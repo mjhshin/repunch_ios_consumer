@@ -1,64 +1,60 @@
 //
 //  AppDelegate.m
-//  repunch
+//  Repunch
 //
-//  Created by CambioLabs on 3/22/13.
-//  Copyright (c) 2013 CambioLabs. All rights reserved.
+//  Created by Gwendolyn Weston on 6/17/13.
+//  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
 #import "AppDelegate.h"
 
-#import <Parse/Parse.h>
-
 #import "PlacesViewController.h"
 #import "PunchViewController.h"
-#import "InboxNavigationController.h"
 #import "InboxViewController.h"
-#import <FacebookSDK/FBSessionTokenCachingStrategy.h>
-#import "Retailer.h"
-#import "Reward.h"
+#import "LoginViewController.h"
 
-@implementation AppDelegate
+#import <Parse/Parse.h>
 
-@synthesize session, loginVC, fbUser, localUser, placesVC;
-
-- (void)dealloc
-{
-    [_window release];
-    [_tabBarController release];
-    [loginVC release];
-    [super dealloc];
+@implementation AppDelegate{
+    PlacesViewController *placesVC;
+    PunchViewController *punchVC;
+    InboxViewController *inboxVC;
+    LoginViewController *loginVC;
 }
+
+//JUST FOR MY OWN SANITY, what's goingon:
+//on launch: set up parse API, (tbd) set up Facebook API, (tbd), set up Push notifications, set up tab view controller, and either send user to home page or login page.
+
+//TODO ON THIS PAGE:
+//INIT + FIGURE OUT ALL FACEBOOK SDK STUFF
+//FIGURE OUT PUSH NOTIFICATION RESPONSE
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
-    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        
     //Set up API keys
     [Parse setApplicationId:@"m0EdwpRYlJwttZLZ5PUk7y13TWCnvSScdn8tfVoh"
                   clientKey:@"XZMybowaEMLHszQTEpxq4Yk2ksivkYj9m1c099ZD"];
-        
-    [PFFacebookUtils initializeFacebook];
     
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"repunch_local.sqlite"];
-
+    
     //Init Tab Bar and all related view controllers
-    placesVC = [[[PlacesViewController alloc] init] autorelease];
-    PunchViewController *punchVC = [[[PunchViewController alloc] init] autorelease];
-    InboxViewController *inboxVC = [[[InboxViewController alloc] initWithStyle:UITableViewStylePlain] autorelease];
-    InboxNavigationController *inboxNavVC = [[[InboxNavigationController alloc] initWithRootViewController:inboxVC] autorelease];
-    [inboxNavVC.navigationBar setBackgroundImage:[UIImage imageNamed:@"bkg_header"] forBarMetrics:UIBarMetricsDefault];
+    placesVC = [[PlacesViewController alloc] init];
+    punchVC = [[PunchViewController alloc] init];
+    inboxVC = [[InboxViewController alloc] init];
     
     //Set up default settings for: sorting by alphabetical order, no notifications
     [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Alphabetical Order", [NSNumber numberWithBool:NO], nil] forKeys:[NSArray arrayWithObjects:@"sort", @"notification", nil]]];
     
-    self.tabBarController = [[[UITabBarController alloc] init] autorelease];
-    self.tabBarController.viewControllers = @[placesVC, punchVC, inboxNavVC];
+    self.tabBarController = [[UITabBarController alloc] init];
+    self.tabBarController.viewControllers = @[placesVC, punchVC, inboxVC];
     
     //Register for Push Notifications
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-
+    
     NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (remoteNotif != nil) {
         NSLog(@"opened from push: %@", remoteNotif);
@@ -66,74 +62,35 @@
         [self.tabBarController setSelectedIndex:2];
     }
     
+    [PFUser logOut];
+    
     //if user is cached, load their local data
     //else, go to login page
     if ([PFUser currentUser])
     {
-        [placesVC loadPlaces];
+        //[placesVC loadPlaces];
         self.window.rootViewController = self.tabBarController;
     } else {
-        loginVC = [[LandingViewController alloc] init];
+        loginVC = [[LoginViewController alloc] init];
         self.window.rootViewController = loginVC;
     }
+    
+    [self.window makeKeyAndVisible];
+    return YES;
 
+    
+    
+    self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
 }
 
+-(void)saveContext{
+    [MagicalRecord cleanUp];
+}
+
 #pragma mark - Facebook SDK helper methods
 
-- (void)sessionDidOpen
-{
-    self.window.rootViewController = self.tabBarController;
-    
-    [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
-         if (!error) {
-             self.fbUser = user;
-         } else {
-             NSLog(@"requestForMe error: %@",error);
-         }
-     }];
-}
-
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    [FBSession.activeSession handleDidBecomeActive];
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    [self.session close];
-}
-
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    return [PFFacebookUtils handleOpenURL:url];
-}
-
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [PFFacebookUtils handleOpenURL:url];
-}
-
-// Helper method to wrap logic for handling app links.
-- (void)handleAppLink:(FBAccessTokenData *)appLinkToken {
-    // Initialize a new blank session instance...
-    FBSession *appLinkSession = [[FBSession alloc] initWithAppID:nil
-                                                     permissions:nil
-                                                 defaultAudience:FBSessionDefaultAudienceNone
-                                                 urlSchemeSuffix:nil
-                                              tokenCacheStrategy:[FBSessionTokenCachingStrategy nullCacheInstance] ];
-    [FBSession setActiveSession:appLinkSession];
-    // ... and open it from the App Link's Token.
-    [appLinkSession openFromAccessTokenData:appLinkToken
-                          completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
-                              // Forward any errors to the FBLoginView delegate.
-                              if (error) {
-                                  NSLog(@"open access token error: %@",error);
-                              }
-                          }];
-}
 
 #pragma mark - Tab controller helper methods
 -(void)makeTabBarHidden:(BOOL)hide {
@@ -171,7 +128,7 @@
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:deviceToken];
     [currentInstallation saveInBackground];
-
+    
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error

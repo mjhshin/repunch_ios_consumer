@@ -1,9 +1,9 @@
 //
 //  main.m
-//  repunch
+//  Repunch
 //
-//  Created by CambioLabs on 3/22/13.
-//  Copyright (c) 2013 CambioLabs. All rights reserved.
+//  Created by Gwendolyn Weston on 6/17/13.
+//  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

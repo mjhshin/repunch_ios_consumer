@@ -10,8 +10,6 @@
 
 @implementation GlobalToolbar
 
-@synthesize delegate;
-
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -20,7 +18,7 @@
         
         [self setBackgroundImage:[UIImage imageNamed:@"bkg_header"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
         
-        UIBarButtonItem *flex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
+        UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         
         UIImage *settingsImage = [UIImage imageNamed:@"ico-settings"];
         UIButton *settingsButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -28,10 +26,10 @@
         [settingsButton setImage:settingsImage forState:UIControlStateNormal];
         [settingsButton addTarget:self action:@selector(openSettings) forControlEvents:UIControlEventTouchUpInside];
         
-        UIBarButtonItem *settingsButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:settingsButton] autorelease];
+        UIBarButtonItem *settingsButtonItem = [[UIBarButtonItem alloc] initWithCustomView:settingsButton];
         
-        UIImageView *logoImageView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"repunch-logo"]] autorelease];
-        UIBarButtonItem *logo = [[[UIBarButtonItem alloc] initWithCustomView:logoImageView] autorelease];
+        UIImageView *logoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"repunch-logo"]];
+        UIBarButtonItem *logo = [[UIBarButtonItem alloc] initWithCustomView:logoImageView];
         
         
         UIImage *searchImage = [UIImage imageNamed:@"ico-search"];
@@ -40,7 +38,7 @@
         [searchButton setImage:searchImage forState:UIControlStateNormal];
         [searchButton addTarget:self action:@selector(openSearch) forControlEvents:UIControlEventTouchUpInside];
         
-        UIBarButtonItem *searchButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:searchButton] autorelease];
+        UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:searchButton];
                                          
         [self setItems:[NSArray arrayWithObjects:settingsButtonItem,flex,logo,flex,searchButtonItem,nil]];
     }
@@ -49,12 +47,12 @@
 
 - (void)openSettings
 {
-    [delegate openSettings];
+    [_toolbarDelegate openSettings];
 }
 
 - (void)openSearch
 {
-    [delegate openSearch];
+    [_toolbarDelegate openSearch];
 }
 
 @end

@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GlobalToolbar : UIToolbar
-{
-    UIViewController *delegate;
-}
+@protocol GlobalToolbarDelegate 
+- (void)openSettings;
+- (void)openSearch;
+@end
 
-@property (nonatomic, retain) UIViewController *delegate;
+@interface GlobalToolbar : UIToolbar
+
+@property (nonatomic, assign) id<GlobalToolbarDelegate> toolbarDelegate;
 
 @end
