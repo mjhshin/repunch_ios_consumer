@@ -179,8 +179,8 @@
 {
     AppDelegate *ad = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     LandingViewController *landingVC = [[LandingViewController alloc] init];
-    ad.lvc = landingVC;
-    ad.window.rootViewController = ad.lvc;
+    ad.loginVC = landingVC;
+    ad.window.rootViewController = ad.loginVC;
 }
 
 - (void)registerUser
@@ -216,7 +216,7 @@
             
             AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
             [appDelegate.window setRootViewController:appDelegate.tabBarController];
-            [appDelegate.placesvc loadPlaces];
+            [appDelegate.placesVC loadPlaces];
         } else {
             // check error, alert user
             NSLog(@"signup error:%@",error);
@@ -449,7 +449,7 @@
                     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
                     
                     [appDelegate.window setRootViewController:appDelegate.tabBarController];
-                    [appDelegate.placesvc loadPlaces];
+                    [appDelegate.placesVC loadPlaces];
                 }
             }];
             

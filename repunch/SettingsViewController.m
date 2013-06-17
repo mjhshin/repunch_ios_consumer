@@ -236,21 +236,21 @@
             break;
             
         case 1:{
-            LegalViewController *lvc = [[LegalViewController alloc] init];
+            LegalViewController *loginVC = [[LegalViewController alloc] init];
             
             switch (indexPath.row) {
                 case 0:
-                    lvc.document = @"terms";
+                    loginVC.document = @"terms";
                     break;
                 case 1:
-                    lvc.document = @"privacy";
+                    loginVC.document = @"privacy";
                     break;
                 case 2:
-                    lvc.document = @"licenses";
+                    loginVC.document = @"licenses";
                     break;
             }            
-            [self.navigationController pushViewController:lvc animated:YES];
-            [lvc release];
+            [self.navigationController pushViewController:loginVC animated:YES];
+            [loginVC release];
             
             break;
         }
@@ -260,8 +260,8 @@
                 
                 AppDelegate *ad = (AppDelegate *)[[UIApplication sharedApplication] delegate];
                 LandingViewController *landingVC = [[LandingViewController alloc] init];
-                ad.lvc = landingVC;
-                ad.window.rootViewController = ad.lvc;
+                ad.loginVC = landingVC;
+                ad.window.rootViewController = ad.loginVC;
                 
                 [self closeSettings];
             }
@@ -273,8 +273,8 @@
                     
                     AppDelegate *ad = (AppDelegate *)[[UIApplication sharedApplication] delegate];
                     LandingViewController *landingVC = [[LandingViewController alloc] init];
-                    ad.lvc = landingVC;
-                    ad.window.rootViewController = ad.lvc;
+                    ad.loginVC = landingVC;
+                    ad.window.rootViewController = ad.loginVC;
                     
                     [self closeSettings];
                     

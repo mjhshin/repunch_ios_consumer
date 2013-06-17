@@ -22,7 +22,7 @@
     UIView *placeAddOrRemove;
     UIView *placeBottomContainer;
     BOOL isSearch;
-    PlaceDetailMapViewController *pdmvc;
+    PlaceDetailMapViewController *placesDetailMapVC;
     UILabel *placePunchesLabel;
 }
 
@@ -33,7 +33,7 @@
 @property (nonatomic, retain) UIView *placeAddOrRemove;
 @property (nonatomic, retain) UIView *placeBottomContainer;
 @property (nonatomic, readwrite) BOOL isSearch;
-@property (nonatomic, retain) PlaceDetailMapViewController *pdmvc;
+@property (nonatomic, retain) PlaceDetailMapViewController *placesDetailMapVC;
 @property (nonatomic, retain) UILabel *placePunchesLabel;
 
 - (void)closePlaceMap;

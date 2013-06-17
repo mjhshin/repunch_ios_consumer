@@ -9,7 +9,6 @@
 #import "RewardDetailViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "FriendViewController.h"
-#import "BumpClient.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "User.h"
 #import "AppDelegate.h"
@@ -147,12 +146,6 @@
     
     self.bumpIsConnected = NO;
 }
-
-- (void)doBump
-{
-    [[BumpClient sharedClient] simulateBump];
-}
-
 - (void)completeRedeem
 {
     if ([[PFFacebookUtils session] isOpen]) {
@@ -283,106 +276,11 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    [bumpDiagram startAnimating];
-    
-//    [[BumpClient sharedClient] connect];
-    
-    /*[[BumpClient sharedClient] setMatchBlock:^(BumpChannelID channel) {
-        NSLog(@"Matched with user: %@", [[BumpClient sharedClient] userIDForChannel:channel]);
-        [[BumpClient sharedClient] confirmMatch:YES onChannel:channel];
-    }];
-    
-    [[BumpClient sharedClient] setChannelConfirmedBlock:^(BumpChannelID channel) {
-        NSLog(@"Channel with %@ confirmed.", [[BumpClient sharedClient] userIDForChannel:channel]);
-        
-        NSData *sendData = [NSJSONSerialization dataWithJSONObject:[NSDictionary dictionaryWithObjectsAndKeys:self.reward.place.retailer_id, @"retailer_id", self.reward.reward_id, @"reward_id", nil] options:kNilOptions error:nil];
-        [[BumpClient sharedClient] sendData:sendData toChannel:channel];
-    }];
-    
-    [[BumpClient sharedClient] setDataReceivedBlock:^(BumpChannelID channel, NSData *data) {
-        NSLog(@"Data received from %@: %@",
-              [[BumpClient sharedClient] userIDForChannel:channel],
-              [NSString stringWithCString:[data bytes] encoding:NSUTF8StringEncoding]);
-        
-        NSDictionary *receivedData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        
-        if ([[receivedData objectForKey:@"confirm"] boolValue]) {
-            
-            PFUser *pfuser = [PFUser currentUser];
-            User *localUser = [User MR_findFirstByAttribute:@"username" withValue:[pfuser username]];
-            PFQuery *query = [[pfuser relationforKey:@"my_places"] query];
-            [query whereKey:@"retailer_id" equalTo:reward.place.retailer_id];
-            
-            [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
-                if (error) {
-                    NSLog(@"Find place error: %@", error);
-                } else {
-                    PFObject *thisPFPlace = [objects objectAtIndex:0];
-                    
-                    int newPunchCount = [[thisPFPlace objectForKey:@"num_punches"] intValue] - 
-                                        [reward.required intValue];
-                    
-                    [thisPFPlace setObject:[NSNumber numberWithInt:newPunchCount] forKey:@"num_punches"];
-                    
-                    [thisPFPlace saveInBackgroundWithBlock:^(BOOL succeeded, NSError *saveError){
-                        if (saveError) {
-                            NSLog(@"Redeem save error: %@", saveError);
-                        } else {
-                            NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
-                            
-                            Retailer *thisPlace = [Retailer MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"retailer_id = %@ and user = %@",reward.place.retailer_id,localUser] inContext:localContext];
-                            
-                            if (thisPlace == nil) {
-                                thisPlace = [Retailer MR_createEntity];
-                            }
-                            
-                            [thisPlace setNum_punches:[NSNumber numberWithInt:newPunchCount]];
-                            
-                            [localContext MR_saveToPersistentStoreAndWait];
-                            
-                            [self performSelector:@selector(completeRedeem)];
-                        }
-                    }];
-                }
-            }];
-        }
-        
-    }];
-    
-    [[BumpClient sharedClient] setBumpEventBlock:^(bump_event event) {
-        switch(event) {
-            case BUMP_EVENT_BUMP:
-                NSLog(@"Bump detected.");
-                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-                break;
-            case BUMP_EVENT_NO_MATCH:
-                NSLog(@"No match.");
-                break;
-        }
-    }];
-    
-    [[BumpClient sharedClient] setConnectionStateChangedBlock:^(BOOL connected) {
-        if (connected) {
-            NSLog(@"Bump connected...");
-            self.bumpIsConnected = YES;
-        } else {
-            NSLog(@"Bump disconnected...");
-            self.bumpIsConnected = NO;
-        }
-    }];*/
-
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    
-    [bumpDiagram stopAnimating];
-    
-    if (self.bumpIsConnected) {
-        [[BumpClient sharedClient] disconnect];
-    }
 }
 
 

@@ -54,8 +54,8 @@
 - (void)goLogin
 {
     AppDelegate *ad = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    LoginViewController *lvc = [[[LoginViewController alloc] init] autorelease];
-    [ad.window setRootViewController:lvc];
+    LoginViewController *loginVC = [[[LoginViewController alloc] init] autorelease];
+    [ad.window setRootViewController:loginVC];
 }
 
 - (void)didReceiveMemoryWarning

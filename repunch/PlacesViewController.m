@@ -14,13 +14,9 @@
 #import "Retailer.h"
 #import "AppDelegate.h"
 
-@interface PlacesViewController ()
-
-@end
-
 @implementation PlacesViewController
 
-@synthesize placesData, placesTableView, snc, pdvc, searchvc, delegate, isSearch, location, my_related_places;
+@synthesize placesData, placesTableView, settingsNavVC, placesDetailVC, searchVC, delegate, isSearch, location, myRelatedPlaces;
 
 - (id)init
 {
@@ -38,12 +34,11 @@
 {
     [super viewDidLoad];
     
-    UIToolbar *gtb;
+    UIToolbar *globalToolbar;
     if (!isSearch) {
-        gtb = [[GlobalToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 46)];
-        [(GlobalToolbar *)gtb setDelegate:self];
+        globalToolbar = [[GlobalToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 46)];
+        [(GlobalToolbar *)globalToolbar setDelegate:self];
     } else {
-        
         UIImage *closeImage = [UIImage imageNamed:@"btn_x-orange"];
         UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [closeButton setFrame:CGRectMake(0, 0, closeImage.size.width, closeImage.size.height)];
@@ -63,13 +58,13 @@
         
         UIBarButtonItem *searchTitleItem = [[[UIBarButtonItem alloc] initWithCustomView:searchTitle] autorelease];
         
-        gtb = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 46)];
-        [gtb setBackgroundImage:[UIImage imageNamed:@"bkg_header"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+        globalToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 46)];
+        [globalToolbar setBackgroundImage:[UIImage imageNamed:@"bkg_header"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
         
         UIBarButtonItem *flex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
         UIBarButtonItem *flex2 = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
         
-        [gtb setItems:[NSArray arrayWithObjects:closeButtonItem, flex, searchTitleItem, flex2, nil]];
+        [globalToolbar setItems:[NSArray arrayWithObjects:closeButtonItem, flex, searchTitleItem, flex2, nil]];
         
         if ([CLLocationManager locationServicesEnabled]) {
             [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error){
@@ -79,9 +74,9 @@
             }];
         }
     }
-    [self.view addSubview:gtb];
+    [self.view addSubview:globalToolbar];
     
-    placesTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, gtb.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - gtb.frame.size.height - (isSearch ? 0 : 49)) style:UITableViewStylePlain];
+    placesTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, globalToolbar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - globalToolbar.frame.size.height - (isSearch ? 0 : 49)) style:UITableViewStylePlain];
     [placesTableView setDataSource:self];
     [placesTableView setDelegate:self];
     [self.view addSubview:placesTableView];
@@ -106,7 +101,7 @@
 
             // set num punches from parse which is in the user object
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"retailer_id = %@",[place objectForKey:@"retailer_id"]];
-            NSArray *userplaces = [my_related_places filteredArrayUsingPredicate:predicate];
+            NSArray *userplaces = [myRelatedPlaces filteredArrayUsingPredicate:predicate];
             
             NSNumber *punches = [NSNumber numberWithInt:0];
             if ([userplaces count] > 0) {
@@ -157,10 +152,10 @@
         if (error) {
             NSLog(@"place count error: %@",error);
         } else {
-            my_related_places = [[NSArray alloc] initWithArray:objects];
+            myRelatedPlaces = [[NSArray alloc] initWithArray:objects];
             
             // local and parse are out of sync so get parse and overwrite local
-            if ([placesData count] != [my_related_places count]){
+            if ([placesData count] != [myRelatedPlaces count]){
                 [self fillPlacesDefault:NO];
             } else {
                 [self sortPlaces];
@@ -183,7 +178,7 @@
     PFQuery *query = [PFQuery queryWithClassName:@"Retailer"];
     
     if (!defaultplaces) {
-        [query whereKey:@"retailer_id" containedIn:[my_related_places valueForKey:@"retailer_id"]];
+        [query whereKey:@"retailer_id" containedIn:[myRelatedPlaces valueForKey:@"retailer_id"]];
     }
     
 //    NSMutableArray *my_places = [[NSMutableArray alloc] initWithCapacity:0];
@@ -205,7 +200,7 @@
             } else {
                 // set num punches from parse which is in the user object
                 NSPredicate *predicate = [NSPredicate predicateWithFormat:@"retailer_id = %@",[place objectForKey:@"retailer_id"]];
-                NSDictionary *userplace = [[my_related_places filteredArrayUsingPredicate:predicate] objectAtIndex:0];
+                NSDictionary *userplace = [[myRelatedPlaces filteredArrayUsingPredicate:predicate] objectAtIndex:0];
                 [newPlace setNum_punches:[userplace objectForKey:@"num_punches"]];
             }
             [localContext MR_saveToPersistentStoreAndWait];
@@ -524,13 +519,13 @@
         thisPlace = [Retailer MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"user = %@ && retailer_id = %@",localUser, thisPlace.retailer_id]];
     }
     
-    pdvc = [[PlaceDetailViewController alloc] init];
-    [pdvc setIsSearch:isSearch];
-    [pdvc setPlace:thisPlace];
-    [pdvc setDelegate:self];
-    [pdvc.view setFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
-    [self.view addSubview:pdvc.view];
-    [self animateView:pdvc.view up:YES distance:self.view.frame.size.height completion:nil];
+    placesDetailVC = [[PlaceDetailViewController alloc] init];
+    [placesDetailVC setIsSearch:isSearch];
+    [placesDetailVC setPlace:thisPlace];
+    [placesDetailVC setDelegate:self];
+    [placesDetailVC.view setFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.view addSubview:placesDetailVC.view];
+    [self animateView:placesDetailVC.view up:YES distance:self.view.frame.size.height completion:nil];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -539,34 +534,34 @@
 
 - (void) openSettings
 {
-    snc = [[SettingsNavigationController alloc] init];
-    [snc setDelegate:self];
-    [snc.navigationBar setBackgroundImage:[UIImage imageNamed:@"bkg_header"] forBarMetrics:UIBarMetricsDefault];
-    [snc.view setFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
-    [self.view addSubview:snc.view];
-    [self animateView:snc.view up:YES distance:self.view.frame.size.height completion:nil];
+    settingsNavVC = [[SettingsNavigationController alloc] init];
+    [settingsNavVC setDelegate:self];
+    [settingsNavVC.navigationBar setBackgroundImage:[UIImage imageNamed:@"bkg_header"] forBarMetrics:UIBarMetricsDefault];
+    [settingsNavVC.view setFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.view addSubview:settingsNavVC.view];
+    [self animateView:settingsNavVC.view up:YES distance:self.view.frame.size.height completion:nil];
 }
 
 - (void) closeSettings
 {
     [self viewWillAppear:NO];
-    [self animateView:snc.view
+    [self animateView:settingsNavVC.view
                    up:NO
              distance:self.view.frame.size.height
            completion:^(BOOL finished){
-               [snc.view removeFromSuperview];
+               [settingsNavVC.view removeFromSuperview];
            }];
 }
 
 - (void) openSearch
 {
-    searchvc = [[PlacesViewController alloc] init];
-    [searchvc setIsSearch:YES];
-    [searchvc setDelegate:self];
-    [searchvc.view setFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
-    [self.view addSubview:searchvc.view];
-    [self animateView:searchvc.view up:YES distance:self.view.frame.size.height completion:nil];
-    [searchvc loadPlacesForSearch];
+    searchVC = [[PlacesViewController alloc] init];
+    [searchVC setIsSearch:YES];
+    [searchVC setDelegate:self];
+    [searchVC.view setFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.view addSubview:searchVC.view];
+    [self animateView:searchVC.view up:YES distance:self.view.frame.size.height completion:nil];
+    [searchVC loadPlacesForSearch];
 }
 
 - (void) closeSearch
@@ -580,8 +575,8 @@
         placesData = [(NSMutableArray *)[localUser.my_places allObjects] retain];
         
         [self viewWillAppear:NO];
-        [self animateView:searchvc.view up:NO distance:self.view.frame.size.height completion:^(BOOL finished){
-            [searchvc.view removeFromSuperview];
+        [self animateView:searchVC.view up:NO distance:self.view.frame.size.height completion:^(BOOL finished){
+            [searchVC.view removeFromSuperview];
             
             NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
             NSArray *searchPlaces = [Retailer MR_findByAttribute:@"user" withValue:nil];
@@ -598,11 +593,11 @@
 - (void)closePlaceDetail
 {
     [self viewWillAppear:NO];
-    [self animateView:pdvc.view
+    [self animateView:placesDetailVC.view
                    up:NO
              distance:self.view.frame.size.height
            completion:^(BOOL finished){
-               [pdvc.view removeFromSuperview];
+               [placesDetailVC.view removeFromSuperview];
            }];
 }
 

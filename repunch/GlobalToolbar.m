@@ -30,7 +30,6 @@
         
         UIBarButtonItem *settingsButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:settingsButton] autorelease];
         
-        
         UIImageView *logoImageView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"repunch-logo"]] autorelease];
         UIBarButtonItem *logo = [[[UIBarButtonItem alloc] initWithCustomView:logoImageView] autorelease];
         

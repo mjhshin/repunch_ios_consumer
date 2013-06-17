@@ -21,7 +21,7 @@
 
 @implementation PlaceDetailViewController
 
-@synthesize placeRewardData, delegate, place, placeAddButton, placeAddOrRemove, placeBottomContainer, isSearch, pdmvc, placePunchesLabel;
+@synthesize placeRewardData, delegate, place, placeAddButton, placeAddOrRemove, placeBottomContainer, isSearch, placesDetailMapVC, placePunchesLabel;
 
 - (id)init
 {
@@ -35,7 +35,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
     
     PFUser *pfuser = [PFUser currentUser];
     User *localUser = [User MR_findFirstByAttribute:@"username" withValue:[pfuser valueForKey:@"username"]];
@@ -314,22 +313,22 @@
 
 - (void)placeMap
 {
-    pdmvc = [[PlaceDetailMapViewController alloc] init];
-    [pdmvc setDelegate:self];
-    [pdmvc setPlace:self.place];
-    [pdmvc.view setFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
-    [self.view addSubview:pdmvc.view];
-    [self animateView:pdmvc.view up:YES distance:self.view.frame.size.height completion:nil];
+    placesDetailMapVC = [[PlaceDetailMapViewController alloc] init];
+    [placesDetailMapVC setDelegate:self];
+    [placesDetailMapVC setPlace:self.place];
+    [placesDetailMapVC.view setFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.view addSubview:placesDetailMapVC.view];
+    [self animateView:placesDetailMapVC.view up:YES distance:self.view.frame.size.height completion:nil];
 }
 
 - (void)closePlaceMap
 {
     [self viewWillAppear:NO];
-    [self animateView:pdmvc.view
+    [self animateView:placesDetailMapVC.view
                    up:NO
              distance:self.view.frame.size.height
            completion:^(BOOL finished){
-               [pdmvc.view removeFromSuperview];
+               [placesDetailMapVC.view removeFromSuperview];
            }];
 }
 

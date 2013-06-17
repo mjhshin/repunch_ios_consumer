@@ -3,13 +3,13 @@
     <entity name="CategoryObject" representedClassName="CategoryObject" syncable="YES">
         <attribute name="alias" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="places" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Retailer" inverseName="categories" inverseEntity="Retailer" syncable="YES"/>
+        <relationship name="places" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Store" inverseName="categories" inverseEntity="Store" syncable="YES"/>
     </entity>
     <entity name="HoursObject" representedClassName="HoursObject" syncable="YES">
         <attribute name="close_time" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="day" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="open_time" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="place" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Retailer" inverseName="hours" inverseEntity="Retailer" syncable="YES"/>
+        <relationship name="place" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Store" inverseName="hours" inverseEntity="Store" syncable="YES"/>
     </entity>
     <entity name="Message" representedClassName="Message" syncable="YES">
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
@@ -26,29 +26,18 @@
         <attribute name="sent_time" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="user" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="messages" inverseEntity="User" syncable="YES"/>
+        <relationship name="user" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" syncable="YES"/>
     </entity>
-    <entity name="Retailer" representedClassName="Retailer" syncable="YES">
-        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="country_code" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="cross_street" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="distance" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="image_url" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
-        <attribute name="is_dirty" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
-        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="neighborhood" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="num_punches" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="postal_code" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="retailer_id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CategoryObject" inverseName="places" inverseEntity="CategoryObject" syncable="YES"/>
-        <relationship name="hours" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="HoursObject" inverseName="place" inverseEntity="HoursObject" syncable="YES"/>
-        <relationship name="rewards" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Reward" inverseName="place" inverseEntity="Reward" syncable="YES"/>
-        <relationship name="user" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="my_places" inverseEntity="User" syncable="YES"/>
+    <entity name="Patron" syncable="YES">
+        <attribute name="date_of_birth" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="first_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gender" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="last_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="punch_code" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="patronStores" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Store" syncable="YES"/>
+        <relationship name="receivedMessages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" syncable="YES"/>
+        <relationship name="sentMessages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" syncable="YES"/>
+        <relationship name="user" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="patron" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="Reward" representedClassName="Reward" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -56,27 +45,40 @@
         <attribute name="required" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="reward_description" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="reward_id" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="place" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Retailer" inverseName="rewards" inverseEntity="Retailer" syncable="YES"/>
+        <relationship name="place" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Store" inverseName="rewards" inverseEntity="Store" syncable="YES"/>
+    </entity>
+    <entity name="Store" representedClassName="Retailer" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="country_code" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cross_street" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="distance" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="image_url" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="neighborhood" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="num_punches" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="postal_code" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CategoryObject" inverseName="places" inverseEntity="CategoryObject" syncable="YES"/>
+        <relationship name="hours" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="HoursObject" inverseName="place" inverseEntity="HoursObject" syncable="YES"/>
+        <relationship name="rewards" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Reward" inverseName="place" inverseEntity="Reward" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
-        <attribute name="birth_date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="facebook_id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="first_name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="gender" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="is_dirty" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
-        <attribute name="last_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Message" inverseName="user" inverseEntity="Message" syncable="YES"/>
-        <relationship name="my_places" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Retailer" inverseName="user" inverseEntity="Retailer" syncable="YES"/>
+        <relationship name="patron" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Patron" inverseName="user" inverseEntity="Patron" syncable="YES"/>
     </entity>
     <elements>
         <element name="CategoryObject" positionX="0" positionY="0" width="128" height="90"/>
         <element name="HoursObject" positionX="0" positionY="0" width="128" height="105"/>
         <element name="Message" positionX="0" positionY="0" width="128" height="270"/>
-        <element name="Retailer" positionX="0" positionY="0" width="128" height="345"/>
+        <element name="Patron" positionX="160" positionY="192" width="128" height="180"/>
         <element name="Reward" positionX="0" positionY="0" width="128" height="135"/>
-        <element name="User" positionX="0" positionY="0" width="128" height="210"/>
+        <element name="Store" positionX="0" positionY="0" width="128" height="300"/>
+        <element name="User" positionX="0" positionY="0" width="128" height="105"/>
     </elements>
 </model>

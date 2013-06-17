@@ -96,15 +96,15 @@
 
 - (void)forgot
 {
-
+    //TODO: ADD FORGOT PASSWORD FUNCTIONALITY
 }
 
 - (void)cancel
 {
     AppDelegate *ad = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     LandingViewController *landingVC = [[LandingViewController alloc] init];
-    ad.lvc = landingVC;
-    ad.window.rootViewController = ad.lvc;
+    ad.loginVC = landingVC;
+    ad.window.rootViewController = ad.loginVC;
 }
 
 - (void)loginUser
@@ -112,7 +112,9 @@
     [PFUser logInWithUsernameInBackground:usernameTextField.text password:passwordTextField.text block:^(PFUser *user, NSError *error) {
         if (user) {
 
+            //Store user in local data store
             NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+            
             User *localUser = [User MR_findFirstByAttribute:@"username" withValue:user.username];
             if (localUser == nil) {
                 localUser = [User MR_createInContext:localContext];
@@ -122,7 +124,7 @@
             
             AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
             [appDelegate.window setRootViewController:appDelegate.tabBarController];
-            [appDelegate.placesvc loadPlaces];
+            [appDelegate.placesVC loadPlaces];
             
         } else {
             // The login failed. Check error to see why.
@@ -216,7 +218,7 @@
 //                                                    NSLog(@"PFUser save error - fb callback: %@",[error description]);
 //                                                } else {
 //                                                    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//                                                    [appDelegate.placesvc loadPlaces];
+//                                                    [appDelegate.placesVC loadPlaces];
 //                                                }
 //                                            }];
 //                                        }
@@ -246,7 +248,7 @@
                         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 
                         [appDelegate.window setRootViewController:appDelegate.tabBarController];                        
-                        [appDelegate.placesvc loadPlaces];
+                        [appDelegate.placesVC loadPlaces];
                     }
                 }];
 //            }

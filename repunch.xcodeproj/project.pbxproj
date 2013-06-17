@@ -12,11 +12,9 @@
 		C300D1261728955F002A185C /* HoursObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C300D1251728955F002A185C /* HoursObject.m */; };
 		C30729951704C00A00272F13 /* PlaceDetailMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C30729941704C00A00272F13 /* PlaceDetailMapViewController.m */; };
 		C307299A1704C3AB00272F13 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C30729981704C39600272F13 /* MapKit.framework */; };
-		C307299E1704C8AD00272F13 /* libBump.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C307299D1704C8AD00272F13 /* libBump.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		C30729A51704C8FA00272F13 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C30729A31704C8ED00272F13 /* AudioToolbox.framework */; };
 		C30729A61704C8FA00272F13 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C30729A11704C8E100272F13 /* CoreLocation.framework */; };
 		C30729A71704C8FA00272F13 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C307299F1704C8D700272F13 /* CFNetwork.framework */; };
-		C31080F016FD1A5F001BC4EC /* PlacesNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C31080EF16FD1A5F001BC4EC /* PlacesNavigationViewController.m */; };
 		C31080F316FD1B3D001BC4EC /* PlacesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C31080F216FD1B3D001BC4EC /* PlacesViewController.m */; };
 		C31080F616FD1BF3001BC4EC /* PunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C31080F516FD1BF3001BC4EC /* PunchViewController.m */; };
 		C31080F916FD1EC8001BC4EC /* InboxNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C31080F816FD1EC8001BC4EC /* InboxNavigationController.m */; };
@@ -49,7 +47,6 @@
 		C31B979D171C6A9A0075BD95 /* MagicalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = C31B9781171C6A9A0075BD95 /* MagicalRecord.m */; };
 		C31B979F171C6AB50075BD95 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C31B979E171C6AB50075BD95 /* CoreData.framework */; };
 		C31B97A6171C6C580075BD95 /* repunch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C31B97A4171C6C580075BD95 /* repunch.xcdatamodeld */; };
-		C31B97B0171C80010075BD95 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = C31B97AF171C80010075BD95 /* User.m */; };
 		C31B97B6171C871B0075BD95 /* Reward.m in Sources */ = {isa = PBXBuildFile; fileRef = C31B97B5171C871B0075BD95 /* Reward.m */; };
 		C31D3CE6173D52F200A319C9 /* btn-back-inbox.png in Resources */ = {isa = PBXBuildFile; fileRef = C31D3CDE173D52F200A319C9 /* btn-back-inbox.png */; };
 		C31D3CE7173D52F200A319C9 /* btn-back-inbox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C31D3CDF173D52F200A319C9 /* btn-back-inbox@2x.png */; };
@@ -60,7 +57,6 @@
 		C31D3CEC173D52F200A319C9 /* btn-edit.png in Resources */ = {isa = PBXBuildFile; fileRef = C31D3CE4173D52F200A319C9 /* btn-edit.png */; };
 		C31D3CED173D52F200A319C9 /* btn-edit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C31D3CE5173D52F200A319C9 /* btn-edit@2x.png */; };
 		C3269E80174D1D9D00D4148E /* NSDate+whenString.m in Sources */ = {isa = PBXBuildFile; fileRef = C3269E7F174D1D9D00D4148E /* NSDate+whenString.m */; };
-		C32CB9B817133D3700872C61 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C32CB9B717133D3700872C61 /* FacebookSDK.framework */; };
 		C32CB9BD17133D7900872C61 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C32CB9BA17133D7900872C61 /* FacebookSDKResources.bundle */; };
 		C32CB9BE17133D7900872C61 /* FBUserSettingsViewResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C32CB9BB17133D7900872C61 /* FBUserSettingsViewResources.bundle */; };
 		C32CB9C2171346D300872C61 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C32CB9C1171346D300872C61 /* LoginViewController.m */; };
@@ -73,7 +69,6 @@
 		C33C66E017453B1A00CA9B0E /* splash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C33C66DF17453B1A00CA9B0E /* splash@2x.png */; };
 		C33C66E217453B4500CA9B0E /* repunch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C33C66E117453B4500CA9B0E /* repunch@2x.png */; };
 		C34020AD170B84C800CDED25 /* RewardDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C34020AC170B84C800CDED25 /* RewardDetailViewController.m */; };
-		C341DB85171DC0B10069FC4D /* Retailer.m in Sources */ = {isa = PBXBuildFile; fileRef = C341DB84171DC0B10069FC4D /* Retailer.m */; };
 		C347BEDB1732BAD3007ED943 /* LandingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C347BEDA1732BAD3007ED943 /* LandingViewController.m */; };
 		C347BEDE1732DA14007ED943 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C347BEDD1732DA14007ED943 /* RegisterViewController.m */; };
 		C36EDCEB1709E230001300F2 /* SettingsNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C36EDCEA1709E230001300F2 /* SettingsNavigationController.m */; };
@@ -174,6 +169,10 @@
 		C3FA6B4617442F69002C43B7 /* btn-register@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C3FA6B4317442F69002C43B7 /* btn-register@2x.png */; };
 		C3FA6B4717442F69002C43B7 /* btn-create-account@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C3FA6B4417442F69002C43B7 /* btn-create-account@2x.png */; };
 		C3FEE0EA174587D9004A9492 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FEE0E9174587D9004A9492 /* Message.m */; };
+		C4421DC1176E93EF003A7D5C /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4421DC0176E93EF003A7D5C /* FacebookSDK.framework */; };
+		C4421DC4176E95B9003A7D5C /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = C4421DC3176E95B9003A7D5C /* User.m */; };
+		C4421DCA176E97EA003A7D5C /* Retailer.m in Sources */ = {isa = PBXBuildFile; fileRef = C4421DC9176E97EA003A7D5C /* Retailer.m */; };
+		C487CDFF176E8560001CE4BB /* PlaceSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C487CDFE176E8560001CE4BB /* PlaceSearchViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -186,13 +185,9 @@
 		C30729931704C00900272F13 /* PlaceDetailMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceDetailMapViewController.h; sourceTree = "<group>"; };
 		C30729941704C00A00272F13 /* PlaceDetailMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceDetailMapViewController.m; sourceTree = "<group>"; };
 		C30729981704C39600272F13 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		C307299C1704C8AD00272F13 /* BumpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BumpClient.h; sourceTree = "<group>"; };
-		C307299D1704C8AD00272F13 /* libBump.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBump.a; sourceTree = "<group>"; };
 		C307299F1704C8D700272F13 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		C30729A11704C8E100272F13 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		C30729A31704C8ED00272F13 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		C31080EE16FD1A5F001BC4EC /* PlacesNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlacesNavigationViewController.h; sourceTree = "<group>"; };
-		C31080EF16FD1A5F001BC4EC /* PlacesNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacesNavigationViewController.m; sourceTree = "<group>"; };
 		C31080F116FD1B3D001BC4EC /* PlacesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlacesViewController.h; sourceTree = "<group>"; };
 		C31080F216FD1B3D001BC4EC /* PlacesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacesViewController.m; sourceTree = "<group>"; };
 		C31080F416FD1BF3001BC4EC /* PunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PunchViewController.h; sourceTree = "<group>"; };
@@ -257,8 +252,6 @@
 		C31B9783171C6A9A0075BD95 /* CoreData+MagicalRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreData+MagicalRecord.h"; sourceTree = "<group>"; };
 		C31B979E171C6AB50075BD95 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		C31B97A5171C6C580075BD95 /* repunch.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = repunch.xcdatamodel; sourceTree = "<group>"; };
-		C31B97AE171C80010075BD95 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = ../User.h; sourceTree = "<group>"; };
-		C31B97AF171C80010075BD95 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = ../User.m; sourceTree = "<group>"; };
 		C31B97B4171C871B0075BD95 /* Reward.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reward.h; sourceTree = "<group>"; };
 		C31B97B5171C871B0075BD95 /* Reward.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reward.m; sourceTree = "<group>"; };
 		C31D3CDE173D52F200A319C9 /* btn-back-inbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-back-inbox.png"; sourceTree = "<group>"; };
@@ -271,7 +264,6 @@
 		C31D3CE5173D52F200A319C9 /* btn-edit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-edit@2x.png"; sourceTree = "<group>"; };
 		C3269E7E174D1D9D00D4148E /* NSDate+whenString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+whenString.h"; sourceTree = "<group>"; };
 		C3269E7F174D1D9D00D4148E /* NSDate+whenString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+whenString.m"; sourceTree = "<group>"; };
-		C32CB9B717133D3700872C61 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		C32CB9BA17133D7900872C61 /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FacebookSDKResources.bundle; sourceTree = "<group>"; };
 		C32CB9BB17133D7900872C61 /* FBUserSettingsViewResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FBUserSettingsViewResources.bundle; sourceTree = "<group>"; };
 		C32CB9C0171346D300872C61 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -288,8 +280,6 @@
 		C33C66E117453B4500CA9B0E /* repunch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "repunch@2x.png"; sourceTree = "<group>"; };
 		C34020AB170B84C800CDED25 /* RewardDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardDetailViewController.h; sourceTree = "<group>"; };
 		C34020AC170B84C800CDED25 /* RewardDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardDetailViewController.m; sourceTree = "<group>"; };
-		C341DB83171DC0B10069FC4D /* Retailer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Retailer.h; sourceTree = "<group>"; };
-		C341DB84171DC0B10069FC4D /* Retailer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Retailer.m; sourceTree = "<group>"; };
 		C347BED91732BAD3007ED943 /* LandingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LandingViewController.h; sourceTree = "<group>"; };
 		C347BEDA1732BAD3007ED943 /* LandingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LandingViewController.m; sourceTree = "<group>"; };
 		C347BEDC1732DA14007ED943 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
@@ -408,6 +398,13 @@
 		C3FA6B4417442F69002C43B7 /* btn-create-account@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-create-account@2x.png"; sourceTree = "<group>"; };
 		C3FEE0E8174587D9004A9492 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		C3FEE0E9174587D9004A9492 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
+		C4421DC0176E93EF003A7D5C /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		C4421DC2176E95B9003A7D5C /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		C4421DC3176E95B9003A7D5C /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		C4421DC8176E97EA003A7D5C /* Retailer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Retailer.h; sourceTree = "<group>"; };
+		C4421DC9176E97EA003A7D5C /* Retailer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Retailer.m; sourceTree = "<group>"; };
+		C487CDFD176E8560001CE4BB /* PlaceSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceSearchViewController.h; sourceTree = "<group>"; };
+		C487CDFE176E8560001CE4BB /* PlaceSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceSearchViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -415,6 +412,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4421DC1176E93EF003A7D5C /* FacebookSDK.framework in Frameworks */,
 				C388DD36170F852500265DA8 /* Accounts.framework in Frameworks */,
 				C388DD34170F851C00265DA8 /* Social.framework in Frameworks */,
 				C388DD32170F851200265DA8 /* AdSupport.framework in Frameworks */,
@@ -432,24 +430,13 @@
 				C30729A61704C8FA00272F13 /* CoreLocation.framework in Frameworks */,
 				C30729A71704C8FA00272F13 /* CFNetwork.framework in Frameworks */,
 				C3D1C01716FCF92300D6165D /* CoreGraphics.framework in Frameworks */,
-				C307299E1704C8AD00272F13 /* libBump.a in Frameworks */,
 				C388DD24170F83E400265DA8 /* Parse.framework in Frameworks */,
-				C32CB9B817133D3700872C61 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C307299B1704C8AD00272F13 /* libBump */ = {
-			isa = PBXGroup;
-			children = (
-				C307299C1704C8AD00272F13 /* BumpClient.h */,
-				C307299D1704C8AD00272F13 /* libBump.a */,
-			);
-			path = libBump;
-			sourceTree = "<group>";
-		};
 		C310810316FD242F001BC4EC /* images */ = {
 			isa = PBXGroup;
 			children = (
@@ -640,12 +627,12 @@
 				C3FEE0E8174587D9004A9492 /* Message.h */,
 				C3FEE0E9174587D9004A9492 /* Message.m */,
 				C31B97A4171C6C580075BD95 /* repunch.xcdatamodeld */,
-				C341DB83171DC0B10069FC4D /* Retailer.h */,
-				C341DB84171DC0B10069FC4D /* Retailer.m */,
+				C4421DC8176E97EA003A7D5C /* Retailer.h */,
+				C4421DC9176E97EA003A7D5C /* Retailer.m */,
+				C4421DC2176E95B9003A7D5C /* User.h */,
+				C4421DC3176E95B9003A7D5C /* User.m */,
 				C31B97B4171C871B0075BD95 /* Reward.h */,
 				C31B97B5171C871B0075BD95 /* Reward.m */,
-				C31B97AE171C80010075BD95 /* User.h */,
-				C31B97AF171C80010075BD95 /* User.m */,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -673,6 +660,7 @@
 		C3D1C00616FCF92300D6165D = {
 			isa = PBXGroup;
 			children = (
+				C4421DC0176E93EF003A7D5C /* FacebookSDK.framework */,
 				C3D1C01116FCF92300D6165D /* Frameworks */,
 				C3D1C01016FCF92300D6165D /* Products */,
 				C3D1C01816FCF92300D6165D /* repunch */,
@@ -692,7 +680,6 @@
 			children = (
 				C31B979E171C6AB50075BD95 /* CoreData.framework */,
 				C32CB9B917133D7900872C61 /* Resources */,
-				C32CB9B717133D3700872C61 /* FacebookSDK.framework */,
 				C388DD35170F852500265DA8 /* Accounts.framework */,
 				C388DD33170F851C00265DA8 /* Social.framework */,
 				C388DD31170F851200265DA8 /* AdSupport.framework */,
@@ -741,7 +728,6 @@
 				C347BEDA1732BAD3007ED943 /* LandingViewController.m */,
 				C36EDCEC1709F1AD001300F2 /* LegalViewController.h */,
 				C36EDCED1709F1AD001300F2 /* LegalViewController.m */,
-				C307299B1704C8AD00272F13 /* libBump */,
 				C32CB9C0171346D300872C61 /* LoginViewController.h */,
 				C32CB9C1171346D300872C61 /* LoginViewController.m */,
 				C31B9748171C6A9A0075BD95 /* MagicalRecord */,
@@ -754,10 +740,10 @@
 				C30729941704C00A00272F13 /* PlaceDetailMapViewController.m */,
 				C3F9AA931700D5E00072BF8B /* PlaceDetailViewController.h */,
 				C3F9AA941700D5E00072BF8B /* PlaceDetailViewController.m */,
-				C31080EE16FD1A5F001BC4EC /* PlacesNavigationViewController.h */,
-				C31080EF16FD1A5F001BC4EC /* PlacesNavigationViewController.m */,
 				C31080F116FD1B3D001BC4EC /* PlacesViewController.h */,
 				C31080F216FD1B3D001BC4EC /* PlacesViewController.m */,
+				C487CDFD176E8560001CE4BB /* PlaceSearchViewController.h */,
+				C487CDFE176E8560001CE4BB /* PlaceSearchViewController.m */,
 				C31080F416FD1BF3001BC4EC /* PunchViewController.h */,
 				C31080F516FD1BF3001BC4EC /* PunchViewController.m */,
 				C347BEDC1732DA14007ED943 /* RegisterViewController.h */,
@@ -949,7 +935,6 @@
 			files = (
 				C3D1C01F16FCF92300D6165D /* main.m in Sources */,
 				C3D1C02316FCF92300D6165D /* AppDelegate.m in Sources */,
-				C31080F016FD1A5F001BC4EC /* PlacesNavigationViewController.m in Sources */,
 				C31080F316FD1B3D001BC4EC /* PlacesViewController.m in Sources */,
 				C31080F616FD1BF3001BC4EC /* PunchViewController.m in Sources */,
 				C31080F916FD1EC8001BC4EC /* InboxNavigationController.m in Sources */,
@@ -991,9 +976,7 @@
 				C31B979C171C6A9A0075BD95 /* MagicalRecord+ShorthandSupport.m in Sources */,
 				C31B979D171C6A9A0075BD95 /* MagicalRecord.m in Sources */,
 				C31B97A6171C6C580075BD95 /* repunch.xcdatamodeld in Sources */,
-				C31B97B0171C80010075BD95 /* User.m in Sources */,
 				C31B97B6171C871B0075BD95 /* Reward.m in Sources */,
-				C341DB85171DC0B10069FC4D /* Retailer.m in Sources */,
 				C300D12017288149002A185C /* InboxDetailViewController.m in Sources */,
 				C300D12317289006002A185C /* CategoryObject.m in Sources */,
 				C300D1261728955F002A185C /* HoursObject.m in Sources */,
@@ -1007,6 +990,9 @@
 				C3D614011742E1E600911946 /* ComposeViewController.m in Sources */,
 				C3FEE0EA174587D9004A9492 /* Message.m in Sources */,
 				C3269E80174D1D9D00D4148E /* NSDate+whenString.m in Sources */,
+				C487CDFF176E8560001CE4BB /* PlaceSearchViewController.m in Sources */,
+				C4421DC4176E95B9003A7D5C /* User.m in Sources */,
+				C4421DCA176E97EA003A7D5C /* Retailer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1085,7 +1071,9 @@
 		C3D1C04116FCF92300D6165D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../externalLibraries/FacebookSDK\"",
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/../../Documents/FacebookSDK\"",
@@ -1093,10 +1081,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "repunch/repunch-Prefix.pch";
 				INFOPLIST_FILE = "repunch/repunch-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/repunch/libBump\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-fobjc-arc",
 					"-lsqlite3.0",
@@ -1110,8 +1095,10 @@
 		C3D1C04216FCF92300D6165D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../externalLibraries/FacebookSDK\"",
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/../../Documents/FacebookSDK\"",
@@ -1119,10 +1106,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "repunch/repunch-Prefix.pch";
 				INFOPLIST_FILE = "repunch/repunch-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/repunch/libBump\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-fobjc-arc",
 					"-lsqlite3.0",

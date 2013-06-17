@@ -17,8 +17,8 @@
 @property (strong, nonatomic) UIWindow *window;
 
 @property (strong, nonatomic) UITabBarController *tabBarController;
-@property (nonatomic, retain) LandingViewController *lvc;
-@property (nonatomic, retain) PlacesViewController *placesvc;
+@property (nonatomic, retain) LandingViewController *loginVC;
+@property (nonatomic, retain) PlacesViewController *placesVC;
 
 @property (nonatomic, retain) FBSession *session;
 @property (nonatomic, retain) NSDictionary<FBGraphUser> *fbUser;

@@ -10,59 +10,55 @@
 
 #import <Parse/Parse.h>
 
-#import "PlacesNavigationViewController.h"
 #import "PlacesViewController.h"
 #import "PunchViewController.h"
 #import "InboxNavigationController.h"
 #import "InboxViewController.h"
-#import "BumpClient.h"
 #import <FacebookSDK/FBSessionTokenCachingStrategy.h>
 #import "Retailer.h"
 #import "Reward.h"
 
 @implementation AppDelegate
 
-@synthesize session, lvc, fbUser, localUser, placesvc;
+@synthesize session, loginVC, fbUser, localUser, placesVC;
 
 - (void)dealloc
 {
     [_window release];
     [_tabBarController release];
-    [lvc release];
+    [loginVC release];
     [super dealloc];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
-    // Override point for customization after application launch.
     
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-    
-    [MagicalRecord setupCoreDataStackWithStoreNamed:@"repunch_local.sqlite"];
-    
-//    [BumpClient configureWithAPIKey:@"3f9faa8e3259459187e013ec751dc9c8"
-//                          andUserID:[[UIDevice currentDevice] name]];
-    
-    [Parse setApplicationId:@"I7lzrryH0UERXmIzyv4rbf6wzucn0v6WUfyPUmn2"
-                  clientKey:@"C8iOnNliJ08XEGvG3j3S3RHazTLEfd18lLsuDIky"];
-    
+    //Set up API keys
+    [Parse setApplicationId:@"m0EdwpRYlJwttZLZ5PUk7y13TWCnvSScdn8tfVoh"
+                  clientKey:@"XZMybowaEMLHszQTEpxq4Yk2ksivkYj9m1c099ZD"];
+        
     [PFFacebookUtils initializeFacebook];
     
-    placesvc = [[[PlacesViewController alloc] init] autorelease];
+    [MagicalRecord setupCoreDataStackWithStoreNamed:@"repunch_local.sqlite"];
+
+    //Init Tab Bar and all related view controllers
+    placesVC = [[[PlacesViewController alloc] init] autorelease];
+    PunchViewController *punchVC = [[[PunchViewController alloc] init] autorelease];
+    InboxViewController *inboxVC = [[[InboxViewController alloc] initWithStyle:UITableViewStylePlain] autorelease];
+    InboxNavigationController *inboxNavVC = [[[InboxNavigationController alloc] initWithRootViewController:inboxVC] autorelease];
+    [inboxNavVC.navigationBar setBackgroundImage:[UIImage imageNamed:@"bkg_header"] forBarMetrics:UIBarMetricsDefault];
     
-    PunchViewController *punchvc = [[[PunchViewController alloc] init] autorelease];
-    
-    InboxViewController *inboxvc = [[[InboxViewController alloc] initWithStyle:UITableViewStylePlain] autorelease];
-    InboxNavigationController *inboxnvc = [[[InboxNavigationController alloc] initWithRootViewController:inboxvc] autorelease];
-    [inboxnvc.navigationBar setBackgroundImage:[UIImage imageNamed:@"bkg_header"] forBarMetrics:UIBarMetricsDefault];
-    
+    //Set up default settings for: sorting by alphabetical order, no notifications
     [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Alphabetical Order", [NSNumber numberWithBool:NO], nil] forKeys:[NSArray arrayWithObjects:@"sort", @"notification", nil]]];
     
     self.tabBarController = [[[UITabBarController alloc] init] autorelease];
-    self.tabBarController.viewControllers = @[placesvc, punchvc, inboxnvc];
+    self.tabBarController.viewControllers = @[placesVC, punchVC, inboxNavVC];
     
+    //Register for Push Notifications
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+
     NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (remoteNotif != nil) {
         NSLog(@"opened from push: %@", remoteNotif);
@@ -70,18 +66,22 @@
         [self.tabBarController setSelectedIndex:2];
     }
     
-    if ([PFUser currentUser]) // Check if user is cached
+    //if user is cached, load their local data
+    //else, go to login page
+    if ([PFUser currentUser])
     {
-        [placesvc loadPlaces];
+        [placesVC loadPlaces];
         self.window.rootViewController = self.tabBarController;
     } else {
-        lvc = [[LandingViewController alloc] init];
-        self.window.rootViewController = lvc;
+        loginVC = [[LandingViewController alloc] init];
+        self.window.rootViewController = loginVC;
     }
 
     [self.window makeKeyAndVisible];
     return YES;
 }
+
+#pragma mark - Facebook SDK helper methods
 
 - (void)sessionDidOpen
 {
@@ -96,32 +96,14 @@
      }];
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-}
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     [FBSession.activeSession handleDidBecomeActive];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [self.session close];
 }
 
@@ -153,20 +135,7 @@
                           }];
 }
 
-/*
-// Optional UITabBarControllerDelegate method.
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
-{
-}
-*/
-
-/*
-// Optional UITabBarControllerDelegate method.
-- (void)tabBarController:(UITabBarController *)tabBarController didEndCustomizingViewControllers:(NSArray *)viewControllers changed:(BOOL)changed
-{
-}
-*/
-
+#pragma mark - Tab controller helper methods
 -(void)makeTabBarHidden:(BOOL)hide {
 	// Custom code to hide TabBar
 	if ( [self.tabBarController.view.subviews count] < 2 ) {
@@ -194,11 +163,15 @@
 	self.tabBarController.tabBar.hidden = hide;
 }
 
+#pragma mark - Push Notification methods
+
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
-	NSLog(@"My token is: %@", deviceToken);
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"notification"];
-    // TODO: send device token to server
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setDeviceTokenFromData:deviceToken];
+    [currentInstallation saveInBackground];
+
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
@@ -208,7 +181,6 @@
 
 - (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
 {
-    NSLog(@"Received notification: %@", userInfo);
     if ([application applicationState] == UIApplicationStateInactive) {
         // app opened from suspended on push, open to inbox
         [[(AppDelegate *)application.delegate tabBarController] setSelectedIndex:2];

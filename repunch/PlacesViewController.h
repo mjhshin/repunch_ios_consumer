@@ -16,24 +16,24 @@
 @interface PlacesViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>{
     NSMutableArray *placesData;
     UITableView *placesTableView;
-    SettingsNavigationController *snc;
-    PlaceDetailViewController *pdvc;
-    PlacesViewController *searchvc;
+    SettingsNavigationController *settingsNavVC;
+    PlaceDetailViewController *placesDetailVC;
+    PlacesViewController *searchVC;
     UIViewController *delegate;
     BOOL isSearch;
     PFGeoPoint *location;
-    NSArray *my_related_places;
+    NSArray *myRelatedPlaces;
 }
 
 @property (nonatomic, retain) NSMutableArray *placesData;
 @property (nonatomic, retain) UITableView *placesTableView;
-@property (nonatomic, retain) SettingsNavigationController *snc;
-@property (nonatomic, retain) PlaceDetailViewController *pdvc;
-@property (nonatomic, retain) PlacesViewController *searchvc;
+@property (nonatomic, retain) SettingsNavigationController *settingsNavVC;
+@property (nonatomic, retain) PlaceDetailViewController *placesDetailVC;
+@property (nonatomic, retain) PlacesViewController *searchVC;
 @property (nonatomic, retain) UIViewController *delegate;
 @property (nonatomic, readwrite) BOOL isSearch;
 @property (nonatomic, retain) PFGeoPoint *location;
-@property (nonatomic, retain) NSArray *my_related_places;
+@property (nonatomic, retain) NSArray *myRelatedPlaces;
 
 - (void)closePlaceDetail;
 - (void)closeSettings;
