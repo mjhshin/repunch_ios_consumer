@@ -30,6 +30,7 @@
         <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="cross_streets" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="neighborhood" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phone_number" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="store_avatar" optional="YES" attributeType="Binary" syncable="YES"/>
@@ -54,11 +55,11 @@
         <relationship name="sent_messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" syncable="YES"/>
     </entity>
     <elements>
-        <element name="User" positionX="160" positionY="192" width="128" height="195"/>
-        <element name="Store" positionX="160" positionY="192" width="128" height="240"/>
-        <element name="Message" positionX="160" positionY="192" width="128" height="165"/>
         <element name="Category" positionX="160" positionY="192" width="128" height="90"/>
         <element name="Hour" positionX="160" positionY="192" width="128" height="105"/>
+        <element name="Message" positionX="160" positionY="192" width="128" height="165"/>
         <element name="Reward" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="Store" positionX="160" positionY="192" width="128" height="255"/>
+        <element name="User" positionX="160" positionY="192" width="128" height="195"/>
     </elements>
 </model>

@@ -7,6 +7,7 @@
 //
 
 #import "PlacesViewController.h"
+#import "PlacesSearchViewController.h"
 #import "GlobalToolbar.h"
 
 //JUST FOR MY OWN SANITY, what's goingon:
@@ -75,17 +76,20 @@
 {
 }
 
-- (void) closeSettings
-{
-}
 
 - (void) openSearch
 {
-    
+    PlacesSearchViewController *placesSearchVC = [[PlacesSearchViewController alloc]init];
+    placesSearchVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    placesSearchVC.modalDelegate = self;
+    [placesSearchVC setup];
+    [self presentViewController:placesSearchVC animated:YES completion:NULL];
 }
-- (void) closeSearch
-{
+
+- (void)didDismissPresentedViewController{
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
+
 
 
 @end

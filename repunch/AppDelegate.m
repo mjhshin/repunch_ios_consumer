@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 
 #import "PlacesViewController.h"
-#import "PunchViewController.h"
 #import "InboxViewController.h"
 #import "LoginViewController.h"
 
@@ -17,7 +16,6 @@
 
 @implementation AppDelegate{
     PlacesViewController *placesVC;
-    PunchViewController *punchVC;
     InboxViewController *inboxVC;
     LoginViewController *loginVC;
 }
@@ -42,14 +40,24 @@
     
     //Init Tab Bar and all related view controllers
     placesVC = [[PlacesViewController alloc] init];
-    punchVC = [[PunchViewController alloc] init];
     inboxVC = [[InboxViewController alloc] init];
     
     //Set up default settings for: sorting by alphabetical order, no notifications
     [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Alphabetical Order", [NSNumber numberWithBool:NO], nil] forKeys:[NSArray arrayWithObjects:@"sort", @"notification", nil]]];
     
+
+    
     self.tabBarController = [[UITabBarController alloc] init];
-    self.tabBarController.viewControllers = @[placesVC, punchVC, inboxVC];
+    self.tabBarController.viewControllers = @[placesVC, inboxVC];
+    
+    UITabBarItem *placeItem = [self.tabBarController.tabBar.items objectAtIndex:0];
+    [placeItem setTitle:@"Places"];
+    [placeItem setImage:[UIImage imageNamed:@"ico-tab-places@2xsmall.png"]];
+    
+    UITabBarItem *inboxItem = [self.tabBarController.tabBar.items objectAtIndex:1];
+    [inboxItem setTitle:@"Inbox"];
+    [inboxItem setImage:[UIImage imageNamed:@"ico-tab-inbox@2xsmall.png"]];
+
     
     //Register for Push Notifications
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
@@ -62,7 +70,7 @@
         [self.tabBarController setSelectedIndex:2];
     }
     
-    [PFUser logOut];
+    //[PFUser logOut];
     
     //if user is cached, load their local data
     //else, go to login page

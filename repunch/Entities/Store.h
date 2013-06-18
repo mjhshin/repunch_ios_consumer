@@ -8,11 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import <Parse/Parse.h>
 
 
 @interface Store : NSManagedObject
 
 @property (nonatomic, retain) NSString * store_name;
+@property (nonatomic, retain) NSString * objectId;
 @property (nonatomic, retain) NSString * store_description;
 @property (nonatomic, retain) NSData * store_avatar;
 @property (nonatomic, retain) NSString * street;
@@ -38,5 +40,7 @@
 - (void)removeHoursObject:(NSManagedObject *)value;
 - (void)addHours:(NSSet *)values;
 - (void)removeHours:(NSSet *)values;
+
+-(void)setFromParseObject: (PFObject *)store;
 
 @end

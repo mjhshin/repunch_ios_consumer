@@ -8,15 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "GlobalToolbar.h"
+#import "ModalDelegate.h"
 
-@interface PlacesViewController : UIViewController <GlobalToolbarDelegate>
+@interface PlacesViewController : UIViewController <GlobalToolbarDelegate, ModalDelegate>
 
 
 //Global Toolbar Delegate Methods
-- (void)closePlaceDetail;
-- (void)closeSettings;
-- (void)sortPlaces;
-- (void)loadPlaces;
+- (void) openSettings;
+- (void) closeSettings;
+
+//Modal Delegate Methods
+- (void)didDismissPresentedViewController;
+
 
 
 @end
