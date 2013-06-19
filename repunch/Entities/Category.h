@@ -25,4 +25,6 @@
 - (void)addStore:(NSSet *)values;
 - (void)removeStore:(NSSet *)values;
 
+- (void) setFromParse:(id)category;
+
 @end

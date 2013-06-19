@@ -45,8 +45,6 @@
     //Set up default settings for: sorting by alphabetical order, no notifications
     [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Alphabetical Order", [NSNumber numberWithBool:NO], nil] forKeys:[NSArray arrayWithObjects:@"sort", @"notification", nil]]];
     
-
-    
     self.tabBarController = [[UITabBarController alloc] init];
     self.tabBarController.viewControllers = @[placesVC, inboxVC];
     

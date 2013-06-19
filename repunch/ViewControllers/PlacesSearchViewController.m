@@ -7,6 +7,8 @@
 //
 
 #import "PlacesSearchViewController.h"
+#import "PlaceDetailViewController.h"
+
 #import "Store.h"
 #import <Parse/Parse.h>
 
@@ -68,11 +70,14 @@
                              [nameLabel setBackgroundColor:[UIColor colorWithWhite:0 alpha:0]];
                              [storeView addSubview:nameLabel];
                              
+                             //this might be useful later
+                             /*
                              PFGeoPoint *storeLocation = [store objectForKey:@"coordinates"];
                              double distanceToStore = [userLocation distanceInMilesTo:storeLocation];
                              NSLog(@"distance is %g", distanceToStore);
+                              */
                              
-                             NSString *addressString = [NSString stringWithFormat:@"%@\n%@, %@ %@\n%g miles", [store objectForKey:@"street"], [store objectForKey:@"city"], [store objectForKey:@"state"], [store objectForKey:@"zip"], distanceToStore];
+                             NSString *addressString = [NSString stringWithFormat:@"%@\n%@, %@ %@", [store objectForKey:@"street"], [store objectForKey:@"city"], [store objectForKey:@"state"], [store objectForKey:@"zip"]];
                              UILabel *addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(80, 35, 200, 40)];
                              [addressLabel setTextAlignment:NSTextAlignmentLeft];
                              [addressLabel setText:addressString];
@@ -84,7 +89,20 @@
                              
                              MGLineStyled *row = [MGLineStyled lineWithLeft:storeView right:nil size:(CGSize){300, 100}];
                              
-                             //NSLog(@"this should be in the cell:s %@ and %@", [store objectForKey:@"store_name"], addressString);
+                             //NSLog(@"this should be in the cell:s %@ and %@", [store objectForKey:@"store_name"], addressString);]
+                             
+                             row.onTap = ^{
+                                 PlaceDetailViewController *placeDetailVC = [[PlaceDetailViewController alloc]init];
+                                 placeDetailVC.modalDelegate = self;
+                                 placeDetailVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+                                 
+                                 Store *newStore = [Store MR_createEntity];
+                                 [newStore setFromParseObject:store];
+                                 placeDetailVC.place = newStore;
+                                 
+                                 [self presentViewController:placeDetailVC animated:YES completion:NULL];
+                                 
+                             };
                              [storesSection.topLines addObject:row];
                          
                             

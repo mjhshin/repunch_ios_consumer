@@ -9,10 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "ModalDelegate.h"
 
-@interface PlacesSearchViewController : UIViewController <UIScrollViewDelegate>
+@interface PlacesSearchViewController : UIViewController <UIScrollViewDelegate, ModalDelegate>
 
 @property (nonatomic, retain) id<ModalDelegate> modalDelegate;
-
 
 - (void)setup;
 

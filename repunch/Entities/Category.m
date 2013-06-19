@@ -16,4 +16,10 @@
 @dynamic name;
 @dynamic store;
 
+- (void) setFromParse:(id)category
+{
+    self.name = [category objectForKey:@"name"];
+    self.alias = [category objectForKey:@"alias"];
+}
+
 @end

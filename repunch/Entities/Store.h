@@ -14,6 +14,7 @@
 @interface Store : NSManagedObject
 
 @property (nonatomic, retain) NSString * store_name;
+@property (nonatomic, retain) NSString * city;
 @property (nonatomic, retain) NSString * objectId;
 @property (nonatomic, retain) NSString * store_description;
 @property (nonatomic, retain) NSData * store_avatar;
@@ -24,6 +25,9 @@
 @property (nonatomic, retain) NSString * zip;
 @property (nonatomic, retain) NSString * country;
 @property (nonatomic, retain) NSString * phone_number;
+@property double longitude;
+@property double latitude;
+
 @property (nonatomic, retain) NSSet *categories;
 @property (nonatomic, retain) NSSet *hours;
 @property (nonatomic, retain) NSManagedObject *rewards;
