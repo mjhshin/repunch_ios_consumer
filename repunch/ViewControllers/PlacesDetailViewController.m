@@ -1,33 +1,24 @@
 //
-//  PlaceDetailViewController.m
-//  repunch
+//  PlacesDetailViewController.m
+//  Repunch
 //
-//  Created by CambioLabs on 3/25/13.
-//  Copyright (c) 2013 CambioLabs. All rights reserved.
+//  Created by Gwendolyn Weston on 6/19/13.
+//  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
-#import "PlaceDetailViewController.h"
-#import "PlacesViewController.h"
-//#import "RewardDetailViewController.h"
-#import <QuartzCore/QuartzCore.h>
-#import "User.h"
-#import "UIViewController+animateView.h"
-#import "AppDelegate.h"
-#import "ComposeViewController.h"
+#import "PlacesDetailViewController.h"
+#import "SIAlertView.h"
 
-@interface PlaceDetailViewController ()
 
-@end
+@implementation PlacesDetailViewController{
+    NSMutableArray *placeRewardData;
+}
 
-@implementation PlaceDetailViewController
-
-@synthesize placeRewardData, delegate, place, placeAddButton, placeAddOrRemove, placeBottomContainer, isSearch, placesDetailMapVC, placePunchesLabel;
-
-- (id)init
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super init];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        isSearch = NO;
+        // Custom initialization
     }
     return self;
 }
@@ -35,15 +26,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    PFUser *pfuser = [PFUser currentUser];
-    User *localUser = [User MR_findFirstByAttribute:@"username" withValue:[pfuser valueForKey:@"username"]];
-    
-    //placeRewardData = [[NSMutableArray alloc] initWithArray:[[self._placerewards] allObjects]];
-    [placeRewardData sortUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:@"required" ascending:YES]]];
-    
-    [self.view setBackgroundColor:[UIColor whiteColor]];
-    
     //THIS IS A TOOLBAR
     //FROM HERE...
     UIToolbar *placeToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 46)];
@@ -61,7 +43,7 @@
     [placeTitleLabel setFont:[UIFont boldSystemFontOfSize:16]];
     [placeTitleLabel setBackgroundColor:[UIColor clearColor]];
     [placeTitleLabel setTextColor:[UIColor whiteColor]];
-    [placeTitleLabel setText:place.store_name];
+    [placeTitleLabel setText:[_storeObject valueForKey:@"store_name"]];
     [placeTitleLabel sizeToFit];
     
     UIBarButtonItem *placeTitleItem = [[UIBarButtonItem alloc] initWithCustomView:placeTitleLabel];
@@ -75,69 +57,53 @@
     
     //THESE ARE STORE INFORMATION LABELS
     //FROM  HERE...
-    UIImageView *placeImageView = [[UIImageView alloc] init];
-    [placeImageView setImage:[UIImage imageWithData:self.place.store_avatar]];
-    [placeImageView setFrame:CGRectMake(10, placeToolbar.frame.size.height + 10, 100, 100)];
-    [self.view addSubview:placeImageView];
     
-    UIView *placeDetails = [[UIView alloc] initWithFrame:CGRectMake(placeImageView.frame.origin.x + placeImageView.frame.size.width, placeToolbar.frame.size.height, self.view.frame.size.width - placeImageView.frame.origin.x - placeImageView.frame.size.width, 100)];
-    [self.view addSubview:placeDetails];
+    //image view
+     UIImageView *placeImageView = [[UIImageView alloc] init];
+     [placeImageView setImage:[UIImage imageWithData:_storePic]];
+     [placeImageView setFrame:CGRectMake(10, placeToolbar.frame.size.height + 10, 100, 100)];
+     [self.view addSubview:placeImageView];
     
-    UILabel *placeCategoryLabel = [[UILabel alloc] init];
-    placeCategoryLabel.font = [UIFont systemFontOfSize:12];
-    placeCategoryLabel.textColor = [UIColor colorWithRed:50/255.f green:50/255.f blue:50/255.f alpha:1];
-    placeCategoryLabel.frame = CGRectMake(10, 10, 200, 14);
-    placeCategoryLabel.text = [[[self.place.categories allObjects] objectAtIndex:0] valueForKey:@"name"];
-    [placeDetails addSubview:placeCategoryLabel];
     
-    UILabel *placeAddressLabel = [[UILabel alloc] init];
-    placeAddressLabel.font = [UIFont systemFontOfSize:12];
-    placeAddressLabel.textColor = [UIColor colorWithRed:50/255.f green:50/255.f blue:50/255.f alpha:1];
-    [placeAddressLabel setFrame:CGRectMake(10, placeCategoryLabel.frame.origin.y + placeCategoryLabel.frame.size.height, 200, 14)];
-    [placeAddressLabel setText:[self.place valueForKey:@"street"]];
-    [placeDetails addSubview:placeAddressLabel];
+    //store info view
+     UIView *placeDetails = [[UIView alloc] initWithFrame:CGRectMake(placeImageView.frame.origin.x + placeImageView.frame.size.width, placeToolbar.frame.size.height, self.view.frame.size.width - placeImageView.frame.origin.x - placeImageView.frame.size.width, 100)];
+     [self.view addSubview:placeDetails];
     
-    UILabel *placeAddressLabel2 = [[UILabel alloc] init];
-    placeAddressLabel2.font = [UIFont systemFontOfSize:12];
-    placeAddressLabel2.textColor = [UIColor colorWithRed:50/255.f green:50/255.f blue:50/255.f alpha:1];
-    [placeAddressLabel2 setFrame:CGRectMake(10, placeAddressLabel.frame.origin.y + placeAddressLabel.frame.size.height, 200, 14)];
-    [placeAddressLabel2 setText:[NSString stringWithFormat:@"%@, %@ %@",[self.place city], [self.place state], [self.place zip]]];
-    [placeDetails addSubview:placeAddressLabel2];
+    //store info view: category
+     UILabel *placeCategoryLabel = [[UILabel alloc] init];
+     placeCategoryLabel.font = [UIFont systemFontOfSize:12];
+     placeCategoryLabel.textColor = [UIColor colorWithRed:50/255.f green:50/255.f blue:50/255.f alpha:1];
+     placeCategoryLabel.frame = CGRectMake(10, 10, 200, 14);
+     //placeCategoryLabel.text = @"coffee";
+     placeCategoryLabel.text = [[[[_storeObject valueForKey:@"categories"] allObjects] objectAtIndex:0] valueForKey:@"name"];
+     [placeDetails addSubview:placeCategoryLabel];
+     
+    //store info view: address line 1
+     UILabel *placeAddressLabel = [[UILabel alloc] init];
+     placeAddressLabel.font = [UIFont systemFontOfSize:12];
+     placeAddressLabel.textColor = [UIColor colorWithRed:50/255.f green:50/255.f blue:50/255.f alpha:1];
+     [placeAddressLabel setFrame:CGRectMake(10, placeCategoryLabel.frame.origin.y + placeCategoryLabel.frame.size.height, 200, 14)];
+     [placeAddressLabel setText:[_storeObject valueForKey:@"street"]];
+     [placeDetails addSubview:placeAddressLabel];
     
-    float hoursLabelTop = placeAddressLabel2.frame.origin.y + placeAddressLabel2.frame.size.height;
+    //store info view: address line 2
+     UILabel *placeAddressLabel2 = [[UILabel alloc] init];
+     placeAddressLabel2.font = [UIFont systemFontOfSize:12];
+     placeAddressLabel2.textColor = [UIColor colorWithRed:50/255.f green:50/255.f blue:50/255.f alpha:1];
+     [placeAddressLabel2 setFrame:CGRectMake(10, placeAddressLabel.frame.origin.y + placeAddressLabel.frame.size.height, 200, 14)];
+     [placeAddressLabel2 setText:[NSString stringWithFormat:@"%@, %@ %@",[_storeObject valueForKey:@"city"], [_storeObject valueForKey:@"state"], [_storeObject valueForKey:@"zip"]]];
+     [placeDetails addSubview:placeAddressLabel2];
     //...TO HERE. END STORE INFO.
     
-    
-    /*
-    
-    //if user has saved place, also show how many punches they have
-    if ([localUser hasPlace:self.place]){
-        
-        UIImage *punchImage = [UIImage imageNamed:([self.place.num_punches integerValue] == 0 ? @"ico_starburst-gray" : @"ico_starburst-orange")];
-        UIImageView *placePunchesImageView = [[[UIImageView alloc] init]  ];
-        [placePunchesImageView setImage:punchImage];
-        [placePunchesImageView setFrame:CGRectMake(10, placeAddressLabel2.frame.origin.y + placeAddressLabel2.frame.size.height + 5, punchImage.size.width, punchImage.size.height)];
-        [placeDetails addSubview:placePunchesImageView];
-        
-        int punches = (self.place.num_punches == nil ? 0 : [self.place.num_punches integerValue]);
-        placePunchesLabel = [[[UILabel alloc] init]  ];
-        [placePunchesLabel setText:[NSString stringWithFormat:(punches == 1 ? @"%d Punch" :  @"%d Punches"),punches]];
-        placePunchesLabel.font = [UIFont boldSystemFontOfSize:13];
-        [placePunchesLabel setFrame:CGRectMake(placePunchesImageView.frame.origin.x + placePunchesImageView.frame.size.width + 3, placePunchesImageView.frame.origin.y + placePunchesImageView.frame.size.height / 2 - 10, 150, 18)];
-        [placePunchesLabel sizeToFit];
-        [placeDetails addSubview:placePunchesLabel];
-        
-        hoursLabelTop = placePunchesImageView.frame.origin.y + placePunchesImageView.frame.size.height;
-        
-    }
-    
-    UILabel *placeHoursLabel = [[[UILabel alloc] init]  ];
+    float hoursLabelTop = placeAddressLabel2.frame.origin.y + placeAddressLabel2.frame.size.height;
+    UILabel *placeHoursLabel = [[UILabel alloc] init];
     [placeHoursLabel setFont:[UIFont boldSystemFontOfSize:12]];
     [placeHoursLabel setFrame:CGRectMake(10, hoursLabelTop + 5, 200, 15)];
     [placeHoursLabel setText:@"Hours Today"];
     [placeDetails addSubview:placeHoursLabel];
     
-    NSDateFormatter *formatter_out = [[[NSDateFormatter alloc] init]  ];
+    
+    NSDateFormatter *formatter_out = [[NSDateFormatter alloc] init];
     [formatter_out setDateFormat:@"h:mm a"];
     
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -150,18 +116,18 @@
     
     bool open = false;
     NSString *hourstodaystring = @"";
-    NSArray *hoursArray = [[NSArray alloc] initWithArray:[[_placehours] allObjects]];
-    for(HoursObject *ho in hoursArray) {
-        if ([ho.day integerValue] == weekday) {
+    NSArray *hoursArray = [[NSArray alloc] initWithArray:[[_storeObject valueForKey:@"hours"] allObjects]];
+    for(NSDictionary *hours in hoursArray) {
+        if ([[hours valueForKey:@"day"] integerValue] == weekday) {
             
-            NSString *openHour = [ho.open_time substringToIndex:2];
-            NSString *openMinute = [ho.open_time substringFromIndex:2];
+            NSString *openHour = [[hours valueForKey:@"open_time"] substringToIndex:2];
+            NSString *openMinute = [[hours valueForKey:@"open_time"]  substringFromIndex:2];
             
-            NSString *closeHour = [ho.close_time substringToIndex:2];
-            NSString *closeMinute = [ho.close_time substringFromIndex:2];
+            NSString *closeHour = [[hours valueForKey:@"close_time"]  substringToIndex:2];
+            NSString *closeMinute = [[hours valueForKey:@"close_time"]  substringFromIndex:2];
             
             NSDate *now = [NSDate date];
-            NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar]  ];
+            NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
             NSDateComponents *components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:now];
             [components setHour:[openHour integerValue]];
             [components setMinute:[openMinute integerValue]];
@@ -178,15 +144,15 @@
         }
     }
     
-    UILabel *placeTimeLabel = [[[UILabel alloc] init]  ];
+    UILabel *placeTimeLabel = [[UILabel alloc] init];
     [placeTimeLabel setFont:[UIFont systemFontOfSize:12]];
     [placeTimeLabel setFrame:CGRectMake(10, placeHoursLabel.frame.origin.y + placeHoursLabel.frame.size.height, 200, 15)];
     [placeTimeLabel setTextColor:[UIColor colorWithRed:50/255.f green:50/255.f blue:50/255.f alpha:1]];
     [placeTimeLabel setText:hourstodaystring];
     [placeTimeLabel sizeToFit];
     [placeDetails addSubview:placeTimeLabel];
-    
-    UILabel *placeOpenLabel = [[[UILabel alloc] init]  ];
+     
+    UILabel *placeOpenLabel = [[UILabel alloc] init];
     [placeOpenLabel setFont:[UIFont boldSystemFontOfSize:12]];
     CGRect frame = CGRectMake(placeTimeLabel.frame.origin.x + placeTimeLabel.frame.size.width, placeTimeLabel.frame.origin.y, 200, 15);
     if (![hourstodaystring isEqualToString:@""]) {
@@ -200,37 +166,50 @@
     [placeOpenLabel sizeToFit];
     [placeDetails addSubview:placeOpenLabel];
     
-    placeAddOrRemove = [[UIView alloc] initWithFrame:CGRectMake(0, placeImageView.frame.origin.y + placeImageView.frame.size.height + 11, self.view.frame.size.width, 40)];
+    UIView *placeAddOrRemove = [[UIView alloc] initWithFrame:CGRectMake(0, placeImageView.frame.origin.y + placeImageView.frame.size.height, self.view.frame.size.width, 48)]; //originally, +11 on second argument and 40 on fourth argument
     [placeAddOrRemove setAutoresizesSubviews:NO];
     [placeAddOrRemove setClipsToBounds:YES];
     
     float placeActionsViewTop = placeImageView.frame.origin.y + placeImageView.frame.size.height;
-    if (![localUser hasPlace:place]) {
-        [self.view addSubview:placeAddOrRemove];
-        placeActionsViewTop = placeAddOrRemove.frame.origin.y + placeAddOrRemove.frame.size.height;
-    }
+    [self.view addSubview:placeAddOrRemove];
+    placeActionsViewTop = placeAddOrRemove.frame.origin.y + placeAddOrRemove.frame.size.height;
     
-    //HERE ARE THE ADD REMOVE BUTTONS
-    UIImage *placeAddImage = [UIImage imageNamed:@"btn-add-myplaces"];
-    placeAddButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [placeAddButton addTarget:self action:@selector(addPlace) forControlEvents:UIControlEventTouchUpInside];
+    //HERE ARE THE ADD/REMOVE BUTTONS
+    //UIImage *placeAddImage = [UIImage imageNamed:@"btn-add-myplaces"];
+    UIImage *placeAddImage = [UIImage imageNamed:@"btn-done@2x"];
+    UIButton *placeAddButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [placeAddButton addTarget:self action:@selector(addOrRemovePlace) forControlEvents:UIControlEventTouchUpInside];
     [placeAddButton setFrame:CGRectMake(10, 0, placeAddImage.size.width, placeAddImage.size.height)];
-    [placeAddButton setImage:placeAddImage forState:UIControlStateNormal];
-    [placeAddButton setTitle:@"Add to My Places" forState:UIControlStateNormal];
+    [placeAddButton setBackgroundImage:placeAddImage forState:UIControlStateNormal];
+    [placeAddButton setTitle:[NSString stringWithFormat:@"%@", (_isSavedStore)? @"Remove from my list": @"Add to my list"] forState:UIControlStateNormal];
+    [[placeAddButton titleLabel] setTextColor:[UIColor whiteColor]];
+    [[placeAddButton titleLabel] setFont:[UIFont fontWithName:@"ArialRoundedMTBold" size:14]];
+
+    UILabel *punches = [[UILabel alloc] init];
+    [punches setFrame:CGRectMake(placeAddImage.size.width+10, 0, 300-placeAddImage.size.width, placeAddImage.size.height)];
+    [punches setText:[NSString stringWithFormat:@"%i punches", 2]];
+    [punches setTextAlignment:NSTextAlignmentCenter];
+    [punches setTextColor:[UIColor blackColor]];
+    [punches setFont:[UIFont fontWithName:@"ArialRoundedMTBold" size:24]];
+    
+    [placeAddOrRemove addSubview:punches];
+    
     [placeAddOrRemove addSubview:placeAddButton];
     
+    /*
     UIButton *placeRemoveButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [placeRemoveButton addTarget:self action:@selector(removePlace) forControlEvents:UIControlEventTouchUpInside];
     [placeRemoveButton setFrame:CGRectMake(120, 0, 100, 40)];
     [placeRemoveButton setTitle:@"Remove" forState:UIControlStateNormal];
-    //    [placeAddOrRemove addSubview:placeRemoveButton];
-    
-    placeBottomContainer = [[UIView alloc] initWithFrame:CGRectMake(0, placeActionsViewTop+10, self.view.frame.size.width, self.view.frame.size.height - 1 - 49)];
-    
-    UIView *placeActionsView = [[[UIView alloc] initWithFrame:CGRectMake(0, 1, self.view.frame.size.width, 50)]  ];
+    //[placeAddOrRemove addSubview:placeRemoveButton];
+     */
+
+    UIView *placeBottomContainer = [[UIView alloc] initWithFrame:CGRectMake(0, placeActionsViewTop+10, self.view.frame.size.width, self.view.frame.size.height - 1 - 49)];
+
+    UIView *placeActionsView = [[UIView alloc] initWithFrame:CGRectMake(0, 1, self.view.frame.size.width, 50)];
     [placeActionsView setBackgroundColor:[UIColor colorWithRed:240/255.f green:240/255.f blue:240/255.f alpha:1]];
-    UIView *placeActionsViewBorderTop = [[[UIView alloc] initWithFrame:CGRectMake(0, placeActionsView.frame.origin.y - 1, self.view.frame.size.width, 1)]  ];
-    UIView *placeActionsViewBorderBottom = [[[UIView alloc] initWithFrame:CGRectMake(0, placeActionsView.frame.origin.y + placeActionsView.frame.size.height, self.view.frame.size.width, 1)]  ];
+    UIView *placeActionsViewBorderTop = [[UIView alloc] initWithFrame:CGRectMake(0, placeActionsView.frame.origin.y - 1, self.view.frame.size.width, 1)];
+    UIView *placeActionsViewBorderBottom = [[UIView alloc] initWithFrame:CGRectMake(0, placeActionsView.frame.origin.y + placeActionsView.frame.size.height, self.view.frame.size.width, 1)];
     [placeActionsViewBorderTop setBackgroundColor:[UIColor colorWithRed:189/255.f green:190/255.f blue:189/255.f alpha:1]];
     [placeActionsViewBorderBottom setBackgroundColor:[UIColor colorWithRed:189/255.f green:190/255.f blue:189/255.f alpha:1]];
     
@@ -271,45 +250,23 @@
     [placeBottomContainer addSubview:placeActionsViewBorderTop];
     [placeBottomContainer addSubview:placeActionsViewBorderBottom];
     [self.view addSubview:placeBottomContainer];
-    
+
+    placeRewardData = [[NSMutableArray alloc] initWithArray:[[_storeObject valueForKey:@"rewards"] allObjects]];
+    [placeRewardData sortUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:@"required" ascending:YES]]];
+
     UITableView *placeRewardsTable = [[UITableView alloc] initWithFrame:CGRectMake(0, placeActionsViewBorderBottom.frame.origin.y + 1, self.view.frame.size.width, self.view.frame.size.height - placeActionsViewBorderBottom.frame.origin.y - 1 - 49) style:UITableViewStylePlain];
     [placeRewardsTable setDataSource:self];
     [placeRewardsTable setDelegate:self];
-    //    [placeRewardsTable setBackgroundColor:[UIColor colorWithRed:1 green:0 blue:0 alpha:.5]];
     [placeBottomContainer addSubview:placeRewardsTable];
-     */
+
+
 }
 
-/*
-- (void)viewWillAppear:(BOOL)animated
+- (void)didReceiveMemoryWarning
 {
-    [super viewWillAppear:animated];
-    
-    if (placePunchesLabel != nil) {
-        int punches = (self.place.num_punches == nil ? 0 : [self.place.num_punches integerValue]);
-        [placePunchesLabel setText:[NSString stringWithFormat:(punches == 1 ? @"%d Punch" :  @"%d Punches"),punches]];
-    }
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    AppDelegate *ad = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [ad makeTabBarHidden:YES];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-    if (!isSearch) {
-        AppDelegate *ad = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        [ad makeTabBarHidden:NO];
-    }
-}
-
-#pragma mark - Place Selectors
 
 #pragma mark - Table view data source
 
@@ -334,19 +291,18 @@
     }
     
     // Configure the cell...
-    cell.textLabel.text = [[placeRewardData objectAtIndex:indexPath.row] name];
-    int required = [[[placeRewardData objectAtIndex:indexPath.row] required] integerValue];
-    cell.detailTextLabel.text = [NSString stringWithFormat:(required == 1 ? @"%@ Punch" :  @"%@ Punches"),[[placeRewardData objectAtIndex:indexPath.row] required]];
+    
+    cell.textLabel.text = [[placeRewardData objectAtIndex:indexPath.row] valueForKey:@"reward_name"];
+    [cell.textLabel setNumberOfLines:3];
+    [cell.textLabel setFont:[UIFont fontWithName:@"ArialRoundedMTBold" size:14]];
+    
+    int required = [[[placeRewardData objectAtIndex:indexPath.row] valueForKey:@"punches"] intValue];
+    cell.detailTextLabel.text = [NSString stringWithFormat:(required == 1 ? @"%i Punch" :  @"%i Punches"), required];
     [cell.detailTextLabel setBackgroundColor:[UIColor clearColor]];
+    [cell.detailTextLabel setFont:[UIFont fontWithName:@"Arial" size:13]];
+
     [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bkg_reward-list-gradient"]]];
-    
-    // if required punches are greater than what we have, disable selection
-    if ([[[placeRewardData objectAtIndex:indexPath.row] required] integerValue] > [self.place.num_punches integerValue]) {
-        cell.userInteractionEnabled = NO;
-        cell.textLabel.enabled = NO;
-        cell.detailTextLabel.enabled = NO;
-    }
-    
+     
     return cell;
 }
 
@@ -360,14 +316,42 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    RewardDetailViewController *rdvc = [[RewardDetailViewController alloc] init];
-    [rdvc setReward:[placeRewardData objectAtIndex:indexPath.row]];
-    [rdvc.view setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    [rdvc setParentVC:self];
-    
-    [self.view addSubview:rdvc.view];
-}
- */
 
+    int required = [[[placeRewardData objectAtIndex:indexPath.row] valueForKey:@"punches"] intValue];
+    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%@.", [[placeRewardData objectAtIndex:indexPath.row] valueForKey:@"reward_name"]] andMessage:[NSString stringWithFormat:@"It'll cost you %@.", [NSString stringWithFormat:(required == 1 ? @"%i Punch" :  @"%i Punches"), required]]];
+    
+    [alertView addButtonWithTitle:@"Cancel"
+                             type:SIAlertViewButtonTypeDefault
+                          handler:^(SIAlertView *alert) {
+                              NSLog(@"Cancel Clicked");
+                          }];
+    [alertView addButtonWithTitle:@"Redeem"
+                             type:SIAlertViewButtonTypeDestructive
+                          handler:^(SIAlertView *alert) {
+                              NSLog(@"Redeem Clicked");
+                          }];
+    [alertView addButtonWithTitle:@"Gift"
+                             type:SIAlertViewButtonTypeDestructive
+                          handler:^(SIAlertView *alert) {
+                              NSLog(@"Gift Clicked");
+                          }];
+    alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
+
+    [alertView show];
+
+
+}
+
+#pragma mark - Modal Delegate
+
+
+-(void)closePlaceDetail{
+    [[self modalDelegate] didDismissPresentedViewController];
+}
+
+#pragma mark - Other methods
+
+-(void)addOrRemovePlace{
+    
+}
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "PlacesSearchViewController.h"
-#import "PlaceDetailViewController.h"
+#import "PlacesDetailViewController.h"
 
 #import "Store.h"
 #import <Parse/Parse.h>
@@ -40,11 +40,12 @@
 
             [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *fetchedStores, NSError *error){
                 for (PFObject *store in fetchedStores){
+                    
                     //add table cell for each store
                     
                     //converting Parse PFFile to UIImage
                     PFFile *picFile = [store objectForKey:@"store_avatar"];
-                    [picFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
+                    [picFile getDataInBackgroundWithBlock:^(NSData *picData, NSError *error){
                      
                          BOOL storeIsInList = FALSE;
                          for (NSString *storeId in storeList){
@@ -53,16 +54,20 @@
                                  break;
                              }
                          }
-                         
+                        
+                        //store list of stores
                          if(!storeIsInList){
                              [storeList addObject:[store objectId]];
                              
+                             //cell view
                              UIView *storeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 100)];
                              
+                             //cell view: image view
                              UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 20, 65, 65)];
-                             imageView.image = [UIImage imageWithData:data];
+                             imageView.image = [UIImage imageWithData:picData];
                              [storeView addSubview:imageView];
                              
+                             //cell view: store name view
                              UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 15, 200, 30)];
                              [nameLabel setText:[store objectForKey:@"store_name"]];
                              [nameLabel setFont:[UIFont fontWithName:@"ArialRoundedMTBold" size:14]];
@@ -77,6 +82,7 @@
                              NSLog(@"distance is %g", distanceToStore);
                               */
                              
+                             //cell view: store info info
                              NSString *addressString = [NSString stringWithFormat:@"%@\n%@, %@ %@", [store objectForKey:@"street"], [store objectForKey:@"city"], [store objectForKey:@"state"], [store objectForKey:@"zip"]];
                              UILabel *addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(80, 35, 200, 40)];
                              [addressLabel setTextAlignment:NSTextAlignmentLeft];
@@ -89,29 +95,29 @@
                              
                              MGLineStyled *row = [MGLineStyled lineWithLeft:storeView right:nil size:(CGSize){300, 100}];
                              
-                             //NSLog(@"this should be in the cell:s %@ and %@", [store objectForKey:@"store_name"], addressString);]
-                             
+                             //add gesture recognizer such that on tap, opens up detail view
                              row.onTap = ^{
-                                 PlaceDetailViewController *placeDetailVC = [[PlaceDetailViewController alloc]init];
+                                 PlacesDetailViewController *placeDetailVC = [[PlacesDetailViewController alloc]init];
                                  placeDetailVC.modalDelegate = self;
                                  placeDetailVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
                                  
-                                 Store *newStore = [Store MR_createEntity];
-                                 [newStore setFromParseObject:store];
-                                 placeDetailVC.place = newStore;
+                                 placeDetailVC.storeObject = store;
+                                 placeDetailVC.storePic = picData;
                                  
                                  [self presentViewController:placeDetailVC animated:YES completion:NULL];
                                  
                              };
+                             
+                             //add to table view
                              [storesSection.topLines addObject:row];
-                         
+                             [storesSection layout];
                             
-                         }
-                        [storesSection layout];
+                         }//end if stores is not in list
+                        
                         
                     }]; //end get picture data
                     
-                }
+                }//end for all fetched loop
                 
             }]; //end get stores
             
@@ -129,7 +135,7 @@
     
     //Programmatically changing global toolbar
     //FROM HERE...
-    UIImage *closeImage = [UIImage imageNamed:@"btn_x-orange"];
+        UIImage *closeImage = [UIImage imageNamed:@"btn_x-orange"];
     UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [closeButton setFrame:CGRectMake(0, 0, closeImage.size.width, closeImage.size.height)];
     [closeButton setImage:closeImage forState:UIControlStateNormal];
@@ -180,4 +186,9 @@
 - (void)dismissPresentedViewController{
     [[self modalDelegate] didDismissPresentedViewController];
 }
+
+- (void)didDismissPresentedViewController{
+    [self dismissPresentedViewController];
+}
+
 @end

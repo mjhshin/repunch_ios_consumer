@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PlaceDetailMapViewController.h"
 #import <Parse/Parse.h>
 #import "Store.h"
 #import "Reward.h"

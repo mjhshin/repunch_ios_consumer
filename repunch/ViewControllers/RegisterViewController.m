@@ -76,15 +76,16 @@
         if (!error){
             [spinner stopAnimating];
             PFObject *newPatron = [PFObject objectWithClassName:@"Patron"];
-            [newPatron setValue:@"first_name" forKey:fName];
-            [newPatron setValue:@"last_name" forKey:lName];
-            [newPatron setValue:@"gender" forKey:gender];
-            [newPatron setValue:@"date_of_birth" forKey:birthday];
+            [newPatron setValue:fName forKey:@"first_name"];
+            [newPatron setValue:lName forKey:@"last_name"];
+            [newPatron setValue:gender forKey:@"gender"];
+            [newPatron setValue:birthday forKey:@"date_of_birth"];
             //TODO: CLOUD CODE TO GENERATE PUNCH CODES
             
             NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
             User *localUser = [User MR_createInContext:localContext];
             [localUser setFromParseUserObject:newUser andPatronObject:newPatron];
+            NSLog(@"here is the object: %@", localUser);
             [localContext MR_saveToPersistentStoreAndWait];
             
             AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];

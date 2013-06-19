@@ -36,10 +36,13 @@
     self.store_name = [store objectForKey:@"store_name"];
     self.objectId = [store objectForKey:@"objectId"];
     self.store_description = [store objectForKey:@"store_description"];
+    /*
     PFFile *picFile = [store objectForKey:@"store_avatar"];
     [picFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
         self.store_avatar = data;
     }];
+     */
+    self.store_avatar = [[store objectForKey:@"store_avatar"] getData];
 
     self.street = [store objectForKey:@"street"];
     if ([store objectForKey:@"cross_streets"] !=  [NSNull null]) self.cross_streets = [store objectForKey:@"cross_streets"];
@@ -79,8 +82,9 @@
         [newReward setFromParse:reward];
         [localContext MR_saveToPersistentStoreAndWait];
     }
-
     
+    [localContext MR_saveToPersistentStoreAndWait];
+
 }
 
 

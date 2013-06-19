@@ -8,7 +8,9 @@
 
 #import "PlacesViewController.h"
 #import "PlacesSearchViewController.h"
+#import "User.h"
 #import "GlobalToolbar.h"
+#import <Parse/Parse.h>
 
 //JUST FOR MY OWN SANITY, what's goingon:
 //on viewdidload: set up UI, meaning global toolbar, tableview
@@ -21,6 +23,7 @@
 //TODO ON THIS PAGE:
 
 @implementation PlacesViewController{
+    User *localUser;
     GlobalToolbar *globalToolbar;
 }
 
@@ -41,9 +44,17 @@
 {
     [super viewDidLoad];
     
+    localUser = [User MR_findFirstByAttribute:@"username" withValue:[[PFUser currentUser] username]];
+        
     globalToolbar = [[GlobalToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 46)];
     [(GlobalToolbar *)globalToolbar setToolbarDelegate:self];
     [self.view addSubview:globalToolbar];
+    
+    UILabel *greeting = [[UILabel alloc] initWithFrame:CGRectMake(10, 46, self.view.frame.size.width, 46)];
+    [greeting setText:@"Greetings!"];
+    [greeting setFont:[UIFont fontWithName:@"ArialRoundedMTBold" size:14]];
+    [self.view addSubview:greeting];
+
 
 }
 

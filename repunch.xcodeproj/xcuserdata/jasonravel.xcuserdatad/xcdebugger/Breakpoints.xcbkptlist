@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Repunch/Entities/Store.m"
-         timestampString = "393358088.145947"
+         timestampString = "393362765.361436"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "44"
-         endingLineNumber = "44"
+         startingLineNumber = "46"
+         endingLineNumber = "46"
          landmarkName = "-setFromParseObject:"
          landmarkType = "5">
       </FileBreakpoint>
