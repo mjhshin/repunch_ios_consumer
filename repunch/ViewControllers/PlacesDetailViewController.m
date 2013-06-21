@@ -8,10 +8,14 @@
 
 #import "PlacesDetailViewController.h"
 #import "SIAlertView.h"
+#import "User.h"
 
+
+//TODO: make sure all alert dialogues match
 
 @implementation PlacesDetailViewController{
     NSMutableArray *placeRewardData;
+    User *localUser;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -26,6 +30,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    localUser = [User MR_findFirstByAttribute:@"username" withValue:[[PFUser currentUser] username]];
+
     //THIS IS A TOOLBAR
     //FROM HERE...
     UIToolbar *placeToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 46)];
@@ -51,7 +58,19 @@
     UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     UIBarButtonItem *flex2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
-    [placeToolbar setItems:[NSArray arrayWithObjects:closePlaceButtonItem, flex, placeTitleItem, flex2, nil]];
+    UIImage *addOrRemoveImage;
+    
+    if (!_isSavedStore) addOrRemoveImage = [UIImage imageNamed:@"ab_add_my_places"];
+    else addOrRemoveImage = [UIImage imageNamed:@"ab_message_delete"];
+    UIButton *addOrRemoveButton= [UIButton buttonWithType:UIButtonTypeCustom];
+    [addOrRemoveButton setImage:addOrRemoveImage forState:UIControlStateNormal];
+    [addOrRemoveButton setFrame:CGRectMake(0, 0, addOrRemoveImage.size.width, addOrRemoveImage.size.height)];
+    [addOrRemoveButton addTarget:self action:@selector(addOrRemovePlace) forControlEvents:UIControlEventTouchUpInside];
+        
+    UIBarButtonItem *addOrRemoveTitle = [[UIBarButtonItem alloc] initWithCustomView:addOrRemoveButton];
+
+    
+    [placeToolbar setItems:[NSArray arrayWithObjects:closePlaceButtonItem, flex, placeTitleItem, flex2, addOrRemoveTitle, nil]];
     [self.view addSubview:placeToolbar];
     //... TO HERE.  END TOOLBAR.
     
@@ -166,7 +185,7 @@
     [placeOpenLabel sizeToFit];
     [placeDetails addSubview:placeOpenLabel];
     
-    UIView *placeAddOrRemove = [[UIView alloc] initWithFrame:CGRectMake(0, placeImageView.frame.origin.y + placeImageView.frame.size.height, self.view.frame.size.width, 48)]; //originally, +11 on second argument and 40 on fourth argument
+    UIView *placeAddOrRemove = [[UIView alloc] initWithFrame:CGRectMake(0, placeImageView.frame.origin.y + placeImageView.frame.size.height+11, self.view.frame.size.width, 40)]; //originally, +11 on second argument and 40 on fourth argument
     [placeAddOrRemove setAutoresizesSubviews:NO];
     [placeAddOrRemove setClipsToBounds:YES];
     
@@ -175,34 +194,26 @@
     placeActionsViewTop = placeAddOrRemove.frame.origin.y + placeAddOrRemove.frame.size.height;
     
     //HERE ARE THE ADD/REMOVE BUTTONS
-    //UIImage *placeAddImage = [UIImage imageNamed:@"btn-add-myplaces"];
-    UIImage *placeAddImage = [UIImage imageNamed:@"btn-done@2x"];
+    /*
     UIButton *placeAddButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [placeAddButton addTarget:self action:@selector(addOrRemovePlace) forControlEvents:UIControlEventTouchUpInside];
-    [placeAddButton setFrame:CGRectMake(10, 0, placeAddImage.size.width, placeAddImage.size.height)];
-    [placeAddButton setBackgroundImage:placeAddImage forState:UIControlStateNormal];
-    [placeAddButton setTitle:[NSString stringWithFormat:@"%@", (_isSavedStore)? @"Remove from my list": @"Add to my list"] forState:UIControlStateNormal];
+    [placeAddButton setFrame:CGRectMake(10, 0, 100, placeAddOrRemove.frame.size.height)];
+    [placeAddButton setBackgroundColor:[UIColor blackColor]];
+    [placeAddButton setTitle:[NSString stringWithFormat:@"%@", (_isSavedStore)? @"Remove store": @"Add to my list"] forState:UIControlStateNormal];
     [[placeAddButton titleLabel] setTextColor:[UIColor whiteColor]];
-    [[placeAddButton titleLabel] setFont:[UIFont fontWithName:@"ArialRoundedMTBold" size:14]];
+    [[placeAddButton titleLabel] setFont:[UIFont fontWithName:@"ArialRoundedMTBold" size:14]];*/
 
     UILabel *punches = [[UILabel alloc] init];
-    [punches setFrame:CGRectMake(placeAddImage.size.width+10, 0, 300-placeAddImage.size.width, placeAddImage.size.height)];
+    [punches setFrame:CGRectMake(0, 0, 320, placeAddOrRemove.frame.size.height)];
+    [punches setBackgroundColor:[UIColor colorWithRed:(float)251/255 green: (float)170/255 blue:(float)83/255 alpha:1]];
     [punches setText:[NSString stringWithFormat:@"%i punches", 2]];
     [punches setTextAlignment:NSTextAlignmentCenter];
-    [punches setTextColor:[UIColor blackColor]];
+    [punches setTextColor:[UIColor whiteColor]];
     [punches setFont:[UIFont fontWithName:@"ArialRoundedMTBold" size:24]];
     
     [placeAddOrRemove addSubview:punches];
+//    [placeAddOrRemove addSubview:placeAddButton];
     
-    [placeAddOrRemove addSubview:placeAddButton];
-    
-    /*
-    UIButton *placeRemoveButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [placeRemoveButton addTarget:self action:@selector(removePlace) forControlEvents:UIControlEventTouchUpInside];
-    [placeRemoveButton setFrame:CGRectMake(120, 0, 100, 40)];
-    [placeRemoveButton setTitle:@"Remove" forState:UIControlStateNormal];
-    //[placeAddOrRemove addSubview:placeRemoveButton];
-     */
 
     UIView *placeBottomContainer = [[UIView alloc] initWithFrame:CGRectMake(0, placeActionsViewTop+10, self.view.frame.size.width, self.view.frame.size.height - 1 - 49)];
 
@@ -352,6 +363,61 @@
 #pragma mark - Other methods
 
 -(void)addOrRemovePlace{
+
+    PFQuery *patronQuery = [PFQuery queryWithClassName:@"Patron"];
+    [patronQuery getObjectInBackgroundWithId:localUser.patronId block:^(PFObject *patronObject, NSError *error) {
+        if (!error){
+            if (!_isSavedStore){
+                //TODO: way to check if patron store has already been added
+                
+                //create new Patron Store
+                PFObject *patronStore = [PFObject objectWithClassName:@"PatronStore"];
+                [patronStore setValue: patronObject forKey:@"Patron"];
+                [patronStore setValue: _storeObject forKey:@"Store"];
+                [patronStore saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    //add it to Patron object's saved stores
+                    PFRelation *relation = [patronObject relationforKey:@"PatronStores"];
+                    [relation addObject:patronStore];
+                    [patronObject saveInBackground];
+
+                }];
+                
+                
+                SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Added!" andMessage:[NSString stringWithFormat:@"You've saved %@", [_storeObject valueForKey:@"store_name"]]];
+                
+                [alertView addButtonWithTitle:@"Sweet beans."
+                                         type:SIAlertViewButtonTypeDefault
+                                      handler:^(SIAlertView *alert) {
+                                      }];
+                [alertView show];
+
+            }
+            else{
+                //get patron store
+                PFQuery *patronStoreQuery = [PFQuery queryWithClassName:@"PatronStore"];
+                [patronStoreQuery whereKey:@"Store" equalTo:[PFObject objectWithoutDataWithClassName:@"Store" objectId:_storeObject.objectId]];
+                [patronStoreQuery whereKey:@"Patron" equalTo:[PFObject objectWithoutDataWithClassName:@"Patron" objectId:localUser.patronId]];
+                [patronStoreQuery getFirstObjectInBackgroundWithBlock:^(PFObject *patronStoreObject, NSError *error) {
+                    //remove it from Patron object
+                    [patronStoreObject deleteInBackground];
+                    [patronObject saveInBackground];
+                    
+                    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Removed!" andMessage:[NSString stringWithFormat:@"You've remove %@", [_storeObject valueForKey:@"store_name"]]];
+                    
+                    [alertView addButtonWithTitle:@"Awesome sauce."
+                                             type:SIAlertViewButtonTypeDefault
+                                          handler:^(SIAlertView *alert) {
+                                          }];
+                    [alertView show];
+
+                }];
+                
+                
+            }
+            
+            
+        } else NSLog(@"error is %@", error);
+    }];
     
 }
 @end

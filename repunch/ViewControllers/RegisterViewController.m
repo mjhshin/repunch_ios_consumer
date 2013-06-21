@@ -14,6 +14,7 @@
 
 //TODO: TEST THIS WORKS.
 //TODO: ALLLL THE FACEBOOK STUFF.
+//TODO: NSDATE
 
 @implementation RegisterViewController
 
@@ -54,12 +55,12 @@
     NSString *fName = [_firstNameInput text];
     NSString *lName = [_lastNameInput text];
     NSString *email = [_emailInput text];
-    NSString *birthday = [_birthdayInput text];
+    //NSDate *birthday = [_birthdayInput text];
     NSString *gender = [_genderInput text];
     
     [self dismissKeyboard];
     
-    PFUser *newUser = [PFUser user];
+    __block PFUser *newUser = [PFUser user];
     newUser.username = username;
     newUser.password = password;
     newUser.email = email;
@@ -79,17 +80,28 @@
             [newPatron setValue:fName forKey:@"first_name"];
             [newPatron setValue:lName forKey:@"last_name"];
             [newPatron setValue:gender forKey:@"gender"];
-            [newPatron setValue:birthday forKey:@"date_of_birth"];
+            //[newPatron setValue:birthday forKey:@"date_of_birth"];
             //TODO: CLOUD CODE TO GENERATE PUNCH CODES
-            
-            NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
-            User *localUser = [User MR_createInContext:localContext];
-            [localUser setFromParseUserObject:newUser andPatronObject:newPatron];
-            NSLog(@"here is the object: %@", localUser);
-            [localContext MR_saveToPersistentStoreAndWait];
-            
-            AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-            [appDelegate.window setRootViewController:appDelegate.tabBarController];
+            [newPatron saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                
+                if (succeeded){
+                //set user 
+                    [newUser setValue:newPatron forKey:@"Patron"];
+                    [newUser saveInBackground];
+                    
+                    NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+                    User *localUser = [User MR_createInContext:localContext];
+                    [localUser setFromParseUserObject:newUser andPatronObject:newPatron];
+                    [localContext MR_saveToPersistentStoreAndWait];
+                    
+                    NSLog(@"here is the object: %@", localUser);
+
+                    
+                    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                    [appDelegate.window setRootViewController:appDelegate.tabBarController];
+                }else NSLog(@"error is: %@", error);
+
+            }];
 
         }
         
@@ -141,9 +153,9 @@
         [errMsg appendString:@"Invalid email address.\n"];
     }
     
-    if (_birthdayInput.text.length <=0){
+    /*if (_birthdayInput.text.length <=0){
         [errMsg appendString:@"Birthday is required.\n"];
-    }
+    }*/
     if (_genderInput.text.length <=0)
     {
         [errMsg appendString:@"Gender is required.\n"];

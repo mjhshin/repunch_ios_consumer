@@ -52,7 +52,9 @@
         <attribute name="first_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="last_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="patronId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="punch_code" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="received_messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" syncable="YES"/>
         <relationship name="saved_stores" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Store" syncable="YES"/>
@@ -64,6 +66,6 @@
         <element name="Message" positionX="160" positionY="192" width="128" height="165"/>
         <element name="Reward" positionX="160" positionY="192" width="128" height="105"/>
         <element name="Store" positionX="160" positionY="192" width="128" height="300"/>
-        <element name="User" positionX="160" positionY="192" width="128" height="195"/>
+        <element name="User" positionX="160" positionY="192" width="128" height="225"/>
     </elements>
 </model>

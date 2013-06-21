@@ -23,6 +23,8 @@
 @dynamic received_messages;
 @dynamic saved_stores;
 @dynamic sent_messages;
+@dynamic patronId;
+@dynamic userId;
 
 -(void)setFromParseUserObject: (PFUser *)user andPatronObject: (PFObject *)patron{
     self.username = user.username;
@@ -32,6 +34,10 @@
     self.last_name = [patron objectForKey:@"last_name"];
     self.facebook_id = [patron objectForKey:@"facebook_id"];
     self.punch_code = [patron objectForKey:@"punch_code"];
+    self.patronId = [patron objectId];
+    self.userId = [user objectId];
+    
+    
     
 }
 

@@ -10,7 +10,7 @@
 #import "GlobalToolbar.h"
 #import "ModalDelegate.h"
 
-@interface PlacesViewController : UIViewController <GlobalToolbarDelegate, ModalDelegate>
+@interface PlacesViewController : UIViewController <GlobalToolbarDelegate, ModalDelegate, UITableViewDelegate, UITableViewDataSource>
 
 
 //Global Toolbar Delegate Methods

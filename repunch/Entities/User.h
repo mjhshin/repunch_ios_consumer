@@ -19,6 +19,8 @@
 @property (nonatomic, retain) NSString * email;
 @property (nonatomic, retain) NSString * first_name;
 @property (nonatomic, retain) NSString * last_name;
+@property (nonatomic, retain) NSString * patronId;
+@property (nonatomic, retain) NSString * userId;
 @property (nonatomic, retain) NSString * facebook_id;
 @property (nonatomic, retain) NSString * punch_code;
 @property (nonatomic, retain) NSSet *received_messages;

@@ -8,6 +8,7 @@
 
 #import "PlacesViewController.h"
 #import "PlacesSearchViewController.h"
+#import "PlacesDetailViewController.h"
 #import "User.h"
 #import "GlobalToolbar.h"
 #import <Parse/Parse.h>
@@ -20,11 +21,12 @@
 //search button goes to search page
 //clicking on table cell goes to place detail view
 
-//TODO ON THIS PAGE:
-
 @implementation PlacesViewController{
     User *localUser;
     GlobalToolbar *globalToolbar;
+    NSMutableArray *savedStores;
+    UITableView *savedStoresTable;
+
 }
 
 - (void)setup {
@@ -50,19 +52,59 @@
     [(GlobalToolbar *)globalToolbar setToolbarDelegate:self];
     [self.view addSubview:globalToolbar];
     
-    UILabel *greeting = [[UILabel alloc] initWithFrame:CGRectMake(10, 46, self.view.frame.size.width, 46)];
-    [greeting setText:@"Greetings!"];
-    [greeting setFont:[UIFont fontWithName:@"ArialRoundedMTBold" size:14]];
-    [self.view addSubview:greeting];
+    savedStores = [[NSMutableArray alloc] init];
+    savedStoresTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 46, 320, 450) style:UITableViewStylePlain];
+    [savedStoresTable setDataSource:self];
+    [savedStoresTable setDelegate:self];
+    [[self view] addSubview:savedStoresTable];
+
 
 
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    // Most data loading should go here to make sure the view matches the model
-    // every time it's put on the screen. This is also a good place to observe
-    // notifications and KVO, and to setup timers.
+    
+    //get patron object from id
+    PFQuery *patronQuery = [PFQuery queryWithClassName:@"Patron"];
+    [patronQuery getObjectInBackgroundWithId:localUser.patronId block:^(PFObject *patronObject, NSError *error) {
+        if (!error){
+            //get all patron objects
+            PFRelation *patronStoreRelation = [patronObject relationforKey:@"PatronStores"];
+            [[patronStoreRelation query] findObjectsInBackgroundWithBlock:^(NSArray *patronStores, NSError *error) {
+                if (error) {
+                    NSLog(@"there was an error: %@", error);
+                } else {
+                    //for each patron store, check that it's not already in list. if not, add to table view.
+                    for (id patronStore in patronStores){
+                        PFObject *store = [patronStore valueForKey:@"Store"];
+                        [store fetchIfNeededInBackgroundWithBlock:^(PFObject *storeObject, NSError *error) {
+                            if (!error){
+                                
+                                BOOL alreadyInList = FALSE;
+                                for (id savedStore in savedStores){
+                                    if ([[savedStore objectId] isEqualToString:[storeObject objectId]]){
+                                        alreadyInList = TRUE;
+                                        break;
+                                    }
+                                }
+                                if (!alreadyInList){
+                                    [savedStores addObject:storeObject];
+                                    [savedStoresTable reloadData];
+                                }
+
+
+                            }
+                            else NSLog(@"there was an error: %@", error);
+                        }]; //end get store from patronstore
+                    } //end looping through patronstores
+                } //end if no error condition
+            }]; //end get patron object with user's patron id
+        } else NSLog(@"Error is %@", error);
+    }];
+    
+
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -99,6 +141,53 @@
 
 - (void)didDismissPresentedViewController{
     [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    // Return the number of sections.
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    // Return the number of rows in the section.
+    return [savedStores count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    }
+    
+    cell.textLabel.text = [[savedStores objectAtIndex:indexPath.row] valueForKey:@"store_name"];
+    [cell.textLabel setNumberOfLines:3];
+    [cell.textLabel setFont:[UIFont fontWithName:@"ArialRoundedMTBold" size:14]];
+    
+    [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bkg_reward-list-gradient"]]];
+    
+    NSLog(@"stores saved are: %@", [savedStores valueForKey:@"store_name"]);
+
+    
+    return cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    PlacesDetailViewController *placesDetailVC = [[PlacesDetailViewController alloc]init];
+    placesDetailVC.modalDelegate = self;
+    placesDetailVC.storeObject = [savedStores objectAtIndex:indexPath.row];
+    placesDetailVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    placesDetailVC.isSavedStore = YES;
+    
+    [self presentViewController:placesDetailVC animated:YES completion:NULL];
 }
 
 

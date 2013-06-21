@@ -14,6 +14,9 @@
 
 #import <Parse/Parse.h>
 
+#import "Store.h"
+#import "User.h"
+
 @implementation AppDelegate{
     PlacesViewController *placesVC;
     InboxViewController *inboxVC;
@@ -68,6 +71,11 @@
         [self.tabBarController setSelectedIndex:2];
     }
     
+    
+//    [self deleteDataForObject:@"Store"];
+//    [self printDataForObject:@"Store"];
+
+    
     //[PFUser logOut];
     
     //if user is cached, load their local data
@@ -83,16 +91,58 @@
     
     [self.window makeKeyAndVisible];
     return YES;
-
-    
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
 }
 
--(void)saveContext{
+#pragma mark - Core Data helper methods
+
+-(void)deleteDataForObject:(NSString *)entityName{
+    
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
+    NSArray *objects;
+    
+    if ([entityName isEqualToString:@"Store"]){
+        objects = [Store MR_findAll];
+    }
+    
+    if ([entityName isEqualToString:@"User"]){
+        objects = [User MR_findAll];
+    }
+
+    
+    for (id object in objects){
+        [context deleteObject:object];
+    }
+    
+    [self saveContext];
+}
+
+-(void)printDataForObject:(NSString *)entityName{
+    
+    NSArray *objects;
+    
+    if ([entityName isEqualToString:@"Store"]){
+        objects = [Store MR_findAll];
+    }
+    
+    for (id object in objects){
+        NSLog(@"%@", object);
+    }
+    
+}
+
+
+- (void)applicationWillTerminate:(UIApplication *)application
+{
     [MagicalRecord cleanUp];
+}
+
+-(void)saveContext{
+    NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+    [localContext MR_saveToPersistentStoreAndWait];
 }
 
 #pragma mark - Facebook SDK helper methods
