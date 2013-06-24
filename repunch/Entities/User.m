@@ -37,7 +37,12 @@
     self.patronId = [patron objectId];
     self.userId = [user objectId];
     
-    
+    NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+    [localContext MR_saveToPersistentStoreAndWait];
+
+}
+
+-(void)alreadyHasStoreSaved:(Store *)store{
     
 }
 

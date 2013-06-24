@@ -9,6 +9,7 @@
 #import "PlacesDetailViewController.h"
 #import "SIAlertView.h"
 #import "User.h"
+#import "PatronStore.h"
 
 
 //TODO: make sure all alert dialogues match
@@ -79,7 +80,7 @@
     
     //image view
      UIImageView *placeImageView = [[UIImageView alloc] init];
-     [placeImageView setImage:[UIImage imageWithData:_storePic]];
+     [placeImageView setImage:[UIImage imageWithData:_storeObject.store_avatar]];
      [placeImageView setFrame:CGRectMake(10, placeToolbar.frame.size.height + 10, 100, 100)];
      [self.view addSubview:placeImageView];
     
@@ -170,22 +171,26 @@
     [placeTimeLabel setText:hourstodaystring];
     [placeTimeLabel sizeToFit];
     [placeDetails addSubview:placeTimeLabel];
-     
+    
+    BOOL hoursAvailable = TRUE;
     UILabel *placeOpenLabel = [[UILabel alloc] init];
     [placeOpenLabel setFont:[UIFont boldSystemFontOfSize:12]];
     CGRect frame = CGRectMake(placeTimeLabel.frame.origin.x + placeTimeLabel.frame.size.width, placeTimeLabel.frame.origin.y, 200, 15);
     if (![hourstodaystring isEqualToString:@""]) {
         frame.origin.x += 3;
     }
+    else{
+        hoursAvailable = FALSE;
+    }
     [placeOpenLabel setFrame:frame];
     UIColor *openColor = [UIColor colorWithRed:104/255.f green:136/255.f blue:13/255.f alpha:1];
     UIColor *closedColor = [UIColor blackColor];
     [placeOpenLabel setTextColor:(open ? openColor : closedColor)];
-    [placeOpenLabel setText:(open ? @"Open" : @"Closed")];
+    [placeOpenLabel setText:(!hoursAvailable?@"Unavailable":(open ? @"Open" : @"Closed"))];
     [placeOpenLabel sizeToFit];
     [placeDetails addSubview:placeOpenLabel];
     
-    UIView *placeAddOrRemove = [[UIView alloc] initWithFrame:CGRectMake(0, placeImageView.frame.origin.y + placeImageView.frame.size.height+11, self.view.frame.size.width, 40)]; //originally, +11 on second argument and 40 on fourth argument
+    UIView *placeAddOrRemove = [[UIView alloc] initWithFrame:CGRectMake(0, placeImageView.frame.origin.y + placeImageView.frame.size.height+11, self.view.frame.size.width, 40)]; 
     [placeAddOrRemove setAutoresizesSubviews:NO];
     [placeAddOrRemove setClipsToBounds:YES];
     
@@ -193,16 +198,6 @@
     [self.view addSubview:placeAddOrRemove];
     placeActionsViewTop = placeAddOrRemove.frame.origin.y + placeAddOrRemove.frame.size.height;
     
-    //HERE ARE THE ADD/REMOVE BUTTONS
-    /*
-    UIButton *placeAddButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [placeAddButton addTarget:self action:@selector(addOrRemovePlace) forControlEvents:UIControlEventTouchUpInside];
-    [placeAddButton setFrame:CGRectMake(10, 0, 100, placeAddOrRemove.frame.size.height)];
-    [placeAddButton setBackgroundColor:[UIColor blackColor]];
-    [placeAddButton setTitle:[NSString stringWithFormat:@"%@", (_isSavedStore)? @"Remove store": @"Add to my list"] forState:UIControlStateNormal];
-    [[placeAddButton titleLabel] setTextColor:[UIColor whiteColor]];
-    [[placeAddButton titleLabel] setFont:[UIFont fontWithName:@"ArialRoundedMTBold" size:14]];*/
-
     UILabel *punches = [[UILabel alloc] init];
     [punches setFrame:CGRectMake(0, 0, 320, placeAddOrRemove.frame.size.height)];
     [punches setBackgroundColor:[UIColor colorWithRed:(float)251/255 green: (float)170/255 blue:(float)83/255 alpha:1]];
@@ -211,9 +206,7 @@
     [punches setTextColor:[UIColor whiteColor]];
     [punches setFont:[UIFont fontWithName:@"ArialRoundedMTBold" size:24]];
     
-    [placeAddOrRemove addSubview:punches];
-//    [placeAddOrRemove addSubview:placeAddButton];
-    
+    [placeAddOrRemove addSubview:punches];    
 
     UIView *placeBottomContainer = [[UIView alloc] initWithFrame:CGRectMake(0, placeActionsViewTop+10, self.view.frame.size.width, self.view.frame.size.height - 1 - 49)];
 
@@ -363,6 +356,7 @@
 #pragma mark - Other methods
 
 -(void)addOrRemovePlace{
+    NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
 
     PFQuery *patronQuery = [PFQuery queryWithClassName:@"Patron"];
     [patronQuery getObjectInBackgroundWithId:localUser.patronId block:^(PFObject *patronObject, NSError *error) {
@@ -370,18 +364,27 @@
             if (!_isSavedStore){
                 //TODO: way to check if patron store has already been added
                 
+                
                 //create new Patron Store
                 PFObject *patronStore = [PFObject objectWithClassName:@"PatronStore"];
                 [patronStore setValue: patronObject forKey:@"Patron"];
-                [patronStore setValue: _storeObject forKey:@"Store"];
-                [patronStore saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    //add it to Patron object's saved stores
-                    PFRelation *relation = [patronObject relationforKey:@"PatronStores"];
-                    [relation addObject:patronStore];
-                    [patronObject saveInBackground];
+                PFQuery *storeQuery = [PFQuery queryWithClassName:@"Store"];
+                    [storeQuery getObjectInBackgroundWithId:_storeObject.objectId block:^(PFObject *fetchedStore, NSError *error) {
+                        [patronStore setValue: fetchedStore forKey:@"Store"];
+                        [patronStore saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                            //add it to Patron object's saved stores
+                            PFRelation *relation = [patronObject relationforKey:@"PatronStores"];
+                            [relation addObject:patronStore];
+                            [patronObject saveInBackground];
+                                                        
+                        }];
 
-                }];
-                
+
+                    }];
+                PatronStore *newPatronStoreEntity = [PatronStore MR_createEntity];
+                [newPatronStoreEntity setFromPatronObject:patronStore andStoreEntity:_storeObject andUserEntity:localUser];
+                [localUser addSaved_storesObject:newPatronStoreEntity];
+                [localContext MR_saveToPersistentStoreAndWait];
                 
                 SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Added!" andMessage:[NSString stringWithFormat:@"You've saved %@", [_storeObject valueForKey:@"store_name"]]];
                 
@@ -401,6 +404,10 @@
                     //remove it from Patron object
                     [patronStoreObject deleteInBackground];
                     [patronObject saveInBackground];
+                    
+                    //get patronStore and delete it
+                    PatronStore *storeToDelete = [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"User = %@ && Store = %@", localUser, _storeObject]];
+                    [localContext delete:storeToDelete];
                     
                     SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Removed!" andMessage:[NSString stringWithFormat:@"You've remove %@", [_storeObject valueForKey:@"store_name"]]];
                     

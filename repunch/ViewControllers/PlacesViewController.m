@@ -10,6 +10,9 @@
 #import "PlacesSearchViewController.h"
 #import "PlacesDetailViewController.h"
 #import "User.h"
+#import "Store.h"
+#import "PatronStore.h"
+#import "StoreCell.h"
 #import "GlobalToolbar.h"
 #import <Parse/Parse.h>
 
@@ -30,46 +33,33 @@
 }
 
 - (void)setup {
-    // Non-UI initialization goes here. It will only ever be called once.
-}
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        [self setup];
+    //load all stores from local data store
+    NSMutableSet *patronStores = [localUser mutableSetValueForKey:@"saved_stores"];
+    
+    for (PatronStore *patronStore in patronStores){
+        BOOL alreadyInList = FALSE;
+        for (id savedStore in savedStores){
+            if ([[savedStore objectId] isEqualToString:[patronStore.store objectId]]){
+                alreadyInList = TRUE;
+                break;
+            }
+            if(!alreadyInList){
+                [savedStores addObject:patronStore.store];
+                [savedStoresTable reloadData];
+            }
+        }
     }
-    return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
     
-    localUser = [User MR_findFirstByAttribute:@"username" withValue:[[PFUser currentUser] username]];
-        
-    globalToolbar = [[GlobalToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 46)];
-    [(GlobalToolbar *)globalToolbar setToolbarDelegate:self];
-    [self.view addSubview:globalToolbar];
+    NSLog(@"PLACES VIEW: before network %@", patronStores);
     
-    savedStores = [[NSMutableArray alloc] init];
-    savedStoresTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 46, 320, 450) style:UITableViewStylePlain];
-    [savedStoresTable setDataSource:self];
-    [savedStoresTable setDelegate:self];
-    [[self view] addSubview:savedStoresTable];
-
-
-
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    //get patron object from id
+    //then get them from the network
+    //get patron object from user id
     PFQuery *patronQuery = [PFQuery queryWithClassName:@"Patron"];
     [patronQuery getObjectInBackgroundWithId:localUser.patronId block:^(PFObject *patronObject, NSError *error) {
         if (!error){
-            //get all patron objects
+            
+            //fetch all patron objects
             PFRelation *patronStoreRelation = [patronObject relationforKey:@"PatronStores"];
             [[patronStoreRelation query] findObjectsInBackgroundWithBlock:^(NSArray *patronStores, NSError *error) {
                 if (error) {
@@ -89,11 +79,18 @@
                                     }
                                 }
                                 if (!alreadyInList){
-                                    [savedStores addObject:storeObject];
+                                    Store *newSavedStore = [Store MR_findFirstByAttribute:@"objectId" withValue:[store objectId]];
+                                    if (!newSavedStore){
+                                        newSavedStore = [Store MR_createEntity];
+                                        [newSavedStore setFromParseObject:store];
+                                    }
+                                    [savedStores addObject:newSavedStore];
                                     [savedStoresTable reloadData];
+                                    
+                                    NSLog(@"PLACES VIEW: before network %@", patronStores);
+
                                 }
-
-
+                                
                             }
                             else NSLog(@"there was an error: %@", error);
                         }]; //end get store from patronstore
@@ -101,9 +98,62 @@
                 } //end if no error condition
             }]; //end get patron object with user's patron id
         } else NSLog(@"Error is %@", error);
-    }];
-    
+        
+    }]; //end patron query
 
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    //spinner to run while fetches happen
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    spinner.center = CGPointMake(160, 260);
+    spinner.color = [UIColor blackColor];
+    [[self view] addSubview:spinner];
+    [spinner startAnimating];
+
+    
+    localUser = [User MR_findFirstByAttribute:@"username" withValue:[[PFUser currentUser] username]];
+    if (localUser == nil){
+        localUser = [User MR_createEntity];
+        PFObject *patron = [[PFUser currentUser] objectForKey:@"Patron"];
+        [patron fetchIfNeededInBackgroundWithBlock:^(PFObject *fetchedPatron, NSError *error) {
+            [spinner stopAnimating];
+            if (!error){
+                [localUser setFromParseUserObject:[PFUser currentUser] andPatronObject:fetchedPatron];
+                [self setup];
+            } else NSLog(@"Error is %@", error);
+        }];
+    } else [self setup];
+    
+    globalToolbar = [[GlobalToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 46)];
+    [(GlobalToolbar *)globalToolbar setToolbarDelegate:self];
+    [self.view addSubview:globalToolbar];
+    
+    savedStores = [[NSMutableArray alloc] init];
+    savedStoresTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 46, 320, 450) style:UITableViewStylePlain];
+    [savedStoresTable setDataSource:self];
+    [savedStoresTable setDelegate:self];
+    [[self view] addSubview:savedStoresTable];
+
+
+
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (!localUser){
+        [self setup];
+    }
 
 }
 
@@ -135,7 +185,6 @@
     PlacesSearchViewController *placesSearchVC = [[PlacesSearchViewController alloc]init];
     placesSearchVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     placesSearchVC.modalDelegate = self;
-    [placesSearchVC setup];
     [self presentViewController:placesSearchVC animated:YES completion:NULL];
 }
 
@@ -159,27 +208,24 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *CellIdentifier = @"StoreCell";
+    StoreCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell = [[[NSBundle mainBundle]loadNibNamed:@"StoreCell" owner:self options:nil]objectAtIndex:0];        
     }
     
-    cell.textLabel.text = [[savedStores objectAtIndex:indexPath.row] valueForKey:@"store_name"];
-    [cell.textLabel setNumberOfLines:3];
-    [cell.textLabel setFont:[UIFont fontWithName:@"ArialRoundedMTBold" size:14]];
+    [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
+    cell.storeNameLabel.text = [[savedStores objectAtIndex:indexPath.row] valueForKey:@"store_name"];
+    cell.storeImageLabel.image = [UIImage imageWithData:[[savedStores objectAtIndex:indexPath.row] valueForKey:@"store_avatar"]];
     
-    [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bkg_reward-list-gradient"]]];
-    
-    NSLog(@"stores saved are: %@", [savedStores valueForKey:@"store_name"]);
-
+    NSLog(@"saved stores are:%@ with punch_count:%@", [savedStores valueForKey:@"store_name"], [savedPatronStores valueForKey:@"punch_count"]);
     
     return cell;
 }
 
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath: (NSIndexPath *) indexPath{
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     PlacesDetailViewController *placesDetailVC = [[PlacesDetailViewController alloc]init];
     placesDetailVC.modalDelegate = self;
@@ -188,6 +234,26 @@
     placesDetailVC.isSavedStore = YES;
     
     [self presentViewController:placesDetailVC animated:YES completion:NULL];
+    
+}
+
+//this method doesn't work when there's an image view in the cell for some reason....
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    PlacesDetailViewController *placesDetailVC = [[PlacesDetailViewController alloc]init];
+    placesDetailVC.modalDelegate = self;
+    placesDetailVC.storeObject = [savedStores objectAtIndex:indexPath.row];
+    placesDetailVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    placesDetailVC.isSavedStore = NO;
+    
+    [self presentViewController:placesDetailVC animated:YES completion:NULL];
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 100;
 }
 
 

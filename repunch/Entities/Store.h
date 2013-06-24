@@ -16,7 +16,6 @@
 @property (nonatomic, retain) NSString * store_name;
 @property (nonatomic, retain) NSString * city;
 @property (nonatomic, retain) NSString * objectId;
-@property (nonatomic, retain) NSString * store_description;
 @property (nonatomic, retain) NSData * store_avatar;
 @property (nonatomic, retain) NSString * street;
 @property (nonatomic, retain) NSString * cross_streets;

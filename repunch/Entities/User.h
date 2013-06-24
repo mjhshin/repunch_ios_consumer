@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 #import <Parse/Parse.h>
 
-@class Message, Store;
+@class Message, PatronStore;
 
 @interface User : NSManagedObject
 
@@ -35,8 +35,8 @@
 - (void)addReceived_messages:(NSSet *)values;
 - (void)removeReceived_messages:(NSSet *)values;
 
-- (void)addSaved_storesObject:(Store *)value;
-- (void)removeSaved_storesObject:(Store *)value;
+- (void)addSaved_storesObject:(PatronStore *)value;
+- (void)removeSaved_storesObject:(PatronStore *)value;
 - (void)addSaved_stores:(NSSet *)values;
 - (void)removeSaved_stores:(NSSet *)values;
 

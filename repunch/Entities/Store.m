@@ -17,7 +17,6 @@
 @dynamic store_name;
 @dynamic objectId;
 @dynamic city;
-@dynamic store_description;
 @dynamic store_avatar;
 @dynamic street;
 @dynamic cross_streets;
@@ -34,15 +33,21 @@
 
 -(void)setFromParseObject: (PFObject *)store{
     self.store_name = [store objectForKey:@"store_name"];
-    self.objectId = [store objectForKey:@"objectId"];
-    self.store_description = [store objectForKey:@"store_description"];
-    /*
+    self.objectId = [store objectId];
+    
     PFFile *picFile = [store objectForKey:@"store_avatar"];
-    [picFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
-        self.store_avatar = data;
-    }];
-     */
-    self.store_avatar = [[store objectForKey:@"store_avatar"] getData];
+    if (!([store objectForKey:@"store_avatar"] == [NSNull null])){
+        [picFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
+            self.store_avatar = data;
+            NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+            [localContext MR_saveToPersistentStoreAndWait];
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:@"FinishedLoadingPic"
+             object:self];
+
+
+        }];
+    } else self.store_avatar = [NSData dataWithContentsOfFile:@"Icon@2x"];
 
     self.street = [store objectForKey:@"street"];
     if ([store objectForKey:@"cross_streets"] !=  [NSNull null]) self.cross_streets = [store objectForKey:@"cross_streets"];

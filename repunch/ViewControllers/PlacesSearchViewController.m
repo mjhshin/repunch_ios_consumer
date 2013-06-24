@@ -10,6 +10,9 @@
 #import "PlacesDetailViewController.h"
 
 #import "Store.h"
+#import "User.h"
+#import "StoreCell.h"
+
 #import <Parse/Parse.h>
 
 @implementation PlacesSearchViewController{
@@ -17,11 +20,18 @@
     UIToolbar *globalToolbar;
     PFGeoPoint *userLocation;
     UITableView *searchTable;
+    User *localUser;
 
 }
 
 //set up data model
 - (void)setup {
+    //get all locally stored store entitires and set that to be storeList
+    storeList = [[Store MR_findAll] mutableCopy];
+
+    
+    //update list with stores from cache+network
+    //will only add new stores, will not check/change any information for locally stored stores
     if ([CLLocationManager locationServicesEnabled]) {
         //get user location
         [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error){
@@ -29,7 +39,6 @@
             
             //only get ten closest stores
             PFQuery *storeQuery = [PFQuery queryWithClassName:@"Store"];
-            //[storeQuery clearCachedResult];
             storeQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
             storeQuery.maxCacheAge = 60 * 60 * 24; //clears cache every 24 hours
             [storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation];
@@ -38,28 +47,29 @@
             [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *fetchedStores, NSError *error){
                 for (PFObject *store in fetchedStores){
                     
-                    //add table cell for each store
-                     
-                     BOOL storeIsInList = FALSE;
+                    BOOL storeIsInList = FALSE;
+                    
+                    //check if store is in list
                     for (id localStore in storeList){
-                        if ([[localStore objectId] isEqualToString:[store objectId]]){
+                        if ([[localStore valueForKey:@"objectId"] isEqualToString:[store objectId]]){
                             storeIsInList = TRUE;
                             break;
                         }
                     }
                     
-                    //store list of stores
+                    //if not, add it + store on disk
                      if(!storeIsInList){
-                         [storeList addObject:store];
+                         Store *newStore = [Store MR_createEntity];
+                         [newStore setFromParseObject:store];
+                         [storeList addObject:newStore];
                          [searchTable reloadData];
+
                      }//end if stores is not in list
                     
                     
                 }//end for all fetched loop
                 
             }]; //end get stores
-            
-            
         }]; //end get user location
     }
 
@@ -114,6 +124,27 @@
 
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self setup];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveLoadedPics:)
+                                                 name:@"FinishedLoadingPic"
+                                               object:nil];
+    
+
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"FinishedLoadingPic" object:nil];
+}
+
+
+-(void)receiveLoadedPics:(NSNotification *) notification{
+    [searchTable reloadData];
+}
+
 - (void)dismissPresentedViewController{
     [[self modalDelegate] didDismissPresentedViewController];
 }
@@ -140,26 +171,14 @@
  
  - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
  {
-     static NSString *CellIdentifier = @"Cell";
-      UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+     static NSString *CellIdentifier = @"StoreCell";
+      StoreCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
      if (cell == nil) {
-         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-     }
-     
-     //converting Parse PFFile to UIImage
-     PFFile *picFile = [[storeList objectAtIndex:indexPath.row] objectForKey:@"store_avatar"];
-     [picFile getDataInBackgroundWithBlock:^(NSData *picData, NSError *error){
-         
-         //cell view: image view
-         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(220, 20, 65, 65)];
-         imageView.image = [UIImage imageWithData:picData];
-         [cell addSubview:imageView];
-         
+         //cell = [[StoreCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+         cell = [[[NSBundle mainBundle]loadNibNamed:@"StoreCell" owner:self options:nil]objectAtIndex:0];
 
-         [searchTable reloadData];
-         
-     }];
-     
+     }
+    
      //this might be useful later
      /*
       PFGeoPoint *storeLocation = [store objectForKey:@"coordinates"];
@@ -167,19 +186,33 @@
       NSLog(@"distance is %g", distanceToStore);
       */
      
-     NSString *addressString = [NSString stringWithFormat:@"%@\n%@, %@ %@", [[storeList objectAtIndex:indexPath.row] objectForKey:@"street"], [[storeList objectAtIndex:indexPath.row] objectForKey:@"city"], [[storeList objectAtIndex:indexPath.row] objectForKey:@"state"], [[storeList objectAtIndex:indexPath.row] objectForKey:@"zip"]];
+     NSString *addressString = [NSString stringWithFormat:@"%@\n%@, %@ %@", [[storeList objectAtIndex:indexPath.row] valueForKey:@"street"], [[storeList objectAtIndex:indexPath.row] valueForKey:@"city"], [[storeList objectAtIndex:indexPath.row] valueForKey:@"state"], [[storeList objectAtIndex:indexPath.row] valueForKey:@"zip"]];
      
-     [[cell textLabel] setText:[[storeList objectAtIndex:indexPath.row] objectForKey:@"store_name"]];
-     [[cell textLabel] setFont:[UIFont fontWithName:@"ArialRoundedMTBold" size:14]];
-     [[cell detailTextLabel] setText:addressString];
-     [[cell detailTextLabel] setFont:[UIFont fontWithName:@"ArialRoundedMTBold" size:13]];
-     [[cell detailTextLabel] setNumberOfLines:4];
-     
+     [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
+     cell.storeAddressLabel.text = addressString;
+     cell.storeNameLabel.text = [[storeList objectAtIndex:indexPath.row] valueForKey:@"store_name"];
+     cell.storeImageLabel.image = [UIImage imageWithData:[[storeList objectAtIndex:indexPath.row] valueForKey:@"store_avatar"]];
+      
      return cell;
 
  }
 
+#pragma mark - Table View delegate methods
 
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath: (NSIndexPath *) indexPath{
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    PlacesDetailViewController *placesDetailVC = [[PlacesDetailViewController alloc]init];
+    placesDetailVC.modalDelegate = self;
+    placesDetailVC.storeObject = [storeList objectAtIndex:indexPath.row];
+    placesDetailVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    placesDetailVC.isSavedStore = NO;
+    
+    [self presentViewController:placesDetailVC animated:YES completion:NULL];
+
+}
+
+//this method doesn't work when there's an image view in the cell for some reason.... wait no, why is it suddenly working!?
  - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
  {
      [tableView deselectRowAtIndexPath:indexPath animated:YES];

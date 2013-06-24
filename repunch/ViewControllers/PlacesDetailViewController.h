@@ -10,11 +10,11 @@
 #import <Parse/Parse.h>
 
 #import "ModalDelegate.h"
+#import "Store.h"
 
-@interface PlacesDetailViewController : UIViewController<ModalDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface PlacesDetailViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, retain) id<ModalDelegate> modalDelegate;
-@property (nonatomic, retain) PFObject* storeObject;
-@property (nonatomic, retain) NSData* storePic;
+@property (nonatomic, retain) Store* storeObject;
 @property BOOL isSavedStore;
 @end

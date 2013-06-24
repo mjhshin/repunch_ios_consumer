@@ -21,6 +21,11 @@
         <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="reply" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Message" syncable="YES"/>
     </entity>
+    <entity name="PatronStore" representedClassName="PatronStore" syncable="YES">
+        <attribute name="punch_count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="patron" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="saved_stores" inverseEntity="User" syncable="YES"/>
+        <relationship name="store" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Store" syncable="YES"/>
+    </entity>
     <entity name="Reward" representedClassName="Reward" syncable="YES">
         <attribute name="punches" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="reward_description" optional="YES" attributeType="String" syncable="YES"/>
@@ -38,7 +43,6 @@
         <attribute name="phone_number" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="store_avatar" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="store_description" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="store_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="street" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="zip" optional="YES" attributeType="String" syncable="YES"/>
@@ -57,7 +61,7 @@
         <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="received_messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" syncable="YES"/>
-        <relationship name="saved_stores" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Store" syncable="YES"/>
+        <relationship name="saved_stores" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PatronStore" inverseName="patron" inverseEntity="PatronStore" syncable="YES"/>
         <relationship name="sent_messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" syncable="YES"/>
     </entity>
     <elements>
@@ -65,7 +69,8 @@
         <element name="Hour" positionX="160" positionY="192" width="128" height="105"/>
         <element name="Message" positionX="160" positionY="192" width="128" height="165"/>
         <element name="Reward" positionX="160" positionY="192" width="128" height="105"/>
-        <element name="Store" positionX="160" positionY="192" width="128" height="300"/>
+        <element name="Store" positionX="160" positionY="192" width="128" height="285"/>
         <element name="User" positionX="160" positionY="192" width="128" height="225"/>
+        <element name="PatronStore" positionX="160" positionY="192" width="128" height="90"/>
     </elements>
 </model>

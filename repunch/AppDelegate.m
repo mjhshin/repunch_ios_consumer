@@ -16,6 +16,7 @@
 
 #import "Store.h"
 #import "User.h"
+#import "PatronStore.h"
 
 @implementation AppDelegate{
     PlacesViewController *placesVC;
@@ -41,6 +42,10 @@
     
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"repunch_local.sqlite"];
     
+    [self printDataForObject:@"Store"];
+    [self printDataForObject:@"PatronStore"];
+    [self printDataForObject:@"User"];
+
     //Init Tab Bar and all related view controllers
     placesVC = [[PlacesViewController alloc] init];
     inboxVC = [[InboxViewController alloc] init];
@@ -72,17 +77,12 @@
     }
     
     
-//    [self deleteDataForObject:@"Store"];
-//    [self printDataForObject:@"Store"];
-
-    
     //[PFUser logOut];
     
     //if user is cached, load their local data
     //else, go to login page
     if ([PFUser currentUser])
     {
-        //[placesVC loadPlaces];
         self.window.rootViewController = self.tabBarController;
     } else {
         loginVC = [[LoginViewController alloc] init];
@@ -108,6 +108,11 @@
         objects = [Store MR_findAll];
     }
     
+    if ([entityName isEqualToString:@"PatronStore"]){
+        objects = [PatronStore MR_findAll];
+    }
+
+    
     if ([entityName isEqualToString:@"User"]){
         objects = [User MR_findAll];
     }
@@ -127,9 +132,8 @@
     if ([entityName isEqualToString:@"Store"]){
         objects = [Store MR_findAll];
     }
-    
     for (id object in objects){
-        NSLog(@"%@", object);
+        NSLog(@"here are all the objects for entity: %@ \n%@", entityName, object);
     }
     
 }
