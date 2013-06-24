@@ -22,7 +22,9 @@
         <relationship name="reply" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Message" syncable="YES"/>
     </entity>
     <entity name="PatronStore" representedClassName="PatronStore" syncable="YES">
+        <attribute name="patron_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="punch_count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="store_id" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="patron" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="saved_stores" inverseEntity="User" syncable="YES"/>
         <relationship name="store" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Store" syncable="YES"/>
     </entity>
@@ -71,6 +73,6 @@
         <element name="Reward" positionX="160" positionY="192" width="128" height="105"/>
         <element name="Store" positionX="160" positionY="192" width="128" height="285"/>
         <element name="User" positionX="160" positionY="192" width="128" height="225"/>
-        <element name="PatronStore" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="PatronStore" positionX="160" positionY="192" width="128" height="120"/>
     </elements>
 </model>

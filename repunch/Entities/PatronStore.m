@@ -14,11 +14,18 @@
 @implementation PatronStore
 
 @dynamic punch_count;
+@dynamic patron_id;
+@dynamic store_id;
 @dynamic patron;
 @dynamic store;
 
 -(void)setFromPatronObject: (PFObject *)Patron andStoreEntity: (Store *)store andUserEntity: (User *)user{
-    self.punch_count = [Patron valueForKey:@"punch_count"];
+    if
+        ([Patron valueForKey:@"punch_count"]>0) self.punch_count = [Patron valueForKey:@"punch_count"];
+    else
+        self.punch_count = 0;
+    self.patron_id = user.userId;
+    self.store_id = store.objectId;
     self.store = store;
     self.patron = user;
     

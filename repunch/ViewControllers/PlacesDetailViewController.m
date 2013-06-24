@@ -371,6 +371,8 @@
                 PFQuery *storeQuery = [PFQuery queryWithClassName:@"Store"];
                     [storeQuery getObjectInBackgroundWithId:_storeObject.objectId block:^(PFObject *fetchedStore, NSError *error) {
                         [patronStore setValue: fetchedStore forKey:@"Store"];
+                        [patronStore setValue:[NSNumber numberWithInt:0] forKey:@"punch_count"];
+                        [patronStore setValue:[NSNumber numberWithInt:0]  forKey:@"all_time_punches"];
                         [patronStore saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                             //add it to Patron object's saved stores
                             PFRelation *relation = [patronObject relationforKey:@"PatronStores"];
@@ -406,7 +408,7 @@
                     [patronObject saveInBackground];
                     
                     //get patronStore and delete it
-                    PatronStore *storeToDelete = [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"User = %@ && Store = %@", localUser, _storeObject]];
+                    PatronStore *storeToDelete = [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", localUser.userId, _storeObject.objectId]];
                     [localContext delete:storeToDelete];
                     
                     SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Removed!" andMessage:[NSString stringWithFormat:@"You've remove %@", [_storeObject valueForKey:@"store_name"]]];

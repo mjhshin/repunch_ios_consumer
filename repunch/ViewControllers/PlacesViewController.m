@@ -39,20 +39,21 @@
     
     for (PatronStore *patronStore in patronStores){
         BOOL alreadyInList = FALSE;
-        for (id savedStore in savedStores){
-            if ([[savedStore objectId] isEqualToString:[patronStore.store objectId]]){
-                alreadyInList = TRUE;
-                break;
-            }
-            if(!alreadyInList){
-                [savedStores addObject:patronStore.store];
-                [savedStoresTable reloadData];
+            for (PatronStore *savedStore in savedStores){
+                if ([[savedStore.store objectId] isEqualToString:[patronStore.store objectId]]){
+                    alreadyInList = TRUE;
+                    break;
+                }
+                if(!alreadyInList){
+                    [savedStores addObject:patronStore];
+                    [savedStoresTable reloadData];
             }
         }
     }
     
-    NSLog(@"PLACES VIEW: before network %@", patronStores);
+    NSLog(@"here are stores in local user %@: %@", localUser.username, [[patronStores valueForKey:@"store"] valueForKey:@"store_name"]);
     
+    /*
     //then get them from the network
     //get patron object from user id
     PFQuery *patronQuery = [PFQuery queryWithClassName:@"Patron"];
@@ -72,23 +73,24 @@
                             if (!error){
                                 
                                 BOOL alreadyInList = FALSE;
-                                for (id savedStore in savedStores){
-                                    if ([[savedStore objectId] isEqualToString:[storeObject objectId]]){
+                                for (PatronStore *savedStore in savedStores){
+                                    if ([[savedStore.store objectId] isEqualToString:[storeObject objectId]]){
                                         alreadyInList = TRUE;
                                         break;
                                     }
                                 }
                                 if (!alreadyInList){
-                                    Store *newSavedStore = [Store MR_findFirstByAttribute:@"objectId" withValue:[store objectId]];
+                                    PatronStore *newPatronStore = [PatronStore MR_createEntity];
+                                    Store *newSavedStore = [Store MR_findFirstByAttribute:@"objectId" withValue:[storeObject objectId]];
                                     if (!newSavedStore){
                                         newSavedStore = [Store MR_createEntity];
                                         [newSavedStore setFromParseObject:store];
                                     }
-                                    [savedStores addObject:newSavedStore];
+
+                                    [newPatronStore setFromPatronObject:patronStore andStoreEntity:newSavedStore andUserEntity:localUser];
+                                    [savedStores addObject:newPatronStore];
                                     [savedStoresTable reloadData];
                                     
-                                    NSLog(@"PLACES VIEW: before network %@", patronStores);
-
                                 }
                                 
                             }
@@ -100,7 +102,7 @@
         } else NSLog(@"Error is %@", error);
         
     }]; //end patron query
-
+     */
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -133,7 +135,7 @@
                 [self setup];
             } else NSLog(@"Error is %@", error);
         }];
-    } else [self setup];
+    } else if ([localUser.patronId length]>0) [self setup];
     
     globalToolbar = [[GlobalToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 46)];
     [(GlobalToolbar *)globalToolbar setToolbarDelegate:self];
@@ -151,7 +153,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if (!localUser){
+    if ([localUser.patronId length]>0){
         [self setup];
     }
 
@@ -215,11 +217,10 @@
     }
     
     [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
-    cell.storeNameLabel.text = [[savedStores objectAtIndex:indexPath.row] valueForKey:@"store_name"];
-    cell.storeImageLabel.image = [UIImage imageWithData:[[savedStores objectAtIndex:indexPath.row] valueForKey:@"store_avatar"]];
-    
-    NSLog(@"saved stores are:%@ with punch_count:%@", [savedStores valueForKey:@"store_name"], [savedPatronStores valueForKey:@"punch_count"]);
-    
+    cell.storeNameLabel.text = [[[savedStores objectAtIndex:indexPath.row] store] valueForKey:@"store_name"];
+    cell.storeImageLabel.image = [UIImage imageWithData:[[[savedStores objectAtIndex:indexPath.row] store] valueForKey:@"store_avatar"]];
+    cell.storeAddressLabel.text = [NSString stringWithFormat:@"%@ punches", [[savedStores objectAtIndex:indexPath.row]valueForKey:@"punch_count"]];
+        
     return cell;
 }
 
@@ -229,7 +230,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     PlacesDetailViewController *placesDetailVC = [[PlacesDetailViewController alloc]init];
     placesDetailVC.modalDelegate = self;
-    placesDetailVC.storeObject = [savedStores objectAtIndex:indexPath.row];
+    placesDetailVC.storeObject = [[savedStores objectAtIndex:indexPath.row] store];
     placesDetailVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     placesDetailVC.isSavedStore = YES;
     
@@ -243,7 +244,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     PlacesDetailViewController *placesDetailVC = [[PlacesDetailViewController alloc]init];
     placesDetailVC.modalDelegate = self;
-    placesDetailVC.storeObject = [savedStores objectAtIndex:indexPath.row];
+    placesDetailVC.storeObject = [[savedStores objectAtIndex:indexPath.row] store];
     placesDetailVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     placesDetailVC.isSavedStore = NO;
     

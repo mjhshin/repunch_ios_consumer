@@ -42,9 +42,10 @@
     
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"repunch_local.sqlite"];
     
-    [self printDataForObject:@"Store"];
-    [self printDataForObject:@"PatronStore"];
-    [self printDataForObject:@"User"];
+    //[self printDataForObject:@"Store"];
+    //[self printDataForObject:@"PatronStore"];
+    //[self printDataForObject:@"User"];
+    //[self deleteDataForObject:@"PatronStore"];
 
     //Init Tab Bar and all related view controllers
     placesVC = [[PlacesViewController alloc] init];
@@ -122,6 +123,8 @@
         [context deleteObject:object];
     }
     
+    [self printDataForObject:@"PatronStore"];
+
     [self saveContext];
 }
 
@@ -132,8 +135,16 @@
     if ([entityName isEqualToString:@"Store"]){
         objects = [Store MR_findAll];
     }
+    if ([entityName isEqualToString:@"PatronStore"]){
+        objects = [PatronStore MR_findAll];
+    }
+    if ([entityName isEqualToString:@"User"]){
+        objects = [User MR_findAll];
+    }
+
+    NSLog(@"here are all the objects for entity: %@", entityName);
     for (id object in objects){
-        NSLog(@"here are all the objects for entity: %@ \n%@", entityName, object);
+        NSLog(@"%@", [object valueForKey:@"store_name"]);
     }
     
 }
