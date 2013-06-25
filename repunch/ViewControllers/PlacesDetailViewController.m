@@ -7,6 +7,7 @@
 //
 
 #import "PlacesDetailViewController.h"
+#import "PlacesDetailMapViewController.h"
 #import "SIAlertView.h"
 #import "User.h"
 #import "PatronStore.h"
@@ -16,6 +17,7 @@
 
 @implementation PlacesDetailViewController{
     NSMutableArray *placeRewardData;
+    PlacesDetailMapViewController *placesDetailMapVC;
     User *localUser;
 }
 
@@ -28,11 +30,16 @@
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    NSLog(@"%i", [self isSavedStore]);
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     localUser = [User MR_findFirstByAttribute:@"username" withValue:[[PFUser currentUser] username]];
+    _isSavedStore = [localUser alreadyHasStoreSaved:[_storeObject objectId]];
 
     //THIS IS A TOOLBAR
     //FROM HERE...
@@ -198,10 +205,11 @@
     [self.view addSubview:placeAddOrRemove];
     placeActionsViewTop = placeAddOrRemove.frame.origin.y + placeAddOrRemove.frame.size.height;
     
+    PatronStore *patronStore = [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", localUser.patronId, _storeObject.objectId]];
     UILabel *punches = [[UILabel alloc] init];
     [punches setFrame:CGRectMake(0, 0, 320, placeAddOrRemove.frame.size.height)];
     [punches setBackgroundColor:[UIColor colorWithRed:(float)251/255 green: (float)170/255 blue:(float)83/255 alpha:1]];
-    [punches setText:[NSString stringWithFormat:@"%i punches", 2]];
+    [punches setText:[NSString stringWithFormat:@"%@ punches", [patronStore punch_count]?[patronStore punch_count]: @"0"]];
     [punches setTextAlignment:NSTextAlignmentCenter];
     [punches setTextColor:[UIColor whiteColor]];
     [punches setFont:[UIFont fontWithName:@"ArialRoundedMTBold" size:24]];
@@ -265,6 +273,43 @@
 
 
 }
+
+#pragma mark - Place Selectors
+
+
+- (void)placeCall
+{
+    NSString *number = [_storeObject phone_number];
+    NSString *phoneNumber = [number stringByReplacingOccurrencesOfString:@"[^0-9]" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, [number length])];
+    NSString *phoneNumberUrl = [@"tel://" stringByAppendingString:phoneNumber];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumberUrl]];
+    
+}
+
+- (void)placeMap
+{
+    placesDetailMapVC = [[PlacesDetailMapViewController alloc] init];
+    [placesDetailMapVC setModalDelegate:self];
+    [placesDetailMapVC setPlace:_storeObject];
+    placesDetailMapVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [placesDetailMapVC.view setFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
+    [self presentViewController:placesDetailMapVC animated:YES completion:NULL];
+
+    
+}
+
+
+- (void)placeFeedback
+{
+    /*
+    ComposeViewController *cvc = [[ComposeViewController alloc] init];
+    [cvc.view setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [cvc setComposeType:@"feedback"];
+    [cvc setPlace:place];
+    [self.view addSubview:cvc.view];
+     */
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -364,7 +409,6 @@
             if (!_isSavedStore){
                 //TODO: way to check if patron store has already been added
                 
-                
                 //create new Patron Store
                 PFObject *patronStore = [PFObject objectWithClassName:@"PatronStore"];
                 [patronStore setValue: patronObject forKey:@"Patron"];
@@ -378,7 +422,7 @@
                             PFRelation *relation = [patronObject relationforKey:@"PatronStores"];
                             [relation addObject:patronStore];
                             [patronObject saveInBackground];
-                                                        
+
                         }];
 
 
@@ -393,40 +437,63 @@
                 [alertView addButtonWithTitle:@"Sweet beans."
                                          type:SIAlertViewButtonTypeDefault
                                       handler:^(SIAlertView *alert) {
+                                          [[self modalDelegate] didDismissPresentedViewController];
+
                                       }];
                 [alertView show];
 
+
             }
             else{
-                //get patron store
-                PFQuery *patronStoreQuery = [PFQuery queryWithClassName:@"PatronStore"];
-                [patronStoreQuery whereKey:@"Store" equalTo:[PFObject objectWithoutDataWithClassName:@"Store" objectId:_storeObject.objectId]];
-                [patronStoreQuery whereKey:@"Patron" equalTo:[PFObject objectWithoutDataWithClassName:@"Patron" objectId:localUser.patronId]];
-                [patronStoreQuery getFirstObjectInBackgroundWithBlock:^(PFObject *patronStoreObject, NSError *error) {
-                    //remove it from Patron object
-                    [patronStoreObject deleteInBackground];
-                    [patronObject saveInBackground];
-                    
-                    //get patronStore and delete it
-                    PatronStore *storeToDelete = [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", localUser.userId, _storeObject.objectId]];
-                    [localContext delete:storeToDelete];
-                    
-                    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Removed!" andMessage:[NSString stringWithFormat:@"You've remove %@", [_storeObject valueForKey:@"store_name"]]];
-                    
-                    [alertView addButtonWithTitle:@"Awesome sauce."
-                                             type:SIAlertViewButtonTypeDefault
-                                          handler:^(SIAlertView *alert) {
-                                          }];
-                    [alertView show];
+                SIAlertView *warningView = [[SIAlertView alloc] initWithTitle:@"Warning! Point of No Return" andMessage:[NSString stringWithFormat:@"Are you sure you want to remove %@? You will lose ALL the punches", [_storeObject valueForKey:@"store_name"]]];
+                [warningView addButtonWithTitle:@"Mm.  Nah."
+                                         type:SIAlertViewButtonTypeDefault
+                                      handler:^(SIAlertView *alert) {
+                                          
+                                      }];
 
-                }];
                 
-                
+                [warningView addButtonWithTitle:@"Bring it."
+                                         type:SIAlertViewButtonTypeDefault
+                                      handler:^(SIAlertView *alert) {
+                                          
+                                          //get patron store
+                                          PFQuery *patronStoreQuery = [PFQuery queryWithClassName:@"PatronStore"];
+                                          [patronStoreQuery whereKey:@"Store" equalTo:[PFObject objectWithoutDataWithClassName:@"Store" objectId:_storeObject.objectId]];
+                                          [patronStoreQuery whereKey:@"Patron" equalTo:[PFObject objectWithoutDataWithClassName:@"Patron" objectId:localUser.patronId]];
+                                          [patronStoreQuery getFirstObjectInBackgroundWithBlock:^(PFObject *patronStoreObject, NSError *error) {
+                                              //remove it from Patron object
+                                              [patronStoreObject deleteInBackground];
+                                              [patronObject saveInBackground];
+                                              
+                                              //get patronStore and delete it
+                                              PatronStore *storeToDelete = [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", localUser.patronId, _storeObject.objectId]];
+                                              [localContext deleteObject:storeToDelete];
+                                              
+                                              SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Removed!" andMessage:[NSString stringWithFormat:@"You've removed %@", [_storeObject valueForKey:@"store_name"]]];
+                                              
+                                              [alertView addButtonWithTitle:@"Awesome sauce."
+                                                                       type:SIAlertViewButtonTypeDefault
+                                                                    handler:^(SIAlertView *alert) {
+                                                                        [[self modalDelegate] didDismissPresentedViewController];
+                                                                    }];
+                                              [alertView show];
+                                              
+                                              
+                                              [localContext MR_saveToPersistentStoreAndWait];
+                                          }];
+                                      }];
+                [warningView show];
+
             }
-            
             
         } else NSLog(@"error is %@", error);
     }];
-    
+
 }
+
+- (void)didDismissPresentedViewController{
+    [self dismissViewControllerAnimated:YES completion:NULL];;
+}
+
 @end

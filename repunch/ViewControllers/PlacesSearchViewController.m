@@ -11,6 +11,7 @@
 
 #import "Store.h"
 #import "User.h"
+#import "PatronStore.h"
 #import "StoreCell.h"
 
 #import <Parse/Parse.h>
@@ -150,7 +151,7 @@
 }
 
 - (void)didDismissPresentedViewController{
-    [self dismissPresentedViewController];
+    [self dismissViewControllerAnimated:YES completion:NULL];;
 }
 
 
@@ -186,12 +187,22 @@
       NSLog(@"distance is %g", distanceToStore);
       */
      
-     NSString *addressString = [NSString stringWithFormat:@"%@\n%@, %@ %@", [[storeList objectAtIndex:indexPath.row] valueForKey:@"street"], [[storeList objectAtIndex:indexPath.row] valueForKey:@"city"], [[storeList objectAtIndex:indexPath.row] valueForKey:@"state"], [[storeList objectAtIndex:indexPath.row] valueForKey:@"zip"]];
+     Store *currentCellStore = [storeList objectAtIndex:indexPath.row];
      
+     NSString *addressString = [NSString stringWithFormat:@"%@\n%@, %@ %@", [currentCellStore valueForKey:@"street"], [currentCellStore valueForKey:@"city"], [currentCellStore valueForKey:@"state"], [currentCellStore valueForKey:@"zip"]];
+     
+     if ([localUser alreadyHasStoreSaved:[currentCellStore objectId]]){
+         PatronStore *patronStore = [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", localUser.patronId, [currentCellStore objectId]]];
+         NSNumber *punches = [patronStore punch_count];
+         addressString = [addressString stringByAppendingFormat:@"\n%@ punches", punches];
+         NSLog(@"address string is %@", addressString);
+     }
+     NSLog(@"address string is %@", addressString);
+
      [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
      cell.storeAddressLabel.text = addressString;
-     cell.storeNameLabel.text = [[storeList objectAtIndex:indexPath.row] valueForKey:@"store_name"];
-     cell.storeImageLabel.image = [UIImage imageWithData:[[storeList objectAtIndex:indexPath.row] valueForKey:@"store_avatar"]];
+     cell.storeNameLabel.text = [currentCellStore valueForKey:@"store_name"];
+     cell.storeImageLabel.image = [UIImage imageWithData:[currentCellStore valueForKey:@"store_avatar"]];
       
      return cell;
 
@@ -206,13 +217,11 @@
     placesDetailVC.modalDelegate = self;
     placesDetailVC.storeObject = [storeList objectAtIndex:indexPath.row];
     placesDetailVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    placesDetailVC.isSavedStore = NO;
     
     [self presentViewController:placesDetailVC animated:YES completion:NULL];
 
 }
 
-//this method doesn't work when there's an image view in the cell for some reason.... wait no, why is it suddenly working!?
  - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
  {
      [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -220,7 +229,6 @@
      placesDetailVC.modalDelegate = self;
      placesDetailVC.storeObject = [storeList objectAtIndex:indexPath.row];
      placesDetailVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-     placesDetailVC.isSavedStore = NO;
      
      [self presentViewController:placesDetailVC animated:YES completion:NULL];
  }

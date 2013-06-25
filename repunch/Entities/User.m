@@ -9,6 +9,7 @@
 #import "User.h"
 #import "Message.h"
 #import "Store.h"
+#import "PatronStore.h"
 #import <Parse/Parse.h>
 
 @implementation User
@@ -42,8 +43,17 @@
 
 }
 
--(void)alreadyHasStoreSaved:(Store *)store{
-    
+-(BOOL)alreadyHasStoreSaved:(NSString *)storeId{
+    NSSet *enumerationCopy = [self saved_stores];
+    BOOL isAlreadySaved = FALSE;
+    for (PatronStore *saved_store in enumerationCopy){
+        if ([[saved_store valueForKey:@"store_id"] isEqualToString:storeId]){
+            isAlreadySaved = TRUE;
+            break;
+        }
+    }
+    return isAlreadySaved;
 }
+
 
 @end

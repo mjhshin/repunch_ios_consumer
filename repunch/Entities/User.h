@@ -47,4 +47,6 @@
 
 -(void)setFromParseUserObject: (PFUser *)user andPatronObject: (PFObject *)patron;
 
+-(BOOL)alreadyHasStoreSaved:(NSString *)storeId;
+
 @end

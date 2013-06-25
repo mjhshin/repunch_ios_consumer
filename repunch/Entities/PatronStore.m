@@ -20,11 +20,9 @@
 @dynamic store;
 
 -(void)setFromPatronObject: (PFObject *)Patron andStoreEntity: (Store *)store andUserEntity: (User *)user{
-    if
-        ([Patron valueForKey:@"punch_count"]>0) self.punch_count = [Patron valueForKey:@"punch_count"];
-    else
-        self.punch_count = 0;
-    self.patron_id = user.userId;
+    self.punch_count = [Patron valueForKey:@"punch_count"];
+    if (!self.punch_count) self.punch_count = [NSNumber numberWithInt:0];
+    self.patron_id = user.patronId;
     self.store_id = store.objectId;
     self.store = store;
     self.patron = user;
@@ -34,5 +32,13 @@
     
 }
 
+-(void)updateLocalEntityWithParseObject:(PFObject *)patronObject{
+    self.punch_count = [patronObject valueForKey:@"punch_count"];
+    if (!self.punch_count) self.punch_count = [NSNumber numberWithInt:0];
+    
+    NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+    [localContext MR_saveToPersistentStoreAndWait];
+
+}
 
 @end

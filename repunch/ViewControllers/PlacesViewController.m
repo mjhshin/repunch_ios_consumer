@@ -35,74 +35,59 @@
 - (void)setup {
 
     //load all stores from local data store
-    NSMutableSet *patronStores = [localUser mutableSetValueForKey:@"saved_stores"];
-    
-    for (PatronStore *patronStore in patronStores){
-        BOOL alreadyInList = FALSE;
-            for (PatronStore *savedStore in savedStores){
-                if ([[savedStore.store objectId] isEqualToString:[patronStore.store objectId]]){
-                    alreadyInList = TRUE;
-                    break;
-                }
-                if(!alreadyInList){
-                    [savedStores addObject:patronStore];
-                    [savedStoresTable reloadData];
-            }
-        }
-    }
-    
-    NSLog(@"here are stores in local user %@: %@", localUser.username, [[patronStores valueForKey:@"store"] valueForKey:@"store_name"]);
+    //NSMutableSet *patronStores = [localUser mutableSetValueForKey:@"saved_stores"];
+    //NSMutableSet *enumerationCopy = [NSSet setWithArray:savedStores];
     
     /*
-    //then get them from the network
-    //get patron object from user id
-    PFQuery *patronQuery = [PFQuery queryWithClassName:@"Patron"];
-    [patronQuery getObjectInBackgroundWithId:localUser.patronId block:^(PFObject *patronObject, NSError *error) {
-        if (!error){
-            
-            //fetch all patron objects
-            PFRelation *patronStoreRelation = [patronObject relationforKey:@"PatronStores"];
-            [[patronStoreRelation query] findObjectsInBackgroundWithBlock:^(NSArray *patronStores, NSError *error) {
-                if (error) {
-                    NSLog(@"there was an error: %@", error);
-                } else {
-                    //for each patron store, check that it's not already in list. if not, add to table view.
-                    for (id patronStore in patronStores){
-                        PFObject *store = [patronStore valueForKey:@"Store"];
-                        [store fetchIfNeededInBackgroundWithBlock:^(PFObject *storeObject, NSError *error) {
-                            if (!error){
-                                
-                                BOOL alreadyInList = FALSE;
-                                for (PatronStore *savedStore in savedStores){
-                                    if ([[savedStore.store objectId] isEqualToString:[storeObject objectId]]){
-                                        alreadyInList = TRUE;
-                                        break;
-                                    }
-                                }
-                                if (!alreadyInList){
-                                    PatronStore *newPatronStore = [PatronStore MR_createEntity];
-                                    Store *newSavedStore = [Store MR_findFirstByAttribute:@"objectId" withValue:[storeObject objectId]];
-                                    if (!newSavedStore){
-                                        newSavedStore = [Store MR_createEntity];
-                                        [newSavedStore setFromParseObject:store];
-                                    }
+     //sync with view's set of stores
+     for (id item in patronStores) {
+     if (![enumerationCopy member:item]) {
+     [savedStores addObject:item];
+     }
+     }*/
 
-                                    [newPatronStore setFromPatronObject:patronStore andStoreEntity:newSavedStore andUserEntity:localUser];
-                                    [savedStores addObject:newPatronStore];
-                                    [savedStoresTable reloadData];
-                                    
-                                }
-                                
-                            }
-                            else NSLog(@"there was an error: %@", error);
-                        }]; //end get store from patronstore
-                    } //end looping through patronstores
-                } //end if no error condition
-            }]; //end get patron object with user's patron id
-        } else NSLog(@"Error is %@", error);
-        
-    }]; //end patron query
-     */
+    
+    savedStores = [[[localUser mutableSetValueForKey:@"saved_stores"] allObjects] mutableCopy];
+    [savedStoresTable reloadData];
+    
+    //NSLog(@"here are stores in local user %@: %@", localUser.username, [[patronStores valueForKey:@"store"] valueForKey:@"store_name"]);
+    NSLog(@"here are saved stores: %@", [[savedStores valueForKey:@"store"] valueForKey:@"store_name"]);
+    
+    PFQuery *patronQuery = [PFQuery queryWithClassName:@"Patron"];
+    [patronQuery getObjectInBackgroundWithId:localUser.patronId block:^(PFObject *fetchedPatron, NSError *error) {
+        PFRelation *patronStoreRelation = [fetchedPatron relationforKey:@"PatronStores"];
+        PFQuery *storeQuery = [patronStoreRelation query];
+        [storeQuery includeKey:@"Store"];
+        [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *fetchedPatronStores, NSError *error) {
+            for (PFObject *fetchedPatronStore in fetchedPatronStores){
+                BOOL isAlreadyInList = [localUser alreadyHasStoreSaved:[[fetchedPatronStore valueForKey:@"Store"] objectId]];
+
+                //NSLog(@"%@ %@ already is list", [[fetchedPatronStore valueForKey:@"Store"] valueForKey:@"store_name"], isAlreadyInList?@"is":@"IS NOT");
+                if (isAlreadyInList){
+                    PatronStore *storeToBeUpdated = [PatronStore MR_findFirstByAttribute:@"store_id" withValue:[[fetchedPatronStore valueForKey:@"Store"] objectId]];
+                    [storeToBeUpdated updateLocalEntityWithParseObject:fetchedPatronStore];
+                    [savedStoresTable reloadData];
+                }
+                
+                if (!isAlreadyInList){
+                    PatronStore *newPatronStore = [PatronStore MR_createEntity];
+                    Store *newSavedStore = [Store MR_findFirstByAttribute:@"objectId" withValue:[[fetchedPatronStore valueForKey:@"Store"] objectId]];
+                    if (!newSavedStore){
+                        newSavedStore = [Store MR_createEntity];
+                        [newSavedStore setFromParseObject:[fetchedPatronStore valueForKey:@"Store"]];
+                    }
+                    
+                    [newPatronStore setFromPatronObject:fetchedPatronStore andStoreEntity:newSavedStore andUserEntity:localUser];
+                    [savedStores addObject:newPatronStore];
+                    [savedStoresTable reloadData];
+                }
+            }
+            
+        }];
+
+    }];
+     
+     
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -215,11 +200,11 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"StoreCell" owner:self options:nil]objectAtIndex:0];        
     }
-    
+    NSNumber *punches = [[savedStores objectAtIndex:indexPath.row]valueForKey:@"punch_count"];
     [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
     cell.storeNameLabel.text = [[[savedStores objectAtIndex:indexPath.row] store] valueForKey:@"store_name"];
     cell.storeImageLabel.image = [UIImage imageWithData:[[[savedStores objectAtIndex:indexPath.row] store] valueForKey:@"store_avatar"]];
-    cell.storeAddressLabel.text = [NSString stringWithFormat:@"%@ punches", [[savedStores objectAtIndex:indexPath.row]valueForKey:@"punch_count"]];
+    cell.storeAddressLabel.text = [NSString stringWithFormat:@"%@ %@", punches, ([punches isEqualToNumber:[NSNumber numberWithInt:1]])?@"punch": @"punches"];
         
     return cell;
 }
@@ -238,7 +223,6 @@
     
 }
 
-//this method doesn't work when there's an image view in the cell for some reason....
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -246,7 +230,7 @@
     placesDetailVC.modalDelegate = self;
     placesDetailVC.storeObject = [[savedStores objectAtIndex:indexPath.row] store];
     placesDetailVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    placesDetailVC.isSavedStore = NO;
+    placesDetailVC.isSavedStore = YES;
     
     [self presentViewController:placesDetailVC animated:YES completion:NULL];
 }
@@ -254,7 +238,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 105;
 }
 
 

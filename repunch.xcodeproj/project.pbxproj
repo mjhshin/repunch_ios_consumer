@@ -164,6 +164,8 @@
 		798BF2411778A3EB0062BA62 /* PatronStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 798BF2401778A3EB0062BA62 /* PatronStore.m */; };
 		798D759F1774E954004B282D /* ab_add_my_places.png in Resources */ = {isa = PBXBuildFile; fileRef = 798D759D1774E954004B282D /* ab_add_my_places.png */; };
 		798D75A01774E954004B282D /* ab_message_delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 798D759E1774E954004B282D /* ab_message_delete.png */; };
+		7994CF10177A3C20003994FB /* PlacesDetailMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7994CF0E177A3C20003994FB /* PlacesDetailMapViewController.m */; };
+		7994CF11177A3C20003994FB /* PlacesDetailMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7994CF0F177A3C20003994FB /* PlacesDetailMapViewController.xib */; };
 		79B866911772117E0074C9FE /* MapPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B8668A1772117E0074C9FE /* MapPin.m */; };
 		79B866921772117E0074C9FE /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B8668C1772117E0074C9FE /* MKMapView+ZoomLevel.m */; };
 		79B866931772117E0074C9FE /* NSDate+whenString.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B8668E1772117E0074C9FE /* NSDate+whenString.m */; };
@@ -393,6 +395,9 @@
 		798BF2401778A3EB0062BA62 /* PatronStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PatronStore.m; path = Entities/PatronStore.m; sourceTree = "<group>"; };
 		798D759D1774E954004B282D /* ab_add_my_places.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ab_add_my_places.png; path = Images/ab_add_my_places.png; sourceTree = "<group>"; };
 		798D759E1774E954004B282D /* ab_message_delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ab_message_delete.png; path = Images/ab_message_delete.png; sourceTree = "<group>"; };
+		7994CF0D177A3C20003994FB /* PlacesDetailMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlacesDetailMapViewController.h; path = ViewControllers/PlacesDetailMapViewController.h; sourceTree = "<group>"; };
+		7994CF0E177A3C20003994FB /* PlacesDetailMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlacesDetailMapViewController.m; path = ViewControllers/PlacesDetailMapViewController.m; sourceTree = "<group>"; };
+		7994CF0F177A3C20003994FB /* PlacesDetailMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlacesDetailMapViewController.xib; path = ViewControllers/PlacesDetailMapViewController.xib; sourceTree = "<group>"; };
 		79B866891772117E0074C9FE /* MapPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapPin.h; path = ViewControllers/ThirdPartyViews/MapPin.h; sourceTree = "<group>"; };
 		79B8668A1772117E0074C9FE /* MapPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapPin.m; path = ViewControllers/ThirdPartyViews/MapPin.m; sourceTree = "<group>"; };
 		79B8668B1772117E0074C9FE /* MKMapView+ZoomLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MKMapView+ZoomLevel.h"; path = "ViewControllers/ThirdPartyViews/MKMapView+ZoomLevel.h"; sourceTree = "<group>"; };
@@ -567,6 +572,9 @@
 				79B866A1177243780074C9FE /* PlacesDetailViewController.h */,
 				79B866A2177243780074C9FE /* PlacesDetailViewController.m */,
 				79B866A3177243790074C9FE /* PlacesDetailViewController.xib */,
+				7994CF0D177A3C20003994FB /* PlacesDetailMapViewController.h */,
+				7994CF0E177A3C20003994FB /* PlacesDetailMapViewController.m */,
+				7994CF0F177A3C20003994FB /* PlacesDetailMapViewController.xib */,
 				798AD95A176F869200276A97 /* InboxViewController.h */,
 				798AD95B176F869200276A97 /* InboxViewController.m */,
 				798AD95C176F869200276A97 /* InboxViewController.xib */,
@@ -1028,6 +1036,7 @@
 				798D759F1774E954004B282D /* ab_add_my_places.png in Resources */,
 				798D75A01774E954004B282D /* ab_message_delete.png in Resources */,
 				798BF23B17788AF20062BA62 /* StoreCell.xib in Resources */,
+				7994CF11177A3C20003994FB /* PlacesDetailMapViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1112,6 +1121,7 @@
 				79B866AB17725A190074C9FE /* SIAlertView.m in Sources */,
 				798BF23E17788B960062BA62 /* StoreCell.m in Sources */,
 				798BF2411778A3EB0062BA62 /* PatronStore.m in Sources */,
+				7994CF10177A3C20003994FB /* PlacesDetailMapViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

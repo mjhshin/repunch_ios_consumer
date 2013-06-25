@@ -12,7 +12,7 @@
 #import "ModalDelegate.h"
 #import "Store.h"
 
-@interface PlacesDetailViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface PlacesDetailViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, ModalDelegate>
 
 @property (nonatomic, retain) id<ModalDelegate> modalDelegate;
 @property (nonatomic, retain) Store* storeObject;
