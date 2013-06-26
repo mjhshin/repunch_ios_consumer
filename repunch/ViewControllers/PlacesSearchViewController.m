@@ -15,6 +15,8 @@
 #import "StoreCell.h"
 
 #import <Parse/Parse.h>
+#import "AppDelegate.h"
+
 
 @implementation PlacesSearchViewController{
     __block NSMutableArray *storeList;
@@ -29,7 +31,6 @@
 - (void)setup {
     //get all locally stored store entitires and set that to be storeList
     storeList = [[Store MR_findAll] mutableCopy];
-
     
     //update list with stores from cache+network
     //will only add new stores, will not check/change any information for locally stored stores
@@ -128,6 +129,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self setup];
+    localUser = [(AppDelegate *)[[UIApplication sharedApplication] delegate] localUser];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receiveLoadedPics:)
                                                  name:@"FinishedLoadingPic"
@@ -193,17 +196,16 @@
      
      if ([localUser alreadyHasStoreSaved:[currentCellStore objectId]]){
          PatronStore *patronStore = [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", localUser.patronId, [currentCellStore objectId]]];
-         NSNumber *punches = [patronStore punch_count];
-         addressString = [addressString stringByAppendingFormat:@"\n%@ punches", punches];
-         NSLog(@"address string is %@", addressString);
+         int punches = [[patronStore punch_count] intValue];
+         [[cell punchesPic] setHidden:FALSE];
+         [[cell numberOfPunches] setText:[NSString stringWithFormat:@"%d %@", punches, (punches==1)?@"punch":@"punches"]];
      }
-     NSLog(@"address string is %@", addressString);
 
      [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
      cell.storeAddressLabel.text = addressString;
      cell.storeNameLabel.text = [currentCellStore valueForKey:@"store_name"];
      cell.storeImageLabel.image = [UIImage imageWithData:[currentCellStore valueForKey:@"store_avatar"]];
-      
+     
      return cell;
 
  }

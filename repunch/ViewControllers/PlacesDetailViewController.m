@@ -11,6 +11,8 @@
 #import "SIAlertView.h"
 #import "User.h"
 #import "PatronStore.h"
+#import "AppDelegate.h"
+
 
 
 //TODO: make sure all alert dialogues match
@@ -38,7 +40,7 @@
 {
     [super viewDidLoad];
     
-    localUser = [User MR_findFirstByAttribute:@"username" withValue:[[PFUser currentUser] username]];
+    localUser = [(AppDelegate *)[[UIApplication sharedApplication] delegate] localUser];
     _isSavedStore = [localUser alreadyHasStoreSaved:[_storeObject objectId]];
 
     //THIS IS A TOOLBAR
@@ -263,9 +265,11 @@
     [placeBottomContainer addSubview:placeActionsViewBorderBottom];
     [self.view addSubview:placeBottomContainer];
 
-    placeRewardData = [[NSMutableArray alloc] initWithArray:[[_storeObject valueForKey:@"rewards"] allObjects]];
-    [placeRewardData sortUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:@"required" ascending:YES]]];
-
+    placeRewardData = [[[_storeObject mutableSetValueForKey:@"rewards"] allObjects] mutableCopy];
+    NSLog(@"%@", placeRewardData);
+    
+    [placeRewardData sortUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:@"punches" ascending:YES]]];
+    
     UITableView *placeRewardsTable = [[UITableView alloc] initWithFrame:CGRectMake(0, placeActionsViewBorderBottom.frame.origin.y + 1, self.view.frame.size.width, self.view.frame.size.height - placeActionsViewBorderBottom.frame.origin.y - 1 - 49) style:UITableViewStylePlain];
     [placeRewardsTable setDataSource:self];
     [placeRewardsTable setDelegate:self];

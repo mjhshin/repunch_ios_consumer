@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GlobalToolbar.h"
 
-@interface InboxViewController : UIViewController
+#import "ModalDelegate.h"
+
+@interface InboxViewController : UIViewController <GlobalToolbarDelegate, UITableViewDataSource, UITableViewDelegate, ModalDelegate>
 
 @end

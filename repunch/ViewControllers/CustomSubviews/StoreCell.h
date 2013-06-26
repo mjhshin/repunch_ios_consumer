@@ -12,5 +12,7 @@
 @property (nonatomic, weak) IBOutlet UILabel *storeNameLabel;
 @property (nonatomic, weak) IBOutlet UILabel *storeAddressLabel;
 @property (nonatomic, weak) IBOutlet UIImageView *storeImageLabel;
+@property (weak, nonatomic) IBOutlet UILabel *numberOfPunches;
+@property (weak, nonatomic) IBOutlet UIImageView *punchesPic;
 
 @end

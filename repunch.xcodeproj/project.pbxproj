@@ -166,6 +166,16 @@
 		798D75A01774E954004B282D /* ab_message_delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 798D759E1774E954004B282D /* ab_message_delete.png */; };
 		7994CF10177A3C20003994FB /* PlacesDetailMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7994CF0E177A3C20003994FB /* PlacesDetailMapViewController.m */; };
 		7994CF11177A3C20003994FB /* PlacesDetailMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7994CF0F177A3C20003994FB /* PlacesDetailMapViewController.xib */; };
+		799BDBF8177B35FD00AA472D /* ic_tab_punch_tiny.png in Resources */ = {isa = PBXBuildFile; fileRef = 799BDBF6177B35FD00AA472D /* ic_tab_punch_tiny.png */; };
+		799BDBF9177B35FD00AA472D /* reward_unlocked_tiny.png in Resources */ = {isa = PBXBuildFile; fileRef = 799BDBF7177B35FD00AA472D /* reward_unlocked_tiny.png */; };
+		799BDBFC177B360700AA472D /* ic_tab_punch_tiny.png in Resources */ = {isa = PBXBuildFile; fileRef = 799BDBFA177B360700AA472D /* ic_tab_punch_tiny.png */; };
+		799BDBFD177B360700AA472D /* reward_unlocked_tiny.png in Resources */ = {isa = PBXBuildFile; fileRef = 799BDBFB177B360700AA472D /* reward_unlocked_tiny.png */; };
+		799BDBFF177B36BC00AA472D /* SavedStoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799BDBFE177B36BC00AA472D /* SavedStoreCell.xib */; };
+		799BDC02177B372200AA472D /* SavedStoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 799BDC01177B372200AA472D /* SavedStoreCell.m */; };
+		799BDC04177B5E9300AA472D /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799BDC03177B5E9300AA472D /* MessageCell.xib */; };
+		799BDC07177B5F5200AA472D /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 799BDC06177B5F5200AA472D /* MessageCell.m */; };
+		799BDC0B177B8F0400AA472D /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 799BDC09177B8F0300AA472D /* MessageViewController.m */; };
+		799BDC0C177B8F0400AA472D /* MessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799BDC0A177B8F0300AA472D /* MessageViewController.xib */; };
 		79B866911772117E0074C9FE /* MapPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B8668A1772117E0074C9FE /* MapPin.m */; };
 		79B866921772117E0074C9FE /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B8668C1772117E0074C9FE /* MKMapView+ZoomLevel.m */; };
 		79B866931772117E0074C9FE /* NSDate+whenString.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B8668E1772117E0074C9FE /* NSDate+whenString.m */; };
@@ -398,6 +408,19 @@
 		7994CF0D177A3C20003994FB /* PlacesDetailMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlacesDetailMapViewController.h; path = ViewControllers/PlacesDetailMapViewController.h; sourceTree = "<group>"; };
 		7994CF0E177A3C20003994FB /* PlacesDetailMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlacesDetailMapViewController.m; path = ViewControllers/PlacesDetailMapViewController.m; sourceTree = "<group>"; };
 		7994CF0F177A3C20003994FB /* PlacesDetailMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlacesDetailMapViewController.xib; path = ViewControllers/PlacesDetailMapViewController.xib; sourceTree = "<group>"; };
+		799BDBF6177B35FD00AA472D /* ic_tab_punch_tiny.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_tab_punch_tiny.png; path = Images/ic_tab_punch_tiny.png; sourceTree = "<group>"; };
+		799BDBF7177B35FD00AA472D /* reward_unlocked_tiny.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = reward_unlocked_tiny.png; path = Images/reward_unlocked_tiny.png; sourceTree = "<group>"; };
+		799BDBFA177B360700AA472D /* ic_tab_punch_tiny.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_tab_punch_tiny.png; path = Images/ic_tab_punch_tiny.png; sourceTree = "<group>"; };
+		799BDBFB177B360700AA472D /* reward_unlocked_tiny.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = reward_unlocked_tiny.png; path = Images/reward_unlocked_tiny.png; sourceTree = "<group>"; };
+		799BDBFE177B36BC00AA472D /* SavedStoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SavedStoreCell.xib; path = ViewControllers/CustomSubviews/SavedStoreCell.xib; sourceTree = "<group>"; };
+		799BDC00177B372200AA472D /* SavedStoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SavedStoreCell.h; path = ViewControllers/CustomSubviews/SavedStoreCell.h; sourceTree = "<group>"; };
+		799BDC01177B372200AA472D /* SavedStoreCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SavedStoreCell.m; path = ViewControllers/CustomSubviews/SavedStoreCell.m; sourceTree = "<group>"; };
+		799BDC03177B5E9300AA472D /* MessageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageCell.xib; path = ViewControllers/CustomSubviews/MessageCell.xib; sourceTree = "<group>"; };
+		799BDC05177B5F5200AA472D /* MessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageCell.h; path = ViewControllers/CustomSubviews/MessageCell.h; sourceTree = "<group>"; };
+		799BDC06177B5F5200AA472D /* MessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageCell.m; path = ViewControllers/CustomSubviews/MessageCell.m; sourceTree = "<group>"; };
+		799BDC08177B8F0300AA472D /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageViewController.h; path = ViewControllers/MessageViewController.h; sourceTree = "<group>"; };
+		799BDC09177B8F0300AA472D /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageViewController.m; path = ViewControllers/MessageViewController.m; sourceTree = "<group>"; };
+		799BDC0A177B8F0300AA472D /* MessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageViewController.xib; path = ViewControllers/MessageViewController.xib; sourceTree = "<group>"; };
 		79B866891772117E0074C9FE /* MapPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapPin.h; path = ViewControllers/ThirdPartyViews/MapPin.h; sourceTree = "<group>"; };
 		79B8668A1772117E0074C9FE /* MapPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapPin.m; path = ViewControllers/ThirdPartyViews/MapPin.m; sourceTree = "<group>"; };
 		79B8668B1772117E0074C9FE /* MKMapView+ZoomLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MKMapView+ZoomLevel.h"; path = "ViewControllers/ThirdPartyViews/MKMapView+ZoomLevel.h"; sourceTree = "<group>"; };
@@ -584,6 +607,9 @@
 				798ADA22176FB65200276A97 /* RegisterViewController.h */,
 				798ADA23176FB65200276A97 /* RegisterViewController.m */,
 				798ADA24176FB65200276A97 /* RegisterViewController.xib */,
+				799BDC08177B8F0300AA472D /* MessageViewController.h */,
+				799BDC09177B8F0300AA472D /* MessageViewController.m */,
+				799BDC0A177B8F0300AA472D /* MessageViewController.xib */,
 			);
 			name = "ViewControllers+Views";
 			sourceTree = "<group>";
@@ -612,6 +638,8 @@
 		798AD8DB176F832F00276A97 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				799BDBF6177B35FD00AA472D /* ic_tab_punch_tiny.png */,
+				799BDBF7177B35FD00AA472D /* reward_unlocked_tiny.png */,
 				798D759D1774E954004B282D /* ab_add_my_places.png */,
 				798D759E1774E954004B282D /* ab_message_delete.png */,
 				79DEAE6C1770A963003DEBBF /* ico-tab-inbox@2xsmall.png */,
@@ -694,6 +722,8 @@
 				798AD9B4176F8E1900276A97 /* login-button-small@2x.png */,
 				798AD9B5176F8E1900276A97 /* placeholder.png */,
 				798AD9B6176F8E1900276A97 /* repunch-logo.png */,
+				799BDBFA177B360700AA472D /* ic_tab_punch_tiny.png */,
+				799BDBFB177B360700AA472D /* reward_unlocked_tiny.png */,
 				798AD9B7176F8E1900276A97 /* repunch-logo@2x.png */,
 				798AD9B8176F8E1900276A97 /* repunch@2x.png */,
 				798AD9B9176F8E1900276A97 /* splash@2x.png */,
@@ -816,19 +846,17 @@
 		798AD965176F8D5E00276A97 /* CustomUIViews */ = {
 			isa = PBXGroup;
 			children = (
-				79B866891772117E0074C9FE /* MapPin.h */,
-				79B8668A1772117E0074C9FE /* MapPin.m */,
-				79B8668B1772117E0074C9FE /* MKMapView+ZoomLevel.h */,
-				79B8668C1772117E0074C9FE /* MKMapView+ZoomLevel.m */,
-				79B8668D1772117E0074C9FE /* NSDate+whenString.h */,
-				79B8668E1772117E0074C9FE /* NSDate+whenString.m */,
-				79B8668F1772117E0074C9FE /* UIViewController+animateView.h */,
-				79B866901772117E0074C9FE /* UIViewController+animateView.m */,
 				798AD966176F8D9B00276A97 /* GlobalToolbar.h */,
 				798AD967176F8D9B00276A97 /* GlobalToolbar.m */,
 				798BF23A17788AF20062BA62 /* StoreCell.xib */,
 				798BF23C17788B960062BA62 /* StoreCell.h */,
 				798BF23D17788B960062BA62 /* StoreCell.m */,
+				799BDBFE177B36BC00AA472D /* SavedStoreCell.xib */,
+				799BDC00177B372200AA472D /* SavedStoreCell.h */,
+				799BDC01177B372200AA472D /* SavedStoreCell.m */,
+				799BDC03177B5E9300AA472D /* MessageCell.xib */,
+				799BDC05177B5F5200AA472D /* MessageCell.h */,
+				799BDC06177B5F5200AA472D /* MessageCell.m */,
 			);
 			name = CustomUIViews;
 			sourceTree = "<group>";
@@ -854,6 +882,14 @@
 		79B86688177211460074C9FE /* ThirdPartyViews */ = {
 			isa = PBXGroup;
 			children = (
+				79B866891772117E0074C9FE /* MapPin.h */,
+				79B8668A1772117E0074C9FE /* MapPin.m */,
+				79B8668B1772117E0074C9FE /* MKMapView+ZoomLevel.h */,
+				79B8668C1772117E0074C9FE /* MKMapView+ZoomLevel.m */,
+				79B8668D1772117E0074C9FE /* NSDate+whenString.h */,
+				79B8668E1772117E0074C9FE /* NSDate+whenString.m */,
+				79B8668F1772117E0074C9FE /* UIViewController+animateView.h */,
+				79B866901772117E0074C9FE /* UIViewController+animateView.m */,
 			);
 			name = ThirdPartyViews;
 			sourceTree = "<group>";
@@ -1037,6 +1073,13 @@
 				798D75A01774E954004B282D /* ab_message_delete.png in Resources */,
 				798BF23B17788AF20062BA62 /* StoreCell.xib in Resources */,
 				7994CF11177A3C20003994FB /* PlacesDetailMapViewController.xib in Resources */,
+				799BDBF8177B35FD00AA472D /* ic_tab_punch_tiny.png in Resources */,
+				799BDBF9177B35FD00AA472D /* reward_unlocked_tiny.png in Resources */,
+				799BDBFC177B360700AA472D /* ic_tab_punch_tiny.png in Resources */,
+				799BDBFD177B360700AA472D /* reward_unlocked_tiny.png in Resources */,
+				799BDBFF177B36BC00AA472D /* SavedStoreCell.xib in Resources */,
+				799BDC04177B5E9300AA472D /* MessageCell.xib in Resources */,
+				799BDC0C177B8F0400AA472D /* MessageViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1122,6 +1165,9 @@
 				798BF23E17788B960062BA62 /* StoreCell.m in Sources */,
 				798BF2411778A3EB0062BA62 /* PatronStore.m in Sources */,
 				7994CF10177A3C20003994FB /* PlacesDetailMapViewController.m in Sources */,
+				799BDC02177B372200AA472D /* SavedStoreCell.m in Sources */,
+				799BDC07177B5F5200AA472D /* MessageCell.m in Sources */,
+				799BDC0B177B8F0400AA472D /* MessageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,7 +12,6 @@
 
 @interface PlacesViewController : UIViewController <GlobalToolbarDelegate, ModalDelegate, UITableViewDelegate, UITableViewDataSource>
 
-
 //Global Toolbar Delegate Methods
 - (void) openSettings;
 - (void) closeSettings;

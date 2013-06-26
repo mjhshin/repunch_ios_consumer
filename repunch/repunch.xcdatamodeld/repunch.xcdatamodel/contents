@@ -50,7 +50,7 @@
         <attribute name="zip" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Category" inverseName="store" inverseEntity="Category" syncable="YES"/>
         <relationship name="hours" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Hour" inverseName="store" inverseEntity="Hour" syncable="YES"/>
-        <relationship name="rewards" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Reward" inverseName="store" inverseEntity="Reward" syncable="YES"/>
+        <relationship name="rewards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Reward" inverseName="store" inverseEntity="Reward" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
@@ -70,9 +70,9 @@
         <element name="Category" positionX="160" positionY="192" width="128" height="90"/>
         <element name="Hour" positionX="160" positionY="192" width="128" height="105"/>
         <element name="Message" positionX="160" positionY="192" width="128" height="165"/>
+        <element name="PatronStore" positionX="160" positionY="192" width="128" height="120"/>
         <element name="Reward" positionX="160" positionY="192" width="128" height="105"/>
         <element name="Store" positionX="160" positionY="192" width="128" height="285"/>
         <element name="User" positionX="160" positionY="192" width="128" height="225"/>
-        <element name="PatronStore" positionX="160" positionY="192" width="128" height="120"/>
     </elements>
 </model>

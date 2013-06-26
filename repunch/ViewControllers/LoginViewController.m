@@ -52,7 +52,19 @@
                 [_passwordInput resignFirstResponder];
                 
                 AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-                [appDelegate.window setRootViewController:appDelegate.tabBarController];
+                
+                PFObject *patronObject = [[PFUser currentUser] valueForKey:@"Patron"];
+                [patronObject fetchIfNeededInBackgroundWithBlock:^(PFObject *fetchedPatronObject, NSError *error) {
+                    [appDelegate setPatronObject:fetchedPatronObject];
+                    [appDelegate.window setRootViewController:appDelegate.tabBarController];
+                    
+                    User *localUserEntity = [User MR_createEntity];
+                    [localUserEntity setFromParseUserObject:user andPatronObject:fetchedPatronObject];
+                    [appDelegate setLocalUser:localUserEntity];
+
+
+                }];
+                
 
             }
          else {

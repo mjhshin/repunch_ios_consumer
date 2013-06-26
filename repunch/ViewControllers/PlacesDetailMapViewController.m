@@ -52,8 +52,6 @@
     [directionsButton setFrame:CGRectMake(0, 0, 100, 40)];
     [directionsButton addTarget:self action:@selector(getWalkingDirections) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *directionButtonItem = [[UIBarButtonItem alloc] initWithCustomView:directionsButton];
-
-
     
     [placeToolbar setItems:[NSArray arrayWithObjects:closePlaceButtonItem, flex, placeTitleItem, flex2, directionButtonItem, nil]];
     [self.view addSubview:placeToolbar];
@@ -85,13 +83,14 @@
     Class mapItemClass = [MKMapItem class];
     if (mapItemClass && [mapItemClass respondsToSelector:@selector(openMapsWithItems:launchOptions:)])
     {
+
         // Create an MKMapItem to pass to the Maps app
         CLLocationCoordinate2D coordinate =
         CLLocationCoordinate2DMake([_place latitude],[_place longitude]);
         MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:coordinate
                                                        addressDictionary:nil];
         MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
-        [mapItem setName:@"My Place"];
+        [mapItem setName:[_place store_name]];
         
         // Set the directions mode to "Walking"
         NSDictionary *launchOptions = @{MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeWalking};

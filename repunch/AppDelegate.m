@@ -9,8 +9,8 @@
 #import "AppDelegate.h"
 
 #import "PlacesViewController.h"
-#import "InboxViewController.h"
 #import "LoginViewController.h"
+#import "InboxViewController.h"
 
 #import <Parse/Parse.h>
 
@@ -19,9 +19,9 @@
 #import "PatronStore.h"
 
 @implementation AppDelegate{
+    LoginViewController *loginVC;
     PlacesViewController *placesVC;
     InboxViewController *inboxVC;
-    LoginViewController *loginVC;
 }
 
 //JUST FOR MY OWN SANITY, what's goingon:
@@ -42,10 +42,12 @@
     
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"repunch_local.sqlite"];
     
-    [self printDataForObject:@"Store"];
-    [self printDataForObject:@"PatronStore"];
+    //[self printDataForObject:@"Store"];
+    //[self printDataForObject:@"PatronStore"];
     [self printDataForObject:@"User"];
     //[self deleteDataForObject:@"PatronStore"];
+    //[self deleteDataForObject:@"Store"];
+    //[self deleteDataForObject:@"User"];
 
     //Init Tab Bar and all related view controllers
     placesVC = [[PlacesViewController alloc] init];
@@ -77,14 +79,29 @@
         [self.tabBarController setSelectedIndex:2];
     }
     
-    
     //[PFUser logOut];
     
-    //if user is cached, load their local data
+    //if user is cached, load their cached data
     //else, go to login page
     if ([PFUser currentUser])
     {
-        self.window.rootViewController = self.tabBarController;
+        
+        _localUser = [User MR_findFirstByAttribute:@"username" withValue:[[PFUser currentUser]username]];
+        
+        NSLog(@"user:%@", [_localUser username]);
+
+        if (!_patronObject){
+            PFObject *patronObject = [[PFUser currentUser] valueForKey:@"Patron"];
+            [patronObject fetchIfNeededInBackgroundWithBlock:^(PFObject *fetchedPatronObject, NSError *error) {
+                _patronObject = fetchedPatronObject;
+                if (!_localUser){
+                    [_localUser setFromParseUserObject:[PFUser currentUser] andPatronObject:fetchedPatronObject];
+                }
+                self.window.rootViewController = self.tabBarController;
+            }];
+        }
+        else
+            self.window.rootViewController = self.tabBarController;
     } else {
         loginVC = [[LoginViewController alloc] init];
         self.window.rootViewController = loginVC;

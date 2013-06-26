@@ -19,15 +19,15 @@
 @dynamic city;
 @dynamic store_avatar;
 @dynamic street;
-@dynamic cross_streets;
-@dynamic neighborhood;
+@dynamic cross_streets; //can be null
+@dynamic neighborhood; //can be null
 @dynamic state;
 @dynamic zip;
 @dynamic country;
 @dynamic phone_number;
-@dynamic categories;
-@dynamic hours;
-@dynamic rewards;
+@dynamic categories; //mandatory, but can be empty array
+@dynamic hours; //mandatory, but can be empty array
+@dynamic rewards; //ditto
 @dynamic longitude;
 @dynamic latitude;
 
@@ -37,6 +37,7 @@
     
     PFFile *picFile = [store objectForKey:@"store_avatar"];
     if (!([store objectForKey:@"store_avatar"] == [NSNull null])){
+        //add error checking
         [picFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
             self.store_avatar = data;
             NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
@@ -44,8 +45,6 @@
             [[NSNotificationCenter defaultCenter]
              postNotificationName:@"FinishedLoadingPic"
              object:self];
-
-
         }];
     } else self.store_avatar = [NSData dataWithContentsOfFile:@"Icon@2x"];
 
@@ -85,6 +84,7 @@
     for (PFObject *reward in rewards) {
         Reward *newReward = [Reward MR_createInContext:localContext];
         [newReward setFromParse:reward];
+        [newReward setStore:self];
         [localContext MR_saveToPersistentStoreAndWait];
     }
     

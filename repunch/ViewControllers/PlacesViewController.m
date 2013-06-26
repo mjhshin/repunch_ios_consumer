@@ -11,10 +11,12 @@
 #import "PlacesDetailViewController.h"
 #import "User.h"
 #import "Store.h"
+#import "Reward.h"
 #import "PatronStore.h"
-#import "StoreCell.h"
+#import "SavedStoreCell.h"
 #import "GlobalToolbar.h"
 #import <Parse/Parse.h>
+#import "AppDelegate.h"
 
 //JUST FOR MY OWN SANITY, what's goingon:
 //on viewdidload: set up UI, meaning global toolbar, tableview
@@ -29,6 +31,7 @@
     GlobalToolbar *globalToolbar;
     NSMutableArray *savedStores;
     UITableView *savedStoresTable;
+    PFObject *patronObject;
 
 }
 
@@ -48,46 +51,44 @@
 
     
     savedStores = [[[localUser mutableSetValueForKey:@"saved_stores"] allObjects] mutableCopy];
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"punch_count"  ascending:YES];
+    savedStores = [[savedStores sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]] mutableCopy];
+
     [savedStoresTable reloadData];
     
     //NSLog(@"here are stores in local user %@: %@", localUser.username, [[patronStores valueForKey:@"store"] valueForKey:@"store_name"]);
+    NSLog(@"user:%@", [localUser username]);
     NSLog(@"here are saved stores: %@", [[savedStores valueForKey:@"store"] valueForKey:@"store_name"]);
     
-    PFQuery *patronQuery = [PFQuery queryWithClassName:@"Patron"];
-    [patronQuery getObjectInBackgroundWithId:localUser.patronId block:^(PFObject *fetchedPatron, NSError *error) {
-        PFRelation *patronStoreRelation = [fetchedPatron relationforKey:@"PatronStores"];
-        PFQuery *storeQuery = [patronStoreRelation query];
-        [storeQuery includeKey:@"Store"];
-        [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *fetchedPatronStores, NSError *error) {
-            for (PFObject *fetchedPatronStore in fetchedPatronStores){
-                BOOL isAlreadyInList = [localUser alreadyHasStoreSaved:[[fetchedPatronStore valueForKey:@"Store"] objectId]];
+    PFRelation *patronStoreRelation = [patronObject relationforKey:@"PatronStores"];
+    PFQuery *storeQuery = [patronStoreRelation query];
+    [storeQuery includeKey:@"Store"];
+    [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *fetchedPatronStores, NSError *error) {
+        for (PFObject *fetchedPatronStore in fetchedPatronStores){
+            BOOL isAlreadyInList = [localUser alreadyHasStoreSaved:[[fetchedPatronStore valueForKey:@"Store"] objectId]];
 
-                //NSLog(@"%@ %@ already is list", [[fetchedPatronStore valueForKey:@"Store"] valueForKey:@"store_name"], isAlreadyInList?@"is":@"IS NOT");
-                if (isAlreadyInList){
-                    PatronStore *storeToBeUpdated = [PatronStore MR_findFirstByAttribute:@"store_id" withValue:[[fetchedPatronStore valueForKey:@"Store"] objectId]];
-                    [storeToBeUpdated updateLocalEntityWithParseObject:fetchedPatronStore];
-                    [savedStoresTable reloadData];
-                }
-                
-                if (!isAlreadyInList){
-                    PatronStore *newPatronStore = [PatronStore MR_createEntity];
-                    Store *newSavedStore = [Store MR_findFirstByAttribute:@"objectId" withValue:[[fetchedPatronStore valueForKey:@"Store"] objectId]];
-                    if (!newSavedStore){
-                        newSavedStore = [Store MR_createEntity];
-                        [newSavedStore setFromParseObject:[fetchedPatronStore valueForKey:@"Store"]];
-                    }
-                    
-                    [newPatronStore setFromPatronObject:fetchedPatronStore andStoreEntity:newSavedStore andUserEntity:localUser];
-                    [savedStores addObject:newPatronStore];
-                    [savedStoresTable reloadData];
-                }
+            //NSLog(@"%@ %@ already is list", [[fetchedPatronStore valueForKey:@"Store"] valueForKey:@"store_name"], isAlreadyInList?@"is":@"IS NOT");
+            if (isAlreadyInList){
+                PatronStore *storeToBeUpdated = [PatronStore MR_findFirstByAttribute:@"store_id" withValue:[[fetchedPatronStore valueForKey:@"Store"] objectId]];
+                [storeToBeUpdated updateLocalEntityWithParseObject:fetchedPatronStore];
+                [savedStoresTable reloadData];
             }
             
-        }];
-
+            if (!isAlreadyInList){
+                PatronStore *newPatronStore = [PatronStore MR_createEntity];
+                Store *newSavedStore = [Store MR_findFirstByAttribute:@"objectId" withValue:[[fetchedPatronStore valueForKey:@"Store"] objectId]];
+                if (!newSavedStore){
+                    newSavedStore = [Store MR_createEntity];
+                    [newSavedStore setFromParseObject:[fetchedPatronStore valueForKey:@"Store"]];
+                }
+                
+                [newPatronStore setFromPatronObject:fetchedPatronStore andStoreEntity:newSavedStore andUserEntity:localUser];
+                [savedStores addObject:newPatronStore];
+                [savedStoresTable reloadData];
+            }
+        }
+        
     }];
-     
-     
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -108,20 +109,6 @@
     [[self view] addSubview:spinner];
     [spinner startAnimating];
 
-    
-    localUser = [User MR_findFirstByAttribute:@"username" withValue:[[PFUser currentUser] username]];
-    if (localUser == nil){
-        localUser = [User MR_createEntity];
-        PFObject *patron = [[PFUser currentUser] objectForKey:@"Patron"];
-        [patron fetchIfNeededInBackgroundWithBlock:^(PFObject *fetchedPatron, NSError *error) {
-            [spinner stopAnimating];
-            if (!error){
-                [localUser setFromParseUserObject:[PFUser currentUser] andPatronObject:fetchedPatron];
-                [self setup];
-            } else NSLog(@"Error is %@", error);
-        }];
-    } else if ([localUser.patronId length]>0) [self setup];
-    
     globalToolbar = [[GlobalToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 46)];
     [(GlobalToolbar *)globalToolbar setToolbarDelegate:self];
     [self.view addSubview:globalToolbar];
@@ -137,10 +124,11 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    localUser = [(AppDelegate *)[[UIApplication sharedApplication] delegate] localUser];
+    patronObject = [(AppDelegate *)[[UIApplication sharedApplication] delegate] patronObject];
+
     [super viewWillAppear:animated];
-    if ([localUser.patronId length]>0){
-        [self setup];
-    }
+    [self setup];
 
 }
 
@@ -175,6 +163,8 @@
     [self presentViewController:placesSearchVC animated:YES completion:NULL];
 }
 
+#pragma mark - Modal View Delegate
+
 - (void)didDismissPresentedViewController{
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
@@ -195,16 +185,27 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"StoreCell";
-    StoreCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *CellIdentifier = @"SavedStoreCell";
+    SavedStoreCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[NSBundle mainBundle]loadNibNamed:@"StoreCell" owner:self options:nil]objectAtIndex:0];        
+        cell = [[[NSBundle mainBundle]loadNibNamed:@"SavedStoreCell" owner:self options:nil]objectAtIndex:0];        
     }
-    NSNumber *punches = [[savedStores objectAtIndex:indexPath.row]valueForKey:@"punch_count"];
+    int punches = [[[savedStores objectAtIndex:indexPath.row]valueForKey:@"punch_count"] intValue];
     [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
-    cell.storeNameLabel.text = [[[savedStores objectAtIndex:indexPath.row] store] valueForKey:@"store_name"];
-    cell.storeImageLabel.image = [UIImage imageWithData:[[[savedStores objectAtIndex:indexPath.row] store] valueForKey:@"store_avatar"]];
-    cell.storeAddressLabel.text = [NSString stringWithFormat:@"%@ %@", punches, ([punches isEqualToNumber:[NSNumber numberWithInt:1]])?@"punch": @"punches"];
+    cell.storeName.text = [[[savedStores objectAtIndex:indexPath.row] store] valueForKey:@"store_name"];
+    cell.storePic.image = [UIImage imageWithData:[[[savedStores objectAtIndex:indexPath.row] store] valueForKey:@"store_avatar"]];
+    cell.numberPuches.text = [NSString stringWithFormat:@"%i %@", punches, (punches == 1)?@"punch": @"punches"];
+    
+    Store *storeForThisCell = [[savedStores objectAtIndex:indexPath.row] store];
+    NSArray *rewardsArray = [[storeForThisCell mutableSetValueForKey:@"rewards"] allObjects];
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"punches"  ascending:YES];
+    rewardsArray = [rewardsArray sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
+
+    if (rewardsArray && ([[rewardsArray[0] valueForKey:@"punches"] intValue]<=punches)){
+        [[cell rewardLabel] setHidden:FALSE];
+        [[cell rewardPic] setHidden:FALSE];
+    }
+    
         
     return cell;
 }
