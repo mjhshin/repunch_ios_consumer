@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		796F64AF177CB43100457B16 /* reward_locked.png in Resources */ = {isa = PBXBuildFile; fileRef = 796F64AE177CB43100457B16 /* reward_locked.png */; };
+		796F64B1177CB70E00457B16 /* ico-feedback-block.png in Resources */ = {isa = PBXBuildFile; fileRef = 796F64B0177CB70E00457B16 /* ico-feedback-block.png */; };
+		796F64B3177CBD8400457B16 /* reward_unlocked.png in Resources */ = {isa = PBXBuildFile; fileRef = 796F64B2177CBD8400457B16 /* reward_unlocked.png */; };
+		796F64B5177CBEEA00457B16 /* CustomToolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 796F64B4177CBEEA00457B16 /* CustomToolbar.xib */; };
+		796F64B8177CBFCA00457B16 /* CustomToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 796F64B7177CBFCA00457B16 /* CustomToolbar.m */; };
+		796F64BC177CC52100457B16 /* ComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 796F64BA177CC52000457B16 /* ComposeViewController.m */; };
+		796F64BD177CC52100457B16 /* ComposeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 796F64BB177CC52000457B16 /* ComposeViewController.xib */; };
 		798AD89F176F82C700276A97 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 798AD89E176F82C700276A97 /* UIKit.framework */; };
 		798AD8A1176F82C700276A97 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 798AD8A0176F82C700276A97 /* Foundation.framework */; };
 		798AD8A3176F82C700276A97 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 798AD8A2176F82C700276A97 /* CoreGraphics.framework */; };
@@ -162,6 +169,8 @@
 		798BF23B17788AF20062BA62 /* StoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798BF23A17788AF20062BA62 /* StoreCell.xib */; };
 		798BF23E17788B960062BA62 /* StoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 798BF23D17788B960062BA62 /* StoreCell.m */; };
 		798BF2411778A3EB0062BA62 /* PatronStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 798BF2401778A3EB0062BA62 /* PatronStore.m */; };
+		798C714B177C990F0038423C /* RewardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798C714A177C990F0038423C /* RewardCell.xib */; };
+		798C714E177C9B4C0038423C /* RewardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 798C714D177C9B4B0038423C /* RewardCell.m */; };
 		798D759F1774E954004B282D /* ab_add_my_places.png in Resources */ = {isa = PBXBuildFile; fileRef = 798D759D1774E954004B282D /* ab_add_my_places.png */; };
 		798D75A01774E954004B282D /* ab_message_delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 798D759E1774E954004B282D /* ab_message_delete.png */; };
 		7994CF10177A3C20003994FB /* PlacesDetailMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7994CF0E177A3C20003994FB /* PlacesDetailMapViewController.m */; };
@@ -203,6 +212,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		796F64AE177CB43100457B16 /* reward_locked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = reward_locked.png; path = Images/reward_locked.png; sourceTree = "<group>"; };
+		796F64B0177CB70E00457B16 /* ico-feedback-block.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ico-feedback-block.png"; path = "Images/ico-feedback-block.png"; sourceTree = "<group>"; };
+		796F64B2177CBD8400457B16 /* reward_unlocked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = reward_unlocked.png; path = Images/reward_unlocked.png; sourceTree = "<group>"; };
+		796F64B4177CBEEA00457B16 /* CustomToolbar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CustomToolbar.xib; path = ViewControllers/CustomSubviews/CustomToolbar.xib; sourceTree = "<group>"; };
+		796F64B6177CBFCA00457B16 /* CustomToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomToolbar.h; path = ViewControllers/CustomSubviews/CustomToolbar.h; sourceTree = "<group>"; };
+		796F64B7177CBFCA00457B16 /* CustomToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomToolbar.m; path = ViewControllers/CustomSubviews/CustomToolbar.m; sourceTree = "<group>"; };
+		796F64B9177CC52000457B16 /* ComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComposeViewController.h; path = ViewControllers/ComposeViewController.h; sourceTree = "<group>"; };
+		796F64BA177CC52000457B16 /* ComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ComposeViewController.m; path = ViewControllers/ComposeViewController.m; sourceTree = "<group>"; };
+		796F64BB177CC52000457B16 /* ComposeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ComposeViewController.xib; path = ViewControllers/ComposeViewController.xib; sourceTree = "<group>"; };
 		798AD89B176F82C700276A97 /* Repunch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Repunch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		798AD89E176F82C700276A97 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		798AD8A0176F82C700276A97 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -403,6 +421,9 @@
 		798BF23D17788B960062BA62 /* StoreCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoreCell.m; path = ViewControllers/CustomSubviews/StoreCell.m; sourceTree = "<group>"; };
 		798BF23F1778A3EB0062BA62 /* PatronStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PatronStore.h; path = Entities/PatronStore.h; sourceTree = "<group>"; };
 		798BF2401778A3EB0062BA62 /* PatronStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PatronStore.m; path = Entities/PatronStore.m; sourceTree = "<group>"; };
+		798C714A177C990F0038423C /* RewardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RewardCell.xib; path = ViewControllers/CustomSubviews/RewardCell.xib; sourceTree = "<group>"; };
+		798C714C177C9B4B0038423C /* RewardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RewardCell.h; path = ViewControllers/CustomSubviews/RewardCell.h; sourceTree = "<group>"; };
+		798C714D177C9B4B0038423C /* RewardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RewardCell.m; path = ViewControllers/CustomSubviews/RewardCell.m; sourceTree = "<group>"; };
 		798D759D1774E954004B282D /* ab_add_my_places.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ab_add_my_places.png; path = Images/ab_add_my_places.png; sourceTree = "<group>"; };
 		798D759E1774E954004B282D /* ab_message_delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ab_message_delete.png; path = Images/ab_message_delete.png; sourceTree = "<group>"; };
 		7994CF0D177A3C20003994FB /* PlacesDetailMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlacesDetailMapViewController.h; path = ViewControllers/PlacesDetailMapViewController.h; sourceTree = "<group>"; };
@@ -610,6 +631,9 @@
 				799BDC08177B8F0300AA472D /* MessageViewController.h */,
 				799BDC09177B8F0300AA472D /* MessageViewController.m */,
 				799BDC0A177B8F0300AA472D /* MessageViewController.xib */,
+				796F64B9177CC52000457B16 /* ComposeViewController.h */,
+				796F64BA177CC52000457B16 /* ComposeViewController.m */,
+				796F64BB177CC52000457B16 /* ComposeViewController.xib */,
 			);
 			name = "ViewControllers+Views";
 			sourceTree = "<group>";
@@ -638,6 +662,9 @@
 		798AD8DB176F832F00276A97 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				796F64B2177CBD8400457B16 /* reward_unlocked.png */,
+				796F64B0177CB70E00457B16 /* ico-feedback-block.png */,
+				796F64AE177CB43100457B16 /* reward_locked.png */,
 				799BDBF6177B35FD00AA472D /* ic_tab_punch_tiny.png */,
 				799BDBF7177B35FD00AA472D /* reward_unlocked_tiny.png */,
 				798D759D1774E954004B282D /* ab_add_my_places.png */,
@@ -857,6 +884,12 @@
 				799BDC03177B5E9300AA472D /* MessageCell.xib */,
 				799BDC05177B5F5200AA472D /* MessageCell.h */,
 				799BDC06177B5F5200AA472D /* MessageCell.m */,
+				798C714A177C990F0038423C /* RewardCell.xib */,
+				798C714C177C9B4B0038423C /* RewardCell.h */,
+				798C714D177C9B4B0038423C /* RewardCell.m */,
+				796F64B4177CBEEA00457B16 /* CustomToolbar.xib */,
+				796F64B6177CBFCA00457B16 /* CustomToolbar.h */,
+				796F64B7177CBFCA00457B16 /* CustomToolbar.m */,
 			);
 			name = CustomUIViews;
 			sourceTree = "<group>";
@@ -1080,6 +1113,12 @@
 				799BDBFF177B36BC00AA472D /* SavedStoreCell.xib in Resources */,
 				799BDC04177B5E9300AA472D /* MessageCell.xib in Resources */,
 				799BDC0C177B8F0400AA472D /* MessageViewController.xib in Resources */,
+				798C714B177C990F0038423C /* RewardCell.xib in Resources */,
+				796F64AF177CB43100457B16 /* reward_locked.png in Resources */,
+				796F64B1177CB70E00457B16 /* ico-feedback-block.png in Resources */,
+				796F64B3177CBD8400457B16 /* reward_unlocked.png in Resources */,
+				796F64B5177CBEEA00457B16 /* CustomToolbar.xib in Resources */,
+				796F64BD177CC52100457B16 /* ComposeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1168,6 +1207,9 @@
 				799BDC02177B372200AA472D /* SavedStoreCell.m in Sources */,
 				799BDC07177B5F5200AA472D /* MessageCell.m in Sources */,
 				799BDC0B177B8F0400AA472D /* MessageViewController.m in Sources */,
+				798C714E177C9B4C0038423C /* RewardCell.m in Sources */,
+				796F64B8177CBFCA00457B16 /* CustomToolbar.m in Sources */,
+				796F64BC177CC52100457B16 /* ComposeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

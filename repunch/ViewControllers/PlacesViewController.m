@@ -32,7 +32,6 @@
     NSMutableArray *savedStores;
     UITableView *savedStoresTable;
     PFObject *patronObject;
-
 }
 
 - (void)setup {
@@ -51,7 +50,7 @@
 
     
     savedStores = [[[localUser mutableSetValueForKey:@"saved_stores"] allObjects] mutableCopy];
-    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"punch_count"  ascending:YES];
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"punch_count"  ascending:NO];
     savedStores = [[savedStores sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]] mutableCopy];
 
     [savedStoresTable reloadData];
@@ -226,6 +225,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     PlacesDetailViewController *placesDetailVC = [[PlacesDetailViewController alloc]init];
     placesDetailVC.modalDelegate = self;

@@ -95,7 +95,7 @@
     
     UILabel *searchTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 140, 46)];
     [searchTitle setText:@"Search"];
-    [searchTitle setFont:[UIFont boldSystemFontOfSize:20]];
+    [searchTitle setFont:[UIFont fontWithName:@"Avenir-Heavy" size:22]];
     [searchTitle setTextColor:[UIColor whiteColor]];
     [searchTitle setBackgroundColor:[UIColor clearColor]];
     [searchTitle setShadowOffset:CGSizeMake(0, -1)];

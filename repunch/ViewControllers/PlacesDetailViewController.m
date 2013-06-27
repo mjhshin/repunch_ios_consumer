@@ -11,9 +11,10 @@
 #import "SIAlertView.h"
 #import "User.h"
 #import "PatronStore.h"
+#import "RewardCell.h"
 #import "AppDelegate.h"
-
-
+#import "CustomToolbar.h"   
+#import "ComposeViewController.h"
 
 //TODO: make sure all alert dialogues match
 
@@ -21,6 +22,7 @@
     NSMutableArray *placeRewardData;
     PlacesDetailMapViewController *placesDetailMapVC;
     User *localUser;
+    int availablePunches;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -33,7 +35,16 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    NSLog(@"%i", [self isSavedStore]);
+    [super viewWillAppear:YES];
+    [_rewardsTable reloadData];
+    PatronStore *patronStore = [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", localUser.patronId, _storeObject.objectId]];
+    availablePunches = [[patronStore punch_count] intValue];
+    
+    if (!_isSavedStore){
+        [_numPunches setText:@"Store isn't saved"];
+        [_feedbackBtn setImage:[UIImage imageNamed:@"ico-feedback-block"] forState:UIControlStateNormal];
+    }
+
 }
 
 - (void)viewDidLoad
@@ -42,7 +53,51 @@
     
     localUser = [(AppDelegate *)[[UIApplication sharedApplication] delegate] localUser];
     _isSavedStore = [localUser alreadyHasStoreSaved:[_storeObject objectId]];
+    
+    NSLog(@"SCROLL VIEW: %@", [_scrollView subviews]);
+    _scrollView.scrollEnabled = YES;
 
+    /*  this doesn't work
+    //THIS IS A TOOLBAR
+    //FROM HERE...
+    CustomToolbar *placeToolbar = [[CustomToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 46)];
+    [placeToolbar setBackgroundImage:[UIImage imageNamed:@"bkg_header"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+    
+    UIImage *closeImage = [UIImage imageNamed:@"btn_x-orange"];
+    UIButton *closePlaceButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [closePlaceButton setImage:closeImage forState:UIControlStateNormal];
+    [closePlaceButton addTarget:self action:@selector(closePlaceDetail) forControlEvents:UIControlEventTouchUpInside];
+
+    [[placeToolbar leftButton] setImage:[UIImage imageNamed:@"btn_x-orange"]];
+    //[placeToolbar setLeftButton:[[UIBarButtonItem alloc] initWithCustomView:closePlaceButton]];
+
+    UILabel *placeTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(closePlaceButton.frame.size.width, 0, placeToolbar.frame.size.width - closePlaceButton.frame.size.width - 25, placeToolbar.frame.size.height)];
+    [placeTitleLabel setFont:[UIFont fontWithName:@"Avenir-Heavy" size:16]];
+    [placeTitleLabel setBackgroundColor:[UIColor clearColor]];
+    [placeTitleLabel setTextColor:[UIColor whiteColor]];
+    [placeTitleLabel setText:[_storeObject valueForKey:@"store_name"]];
+    [placeTitleLabel sizeToFit];
+    
+    UIBarButtonItem *placeTitleItem = [[UIBarButtonItem alloc] initWithCustomView:placeTitleLabel];
+    
+    [placeToolbar setMiddleItem:placeTitleItem];
+    
+    UIImage *addOrRemoveImage;
+    
+    if (!_isSavedStore) addOrRemoveImage = [UIImage imageNamed:@"ab_add_my_places"];
+    else addOrRemoveImage = [UIImage imageNamed:@"ab_message_delete"];
+    UIButton *addOrRemoveButton= [UIButton buttonWithType:UIButtonTypeCustom];
+    [addOrRemoveButton setImage:addOrRemoveImage forState:UIControlStateNormal];
+    [addOrRemoveButton setFrame:CGRectMake(0, 0, addOrRemoveImage.size.width, addOrRemoveImage.size.height)];
+    [addOrRemoveButton addTarget:self action:@selector(addOrRemovePlace) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *addOrRemoveTitle = [[UIBarButtonItem alloc] initWithCustomView:addOrRemoveButton];
+    
+    [placeToolbar setRightButton:addOrRemoveTitle];
+
+    [[self view] addSubview:placeToolbar];
+     */
+    
     //THIS IS A TOOLBAR
     //FROM HERE...
     UIToolbar *placeToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 46)];
@@ -76,62 +131,86 @@
     [addOrRemoveButton setImage:addOrRemoveImage forState:UIControlStateNormal];
     [addOrRemoveButton setFrame:CGRectMake(0, 0, addOrRemoveImage.size.width, addOrRemoveImage.size.height)];
     [addOrRemoveButton addTarget:self action:@selector(addOrRemovePlace) forControlEvents:UIControlEventTouchUpInside];
-        
+    
     UIBarButtonItem *addOrRemoveTitle = [[UIBarButtonItem alloc] initWithCustomView:addOrRemoveButton];
-
+    
     
     [placeToolbar setItems:[NSArray arrayWithObjects:closePlaceButtonItem, flex, placeTitleItem, flex2, addOrRemoveTitle, nil]];
     [self.view addSubview:placeToolbar];
     //... TO HERE.  END TOOLBAR.
     
-    //THESE ARE STORE INFORMATION LABELS
-    //FROM  HERE...
+    _storePic.image = [UIImage imageWithData:_storeObject.store_avatar];
+
+    NSString *addressString = [_storeObject valueForKey:@"street"];
+    if ([[_storeObject valueForKey:@"cross_streets"] length]>0) addressString = [addressString stringByAppendingFormat:@"\n%@",[_storeObject valueForKey:@"cross_streets"]];
+    if ([[_storeObject valueForKey:@"neighborhood"] length]>0)addressString = [addressString stringByAppendingFormat:@"\n%@",[_storeObject valueForKey:@"neighborhood"]];
+    addressString = [addressString stringByAppendingFormat:@"\n%@, %@ %@",[_storeObject valueForKey:@"city"], [_storeObject valueForKey:@"state"], [_storeObject valueForKey:@"zip"]];
+    _storeAddress.text = addressString;
+    _storeHours.text = [self getHoursString];
     
-    //image view
-     UIImageView *placeImageView = [[UIImageView alloc] init];
-     [placeImageView setImage:[UIImage imageWithData:_storeObject.store_avatar]];
-     [placeImageView setFrame:CGRectMake(10, placeToolbar.frame.size.height + 10, 100, 100)];
-     [self.view addSubview:placeImageView];
+    placeRewardData = [[[_storeObject mutableSetValueForKey:@"rewards"] allObjects] mutableCopy];
     
+    [placeRewardData sortUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:@"punches" ascending:YES]]];
     
-    //store info view
-     UIView *placeDetails = [[UIView alloc] initWithFrame:CGRectMake(placeImageView.frame.origin.x + placeImageView.frame.size.width, placeToolbar.frame.size.height, self.view.frame.size.width - placeImageView.frame.origin.x - placeImageView.frame.size.width, 100)];
-     [self.view addSubview:placeDetails];
+    //  trying to resize the table view ugh.  NOTHING WORKS I DON'T UNDERSTAND LIFE ANYMORE.
+    //_rewardsTable = [[UITableView alloc] initWithFrame:CGRectMake(_rewardsTable.frame.origin.x, _rewardsTable.frame.origin.y, _rewardsTable.frame.size.width,(60.0f*([placeRewardData count])))];
+
+    [_rewardsTable setDataSource:self];
+    [_rewardsTable setDelegate:self];
     
-    //store info view: category
-     UILabel *placeCategoryLabel = [[UILabel alloc] init];
-     placeCategoryLabel.font = [UIFont systemFontOfSize:12];
-     placeCategoryLabel.textColor = [UIColor colorWithRed:50/255.f green:50/255.f blue:50/255.f alpha:1];
-     placeCategoryLabel.frame = CGRectMake(10, 10, 200, 14);
-     //placeCategoryLabel.text = @"coffee";
-     placeCategoryLabel.text = [[[[_storeObject valueForKey:@"categories"] allObjects] objectAtIndex:0] valueForKey:@"name"];
-     [placeDetails addSubview:placeCategoryLabel];
-     
-    //store info view: address line 1
-     UILabel *placeAddressLabel = [[UILabel alloc] init];
-     placeAddressLabel.font = [UIFont systemFontOfSize:12];
-     placeAddressLabel.textColor = [UIColor colorWithRed:50/255.f green:50/255.f blue:50/255.f alpha:1];
-     [placeAddressLabel setFrame:CGRectMake(10, placeCategoryLabel.frame.origin.y + placeCategoryLabel.frame.size.height, 200, 14)];
-     [placeAddressLabel setText:[_storeObject valueForKey:@"street"]];
-     [placeDetails addSubview:placeAddressLabel];
+    [_scrollView setContentSize:CGSizeMake(320, [self bottomOfLowestContent:[self view]])];
+
+}
+
+
+#pragma mark - Self Helper Methods
+- (CGFloat) bottomOfLowestContent:(UIView*) view
+{
+    CGFloat lowestPoint = 0.0;
     
-    //store info view: address line 2
-     UILabel *placeAddressLabel2 = [[UILabel alloc] init];
-     placeAddressLabel2.font = [UIFont systemFontOfSize:12];
-     placeAddressLabel2.textColor = [UIColor colorWithRed:50/255.f green:50/255.f blue:50/255.f alpha:1];
-     [placeAddressLabel2 setFrame:CGRectMake(10, placeAddressLabel.frame.origin.y + placeAddressLabel.frame.size.height, 200, 14)];
-     [placeAddressLabel2 setText:[NSString stringWithFormat:@"%@, %@ %@",[_storeObject valueForKey:@"city"], [_storeObject valueForKey:@"state"], [_storeObject valueForKey:@"zip"]]];
-     [placeDetails addSubview:placeAddressLabel2];
-    //...TO HERE. END STORE INFO.
+    BOOL restoreHorizontal = NO;
+    BOOL restoreVertical = NO;
     
-    float hoursLabelTop = placeAddressLabel2.frame.origin.y + placeAddressLabel2.frame.size.height;
-    UILabel *placeHoursLabel = [[UILabel alloc] init];
-    [placeHoursLabel setFont:[UIFont boldSystemFontOfSize:12]];
-    [placeHoursLabel setFrame:CGRectMake(10, hoursLabelTop + 5, 200, 15)];
-    [placeHoursLabel setText:@"Hours Today"];
-    [placeDetails addSubview:placeHoursLabel];
+    if ([view respondsToSelector:@selector(setShowsHorizontalScrollIndicator:)] && [view respondsToSelector:@selector(setShowsVerticalScrollIndicator:)])
+    {
+        if ([(UIScrollView*)view showsHorizontalScrollIndicator])
+        {
+            restoreHorizontal = YES;
+            [(UIScrollView*)view setShowsHorizontalScrollIndicator:NO];
+        }
+        if ([(UIScrollView*)view showsVerticalScrollIndicator])
+        {
+            restoreVertical = YES;
+            [(UIScrollView*)view setShowsVerticalScrollIndicator:NO];
+        }
+    }
+    for (UIView *subView in view.subviews)
+    {
+        if (!subView.hidden)
+        {
+            CGFloat maxY = CGRectGetMaxY(subView.frame);
+            if (maxY > lowestPoint)
+            {
+                lowestPoint = maxY;
+            }
+        }
+    }
+    if ([view respondsToSelector:@selector(setShowsHorizontalScrollIndicator:)] && [view respondsToSelector:@selector(setShowsVerticalScrollIndicator:)])
+    {
+        if (restoreHorizontal)
+        {
+            [(UIScrollView*)view setShowsHorizontalScrollIndicator:YES];
+        }
+        if (restoreVertical)
+        {
+            [(UIScrollView*)view setShowsVerticalScrollIndicator:YES];
+        }
+    }
     
-    
+    return lowestPoint;
+}
+
+-(NSString *)getHoursString{
     NSDateFormatter *formatter_out = [[NSDateFormatter alloc] init];
     [formatter_out setDateFormat:@"h:mm a"];
     
@@ -173,147 +252,20 @@
         }
     }
     
-    UILabel *placeTimeLabel = [[UILabel alloc] init];
-    [placeTimeLabel setFont:[UIFont systemFontOfSize:12]];
-    [placeTimeLabel setFrame:CGRectMake(10, placeHoursLabel.frame.origin.y + placeHoursLabel.frame.size.height, 200, 15)];
-    [placeTimeLabel setTextColor:[UIColor colorWithRed:50/255.f green:50/255.f blue:50/255.f alpha:1]];
-    [placeTimeLabel setText:hourstodaystring];
-    [placeTimeLabel sizeToFit];
-    [placeDetails addSubview:placeTimeLabel];
-    
-    BOOL hoursAvailable = TRUE;
-    UILabel *placeOpenLabel = [[UILabel alloc] init];
-    [placeOpenLabel setFont:[UIFont boldSystemFontOfSize:12]];
-    CGRect frame = CGRectMake(placeTimeLabel.frame.origin.x + placeTimeLabel.frame.size.width, placeTimeLabel.frame.origin.y, 200, 15);
-    if (![hourstodaystring isEqualToString:@""]) {
-        frame.origin.x += 3;
+    if (![hourstodaystring isEqualToString:@""]){
+        hourstodaystring = @"Unavailable";
+        _storeOpen.text = @"";
+    } else{
+        _storeOpen.text = (open)?@"Open":@"Closed";
+        UIColor *openColor = [UIColor colorWithRed:104/255.f green:136/255.f blue:13/255.f alpha:1];
+        UIColor *closedColor = [UIColor blackColor];
+        _storeOpen.textColor = (open ? openColor : closedColor);
+
     }
-    else{
-        hoursAvailable = FALSE;
-    }
-    [placeOpenLabel setFrame:frame];
-    UIColor *openColor = [UIColor colorWithRed:104/255.f green:136/255.f blue:13/255.f alpha:1];
-    UIColor *closedColor = [UIColor blackColor];
-    [placeOpenLabel setTextColor:(open ? openColor : closedColor)];
-    [placeOpenLabel setText:(!hoursAvailable?@"Unavailable":(open ? @"Open" : @"Closed"))];
-    [placeOpenLabel sizeToFit];
-    [placeDetails addSubview:placeOpenLabel];
-    
-    UIView *placeAddOrRemove = [[UIView alloc] initWithFrame:CGRectMake(0, placeImageView.frame.origin.y + placeImageView.frame.size.height+11, self.view.frame.size.width, 40)]; 
-    [placeAddOrRemove setAutoresizesSubviews:NO];
-    [placeAddOrRemove setClipsToBounds:YES];
-    
-    float placeActionsViewTop = placeImageView.frame.origin.y + placeImageView.frame.size.height;
-    [self.view addSubview:placeAddOrRemove];
-    placeActionsViewTop = placeAddOrRemove.frame.origin.y + placeAddOrRemove.frame.size.height;
-    
-    PatronStore *patronStore = [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", localUser.patronId, _storeObject.objectId]];
-    UILabel *punches = [[UILabel alloc] init];
-    [punches setFrame:CGRectMake(0, 0, 320, placeAddOrRemove.frame.size.height)];
-    [punches setBackgroundColor:[UIColor colorWithRed:(float)251/255 green: (float)170/255 blue:(float)83/255 alpha:1]];
-    [punches setText:[NSString stringWithFormat:@"%@ punches", [patronStore punch_count]?[patronStore punch_count]: @"0"]];
-    [punches setTextAlignment:NSTextAlignmentCenter];
-    [punches setTextColor:[UIColor whiteColor]];
-    [punches setFont:[UIFont fontWithName:@"ArialRoundedMTBold" size:24]];
-    
-    [placeAddOrRemove addSubview:punches];    
 
-    UIView *placeBottomContainer = [[UIView alloc] initWithFrame:CGRectMake(0, placeActionsViewTop+10, self.view.frame.size.width, self.view.frame.size.height - 1 - 49)];
-
-    UIView *placeActionsView = [[UIView alloc] initWithFrame:CGRectMake(0, 1, self.view.frame.size.width, 50)];
-    [placeActionsView setBackgroundColor:[UIColor colorWithRed:240/255.f green:240/255.f blue:240/255.f alpha:1]];
-    UIView *placeActionsViewBorderTop = [[UIView alloc] initWithFrame:CGRectMake(0, placeActionsView.frame.origin.y - 1, self.view.frame.size.width, 1)];
-    UIView *placeActionsViewBorderBottom = [[UIView alloc] initWithFrame:CGRectMake(0, placeActionsView.frame.origin.y + placeActionsView.frame.size.height, self.view.frame.size.width, 1)];
-    [placeActionsViewBorderTop setBackgroundColor:[UIColor colorWithRed:189/255.f green:190/255.f blue:189/255.f alpha:1]];
-    [placeActionsViewBorderBottom setBackgroundColor:[UIColor colorWithRed:189/255.f green:190/255.f blue:189/255.f alpha:1]];
-    
-    UIButton *placeCallButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [placeCallButton addTarget:self action:@selector(placeCall) forControlEvents:UIControlEventTouchUpInside];
-    [placeCallButton setFrame:CGRectMake(20, 0, 100, placeActionsView.frame.size.height)];
-    [placeCallButton setTitle:@"Call" forState:UIControlStateNormal];
-    [placeCallButton setTitleColor:[UIColor colorWithRed:36/255.f green:83/255.f blue:151/255.f alpha:1] forState:UIControlStateNormal];
-    [placeCallButton.titleLabel setFont:[UIFont boldSystemFontOfSize:11]];
-    [placeCallButton setImage:[UIImage imageNamed:@"ico-phone"] forState:UIControlStateNormal];
-    [placeCallButton setTitleEdgeInsets:UIEdgeInsetsMake(placeActionsView.frame.size.height - 10, -45, 0, 0)];
-    [placeCallButton setContentEdgeInsets:UIEdgeInsetsMake(-13, 0, 0, 0)];
-    
-    UIButton *placeMapButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [placeMapButton addTarget:self action:@selector(placeMap) forControlEvents:UIControlEventTouchUpInside];
-    [placeMapButton setFrame:CGRectMake(120, 0, 100, placeActionsView.frame.size.height)];
-    [placeMapButton setTitle:@"Map" forState:UIControlStateNormal];
-    [placeMapButton.titleLabel setFont:[UIFont boldSystemFontOfSize:11]];
-    [placeMapButton setTitleColor:[UIColor colorWithRed:36/255.f green:83/255.f blue:151/255.f alpha:1] forState:UIControlStateNormal];
-    [placeMapButton setImage:[UIImage imageNamed:@"ico-map"] forState:UIControlStateNormal];
-    [placeMapButton setTitleEdgeInsets:UIEdgeInsetsMake(placeActionsView.frame.size.height - 10, -48, 0, 0)];
-    [placeMapButton setContentEdgeInsets:UIEdgeInsetsMake(-13, 0, 0, 0)];
-    
-    UIButton *placeFeedbackButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [placeFeedbackButton addTarget:self action:@selector(placeFeedback) forControlEvents:UIControlEventTouchUpInside];
-    [placeFeedbackButton setFrame:CGRectMake(240, 0, 100, placeActionsView.frame.size.height)];
-    [placeFeedbackButton setTitle:@"Feedback" forState:UIControlStateNormal];
-    [placeFeedbackButton.titleLabel setFont:[UIFont boldSystemFontOfSize:11]];
-    [placeFeedbackButton setTitleColor:[UIColor colorWithRed:36/255.f green:83/255.f blue:151/255.f alpha:1] forState:UIControlStateNormal];
-    [placeFeedbackButton setImage:[UIImage imageNamed:@"ico-feedback"] forState:UIControlStateNormal];
-    [placeFeedbackButton setTitleEdgeInsets:UIEdgeInsetsMake(placeActionsView.frame.size.height - 10, -84, 0, 0)];
-    [placeFeedbackButton setContentEdgeInsets:UIEdgeInsetsMake(-13, 0, 0, 0)];
-    
-    [placeActionsView addSubview:placeCallButton];
-    [placeActionsView addSubview:placeMapButton];
-    [placeActionsView addSubview:placeFeedbackButton];
-    [placeBottomContainer addSubview:placeActionsView];
-    [placeBottomContainer addSubview:placeActionsViewBorderTop];
-    [placeBottomContainer addSubview:placeActionsViewBorderBottom];
-    [self.view addSubview:placeBottomContainer];
-
-    placeRewardData = [[[_storeObject mutableSetValueForKey:@"rewards"] allObjects] mutableCopy];
-    NSLog(@"%@", placeRewardData);
-    
-    [placeRewardData sortUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:@"punches" ascending:YES]]];
-    
-    UITableView *placeRewardsTable = [[UITableView alloc] initWithFrame:CGRectMake(0, placeActionsViewBorderBottom.frame.origin.y + 1, self.view.frame.size.width, self.view.frame.size.height - placeActionsViewBorderBottom.frame.origin.y - 1 - 49) style:UITableViewStylePlain];
-    [placeRewardsTable setDataSource:self];
-    [placeRewardsTable setDelegate:self];
-    [placeBottomContainer addSubview:placeRewardsTable];
-
-
-}
-
-#pragma mark - Place Selectors
-
-
-- (void)placeCall
-{
-    NSString *number = [_storeObject phone_number];
-    NSString *phoneNumber = [number stringByReplacingOccurrencesOfString:@"[^0-9]" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, [number length])];
-    NSString *phoneNumberUrl = [@"tel://" stringByAppendingString:phoneNumber];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumberUrl]];
+    return hourstodaystring;
     
 }
-
-- (void)placeMap
-{
-    placesDetailMapVC = [[PlacesDetailMapViewController alloc] init];
-    [placesDetailMapVC setModalDelegate:self];
-    [placesDetailMapVC setPlace:_storeObject];
-    placesDetailMapVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    [placesDetailMapVC.view setFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
-    [self presentViewController:placesDetailMapVC animated:YES completion:NULL];
-
-    
-}
-
-
-- (void)placeFeedback
-{
-    /*
-    ComposeViewController *cvc = [[ComposeViewController alloc] init];
-    [cvc.view setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    [cvc setComposeType:@"feedback"];
-    [cvc setPlace:place];
-    [self.view addSubview:cvc.view];
-     */
-}
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -337,25 +289,25 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *CellIdentifier = @"RewardCell";
+    RewardCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell = [[[NSBundle mainBundle]loadNibNamed:@"RewardCell" owner:self options:nil]objectAtIndex:0];
     }
     
     // Configure the cell...
     
-    cell.textLabel.text = [[placeRewardData objectAtIndex:indexPath.row] valueForKey:@"reward_name"];
-    [cell.textLabel setNumberOfLines:3];
-    [cell.textLabel setFont:[UIFont fontWithName:@"ArialRoundedMTBold" size:14]];
-    
+    cell.rewardName.text = [[placeRewardData objectAtIndex:indexPath.row] valueForKey:@"reward_name"];
+    cell.rewardDescription.text = [[placeRewardData objectAtIndex:indexPath.row] valueForKey:@"reward_description"];
     int required = [[[placeRewardData objectAtIndex:indexPath.row] valueForKey:@"punches"] intValue];
-    cell.detailTextLabel.text = [NSString stringWithFormat:(required == 1 ? @"%i Punch" :  @"%i Punches"), required];
-    [cell.detailTextLabel setBackgroundColor:[UIColor clearColor]];
-    [cell.detailTextLabel setFont:[UIFont fontWithName:@"Arial" size:13]];
-
-    [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bkg_reward-list-gradient"]]];
-     
+    cell.numberOfPunches.text = [NSString stringWithFormat:(required == 1 ? @"%i Punch" :  @"%i Punches"), required];
+    if (availablePunches >= required){
+        cell.padlockPic.image = [UIImage imageNamed:@"reward_unlocked"];
+    }
+    
+    if (!_isSavedStore){
+        [cell setUserInteractionEnabled:NO];
+    }
     return cell;
 }
 
@@ -363,34 +315,48 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 58;
+    return 93;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (_isSavedStore){
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-    int required = [[[placeRewardData objectAtIndex:indexPath.row] valueForKey:@"punches"] intValue];
-    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%@.", [[placeRewardData objectAtIndex:indexPath.row] valueForKey:@"reward_name"]] andMessage:[NSString stringWithFormat:@"It'll cost you %@.", [NSString stringWithFormat:(required == 1 ? @"%i Punch" :  @"%i Punches"), required]]];
-    
-    [alertView addButtonWithTitle:@"Cancel"
-                             type:SIAlertViewButtonTypeDefault
-                          handler:^(SIAlertView *alert) {
-                              NSLog(@"Cancel Clicked");
-                          }];
-    [alertView addButtonWithTitle:@"Redeem"
-                             type:SIAlertViewButtonTypeDestructive
-                          handler:^(SIAlertView *alert) {
-                              NSLog(@"Redeem Clicked");
-                          }];
-    [alertView addButtonWithTitle:@"Gift"
-                             type:SIAlertViewButtonTypeDestructive
-                          handler:^(SIAlertView *alert) {
-                              NSLog(@"Gift Clicked");
-                          }];
-    alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
+        int required = [[[placeRewardData objectAtIndex:indexPath.row] valueForKey:@"punches"] intValue];
+        if (availablePunches >= required){
+            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%@.", [[placeRewardData objectAtIndex:indexPath.row] valueForKey:@"reward_name"]] andMessage:[NSString stringWithFormat:@"It'll cost you %@.", [NSString stringWithFormat:(required == 1 ? @"%i Punch" :  @"%i Punches"), required]]];
+            
+            [alertView addButtonWithTitle:@"Cancel"
+                                     type:SIAlertViewButtonTypeDefault
+                                  handler:^(SIAlertView *alert) {
+                                      //Nothing Happens
+                                  }];
+            [alertView addButtonWithTitle:@"Redeem"
+                                     type:SIAlertViewButtonTypeDestructive
+                                  handler:^(SIAlertView *alert) {
+                                      NSLog(@"Redeem Clicked");
+                                  }];
+            [alertView addButtonWithTitle:@"Gift"
+                                     type:SIAlertViewButtonTypeDestructive
+                                  handler:^(SIAlertView *alert) {
+                                      NSLog(@"Gift Clicked");
+                                  }];
+            alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
 
-    [alertView show];
+            [alertView show];
+        }
+        else {
+            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%@.", [[placeRewardData objectAtIndex:indexPath.row] valueForKey:@"reward_name"]] andMessage:[NSString stringWithFormat:@"You don't have %@.", [NSString stringWithFormat:(required == 1 ? @"%i Punch" :  @"%i Punches"), required]]];
+            
+            [alertView addButtonWithTitle:@"Shucks."
+                                     type:SIAlertViewButtonTypeDefault
+                                  handler:^(SIAlertView *alert) {
+                                      //Nothing Happens
+                                  }];
+
+        }
+     }
 
 
 }
@@ -441,8 +407,9 @@
                 [alertView addButtonWithTitle:@"Sweet beans."
                                          type:SIAlertViewButtonTypeDefault
                                       handler:^(SIAlertView *alert) {
-                                          [[self modalDelegate] didDismissPresentedViewController];
-
+                                          //[[self modalDelegate] didDismissPresentedViewController];
+                                          _isSavedStore = TRUE;
+                                          [self viewDidLoad];
                                       }];
                 [alertView show];
 
@@ -500,4 +467,45 @@
     [self dismissViewControllerAnimated:YES completion:NULL];;
 }
 
+- (IBAction)callButton:(id)sender {
+    NSString *number = [_storeObject phone_number];
+    NSString *phoneNumber = [number stringByReplacingOccurrencesOfString:@"[^0-9]" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, [number length])];
+    NSString *phoneNumberUrl = [@"tel://" stringByAppendingString:phoneNumber];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumberUrl]];
+
+}
+
+- (IBAction)mapButton:(id)sender {
+    placesDetailMapVC = [[PlacesDetailMapViewController alloc] init];
+    [placesDetailMapVC setModalDelegate:self];
+    [placesDetailMapVC setPlace:_storeObject];
+    placesDetailMapVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [placesDetailMapVC.view setFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
+    [self presentViewController:placesDetailMapVC animated:YES completion:NULL];
+    
+
+}
+
+- (IBAction)feedbackButton:(id)sender {
+    if (!_isSavedStore){
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"I can't do that, Hal." andMessage:@"You can only send feedback to saved stores"];
+        
+        [alertView addButtonWithTitle:@"Ok."
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert) {
+                                  //Nothing Happens
+                              }];
+        [alertView show];
+    }
+    else{
+         ComposeViewController *composeVC = [[ComposeViewController alloc] init];
+        composeVC.modalDelegate = self;
+        composeVC.storeObject = _storeObject;
+        
+        [self presentViewController:composeVC animated:YES completion:NULL];
+        
+    }
+    
+
+}
 @end

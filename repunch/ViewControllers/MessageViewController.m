@@ -28,7 +28,7 @@
     UIBarButtonItem *closePlaceButtonItem = [[UIBarButtonItem alloc] initWithCustomView:closePlaceButton];
     
     UILabel *placeTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(closePlaceButton.frame.size.width, 0, placeToolbar.frame.size.width - closePlaceButton.frame.size.width - 25, placeToolbar.frame.size.height)];
-    [placeTitleLabel setFont:[UIFont boldSystemFontOfSize:16]];
+    [placeTitleLabel setFont:[UIFont fontWithName:@"Avenir-Heavy" size:16]];
     [placeTitleLabel setBackgroundColor:[UIColor clearColor]];
     [placeTitleLabel setTextColor:[UIColor whiteColor]];
     [placeTitleLabel setText:[_message valueForKey:@"subject"]];
