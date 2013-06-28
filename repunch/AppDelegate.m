@@ -44,7 +44,7 @@
     
     //[self printDataForObject:@"Store"];
     //[self printDataForObject:@"PatronStore"];
-    [self printDataForObject:@"User"];
+    //[self printDataForObject:@"User"];
     //[self deleteDataForObject:@"PatronStore"];
     //[self deleteDataForObject:@"Store"];
     //[self deleteDataForObject:@"User"];
@@ -71,7 +71,7 @@
     //Register for Push Notifications
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-    
+        
     NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (remoteNotif != nil) {
         NSLog(@"opened from push: %@", remoteNotif);
@@ -222,19 +222,12 @@
     
 }
 
-- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
-{
-	NSLog(@"Failed to get token, error: %@", error);
-}
-
 - (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
 {
-    if ([application applicationState] == UIApplicationStateInactive) {
-        // app opened from suspended on push, open to inbox
-        [[(AppDelegate *)application.delegate tabBarController] setSelectedIndex:2];
-    } else if ([application applicationState] == UIApplicationStateActive) {
-        // push received when app already open, so alert?
-    }
+    [PFPush handlePush:userInfo];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"receivedPush" object:self];
+
 }
 
 @end

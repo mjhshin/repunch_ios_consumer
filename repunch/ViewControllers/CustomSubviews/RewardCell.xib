@@ -46,7 +46,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{42, 13}, {238, 23}}</string>
 								<reference key="NSSuperview" ref="841814120"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="346274576"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -83,7 +82,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{20, 34}, {280, 26}}</string>
 								<reference key="NSSuperview" ref="841814120"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="715675686"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -113,7 +111,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{20, 57}, {153, 24}}</string>
 								<reference key="NSSuperview" ref="841814120"/>
-								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -142,7 +139,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{15, 6}, {27, 30}}</string>
 								<reference key="NSSuperview" ref="841814120"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="531445078"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -155,7 +151,6 @@
 						</array>
 						<string key="NSFrameSize">{320, 92}</string>
 						<reference key="NSSuperview" ref="328945586"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="627575664"/>
 						<string key="NSReuseIdentifierKey">_NS:11</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -171,7 +166,6 @@
 				</array>
 				<string key="NSFrameSize">{320, 93}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="841814120"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -705,50 +699,7 @@
 			<nil key="sourceID"/>
 			<int key="maxID">82</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes">
-			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<object class="IBPartialClassDescription">
-					<string key="className">NSLayoutConstraint</string>
-					<string key="superclassName">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/NSLayoutConstraint.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">RewardCell</string>
-					<string key="superclassName">UITableViewCell</string>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="numberOfPunches">UILabel</string>
-						<string key="padlockPic">UIImageView</string>
-						<string key="rewardDescription">UILabel</string>
-						<string key="rewardName">UILabel</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="numberOfPunches">
-							<string key="name">numberOfPunches</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="padlockPic">
-							<string key="name">padlockPic</string>
-							<string key="candidateClassName">UIImageView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="rewardDescription">
-							<string key="name">rewardDescription</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="rewardName">
-							<string key="name">rewardName</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/RewardCell.h</string>
-					</object>
-				</object>
-			</array>
-		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>

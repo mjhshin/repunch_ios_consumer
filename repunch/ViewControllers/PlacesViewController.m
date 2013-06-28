@@ -125,6 +125,11 @@
 - (void)viewWillAppear:(BOOL)animated {
     localUser = [(AppDelegate *)[[UIApplication sharedApplication] delegate] localUser];
     patronObject = [(AppDelegate *)[[UIApplication sharedApplication] delegate] patronObject];
+        
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(setup)
+                                                 name:@"receivedPush"
+                                               object:nil];
 
     [super viewWillAppear:animated];
     [self setup];
@@ -133,10 +138,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    // Unregister from notifications and KVO here (balancing viewWillAppear:).
-    // Stop timers.
-    // This is a good place to tidy things up, free memory, save things to
-    // the model, etc.
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"receivedPush" object:nil];
+
 }
 
 

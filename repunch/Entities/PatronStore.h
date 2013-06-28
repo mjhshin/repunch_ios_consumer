@@ -16,6 +16,7 @@
 @interface PatronStore : NSManagedObject
 
 @property (nonatomic, retain) NSNumber *punch_count;
+@property (nonatomic, retain) NSString *objectId;
 @property (nonatomic, retain) NSString *patron_id;
 @property (nonatomic, retain) NSString *store_id;
 

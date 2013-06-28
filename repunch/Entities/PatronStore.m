@@ -13,6 +13,7 @@
 
 @implementation PatronStore
 
+@dynamic objectId;
 @dynamic punch_count;
 @dynamic patron_id;
 @dynamic store_id;
@@ -26,6 +27,7 @@
     self.store_id = store.objectId;
     self.store = store;
     self.patron = user;
+    self.objectId = [Patron objectId];
     
     NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
     [localContext MR_saveToPersistentStoreAndWait];

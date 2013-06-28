@@ -15,6 +15,7 @@
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="date_offer_expiration" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="is_read" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="offer_title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sender_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="store_id" optional="YES" attributeType="String" syncable="YES"/>
@@ -22,6 +23,7 @@
         <relationship name="reply" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Message" syncable="YES"/>
     </entity>
     <entity name="PatronStore" representedClassName="PatronStore" syncable="YES">
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="patron_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="punch_count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="store_id" optional="YES" attributeType="String" syncable="YES"/>
@@ -29,6 +31,7 @@
         <relationship name="store" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Store" syncable="YES"/>
     </entity>
     <entity name="Reward" representedClassName="Reward" syncable="YES">
+        <attribute name="objectId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="punches" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="reward_description" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="reward_name" optional="YES" attributeType="String" syncable="YES"/>
@@ -69,9 +72,9 @@
     <elements>
         <element name="Category" positionX="160" positionY="192" width="128" height="90"/>
         <element name="Hour" positionX="160" positionY="192" width="128" height="105"/>
-        <element name="Message" positionX="160" positionY="192" width="128" height="165"/>
-        <element name="PatronStore" positionX="160" positionY="192" width="128" height="120"/>
-        <element name="Reward" positionX="160" positionY="192" width="128" height="105"/>
+        <element name="Message" positionX="160" positionY="192" width="128" height="180"/>
+        <element name="PatronStore" positionX="160" positionY="192" width="128" height="135"/>
+        <element name="Reward" positionX="160" positionY="192" width="128" height="120"/>
         <element name="Store" positionX="160" positionY="192" width="128" height="285"/>
         <element name="User" positionX="160" positionY="192" width="128" height="225"/>
     </elements>

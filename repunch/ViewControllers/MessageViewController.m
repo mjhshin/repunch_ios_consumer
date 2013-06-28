@@ -7,6 +7,7 @@
 //
 
 #import "MessageViewController.h"
+#import "PatronStore.h"
 
 @implementation MessageViewController
 
@@ -51,15 +52,39 @@
     [self.view addSubview:placeToolbar];
     //... TO HERE.  END TOOLBAR.
     
-    _senderLabel.text = [_message valueForKey:@"sender_name"];
-    _dateLabel.text = [self formattedDateString:[_message valueForKey:@"createdAt"]];
+    if ([_messageType isEqualToString:@"basic"]){
+        _senderLabel.text = [_message valueForKey:@"sender_name"];
+        _dateLabel.text = [self formattedDateString:[_message valueForKey:@"createdAt"]];
+        _bodyLabel.text = [_message valueForKey:@"body"];
+    }
     
-    _bodyLabel.text = [_message valueForKey:@"body"];
+    if ([_messageType isEqualToString:@"offer"]){
+        _senderLabel.text = [_message valueForKey:@"sender_name"];
+        _dateLabel.text = [self formattedDateString:[_message valueForKey:@"createdAt"]];
+        _bodyLabel.text = [_message valueForKey:@"body"];
+        
+        [_offerTitleBtn setHidden:FALSE];
+        [_offerTitleBtn setTitle:[_message valueForKey:@"offer_title"] forState:UIControlStateNormal];
+        [_timeLeft setHidden:FALSE];
+        [_timeLeftLabel setHidden:FALSE];
+    }
+    
+    if ([_messageType isEqualToString:@"feedback"]){
+        [_replierLabel setHidden:FALSE];
+        [_replyBodyLabel setHidden:FALSE];
+        
+        //get previous message
+        //TODO: add parent message
+        /*
+        _senderLabel.text = 
+        _dateLabel.text = 
+        _bodyLabel.text =
+         */
 
-    _bodyLabel.numberOfLines = 100/19;
-
-
-
+        _replierLabel.text = [_message valueForKey:@"sender_name"];
+        _replyDateLabel.text = [self formattedDateString:[_message valueForKey:@"createdAt"]];
+        _replyBodyLabel.text = [_message valueForKey:@"body"];
+    }
 
 }
 
@@ -102,4 +127,31 @@
     return dateString;
 }
 
+- (IBAction)redeemOffer:(id)sender {
+    PatronStore *patronStoreEntity= [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", _patronId, [_message valueForKey:@"store_id"]]];
+    NSLog(@"%@", patronStoreEntity);
+
+    NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:[_message valueForKey:@"store_id"], @"store_id",[patronStoreEntity objectId], @"patron_store_id", [_message valueForKey:@"offer_title"], @"title", @"0", @"num_punches", _customerName, @"name", nil];
+    
+    NSLog(@"dictionary is %@", functionArguments);
+    
+    
+    [PFCloud callFunctionInBackground:@"request_redeem"
+                       withParameters:functionArguments
+                                block:^(NSString *success, NSError *error) {
+                                    if (!error){
+                                        NSLog(@"function call is :%@", success);
+                                    }
+                                    else
+                                        NSLog(@"error occurred: %@", error);
+                                }];
+     
+     
+
+}
+
+-(void)deleteMessage{
+    [_message deleteInBackground];
+    [[self modalDelegate] didDismissPresentedViewController];
+}
 @end

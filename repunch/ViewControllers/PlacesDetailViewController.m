@@ -11,6 +11,7 @@
 #import "SIAlertView.h"
 #import "User.h"
 #import "PatronStore.h"
+#import "Reward.h"
 #import "RewardCell.h"
 #import "AppDelegate.h"
 #import "CustomToolbar.h"   
@@ -23,6 +24,8 @@
     PlacesDetailMapViewController *placesDetailMapVC;
     User *localUser;
     int availablePunches;
+    PatronStore *patronStoreEntity;
+
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -37,13 +40,27 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     [_rewardsTable reloadData];
-    PatronStore *patronStore = [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", localUser.patronId, _storeObject.objectId]];
-    availablePunches = [[patronStore punch_count] intValue];
+    
+    placeRewardData = [[[_storeObject mutableSetValueForKey:@"rewards"] allObjects] mutableCopy];
+
+    patronStoreEntity= [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", localUser.patronId, _storeObject.objectId]];
+    availablePunches = [[patronStoreEntity punch_count] intValue];
     
     if (!_isSavedStore){
         [_numPunches setText:@"Store isn't saved"];
         [_feedbackBtn setImage:[UIImage imageNamed:@"ico-feedback-block"] forState:UIControlStateNormal];
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(viewWillAppear:)
+                                                 name:@"receivedPush"
+                                               object:nil];
+
+
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"receivedPush" object:nil];
 
 }
 
@@ -54,7 +71,6 @@
     localUser = [(AppDelegate *)[[UIApplication sharedApplication] delegate] localUser];
     _isSavedStore = [localUser alreadyHasStoreSaved:[_storeObject objectId]];
     
-    NSLog(@"SCROLL VIEW: %@", [_scrollView subviews]);
     _scrollView.scrollEnabled = YES;
 
     /*  this doesn't work
@@ -149,6 +165,7 @@
     _storeHours.text = [self getHoursString];
     
     placeRewardData = [[[_storeObject mutableSetValueForKey:@"rewards"] allObjects] mutableCopy];
+    NSLog(@"rewards are :%@", [placeRewardData valueForKey:@"reward_name"]);
     
     [placeRewardData sortUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:@"punches" ascending:YES]]];
     
@@ -322,10 +339,11 @@
 {
     if (_isSavedStore){
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        Reward *currentCellReward = [placeRewardData objectAtIndex:indexPath.row];
 
-        int required = [[[placeRewardData objectAtIndex:indexPath.row] valueForKey:@"punches"] intValue];
+        int required = [[currentCellReward punches] intValue];
         if (availablePunches >= required){
-            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%@.", [[placeRewardData objectAtIndex:indexPath.row] valueForKey:@"reward_name"]] andMessage:[NSString stringWithFormat:@"It'll cost you %@.", [NSString stringWithFormat:(required == 1 ? @"%i Punch" :  @"%i Punches"), required]]];
+            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%@.", [currentCellReward reward_name]] andMessage:[NSString stringWithFormat:@"It'll cost you %@.", [NSString stringWithFormat:(required == 1 ? @"%i Punch" :  @"%i Punches"), required]]];
             
             [alertView addButtonWithTitle:@"Cancel"
                                      type:SIAlertViewButtonTypeDefault
@@ -335,11 +353,23 @@
             [alertView addButtonWithTitle:@"Redeem"
                                      type:SIAlertViewButtonTypeDestructive
                                   handler:^(SIAlertView *alert) {
+                                      NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:[_storeObject objectId], @"store_id",[patronStoreEntity objectId], @"patron_store_id", [currentCellReward reward_name], @"title", [currentCellReward objectId], @"reward_id", [currentCellReward punches], @"num_punches",   nil];
+
+                                      [PFCloud callFunctionInBackground:@"request_redeem"
+                                                         withParameters:functionArguments
+                                                                  block:^(NSString *success, NSError *error) {
+                                                                      if (!error){
+                                                                          NSLog(@"function call is :%@", success);
+                                                                      }
+                                                                      else
+                                                                          NSLog(@"error occurred: %@", error);
+                                                                  }];
                                       NSLog(@"Redeem Clicked");
                                   }];
             [alertView addButtonWithTitle:@"Gift"
                                      type:SIAlertViewButtonTypeDestructive
                                   handler:^(SIAlertView *alert) {
+                                      //CAN'T DO THIS WITHOUT FACEBOOK OR SOMETHING
                                       NSLog(@"Gift Clicked");
                                   }];
             alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
@@ -392,6 +422,10 @@
                             PFRelation *relation = [patronObject relationforKey:@"PatronStores"];
                             [relation addObject:patronStore];
                             [patronObject saveInBackground];
+                            
+                            PFRelation *storeRelation = [fetchedStore relationforKey:@"PatronStores"];
+                            [storeRelation addObject:patronStore];
+                            [fetchedStore saveInBackground];
 
                         }];
 

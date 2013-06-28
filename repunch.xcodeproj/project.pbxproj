@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		79021637177E2B4200A249B2 /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = 79021636177E2B4100A249B2 /* Store.m */; };
 		796F64AF177CB43100457B16 /* reward_locked.png in Resources */ = {isa = PBXBuildFile; fileRef = 796F64AE177CB43100457B16 /* reward_locked.png */; };
 		796F64B1177CB70E00457B16 /* ico-feedback-block.png in Resources */ = {isa = PBXBuildFile; fileRef = 796F64B0177CB70E00457B16 /* ico-feedback-block.png */; };
 		796F64B3177CBD8400457B16 /* reward_unlocked.png in Resources */ = {isa = PBXBuildFile; fileRef = 796F64B2177CBD8400457B16 /* reward_unlocked.png */; };
@@ -156,7 +157,6 @@
 		798ADA08176F8E1900276A97 /* repunch-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 798AD9B7176F8E1900276A97 /* repunch-logo@2x.png */; };
 		798ADA09176F8E1900276A97 /* repunch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 798AD9B8176F8E1900276A97 /* repunch@2x.png */; };
 		798ADA0A176F8E1900276A97 /* splash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 798AD9B9176F8E1900276A97 /* splash@2x.png */; };
-		798ADA10176FB55E00276A97 /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = 798ADA0F176FB55E00276A97 /* Store.m */; };
 		798ADA16176FB58100276A97 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 798ADA15176FB58100276A97 /* Message.m */; };
 		798ADA1C176FB59300276A97 /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 798ADA1B176FB59300276A97 /* Category.m */; };
 		798ADA25176FB65200276A97 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 798ADA23176FB65200276A97 /* RegisterViewController.m */; };
@@ -212,6 +212,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		79021635177E2B4100A249B2 /* Store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Store.h; path = Entities/Store.h; sourceTree = "<group>"; };
+		79021636177E2B4100A249B2 /* Store.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Store.m; path = Entities/Store.m; sourceTree = "<group>"; };
 		796F64AE177CB43100457B16 /* reward_locked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = reward_locked.png; path = Images/reward_locked.png; sourceTree = "<group>"; };
 		796F64B0177CB70E00457B16 /* ico-feedback-block.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ico-feedback-block.png"; path = "Images/ico-feedback-block.png"; sourceTree = "<group>"; };
 		796F64B2177CBD8400457B16 /* reward_unlocked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = reward_unlocked.png; path = Images/reward_unlocked.png; sourceTree = "<group>"; };
@@ -398,8 +400,6 @@
 		798AD9B7176F8E1900276A97 /* repunch-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "repunch-logo@2x.png"; path = "Images/repunch-logo@2x.png"; sourceTree = "<group>"; };
 		798AD9B8176F8E1900276A97 /* repunch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "repunch@2x.png"; path = "Images/repunch@2x.png"; sourceTree = "<group>"; };
 		798AD9B9176F8E1900276A97 /* splash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "splash@2x.png"; path = "Images/splash@2x.png"; sourceTree = "<group>"; };
-		798ADA0E176FB55E00276A97 /* Store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Store.h; path = Entities/Store.h; sourceTree = "<group>"; };
-		798ADA0F176FB55E00276A97 /* Store.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Store.m; path = Entities/Store.m; sourceTree = "<group>"; };
 		798ADA14176FB58100276A97 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Message.h; path = Entities/Message.h; sourceTree = "<group>"; };
 		798ADA15176FB58100276A97 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Message.m; path = Entities/Message.m; sourceTree = "<group>"; };
 		798ADA1A176FB59300276A97 /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Category.h; path = Entities/Category.h; sourceTree = "<group>"; };
@@ -651,8 +651,8 @@
 				79B866971772262E0074C9FE /* Hour.m */,
 				79B86699177227950074C9FE /* Reward.h */,
 				79B8669A177227950074C9FE /* Reward.m */,
-				798ADA0E176FB55E00276A97 /* Store.h */,
-				798ADA0F176FB55E00276A97 /* Store.m */,
+				79021635177E2B4100A249B2 /* Store.h */,
+				79021636177E2B4100A249B2 /* Store.m */,
 				798ADA68176FC34B00276A97 /* User.h */,
 				798ADA69176FC34C00276A97 /* User.m */,
 			);
@@ -1185,7 +1185,6 @@
 				798AD952176F864400276A97 /* PlacesViewController.m in Sources */,
 				798AD95D176F869200276A97 /* InboxViewController.m in Sources */,
 				798AD968176F8D9B00276A97 /* GlobalToolbar.m in Sources */,
-				798ADA10176FB55E00276A97 /* Store.m in Sources */,
 				798ADA16176FB58100276A97 /* Message.m in Sources */,
 				798ADA1C176FB59300276A97 /* Category.m in Sources */,
 				798ADA25176FB65200276A97 /* RegisterViewController.m in Sources */,
@@ -1210,6 +1209,7 @@
 				798C714E177C9B4C0038423C /* RewardCell.m in Sources */,
 				796F64B8177CBFCA00457B16 /* CustomToolbar.m in Sources */,
 				796F64BC177CC52100457B16 /* ComposeViewController.m in Sources */,
+				79021637177E2B4200A249B2 /* Store.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

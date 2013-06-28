@@ -55,8 +55,17 @@
     localUser = [(AppDelegate *)[[UIApplication sharedApplication] delegate] localUser];
     patronObject = [(AppDelegate *)[[UIApplication sharedApplication] delegate] patronObject];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(setup)
+                                                 name:@"receivedPush"
+                                               object:nil];
+    
 
     [self setup];
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"receivedPush" object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -83,10 +92,13 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"MessageCell" owner:self options:nil]objectAtIndex:0];
     }
-    id currentCellStore = [savedMessages objectAtIndex:indexPath.row];
-    cell.senderName.text = [currentCellStore valueForKey:@"sender_name"];
-    cell.subjectLabel.text = [NSString stringWithFormat:@"%@ - %@", [currentCellStore valueForKey:@"subject"], [currentCellStore valueForKey:@"body"]];
-    cell.dateSent.text = [self formattedDateString:[currentCellStore valueForKey:@"createdAt"]];
+    id currentCellMessage = [savedMessages objectAtIndex:indexPath.row];
+    cell.senderName.text = [currentCellMessage valueForKey:@"sender_name"];
+    cell.subjectLabel.text = [NSString stringWithFormat:@"%@ - %@", [currentCellMessage valueForKey:@"subject"], [currentCellMessage valueForKey:@"body"]];
+    cell.dateSent.text = [self formattedDateString:[currentCellMessage valueForKey:@"createdAt"]];
+    if ([[currentCellMessage valueForKey:@"message_type"] isEqualToString:@"offer"]){
+        [[cell offerPic] setHidden:FALSE];
+    }
 
     return cell;
      
@@ -99,6 +111,9 @@
     MessageViewController *messageVC = [[MessageViewController alloc] init];
     messageVC.modalDelegate = self;
     messageVC.message = [savedMessages objectAtIndex:indexPath.row];
+    messageVC.customerName = [NSString stringWithFormat:@"%@ %@", [localUser first_name], [localUser last_name]];
+    messageVC.patronId = [localUser patronId];
+    messageVC.messageType = [[savedMessages objectAtIndex:indexPath.row] valueForKey:@"message_type"];
     messageVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     
     [self presentViewController:messageVC animated:YES completion:NULL];

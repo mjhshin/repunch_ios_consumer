@@ -16,12 +16,15 @@
 @dynamic reward_description;
 @dynamic reward_name;
 @dynamic store;
+@dynamic objectId;
+
 
 -(void) setFromParse:(PFObject *)pfObject
 {
     self.reward_name = [pfObject objectForKey:@"reward_name"];
     self.reward_description = [pfObject objectForKey:@"description"];
     self.punches = [NSNumber numberWithDouble:[[pfObject objectForKey:@"punches"] doubleValue]];
+    self.objectId = [pfObject objectForKey:@"reward_id"];
 }
 
 @end

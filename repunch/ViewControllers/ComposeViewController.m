@@ -110,7 +110,7 @@ shouldChangeTextInRange: (NSRange) range
     return YES;
 }
 
--(void)closePlace{
+-(void)closeView{
     [[self modalDelegate] didDismissPresentedViewController];
 }
 

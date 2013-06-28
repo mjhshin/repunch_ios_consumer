@@ -20,5 +20,6 @@
 @dynamic date_offer_expiration;
 @dynamic store_id;
 @dynamic reply;
+@dynamic objectId;
 
 @end

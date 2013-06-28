@@ -2,18 +2,18 @@
 //  Store.m
 //  Repunch
 //
-//  Created by Gwendolyn Weston on 6/17/13.
+//  Created by Gwendolyn Weston on 6/28/13.
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
 #import "Store.h"
 #import "Category.h"
-#import "Reward.h"
 #import "Hour.h"
+#import "Reward.h"
 #import <Parse/Parse.h>
 
-@implementation Store
 
+@implementation Store
 @dynamic store_name;
 @dynamic objectId;
 @dynamic city;
@@ -47,7 +47,7 @@
              object:self];
         }];
     } else self.store_avatar = [NSData dataWithContentsOfFile:@"Icon@2x"];
-
+    
     self.street = [store objectForKey:@"street"];
     if ([store objectForKey:@"cross_streets"] !=  [NSNull null]) self.cross_streets = [store objectForKey:@"cross_streets"];
     if ([store objectForKey:@"neighborhood"] !=  [NSNull null]) self.neighborhood = [store objectForKey:@"neighborhood"];
@@ -89,8 +89,8 @@
     }
     
     [localContext MR_saveToPersistentStoreAndWait];
-
+    
 }
 
-
 @end
+

@@ -21,5 +21,7 @@
 @property (nonatomic, retain) NSString * date_offer_expiration;
 @property (nonatomic, retain) NSString * store_id;
 @property (nonatomic, retain) Message *reply;
+@property (nonatomic, retain) NSString *objectId;
+
 
 @end

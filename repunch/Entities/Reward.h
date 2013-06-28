@@ -18,6 +18,8 @@
 @property (nonatomic, retain) NSString * reward_description;
 @property (nonatomic, retain) NSString * reward_name;
 @property (nonatomic, retain) Store *store;
+@property (nonatomic, retain) NSNumber *objectId;
+
 
 -(void) setFromParse:(PFObject *)pfObject;
 @end

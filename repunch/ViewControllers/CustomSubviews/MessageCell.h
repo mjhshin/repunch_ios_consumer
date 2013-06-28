@@ -13,5 +13,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *subjectLabel;
 @property (weak, nonatomic) IBOutlet UILabel *previewLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateSent;
+@property (weak, nonatomic) IBOutlet UIImageView *offerPic;
 
 @end
