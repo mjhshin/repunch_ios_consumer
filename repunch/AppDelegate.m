@@ -2,12 +2,11 @@
 //  AppDelegate.m
 //  Repunch
 //
-//  Created by Gwendolyn Weston on 6/17/13.
+//  Created by Gwendolyn Weston on 7/1/13.
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
 #import "AppDelegate.h"
-
 #import "PlacesViewController.h"
 #import "LoginViewController.h"
 #import "InboxViewController.h"
@@ -35,7 +34,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-        
+    
     //Set up API keys
     [Parse setApplicationId:@"m0EdwpRYlJwttZLZ5PUk7y13TWCnvSScdn8tfVoh"
                   clientKey:@"XZMybowaEMLHszQTEpxq4Yk2ksivkYj9m1c099ZD"];
@@ -48,7 +47,7 @@
     //[self deleteDataForObject:@"PatronStore"];
     //[self deleteDataForObject:@"Store"];
     //[self deleteDataForObject:@"User"];
-
+    
     //Init Tab Bar and all related view controllers
     placesVC = [[PlacesViewController alloc] init];
     inboxVC = [[InboxViewController alloc] init];
@@ -66,12 +65,13 @@
     UITabBarItem *inboxItem = [self.tabBarController.tabBar.items objectAtIndex:1];
     [inboxItem setTitle:@"Inbox"];
     [inboxItem setImage:[UIImage imageNamed:@"ico-tab-inbox@2xsmall.png"]];
-
     
+    /*
     //Register for Push Notifications
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-        
+     */
+    
     NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (remoteNotif != nil) {
         NSLog(@"opened from push: %@", remoteNotif);
@@ -89,7 +89,7 @@
         _localUser = [User MR_findFirstByAttribute:@"username" withValue:[[PFUser currentUser]username]];
         
         NSLog(@"user:%@", [_localUser username]);
-
+        
         if (!_patronObject){
             PFObject *patronObject = [[PFUser currentUser] valueForKey:@"Patron"];
             [patronObject fetchIfNeededInBackgroundWithBlock:^(PFObject *fetchedPatronObject, NSError *error) {
@@ -129,19 +129,19 @@
     if ([entityName isEqualToString:@"PatronStore"]){
         objects = [PatronStore MR_findAll];
     }
-
+    
     
     if ([entityName isEqualToString:@"User"]){
         objects = [User MR_findAll];
     }
-
+    
     
     for (id object in objects){
         [context deleteObject:object];
     }
     
     [self printDataForObject:@"PatronStore"];
-
+    
     [self saveContext];
 }
 
@@ -158,13 +158,13 @@
     if ([entityName isEqualToString:@"User"]){
         objects = [User MR_findAll];
     }
-
+    
     NSLog(@"here are all the objects for entity: %@", entityName);
     for (id object in objects){
         if ([entityName isEqualToString:@"Store"]) NSLog(@"%@", [object valueForKey:@"store_name"]);
         if ([entityName isEqualToString:@"PatronStore"]) NSLog(@"%@", [[object valueForKey:@"store"] valueForKey:@"store_name"]);
         if ([entityName isEqualToString:@"User"]) NSLog(@"%@", [object valueForKey:@"username"]);
-
+        
     }
     
 }
@@ -211,6 +211,7 @@
 	self.tabBarController.tabBar.hidden = hide;
 }
 
+/*
 #pragma mark - Push Notification methods
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
@@ -227,7 +228,7 @@
     [PFPush handlePush:userInfo];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"receivedPush" object:self];
-
-}
+    
+}*/
 
 @end

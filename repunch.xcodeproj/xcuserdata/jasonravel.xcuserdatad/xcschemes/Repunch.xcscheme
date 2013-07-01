@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "798AD89A176F82C700276A97"
+               BlueprintIdentifier = "7996B35817820A9700CCAFED"
                BuildableName = "Repunch.app"
                BlueprintName = "Repunch"
                ReferencedContainer = "container:Repunch.xcodeproj">
@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "798AD8BF176F82C800276A97"
+               BlueprintIdentifier = "7996B37D17820A9700CCAFED"
                BuildableName = "RepunchTests.octest"
                BlueprintName = "RepunchTests"
                ReferencedContainer = "container:Repunch.xcodeproj">
@@ -42,7 +42,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "798AD89A176F82C700276A97"
+            BlueprintIdentifier = "7996B35817820A9700CCAFED"
             BuildableName = "Repunch.app"
             BlueprintName = "Repunch"
             ReferencedContainer = "container:Repunch.xcodeproj">
@@ -61,7 +61,7 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "798AD89A176F82C700276A97"
+            BlueprintIdentifier = "7996B35817820A9700CCAFED"
             BuildableName = "Repunch.app"
             BlueprintName = "Repunch"
             ReferencedContainer = "container:Repunch.xcodeproj">
@@ -79,7 +79,7 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "798AD89A176F82C700276A97"
+            BlueprintIdentifier = "7996B35817820A9700CCAFED"
             BuildableName = "Repunch.app"
             BlueprintName = "Repunch"
             ReferencedContainer = "container:Repunch.xcodeproj">

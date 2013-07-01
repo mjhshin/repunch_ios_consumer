@@ -3,13 +3,13 @@
     <entity name="Category" representedClassName="Category" syncable="YES">
         <attribute name="alias" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="store" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Store" inverseName="categories" inverseEntity="Store" syncable="YES"/>
+        <relationship name="store" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Store" syncable="YES"/>
     </entity>
     <entity name="Hour" representedClassName="Hour" syncable="YES">
         <attribute name="close_time" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="day" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="open_time" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="store" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Store" inverseName="hours" inverseEntity="Store" syncable="YES"/>
+        <relationship name="store" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Store" syncable="YES"/>
     </entity>
     <entity name="Message" representedClassName="Message" syncable="YES">
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
@@ -20,12 +20,12 @@
         <attribute name="sender_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="store_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="reply" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Message" syncable="YES"/>
+        <relationship name="reply" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Message" inverseName="reply" inverseEntity="Message" syncable="YES"/>
     </entity>
     <entity name="PatronStore" representedClassName="PatronStore" syncable="YES">
         <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="patron_id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="punch_count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="punch_count" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="store_id" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="patron" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="saved_stores" inverseEntity="User" syncable="YES"/>
         <relationship name="store" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Store" syncable="YES"/>
@@ -51,8 +51,8 @@
         <attribute name="store_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="street" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="zip" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Category" inverseName="store" inverseEntity="Category" syncable="YES"/>
-        <relationship name="hours" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Hour" inverseName="store" inverseEntity="Hour" syncable="YES"/>
+        <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Category" syncable="YES"/>
+        <relationship name="hours" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" syncable="YES"/>
         <relationship name="rewards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Reward" inverseName="store" inverseEntity="Reward" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
