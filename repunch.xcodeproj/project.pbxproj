@@ -1365,6 +1365,8 @@
 		7996B39217820A9700CCAFED /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jinhee Shin (5XRCS768D8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jinhee Shin (5XRCS768D8)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Repunch/ExternalLibraries\"",
@@ -1373,6 +1375,8 @@
 				GCC_PREFIX_HEADER = "Repunch/Repunch-Prefix.pch";
 				INFOPLIST_FILE = "Repunch/Repunch-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "DCC6BB3A-7759-4DFA-875F-4849ED84146A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DCC6BB3A-7759-4DFA-875F-4849ED84146A";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1380,6 +1384,8 @@
 		7996B39317820A9700CCAFED /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jinhee Shin (5XRCS768D8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jinhee Shin (5XRCS768D8)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Repunch/ExternalLibraries\"",
@@ -1388,6 +1394,8 @@
 				GCC_PREFIX_HEADER = "Repunch/Repunch-Prefix.pch";
 				INFOPLIST_FILE = "Repunch/Repunch-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "DCC6BB3A-7759-4DFA-875F-4849ED84146A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DCC6BB3A-7759-4DFA-875F-4849ED84146A";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

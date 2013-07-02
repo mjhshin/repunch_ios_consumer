@@ -66,12 +66,13 @@
     [inboxItem setTitle:@"Inbox"];
     [inboxItem setImage:[UIImage imageNamed:@"ico-tab-inbox@2xsmall.png"]];
     
-    /*
+    
     //Register for Push Notifications
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-     */
     
+    NSLog(@"%u",[[UIApplication sharedApplication] enabledRemoteNotificationTypes]);
+
     NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (remoteNotif != nil) {
         NSLog(@"opened from push: %@", remoteNotif);
@@ -211,7 +212,7 @@
 	self.tabBarController.tabBar.hidden = hide;
 }
 
-/*
+
 #pragma mark - Push Notification methods
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
@@ -229,6 +230,6 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"receivedPush" object:self];
     
-}*/
+}
 
 @end
