@@ -27,10 +27,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *numPunches;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *feedbackBtn;
+@property (weak, nonatomic) IBOutlet UIButton *addPlaceBtn;
+@property (weak, nonatomic) IBOutlet UILabel *feedbackLbl;
 
 - (IBAction)callButton:(id)sender;
 - (IBAction)mapButton:(id)sender;
 - (IBAction)feedbackButton:(id)sender;
+- (IBAction)addStore:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UITableView *rewardsTable;
 

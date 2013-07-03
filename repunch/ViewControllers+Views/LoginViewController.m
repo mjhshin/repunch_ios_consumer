@@ -14,7 +14,6 @@
 
 //TODO: ALLL THE FACEBOOK STUFF.
 
-
 @implementation LoginViewController
 
 - (void)viewDidLoad
@@ -96,6 +95,8 @@
         [[[UIAlertView alloc] initWithTitle:@"Empty..." message:@"You didn't fill out both fields" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
 
     }
+    _scrollView.translatesAutoresizingMaskIntoConstraints = NO;    
+
     
 }
 
@@ -125,7 +126,15 @@
                           otherButtonTitles: @"Sweet.",nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     [alert show];
+
     
+}
+
+- (IBAction)fbLogin:(id)sender {
+    UIAlertView *loginPrompt = [[UIAlertView alloc] initWithTitle:@"Login with Facebook" message:@"Please enter your login information" delegate:self cancelButtonTitle:@
+                                "Cancel" otherButtonTitles:@"Login", nil];
+    loginPrompt.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
+    [loginPrompt show];
 }
 
 #pragma mark - Modal Delegate methods
@@ -142,8 +151,26 @@
 {
     if (buttonIndex == 1)
     {
-        NSString *email = [[alertView textFieldAtIndex:0] text];
-        [PFUser requestPasswordResetForEmailInBackground:email];
+        
+        if ([[alertView title] isEqualToString:@"Forgotten password?"]){
+            NSString *email = [[alertView textFieldAtIndex:0] text];
+            [PFUser requestPasswordResetForEmailInBackground:email];
+        }
+        if ([[alertView title] isEqualToString:@"Login with Facebook"]){
+            //spinner to run while fetches happen
+            UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            spinner.center = CGPointMake(160, 470);
+            spinner.color = [UIColor blackColor];
+            [self.view addSubview:spinner];
+            [spinner startAnimating];
+            
+            
+            
+            // The permissions requested from the user
+            NSArray *permissionsArray = @[ @"user_about_me", @"user_birthday", @"user_location"];
+            
+
+        }
     }
 }
 

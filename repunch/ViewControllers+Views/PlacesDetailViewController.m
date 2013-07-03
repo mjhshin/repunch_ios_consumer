@@ -41,17 +41,24 @@
     [_rewardsTable reloadData];
     
     placeRewardData = [[[_storeObject mutableSetValueForKey:@"rewards"] allObjects] mutableCopy];
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"punches"  ascending:YES];
+    placeRewardData = [[placeRewardData sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]] mutableCopy];
+
 
     patronStoreEntity= [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", localUser.patronId, _storeObject.objectId]];
     availablePunches = [[patronStoreEntity punch_count] intValue];
     
     if (!_isSavedStore){
-        [_numPunches setText:@""];
+        //[_numPunches setText:@""];
         [_feedbackBtn setImage:[UIImage imageNamed:@"ico-feedback-block"] forState:UIControlStateNormal];
+        [_feedbackBtn setHidden:TRUE];
+        [_feedbackLbl setHidden:TRUE];
     }
     else{
         int punches = [[patronStoreEntity punch_count] intValue];
-        [_numPunches setText:[NSString stringWithFormat:@"%d %@", punches, (punches==1)?@"punch":@"punches"]];
+        [_addPlaceBtn setTitle:[NSString stringWithFormat:@"%d %@", punches, (punches==1)?@"punch":@"punches"] forState:UIControlStateNormal];
+        [_addPlaceBtn setUserInteractionEnabled:FALSE];
+        //[_numPunches setText:[NSString stringWithFormat:@"%d %@", punches, (punches==1)?@"punch":@"punches"]];
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -103,6 +110,7 @@
     
     UIImage *addOrRemoveImage;
     
+    /*
     if (!_isSavedStore) addOrRemoveImage = [UIImage imageNamed:@"ab_add_my_places"];
     else addOrRemoveImage = [UIImage imageNamed:@"ab_message_delete"];
     UIButton *addOrRemoveButton= [UIButton buttonWithType:UIButtonTypeCustom];
@@ -111,6 +119,18 @@
     [addOrRemoveButton addTarget:self action:@selector(addOrRemovePlace) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *addOrRemoveTitle = [[UIBarButtonItem alloc] initWithCustomView:addOrRemoveButton];
+     */
+    
+    if (!_isSavedStore) addOrRemoveImage = [UIImage imageNamed:@"ab_add_my_places"];
+    else addOrRemoveImage = [UIImage imageNamed:@"ab_message_delete"];
+    UIButton *addOrRemoveButton= [UIButton buttonWithType:UIButtonTypeCustom];
+    [addOrRemoveButton setImage:addOrRemoveImage forState:UIControlStateNormal];
+    [addOrRemoveButton setFrame:CGRectMake(0, 0, addOrRemoveImage.size.width, addOrRemoveImage.size.height)];
+    [addOrRemoveButton addTarget:self action:@selector(addOrRemovePlace) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *addOrRemoveTitle = [[UIBarButtonItem alloc] initWithCustomView:addOrRemoveButton];
+    if (!_isSavedStore) [addOrRemoveButton setHidden:TRUE];
+
     
     
     [placeToolbar setItems:[NSArray arrayWithObjects:closePlaceButtonItem, flex, placeTitleItem, flex2, addOrRemoveTitle, nil]];
@@ -503,5 +523,9 @@
     }
     
 
+}
+
+- (IBAction)addStore:(id)sender {
+    [self addOrRemovePlace];
 }
 @end

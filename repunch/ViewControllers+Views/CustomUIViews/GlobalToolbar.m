@@ -25,11 +25,16 @@
         [settingsButton setFrame:CGRectMake(0, 0, settingsImage.size.width, settingsImage.size.height)];
         [settingsButton setImage:settingsImage forState:UIControlStateNormal];
         [settingsButton addTarget:self action:@selector(openSettings) forControlEvents:UIControlEventTouchUpInside];
-        
         UIBarButtonItem *settingsButtonItem = [[UIBarButtonItem alloc] initWithCustomView:settingsButton];
         
-        UIImageView *logoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"repunch-logo"]];
-        UIBarButtonItem *logo = [[UIBarButtonItem alloc] initWithCustomView:logoImageView];
+        UIImage *repunchImage = [UIImage imageNamed:@"repunch-logo"];
+        UIButton *showPunchCodeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [showPunchCodeBtn setFrame:CGRectMake(0,0, repunchImage.size.width, repunchImage.size.height)];
+        [showPunchCodeBtn setImage:repunchImage forState:UIControlStateNormal];
+        [settingsButton setFrame:CGRectMake(0, 0, settingsImage.size.width, settingsImage.size.height)];
+
+        [showPunchCodeBtn addTarget:self action:@selector(showPunchCode) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *logo = [[UIBarButtonItem alloc] initWithCustomView:showPunchCodeBtn];
         
         
         UIImage *searchImage = [UIImage imageNamed:@"ico-search"];
@@ -53,6 +58,10 @@
 - (void)openSearch
 {
     [_toolbarDelegate openSearch];
+}
+
+-(void)showPunchCode{
+    [_toolbarDelegate showPunchCode];
 }
 
 @end

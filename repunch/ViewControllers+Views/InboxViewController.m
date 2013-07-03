@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "PlacesSearchViewController.h"
 #import "MessageViewController.h"
+#import "SettingsViewController.h"
 
 #import "GlobalToolbar.h"
 #import "MessageCell.h"
@@ -93,6 +94,8 @@
 {
     static NSString *CellIdentifier = @"MessageCell";
     MessageCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    [[cell offerPic] setHidden:TRUE];
+
     if (cell == nil) {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"MessageCell" owner:self options:nil]objectAtIndex:0];
     }
@@ -102,7 +105,14 @@
     cell.dateSent.text = [self formattedDateString:[currentCellMessage valueForKey:@"createdAt"]];
     if ([[currentCellMessage valueForKey:@"message_type"] isEqualToString:@"offer"]){
         [[cell offerPic] setHidden:FALSE];
+        [[cell offerPic] setImage:[UIImage imageNamed:@"ico_message_coupon"]];
     }
+    if ([[currentCellMessage valueForKey:@"message_type"] isEqualToString:@"feedback"]){
+        [[cell offerPic] setHidden:FALSE];
+        [[cell offerPic] setImage:[UIImage imageNamed:@"message_reply"]];
+        
+    }
+
 
     return cell;
      
@@ -159,6 +169,16 @@
 
 #pragma mark - Global Toolbar Delegate
 
+- (void) openSettings
+{
+    SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
+    settingsVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    settingsVC.modalDelegate = self;
+    [self presentViewController:settingsVC animated:YES completion:NULL];
+    
+}
+
+
 - (void) openSearch
 {
     PlacesSearchViewController *placesSearchVC = [[PlacesSearchViewController alloc]init];
@@ -167,6 +187,9 @@
     [self presentViewController:placesSearchVC animated:YES completion:NULL];
 }
 
+-(void)showPunchCode{
+    
+}
 #pragma mark - Modal View Delegate
 
 - (void)didDismissPresentedViewController{

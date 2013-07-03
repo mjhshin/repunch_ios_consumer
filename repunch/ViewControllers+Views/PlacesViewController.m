@@ -9,6 +9,8 @@
 #import "PlacesViewController.h"
 #import "PlacesSearchViewController.h"
 #import "PlacesDetailViewController.h"
+#import "SettingsViewController.h"
+#import "SIAlertView.h"
 #import "User.h"
 #import "Store.h"
 #import "Reward.h"
@@ -157,6 +159,11 @@
 
 - (void) openSettings
 {
+    SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
+    settingsVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    settingsVC.modalDelegate = self;
+    [self presentViewController:settingsVC animated:YES completion:NULL];
+
 }
 
 
@@ -166,6 +173,14 @@
     placesSearchVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     placesSearchVC.modalDelegate = self;
     [self presentViewController:placesSearchVC animated:YES completion:NULL];
+}
+
+-(void)showPunchCode{
+    SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Your Punch Code" andMessage:[NSString stringWithFormat:@"Your punch code is %@", [localUser punch_code]]];
+    [alert addButtonWithTitle:@"Cool" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+        //nothing happens
+    }];
+    [alert show];
 }
 
 #pragma mark - Modal View Delegate
@@ -196,7 +211,6 @@
         cell = [[[NSBundle mainBundle]loadNibNamed:@"SavedStoreCell" owner:self options:nil]objectAtIndex:0];        
     }
     int punches = [[[savedStores objectAtIndex:indexPath.row]valueForKey:@"punch_count"] intValue];
-    [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
     cell.storeName.text = [[[savedStores objectAtIndex:indexPath.row] store] valueForKey:@"store_name"];
     cell.storePic.image = [UIImage imageWithData:[[[savedStores objectAtIndex:indexPath.row] store] valueForKey:@"store_avatar"]];
     cell.numberPuches.text = [NSString stringWithFormat:@"%i %@", punches, (punches == 1)?@"punch": @"punches"];
@@ -214,23 +228,9 @@
         }
     }
     
-        
     return cell;
 }
 
-
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath: (NSIndexPath *) indexPath{
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    PlacesDetailViewController *placesDetailVC = [[PlacesDetailViewController alloc]init];
-    placesDetailVC.modalDelegate = self;
-    placesDetailVC.storeObject = [[savedStores objectAtIndex:indexPath.row] store];
-    placesDetailVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    placesDetailVC.isSavedStore = YES;
-    
-    [self presentViewController:placesDetailVC animated:YES completion:NULL];
-    
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

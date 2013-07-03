@@ -13,6 +13,7 @@
 #import "User.h"
 #import "PatronStore.h"
 #import "StoreCell.h"
+#import "Category.h"
 
 #import <Parse/Parse.h>
 #import "AppDelegate.h"
@@ -189,6 +190,9 @@
          cell = [[[NSBundle mainBundle]loadNibNamed:@"StoreCell" owner:self options:nil]objectAtIndex:0];
 
      }
+     
+     [[cell punchesPic] setHidden:TRUE];
+     [[cell numberOfPunches] setHidden:TRUE];
     
      //this might be useful later
      /*
@@ -199,16 +203,39 @@
      
      Store *currentCellStore = [storeList objectAtIndex:indexPath.row];
      
+     NSString *neighborhood = [currentCellStore valueForKey:@"neighborhood"];
+     NSString *state = [currentCellStore valueForKey:@"state"];
+     NSString *addressString = [currentCellStore valueForKey:@"street"];
+     
+     if ([neighborhood length]>0){
+         addressString = [addressString stringByAppendingFormat:@", %@", neighborhood];
+     }
+     else{
+         addressString = [addressString stringByAppendingFormat:@", %@", state];
+     }
+     
+     NSArray *categories = [[currentCellStore mutableSetValueForKey:@"categories"] allObjects];
+     NSString *categoryString = @"";
+     for (int i = 0; i <[categories count]; i++){
+         categoryString = [categoryString stringByAppendingString:[categories[i] valueForKey:@"name"]];
+         if (i!= [categories count]-1){
+             categoryString = [categoryString stringByAppendingFormat:@", "];
+         }
+     }
+     
+     addressString = [addressString stringByAppendingFormat:@"\n%@", categoryString];
+     /*
      NSString *addressString = [NSString stringWithFormat:@"%@\n%@, %@ %@", [currentCellStore valueForKey:@"street"], [currentCellStore valueForKey:@"city"], [currentCellStore valueForKey:@"state"], [currentCellStore valueForKey:@"zip"]];
+      */
      
      if ([localUser alreadyHasStoreSaved:[currentCellStore objectId]]){
          PatronStore *patronStore = [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", localUser.patronId, [currentCellStore objectId]]];
          int punches = [[patronStore punch_count] intValue];
          [[cell punchesPic] setHidden:FALSE];
+         [[cell numberOfPunches] setHidden:FALSE];
          [[cell numberOfPunches] setText:[NSString stringWithFormat:@"%d %@", punches, (punches==1)?@"punch":@"punches"]];
      }
 
-     [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
      cell.storeAddressLabel.text = addressString;
      cell.storeNameLabel.text = [currentCellStore valueForKey:@"store_name"];
      cell.storeImageLabel.image = [UIImage imageWithData:[currentCellStore valueForKey:@"store_avatar"]];
@@ -219,17 +246,6 @@
 
 #pragma mark - Table View delegate methods
 
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath: (NSIndexPath *) indexPath{
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    PlacesDetailViewController *placesDetailVC = [[PlacesDetailViewController alloc]init];
-    placesDetailVC.modalDelegate = self;
-    placesDetailVC.storeObject = [storeList objectAtIndex:indexPath.row];
-    placesDetailVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    
-    [self presentViewController:placesDetailVC animated:YES completion:NULL];
-
-}
 
  - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
  {
@@ -244,7 +260,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 110;
 }
 
 

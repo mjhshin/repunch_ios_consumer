@@ -11,6 +11,7 @@
 @protocol GlobalToolbarDelegate 
 - (void)openSettings;
 - (void)openSearch;
+-(void)showPunchCode;
 @end
 
 @interface GlobalToolbar : UIToolbar
