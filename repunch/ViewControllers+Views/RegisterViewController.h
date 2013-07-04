@@ -10,7 +10,7 @@
 #import "ModalDelegate.h"
 #import "TPKeyboardAvoidingScrollView.h"
 
-@interface RegisterViewController : UIViewController <UITextFieldDelegate>
+@interface RegisterViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameInput;
 @property (weak, nonatomic) IBOutlet UITextField *passwordInput;
@@ -25,5 +25,6 @@
 
 - (IBAction)registerBtn:(id)sender;
 - (IBAction)cancelBtn:(id)sender;
+- (IBAction)fbRegisterBtn:(id)sender;
 
 @end

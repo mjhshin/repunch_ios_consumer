@@ -48,9 +48,9 @@
     //[self printDataForObject:@"Store"];
     //[self printDataForObject:@"PatronStore"];
     //[self printDataForObject:@"User"];
-    //[self deleteDataForObject:@"PatronStore"];
-    //[self deleteDataForObject:@"Store"];
-    //[self deleteDataForObject:@"User"];
+    [self deleteDataForObject:@"PatronStore"];
+    [self deleteDataForObject:@"Store"];
+    [self deleteDataForObject:@"User"];
     
     //Init Tab Bar and all related view controllers
     placesVC = [[PlacesViewController alloc] init];
@@ -84,7 +84,7 @@
         [self.tabBarController setSelectedIndex:2];
     }
     
-    //[PFUser logOut];
+    [PFUser logOut];
     
     //if user is cached, load their cached data
     //else, go to login page

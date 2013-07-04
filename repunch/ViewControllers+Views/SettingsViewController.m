@@ -37,9 +37,9 @@
 }
 
 - (IBAction)logOut:(id)sender {
+    [[self modalDelegate] didDismissPresentedViewController];
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate logout];
-    [[self modalDelegate] didDismissPresentedViewController];
 
     
 }

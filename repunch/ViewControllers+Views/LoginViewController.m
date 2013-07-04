@@ -35,36 +35,112 @@
 
 
 -(void)login{
-    
-    //check make sure device store_id matches the store_id of employee logging in
-    NSString *devicePatronID = [[PFInstallation currentInstallation] objectForKey:@"patron_id"];
-    NSLog(@"device patron ID is: %@", devicePatronID);
-    
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-    PFObject *patronObject = [[PFUser currentUser] valueForKey:@"Patron"];
-    [patronObject fetchIfNeededInBackgroundWithBlock:^(PFObject *fetchedPatronObject, NSError *error) {
+    //spinner to run while fetches happen
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    spinner.center = CGPointMake(160, 470);
+    spinner.color = [UIColor blackColor];
+    [self.view addSubview:spinner];
+    [spinner startAnimating];
         
-        //check make sure device store_id matches the store_id of employee logging in
-        NSString *userPatronID = [fetchedPatronObject objectId];
-        NSString *punch_code = [fetchedPatronObject valueForKey:@"punch_code"];
-        if (![devicePatronID isEqualToString:userPatronID]){
-            [[PFInstallation currentInstallation] setObject:userPatronID forKey:@"patron_id"];
-            [[PFInstallation currentInstallation] setObject:punch_code forKey:@"punch_code"];
-            [[PFInstallation currentInstallation] saveInBackground];
-            NSLog(@"device store ID is now: %@", [[PFInstallation currentInstallation] objectForKey:@"patron_id"]);
+    // The permissions requested from the user
+    NSArray *permissionsArray = @[ @"email", @"user_birthday", @"publish_actions"];
+    
+    // Login PFUser using Facebook
+    [PFFacebookUtils logInWithPermissions:permissionsArray block:^(PFUser *user, NSError *error) {
+        [spinner stopAnimating]; // Hide loading indicator
+        
+        if (!user) {
+            if (!error) {
+                NSLog(@"Uh oh. The user cancelled the Facebook login.");
+            } else {
+                NSLog(@"Uh oh. An error occurred: %@", error);
+            }
+        } else {
+            
+            AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            
+            PFObject *patronObject = [user valueForKey:@"Patron"];
+            [patronObject fetchIfNeededInBackgroundWithBlock:^(PFObject *fetchedPatronObject, NSError *error) {
+                NSLog(@"HERE?");
+                
+                //if patron doesn't exist (as in, if the user is trying to login without having previously registered, boo)
+                if (fetchedPatronObject == nil){
+                    FBRequest *request = [FBRequest requestForMe];
+                    
+                    NSLog(@"HOW ABOUT HERE?");
+                    
+                    // Send request to Facebook
+                    [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                        if (!error) {
+                            // result is a dictionary with the user's Facebook data
+                            NSDictionary *userData = (NSDictionary *)result;
+                            NSString *facebookID = userData[@"id"];
+                            NSString *fName = userData[@"first_name"];
+                            NSString *lName = userData[@"last_name"];
+                            NSString *email = userData[@"email"];
+                            NSString *gender = userData[@"gender"];
+                            NSString *birthday = userData[@"birthday"];
+                            NSLog(@"AM I HERE YET?");
+                            
+                            AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                            
+                            NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:[[PFUser currentUser] objectId], @"user_id", [[PFUser currentUser]username], @"username", email, @"email", gender, @"gender", fName, @"first_name", birthday, @"birthday", lName, @"last_name", facebookID, @"facebook_id", nil];
+                            
+                            [PFCloud callFunctionInBackground:@"register_patron" withParameters:parameters block:^(id createdPatronObject, NSError *error) {
+                                if (!error){
+                                    
+                                    //make sure installation is set
+                                    NSString *userPatronID = [createdPatronObject objectId];
+                                    NSString *punch_code = [createdPatronObject valueForKey:@"punch_code"];
+                                    [[PFInstallation currentInstallation] setObject:userPatronID forKey:@"patron_id"];
+                                    [[PFInstallation currentInstallation] setObject:punch_code forKey:@"punch_code"];
+                                    [[PFInstallation currentInstallation] saveInBackground];
+                                    
+                                    User *localUserEntity = [User MR_createEntity];
+                                    [localUserEntity setFromParseUserObject:[PFUser currentUser] andPatronObject:createdPatronObject];
+                                    NSLog(@"user is %@", localUserEntity);
+                                    
+                                    [appDelegate setLocalUser:localUserEntity];
+                                    [appDelegate setPatronObject:createdPatronObject];
+                                    
+                                    [appDelegate.window setRootViewController:appDelegate.tabBarController];
+                                }
+                                else{
+                                    NSLog(@"There was an ERROR: %@", error);
+                                    
+                                }
+                            }]; //end register patron cloud code
+                            
+                            
+                        }
+                    }]; //end get user info
+                    
+                } //end if fetchedPatronObject is nil
+                
+                else{
+                    //make sure installation is set
+                    NSString *userPatronID = [fetchedPatronObject objectId];
+                    NSString *punch_code = [fetchedPatronObject valueForKey:@"punch_code"];
+                    [[PFInstallation currentInstallation] setObject:userPatronID forKey:@"patron_id"];
+                    [[PFInstallation currentInstallation] setObject:punch_code forKey:@"punch_code"];
+                    [[PFInstallation currentInstallation] saveInBackground];
+                    
+                    [appDelegate setPatronObject:fetchedPatronObject];
+                    User *localUserEntity =[User MR_findFirstByAttribute:@"username" withValue:[[PFUser currentUser] username]];
+                    if (localUserEntity == nil){
+                        localUserEntity = [User MR_createEntity];
+                    }
+                    [localUserEntity setFromParseUserObject:[PFUser currentUser] andPatronObject:fetchedPatronObject];
+                    [appDelegate setLocalUser:localUserEntity];
+                    
+                    [appDelegate.window setRootViewController:appDelegate.tabBarController];
+                }
+            }];
+
         }
-        
-        [appDelegate setPatronObject:fetchedPatronObject];
-        User *localUserEntity =[User MR_findFirstByAttribute:@"username" withValue:[[PFUser currentUser] username]];
-        if (localUserEntity == nil){
-            localUserEntity = [User MR_createEntity];
-        }
-        [localUserEntity setFromParseUserObject:[PFUser currentUser] andPatronObject:fetchedPatronObject];
-        [appDelegate setLocalUser:localUserEntity];
-        
-        [appDelegate.window setRootViewController:appDelegate.tabBarController];
     }];
+
+    
 
 }
 
@@ -161,30 +237,9 @@
             [PFUser requestPasswordResetForEmailInBackground:email];
         }
         if ([[alertView title] isEqualToString:@"Login with Facebook"]){
-            //spinner to run while fetches happen
-            UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-            spinner.center = CGPointMake(160, 470);
-            spinner.color = [UIColor blackColor];
-            [self.view addSubview:spinner];
-            [spinner startAnimating];
             
-            // The permissions requested from the user
-            NSArray *permissionsArray = @[ @"email", @"user_birthday", @"publish_actions"];
-            
-            // Login PFUser using Facebook
-            [PFFacebookUtils logInWithPermissions:permissionsArray block:^(PFUser *user, NSError *error) {
-                [spinner stopAnimating]; // Hide loading indicator
-                
-                if (!user) {
-                    if (!error) {
-                        NSLog(@"Uh oh. The user cancelled the Facebook login.");
-                    } else {
-                        NSLog(@"Uh oh. An error occurred: %@", error);
-                    }
-                } else {
-                    [self login];
-                }
-            }];
+            [self login];
+
         }
     }
 }

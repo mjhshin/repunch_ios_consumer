@@ -43,24 +43,10 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)register{
-    
-}
-
-#pragma mark - UI response methods
-
-- (IBAction)registerBtn:(id)sender {
-    if (![self validateForm]) {
-        return;
-    }
-
+-(void)registerWithEmail{
     NSString *username = [_usernameInput text];
     NSString *password = [_passwordInput text];
-    NSString *fName = [_firstNameInput text];
-    NSString *lName = [_lastNameInput text];
     NSString *email = [_emailInput text];
-    //NSDate *birthday = [_birthdayInput text];
-    NSString *gender = [_genderInput text];
     
     [self dismissKeyboard];
     
@@ -77,71 +63,128 @@
     [[self view] addSubview:spinner];
     [spinner startAnimating];
     
-    // old not cloud code version
     [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error){
             [spinner stopAnimating];
-            PFObject *newPatron = [PFObject objectWithClassName:@"Patron"];
-            [newPatron setValue:fName forKey:@"first_name"];
-            [newPatron setValue:lName forKey:@"last_name"];
-            [newPatron setValue:gender forKey:@"gender"];
-            //[newPatron setValue:birthday forKey:@"date_of_birth"];
-            //TODO: CLOUD CODE TO GENERATE PUNCH CODES
-            [newPatron saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                
-                if (succeeded){
-                //set user 
-                    [newUser setValue:newPatron forKey:@"Patron"];
-                    [newUser saveInBackground];
+            NSString *username = [_usernameInput text];
+            NSString *email = [_emailInput text];
+            NSString *fName = [_firstNameInput text];
+            NSString *lName = [_lastNameInput text];
+            NSString *birthday = @"01/01/1991";
+            NSString *gender = [_genderInput text];
+            
+            AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            
+            NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:[[PFUser currentUser] objectId], @"user_id",username, @"username", email, @"email", gender, @"gender", fName, @"first_name", lName, @"last_name", nil];
+            
+            [PFCloud callFunctionInBackground:@"register_patron" withParameters:parameters block:^(id createdPatronObject, NSError *error) {
+                if (!error){
                     
-                    NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
-                    User *localUser = [User MR_createInContext:localContext];
-                    [localUser setFromParseUserObject:newUser andPatronObject:newPatron];
-                    [localContext MR_saveToPersistentStoreAndWait];
+                    User *localUserEntity = [User MR_createEntity];
+                    [localUserEntity setFromParseUserObject:[PFUser currentUser] andPatronObject:createdPatronObject];
+                    NSLog(@"user is %@", localUserEntity);
                     
-                    NSLog(@"here is the object: %@", localUser);
-
+                    [appDelegate setLocalUser:localUserEntity];
+                    [appDelegate setPatronObject:createdPatronObject];
+                    
+                    [appDelegate.window setRootViewController:appDelegate.tabBarController];
                     
                     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
                     [appDelegate.window setRootViewController:appDelegate.tabBarController];
-                }else NSLog(@"error is: %@", error);
-
-            }];
+                }
+                else{
+                    NSLog(@"There was an ERROR: %@", error);
+                    
+                }
+            }]; //end cloud code for register patron
 
         }
         
         else{
             [spinner stopAnimating];
-            //TODO: HERE BE ERROR CODES
             NSLog(@"There was an ERROR: %@", error);
         }
-    }];
-    /*
+    }]; //end sign up block
     
-    NSDictionary *parameters = [[NSDictionary alloc] initWithObjects:@[username, password, email, @"patron", fName, lName, gender, birthday]; forKeys:@[@"username", @"password", @"email", @"account_type", @"first_name", @"last_name", @"gender", @"date_of_birth"];
-    [PFCloud callFunctionInBackground:@"register_patron" withParameters:parameters block:^(id object, NSError *error) {
-        if (!error){
-        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
-        User *localUser = [User MR_createInContext:localContext];
-        [localUser setFromParseUserObject:newUser andPatronObject:newPatron];
-        [localContext MR_saveToPersistentStoreAndWait];
-        
-        NSLog(@"here is the object: %@", localUser);
-        
-        
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        [appDelegate.window setRootViewController:appDelegate.tabBarController];
-        }
-        else{
-            [spinner stopAnimating];
-            //TODO: HERE BE ERROR CODES
-            NSLog(@"There was an ERROR: %@", error);
+}
 
-        }
 
-    }];*/
+-(void)registerWithFacebook{
     
+    //spinner to run while fetches happen
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    spinner.center = CGPointMake(160, 470);
+    spinner.color = [UIColor blackColor];
+    [self.view addSubview:spinner];
+    [spinner startAnimating];
+    
+    // The permissions requested from the user
+    NSArray *permissionsArray = @[ @"email", @"user_birthday", @"publish_actions"];
+    
+    // Login PFUser using Facebook
+    [PFFacebookUtils logInWithPermissions:permissionsArray block:^(PFUser *user, NSError *error) {
+        [spinner stopAnimating]; // Hide loading indicator
+        
+        if (!user) {
+            if (!error) {
+                NSLog(@"Uh oh. The user cancelled the Facebook login.");
+            } else {
+                NSLog(@"Uh oh. An error occurred: %@", error);
+            }
+        } else {
+            FBRequest *request = [FBRequest requestForMe];
+            
+            // Send request to Facebook
+            [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                if (!error) {
+                    // result is a dictionary with the user's Facebook data
+                    NSDictionary *userData = (NSDictionary *)result;
+                    
+                    NSString *facebookID = userData[@"id"];
+                    NSString *fName = userData[@"first_name"];
+                    NSString *lName = userData[@"last_name"];
+                    NSString *email = userData[@"email"];
+                    NSString *gender = userData[@"gender"];
+                    NSString *birthday = userData[@"birthday"];
+                    
+                    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                    
+                    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:[[PFUser currentUser] objectId], @"user_id", [[PFUser currentUser]username], @"username", email, @"email", gender, @"gender", fName, @"first_name", birthday, @"birthday", lName, @"last_name", facebookID, @"facebook_id", nil];
+                    
+                    [PFCloud callFunctionInBackground:@"register_patron" withParameters:parameters block:^(id createdPatronObject, NSError *error) {
+                        if (!error){
+                            User *localUserEntity = [User MR_createEntity];
+                            [localUserEntity setFromParseUserObject:[PFUser currentUser] andPatronObject:createdPatronObject];
+                            NSLog(@"user is %@", localUserEntity);
+                            
+                            [appDelegate setLocalUser:localUserEntity];
+                            [appDelegate setPatronObject:createdPatronObject];
+                            
+                            [appDelegate.window setRootViewController:appDelegate.tabBarController];
+                        }
+                        else{
+                            NSLog(@"There was an ERROR: %@", error);
+                            
+                        }
+                    }]; //end register patron cloud code
+                    
+                    
+                }
+            }]; //end get user info
 
+        }
+    }]; //end login with facebook user
+    
+}
+
+#pragma mark - UI response methods
+
+- (IBAction)registerBtn:(id)sender {
+    if (![self validateForm]) {
+        return;
+    }
+    
+    [self registerWithEmail];
 }
 
 - (IBAction)cancelBtn:(id)sender {
@@ -182,9 +225,9 @@
         [errMsg appendString:@"Invalid email address.\n"];
     }
     
-    /*if (_birthdayInput.text.length <=0){
+    if (_birthdayInput.text.length <=0){
         [errMsg appendString:@"Birthday is required.\n"];
-    }*/
+    }
     if (_genderInput.text.length <=0)
     {
         [errMsg appendString:@"Gender is required.\n"];
@@ -211,6 +254,32 @@
     return [emailTest evaluateWithObject:candidate];
 }
 
+ - (IBAction)fbRegisterBtn:(id)sender {
+     
+     UIAlertView *loginPrompt = [[UIAlertView alloc] initWithTitle:@"Login with Facebook" message:@"Please enter your login information" delegate:self cancelButtonTitle:@
+                                 "Cancel" otherButtonTitles:@"Login", nil];
+     loginPrompt.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
+     [loginPrompt show];
+      
+}
 
+#pragma mark - Text View Delegate methods
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+
+{
+    if (buttonIndex == 1)
+    {
+        if ([[alertView title] isEqualToString:@"Login with Facebook"]){
+            //spinner to run while fetches happen
+            UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            spinner.center = CGPointMake(160, 470);
+            spinner.color = [UIColor blackColor];
+            [self.view addSubview:spinner];
+            
+            [self registerWithFacebook];
+        }
+    }
+}
 
 @end
