@@ -10,6 +10,7 @@
 #import <CoreData/CoreData.h>
 #import <Parse/Parse.h>
 
+
 @class Category, Hour, Reward;
 
 @interface Store : NSManagedObject

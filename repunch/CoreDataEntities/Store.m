@@ -69,6 +69,7 @@
         }
         [newCategory addStoreObject:self];
         [newCategory setFromParse:category];
+        [self addCategoriesObject:newCategory];
         [localContext MR_saveToPersistentStoreAndWait];
     }
     
@@ -77,6 +78,7 @@
         Hour *newHour = [Hour MR_createInContext:localContext];
         [newHour setStore:self];
         [newHour setFromParse:hour];
+        [self addHoursObject:newHour];
         [localContext MR_saveToPersistentStoreAndWait];
     }
     
@@ -85,6 +87,7 @@
         Reward *newReward = [Reward MR_createInContext:localContext];
         [newReward setFromParse:reward];
         [newReward setStore:self];
+        [self addRewardsObject:newReward];
         [localContext MR_saveToPersistentStoreAndWait];
     }
     

@@ -36,7 +36,6 @@
     [placeTitleLabel setBackgroundColor:[UIColor clearColor]];
     [placeTitleLabel setTextColor:[UIColor whiteColor]];
     [placeTitleLabel setText:[_message valueForKey:@"subject"]];
-    [placeTitleLabel sizeToFit];
     
     UIBarButtonItem *placeTitleItem = [[UIBarButtonItem alloc] initWithCustomView:placeTitleLabel];
     
@@ -46,7 +45,6 @@
     UIImage *deleteMessageImage = [UIImage imageNamed:@"ab_message_delete"];
     UIButton *deleteMessage= [UIButton buttonWithType:UIButtonTypeCustom];
     [deleteMessage setImage:deleteMessageImage forState:UIControlStateNormal];
-    [deleteMessage setFrame:CGRectMake(0, 0, deleteMessageImage.size.width, deleteMessageImage.size.height)];
     [deleteMessage addTarget:self action:@selector(deleteMessage) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *deleteMessageTitle = [[UIBarButtonItem alloc] initWithCustomView:deleteMessage];

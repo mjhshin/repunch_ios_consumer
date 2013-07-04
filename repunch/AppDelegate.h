@@ -21,6 +21,8 @@
 
 - (void)saveContext;
 -(void)makeTabBarHidden:(BOOL)hide;
+-(void)logout;
+
 
 
 @end

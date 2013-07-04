@@ -33,71 +33,39 @@
     [super didReceiveMemoryWarning];
 }
 
-- (IBAction)signinBtn:(id)sender {
-    if ([_usernameInput.text length] > 0 || [_passwordInput.text length] > 0){
-        //spinner to run while fetches happen
-        UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        spinner.center = CGPointMake(160, 470);
-        spinner.color = [UIColor blackColor];
-        [self.view addSubview:spinner];
-        [spinner startAnimating];
 
-        [PFUser logInWithUsernameInBackground:[_usernameInput text] password:[_passwordInput text] block:^(PFUser *user, NSError *error){
-            if (user){
-                [spinner stopAnimating];
-                
-                //dismiss keyboard on sign in
-                [_usernameInput resignFirstResponder];
-                [_passwordInput resignFirstResponder];
-                
-                
-                //check make sure device store_id matches the store_id of employee logging in
-                NSString *devicePatronID = [[PFInstallation currentInstallation] objectForKey:@"patron_id"];
-                NSLog(@"device patron ID is: %@", devicePatronID);
-                                
-                AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-                
-                PFObject *patronObject = [[PFUser currentUser] valueForKey:@"Patron"];
-                [patronObject fetchIfNeededInBackgroundWithBlock:^(PFObject *fetchedPatronObject, NSError *error) {
-                    
-                    //check make sure device store_id matches the store_id of employee logging in
-
-                    NSString *userPatronID = [fetchedPatronObject objectId];
-                    NSString *punch_code = [fetchedPatronObject valueForKey:@"punch_code"];
-                    if (![devicePatronID isEqualToString:userPatronID]){
-                        [[PFInstallation currentInstallation] setObject:userPatronID forKey:@"patron_id"];
-                        [[PFInstallation currentInstallation] setObject:punch_code forKey:@"punch_code"];
-                        [[PFInstallation currentInstallation] saveInBackground];
-                        NSLog(@"device store ID is now: %@", [[PFInstallation currentInstallation] objectForKey:@"patron_id"]);
-                    }
-
-                    [appDelegate setPatronObject:fetchedPatronObject];
-                    User *localUserEntity = [User MR_createEntity];
-                    [localUserEntity setFromParseUserObject:user andPatronObject:fetchedPatronObject];
-                    [appDelegate setLocalUser:localUserEntity];
-
-                    [appDelegate.window setRootViewController:appDelegate.tabBarController];
-                    
-
-
-                }];
-                
-
-            }
-         else {
-             [spinner stopAnimating];
-             [[[UIAlertView alloc] initWithTitle:@"Invalid login" message:@"Didn't find any user with that login" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-             NSLog(@"Here is the ERROR: %@", error);
-         }
-        }]; //end get user block
-        
-    }else{
-        [[[UIAlertView alloc] initWithTitle:@"Empty..." message:@"You didn't fill out both fields" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-
-    }
-    _scrollView.translatesAutoresizingMaskIntoConstraints = NO;    
-
+-(void)login{
     
+    //check make sure device store_id matches the store_id of employee logging in
+    NSString *devicePatronID = [[PFInstallation currentInstallation] objectForKey:@"patron_id"];
+    NSLog(@"device patron ID is: %@", devicePatronID);
+    
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    PFObject *patronObject = [[PFUser currentUser] valueForKey:@"Patron"];
+    [patronObject fetchIfNeededInBackgroundWithBlock:^(PFObject *fetchedPatronObject, NSError *error) {
+        
+        //check make sure device store_id matches the store_id of employee logging in
+        NSString *userPatronID = [fetchedPatronObject objectId];
+        NSString *punch_code = [fetchedPatronObject valueForKey:@"punch_code"];
+        if (![devicePatronID isEqualToString:userPatronID]){
+            [[PFInstallation currentInstallation] setObject:userPatronID forKey:@"patron_id"];
+            [[PFInstallation currentInstallation] setObject:punch_code forKey:@"punch_code"];
+            [[PFInstallation currentInstallation] saveInBackground];
+            NSLog(@"device store ID is now: %@", [[PFInstallation currentInstallation] objectForKey:@"patron_id"]);
+        }
+        
+        [appDelegate setPatronObject:fetchedPatronObject];
+        User *localUserEntity =[User MR_findFirstByAttribute:@"username" withValue:[[PFUser currentUser] username]];
+        if (localUserEntity == nil){
+            localUserEntity = [User MR_createEntity];
+        }
+        [localUserEntity setFromParseUserObject:[PFUser currentUser] andPatronObject:fetchedPatronObject];
+        [appDelegate setLocalUser:localUserEntity];
+        
+        [appDelegate.window setRootViewController:appDelegate.tabBarController];
+    }];
+
 }
 
 #pragma mark - Gesture methods
@@ -127,6 +95,42 @@
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     [alert show];
 
+    
+}
+
+
+- (IBAction)signinBtn:(id)sender {
+    if ([_usernameInput.text length] > 0 || [_passwordInput.text length] > 0){
+        //spinner to run while fetches happen
+        UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        spinner.center = CGPointMake(160, 470);
+        spinner.color = [UIColor blackColor];
+        [self.view addSubview:spinner];
+        [spinner startAnimating];
+        
+        [PFUser logInWithUsernameInBackground:[_usernameInput text] password:[_passwordInput text] block:^(PFUser *user, NSError *error){
+            if (user){
+                [spinner stopAnimating];
+                
+                //dismiss keyboard on sign in
+                [_usernameInput resignFirstResponder];
+                [_passwordInput resignFirstResponder];
+                
+                [self login];
+                
+            }
+            else {
+                [spinner stopAnimating];
+                [[[UIAlertView alloc] initWithTitle:@"Invalid login" message:@"Didn't find any user with that login" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+                NSLog(@"Here is the ERROR: %@", error);
+            }
+        }]; //end get user block
+        
+    }else{
+        [[[UIAlertView alloc] initWithTitle:@"Empty..." message:@"You didn't fill out both fields" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+        
+    }
+    
     
 }
 
@@ -164,12 +168,23 @@
             [self.view addSubview:spinner];
             [spinner startAnimating];
             
-            
-            
             // The permissions requested from the user
-            NSArray *permissionsArray = @[ @"user_about_me", @"user_birthday", @"user_location"];
+            NSArray *permissionsArray = @[ @"email", @"user_birthday", @"publish_actions"];
             
-
+            // Login PFUser using Facebook
+            [PFFacebookUtils logInWithPermissions:permissionsArray block:^(PFUser *user, NSError *error) {
+                [spinner stopAnimating]; // Hide loading indicator
+                
+                if (!user) {
+                    if (!error) {
+                        NSLog(@"Uh oh. The user cancelled the Facebook login.");
+                    } else {
+                        NSLog(@"Uh oh. An error occurred: %@", error);
+                    }
+                } else {
+                    [self login];
+                }
+            }];
         }
     }
 }

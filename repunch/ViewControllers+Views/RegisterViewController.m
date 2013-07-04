@@ -43,6 +43,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)register{
+    
+}
+
 #pragma mark - UI response methods
 
 - (IBAction)registerBtn:(id)sender {
@@ -112,8 +116,8 @@
             NSLog(@"There was an ERROR: %@", error);
         }
     }];
-    
     /*
+    
     NSDictionary *parameters = [[NSDictionary alloc] initWithObjects:@[username, password, email, @"patron", fName, lName, gender, birthday]; forKeys:@[@"username", @"password", @"email", @"account_type", @"first_name", @"last_name", @"gender", @"date_of_birth"];
     [PFCloud callFunctionInBackground:@"register_patron" withParameters:parameters block:^(id object, NSError *error) {
         if (!error){

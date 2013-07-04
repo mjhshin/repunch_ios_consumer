@@ -46,7 +46,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{33, 15}, {194, 21}}</string>
 								<reference key="NSSuperview" ref="305110116"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="189534427"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -83,7 +82,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{216, 13}, {59, 21}}</string>
 								<reference key="NSSuperview" ref="305110116"/>
-								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -116,7 +114,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{33, 31}, {242, 46}}</string>
 								<reference key="NSSuperview" ref="305110116"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="230906801"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -148,20 +145,14 @@
 								<int key="NSvFlags">-2147483356</int>
 								<string key="NSFrame">{{8, 28}, {22, 21}}</string>
 								<reference key="NSSuperview" ref="305110116"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="499800794"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<object class="NSCustomResource" key="IBUIImage">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">ico_message_coupon.png</string>
-								</object>
 							</object>
 						</array>
 						<string key="NSFrameSize">{320, 77}</string>
 						<reference key="NSSuperview" ref="799083568"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="69458145"/>
 						<string key="NSReuseIdentifierKey">_NS:11</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -177,7 +168,6 @@
 				</array>
 				<string key="NSFrameSize">{320, 78}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="305110116"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -679,63 +669,11 @@
 			<nil key="sourceID"/>
 			<int key="maxID">408</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes">
-			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<object class="IBPartialClassDescription">
-					<string key="className">MessageCell</string>
-					<string key="superclassName">UITableViewCell</string>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="dateSent">UILabel</string>
-						<string key="offerPic">UIImageView</string>
-						<string key="previewLabel">UILabel</string>
-						<string key="senderName">UILabel</string>
-						<string key="subjectLabel">UILabel</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="dateSent">
-							<string key="name">dateSent</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="offerPic">
-							<string key="name">offerPic</string>
-							<string key="candidateClassName">UIImageView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="previewLabel">
-							<string key="name">previewLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="senderName">
-							<string key="name">senderName</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="subjectLabel">
-							<string key="name">subjectLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MessageCell.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSLayoutConstraint</string>
-					<string key="superclassName">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/NSLayoutConstraint.h</string>
-					</object>
-				</object>
-			</array>
-		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">ico_message_coupon.png</string>
-			<string key="NS.object.0">{34, 35}</string>
-		</object>
 		<bool key="IBDocument.UseAutolayout">YES</bool>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>

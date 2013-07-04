@@ -15,6 +15,7 @@
 //Global Toolbar Delegate Methods
 - (void) openSettings;
 - (void) closeSettings;
+- (void)showPunchCode;
 
 //Modal Delegate Methods
 - (void)didDismissPresentedViewController;

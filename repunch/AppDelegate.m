@@ -39,6 +39,10 @@
     [Parse setApplicationId:@"m0EdwpRYlJwttZLZ5PUk7y13TWCnvSScdn8tfVoh"
                   clientKey:@"XZMybowaEMLHszQTEpxq4Yk2ksivkYj9m1c099ZD"];
     
+    [PFFacebookUtils initializeFacebook];
+
+    
+    
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"repunch_local.sqlite"];
     
     //[self printDataForObject:@"Store"];
@@ -241,7 +245,7 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    //return [PFFacebookUtils handleOpenURL:url];
+    return [PFFacebookUtils handleOpenURL:url];
 }
 
 @end
