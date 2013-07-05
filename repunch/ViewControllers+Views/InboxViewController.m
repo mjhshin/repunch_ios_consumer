@@ -27,11 +27,12 @@
     UITableView *messageTable;
 }
 -(void)setup{
-    PFRelation *messages = [patronObject relationforKey:@"ReceivedMessages"];
-    PFQuery *messageQuery = [messages query];
-    [messageQuery includeKey:@"Reply"];
-    [messageQuery findObjectsInBackgroundWithBlock:^(NSArray *fetchedMessages, NSError *error) {
-        savedMessages = fetchedMessages;
+    PFRelation *messageStatus = [patronObject relationforKey:@"ReceivedMessages"];
+    PFQuery *messageStatusQuery = [messageStatus query];
+    [messageStatusQuery includeKey:@"Message"];
+    [messageStatusQuery includeKey:@"Message.Reply"];
+    [messageStatusQuery findObjectsInBackgroundWithBlock:^(NSArray *fetchedMessageStatuses, NSError *error) {
+        savedMessages = [fetchedMessageStatuses valueForKey:@"Message"];
         savedMessages = [savedMessages sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO]]];
 
         [messageTable reloadData];

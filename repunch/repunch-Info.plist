@@ -7,14 +7,14 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb558773920827601</string>
+				<string>fb141104589345410</string>
 			</array>
 		</dict>
 	</array>
 	<key>FacebookDisplayName</key>
 	<string>Repunch</string>
 	<key>FacebookAppID</key>
-	<string>558773920827601</string>
+	<string>141104589345410</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>

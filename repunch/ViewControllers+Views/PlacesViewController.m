@@ -59,6 +59,7 @@
     
     //NSLog(@"here are stores in local user %@: %@", localUser.username, [[patronStores valueForKey:@"store"] valueForKey:@"store_name"]);
     NSLog(@"user:%@", [localUser username]);
+    NSLog(@"patron: %@", [localUser patronId]);
     NSLog(@"here are saved stores: %@", [[savedStores valueForKey:@"store"] valueForKey:@"store_name"]);
     
     PFRelation *patronStoreRelation = [patronObject relationforKey:@"PatronStores"];
