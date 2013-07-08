@@ -12,7 +12,9 @@
 
 @interface MessageViewController : UIViewController
 @property (nonatomic, retain) id<ModalDelegate> modalDelegate;
-@property (nonatomic, retain)  PFObject *message; //ONLY TEMPORARY. WILL REPLACE WITH MESSAGE ENTITY.
+@property (nonatomic, retain)  PFObject *message; 
+@property (nonatomic, retain)  PFObject *messageStatus; 
+
 @property (nonatomic, retain) NSString *customerName;
 @property (nonatomic, retain) NSString *patronId;
 

@@ -335,7 +335,7 @@
             [alertView addButtonWithTitle:@"Redeem"
                                      type:SIAlertViewButtonTypeDefault
                                   handler:^(SIAlertView *alert) {
-                                      NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:[_storeObject objectId], @"store_id",[patronStoreEntity objectId], @"patron_store_id", [currentCellReward reward_name], @"title", [currentCellReward objectId], @"reward_id", [currentCellReward punches], @"num_punches",   nil];
+                                      NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:[_storeObject objectId], @"store_id",[patronStoreEntity objectId], @"patron_store_id", [currentCellReward reward_name], @"title", [currentCellReward objectId], @"reward_id", [currentCellReward punches], @"num_punches",   [localUser fullName], @"name", nil];
 
                                       [PFCloud callFunctionInBackground:@"request_redeem"
                                                          withParameters:functionArguments

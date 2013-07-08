@@ -177,7 +177,7 @@
     PatronStore *patronStoreEntity= [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", _patronId, [_message valueForKey:@"store_id"]]];
     NSLog(@"%@", patronStoreEntity);
 
-    NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:[_message valueForKey:@"store_id"], @"store_id",[patronStoreEntity objectId], @"patron_store_id", [_message valueForKey:@"offer_title"], @"title", @"0", @"num_punches", _customerName, @"name", nil];
+    NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:[_message valueForKey:@"store_id"], @"store_id",[patronStoreEntity objectId], @"patron_store_id", [_message valueForKey:@"offer_title"], @"title", @"0", @"num_punches", _customerName, @"name", [_messageStatus objectId], @"message_status_id", nil];
     
     NSLog(@"dictionary is %@", functionArguments);
     
@@ -196,13 +196,20 @@
                                                  withParameters:functionArguments
                                                           block:^(NSString *success, NSError *error) {
                                                               if (!error){
-                                                                  SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"You redeemd %@!", [_message valueForKey:@"offer_title"]]];
+                                                                  SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"You redeemedd %@!", [_message valueForKey:@"offer_title"]]];
+                                                                  [alertView addButtonWithTitle:@"Cancel" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+                                                                      //nothing
+                                                                  }];
 
                                                                   [alertView show];
                                                                   NSLog(@"function call is :%@", success);
                                                               }
                                                               else{
                                                                   SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Hmmm..." andMessage:[NSString stringWithFormat:@"Something went wrong... (%@)", error]];
+                                                                  [alertView addButtonWithTitle:@"Cancel" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+                                                                      //nothing
+                                                                  }];
+
                                                                   
                                                                   [alertView show];
 

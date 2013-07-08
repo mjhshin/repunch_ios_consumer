@@ -9,11 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "ModalDelegate.h"
 
-@interface SettingsViewController : UIViewController
+@interface SettingsViewController : UIViewController <UITableViewDataSource, UITabBarDelegate>
 
 @property (nonatomic, retain) id<ModalDelegate> modalDelegate;
+@property (nonatomic, retain) NSString *userName;
 
+- (IBAction)termsAndConditions:(id)sender;
+- (IBAction)privacyPolicy:(id)sender;
 - (IBAction)logOut:(id)sender;
-- (IBAction)goBack:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UILabel *currentLogin;
 @end

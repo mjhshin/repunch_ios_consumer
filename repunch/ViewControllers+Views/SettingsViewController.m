@@ -57,7 +57,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     
-    _currentLogin = [NSString stringWithFormat:@"You are currently logged is as %@", _userName];
+    _currentLogin.text = [NSString stringWithFormat:@"You are currently logged is as %@", _userName];
 }
 
 - (void)didReceiveMemoryWarning

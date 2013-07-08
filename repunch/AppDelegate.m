@@ -12,10 +12,13 @@
 #import "InboxViewController.h"
 
 #import <Parse/Parse.h>
+#import <FacebookSDK/FacebookSDK.h>
 
 #import "Store.h"
 #import "User.h"
 #import "PatronStore.h"
+
+#import "SIAlertView.h"
 
 @implementation AppDelegate{
     LoginViewController *loginVC;
@@ -231,7 +234,50 @@
 - (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
 {
     [PFPush handlePush:userInfo];
-    
+    if ([[userInfo valueForKey:@"punch_type"] isEqualToString:@"validate_redeem"]){
+        if ([[_patronObject valueForKey:@"facebook_id"] length]>0){
+            SIAlertView *alertView = [[SIAlertView alloc]initWithTitle:@"Want More Punches?" andMessage:@"Would you like to post to facebook to receive more punches?"];
+            [alertView addButtonWithTitle:@"No thanks." type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+                NSDictionary *functionParameters = [[NSDictionary alloc]initWithObjectsAndKeys:[userInfo valueForKey:@"patron_store_id"], @"patron_store_id", @"false", @"accept", nil];
+                [PFCloud callFunctionInBackground:@"facebook_post" withParameters:functionParameters block:^(id object, NSError *error) {
+                    if (!error){
+                        NSLog(@"facebook function call is :%@", object);
+                    }
+                    else {
+                        NSLog(@"error is %@", error);
+                    }
+                }];
+
+            }];
+            
+            [alertView addButtonWithTitle:@"Sure!" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+                NSDictionary *functionParameters = [[NSDictionary alloc]initWithObjectsAndKeys:[userInfo valueForKey:@"patron_store_id"], @"patron_store_id", @"true", @"accept", nil];
+                [PFCloud callFunctionInBackground:@"facebook_post" withParameters:functionParameters block:^(id object, NSError *error) {
+                    if (!error){
+                        NSLog(@"facebook function call is :%@", object);
+                        NSURL* url = [NSURL URLWithString:@"http://repunch.com"];
+                        [FBDialogs presentShareDialogWithLink:url
+                                                      handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
+                                                          if(error) {
+                                                              NSLog(@"Error: %@", error.description);
+                                                          } else {
+                                                              NSLog(@"Success!");
+                                                          }
+                                                      }];
+
+                    }
+
+                    else {
+                        NSLog(@"error is %@", error);
+                    }
+                }];
+            }];
+            
+            [alertView show];
+            
+        }
+
+    }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"receivedPush" object:self];
     
 }

@@ -132,6 +132,7 @@
     messageVC.patronId = [localUser patronId];
     messageVC.messageType = [[savedMessages objectAtIndex:indexPath.row] valueForKey:@"message_type"];
     messageVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    messageVC.messageStatus = [savedMessageStatuses objectAtIndex:indexPath.row];
     
     [[savedMessageStatuses objectAtIndex:indexPath.row] setValue:@"true" forKey:@"is_read"];
     [[savedMessageStatuses objectAtIndex:indexPath.row] saveInBackground];
