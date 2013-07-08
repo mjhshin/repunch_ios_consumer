@@ -49,4 +49,6 @@
 
 -(BOOL)alreadyHasStoreSaved:(NSString *)storeId;
 
+-(NSString *)fullName;
+
 @end

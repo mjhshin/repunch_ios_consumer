@@ -22,6 +22,7 @@
 
 @implementation InboxViewController{
     NSArray *savedMessages;
+    NSArray *savedMessageStatuses;
     User *localUser;
     PFObject *patronObject;
     UITableView *messageTable;
@@ -32,6 +33,7 @@
     [messageStatusQuery includeKey:@"Message"];
     [messageStatusQuery includeKey:@"Message.Reply"];
     [messageStatusQuery findObjectsInBackgroundWithBlock:^(NSArray *fetchedMessageStatuses, NSError *error) {
+        savedMessageStatuses = fetchedMessageStatuses;
         savedMessages = [fetchedMessageStatuses valueForKey:@"Message"];
         savedMessages = [savedMessages sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO]]];
 
@@ -131,6 +133,9 @@
     messageVC.messageType = [[savedMessages objectAtIndex:indexPath.row] valueForKey:@"message_type"];
     messageVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     
+    [[savedMessageStatuses objectAtIndex:indexPath.row] setValue:@"true" forKey:@"is_read"];
+    [[savedMessageStatuses objectAtIndex:indexPath.row] saveInBackground];
+    
     [self presentViewController:messageVC animated:YES completion:NULL];
      
 }
@@ -175,6 +180,7 @@
     SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
     settingsVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     settingsVC.modalDelegate = self;
+    settingsVC.userName = [localUser fullName];
     [self presentViewController:settingsVC animated:YES completion:NULL];
     
 }

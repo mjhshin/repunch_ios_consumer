@@ -174,6 +174,7 @@
     SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
     settingsVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     settingsVC.modalDelegate = self;
+    settingsVC.userName = [localUser fullName];
     [self presentViewController:settingsVC animated:YES completion:NULL];
 
 }
