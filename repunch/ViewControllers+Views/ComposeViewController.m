@@ -51,11 +51,19 @@
     
     UIBarButtonItem *placeTitleItem = [[UIBarButtonItem alloc] initWithCustomView:placeTitleLabel];
     
+    UIButton *sendButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [sendButton setTitle:@"Send" forState:UIControlStateNormal];
+    [[sendButton titleLabel] setFont:[UIFont fontWithName:@"Avenir-Heavy" size:16]];
+    [sendButton setFrame:CGRectMake(0, 0, 100, 50)];
+    [sendButton addTarget:self action:@selector(sendMessage) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *sendButtonItem = [[UIBarButtonItem alloc] initWithCustomView:sendButton];
+    
     UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     UIBarButtonItem *flex2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     
-    [placeToolbar setItems:[NSArray arrayWithObjects:closePlaceButtonItem, flex, placeTitleItem, flex2, nil]];
+    [placeToolbar setItems:[NSArray arrayWithObjects:closePlaceButtonItem, flex, placeTitleItem, flex2, sendButtonItem, nil]];
     [self.view addSubview:placeToolbar];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
@@ -64,6 +72,8 @@
     [self.view addGestureRecognizer:tap];
     
     _body.delegate = self;
+    
+    _subject.placeholder = [NSString stringWithFormat:@"Feedback for %@", [_storeObject store_name]];
 
 
 }
@@ -86,27 +96,33 @@ shouldChangeTextInRange: (NSRange) range
 {
     if ([text isEqualToString:@"\n"]) {
         [self dismissKeyboard];
-        NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:[localUser patronId], @"patron_id", [_storeObject objectId], @"store_id", [_body text], @"body", [_subject text], @"subject", [localUser first_name], @"sender_name", nil];
-        
-        [PFCloud callFunctionInBackground:@"send_feedback" withParameters:dictionary block:^(NSString *result, NSError *error) {
-            if (!error){
-                SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Sent!" andMessage:@"Your feedback was sent."];
-                
-                [alertView addButtonWithTitle:@"Ok."
-                                         type:SIAlertViewButtonTypeDefault
-                                      handler:^(SIAlertView *alert) {
-                                          [[self modalDelegate] didDismissPresentedViewController];
-                                      }];
-                [alertView show];
-                NSLog(@"result is: %@", result);
-            }
-            else NSLog(@"error occured: %@", error);
-            
-        }];
+        [self sendMessage];
 
         return NO;
     }
     return YES;
+}
+
+-(void)sendMessage{
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:[localUser patronId], @"patron_id", [_storeObject objectId], @"store_id", [_body text], @"body", [_subject text], @"subject", [localUser first_name], @"sender_name", nil];
+    
+    [PFCloud callFunctionInBackground:@"send_feedback" withParameters:dictionary block:^(NSString *result, NSError *error) {
+        if (!error){
+            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Sent!" andMessage:@"Your feedback was sent."];
+            
+            [alertView addButtonWithTitle:@"Ok."
+                                     type:SIAlertViewButtonTypeDefault
+                                  handler:^(SIAlertView *alert) {
+                                      [[self modalDelegate] didDismissPresentedViewController];
+                                  }];
+            [alertView show];
+            NSLog(@"result is: %@", result);
+        }
+        else NSLog(@"error occured: %@", error);
+        
+    }];
+
+    
 }
 
 -(void)closeView{

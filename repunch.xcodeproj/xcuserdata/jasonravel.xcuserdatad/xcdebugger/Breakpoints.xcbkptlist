@@ -20,13 +20,13 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Repunch/ViewControllers+Views/ComposeViewController.m"
-         timestampString = "394495040.333211"
+         filePath = "Repunch/ViewControllers+Views/LoginViewController.m"
+         timestampString = "394740246.043349"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "89"
-         endingLineNumber = "89"
-         landmarkName = "-textView:shouldChangeTextInRange:replacementText:"
+         startingLineNumber = "238"
+         endingLineNumber = "238"
+         landmarkName = "-signinBtn:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

@@ -389,45 +389,29 @@
     [patronQuery getObjectInBackgroundWithId:localUser.patronId block:^(PFObject *patronObject, NSError *error) {
         if (!error){
             if (!_isSavedStore){
-                //TODO: way to check if patron store has already been added
                 
-                //create new Patron Store
-                PFObject *patronStore = [PFObject objectWithClassName:@"PatronStore"];
-                [patronStore setValue: patronObject forKey:@"Patron"];
-                PFQuery *storeQuery = [PFQuery queryWithClassName:@"Store"];
-                    [storeQuery getObjectInBackgroundWithId:_storeObject.objectId block:^(PFObject *fetchedStore, NSError *error) {
-                        [patronStore setValue: fetchedStore forKey:@"Store"];
-                        [patronStore setValue:[NSNumber numberWithInt:0] forKey:@"punch_count"];
-                        [patronStore setValue:[NSNumber numberWithInt:0]  forKey:@"all_time_punches"];
-                        [patronStore saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                            //add it to Patron object's saved stores
-                            PFRelation *relation = [patronObject relationforKey:@"PatronStores"];
-                            [relation addObject:patronStore];
-                            [patronObject saveInBackground];
-                            
-                            PFRelation *storeRelation = [fetchedStore relationforKey:@"PatronStores"];
-                            [storeRelation addObject:patronStore];
-                            [fetchedStore saveInBackground];
-
-                        }];
-
-
-                    }];
-                PatronStore *newPatronStoreEntity = [PatronStore MR_createEntity];
-                [newPatronStoreEntity setFromPatronObject:patronStore andStoreEntity:_storeObject andUserEntity:localUser];
-                [localUser addSaved_storesObject:newPatronStoreEntity];
-                [localContext MR_saveToPersistentStoreAndWait];
-                
-                SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Added!" andMessage:[NSString stringWithFormat:@"You've saved %@", [_storeObject valueForKey:@"store_name"]]];
-                
-                [alertView addButtonWithTitle:@"Sweet beans."
-                                         type:SIAlertViewButtonTypeDefault
-                                      handler:^(SIAlertView *alert) {
-                                          //[[self modalDelegate] didDismissPresentedViewController];
-                                          _isSavedStore = TRUE;
-                                          [self viewDidLoad];
-                                      }];
-                [alertView show];
+                NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:[patronObject objectId], @"patron_id", [_storeObject objectId], @"store_id", nil];
+                                                   
+                [PFCloud callFunctionInBackground: @"add_patronstore"
+                                   withParameters:functionArguments block:^(PFObject *patronStore, NSError *error) {
+                                       
+                                       PatronStore *newPatronStoreEntity = [PatronStore MR_createEntity];
+                                       [newPatronStoreEntity setFromPatronObject:patronStore andStoreEntity:_storeObject andUserEntity:localUser];
+                                       [localUser addSaved_storesObject:newPatronStoreEntity];
+                                       [localContext MR_saveToPersistentStoreAndWait];
+                                       
+                                       SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Added!" andMessage:[NSString stringWithFormat:@"You've saved %@", [_storeObject valueForKey:@"store_name"]]];
+                                       
+                                       [alertView addButtonWithTitle:@"Sweet beans."
+                                                                type:SIAlertViewButtonTypeDefault
+                                                             handler:^(SIAlertView *alert) {
+                                                                 //[[self modalDelegate] didDismissPresentedViewController];
+                                                                 _isSavedStore = TRUE;
+                                                                 [self viewDidLoad];
+                                                                 [self viewWillAppear:YES];
+                                                             }];
+                                       [alertView show];
+                                   }];
 
 
             }

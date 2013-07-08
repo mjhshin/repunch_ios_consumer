@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1552</int>
-		<string key="IBDocument.SystemVersion">12C3103</string>
+		<string key="IBDocument.SystemVersion">12E55</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1187.34</string>
-		<string key="IBDocument.HIToolboxVersion">625.00</string>
+		<string key="IBDocument.AppKitVersion">1187.39</string>
+		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			<string key="NS.object.0">2083</string>
@@ -125,7 +125,7 @@
 								<int key="NSvFlags">-2147483356</int>
 								<string key="NSFrame">{{20, 157}, {320, 48}}</string>
 								<reference key="NSSuperview" ref="963332427"/>
-								<reference key="NSNextKeyView" ref="462078412"/>
+								<reference key="NSNextKeyView" ref="856716323"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">1</int>
@@ -320,7 +320,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{262, 103}, {75, 21}}</string>
 								<reference key="NSSuperview" ref="963332427"/>
-								<reference key="NSNextKeyView" ref="267153767"/>
+								<reference key="NSNextKeyView" ref="462078412"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -445,7 +445,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{20, 154}, {320, 54}}</string>
 								<reference key="NSSuperview" ref="963332427"/>
-								<reference key="NSNextKeyView" ref="856716323"/>
+								<reference key="NSNextKeyView" ref="267153767"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">1</int>
@@ -1405,12 +1405,12 @@
 							<reference ref="509998905"/>
 							<reference ref="828056592"/>
 							<reference ref="267153767"/>
-							<reference ref="856716323"/>
 							<reference ref="313892922"/>
 							<reference ref="1047142081"/>
 							<reference ref="154256917"/>
 							<reference ref="64796936"/>
 							<reference ref="462078412"/>
+							<reference ref="856716323"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>

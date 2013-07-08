@@ -255,31 +255,9 @@
 }
 
  - (IBAction)fbRegisterBtn:(id)sender {
-     
-     UIAlertView *loginPrompt = [[UIAlertView alloc] initWithTitle:@"Login with Facebook" message:@"Please enter your login information" delegate:self cancelButtonTitle:@
-                                 "Cancel" otherButtonTitles:@"Login", nil];
-     loginPrompt.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
-     [loginPrompt show];
-      
+     [self registerWithFacebook];
+
 }
 
-#pragma mark - Text View Delegate methods
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-
-{
-    if (buttonIndex == 1)
-    {
-        if ([[alertView title] isEqualToString:@"Login with Facebook"]){
-            //spinner to run while fetches happen
-            UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-            spinner.center = CGPointMake(160, 470);
-            spinner.color = [UIColor blackColor];
-            [self.view addSubview:spinner];
-            
-            [self registerWithFacebook];
-        }
-    }
-}
 
 @end

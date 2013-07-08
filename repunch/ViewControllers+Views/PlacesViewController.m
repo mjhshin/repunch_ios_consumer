@@ -136,6 +136,12 @@
                                              selector:@selector(setup)
                                                  name:@"receivedPush"
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveLoadedPics:)
+                                                 name:@"FinishedLoadingPic"
+                                               object:nil];
+
 
     [super viewWillAppear:animated];
     [self setup];
@@ -144,6 +150,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"FinishedLoadingPic" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"receivedPush" object:nil];
 
 }
@@ -153,6 +160,10 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)receiveLoadedPics:(NSNotification *) notification{
+    [savedStoresTable reloadData];
 }
 
 
