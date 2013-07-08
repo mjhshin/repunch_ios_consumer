@@ -236,7 +236,7 @@
     [PFPush handlePush:userInfo];
     if ([[userInfo valueForKey:@"punch_type"] isEqualToString:@"validate_redeem"]){
         if ([[_patronObject valueForKey:@"facebook_id"] length]>0){
-            SIAlertView *alertView = [[SIAlertView alloc]initWithTitle:@"Want More Punches?" andMessage:@"Would you like to post to facebook to receive more punches?"];
+            SIAlertView *alertView = [[SIAlertView alloc]initWithTitle:@"Want More Punches?" andMessage:@"Would you like to post to Facebook to receive more punches?"];
             [alertView addButtonWithTitle:@"No thanks." type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
                 NSDictionary *functionParameters = [[NSDictionary alloc]initWithObjectsAndKeys:[userInfo valueForKey:@"patron_store_id"], @"patron_store_id", @"false", @"accept", nil];
                 [PFCloud callFunctionInBackground:@"facebook_post" withParameters:functionParameters block:^(id object, NSError *error) {
@@ -251,26 +251,8 @@
             }];
             
             [alertView addButtonWithTitle:@"Sure!" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
-                NSDictionary *functionParameters = [[NSDictionary alloc]initWithObjectsAndKeys:[userInfo valueForKey:@"patron_store_id"], @"patron_store_id", @"true", @"accept", nil];
-                [PFCloud callFunctionInBackground:@"facebook_post" withParameters:functionParameters block:^(id object, NSError *error) {
-                    if (!error){
-                        NSLog(@"facebook function call is :%@", object);
-                        NSURL* url = [NSURL URLWithString:@"http://repunch.com"];
-                        [FBDialogs presentShareDialogWithLink:url
-                                                      handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
-                                                          if(error) {
-                                                              NSLog(@"Error: %@", error.description);
-                                                          } else {
-                                                              NSLog(@"Success!");
-                                                          }
-                                                      }];
+                [self publishButtonActionForReward:[userInfo valueForKey:@"title"] atStore:[userInfo valueForKey:@"store"] andDict:userInfo];
 
-                    }
-
-                    else {
-                        NSLog(@"error is %@", error);
-                    }
-                }];
             }];
             
             [alertView show];
@@ -280,6 +262,86 @@
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"receivedPush" object:self];
     
+}
+- (void)publishButtonActionForReward: (NSString *)rewardTitle atStore:(NSString *)storeName andDict:(NSDictionary*)userInfo{
+    PFQuery *getStore = [PFQuery queryWithClassName:@"Store"];
+    [getStore getObjectInBackgroundWithId:[userInfo valueForKey:@"id"] block:^(PFObject *fetchedStore, NSError *error) {
+        NSString *picURL = [[fetchedStore objectForKey:@"store_avatar"] url];
+        
+        // Put together the dialog parameters
+        NSMutableDictionary *params =
+        [NSMutableDictionary dictionaryWithObjectsAndKeys:
+         [NSString stringWithFormat:@"Just redeemed %@ with Repunch", rewardTitle], @"name",
+         [NSString stringWithFormat:@"%@", storeName], @"caption",
+         picURL, @"picture",
+         nil];
+        
+        // Invoke the dialog
+        [FBWebDialogs presentFeedDialogModallyWithSession:nil
+                                               parameters:params
+                                                  handler:
+         ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+             if (error) {
+                 // Error launching the dialog or publishing a story.
+                 NSLog(@"Error publishing story.");
+             } else {
+                 if (result == FBWebDialogResultDialogNotCompleted) {
+                     // User clicked the "x" icon
+                     NSLog(@"User canceled story publishing.");
+                 } else {
+                     // Handle the publish feed callback
+                     NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
+                     if (![urlParams valueForKey:@"post_id"]) {
+                         // User clicked the Cancel button
+                         NSLog(@"User canceled story publishing.");
+                     } else {
+                         // User clicked the Share button
+                         NSString *msg = [NSString stringWithFormat:
+                                          @"Posted the status!"];
+                         NSLog(@"%@", msg);
+                         // Show the result in an alert
+                         [[[UIAlertView alloc] initWithTitle:@"Yay! More punches for you!"
+                                                     message:msg
+                                                    delegate:nil
+                                           cancelButtonTitle:@"OK!"
+                                           otherButtonTitles:nil]
+                          show];
+                         
+                         NSDictionary *functionParameters = [[NSDictionary alloc]initWithObjectsAndKeys:[userInfo valueForKey:@"patron_store_id"], @"patron_store_id", @"true", @"accept", nil];
+                         [PFCloud callFunctionInBackground:@"facebook_post" withParameters:functionParameters block:^(id object, NSError *error) {
+                             if (!error){
+                                 NSLog(@"facebook function call is :%@", object);
+                                 
+                             }
+                             
+                             else {
+                                 NSLog(@"error is %@", error);
+                             }
+                         }];
+                         
+                     }
+                 }
+             }
+         }];
+
+        
+    }];
+    
+}
+
+/**
+ * A function for parsing URL parameters.
+ */
+- (NSDictionary*)parseURLParams:(NSString *)query {
+    NSArray *pairs = [query componentsSeparatedByString:@"&"];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    for (NSString *pair in pairs) {
+        NSArray *kv = [pair componentsSeparatedByString:@"="];
+        NSString *val =
+        [kv[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        params[kv[0]] = val;
+    }
+    return params;
 }
 
 
