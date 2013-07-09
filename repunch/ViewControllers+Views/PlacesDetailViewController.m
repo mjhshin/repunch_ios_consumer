@@ -70,7 +70,7 @@
                 [self publishButtonActionWithParameters:[[NSDictionary alloc] initWithObjectsAndKeys:[patronStoreEntity store_id], @"store_id", [patronStoreEntity objectId], @"patron_store_id", [_storeObject store_name], @"store_name", [[fetchedPatronStore objectForKey:@"FacebookPost"] valueForKey:@"reward"], @"reward_title", nil]];
             }
         }];
-        //[_numPunches setText:[NSString stringWithFormat:@"%d %@", punches, (punches==1)?@"punch":@"punches"]];
+        
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -410,7 +410,7 @@
                                    withParameters:functionArguments block:^(PFObject *patronStore, NSError *error) {
                                        
                                        PatronStore *newPatronStoreEntity = [PatronStore MR_createEntity];
-                                       [newPatronStoreEntity setFromPatronObject:patronStore andStoreEntity:_storeObject andUserEntity:localUser];
+                                       [newPatronStoreEntity setFromPatronObject:patronObject andStoreEntity:_storeObject andUserEntity:localUser];
                                        [localUser addSaved_storesObject:newPatronStoreEntity];
                                        [localContext MR_saveToPersistentStoreAndWait];
                                        

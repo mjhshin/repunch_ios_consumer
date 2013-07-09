@@ -30,7 +30,7 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Repunch/AppDelegate.m"
@@ -40,6 +40,19 @@
          startingLineNumber = "104"
          endingLineNumber = "104"
          landmarkName = "-application:didFinishLaunchingWithOptions:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Repunch/ViewControllers+Views/PlacesDetailViewController.m"
+         timestampString = "395087708.730641"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "411"
+         endingLineNumber = "411"
+         landmarkName = "-addOrRemovePlace"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
