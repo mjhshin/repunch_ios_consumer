@@ -87,7 +87,7 @@
         [self.tabBarController setSelectedIndex:2];
     }
     
-    [PFUser logOut];
+    //[PFUser logOut];
     
     //if user is cached, load their cached data
     //else, go to login page
@@ -103,6 +103,7 @@
             [patronObject fetchIfNeededInBackgroundWithBlock:^(PFObject *fetchedPatronObject, NSError *error) {
                 _patronObject = fetchedPatronObject;
                 if (!_localUser){
+                    _localUser = [User MR_createEntity];
                     [_localUser setFromParseUserObject:[PFUser currentUser] andPatronObject:fetchedPatronObject];
                 }
                 self.window.rootViewController = self.tabBarController;
@@ -251,7 +252,7 @@
             }];
             
             [alertView addButtonWithTitle:@"Sure!" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
-                [self publishButtonActionForReward:[userInfo valueForKey:@"title"] atStore:[userInfo valueForKey:@"store"] andDict:userInfo];
+                [self publishButtonActionWithParameters:userInfo];
 
             }];
             
@@ -263,7 +264,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"receivedPush" object:self];
     
 }
-- (void)publishButtonActionForReward: (NSString *)rewardTitle atStore:(NSString *)storeName andDict:(NSDictionary*)userInfo{
+- (void)publishButtonActionWithParameters:(NSDictionary*)userInfo{
     PFQuery *getStore = [PFQuery queryWithClassName:@"Store"];
     [getStore getObjectInBackgroundWithId:[userInfo valueForKey:@"id"] block:^(PFObject *fetchedStore, NSError *error) {
         NSString *picURL = [[fetchedStore objectForKey:@"store_avatar"] url];
@@ -271,8 +272,8 @@
         // Put together the dialog parameters
         NSMutableDictionary *params =
         [NSMutableDictionary dictionaryWithObjectsAndKeys:
-         [NSString stringWithFormat:@"Just redeemed %@ with Repunch", rewardTitle], @"name",
-         [NSString stringWithFormat:@"%@", storeName], @"caption",
+         [NSString stringWithFormat:@"Just redeemed %@ with Repunch", [userInfo valueForKey:@"title"]], @"name",
+         [NSString stringWithFormat:@"%@", [userInfo valueForKey:@"store"]], @"caption",
          picURL, @"picture",
          nil];
         
@@ -294,6 +295,16 @@
                      if (![urlParams valueForKey:@"post_id"]) {
                          // User clicked the Cancel button
                          NSLog(@"User canceled story publishing.");
+                         NSDictionary *functionParameters = [[NSDictionary alloc]initWithObjectsAndKeys:[userInfo valueForKey:@"patron_store_id"], @"patron_store_id", @"false", @"accept", nil];
+                         [PFCloud callFunctionInBackground:@"facebook_post" withParameters:functionParameters block:^(id object, NSError *error) {
+                             if (!error){
+                                 NSLog(@"facebook function call is :%@", object);
+                             }
+                             else {
+                                 NSLog(@"error is %@", error);
+                             }
+                         }];
+
                      } else {
                          // User clicked the Share button
                          NSString *msg = [NSString stringWithFormat:

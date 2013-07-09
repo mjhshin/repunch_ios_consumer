@@ -53,11 +53,23 @@
         [_feedbackBtn setImage:[UIImage imageNamed:@"ico-feedback-block"] forState:UIControlStateNormal];
         [_feedbackBtn setHidden:TRUE];
         [_feedbackLbl setHidden:TRUE];
+        
+        [_callView setFrame:CGRectMake(_callView.frame.origin.x + 43, _callView.frame.origin.y, _callView.frame.size.width, _callView.frame.size.height)];
+        [_mapView setFrame:CGRectMake(_mapView.frame.origin.x + 73, _mapView.frame.origin.y, _mapView.frame.size.width, _mapView.frame.size.height)];
+
     }
     else{
         int punches = [[patronStoreEntity punch_count] intValue];
         [_addPlaceBtn setTitle:[NSString stringWithFormat:@"%d %@", punches, (punches==1)?@"punch":@"punches"] forState:UIControlStateNormal];
         [_addPlaceBtn setUserInteractionEnabled:FALSE];
+        
+        PFQuery *query = [PFQuery queryWithClassName:@"PatronStore"];
+        [query includeKey:@"FacebookPost"];
+        [query getObjectInBackgroundWithId:patronStoreEntity.objectId block:^(PFObject *fetchedPatronStore, NSError *error) {
+            if (!([NSNull null] == [fetchedPatronStore objectForKey:@"FacebookPost"])){
+                [self publishButtonActionWithParameters:[[NSDictionary alloc] initWithObjectsAndKeys:[patronStoreEntity store_id], @"store_id", [patronStoreEntity objectId], @"patron_store_id", [_storeObject store_name], @"store_name", [[fetchedPatronStore objectForKey:@"FacebookPost"] valueForKey:@"reward"], @"reward_title", nil]];
+            }
+        }];
         //[_numPunches setText:[NSString stringWithFormat:@"%d %@", punches, (punches==1)?@"punch":@"punches"]];
     }
     
@@ -65,6 +77,7 @@
                                              selector:@selector(viewWillAppear:)
                                                  name:@"receivedPush"
                                                object:nil];
+    
 
 
 }
@@ -81,7 +94,7 @@
     localUser = [(AppDelegate *)[[UIApplication sharedApplication] delegate] localUser];
     _isSavedStore = [localUser alreadyHasStoreSaved:[_storeObject objectId]];
     
-    //_scrollView.scrollEnabled = YES;
+    _scrollView.scrollEnabled = YES;
     
     //THIS IS A TOOLBAR
     //FROM HERE...
@@ -109,18 +122,7 @@
     UIBarButtonItem *flex2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     UIImage *addOrRemoveImage;
-    
-    /*
-    if (!_isSavedStore) addOrRemoveImage = [UIImage imageNamed:@"ab_add_my_places"];
-    else addOrRemoveImage = [UIImage imageNamed:@"ab_message_delete"];
-    UIButton *addOrRemoveButton= [UIButton buttonWithType:UIButtonTypeCustom];
-    [addOrRemoveButton setImage:addOrRemoveImage forState:UIControlStateNormal];
-    [addOrRemoveButton setFrame:CGRectMake(0, 0, addOrRemoveImage.size.width, addOrRemoveImage.size.height)];
-    [addOrRemoveButton addTarget:self action:@selector(addOrRemovePlace) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *addOrRemoveTitle = [[UIBarButtonItem alloc] initWithCustomView:addOrRemoveButton];
-     */
-    
+        
     if (!_isSavedStore) addOrRemoveImage = [UIImage imageNamed:@"ab_add_my_places"];
     else addOrRemoveImage = [UIImage imageNamed:@"ab_message_delete"];
     UIButton *addOrRemoveButton= [UIButton buttonWithType:UIButtonTypeCustom];
@@ -139,11 +141,23 @@
     
     _storePic.image = [UIImage imageWithData:_storeObject.store_avatar];
 
-    NSString *addressString = [_storeObject valueForKey:@"street"];
-    if ([[_storeObject valueForKey:@"cross_streets"] length]>0) addressString = [addressString stringByAppendingFormat:@"\n%@",[_storeObject valueForKey:@"cross_streets"]];
-    if ([[_storeObject valueForKey:@"neighborhood"] length]>0)addressString = [addressString stringByAppendingFormat:@"\n%@",[_storeObject valueForKey:@"neighborhood"]];
-    addressString = [addressString stringByAppendingFormat:@"\n%@, %@ %@",[_storeObject valueForKey:@"city"], [_storeObject valueForKey:@"state"], [_storeObject valueForKey:@"zip"]];
-    _storeAddress.text = addressString;
+    _storeStreet.text = [_storeObject valueForKey:@"street"];
+    if ([[_storeObject valueForKey:@"cross_streets"] length]>0) {
+        _storeCrossStreets.text = [_storeObject valueForKey:@"cross_streets"];
+        _storeCrossStreets.hidden = FALSE;
+        [_storeNeighborhood setFrame:CGRectMake(_storeNeighborhood.frame.origin.x, _storeNeighborhood.frame.origin.y  + _storeCrossStreets.frame.size.height-8, _storeNeighborhood.frame.size.width, _storeNeighborhood.frame.size.height)];
+
+        [_storeCity setFrame:CGRectMake(_storeCity.frame.origin.x, _storeCity.frame.origin.y +  _storeCrossStreets.frame.size.height-8, _storeCity.frame.size.width, _storeCity.frame.size.height)];
+    }
+    if ([[_storeObject valueForKey:@"neighborhood"] length]>0) {
+        _storeNeighborhood.text = [_storeObject valueForKey:@"neighborhood"];
+        _storeNeighborhood.hidden = FALSE;
+        [_storeCity setFrame:CGRectMake(_storeCity.frame.origin.x, _storeCity.frame.origin.y +  _storeNeighborhood.frame.size.height-8, _storeCity.frame.size.width, _storeCity.frame.size.height)];
+
+    }
+    
+    _storeCity.text = [NSString stringWithFormat:@"%@, %@ %@",[_storeObject valueForKey:@"city"], [_storeObject valueForKey:@"state"], [_storeObject valueForKey:@"zip"]];
+    
     _storeHours.text = [self getHoursString];
     
     placeRewardData = [[[_storeObject mutableSetValueForKey:@"rewards"] allObjects] mutableCopy];
@@ -467,6 +481,97 @@
     [self dismissViewControllerAnimated:YES completion:NULL];;
 }
 
+- (void)publishButtonActionWithParameters:(NSDictionary*)userInfo{
+    PFQuery *getStore = [PFQuery queryWithClassName:@"Store"];
+    [getStore getObjectInBackgroundWithId:[userInfo valueForKey:@"store_id"] block:^(PFObject *fetchedStore, NSError *error) {
+        NSString *picURL = [[fetchedStore objectForKey:@"store_avatar"] url];
+        
+        // Put together the dialog parameters
+        NSMutableDictionary *params =
+        [NSMutableDictionary dictionaryWithObjectsAndKeys:
+         [NSString stringWithFormat:@"Just redeemed %@ with Repunch", [userInfo valueForKey:@"reward_title"]], @"name",
+         [NSString stringWithFormat:@"%@", [userInfo valueForKey:@"store_name"]], @"caption",
+         picURL, @"picture",
+         nil];
+        
+        // Invoke the dialog
+        [FBWebDialogs presentFeedDialogModallyWithSession:nil
+                                               parameters:params
+                                                  handler:
+         ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+             if (error) {
+                 // Error launching the dialog or publishing a story.
+                 NSLog(@"Error publishing story.");
+             } else {
+                 if (result == FBWebDialogResultDialogNotCompleted) {
+                     // User clicked the "x" icon
+                     NSLog(@"User canceled story publishing.");
+                 } else {
+                     // Handle the publish feed callback
+                     NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
+                     if (![urlParams valueForKey:@"post_id"]) {
+                         // User clicked the Cancel button
+                         NSLog(@"User canceled story publishing.");
+                         NSDictionary *functionParameters = [[NSDictionary alloc]initWithObjectsAndKeys:[userInfo valueForKey:@"patron_store_id"], @"patron_store_id", @"false", @"accept", nil];
+                         [PFCloud callFunctionInBackground:@"facebook_post" withParameters:functionParameters block:^(id object, NSError *error) {
+                             if (!error){
+                                 NSLog(@"facebook function call is :%@", object);
+                             }
+                             else {
+                                 NSLog(@"error is %@", error);
+                             }
+                         }];
+
+                     } else {
+                         // User clicked the Share button
+                         NSString *msg = [NSString stringWithFormat:
+                                          @"Posted the status!"];
+                         NSLog(@"%@", msg);
+                         // Show the result in an alert
+                         [[[UIAlertView alloc] initWithTitle:@"Yay! More punches for you!"
+                                                     message:msg
+                                                    delegate:nil
+                                           cancelButtonTitle:@"OK!"
+                                           otherButtonTitles:nil]
+                          show];
+                         
+                         NSDictionary *functionParameters = [[NSDictionary alloc]initWithObjectsAndKeys:[userInfo valueForKey:@"patron_store_id"], @"patron_store_id", @"true", @"accept", nil];
+                         [PFCloud callFunctionInBackground:@"facebook_post" withParameters:functionParameters block:^(id object, NSError *error) {
+                             if (!error){
+                                 NSLog(@"facebook function call is :%@", object);
+                                 
+                             }
+                             
+                             else {
+                                 NSLog(@"error is %@", error);
+                             }
+                         }];
+                         
+                     }
+                 }
+             }
+         }];
+        
+        
+    }];
+    
+}
+
+/**
+ * A function for parsing URL parameters.
+ */
+- (NSDictionary*)parseURLParams:(NSString *)query {
+    NSArray *pairs = [query componentsSeparatedByString:@"&"];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    for (NSString *pair in pairs) {
+        NSArray *kv = [pair componentsSeparatedByString:@"="];
+        NSString *val =
+        [kv[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        params[kv[0]] = val;
+    }
+    return params;
+}
+
 - (IBAction)callButton:(id)sender {
     NSString *number = [_storeObject phone_number];
     NSString *phoneNumber = [number stringByReplacingOccurrencesOfString:@"[^0-9]" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, [number length])];
@@ -505,7 +610,6 @@
         [self presentViewController:composeVC animated:YES completion:NULL];
         
     }
-    
 
 }
 

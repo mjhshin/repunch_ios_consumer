@@ -254,7 +254,7 @@
      placesDetailVC.modalDelegate = self;
      placesDetailVC.storeObject = [storeList objectAtIndex:indexPath.row];
      placesDetailVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-     
+
      [self presentViewController:placesDetailVC animated:YES completion:NULL];
  }
 
