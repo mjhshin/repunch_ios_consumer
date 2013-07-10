@@ -14,5 +14,6 @@
 @property (nonatomic, weak) IBOutlet UIImageView *storeImageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *numberOfPunches;
 @property (weak, nonatomic) IBOutlet UIImageView *punchesPic;
+@property (weak, nonatomic) IBOutlet UILabel *distance;
 
 @end

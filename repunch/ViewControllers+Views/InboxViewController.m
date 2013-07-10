@@ -26,6 +26,7 @@
     User *localUser;
     PFObject *patronObject;
     UITableView *messageTable;
+    UIActivityIndicatorView *spinner;
 }
 -(void)setup{
     PFRelation *messageStatus = [patronObject relationforKey:@"ReceivedMessages"];
@@ -36,8 +37,11 @@
         savedMessageStatuses = fetchedMessageStatuses;
         savedMessages = [fetchedMessageStatuses valueForKey:@"Message"];
         savedMessages = [savedMessages sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO]]];
-
+        
         [messageTable reloadData];
+        [[self view] addSubview:messageTable];
+        [spinner stopAnimating];
+
     }];
 
 }
@@ -54,7 +58,7 @@
     messageTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 46, 320, 450) style:UITableViewStylePlain];
     [messageTable setDataSource:self];
     [messageTable setDelegate:self];
-    [[self view] addSubview:messageTable];
+    //[[self view] addSubview:messageTable];
 
 }
 
@@ -68,6 +72,11 @@
                                                  name:@"receivedPush"
                                                object:nil];
     
+    spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    spinner.center = CGPointMake(160, 260);
+    spinner.color = [UIColor blackColor];
+    [[self view] addSubview:spinner];
+    [spinner startAnimating];
 
     [self setup];
 }
@@ -106,6 +115,7 @@
     cell.senderName.text = [currentCellMessage valueForKey:@"sender_name"];
     cell.subjectLabel.text = [NSString stringWithFormat:@"%@ - %@", [currentCellMessage valueForKey:@"subject"], [currentCellMessage valueForKey:@"body"]];
     cell.dateSent.text = [self formattedDateString:[currentCellMessage valueForKey:@"createdAt"]];
+    NSLog(@"date is %@", [currentCellMessage valueForKey:@"createdAt"]);
     if ([[currentCellMessage valueForKey:@"message_type"] isEqualToString:@"offer"]){
         [[cell offerPic] setHidden:FALSE];
         [[cell offerPic] setImage:[UIImage imageNamed:@"ico_message_coupon"]];
@@ -133,8 +143,8 @@
     messageVC.messageType = [[savedMessages objectAtIndex:indexPath.row] valueForKey:@"message_type"];
     messageVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     messageVC.messageStatus = [savedMessageStatuses objectAtIndex:indexPath.row];
-    
-    [[savedMessageStatuses objectAtIndex:indexPath.row] setValue:@"true" forKey:@"is_read"];
+        
+    //[[savedMessageStatuses objectAtIndex:indexPath.row] encodeBool:YES forKey:@"is_read"];
     [[savedMessageStatuses objectAtIndex:indexPath.row] saveInBackground];
     
     [self presentViewController:messageVC animated:YES completion:NULL];
@@ -161,8 +171,11 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     
     if([today isEqualToDate:otherDate]) {
+        NSTimeZone *thisTimeZone = [NSTimeZone localTimeZone];
         [formatter setDateFormat:@"hh:mm a"];
         [formatter setLocale:locale];
+        [formatter setTimeZone:thisTimeZone];
+        
         dateString = [formatter stringFromDate:dateCreated];
         
     } else {

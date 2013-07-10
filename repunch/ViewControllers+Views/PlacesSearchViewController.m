@@ -25,7 +25,6 @@
     PFGeoPoint *userLocation;
     UITableView *searchTable;
     User *localUser;
-
 }
 
 //set up data model
@@ -45,11 +44,11 @@
             storeQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
             storeQuery.maxCacheAge = 60 * 60 * 24; //clears cache every 24 hours
             [storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation];
-            storeQuery.limit = 10;
 
             [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *fetchedStores, NSError *error){
-                for (PFObject *store in fetchedStores){
-                    
+                //for (PFObject *store in fetchedStores){
+                for (int i = 0 ; i <[fetchedStores count]; i++) {
+                    PFObject *store = fetchedStores[i];
                     BOOL storeIsInList = FALSE;
                     
                     //check if store is in list
@@ -193,15 +192,12 @@
      
      [[cell punchesPic] setHidden:TRUE];
      [[cell numberOfPunches] setHidden:TRUE];
-    
-     //this might be useful later
-     /*
-      PFGeoPoint *storeLocation = [store objectForKey:@"coordinates"];
-      double distanceToStore = [userLocation distanceInMilesTo:storeLocation];
-      NSLog(@"distance is %g", distanceToStore);
-      */
      
      Store *currentCellStore = [storeList objectAtIndex:indexPath.row];
+     
+      PFGeoPoint *storeLocation = [PFGeoPoint geoPointWithLatitude:currentCellStore.latitude longitude:currentCellStore.longitude];
+      double distanceToStore = [userLocation distanceInMilesTo:storeLocation];
+      //NSLog(@"distance is %g", distanceToStore);
      
      NSString *neighborhood = [currentCellStore valueForKey:@"neighborhood"];
      NSString *state = [currentCellStore valueForKey:@"state"];
@@ -235,7 +231,8 @@
          [[cell numberOfPunches] setHidden:FALSE];
          [[cell numberOfPunches] setText:[NSString stringWithFormat:@"%d %@", punches, (punches==1)?@"punch":@"punches"]];
      }
-
+     
+     cell.distance.text = [NSString stringWithFormat:@"%.2f mi", distanceToStore];
      cell.storeAddressLabel.text = addressString;
      cell.storeNameLabel.text = [currentCellStore valueForKey:@"store_name"];
      cell.storeImageLabel.image = [UIImage imageWithData:[currentCellStore valueForKey:@"store_avatar"]];

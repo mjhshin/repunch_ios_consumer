@@ -66,7 +66,10 @@
         PFQuery *query = [PFQuery queryWithClassName:@"PatronStore"];
         [query includeKey:@"FacebookPost"];
         [query getObjectInBackgroundWithId:patronStoreEntity.objectId block:^(PFObject *fetchedPatronStore, NSError *error) {
-            if (!([NSNull null] == [fetchedPatronStore objectForKey:@"FacebookPost"])){
+            //if ([NSNull null] != [fetchedPatronStore objectForKey:@"FacebookPost"]) {
+            if ([fetchedPatronStore objectForKey:@"FacebookPost"] != nil && [NSNull null] != [fetchedPatronStore objectForKey:@"FacebookPost"]) {
+
+                NSLog(@"there is a facebook post!");
                 [self publishButtonActionWithParameters:[[NSDictionary alloc] initWithObjectsAndKeys:[patronStoreEntity store_id], @"store_id", [patronStoreEntity objectId], @"patron_store_id", [_storeObject store_name], @"store_name", [[fetchedPatronStore objectForKey:@"FacebookPost"] valueForKey:@"reward"], @"reward_title", nil]];
             }
         }];
@@ -341,11 +344,6 @@
         if (availablePunches >= required){
             SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%@.", [currentCellReward reward_name]] andMessage:[NSString stringWithFormat:@"It'll cost you %@.", [NSString stringWithFormat:(required == 1 ? @"%i Punch" :  @"%i Punches"), required]]];
             
-            [alertView addButtonWithTitle:@"Cancel"
-                                     type:SIAlertViewButtonTypeDefault
-                                  handler:^(SIAlertView *alert) {
-                                      //Nothing Happens
-                                  }];
             [alertView addButtonWithTitle:@"Redeem"
                                      type:SIAlertViewButtonTypeDefault
                                   handler:^(SIAlertView *alert) {
@@ -354,11 +352,29 @@
                                       [PFCloud callFunctionInBackground:@"request_redeem"
                                                          withParameters:functionArguments
                                                                   block:^(NSString *success, NSError *error) {
-                                                                      if (!error){
-                                                                          NSLog(@"function call is :%@", success);
+                                                                      if (!error) {
+                                                                          if ([success isEqualToString:@"pending"]){
+                                                                              NSLog(@"function call is :%@", success);
+                                                                              SIAlertView *confirmDialogue = [[SIAlertView alloc] initWithTitle:@"Pending" andMessage:@"You already have a pending reward"];
+                                                                              [confirmDialogue addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
+                                                                                  //nothing
+                                                                              }];
+                                                                          }
+                                                                          else {
+                                                                              NSLog(@"function call is :%@", success);
+                                                                              SIAlertView *confirmDialogue = [[SIAlertView alloc] initWithTitle:@"Waiting for confirmation" andMessage:@"Please wait for your reward to be validated"];
+                                                                              [confirmDialogue addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
+                                                                                  //nothing
+                                                                              }];
+                                                                          }
                                                                       }
-                                                                      else
+                                                                      else {
                                                                           NSLog(@"error occurred: %@", error);
+                                                                          SIAlertView *errorDialogue = [[SIAlertView alloc] initWithTitle:@"Error" andMessage:@"Please wait for your reward to be validated"];
+                                                                          [errorDialogue addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
+                                                                              //nothing
+                                                                          }];
+                                                                      }
                                                                   }];
                                       NSLog(@"Redeem Clicked");
                                   }];
@@ -368,6 +384,13 @@
                                       //CAN'T DO THIS WITHOUT FACEBOOK OR SOMETHING
                                       NSLog(@"Gift Clicked");
                                   }];
+            
+            [alertView addButtonWithTitle:@"Cancel"
+                                     type:SIAlertViewButtonTypeDefault
+                                  handler:^(SIAlertView *alert) {
+                                      //Nothing Happens
+                                  }];
+
             alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
 
             [alertView show];
@@ -375,7 +398,7 @@
         else {
             SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%@.", [[placeRewardData objectAtIndex:indexPath.row] valueForKey:@"reward_name"]] andMessage:[NSString stringWithFormat:@"You don't have %@.", [NSString stringWithFormat:(required == 1 ? @"%i Punch" :  @"%i Punches"), required]]];
             
-            [alertView addButtonWithTitle:@"Shucks."
+            [alertView addButtonWithTitle:@"Okay."
                                      type:SIAlertViewButtonTypeDefault
                                   handler:^(SIAlertView *alert) {
                                       //Nothing Happens
@@ -398,25 +421,43 @@
 
 -(void)addOrRemovePlace{
     NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+    
+    UIView *greyedOutView = [[UIView alloc]initWithFrame:CGRectMake(0, 47, 320, self.view.frame.size.height - 47)];
+    [greyedOutView setBackgroundColor:[UIColor colorWithRed:127/255 green:127/255 blue:127/255 alpha:0.5]];
+    [[self view] addSubview:greyedOutView];
+    [[self view] bringSubviewToFront:greyedOutView];
+
 
     PFQuery *patronQuery = [PFQuery queryWithClassName:@"Patron"];
     [patronQuery getObjectInBackgroundWithId:localUser.patronId block:^(PFObject *patronObject, NSError *error) {
         if (!error){
             if (!_isSavedStore){
+                UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+                
+                spinner.center = CGPointMake(160, 260);
+                spinner.color = [UIColor blackColor];
+                //spinner.transform = CGAffineTransformMakeScale(2, 2); //sorta violates apple aesthetics. do we care?
+                [[self view] addSubview:spinner];
+                
+                [spinner startAnimating];
+
                 
                 NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:[patronObject objectId], @"patron_id", [_storeObject objectId], @"store_id", nil];
                                                    
                 [PFCloud callFunctionInBackground: @"add_patronstore"
                                    withParameters:functionArguments block:^(PFObject *patronStore, NSError *error) {
+                                       [spinner stopAnimating];
+                                       [greyedOutView removeFromSuperview];
+
                                        
                                        PatronStore *newPatronStoreEntity = [PatronStore MR_createEntity];
-                                       [newPatronStoreEntity setFromPatronObject:patronObject andStoreEntity:_storeObject andUserEntity:localUser];
+                                       [newPatronStoreEntity setFromPatronObject:patronObject andStoreEntity:_storeObject andUserEntity:localUser andPatronStore:patronStore];
                                        [localUser addSaved_storesObject:newPatronStoreEntity];
                                        [localContext MR_saveToPersistentStoreAndWait];
                                        
                                        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Added!" andMessage:[NSString stringWithFormat:@"You've saved %@", [_storeObject valueForKey:@"store_name"]]];
                                        
-                                       [alertView addButtonWithTitle:@"Sweet beans."
+                                       [alertView addButtonWithTitle:@"Okay."
                                                                 type:SIAlertViewButtonTypeDefault
                                                              handler:^(SIAlertView *alert) {
                                                                  //[[self modalDelegate] didDismissPresentedViewController];
@@ -430,17 +471,26 @@
 
             }
             else{
-                SIAlertView *warningView = [[SIAlertView alloc] initWithTitle:@"Warning! Point of No Return" andMessage:[NSString stringWithFormat:@"Are you sure you want to remove %@? You will lose ALL the punches", [_storeObject valueForKey:@"store_name"]]];
-                [warningView addButtonWithTitle:@"Mm.  Nah."
+                SIAlertView *warningView = [[SIAlertView alloc] initWithTitle:@"Warning!" andMessage:[NSString stringWithFormat:@"Are you sure you want to remove %@? You will lose all your punches", [_storeObject valueForKey:@"store_name"]]];
+                [warningView addButtonWithTitle:@"Cancel"
                                          type:SIAlertViewButtonTypeDefault
                                       handler:^(SIAlertView *alert) {
                                           
                                       }];
 
                 
-                [warningView addButtonWithTitle:@"Bring it."
+                [warningView addButtonWithTitle:@"Okay"
                                          type:SIAlertViewButtonTypeDefault
                                       handler:^(SIAlertView *alert) {
+                                          UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+                                          
+                                          spinner.center = CGPointMake(160, 260);
+                                          spinner.color = [UIColor blackColor];
+                                          //spinner.transform = CGAffineTransformMakeScale(2, 2); //sorta violates apple aesthetics. do we care?
+                                          [[self view] addSubview:spinner];
+
+                                          [spinner startAnimating];
+
                                           
                                           //get patron store
                                           PFQuery *patronStoreQuery = [PFQuery queryWithClassName:@"PatronStore"];
@@ -455,9 +505,13 @@
                                               PatronStore *storeToDelete = [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", localUser.patronId, _storeObject.objectId]];
                                               [localContext deleteObject:storeToDelete];
                                               
+                                              [spinner stopAnimating];
+                                              [greyedOutView removeFromSuperview];
+
+                                              
                                               SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Removed!" andMessage:[NSString stringWithFormat:@"You've removed %@", [_storeObject valueForKey:@"store_name"]]];
                                               
-                                              [alertView addButtonWithTitle:@"Awesome sauce."
+                                              [alertView addButtonWithTitle:@"Okay."
                                                                        type:SIAlertViewButtonTypeDefault
                                                                     handler:^(SIAlertView *alert) {
                                                                         [[self modalDelegate] didDismissPresentedViewController];

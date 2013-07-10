@@ -65,6 +65,7 @@
     PFRelation *patronStoreRelation = [patronObject relationforKey:@"PatronStores"];
     PFQuery *storeQuery = [patronStoreRelation query];
     [storeQuery includeKey:@"Store"];
+    
     [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *fetchedPatronStores, NSError *error) {
         for (PFObject *fetchedPatronStore in fetchedPatronStores){
             BOOL isAlreadyInList = [localUser alreadyHasStoreSaved:[[fetchedPatronStore valueForKey:@"Store"] objectId]];
@@ -73,6 +74,7 @@
             if (isAlreadyInList){
                 PatronStore *storeToBeUpdated = [PatronStore MR_findFirstByAttribute:@"store_id" withValue:[[fetchedPatronStore valueForKey:@"Store"] objectId]];
                 [storeToBeUpdated updateLocalEntityWithParseObject:fetchedPatronStore];
+                savedStores = [[savedStores sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]] mutableCopy];
                 [savedStoresTable reloadData];
             }
             
@@ -84,7 +86,7 @@
                     [newSavedStore setFromParseObject:[fetchedPatronStore valueForKey:@"Store"]];
                 }
                 
-                [newPatronStore setFromPatronObject:fetchedPatronStore andStoreEntity:newSavedStore andUserEntity:localUser];
+                [newPatronStore setFromPatronObject:patronObject andStoreEntity:newSavedStore andUserEntity:localUser andPatronStore:fetchedPatronStore];
                 [savedStores addObject:newPatronStore];
                 savedStores = [[savedStores sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]] mutableCopy];
                 [savedStoresTable reloadData];
@@ -125,10 +127,11 @@
     [[self view] addSubview:savedStoresTable];
 
 
-
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
     localUser = [(AppDelegate *)[[UIApplication sharedApplication] delegate] localUser];
     patronObject = [(AppDelegate *)[[UIApplication sharedApplication] delegate] patronObject];
         
@@ -142,9 +145,8 @@
                                                  name:@"FinishedLoadingPic"
                                                object:nil];
 
-
-    [super viewWillAppear:animated];
     [self setup];
+
 
 }
 
@@ -190,7 +192,7 @@
 
 -(void)showPunchCode{
     SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Your Punch Code" andMessage:[NSString stringWithFormat:@"Your punch code is %@", [localUser punch_code]]];
-    [alert addButtonWithTitle:@"Cool" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+    [alert addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
         //nothing happens
     }];
     [alert show];

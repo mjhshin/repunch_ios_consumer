@@ -9,6 +9,7 @@
 #import "PatronStore.h"
 #import "Store.h"
 #import "User.h"
+#import <Parse/Parse.h>
 
 
 @implementation PatronStore
@@ -20,14 +21,14 @@
 @dynamic patron;
 @dynamic store;
 
--(void)setFromPatronObject: (PFObject *)Patron andStoreEntity: (Store *)store andUserEntity: (User *)user{
+-(void)setFromPatronObject: (PFObject *)Patron andStoreEntity: (Store *)store andUserEntity: (User *)user andPatronStore:(PFObject *)patronStore {
     self.punch_count = [Patron valueForKey:@"punch_count"];
     if (!self.punch_count) self.punch_count = [NSNumber numberWithInt:0];
     self.patron_id = user.patronId;
     self.store_id = store.objectId;
     self.store = store;
     self.patron = user;
-    //self.objectId = [Patron objectId];
+    self.objectId = [patronStore objectId];
     
     NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
     [localContext MR_saveToPersistentStoreAndWait];
