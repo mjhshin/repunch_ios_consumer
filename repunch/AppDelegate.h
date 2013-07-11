@@ -19,7 +19,6 @@
 @property (strong, nonatomic) PFObject *patronObject;
 @property (strong, nonatomic) User *localUser;
 
-- (void)saveContext;
 -(void)makeTabBarHidden:(BOOL)hide;
 -(void)logout;
 

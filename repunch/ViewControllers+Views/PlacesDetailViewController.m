@@ -38,6 +38,48 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    
+    //THIS IS A TOOLBAR
+    //FROM HERE...
+    UIToolbar *placeToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 46)];
+    [placeToolbar setBackgroundImage:[UIImage imageNamed:@"bkg_header"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+    
+    UIImage *closeImage = [UIImage imageNamed:@"btn_x-orange"];
+    UIButton *closePlaceButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [closePlaceButton setImage:closeImage forState:UIControlStateNormal];
+    [closePlaceButton setFrame:CGRectMake(0, 0, closeImage.size.width, closeImage.size.height)];
+    [closePlaceButton addTarget:self action:@selector(closePlaceDetail) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *closePlaceButtonItem = [[UIBarButtonItem alloc] initWithCustomView:closePlaceButton];
+    
+    UILabel *placeTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(closePlaceButton.frame.size.width, 0, placeToolbar.frame.size.width - closePlaceButton.frame.size.width - 25, placeToolbar.frame.size.height)];
+    [placeTitleLabel setFont:[UIFont boldSystemFontOfSize:16]];
+    [placeTitleLabel setBackgroundColor:[UIColor clearColor]];
+    [placeTitleLabel setTextColor:[UIColor whiteColor]];
+    [placeTitleLabel setText:[_storeObject valueForKey:@"store_name"]];
+    [placeTitleLabel sizeToFit];
+    
+    UIBarButtonItem *placeTitleItem = [[UIBarButtonItem alloc] initWithCustomView:placeTitleLabel];
+    
+    UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIBarButtonItem *flex2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    UIImage *addOrRemoveImage;
+    
+    if (!_isSavedStore) addOrRemoveImage = [UIImage imageNamed:@"ab_add_my_places"];
+    else addOrRemoveImage = [UIImage imageNamed:@"ab_message_delete"];
+    UIButton *addOrRemoveButton= [UIButton buttonWithType:UIButtonTypeCustom];
+    [addOrRemoveButton setImage:addOrRemoveImage forState:UIControlStateNormal];
+    [addOrRemoveButton setFrame:CGRectMake(0, 0, addOrRemoveImage.size.width, addOrRemoveImage.size.height)];
+    [addOrRemoveButton addTarget:self action:@selector(addOrRemovePlace) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *addOrRemoveTitle = [[UIBarButtonItem alloc] initWithCustomView:addOrRemoveButton];
+    if (!_isSavedStore) [addOrRemoveButton setHidden:TRUE];
+    
+    [placeToolbar setItems:[NSArray arrayWithObjects:closePlaceButtonItem, flex, placeTitleItem, flex2, addOrRemoveTitle, nil]];
+    [self.view addSubview:placeToolbar];
+    //... TO HERE.  END TOOLBAR.
+    
     [_rewardsTable reloadData];
     
     placeRewardData = [[[_storeObject mutableSetValueForKey:@"rewards"] allObjects] mutableCopy];
@@ -99,48 +141,7 @@
     
     _scrollView.scrollEnabled = YES;
     
-    //THIS IS A TOOLBAR
-    //FROM HERE...
-    UIToolbar *placeToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 46)];
-    [placeToolbar setBackgroundImage:[UIImage imageNamed:@"bkg_header"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
-    
-    UIImage *closeImage = [UIImage imageNamed:@"btn_x-orange"];
-    UIButton *closePlaceButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [closePlaceButton setImage:closeImage forState:UIControlStateNormal];
-    [closePlaceButton setFrame:CGRectMake(0, 0, closeImage.size.width, closeImage.size.height)];
-    [closePlaceButton addTarget:self action:@selector(closePlaceDetail) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *closePlaceButtonItem = [[UIBarButtonItem alloc] initWithCustomView:closePlaceButton];
-    
-    UILabel *placeTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(closePlaceButton.frame.size.width, 0, placeToolbar.frame.size.width - closePlaceButton.frame.size.width - 25, placeToolbar.frame.size.height)];
-    [placeTitleLabel setFont:[UIFont boldSystemFontOfSize:16]];
-    [placeTitleLabel setBackgroundColor:[UIColor clearColor]];
-    [placeTitleLabel setTextColor:[UIColor whiteColor]];
-    [placeTitleLabel setText:[_storeObject valueForKey:@"store_name"]];
-    [placeTitleLabel sizeToFit];
-    
-    UIBarButtonItem *placeTitleItem = [[UIBarButtonItem alloc] initWithCustomView:placeTitleLabel];
-    
-    UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    UIBarButtonItem *flex2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    
-    UIImage *addOrRemoveImage;
-        
-    if (!_isSavedStore) addOrRemoveImage = [UIImage imageNamed:@"ab_add_my_places"];
-    else addOrRemoveImage = [UIImage imageNamed:@"ab_message_delete"];
-    UIButton *addOrRemoveButton= [UIButton buttonWithType:UIButtonTypeCustom];
-    [addOrRemoveButton setImage:addOrRemoveImage forState:UIControlStateNormal];
-    [addOrRemoveButton setFrame:CGRectMake(0, 0, addOrRemoveImage.size.width, addOrRemoveImage.size.height)];
-    [addOrRemoveButton addTarget:self action:@selector(addOrRemovePlace) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *addOrRemoveTitle = [[UIBarButtonItem alloc] initWithCustomView:addOrRemoveButton];
-    if (!_isSavedStore) [addOrRemoveButton setHidden:TRUE];
 
-    
-    
-    [placeToolbar setItems:[NSArray arrayWithObjects:closePlaceButtonItem, flex, placeTitleItem, flex2, addOrRemoveTitle, nil]];
-    [self.view addSubview:placeToolbar];
-    //... TO HERE.  END TOOLBAR.
     
     _storePic.image = [UIImage imageWithData:_storeObject.store_avatar];
 
@@ -422,7 +423,7 @@
 -(void)addOrRemovePlace{
     NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
     
-    UIView *greyedOutView = [[UIView alloc]initWithFrame:CGRectMake(0, 47, 320, self.view.frame.size.height - 47)];
+    UIView *greyedOutView = [[UIView alloc]initWithFrame:CGRectMake(0, 46, 320, self.view.frame.size.height - 46)];
     [greyedOutView setBackgroundColor:[UIColor colorWithRed:127/255 green:127/255 blue:127/255 alpha:0.5]];
     [[self view] addSubview:greyedOutView];
     [[self view] bringSubviewToFront:greyedOutView];
@@ -462,7 +463,7 @@
                                                              handler:^(SIAlertView *alert) {
                                                                  //[[self modalDelegate] didDismissPresentedViewController];
                                                                  _isSavedStore = TRUE;
-                                                                 [self viewDidLoad];
+                                                                 //[self viewDidLoad];
                                                                  [self viewWillAppear:YES];
                                                              }];
                                        [alertView show];

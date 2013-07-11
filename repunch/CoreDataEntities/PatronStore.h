@@ -23,6 +23,6 @@
 @property (nonatomic, retain) User *patron;
 @property (nonatomic, retain) Store *store;
 
--(void)setFromPatronObject: (PFObject *)Patron andStoreEntity: (Store *)store andUserEntity: (User *)user;
+-(void)setFromPatronObject: (PFObject *)Patron andStoreEntity: (Store *)store andUserEntity: (User *)user andPatronStore: (PFObject *)patronStore;
 -(void)updateLocalEntityWithParseObject:(PFObject *)patronObject;
 @end

@@ -182,7 +182,7 @@
     NSLog(@"dictionary is %@", functionArguments);
     
     
-    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"Are you sure you want to redeem %@?", [_message valueForKey:@"offer_title"]]];
+    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redeem Offer" andMessage:[NSString stringWithFormat:@"Are you sure you want to redeem %@?", [_message valueForKey:@"offer_title"]]];
     
     [alertView addButtonWithTitle:@"No"
                              type:SIAlertViewButtonTypeCancel
@@ -196,8 +196,8 @@
                                                  withParameters:functionArguments
                                                           block:^(NSString *success, NSError *error) {
                                                               if (!error){
-                                                                  SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"You redeemedd %@!", [_message valueForKey:@"offer_title"]]];
-                                                                  [alertView addButtonWithTitle:@"Cancel" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+                                                                  SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"You redeemed %@!", [_message valueForKey:@"offer_title"]]];
+                                                                  [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
                                                                       //nothing
                                                                   }];
 
@@ -205,8 +205,8 @@
                                                                   NSLog(@"function call is :%@", success);
                                                               }
                                                               else{
-                                                                  SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Hmmm..." andMessage:[NSString stringWithFormat:@"Something went wrong... (%@)", error]];
-                                                                  [alertView addButtonWithTitle:@"Cancel" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+                                                                  SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Sorry" andMessage:[NSString stringWithFormat:@"Looks like something went wrong."]];
+                                                                  [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
                                                                       //nothing
                                                                   }];
 
