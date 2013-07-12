@@ -20,10 +20,11 @@
 
 #import "SIAlertView.h"
 
+#import "CoreDataStore.h"
 
 #import "LandingViewController.h"
 @implementation AppDelegate{
-    LoginViewController *loginVC;
+    LandingViewController *loginVC;
     PlacesViewController *placesVC;
     InboxViewController *inboxVC;
 }
@@ -43,6 +44,7 @@
     //Init Tab Bar and all related view controllers
     placesVC = [[PlacesViewController alloc] init];
     inboxVC = [[InboxViewController alloc] init];
+    loginVC = [[LandingViewController alloc] init];
     
     //Set up default settings for: sorting by alphabetical order, no notifications
     [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Alphabetical Order", [NSNumber numberWithBool:NO], nil] forKeys:[NSArray arrayWithObjects:@"sort", @"notification", nil]]];
@@ -72,8 +74,15 @@
         [self.tabBarController setSelectedIndex:2];
     }
     
+    CoreDataStore *coreDataStore = [[CoreDataStore alloc]init];
+    //[coreDataStore deleteDataForObject:@"Store"];
+    //[coreDataStore deleteDataForObject:@"User"];
+    //[coreDataStore deleteDataForObject:@"PatronStore"];
+    [CoreDataStore printDataForObject:@"Store"];
+    [CoreDataStore printDataForObject:@"User"];
+    [CoreDataStore printDataForObject:@"PatronStore"];
     
-    [PFUser logOut];
+    //[PFUser logOut];
     
     //if user is cached, load their cached data
     //else, go to login page
@@ -87,20 +96,24 @@
             PFObject *patronObject = [[PFUser currentUser] valueForKey:@"Patron"];
             
             [patronObject fetchIfNeededInBackgroundWithBlock:^(PFObject *fetchedPatronObject, NSError *error) {
-                _patronObject = fetchedPatronObject;
-                if (!_localUser){
-                    _localUser = [User MR_createEntity];
-                    [_localUser setFromParseUserObject:[PFUser currentUser] andPatronObject:fetchedPatronObject];
+                if (!error) {
+                    _patronObject = fetchedPatronObject;
+                    if (!_localUser){
+                        _localUser = [User MR_createEntity];
+                        [_localUser setFromParseUserObject:[PFUser currentUser] andPatronObject:fetchedPatronObject];
+                    }
+                    
+                    self.window.rootViewController = self.tabBarController;
                 }
-                
-                self.window.rootViewController = self.tabBarController;
+                else {
+                    NSLog(@"error in app delegate: %@", error);
+                }
             }];
         }
         else
             self.window.rootViewController = self.tabBarController;
     } else {
-        LandingViewController *landingVC = [[LandingViewController alloc] init];
-        self.window.rootViewController = landingVC;
+        self.window.rootViewController = loginVC;
     }
     
      
@@ -258,7 +271,6 @@
 -(void)logout{
     [PFUser logOut];
     self.window.rootViewController = loginVC;
-    
 }
 
 

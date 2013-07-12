@@ -15,8 +15,7 @@
 #import "RewardCell.h"
 #import "AppDelegate.h"
 #import "ComposeViewController.h"
-
-//TODO: make sure all alert dialogues match
+#import "RepunchFriendsViewController.h"
 
 @implementation PlacesDetailViewController{
     NSMutableArray *placeRewardData;
@@ -360,6 +359,7 @@
                                                                               [confirmDialogue addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
                                                                                   //nothing
                                                                               }];
+                                                                              [confirmDialogue show];
                                                                           }
                                                                           else {
                                                                               NSLog(@"function call is :%@", success);
@@ -367,6 +367,7 @@
                                                                               [confirmDialogue addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
                                                                                   //nothing
                                                                               }];
+                                                                              [confirmDialogue show];
                                                                           }
                                                                       }
                                                                       else {
@@ -375,6 +376,7 @@
                                                                           [errorDialogue addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
                                                                               //nothing
                                                                           }];
+                                                                          [errorDialogue show];
                                                                       }
                                                                   }];
                                       NSLog(@"Redeem Clicked");
@@ -382,7 +384,9 @@
             [alertView addButtonWithTitle:@"Gift"
                                      type:SIAlertViewButtonTypeDefault
                                   handler:^(SIAlertView *alert) {
-                                      //CAN'T DO THIS WITHOUT FACEBOOK OR SOMETHING
+                                      RepunchFriendsViewController *friendsVC = [[RepunchFriendsViewController alloc]init];
+                                      friendsVC.modalDelegate = self;
+                                      [self presentViewController:friendsVC animated:YES completion:nil];
                                       NSLog(@"Gift Clicked");
                                   }];
             
@@ -432,6 +436,8 @@
     PFQuery *patronQuery = [PFQuery queryWithClassName:@"Patron"];
     [patronQuery getObjectInBackgroundWithId:localUser.patronId block:^(PFObject *patronObject, NSError *error) {
         if (!error){
+            
+            //add store
             if (!_isSavedStore){
                 UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                 
@@ -471,6 +477,8 @@
 
 
             }
+            
+            //remove store
             else{
                 SIAlertView *warningView = [[SIAlertView alloc] initWithTitle:@"Warning!" andMessage:[NSString stringWithFormat:@"Are you sure you want to remove %@? You will lose all your punches", [_storeObject valueForKey:@"store_name"]]];
                 [warningView addButtonWithTitle:@"Cancel"

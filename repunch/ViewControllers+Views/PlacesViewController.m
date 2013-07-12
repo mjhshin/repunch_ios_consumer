@@ -19,6 +19,7 @@
 #import "GlobalToolbar.h"
 #import <Parse/Parse.h>
 #import "AppDelegate.h"
+#import "CoreDataStore.h"
 
 //JUST FOR MY OWN SANITY, what's goingon:
 //on viewdidload: set up UI, meaning global toolbar, tableview
@@ -37,65 +38,69 @@
 }
 
 - (void)setup {
-
-    //load all stores from local data store
-    //NSMutableSet *patronStores = [localUser mutableSetValueForKey:@"saved_stores"];
-    //NSMutableSet *enumerationCopy = [NSSet setWithArray:savedStores];
-    
-    /*
-     //sync with view's set of stores
-     for (id item in patronStores) {
-     if (![enumerationCopy member:item]) {
-     [savedStores addObject:item];
-     }
-     }*/
-
-    
+    //get all local store entities and sort them by number of punches
     savedStores = [[[localUser mutableSetValueForKey:@"saved_stores"] allObjects] mutableCopy];
     NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"punch_count"  ascending:NO];
     savedStores = [[savedStores sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]] mutableCopy];
 
     [savedStoresTable reloadData];
     
-    //NSLog(@"here are stores in local user %@: %@", localUser.username, [[patronStores valueForKey:@"store"] valueForKey:@"store_name"]);
     NSLog(@"user:%@", [localUser username]);
     NSLog(@"patron: %@", [localUser patronId]);
     NSLog(@"here are saved stores: %@", [[savedStores valueForKey:@"store"] valueForKey:@"store_name"]);
-    
+ 
     PFRelation *patronStoreRelation = [patronObject relationforKey:@"PatronStores"];
     PFQuery *storeQuery = [patronStoreRelation query];
     [storeQuery includeKey:@"Store"];
     
+    //get saved stores from parse backend
     [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *fetchedPatronStores, NSError *error) {
-        for (PFObject *fetchedPatronStore in fetchedPatronStores){
-            BOOL isAlreadyInList = [localUser alreadyHasStoreSaved:[[fetchedPatronStore valueForKey:@"Store"] objectId]];
-
-            //NSLog(@"%@ %@ already is list", [[fetchedPatronStore valueForKey:@"Store"] valueForKey:@"store_name"], isAlreadyInList?@"is":@"IS NOT");
-            if (isAlreadyInList){
-                PatronStore *storeToBeUpdated = [PatronStore MR_findFirstByAttribute:@"store_id" withValue:[[fetchedPatronStore valueForKey:@"Store"] objectId]];
-                [storeToBeUpdated updateLocalEntityWithParseObject:fetchedPatronStore];
-                savedStores = [[savedStores sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]] mutableCopy];
-                [savedStoresTable reloadData];
-            }
+        if (!error){
+            for (PFObject *fetchedPatronStore in fetchedPatronStores){
             
-            if (!isAlreadyInList){
-                PatronStore *newPatronStore = [PatronStore MR_createEntity];
-                Store *newSavedStore = [Store MR_findFirstByAttribute:@"objectId" withValue:[[fetchedPatronStore valueForKey:@"Store"] objectId]];
-                if (!newSavedStore){
-                    newSavedStore = [Store MR_createEntity];
-                    [newSavedStore setFromParseObject:[fetchedPatronStore valueForKey:@"Store"]];
+                //check if saved store is already in local store's saved list
+                BOOL isAlreadyInList = [localUser alreadyHasStoreSaved:[[fetchedPatronStore valueForKey:@"Store"] objectId]];
+
+                NSLog(@"%@ %@ already is list", [[fetchedPatronStore valueForKey:@"Store"] valueForKey:@"store_name"], isAlreadyInList?@"is":@"IS NOT");
+                
+                if (isAlreadyInList){
+                    PatronStore *storeToBeUpdated = [PatronStore MR_findFirstByAttribute:@"store_id" withValue:[[fetchedPatronStore valueForKey:@"Store"] objectId]];
+                    [storeToBeUpdated updateLocalEntityWithParseObject:fetchedPatronStore];
                 }
                 
-                [newPatronStore setFromPatronObject:patronObject andStoreEntity:newSavedStore andUserEntity:localUser andPatronStore:fetchedPatronStore];
-                [savedStores addObject:newPatronStore];
+                if (!isAlreadyInList){
+                    
+                    Store *newSavedStore = [Store MR_findFirstByAttribute:@"objectId" withValue:[[fetchedPatronStore valueForKey:@"Store"] objectId]];
+                    if (!newSavedStore){
+                        newSavedStore = [Store MR_createEntity];
+                        [newSavedStore setFromParseObject:[fetchedPatronStore valueForKey:@"Store"]];
+                    }
+                    
+                    PatronStore *newPatronStore = [PatronStore MR_createEntity];
+                    [newPatronStore setFromPatronObject:patronObject andStoreEntity:newSavedStore andUserEntity:localUser andPatronStore:fetchedPatronStore];
+                    [savedStores addObject:newPatronStore];
+                    [localUser addSaved_storesObject:newPatronStore];
+                    [CoreDataStore saveContext];
+
+
+                }
                 savedStores = [[savedStores sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]] mutableCopy];
                 [savedStoresTable reloadData];
-                
 
+                NSLog(@"here are saved stores after networking: %@", [[savedStores valueForKey:@"store"] valueForKey:@"store_name"]);
+                
+                [CoreDataStore printDataForObject:@"PatronStore"];
+                [CoreDataStore printDataForObject:@"Store"];
+                
             }
+        }
+        else {
+            NSLog(@"places view: error is %@", error);
         }
         
     }];
+
+
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -124,6 +129,7 @@
     savedStoresTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 46, 320, 450) style:UITableViewStylePlain];
     [savedStoresTable setDataSource:self];
     [savedStoresTable setDelegate:self];
+    
     [[self view] addSubview:savedStoresTable];
 
 
@@ -201,7 +207,11 @@
 #pragma mark - Modal View Delegate
 
 - (void)didDismissPresentedViewController{
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self dismissViewControllerAnimated:YES completion:^{
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate logout];
+
+    }];
 }
 
 #pragma mark - Table view data source

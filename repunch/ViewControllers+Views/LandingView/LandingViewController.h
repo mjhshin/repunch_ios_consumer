@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ModalDelegate.h"
 
-@interface LandingViewController : UIViewController
+@interface LandingViewController : UIViewController <ModalDelegate>
 - (IBAction)signIn:(id)sender;
 - (IBAction)registerUser:(id)sender;
-- (IBAction)getForgottenPassword:(id)sender;
+
+//Modal Delegate Methods
+- (void)didDismissPresentedViewController;
+
 
 @end

@@ -11,6 +11,7 @@
 #import "User.h"
 #import "AppDelegate.h"
 #import "SIAlertView.h"
+#import "CustomToolbar.h"
 
 #include <Parse/Parse.h>
 //TODO DATA VALIDATION FOR ALL FIELDS
@@ -31,6 +32,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    /*
     UIToolbar *placeToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 46)];
     [placeToolbar setBackgroundImage:[UIImage imageNamed:@"bkg_header"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
     
@@ -65,6 +67,10 @@
     
     [placeToolbar setItems:[NSArray arrayWithObjects:closePlaceButtonItem, flex, placeTitleItem, flex2, sendButtonItem, nil]];
     [self.view addSubview:placeToolbar];
+     */
+    
+    _storeName.text = [_storeObject valueForKey:@"store_name"];
+    
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self
@@ -104,23 +110,7 @@ shouldChangeTextInRange: (NSRange) range
 }
 
 -(void)sendMessage{
-    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:[localUser patronId], @"patron_id", [_storeObject objectId], @"store_id", [_body text], @"body", [_subject text], @"subject", [localUser first_name], @"sender_name", nil];
-    
-    [PFCloud callFunctionInBackground:@"send_feedback" withParameters:dictionary block:^(NSString *result, NSError *error) {
-        if (!error){
-            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Sent!" andMessage:@"Your feedback was sent."];
-            
-            [alertView addButtonWithTitle:@"Ok."
-                                     type:SIAlertViewButtonTypeDefault
-                                  handler:^(SIAlertView *alert) {
-                                      [[self modalDelegate] didDismissPresentedViewController];
-                                  }];
-            [alertView show];
-            NSLog(@"result is: %@", result);
-        }
-        else NSLog(@"error occured: %@", error);
-        
-    }];
+
 
     
 }
@@ -135,4 +125,12 @@ shouldChangeTextInRange: (NSRange) range
     
 }
 
+- (IBAction)sendFeedback:(id)sender {
+    [self sendMessage];
+}
+
+- (IBAction)closeButton:(id)sender {
+    [self closeView];
+
+}
 @end

@@ -12,6 +12,14 @@
 		798B8D82178F0FF3000500AC /* CoreDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 798B8D81178F0FF3000500AC /* CoreDataStore.m */; };
 		798D6DE61785B90600CF8109 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 798D6DE51785B90600CF8109 /* FacebookSDK.framework */; };
 		798D6DE81785B98A00CF8109 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 798D6DE71785B98A00CF8109 /* libsqlite3.dylib */; };
+		79902DD817908E71001A8E5F /* CustomToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 79902DD717908E71001A8E5F /* CustomToolbar.m */; };
+		79902DDE17909262001A8E5F /* ab_contextual_cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 79902DD917909262001A8E5F /* ab_contextual_cancel.png */; };
+		79902DDF17909262001A8E5F /* ab_message_delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 79902DDA17909262001A8E5F /* ab_message_delete.png */; };
+		79902DE017909262001A8E5F /* ab_search.png in Resources */ = {isa = PBXBuildFile; fileRef = 79902DDB17909262001A8E5F /* ab_search.png */; };
+		79902DE117909262001A8E5F /* ab_send_feedback.png in Resources */ = {isa = PBXBuildFile; fileRef = 79902DDC17909262001A8E5F /* ab_send_feedback.png */; };
+		79902DE217909262001A8E5F /* ab_settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 79902DDD17909262001A8E5F /* ab_settings.png */; };
+		79902DF01790A23B001A8E5F /* RepunchFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79902DEE1790A239001A8E5F /* RepunchFriendsViewController.m */; };
+		79902DF11790A23B001A8E5F /* RepunchFriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79902DEF1790A23A001A8E5F /* RepunchFriendsViewController.xib */; };
 		79956E9D17846D7A006D512B /* CustomToolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79956E9C17846D7A006D512B /* CustomToolbar.xib */; };
 		79956EF817846F4E006D512B /* ab_add_my_places.png in Resources */ = {isa = PBXBuildFile; fileRef = 79956E9E17846F4E006D512B /* ab_add_my_places.png */; };
 		79956EF917846F4E006D512B /* ab_message_delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 79956E9F17846F4E006D512B /* ab_message_delete.png */; };
@@ -237,6 +245,16 @@
 		798B8D81178F0FF3000500AC /* CoreDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataStore.m; sourceTree = "<group>"; };
 		798D6DE51785B90600CF8109 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		798D6DE71785B98A00CF8109 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		79902DD617908E70001A8E5F /* CustomToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomToolbar.h; path = "Repunch/ViewControllers+Views/CustomUIViews/CustomToolbar.h"; sourceTree = "<group>"; };
+		79902DD717908E71001A8E5F /* CustomToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomToolbar.m; path = "Repunch/ViewControllers+Views/CustomUIViews/CustomToolbar.m"; sourceTree = "<group>"; };
+		79902DD917909262001A8E5F /* ab_contextual_cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ab_contextual_cancel.png; path = Images/ab_contextual_cancel.png; sourceTree = "<group>"; };
+		79902DDA17909262001A8E5F /* ab_message_delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ab_message_delete.png; path = Images/ab_message_delete.png; sourceTree = "<group>"; };
+		79902DDB17909262001A8E5F /* ab_search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ab_search.png; path = Images/ab_search.png; sourceTree = "<group>"; };
+		79902DDC17909262001A8E5F /* ab_send_feedback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ab_send_feedback.png; path = Images/ab_send_feedback.png; sourceTree = "<group>"; };
+		79902DDD17909262001A8E5F /* ab_settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ab_settings.png; path = Images/ab_settings.png; sourceTree = "<group>"; };
+		79902DED1790A239001A8E5F /* RepunchFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RepunchFriendsViewController.h; path = "Repunch/ViewControllers+Views/RepunchFriendsViewController.h"; sourceTree = "<group>"; };
+		79902DEE1790A239001A8E5F /* RepunchFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RepunchFriendsViewController.m; path = "Repunch/ViewControllers+Views/RepunchFriendsViewController.m"; sourceTree = "<group>"; };
+		79902DEF1790A23A001A8E5F /* RepunchFriendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RepunchFriendsViewController.xib; path = "Repunch/ViewControllers+Views/RepunchFriendsViewController.xib"; sourceTree = "<group>"; };
 		79956E9C17846D7A006D512B /* CustomToolbar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CustomToolbar.xib; path = "Repunch/ViewControllers+Views/CustomUIViews/CustomToolbar.xib"; sourceTree = "<group>"; };
 		79956E9E17846F4E006D512B /* ab_add_my_places.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ab_add_my_places.png; path = Images/ab_add_my_places.png; sourceTree = "<group>"; };
 		79956E9F17846F4E006D512B /* ab_message_delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ab_message_delete.png; path = Images/ab_message_delete.png; sourceTree = "<group>"; };
@@ -691,6 +709,11 @@
 		7996B3B217820B8600CCAFED /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				79902DD917909262001A8E5F /* ab_contextual_cancel.png */,
+				79902DDA17909262001A8E5F /* ab_message_delete.png */,
+				79902DDB17909262001A8E5F /* ab_search.png */,
+				79902DDC17909262001A8E5F /* ab_send_feedback.png */,
+				79902DDD17909262001A8E5F /* ab_settings.png */,
 				798B8D7B178EFECD000500AC /* splash_background_big.png */,
 				79956F5217848252006D512B /* message_reply.png */,
 				79956E9E17846F4E006D512B /* ab_add_my_places.png */,
@@ -819,6 +842,9 @@
 				79956F5417848F43006D512B /* SettingsViewController.h */,
 				79956F5517848F43006D512B /* SettingsViewController.m */,
 				79956F5617848F43006D512B /* SettingsViewController.xib */,
+				79902DED1790A239001A8E5F /* RepunchFriendsViewController.h */,
+				79902DEE1790A239001A8E5F /* RepunchFriendsViewController.m */,
+				79902DEF1790A23A001A8E5F /* RepunchFriendsViewController.xib */,
 			);
 			name = "ViewControllers+Views";
 			path = ..;
@@ -1021,6 +1047,8 @@
 				7996B4A21782141400CCAFED /* StoreCell.h */,
 				7996B4A31782141400CCAFED /* StoreCell.m */,
 				7996B4A41782141400CCAFED /* StoreCell.xib */,
+				79902DD617908E70001A8E5F /* CustomToolbar.h */,
+				79902DD717908E71001A8E5F /* CustomToolbar.m */,
 				79956E9C17846D7A006D512B /* CustomToolbar.xib */,
 			);
 			name = CustomViews;
@@ -1235,6 +1263,12 @@
 				79ACBF48178F306500937B29 /* SignInViewController.xib in Resources */,
 				79ACBF4D178F323800937B29 /* LandingViewController.xib in Resources */,
 				79ACBF52178F32ED00937B29 /* RegisterViewController.xib in Resources */,
+				79902DDE17909262001A8E5F /* ab_contextual_cancel.png in Resources */,
+				79902DDF17909262001A8E5F /* ab_message_delete.png in Resources */,
+				79902DE017909262001A8E5F /* ab_search.png in Resources */,
+				79902DE117909262001A8E5F /* ab_send_feedback.png in Resources */,
+				79902DE217909262001A8E5F /* ab_settings.png in Resources */,
+				79902DF11790A23B001A8E5F /* RepunchFriendsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1340,6 +1374,8 @@
 				79ACBF47178F306500937B29 /* SignInViewController.m in Sources */,
 				79ACBF4C178F323800937B29 /* LandingViewController.m in Sources */,
 				79ACBF51178F32ED00937B29 /* RegisterViewController.m in Sources */,
+				79902DD817908E71001A8E5F /* CustomToolbar.m in Sources */,
+				79902DF01790A23B001A8E5F /* RepunchFriendsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

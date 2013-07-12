@@ -9,6 +9,8 @@
 #import "RegisterViewController.h"
 #import "ParseStore.h"
 #import "AppDelegate.h"
+#import "UIViewController+KNSemiModal.h"
+
 
 @implementation RegisterViewController{
     ParseStore *parseStore;
@@ -31,6 +33,12 @@
     spinner.color = [UIColor grayColor];
     [[self view] addSubview:spinner];
 
+    CGRect contentRect = CGRectZero;
+    for ( UIView *subview in self.scrollView.subviews) {
+        contentRect = CGRectUnion(contentRect, subview.frame);
+    }
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.bounds.size.width, CGRectGetMaxY(contentRect)+10);
+
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -51,13 +59,20 @@
                                                  name:@"finishedLoggingIn"
                                                object:nil];
     
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showError)
+                                                 name:@"errorLoggingIn"
+                                               object:nil];
+
     
 }
 
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:YES];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"finishedLoggingIn" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"finishedLoggingIn" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"errorLoggingIn" object:nil];
+
     
 }
 
@@ -66,25 +81,24 @@
 -(void)goToPlaces{
     [spinner stopAnimating];
     
-    //go to saved places view
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [appDelegate.window setRootViewController:appDelegate.tabBarController];
+    [[self modalDelegate] didDismissPresentedViewControllerWithCompletion];
     
 }
 
-#pragma mark - registration methods
--(void)registerWithEmail
-{
-    NSString *username = [_usernameInput text];
-    NSString *password = [_passwordInput text];
-    NSString *email = [_emailInput text];
-    NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:[_firstNameInput text], @"fName", [_lastNameInput text], @"lName", @"01/01/1991", @"birthday", [_genderInput text], @"gender", nil];
-    [self dismissKeyboard];
 
-    [spinner startAnimating];
-    [parseStore registerUserInWithUsername:username andPassword:password andEmail:email andUserInfoDictionary:userInfo];
-   
+-(void)showError {
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"There was an error."
+                          message:@"Sorry, something went wrong."
+                          delegate:self
+                          cancelButtonTitle:@"Okay"
+                          otherButtonTitles: nil];
+    [alert show];
 }
+
+
+
+#pragma mark - registration methods
 
 - (IBAction)registerWithFB:(id)sender
 {
@@ -94,6 +108,20 @@
 }
 
 - (IBAction)registerWithEmail:(id)sender {
+    NSString *username = [_usernameInput text];
+    NSString *password = [_passwordInput text];
+    NSString *email = [_emailInput text];
+    NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:[_firstNameInput text], @"fName", [_lastNameInput text], @"lName", @"01/01/1991", @"birthday", [_genderInput text], @"gender", nil];
+    [self dismissKeyboard];
+    
+    [spinner startAnimating];
+    [parseStore registerUserInWithUsername:username andPassword:password andEmail:email andUserInfoDictionary:userInfo];
+}
+
+- (IBAction)cancelRegistration:(id)sender {
+    NSLog(@"here");
+    
+    [[self modalDelegate] didDismissPresentedViewController];
 }
 
 #pragma mark - UI gesture methods
