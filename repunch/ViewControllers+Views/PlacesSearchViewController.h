@@ -12,6 +12,7 @@
 @interface PlacesSearchViewController : UIViewController <UIScrollViewDelegate, ModalDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, retain) id<ModalDelegate> modalDelegate;
+- (IBAction)closeView:(id)sender;
 
 - (void)setup;
 

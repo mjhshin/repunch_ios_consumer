@@ -14,7 +14,6 @@
 @implementation ParseStore
 
 -(PFObject *)getPatronObjectForCurrentUser {
-    
     PFObject *patronObject = [[PFUser currentUser] valueForKey:@"Patron"];
     return [patronObject fetchIfNeeded];
 }
@@ -28,27 +27,34 @@
     
     PFObject *patronObject = [[PFUser currentUser] valueForKey:@"Patron"];
     [patronObject fetchIfNeededInBackgroundWithBlock:^(PFObject *fetchedPatronObject, NSError *error) {
-        
-        //check make sure device store_id matches the store_id of employee logging in
-        NSString *userPatronID = [fetchedPatronObject objectId];
-        NSString *punch_code = [fetchedPatronObject valueForKey:@"punch_code"];
-        if (![devicePatronID isEqualToString:userPatronID]){
-            [[PFInstallation currentInstallation] setObject:userPatronID forKey:@"patron_id"];
-            [[PFInstallation currentInstallation] setObject:punch_code forKey:@"punch_code"];
-            [[PFInstallation currentInstallation] saveInBackground];
-            NSLog(@"device patron ID is now: %@", [[PFInstallation currentInstallation] objectForKey:@"patron_id"]);
+        if (!error){
+            //check make sure device store_id matches the store_id of employee logging in
+            NSString *userPatronID = [fetchedPatronObject objectId];
+            NSString *punch_code = [fetchedPatronObject valueForKey:@"punch_code"];
+            if (![devicePatronID isEqualToString:userPatronID]){
+                [[PFInstallation currentInstallation] setObject:userPatronID forKey:@"patron_id"];
+                [[PFInstallation currentInstallation] setObject:punch_code forKey:@"punch_code"];
+                [[PFInstallation currentInstallation] saveInBackground];
+                NSLog(@"device patron ID is now: %@", [[PFInstallation currentInstallation] objectForKey:@"patron_id"]);
+            }
+            
+            User *localUserEntity =[User MR_findFirstByAttribute:@"username" withValue:[[PFUser currentUser] username]];
+            if (localUserEntity == nil){
+                localUserEntity = [User MR_createEntity];
+            }
+            
+            [self setAppDelegateLocalUser:localUserEntity AndPatronObject:fetchedPatronObject];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"finishedLoggingIn" object:self];
         }
-        
-        User *localUserEntity =[User MR_findFirstByAttribute:@"username" withValue:[[PFUser currentUser] username]];
-        if (localUserEntity == nil){
-            localUserEntity = [User MR_createEntity];
+        else {
+            NSLog(@"error");
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"errorLoggingIn" object:self];
+
         }
-        
-        [self setAppDelegateLocalUser:localUserEntity AndPatronObject:fetchedPatronObject];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"finishedLoggingIn" object:self];
 
 
     }];
+        
     
 }
 

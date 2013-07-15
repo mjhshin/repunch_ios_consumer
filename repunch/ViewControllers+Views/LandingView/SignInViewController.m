@@ -68,11 +68,7 @@
 
 -(void)goToPlaces {
     [spinner stopAnimating];
-    
-    //go to saved places view
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [appDelegate.window setRootViewController:appDelegate.tabBarController];
-
+    [[self modalDelegate] didDismissPresentedViewControllerWithCompletion];
 }
 
 -(void)showError {
@@ -87,9 +83,9 @@
 
 #pragma mark - login methods
 - (IBAction)loginWithEmail:(id)sender {
-    
     NSString *username = [_usernameInput text];
     NSString *password = [_passwordInput text];
+    [spinner startAnimating];
     [parseStore signUserInWithUsername:username andPassword:password];
 }
 

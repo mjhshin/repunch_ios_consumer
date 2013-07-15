@@ -7,15 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "GlobalToolbar.h"
 #import "ModalDelegate.h"
 
-@interface PlacesViewController : UIViewController <GlobalToolbarDelegate, ModalDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface PlacesViewController : UIViewController< ModalDelegate, UITableViewDelegate, UITableViewDataSource>
 
-//Global Toolbar Delegate Methods
-- (void) openSettings;
-- (void) closeSettings;
-- (void)showPunchCode;
+- (IBAction)openSettings:(id)sender;
+- (IBAction)showPunchCode:(id)sender;
+- (IBAction)openSearch:(id)sender;
 
 //Modal Delegate Methods
 - (void)didDismissPresentedViewController;

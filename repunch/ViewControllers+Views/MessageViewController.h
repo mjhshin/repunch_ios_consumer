@@ -14,10 +14,13 @@
 @property (nonatomic, retain) id<ModalDelegate> modalDelegate;
 @property (nonatomic, retain)  PFObject *message; 
 @property (nonatomic, retain)  PFObject *messageStatus; 
+- (IBAction)closeMessage:(id)sender;
+- (IBAction)deleteMessage:(id)sender;
 
 @property (nonatomic, retain) NSString *customerName;
 @property (nonatomic, retain) NSString *patronId;
 
+@property (weak, nonatomic) IBOutlet UILabel *messageName;
 @property (nonatomic, retain) NSString *messageType;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *replierLabel;

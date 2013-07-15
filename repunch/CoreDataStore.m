@@ -15,7 +15,7 @@
 @implementation CoreDataStore
 
 #pragma mark - Cleaning Up
--(void)deleteDataForObject:(NSString *)entityName {
++(void)deleteDataForObject:(NSString *)entityName {
     
     NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
     NSArray *objects;
@@ -41,7 +41,7 @@
     [self saveContext];
 }
 
--(void)deleteAll {
++(void)deleteAll {
     NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
     NSArray *objects = [NSManagedObject MR_findAll];
     [context delete:objects];
@@ -49,7 +49,7 @@
 }
 #pragma mark - Debugging
 
--(void)printDataForObject:(NSString *)entityName {
++(void)printDataForObject:(NSString *)entityName {
     
     NSArray *objects;
     
@@ -70,10 +70,9 @@
         if ([entityName isEqualToString:@"User"]) NSLog(@"%@", [object valueForKey:@"username"]);
         
     }
-    
 }
 
--(void)saveContext {
++(void)saveContext {
     NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
     [localContext MR_saveToPersistentStoreAndWait];
 }

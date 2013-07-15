@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface CoreDataStore : NSObject
--(void)deleteAll;
--(void)deleteDataForObject:(NSString *)entityName;
--(void)printDataForObject:(NSString *)entityName;
++(void)deleteAll;
++(void)deleteDataForObject:(NSString *)entityName;
++(void)printDataForObject:(NSString *)entityName;
++(void)saveContext;
 @end

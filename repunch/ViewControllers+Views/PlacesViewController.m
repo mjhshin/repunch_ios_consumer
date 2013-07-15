@@ -120,10 +120,6 @@
     spinner.color = [UIColor blackColor];
     [[self view] addSubview:spinner];
     [spinner startAnimating];
-
-    globalToolbar = [[GlobalToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 46)];
-    [(GlobalToolbar *)globalToolbar setToolbarDelegate:self];
-    [self.view addSubview:globalToolbar];
     
     savedStores = [[NSMutableArray alloc] init];
     savedStoresTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 46, 320, 450) style:UITableViewStylePlain];
@@ -175,43 +171,20 @@
 }
 
 
-#pragma mark - Global Toolbar Delegate
-
-- (void) openSettings
-{
-    SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
-    settingsVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    settingsVC.modalDelegate = self;
-    settingsVC.userName = [localUser fullName];
-    [self presentViewController:settingsVC animated:YES completion:NULL];
-
-}
-
-
-- (void) openSearch
-{
-    PlacesSearchViewController *placesSearchVC = [[PlacesSearchViewController alloc]init];
-    placesSearchVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    placesSearchVC.modalDelegate = self;
-    [self presentViewController:placesSearchVC animated:YES completion:NULL];
-}
-
--(void)showPunchCode{
-    SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Your Punch Code" andMessage:[NSString stringWithFormat:@"Your punch code is %@", [localUser punch_code]]];
-    [alert addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
-        //nothing happens
-    }];
-    [alert show];
-}
 
 #pragma mark - Modal View Delegate
 
 - (void)didDismissPresentedViewController{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)didDismissPresentedViewControllerWithCompletion{
     [self dismissViewControllerAnimated:YES completion:^{
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         [appDelegate logout];
-
+        
     }];
+
 }
 
 #pragma mark - Table view data source
@@ -278,4 +251,31 @@
 
 
 
+- (IBAction)openSettings:(id)sender {
+    SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
+    settingsVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    settingsVC.modalDelegate = self;
+    settingsVC.userName = [localUser fullName];
+    [self presentViewController:settingsVC animated:YES completion:NULL];
+
+}
+
+- (IBAction)showPunchCode:(id)sender {
+    
+    SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Your Punch Code" andMessage:[NSString stringWithFormat:@"Your punch code is %@", [localUser punch_code]]];
+    [alert addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+        //nothing happens
+    }];
+    [alert show];
+
+    
+}
+
+- (IBAction)openSearch:(id)sender {
+    PlacesSearchViewController *placesSearchVC = [[PlacesSearchViewController alloc]init];
+    placesSearchVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    placesSearchVC.modalDelegate = self;
+    [self presentViewController:placesSearchVC animated:YES completion:NULL];
+
+}
 @end

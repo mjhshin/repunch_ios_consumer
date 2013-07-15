@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "ModalDelegate.h"
 
-@interface RepunchFriendsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
-@property (weak, nonatomic) IBOutlet UIButton *closePage;
+@interface RepunchFriendsViewController : UIViewController <ModalDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, retain) id<ModalDelegate> modalDelegate;
-
+@property (nonatomic, retain) NSDictionary *giftParametersDict;
+- (IBAction)closePage:(id)sender;
 @end

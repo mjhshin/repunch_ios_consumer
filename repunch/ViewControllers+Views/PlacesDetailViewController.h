@@ -20,6 +20,7 @@
 
 
 //UI STUFF
+@property (weak, nonatomic) IBOutlet UILabel *storeName;
 @property (weak, nonatomic) IBOutlet UIImageView *storePic;
 @property (weak, nonatomic) IBOutlet UILabel *storeStreet;
 @property (weak, nonatomic) IBOutlet UILabel *storeCrossStreets;
@@ -39,6 +40,8 @@
 - (IBAction)mapButton:(id)sender;
 - (IBAction)feedbackButton:(id)sender;
 - (IBAction)addStore:(id)sender;
+- (IBAction)deleteStore:(id)sender;
+- (IBAction)closeView:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UITableView *rewardsTable;
 

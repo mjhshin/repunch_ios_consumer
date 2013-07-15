@@ -94,7 +94,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ComposeViewController *composeVC = [[ComposeViewController alloc] init];
-    composeVC.modal
+    composeVC.modalDelegate = self;
+    composeVC.messageType = @"Gift";
+    composeVC.giftParameters = _giftParametersDict;
+    composeVC.recipient = [friendsOnRepunchArray objectAtIndex:indexPath.row];
+    
+    [self presentViewController:composeVC animated:YES completion:NULL];
 }
 
 #pragma mark - Modal delegate
@@ -104,4 +109,7 @@
 }
 
 
+- (IBAction)closePage:(id)sender {
+    [[self modalDelegate] didDismissPresentedViewController];
+}
 @end
