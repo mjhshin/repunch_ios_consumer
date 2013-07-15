@@ -126,9 +126,6 @@
     
     [placeRewardData sortUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:@"punches" ascending:YES]]];
     
-    //  trying to resize the table view ugh.  NOTHING WORKS I DON'T UNDERSTAND LIFE ANYMORE.
-    //_rewardsTable = [[UITableView alloc] initWithFrame:CGRectMake(_rewardsTable.frame.origin.x, _rewardsTable.frame.origin.y, _rewardsTable.frame.size.width,(60.0f*([placeRewardData count])))];
-
     [_rewardsTable setDataSource:self];
     [_rewardsTable setDelegate:self];
     
@@ -407,11 +404,9 @@
                 
                 spinner.center = CGPointMake(160, 260);
                 spinner.color = [UIColor blackColor];
-                //spinner.transform = CGAffineTransformMakeScale(2, 2); //sorta violates apple aesthetics. do we care?
                 [[self view] addSubview:spinner];
                 
                 [spinner startAnimating];
-
                 
                 NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:[patronObject objectId], @"patron_id", [_storeObject objectId], @"store_id", nil];
                                                    
@@ -419,7 +414,6 @@
                                    withParameters:functionArguments block:^(PFObject *patronStore, NSError *error) {
                                        [spinner stopAnimating];
                                        [greyedOutView removeFromSuperview];
-
                                        
                                        PatronStore *newPatronStoreEntity = [PatronStore MR_createEntity];
                                        [newPatronStoreEntity setFromPatronObject:patronObject andStoreEntity:_storeObject andUserEntity:localUser andPatronStore:patronStore];
@@ -431,9 +425,7 @@
                                        [alertView addButtonWithTitle:@"Okay."
                                                                 type:SIAlertViewButtonTypeDefault
                                                              handler:^(SIAlertView *alert) {
-                                                                 //[[self modalDelegate] didDismissPresentedViewController];
                                                                  _isSavedStore = TRUE;
-                                                                 //[self viewDidLoad];
                                                                  [self viewWillAppear:YES];
                                                              }];
                                        [alertView show];
@@ -460,7 +452,6 @@
                                           
                                           spinner.center = CGPointMake(160, 260);
                                           spinner.color = [UIColor blackColor];
-                                          //spinner.transform = CGAffineTransformMakeScale(2, 2); //sorta violates apple aesthetics. do we care?
                                           [[self view] addSubview:spinner];
 
                                           [spinner startAnimating];

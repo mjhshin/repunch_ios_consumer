@@ -117,8 +117,10 @@ shouldChangeTextInRange: (NSRange) range
         [PFCloud callFunctionInBackground: @"add_patronstore"
                            withParameters:functionArguments block:^(PFObject *patronStore, NSError *error) {
                                if (!error){
+                                   
+                                   NSString *subjectText = ([[_subject text] length]>0)? [_subject text] : [NSString stringWithFormat:@"Gift for %@", [_recipient valueForKey:@"first_name"]];
                                                                       
-                                   NSDictionary *functionParameters = [NSDictionary dictionaryWithObjectsAndKeys:[_storeObject objectId], @"store_id", [localUser patronId], @"user_id", [localUser fullName], @"sender_name", [_subject text], @"subject", [_body text], @"body", [_recipient objectId], @"recepient_id", [_giftParameters valueForKey:@"gift_title"],@"gift_title", [_giftParameters valueForKey:@"gift_description"], @"gift_description", [_giftParameters valueForKey:@"gift_punches"], @"gift_punches", nil];
+                                   NSDictionary *functionParameters = [NSDictionary dictionaryWithObjectsAndKeys:[_giftParameters valueForKey:@"store_id"], @"store_id", [localUser patronId], @"user_id", [localUser fullName], @"sender_name", subjectText, @"subject", [_body text], @"body", [_recipient objectId], @"recepient_id", [_giftParameters valueForKey:@"gift_title"],@"gift_title", [_giftParameters valueForKey:@"gift_description"], @"gift_description", [_giftParameters valueForKey:@"gift_punches"], @"gift_punches", nil];
                                    
                                    [PFCloud callFunctionInBackground:@"send_gift" withParameters:functionParameters block:^(id object, NSError *error) {
                                        if (!error){

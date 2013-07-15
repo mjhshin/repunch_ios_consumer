@@ -13,6 +13,7 @@
 
 #import <Parse/Parse.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import "Crittercism.h"
 
 #import "Store.h"
 #import "User.h"
@@ -38,6 +39,8 @@
                   clientKey:@"XZMybowaEMLHszQTEpxq4Yk2ksivkYj9m1c099ZD"];
     
     [PFFacebookUtils initializeFacebook];
+    
+   [Crittercism enableWithAppID: @"51df08478b2e331138000003"];
     
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"repunch_local.sqlite"];
         
@@ -74,10 +77,9 @@
         [self.tabBarController setSelectedIndex:2];
     }
     
-    CoreDataStore *coreDataStore = [[CoreDataStore alloc]init];
-    //[coreDataStore deleteDataForObject:@"Store"];
+    //[CoreDataStore deleteDataForObject:@"Store"];
     //[coreDataStore deleteDataForObject:@"User"];
-    //[coreDataStore deleteDataForObject:@"PatronStore"];
+    //[CoreDataStore deleteDataForObject:@"PatronStore"];
     [CoreDataStore printDataForObject:@"Store"];
     [CoreDataStore printDataForObject:@"User"];
     [CoreDataStore printDataForObject:@"PatronStore"];

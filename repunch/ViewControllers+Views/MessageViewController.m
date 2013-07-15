@@ -40,10 +40,7 @@
     if ([_messageType isEqualToString:@"feedback"]){
         [_replierLabel setHidden:FALSE];
         [_replyBodyLabel setHidden:FALSE];
-        
-        //get previous message
-        //TODO: add parent message
-        
+                
         _senderLabel.text = [[_message objectForKey:@"Reply"]valueForKey:@"sender_name"];
         _dateLabel.text = [self formattedDateString:[[_message objectForKey:@"Reply"] valueForKey:@"createdAt"]];
         _bodyLabel.text = [[_message objectForKey:@"Reply"] valueForKey:@"body"];
@@ -53,12 +50,24 @@
         _replyDateLabel.text = [self formattedDateString:[_message valueForKey:@"createdAt"]];
         _replyBodyLabel.text = [_message valueForKey:@"body"];
     }
+    
+    if ([_messageType isEqualToString:@"gift"]){
+        _senderLabel.text = [_message valueForKey:@"sender_name"];
+        _dateLabel.text = [self formattedDateString:[_message valueForKey:@"createdAt"]];
+        _bodyLabel.text = [_message valueForKey:@"body"];
+        
+        [_offerTitleBtn setHidden:FALSE];
+        [_offerTitleBtn setTitle:[_message valueForKey:@"gift_title"] forState:UIControlStateNormal];
+        [_timeLeft setHidden:FALSE];
+        [_timeLeftLabel setHidden:FALSE];
+
+    }
 
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     
-    if([_messageType isEqualToString:@"offer"]){
+    if([_messageType isEqualToString:@"offer"] || [_messageType isEqualToString:@"gift"] ){
         timer = [NSTimer scheduledTimerWithTimeInterval:1.0f
                                                   target:self
                                                 selector:@selector(updateTimer)
@@ -129,6 +138,7 @@
     if([today isEqualToDate:otherDate]) {
         [formatter setDateFormat:@"hh:mm a"];
         [formatter setLocale:locale];
+        [formatter setTimeZone:[NSTimeZone localTimeZone]];
         dateString = [formatter stringFromDate:dateCreated];
         
     } else {
