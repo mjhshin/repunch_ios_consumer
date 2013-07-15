@@ -35,6 +35,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *feedbackLbl;
 @property (weak, nonatomic) IBOutlet UIView *callView;
 @property (weak, nonatomic) IBOutlet UIView *mapView;
+@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 
 - (IBAction)callButton:(id)sender;
 - (IBAction)mapButton:(id)sender;

@@ -28,6 +28,7 @@
     PFObject *patronObject;
     UITableView *messageTable;
     UIActivityIndicatorView *spinner;
+    UIView *greyedOutView;
 }
 -(void)setup{
     PFRelation *messageStatus = [patronObject relationforKey:@"ReceivedMessages"];
@@ -42,6 +43,7 @@
         [messageTable reloadData];
         [[self view] addSubview:messageTable];
         [spinner stopAnimating];
+        [greyedOutView removeFromSuperview];
 
     }];
 
@@ -72,6 +74,11 @@
     spinner.color = [UIColor blackColor];
     [[self view] addSubview:spinner];
     [spinner startAnimating];
+    greyedOutView = [[UIView alloc]initWithFrame:CGRectMake(0, 47, 320, self.view.frame.size.height - 47)];
+    [greyedOutView setBackgroundColor:[UIColor colorWithRed:127/255 green:127/255 blue:127/255 alpha:0.5]];
+    [[self view] addSubview:greyedOutView];
+    [[self view] bringSubviewToFront:greyedOutView];
+
 
     [self setup];
 }

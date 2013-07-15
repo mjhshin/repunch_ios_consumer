@@ -16,6 +16,7 @@
 @property (nonatomic, retain)  PFObject *messageStatus; 
 - (IBAction)closeMessage:(id)sender;
 - (IBAction)deleteMessage:(id)sender;
+- (IBAction)sendReply:(id)sender;
 
 @property (nonatomic, retain) NSString *customerName;
 @property (nonatomic, retain) NSString *patronId;

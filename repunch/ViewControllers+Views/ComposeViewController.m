@@ -37,7 +37,6 @@
 
     _storeName.text = [_storeObject valueForKey:@"store_name"];
     
-    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self
                                    action:@selector(dismissKeyboard)];
@@ -82,6 +81,11 @@ shouldChangeTextInRange: (NSRange) range
 }
 
 -(void)sendMessage{
+    UIView *greyedOutView = [[UIView alloc]initWithFrame:CGRectMake(0, 47, 320, self.view.frame.size.height - 47)];
+    [greyedOutView setBackgroundColor:[UIColor colorWithRed:127/255 green:127/255 blue:127/255 alpha:0.5]];
+    [[self view] addSubview:greyedOutView];
+    [[self view] bringSubviewToFront:greyedOutView];
+
     if ([_messageType isEqualToString:@"Feedback"]){
         NSString *subject = ([[_subject text] length]>0)? [_subject text]:[NSString stringWithFormat:@"Feedback for %@", [_storeObject store_name]];
         NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:[localUser patronId], @"patron_id", [_storeObject objectId], @"store_id", [_body text], @"body", subject, @"subject", [localUser fullName], @"sender_name", nil];
@@ -107,55 +111,39 @@ shouldChangeTextInRange: (NSRange) range
         
         spinner.center = CGPointMake(160, 260);
         spinner.color = [UIColor blackColor];
-        //spinner.transform = CGAffineTransformMakeScale(2, 2); //sorta violates apple aesthetics. do we care?
         [[self view] addSubview:spinner];
         
-        [spinner startAnimating];        
+        [spinner startAnimating];
         
-        NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:[_recipient objectId], @"patron_id", [_storeObject objectId], @"store_id", nil];
-        
-        [PFCloud callFunctionInBackground: @"add_patronstore"
-                           withParameters:functionArguments block:^(PFObject *patronStore, NSError *error) {
-                               if (!error){
-                                   
-                                   NSString *subjectText = ([[_subject text] length]>0)? [_subject text] : [NSString stringWithFormat:@"Gift for %@", [_recipient valueForKey:@"first_name"]];
-                                                                      
-                                   NSDictionary *functionParameters = [NSDictionary dictionaryWithObjectsAndKeys:[_giftParameters valueForKey:@"store_id"], @"store_id", [localUser patronId], @"user_id", [localUser fullName], @"sender_name", subjectText, @"subject", [_body text], @"body", [_recipient objectId], @"recepient_id", [_giftParameters valueForKey:@"gift_title"],@"gift_title", [_giftParameters valueForKey:@"gift_description"], @"gift_description", [_giftParameters valueForKey:@"gift_punches"], @"gift_punches", nil];
-                                   
-                                   [PFCloud callFunctionInBackground:@"send_gift" withParameters:functionParameters block:^(id object, NSError *error) {
-                                       if (!error){
-                                           [spinner stopAnimating];
-                                           SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Sent!" andMessage:[NSString stringWithFormat:@"You sent %@ to %@", [_giftParameters valueForKey:@"gift_title"], [_recipient valueForKey:@"first_name"]]];
-                                           [alertView addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
-                                               [[self modalDelegate] didDismissPresentedViewController];
-                                           }];
+        NSString *subjectText = ([[_subject text] length]>0)? [_subject text] : [NSString stringWithFormat:@"Gift for %@", [_recipient valueForKey:@"first_name"]];
+                                          
+        NSDictionary *functionParameters = [NSDictionary dictionaryWithObjectsAndKeys:[_giftParameters valueForKey:@"store_id"], @"store_id", [localUser patronId], @"user_id", [localUser fullName], @"sender_name", subjectText, @"subject", [_body text], @"body", [_recipient objectId], @"recepient_id", [_giftParameters valueForKey:@"gift_title"],@"gift_title", [_giftParameters valueForKey:@"gift_description"], @"gift_description", [_giftParameters valueForKey:@"gift_punches"], @"gift_punches", nil];
 
-                                       }
-                                       else {
-                                           [spinner stopAnimating];
-                                           
-                                           SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Error!" andMessage:[NSString stringWithFormat:@"Sorry, an error occured"]];
-                                           [alertView addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
-                                           }];
+        [PFCloud callFunctionInBackground:@"send_gift" withParameters:functionParameters block:^(id object, NSError *error) {
+           if (!error){
+               [spinner stopAnimating];
+               [greyedOutView removeFromSuperview];
 
-                                           NSLog(@"%@", error);
+               
+               SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Sent!" andMessage:[NSString stringWithFormat:@"You sent %@ to %@", [_giftParameters valueForKey:@"gift_title"], [_recipient valueForKey:@"first_name"]]];
+               [alertView addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+                   [[self modalDelegate] didDismissPresentedViewController];
+               }];
 
-                                       }
-                                   }];
-                               }
-                               else {
-                                   [spinner stopAnimating];
-                                   
-                                   SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Error!" andMessage:[NSString stringWithFormat:@"Sorry, an error occured"]];
-                                   [alertView addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
-                                   }];
-                                   
+           }
+           else {
+               [spinner stopAnimating];
+               [greyedOutView removeFromSuperview];
+               
+               SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Error!" andMessage:[NSString stringWithFormat:@"Sorry, an error occured"]];
+               [alertView addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+               }];
 
-                                   NSLog(@"%@", error);
-                               }
-                           }];
+               NSLog(@"%@", error);
+
+           }
+        }];
     }
-    
 }
 
 -(void)closeView{

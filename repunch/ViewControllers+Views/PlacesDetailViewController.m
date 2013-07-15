@@ -76,6 +76,10 @@
         
     }
     
+    if (!_isSavedStore){
+        [_deleteButton setHidden:YES];
+    }
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(viewWillAppear:)
                                                  name:@"receivedPush"

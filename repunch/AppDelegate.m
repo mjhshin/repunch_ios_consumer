@@ -77,9 +77,9 @@
         [self.tabBarController setSelectedIndex:2];
     }
     
-    //[CoreDataStore deleteDataForObject:@"Store"];
-    //[coreDataStore deleteDataForObject:@"User"];
-    //[CoreDataStore deleteDataForObject:@"PatronStore"];
+    [CoreDataStore deleteDataForObject:@"Store"];
+    //[CoreDataStore deleteDataForObject:@"User"];
+    [CoreDataStore deleteDataForObject:@"PatronStore"];
     [CoreDataStore printDataForObject:@"Store"];
     [CoreDataStore printDataForObject:@"User"];
     [CoreDataStore printDataForObject:@"PatronStore"];

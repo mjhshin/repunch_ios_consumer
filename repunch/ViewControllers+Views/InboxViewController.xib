@@ -2,9 +2,9 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1552</int>
-		<string key="IBDocument.SystemVersion">12D78</string>
+		<string key="IBDocument.SystemVersion">12E55</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1187.37</string>
+		<string key="IBDocument.AppKitVersion">1187.39</string>
 		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -42,7 +42,7 @@
 							<object class="IBUIButton" id="555588805">
 								<reference key="NSNextResponder" ref="1037174207"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{20, 9}, {32, 31}}</string>
+								<string key="NSFrame">{{20, 8}, {32, 31}}</string>
 								<reference key="NSSuperview" ref="1037174207"/>
 								<reference key="NSNextKeyView" ref="362434175"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -80,7 +80,7 @@
 							<object class="IBUIButton" id="68487762">
 								<reference key="NSNextResponder" ref="1037174207"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{269, 10}, {31, 31}}</string>
+								<string key="NSFrame">{{269, 8}, {31, 31}}</string>
 								<reference key="NSSuperview" ref="1037174207"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -104,7 +104,7 @@
 							<object class="IBUIButton" id="362434175">
 								<reference key="NSNextResponder" ref="1037174207"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{100, 12}, {120, 27}}</string>
+								<string key="NSFrame">{{100, 10}, {120, 27}}</string>
 								<reference key="NSSuperview" ref="1037174207"/>
 								<reference key="NSNextKeyView" ref="68487762"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -126,7 +126,7 @@
 								<reference key="IBUIFont" ref="946368000"/>
 							</object>
 						</array>
-						<string key="NSFrameSize">{320, 51}</string>
+						<string key="NSFrameSize">{320, 47}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSNextKeyView" ref="555588805"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>

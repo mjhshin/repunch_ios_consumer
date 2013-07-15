@@ -40,9 +40,11 @@
 
 
 - (IBAction)termsAndConditions:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.repunch.com/terms-mobile"]];
 }
 
 - (IBAction)privacyPolicy:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.repunch.com/privacy-mobile"]];
 }
 
 - (IBAction)logOut:(id)sender {
