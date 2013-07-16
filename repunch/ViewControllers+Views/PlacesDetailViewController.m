@@ -44,7 +44,6 @@
     NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"punches"  ascending:YES];
     placeRewardData = [[placeRewardData sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]] mutableCopy];
 
-
     patronStoreEntity= [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", localUser.patronId, _storeObject.objectId]];
     availablePunches = [[patronStoreEntity punch_count] intValue];
     
@@ -66,7 +65,6 @@
         PFQuery *query = [PFQuery queryWithClassName:@"PatronStore"];
         [query includeKey:@"FacebookPost"];
         [query getObjectInBackgroundWithId:patronStoreEntity.objectId block:^(PFObject *fetchedPatronStore, NSError *error) {
-            //if ([NSNull null] != [fetchedPatronStore objectForKey:@"FacebookPost"]) {
             if ([fetchedPatronStore objectForKey:@"FacebookPost"] != nil && [NSNull null] != [fetchedPatronStore objectForKey:@"FacebookPost"]) {
 
                 NSLog(@"there is a facebook post!");

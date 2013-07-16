@@ -51,6 +51,12 @@
         _subject.placeholder = [NSString stringWithFormat:@"Gift for %@", [_recipient valueForKey:@"first_name"]];
         _instructionLabel.hidden = YES;
     }
+    
+    if ([_messageType isEqualToString:@"GiftReply"]){
+        _subject.placeholder = [NSString stringWithFormat:@"Thanks for the gift!"];
+        _instructionLabel.hidden = YES;
+    }
+
 
 
 }
@@ -123,12 +129,13 @@ shouldChangeTextInRange: (NSRange) range
            if (!error){
                [spinner stopAnimating];
                [greyedOutView removeFromSuperview];
-
                
                SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Sent!" andMessage:[NSString stringWithFormat:@"You sent %@ to %@", [_giftParameters valueForKey:@"gift_title"], [_recipient valueForKey:@"first_name"]]];
                [alertView addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
                    [[self modalDelegate] didDismissPresentedViewController];
                }];
+               
+               [alertView show];
 
            }
            else {
@@ -140,10 +147,18 @@ shouldChangeTextInRange: (NSRange) range
                }];
 
                NSLog(@"%@", error);
+               
+               [alertView show];
+
 
            }
         }];
     }
+    
+    if ([_messageType isEqualToString:@"GiftReply"]){
+        //SEND MESSAGE HOWEVER
+    }
+
 }
 
 -(void)closeView{

@@ -17,7 +17,6 @@
 @property (nonatomic, retain) id<ModalDelegate> modalDelegate;
 @property (nonatomic, retain) Store *storeObject;
 @property (nonatomic, retain) PFObject *recipient;
-
 @property (nonatomic, retain) NSDictionary *giftParameters;
 @property (nonatomic, retain) NSString *messageType;
 @property (weak, nonatomic) IBOutlet UITextView *body;

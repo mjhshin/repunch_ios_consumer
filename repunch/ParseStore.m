@@ -151,15 +151,18 @@
                     [appDelegate setLocalUser:localUserEntity];
                     [appDelegate setPatronObject:fetchedPatronObject];
                     
+                    NSLog(@"punch code is %@", [[PFInstallation currentInstallation] valueForKey:@"punch_code"]);
+                    
                     //make sure installation is set
                     NSString *userPatronID = [fetchedPatronObject objectId];
                     NSString *punch_code = [fetchedPatronObject valueForKey:@"punch_code"];
                     [[PFInstallation currentInstallation] setObject:userPatronID forKey:@"patron_id"];
                     [[PFInstallation currentInstallation] setObject:punch_code forKey:@"punch_code"];
-                    [[PFInstallation currentInstallation] saveInBackground];
+                    [[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"finishedLoggingIn" object:self];
+                    }];
                     
                     [self setAppDelegateLocalUser:localUserEntity AndPatronObject:fetchedPatronObject];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"finishedLoggingIn" object:self];
                 }
                 else if (error){
                     NSLog(@"Error is %@", error);

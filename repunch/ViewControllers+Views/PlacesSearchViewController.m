@@ -170,7 +170,8 @@
      
       PFGeoPoint *storeLocation = [PFGeoPoint geoPointWithLatitude:currentCellStore.latitude longitude:currentCellStore.longitude];
       double distanceToStore = [userLocation distanceInMilesTo:storeLocation];
-      //NSLog(@"distance is %g", distanceToStore);
+     NSLog(@"distance is %g and %g", currentCellStore.latitude, currentCellStore.longitude);
+
      
      NSString *neighborhood = [currentCellStore valueForKey:@"neighborhood"];
      NSString *state = [currentCellStore valueForKey:@"state"];
@@ -193,9 +194,6 @@
      }
      
      addressString = [addressString stringByAppendingFormat:@"\n%@", categoryString];
-     /*
-     NSString *addressString = [NSString stringWithFormat:@"%@\n%@, %@ %@", [currentCellStore valueForKey:@"street"], [currentCellStore valueForKey:@"city"], [currentCellStore valueForKey:@"state"], [currentCellStore valueForKey:@"zip"]];
-      */
      
      if ([localUser alreadyHasStoreSaved:[currentCellStore objectId]]){
          PatronStore *patronStore = [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", localUser.patronId, [currentCellStore objectId]]];
@@ -205,6 +203,7 @@
          [[cell numberOfPunches] setText:[NSString stringWithFormat:@"%d %@", punches, (punches==1)?@"punch":@"punches"]];
      }
      
+     NSLog(@"store: %@ and %@", [currentCellStore valueForKey:@"store_name"], [NSString stringWithFormat:@"%.2f mi", distanceToStore]);
      cell.distance.text = [NSString stringWithFormat:@"%.2f mi", distanceToStore];
      cell.storeAddressLabel.text = addressString;
      cell.storeNameLabel.text = [currentCellStore valueForKey:@"store_name"];

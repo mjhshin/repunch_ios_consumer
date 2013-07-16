@@ -42,7 +42,7 @@
     
    [Crittercism enableWithAppID: @"51df08478b2e331138000003"];
     
-    [MagicalRecord setupCoreDataStackWithStoreNamed:@"repunch_local.sqlite"];
+    [MagicalRecord setupCoreDataStackWithStoreNamed:@"repunch_local_two.sqlite"];
         
     //Init Tab Bar and all related view controllers
     placesVC = [[PlacesViewController alloc] init];
@@ -78,13 +78,13 @@
     }
     
     [CoreDataStore deleteDataForObject:@"Store"];
-    //[CoreDataStore deleteDataForObject:@"User"];
+    [CoreDataStore deleteDataForObject:@"User"];
     [CoreDataStore deleteDataForObject:@"PatronStore"];
     [CoreDataStore printDataForObject:@"Store"];
     [CoreDataStore printDataForObject:@"User"];
     [CoreDataStore printDataForObject:@"PatronStore"];
     
-    //[PFUser logOut];
+    [PFUser logOut];
     
     //if user is cached, load their cached data
     //else, go to login page
@@ -137,10 +137,19 @@
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
+    NSLog(@"setting installation here");
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"notification"];
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:deviceToken];
-    [currentInstallation saveInBackground];
+    //[currentInstallation setValue:@"ios" forKey:@"deviceType"];
+    [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error){
+            NSLog(@"%i", succeeded);
+        }
+        else {
+            NSLog(@"%@", error);
+        }
+    }];
     
 }
 

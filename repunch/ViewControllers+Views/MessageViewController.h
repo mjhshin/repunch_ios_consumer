@@ -10,7 +10,7 @@
 #import "ModalDelegate.h"
 #import <Parse/Parse.h>
 
-@interface MessageViewController : UIViewController
+@interface MessageViewController : UIViewController <ModalDelegate>
 @property (nonatomic, retain) id<ModalDelegate> modalDelegate;
 @property (nonatomic, retain)  PFObject *message; 
 @property (nonatomic, retain)  PFObject *messageStatus; 

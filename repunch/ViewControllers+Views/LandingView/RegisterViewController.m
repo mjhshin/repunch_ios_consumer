@@ -99,7 +99,7 @@
 - (IBAction)registerWithFB:(id)sender
 {
     [spinner startAnimating];
-    [parseStore registerUserWithFacebook];
+    [parseStore signUserWithFacebook];
 
 }
 
