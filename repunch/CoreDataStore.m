@@ -38,18 +38,18 @@
         [context deleteObject:object];
     }
         
-    [self saveContext];
+    [CoreDataStore saveContext];
 }
 
 -(void)deleteAll {
     NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
     NSArray *objects = [NSManagedObject MR_findAll];
     [context delete:objects];
-    [self saveContext];
+    [CoreDataStore saveContext];
 }
 #pragma mark - Debugging
 
--(void)printDataForObject:(NSString *)entityName {
++(void)printDataForObject:(NSString *)entityName {
     
     NSArray *objects;
     
@@ -73,7 +73,11 @@
     
 }
 
--(void)saveContext {
+
+#pragma mark - Get objects
+
+
++(void)saveContext {
     NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
     [localContext MR_saveToPersistentStoreAndWait];
 }

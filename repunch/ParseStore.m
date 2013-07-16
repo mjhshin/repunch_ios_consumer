@@ -156,7 +156,8 @@
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"finishedLoggingIn" object:self];
                 }
                 else if (error){
-                    NSLog(@"Error is %@", error);
+                    NSLog(@"%@", error);
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"errorLoggingIn" object:self];
                 }
                 
             }];

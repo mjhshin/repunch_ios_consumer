@@ -30,7 +30,14 @@
     spinner.center = CGPointMake(160, 100);
     spinner.color = [UIColor grayColor];
     [[self view] addSubview:spinner];
-
+    
+    
+    CGRect contentRect = CGRectZero;
+    for ( UIView *subview in self.scrollView.subviews) {
+        contentRect = CGRectUnion(contentRect, subview.frame);
+    }
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.bounds.size.width, CGRectGetMaxY(contentRect)+10);
+    
 
 
 }
@@ -68,14 +75,12 @@
 
 -(void)goToPlaces {
     [spinner stopAnimating];
-    
-    //go to saved places view
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [appDelegate.window setRootViewController:appDelegate.tabBarController];
-
+    [[self modalDelegate] didDismissPresentedViewControllerWithCompletion];
 }
 
 -(void)showError {
+    [spinner stopAnimating];
+
     UIAlertView *alert = [[UIAlertView alloc]
                           initWithTitle:@"There was an error."
                           message:@"Sorry, something went wrong."

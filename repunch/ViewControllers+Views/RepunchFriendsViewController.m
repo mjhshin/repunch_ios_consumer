@@ -94,7 +94,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ComposeViewController *composeVC = [[ComposeViewController alloc] init];
-    composeVC.modal
 }
 
 #pragma mark - Modal delegate
