@@ -14,6 +14,7 @@
 
 #import "GlobalToolbar.h"
 #import "MessageCell.h"
+#import "SIAlertView.h"
 
 #import "User.h"
 #import "Message.h"
@@ -27,6 +28,7 @@
     PFObject *patronObject;
     UITableView *messageTable;
     UIActivityIndicatorView *spinner;
+    UIView *greyedOutView;
 }
 -(void)setup{
     PFRelation *messageStatus = [patronObject relationforKey:@"ReceivedMessages"];
@@ -41,6 +43,7 @@
         [messageTable reloadData];
         [[self view] addSubview:messageTable];
         [spinner stopAnimating];
+        [greyedOutView removeFromSuperview];
 
     }];
 
@@ -48,12 +51,6 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    GlobalToolbar *globalToolbar;
-    globalToolbar = [[GlobalToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 46)];
-    [(GlobalToolbar *)globalToolbar setToolbarDelegate:self];
-    [self.view addSubview:globalToolbar];
-
 
     messageTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 46, 320, 450) style:UITableViewStylePlain];
     [messageTable setDataSource:self];
@@ -77,6 +74,11 @@
     spinner.color = [UIColor blackColor];
     [[self view] addSubview:spinner];
     [spinner startAnimating];
+    greyedOutView = [[UIView alloc]initWithFrame:CGRectMake(0, 47, 320, self.view.frame.size.height - 47)];
+    [greyedOutView setBackgroundColor:[UIColor colorWithRed:127/255 green:127/255 blue:127/255 alpha:0.5]];
+    [[self view] addSubview:greyedOutView];
+    [[self view] bringSubviewToFront:greyedOutView];
+
 
     [self setup];
 }
@@ -187,35 +189,47 @@
     return dateString;
 }
 
-#pragma mark - Global Toolbar Delegate
 
-- (void) openSettings
-{
+#pragma mark - Modal View Delegate
+
+- (void)didDismissPresentedViewController{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)didDismissPresentedViewControllerWithCompletion{
+    [self dismissViewControllerAnimated:YES completion:^{
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate logout];
+        
+    }];
+    
+}
+
+- (IBAction)openSettings:(id)sender {
+    
     SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
     settingsVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     settingsVC.modalDelegate = self;
     settingsVC.userName = [localUser fullName];
     [self presentViewController:settingsVC animated:YES completion:NULL];
-    
+
 }
 
-
-- (void) openSearch
-{
+- (IBAction)openSearch:(id)sender {
+    
     PlacesSearchViewController *placesSearchVC = [[PlacesSearchViewController alloc]init];
     placesSearchVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     placesSearchVC.modalDelegate = self;
     [self presentViewController:placesSearchVC animated:YES completion:NULL];
+
 }
 
--(void)showPunchCode{
-    
+- (IBAction)showPunchCode:(id)sender {
+    SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Your Punch Code" andMessage:[NSString stringWithFormat:@"Your punch code is %@", [localUser punch_code]]];
+    [alert addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+        //nothing happens
+    }];
+    [alert show];
+
 }
-#pragma mark - Modal View Delegate
-
-- (void)didDismissPresentedViewController{
-    [self dismissViewControllerAnimated:YES completion:NULL];
-}
-
-
 @end

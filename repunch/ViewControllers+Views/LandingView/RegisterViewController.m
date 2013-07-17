@@ -72,7 +72,6 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"finishedLoggingIn" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"errorLoggingIn" object:nil];
-
     
 }
 
@@ -80,11 +79,8 @@
 
 -(void)goToPlaces{
     [spinner stopAnimating];
-    
     [[self modalDelegate] didDismissPresentedViewControllerWithCompletion];
-    
 }
-
 
 -(void)showError {
     UIAlertView *alert = [[UIAlertView alloc]
@@ -103,7 +99,7 @@
 - (IBAction)registerWithFB:(id)sender
 {
     [spinner startAnimating];
-    [parseStore registerUserWithFacebook];
+    [parseStore signUserWithFacebook];
 
 }
 

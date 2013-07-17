@@ -17,6 +17,7 @@
 - (IBAction)termsAndConditions:(id)sender;
 - (IBAction)privacyPolicy:(id)sender;
 - (IBAction)logOut:(id)sender;
+- (IBAction)closeView:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UILabel *currentLogin;
 @end

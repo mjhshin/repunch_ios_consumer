@@ -92,9 +92,9 @@
 
 #pragma mark - login methods
 - (IBAction)loginWithEmail:(id)sender {
-    
     NSString *username = [_usernameInput text];
     NSString *password = [_passwordInput text];
+    [spinner startAnimating];
     [parseStore signUserInWithUsername:username andPassword:password];
 }
 

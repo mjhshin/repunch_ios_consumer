@@ -27,6 +27,10 @@
     User *localUser;
 }
 
+- (IBAction)closeView:(id)sender {
+    [self didDismissPresentedViewController];
+}
+
 //set up data model
 - (void)setup {
     //get all locally stored store entitires and set that to be storeList
@@ -83,39 +87,8 @@
 {
     [super viewDidLoad];
     
-    //Programmatically changing global toolbar
-    //FROM HERE...
-    UIImage *closeImage = [UIImage imageNamed:@"btn_x-orange"];
-    UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [closeButton setFrame:CGRectMake(0, 0, closeImage.size.width, closeImage.size.height)];
-    [closeButton setImage:closeImage forState:UIControlStateNormal];
-    [closeButton addTarget:self action:@selector(dismissPresentedViewController) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithCustomView:closeButton];
-    
-    UILabel *searchTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 140, 46)];
-    [searchTitle setText:@"Search"];
-    [searchTitle setFont:[UIFont fontWithName:@"Avenir-Heavy" size:22]];
-    [searchTitle setTextColor:[UIColor whiteColor]];
-    [searchTitle setBackgroundColor:[UIColor clearColor]];
-    [searchTitle setShadowOffset:CGSizeMake(0, -1)];
-    [searchTitle setShadowColor:[UIColor blackColor]];
-    [searchTitle sizeToFit];
-    
-    UIBarButtonItem *searchTitleItem = [[UIBarButtonItem alloc] initWithCustomView:searchTitle];
-    
-    globalToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 46)];
-    [globalToolbar setBackgroundImage:[UIImage imageNamed:@"bkg_header"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
-    
-    UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    UIBarButtonItem *flex2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    
-    [globalToolbar setItems:[NSArray arrayWithObjects:closeButtonItem, flex, searchTitleItem, flex2, nil]];
-    // ... TO HERE, this is allll just programming the toolbar.
-    
     [self.view addSubview:globalToolbar];
-    
-    
+        
     storeList = [[NSMutableArray alloc] init];
     
     searchTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 46, self.view.frame.size.width, self.view.frame.size.height-46) style:UITableViewStylePlain];
@@ -197,7 +170,8 @@
      
       PFGeoPoint *storeLocation = [PFGeoPoint geoPointWithLatitude:currentCellStore.latitude longitude:currentCellStore.longitude];
       double distanceToStore = [userLocation distanceInMilesTo:storeLocation];
-      //NSLog(@"distance is %g", distanceToStore);
+     NSLog(@"distance is %g and %g", currentCellStore.latitude, currentCellStore.longitude);
+
      
      NSString *neighborhood = [currentCellStore valueForKey:@"neighborhood"];
      NSString *state = [currentCellStore valueForKey:@"state"];
@@ -220,9 +194,6 @@
      }
      
      addressString = [addressString stringByAppendingFormat:@"\n%@", categoryString];
-     /*
-     NSString *addressString = [NSString stringWithFormat:@"%@\n%@, %@ %@", [currentCellStore valueForKey:@"street"], [currentCellStore valueForKey:@"city"], [currentCellStore valueForKey:@"state"], [currentCellStore valueForKey:@"zip"]];
-      */
      
      if ([localUser alreadyHasStoreSaved:[currentCellStore objectId]]){
          PatronStore *patronStore = [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", localUser.patronId, [currentCellStore objectId]]];
@@ -232,6 +203,7 @@
          [[cell numberOfPunches] setText:[NSString stringWithFormat:@"%d %@", punches, (punches==1)?@"punch":@"punches"]];
      }
      
+     NSLog(@"store: %@ and %@", [currentCellStore valueForKey:@"store_name"], [NSString stringWithFormat:@"%.2f mi", distanceToStore]);
      cell.distance.text = [NSString stringWithFormat:@"%.2f mi", distanceToStore];
      cell.storeAddressLabel.text = addressString;
      cell.storeNameLabel.text = [currentCellStore valueForKey:@"store_name"];

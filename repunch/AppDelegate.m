@@ -13,6 +13,7 @@
 
 #import <Parse/Parse.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import "Crittercism.h"
 
 #import "Store.h"
 #import "User.h"
@@ -39,7 +40,9 @@
     
     [PFFacebookUtils initializeFacebook];
     
-    [MagicalRecord setupCoreDataStackWithStoreNamed:@"repunch_local.sqlite"];
+   [Crittercism enableWithAppID: @"51df08478b2e331138000003"];
+    
+    [MagicalRecord setupCoreDataStackWithStoreNamed:@"repunch_local_two.sqlite"];
         
     //Init Tab Bar and all related view controllers
     placesVC = [[PlacesViewController alloc] init];
@@ -74,15 +77,14 @@
         [self.tabBarController setSelectedIndex:2];
     }
     
-    CoreDataStore *coreDataStore = [[CoreDataStore alloc]init];
-    //[coreDataStore deleteDataForObject:@"Store"];
-    //[coreDataStore deleteDataForObject:@"User"];
-    //[coreDataStore deleteDataForObject:@"PatronStore"];
+    [CoreDataStore deleteDataForObject:@"Store"];
+    [CoreDataStore deleteDataForObject:@"User"];
+    [CoreDataStore deleteDataForObject:@"PatronStore"];
     [CoreDataStore printDataForObject:@"Store"];
     [CoreDataStore printDataForObject:@"User"];
     [CoreDataStore printDataForObject:@"PatronStore"];
     
-    //[PFUser logOut];
+    [PFUser logOut];
     
     //if user is cached, load their cached data
     //else, go to login page
@@ -135,10 +137,19 @@
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
+    NSLog(@"setting installation here");
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"notification"];
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:deviceToken];
-    [currentInstallation saveInBackground];
+    //[currentInstallation setValue:@"ios" forKey:@"deviceType"];
+    [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error){
+            NSLog(@"%i", succeeded);
+        }
+        else {
+            NSLog(@"%@", error);
+        }
+    }];
     
 }
 

@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 
 #import "UIViewController+KNSemiModal.h"
+#import "AppDelegate.h"
 #import <Parse/Parse.h>
 
 @implementation LandingViewController
@@ -38,7 +39,10 @@
 - (IBAction)signIn:(id)sender {
     SignInViewController *signInVC = [[SignInViewController alloc] init];
     signInVC.modalDelegate = self;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 080289920eb904c090957c1a9738892947996bd5
     [self presentSemiViewController:signInVC withOptions:@{
          KNSemiModalOptionKeys.pushParentBack : @(NO),
          KNSemiModalOptionKeys.parentAlpha : @(0.8)
@@ -59,6 +63,7 @@
     [self dismissSemiModalView];
 }
 
+<<<<<<< HEAD
 - (void)didDismissPresentedViewControllerWithCompletion{
     [self dismissSemiModalViewWithCompletion:^{
         
@@ -69,7 +74,22 @@
     }];
 
 }
+=======
+#pragma mark - modal delegate views
+>>>>>>> 080289920eb904c090957c1a9738892947996bd5
 
+-(void)didDismissPresentedViewController {
+    [self dismissSemiModalView];
+}
+
+-(void)didDismissPresentedViewControllerWithCompletion {
+    [self dismissSemiModalViewWithCompletion:^{
+        //go to saved places view
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate.window setRootViewController:appDelegate.tabBarController];
+
+    }];
+}
 
 #pragma mark - text field delegate methods
 

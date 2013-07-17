@@ -11,6 +11,8 @@
 #import "TPKeyboardAvoidingScrollView.h"
 
 @interface RegisterViewController : UIViewController
+@property (weak, nonatomic) IBOutlet TPKeyboardAvoidingScrollView *scrollView;
+@property (nonatomic, retain) id<ModalDelegate> modalDelegate;
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameInput;
 @property (weak, nonatomic) IBOutlet UITextField *passwordInput;

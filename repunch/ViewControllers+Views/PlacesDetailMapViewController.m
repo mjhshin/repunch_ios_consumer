@@ -24,39 +24,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIToolbar *placeToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 46)];
-    [placeToolbar setBackgroundImage:[UIImage imageNamed:@"bkg_header"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+
     
-    UIImage *closeImage = [UIImage imageNamed:@"btn_x-orange"];
-    UIButton *closePlaceButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [closePlaceButton setImage:closeImage forState:UIControlStateNormal];
-    [closePlaceButton setFrame:CGRectMake(0, 0, closeImage.size.width, closeImage.size.height)];
-    [closePlaceButton addTarget:self action:@selector(closePlaceMap) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *closePlaceButtonItem = [[UIBarButtonItem alloc] initWithCustomView:closePlaceButton];
-    
-    UILabel *placeTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(closePlaceButton.frame.size.width, 0, placeToolbar.frame.size.width - closePlaceButton.frame.size.width - 25, placeToolbar.frame.size.height)];
-    [placeTitleLabel setFont:[UIFont boldSystemFontOfSize:16]];
-    [placeTitleLabel setBackgroundColor:[UIColor clearColor]];
-    [placeTitleLabel setTextColor:[UIColor whiteColor]];
-    [placeTitleLabel setText:[_place store_name]];
-    [placeTitleLabel sizeToFit];
-    
-    UIBarButtonItem *placeTitleItem = [[UIBarButtonItem alloc] initWithCustomView:placeTitleLabel];
-    
-    UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    UIBarButtonItem *flex2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    
-    UIButton *directionsButton= [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [directionsButton setTitle:@"Directions" forState:UIControlStateNormal];
-    [directionsButton setFrame:CGRectMake(0, 0, 100, 40)];
-    [directionsButton addTarget:self action:@selector(getWalkingDirections) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *directionButtonItem = [[UIBarButtonItem alloc] initWithCustomView:directionsButton];
-    
-    [placeToolbar setItems:[NSArray arrayWithObjects:closePlaceButtonItem, flex, placeTitleItem, flex2, directionButtonItem, nil]];
-    [self.view addSubview:placeToolbar];
-    
-    MKMapView *placeMapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, placeToolbar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - placeToolbar.frame.size.height)];
+    MKMapView *placeMapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 47, self.view.frame.size.width, self.view.frame.size.height - 47)];
     [placeMapView setCenterCoordinate:CLLocationCoordinate2DMake([_place latitude],[_place longitude]) zoomLevel:14 animated:NO];
     
     NSString *addressString = [NSString stringWithFormat:@"%@\n%@, %@ %@", [_place valueForKey:@"street"], [_place valueForKey:@"city"], [_place valueForKey:@"state"], [_place valueForKey:@"zip"]];
@@ -68,10 +38,6 @@
     [self.view addSubview:placeMapView];
 
 }
--(void)closePlaceMap
-{
-    [[self modalDelegate] didDismissPresentedViewController];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -79,11 +45,17 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)getWalkingDirections{
+
+- (IBAction)closeView:(id)sender {
+    [[self modalDelegate] didDismissPresentedViewController];
+
+}
+
+- (IBAction)getDirections:(id)sender {
     Class mapItemClass = [MKMapItem class];
     if (mapItemClass && [mapItemClass respondsToSelector:@selector(openMapsWithItems:launchOptions:)])
     {
-
+        
         // Create an MKMapItem to pass to the Maps app
         CLLocationCoordinate2D coordinate =
         CLLocationCoordinate2DMake([_place latitude],[_place longitude]);
@@ -104,5 +76,4 @@
     }
 
 }
-
 @end

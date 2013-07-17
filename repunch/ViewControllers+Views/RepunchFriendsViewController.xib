@@ -131,12 +131,13 @@
 					<int key="connectionID">3</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">closePage</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="967362324"/>
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">closePage:</string>
+						<reference key="source" ref="967362324"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">18</int>
+					<int key="connectionID">44</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -388,7 +389,11 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
+<<<<<<< HEAD
 			<int key="maxID">18</int>
+=======
+			<int key="maxID">44</int>
+>>>>>>> 080289920eb904c090957c1a9738892947996bd5
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>

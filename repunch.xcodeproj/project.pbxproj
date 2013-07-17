@@ -10,7 +10,9 @@
 		798B8D7C178EFECD000500AC /* splash_background_big.png in Resources */ = {isa = PBXBuildFile; fileRef = 798B8D7B178EFECD000500AC /* splash_background_big.png */; };
 		798B8D7F178F0E0A000500AC /* ParseStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 798B8D7E178F0E0A000500AC /* ParseStore.m */; };
 		798B8D82178F0FF3000500AC /* CoreDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 798B8D81178F0FF3000500AC /* CoreDataStore.m */; };
-		798D6DE61785B90600CF8109 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 798D6DE51785B90600CF8109 /* FacebookSDK.framework */; };
+		798C27F11794529500E125AC /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 798C27F01794529500E125AC /* FacebookSDK.framework */; };
+		798C27F7179453E600E125AC /* dsym_upload.sh in Resources */ = {isa = PBXBuildFile; fileRef = 798C27F5179453E600E125AC /* dsym_upload.sh */; };
+		798C27F8179453E600E125AC /* libCrittercism_v4_0_2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 798C27F6179453E600E125AC /* libCrittercism_v4_0_2.a */; };
 		798D6DE81785B98A00CF8109 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 798D6DE71785B98A00CF8109 /* libsqlite3.dylib */; };
 		79902DD817908E71001A8E5F /* CustomToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 79902DD717908E71001A8E5F /* CustomToolbar.m */; };
 		79902DDE17909262001A8E5F /* ab_contextual_cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 79902DD917909262001A8E5F /* ab_contextual_cancel.png */; };
@@ -225,6 +227,7 @@
 		79ACBF4D178F323800937B29 /* LandingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79ACBF4B178F323800937B29 /* LandingViewController.xib */; };
 		79ACBF51178F32ED00937B29 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79ACBF4F178F32ED00937B29 /* RegisterViewController.m */; };
 		79ACBF52178F32ED00937B29 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79ACBF50178F32ED00937B29 /* RegisterViewController.xib */; };
+		C4E4011D17927900005D4989 /* PlacesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4E4011C179278FF005D4989 /* PlacesViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -243,7 +246,11 @@
 		798B8D7E178F0E0A000500AC /* ParseStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseStore.m; sourceTree = "<group>"; };
 		798B8D80178F0FF3000500AC /* CoreDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataStore.h; sourceTree = "<group>"; };
 		798B8D81178F0FF3000500AC /* CoreDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataStore.m; sourceTree = "<group>"; };
-		798D6DE51785B90600CF8109 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		798C27F01794529500E125AC /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		798C27F3179453E600E125AC /* Crittercism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crittercism.h; sourceTree = "<group>"; };
+		798C27F4179453E600E125AC /* CrittercismDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrittercismDelegate.h; sourceTree = "<group>"; };
+		798C27F5179453E600E125AC /* dsym_upload.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = dsym_upload.sh; sourceTree = "<group>"; };
+		798C27F6179453E600E125AC /* libCrittercism_v4_0_2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCrittercism_v4_0_2.a; sourceTree = "<group>"; };
 		798D6DE71785B98A00CF8109 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		79902DD617908E70001A8E5F /* CustomToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomToolbar.h; path = "Repunch/ViewControllers+Views/CustomUIViews/CustomToolbar.h"; sourceTree = "<group>"; };
 		79902DD717908E71001A8E5F /* CustomToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomToolbar.m; path = "Repunch/ViewControllers+Views/CustomUIViews/CustomToolbar.m"; sourceTree = "<group>"; };
@@ -534,6 +541,7 @@
 		79ACBF4E178F32ED00937B29 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterViewController.h; path = "Repunch/ViewControllers+Views/LandingView/RegisterViewController.h"; sourceTree = "<group>"; };
 		79ACBF4F178F32ED00937B29 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegisterViewController.m; path = "Repunch/ViewControllers+Views/LandingView/RegisterViewController.m"; sourceTree = "<group>"; };
 		79ACBF50178F32ED00937B29 /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RegisterViewController.xib; path = "Repunch/ViewControllers+Views/LandingView/RegisterViewController.xib"; sourceTree = "<group>"; };
+		C4E4011C179278FF005D4989 /* PlacesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlacesViewController.xib; path = "repunch/ViewControllers+Views/PlacesViewController.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -541,8 +549,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				798C27F11794529500E125AC /* FacebookSDK.framework in Frameworks */,
 				798D6DE81785B98A00CF8109 /* libsqlite3.dylib in Frameworks */,
-				798D6DE61785B90600CF8109 /* FacebookSDK.framework in Frameworks */,
 				7996B3B017820B1C00CCAFED /* Accounts.framework in Frameworks */,
 				7996B3AE17820B1800CCAFED /* Social.framework in Frameworks */,
 				7996B3AC17820B1400CCAFED /* AdSupport.framework in Frameworks */,
@@ -561,6 +569,7 @@
 				7996B36117820A9700CCAFED /* CoreGraphics.framework in Frameworks */,
 				7996B36317820A9700CCAFED /* CoreData.framework in Frameworks */,
 				7996B41417820BC400CCAFED /* Parse.framework in Frameworks */,
+				798C27F8179453E600E125AC /* libCrittercism_v4_0_2.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,11 +603,22 @@
 			name = LandingView;
 			sourceTree = "<group>";
 		};
+		798C27F2179453E600E125AC /* CrittercismSDK */ = {
+			isa = PBXGroup;
+			children = (
+				798C27F3179453E600E125AC /* Crittercism.h */,
+				798C27F4179453E600E125AC /* CrittercismDelegate.h */,
+				798C27F5179453E600E125AC /* dsym_upload.sh */,
+				798C27F6179453E600E125AC /* libCrittercism_v4_0_2.a */,
+			);
+			path = CrittercismSDK;
+			sourceTree = "<group>";
+		};
 		7996B35017820A9700CCAFED = {
 			isa = PBXGroup;
 			children = (
+				798C27F01794529500E125AC /* FacebookSDK.framework */,
 				798D6DE71785B98A00CF8109 /* libsqlite3.dylib */,
-				798D6DE51785B90600CF8109 /* FacebookSDK.framework */,
 				7996B3AF17820B1C00CCAFED /* Accounts.framework */,
 				7996B3AD17820B1800CCAFED /* Social.framework */,
 				7996B3AB17820B1400CCAFED /* AdSupport.framework */,
@@ -696,6 +716,7 @@
 		7996B3B117820B7F00CCAFED /* ExternalLibraries */ = {
 			isa = PBXGroup;
 			children = (
+				798C27F2179453E600E125AC /* CrittercismSDK */,
 				79ACBF32178F2B1300937B29 /* HalfModalTransition */,
 				7996B4641782126000CCAFED /* AFNetworking */,
 				7996B3B517820BC400CCAFED /* KeyboardScroll */,
@@ -839,6 +860,7 @@
 				7996B42D17820DA200CCAFED /* PlacesSearchViewController.xib */,
 				7996B42F17820DA200CCAFED /* PlacesViewController.h */,
 				7996B43017820DA200CCAFED /* PlacesViewController.m */,
+				C4E4011C179278FF005D4989 /* PlacesViewController.xib */,
 				79956F5417848F43006D512B /* SettingsViewController.h */,
 				79956F5517848F43006D512B /* SettingsViewController.m */,
 				79956F5617848F43006D512B /* SettingsViewController.xib */,
@@ -1127,7 +1149,7 @@
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = Repunch;
 			};
-			buildConfigurationList = 7996B35417820A9700CCAFED /* Build configuration list for PBXProject "Repunch" */;
+			buildConfigurationList = 7996B35417820A9700CCAFED /* Build configuration list for PBXProject "repunch" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1269,6 +1291,8 @@
 				79902DE117909262001A8E5F /* ab_send_feedback.png in Resources */,
 				79902DE217909262001A8E5F /* ab_settings.png in Resources */,
 				79902DF11790A23B001A8E5F /* RepunchFriendsViewController.xib in Resources */,
+				C4E4011D17927900005D4989 /* PlacesViewController.xib in Resources */,
+				798C27F7179453E600E125AC /* dsym_upload.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1429,8 +1453,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jinhee Shin (5XRCS768D8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jinhee Shin (5XRCS768D8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1445,8 +1469,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "49EB064A-8EA2-4116-A5E7-AB422169B54D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "49EB064A-8EA2-4116-A5E7-AB422169B54D";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1463,8 +1487,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jinhee Shin (5XRCS768D8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jinhee Shin (5XRCS768D8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1472,8 +1496,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "49EB064A-8EA2-4116-A5E7-AB422169B54D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "49EB064A-8EA2-4116-A5E7-AB422169B54D";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1482,19 +1506,24 @@
 		7996B39217820A9700CCAFED /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jinhee Shin (5XRCS768D8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jinhee Shin (5XRCS768D8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Repunch/ExternalLibraries\"",
 					"\"$(SRCROOT)/../../../FacebookSDK\"",
+					"\"$(SRCROOT)/../../Documents/FacebookSDK\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Repunch/Repunch-Prefix.pch";
 				INFOPLIST_FILE = "Repunch/Repunch-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Repunch/CrittercismSDK\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "DCC6BB3A-7759-4DFA-875F-4849ED84146A";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DCC6BB3A-7759-4DFA-875F-4849ED84146A";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1502,19 +1531,24 @@
 		7996B39317820A9700CCAFED /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jinhee Shin (5XRCS768D8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jinhee Shin (5XRCS768D8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Repunch/ExternalLibraries\"",
 					"\"$(SRCROOT)/../../../FacebookSDK\"",
+					"\"$(SRCROOT)/../../Documents/FacebookSDK\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Repunch/Repunch-Prefix.pch";
 				INFOPLIST_FILE = "Repunch/Repunch-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Repunch/CrittercismSDK\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "DCC6BB3A-7759-4DFA-875F-4849ED84146A";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DCC6BB3A-7759-4DFA-875F-4849ED84146A";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1556,7 +1590,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7996B35417820A9700CCAFED /* Build configuration list for PBXProject "Repunch" */ = {
+		7996B35417820A9700CCAFED /* Build configuration list for PBXProject "repunch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7996B38F17820A9700CCAFED /* Debug */,

@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "GlobalToolbar.h"
 #import "ModalDelegate.h"
 
-@interface InboxViewController : UIViewController <GlobalToolbarDelegate, UITableViewDataSource, UITableViewDelegate, ModalDelegate>
+@interface InboxViewController : UIViewController < UITableViewDataSource, UITableViewDelegate, ModalDelegate>
+- (IBAction)openSettings:(id)sender;
+- (IBAction)openSearch:(id)sender;
+- (IBAction)showPunchCode:(id)sender;
 
 @end
