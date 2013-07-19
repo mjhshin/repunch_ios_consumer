@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "PlacesViewController.h"
 #import "InboxViewController.h"
+#import "LandingViewController.h"
+#import "MessageViewController.h"
 
 #import <Parse/Parse.h>
 #import <FacebookSDK/FacebookSDK.h>
@@ -22,7 +24,6 @@
 
 #import "CoreDataStore.h"
 
-#import "LandingViewController.h"
 @implementation AppDelegate{
     LandingViewController *loginVC;
     PlacesViewController *placesVC;
@@ -86,7 +87,7 @@
     [CoreDataStore printDataForObject:@"User"];
     [CoreDataStore printDataForObject:@"PatronStore"];
     
-    [PFUser logOut];
+    //[PFUser logOut];
     
     //if user is cached, load their cached data
     //else, go to login page
@@ -186,17 +187,73 @@
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"receivedPush" object:self];
     
-    if ([userInfo valueForKey:@"push_type"] isEqualToString:@"receive_message") {
+    /*
+    if ([[userInfo valueForKey:@"push_type"] isEqualToString:@"receive_message"]) {
+        NSString *messageStatusIdString = [userInfo valueForKey:@"message_status_id"];
+        PFQuery *messageStatusQuery = [PFQuery queryWithClassName:@"MessageStatus"];
+        [messageStatusQuery includeKey:@"Message"];
+        [messageStatusQuery includeKey:@"Message.Reply"];
         
+        [messageStatusQuery getObjectInBackgroundWithId:messageStatusIdString block:^(PFObject *fetchedMessageStatus, NSError *error) {
+            MessageViewController *messageVC = [[MessageViewController alloc] init];
+            messageVC.modalDelegate = [[self window] rootViewController];
+            messageVC.message = [fetchedMessageStatus objectForKey:@"Message"];
+            messageVC.customerName = [NSString stringWithFormat:@"%@ %@", [_localUser first_name], [_localUser last_name]];
+            messageVC.patronId = [_localUser patronId];
+            messageVC.messageType = [fetchedMessageStatus objectForKey:@"Message"];
+            messageVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+            messageVC.messageStatus = fetchedMessageStatus;
+            
+            self.window.rootViewController = messageVC;
+            
+        }];
+
+
     }
     
-    if ([userInfo valueForKey:@"push_type"] isEqualToString:@"receive_gift") {
+    if ([[userInfo valueForKey:@"push_type"] isEqualToString:@"receive_gift"]) {
+        NSString *messageStatusIdString = [userInfo valueForKey:@"message_status_id"];
+        PFQuery *messageStatusQuery = [PFQuery queryWithClassName:@"MessageStatus"];
+        [messageStatusQuery includeKey:@"Message"];
+        [messageStatusQuery includeKey:@"Message.Reply"];
         
+        [messageStatusQuery getObjectInBackgroundWithId:messageStatusIdString block:^(PFObject *fetchedMessageStatus, NSError *error) {
+            MessageViewController *messageVC = [[MessageViewController alloc] init];
+            messageVC.modalDelegate = [[self window] rootViewController];
+            messageVC.message = [fetchedMessageStatus objectForKey:@"Message"];
+            messageVC.customerName = [NSString stringWithFormat:@"%@ %@", [_localUser first_name], [_localUser last_name]];
+            messageVC.patronId = [_localUser patronId];
+            messageVC.messageType = [fetchedMessageStatus objectForKey:@"Message"];
+            messageVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+            messageVC.messageStatus = fetchedMessageStatus;
+            
+            self.window.rootViewController = messageVC;
+
+        }];
     }
 
-    if ([userInfo valueForKey:@"push_type"] isEqualToString:@"receive_gift_reply") {
+    if ([[userInfo valueForKey:@"push_type"] isEqualToString:@"receive_gift_reply"]) {
+        NSString *messageStatusIdString = [userInfo valueForKey:@"message_status_id"];
+        PFQuery *messageStatusQuery = [PFQuery queryWithClassName:@"MessageStatus"];
+        [messageStatusQuery includeKey:@"Message"];
+        [messageStatusQuery includeKey:@"Message.Reply"];
         
-    }
+        [messageStatusQuery getObjectInBackgroundWithId:messageStatusIdString block:^(PFObject *fetchedMessageStatus, NSError *error) {
+            MessageViewController *messageVC = [[MessageViewController alloc] init];
+            messageVC.modalDelegate = [[self window] rootViewController];
+            messageVC.message = [fetchedMessageStatus objectForKey:@"Message"];
+            messageVC.customerName = [NSString stringWithFormat:@"%@ %@", [_localUser first_name], [_localUser last_name]];
+            messageVC.patronId = [_localUser patronId];
+            messageVC.messageType = [fetchedMessageStatus objectForKey:@"Message"];
+            messageVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+            messageVC.messageStatus = fetchedMessageStatus;
+            
+            self.window.rootViewController = messageVC;
+
+        }];
+
+        
+    }*/
     
 }
 #pragma mark - Facebook SDK helper methods

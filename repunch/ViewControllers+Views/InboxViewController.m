@@ -109,7 +109,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+{   
     static NSString *CellIdentifier = @"MessageCell";
     MessageCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     [[cell offerPic] setHidden:TRUE];
@@ -117,7 +117,11 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"MessageCell" owner:self options:nil]objectAtIndex:0];
     }
+    
+
     id currentCellMessage = [savedMessages objectAtIndex:indexPath.row];
+    id currentCellMessageStatus = [savedMessageStatuses objectAtIndex:indexPath.row];
+
     cell.senderName.text = [currentCellMessage valueForKey:@"sender_name"];
     cell.subjectLabel.text = [NSString stringWithFormat:@"%@ - %@", [currentCellMessage valueForKey:@"subject"], [currentCellMessage valueForKey:@"body"]];
     cell.dateSent.text = [self formattedDateString:[currentCellMessage valueForKey:@"createdAt"]];
@@ -135,8 +139,14 @@
         [[cell offerPic] setHidden:FALSE];
         [[cell offerPic] setImage:[UIImage imageNamed:@"message_gift"]];
     }
+    
+    if ([[currentCellMessageStatus objectForKey:@"is_read"] boolValue]) {
+        cell.contentView.backgroundColor = [UIColor colorWithRed:(float)190/256 green:(float)190/256 blue:(float)190/256 alpha:1];
+    }
+    else {
+        cell.contentView.backgroundColor = [UIColor whiteColor];
 
-
+    }
 
     return cell;
      
@@ -155,7 +165,7 @@
     messageVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     messageVC.messageStatus = [savedMessageStatuses objectAtIndex:indexPath.row];
         
-    //[[savedMessageStatuses objectAtIndex:indexPath.row] encodeBool:YES forKey:@"is_read"];
+    [[savedMessageStatuses objectAtIndex:indexPath.row] setValue:[NSNumber numberWithBool:TRUE] forKey:@"is_read"];
     [[savedMessageStatuses objectAtIndex:indexPath.row] saveInBackground];
     
     [self presentViewController:messageVC animated:YES completion:NULL];
