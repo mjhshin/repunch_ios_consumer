@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		79079E97179598B400097DB4 /* ab_message_reply.png in Resources */ = {isa = PBXBuildFile; fileRef = 79079E96179598B400097DB4 /* ab_message_reply.png */; };
 		79079E99179599B100097DB4 /* message_gift.png in Resources */ = {isa = PBXBuildFile; fileRef = 79079E98179599B100097DB4 /* message_gift.png */; };
+		7949D0E8179D96A9007CBEBE /* MessageAutoLayoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7949D0E6179D96A9007CBEBE /* MessageAutoLayoutViewController.m */; };
+		7949D0E9179D96A9007CBEBE /* MessageAutoLayoutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7949D0E7179D96A9007CBEBE /* MessageAutoLayoutViewController.xib */; };
 		798B8D7C178EFECD000500AC /* splash_background_big.png in Resources */ = {isa = PBXBuildFile; fileRef = 798B8D7B178EFECD000500AC /* splash_background_big.png */; };
 		798B8D7F178F0E0A000500AC /* ParseStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 798B8D7E178F0E0A000500AC /* ParseStore.m */; };
 		798B8D82178F0FF3000500AC /* CoreDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 798B8D81178F0FF3000500AC /* CoreDataStore.m */; };
@@ -240,6 +242,9 @@
 		79079E9517958CB300097DB4 /* Repunch 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Repunch 2.xcdatamodel"; sourceTree = "<group>"; };
 		79079E96179598B400097DB4 /* ab_message_reply.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ab_message_reply.png; sourceTree = "<group>"; };
 		79079E98179599B100097DB4 /* message_gift.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = message_gift.png; sourceTree = "<group>"; };
+		7949D0E5179D96A9007CBEBE /* MessageAutoLayoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageAutoLayoutViewController.h; path = "repunch/ViewControllers+Views/MessageAutoLayoutViewController.h"; sourceTree = "<group>"; };
+		7949D0E6179D96A9007CBEBE /* MessageAutoLayoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageAutoLayoutViewController.m; path = "repunch/ViewControllers+Views/MessageAutoLayoutViewController.m"; sourceTree = "<group>"; };
+		7949D0E7179D96A9007CBEBE /* MessageAutoLayoutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageAutoLayoutViewController.xib; path = "repunch/ViewControllers+Views/MessageAutoLayoutViewController.xib"; sourceTree = "<group>"; };
 		798B8D7B178EFECD000500AC /* splash_background_big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash_background_big.png; path = Images/splash_background_big.png; sourceTree = "<group>"; };
 		798B8D7D178F0E0A000500AC /* ParseStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseStore.h; sourceTree = "<group>"; };
 		798B8D7E178F0E0A000500AC /* ParseStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseStore.m; sourceTree = "<group>"; };
@@ -834,6 +839,9 @@
 				7996B42017820DA200CCAFED /* MessageViewController.h */,
 				7996B42117820DA200CCAFED /* MessageViewController.m */,
 				7996B42217820DA200CCAFED /* MessageViewController.xib */,
+				7949D0E5179D96A9007CBEBE /* MessageAutoLayoutViewController.h */,
+				7949D0E6179D96A9007CBEBE /* MessageAutoLayoutViewController.m */,
+				7949D0E7179D96A9007CBEBE /* MessageAutoLayoutViewController.xib */,
 				7996B42517820DA200CCAFED /* PlacesDetailMapViewController.h */,
 				7996B42617820DA200CCAFED /* PlacesDetailMapViewController.m */,
 				7996B42717820DA200CCAFED /* PlacesDetailMapViewController.xib */,
@@ -1257,6 +1265,7 @@
 				7995DEE117985154008D9FEB /* ic_tab_inbox.png in Resources */,
 				7995DEE217985154008D9FEB /* ic_tab_my_places.png in Resources */,
 				7995DEEE17986FD4008D9FEB /* arrow.png in Resources */,
+				7949D0E9179D96A9007CBEBE /* MessageAutoLayoutViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1354,6 +1363,7 @@
 				79ACBF51178F32ED00937B29 /* RegisterViewController.m in Sources */,
 				79902DD817908E71001A8E5F /* CustomToolbar.m in Sources */,
 				79902DF01790A23B001A8E5F /* RepunchFriendsViewController.m in Sources */,
+				7949D0E8179D96A9007CBEBE /* MessageAutoLayoutViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

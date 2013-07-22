@@ -472,37 +472,27 @@
                                           [[self view] addSubview:spinner];
 
                                           [spinner startAnimating];
-
                                           
-                                          //get patron store
-                                          PFQuery *patronStoreQuery = [PFQuery queryWithClassName:@"PatronStore"];
-                                          [patronStoreQuery whereKey:@"Store" equalTo:[PFObject objectWithoutDataWithClassName:@"Store" objectId:_storeObject.objectId]];
-                                          [patronStoreQuery whereKey:@"Patron" equalTo:[PFObject objectWithoutDataWithClassName:@"Patron" objectId:localUser.patronId]];
-                                          [patronStoreQuery getFirstObjectInBackgroundWithBlock:^(PFObject *patronStoreObject, NSError *error) {
-                                              //remove it from Patron object
-                                              [patronStoreObject deleteInBackground];
-                                              [patronObject saveInBackground];
-                                              
+                                          NSDictionary *cloudFunctionParameters = [[NSDictionary alloc] initWithObjectsAndKeys:patronStoreEntity.objectId, @"patron_store_id", localUser.patronId, @"patron_id", _storeObject.objectId, @"store_id", nil];
+                                          
+                                          
+                                          [PFCloud callFunctionInBackground:@"delete_patronstore" withParameters:cloudFunctionParameters block:^(id object, NSError *error) {
                                               //get patronStore and delete it
                                               PatronStore *storeToDelete = [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", localUser.patronId, _storeObject.objectId]];
                                               [localContext deleteObject:storeToDelete];
-                                              
-                                              [spinner stopAnimating];
-                                              [greyedOutView removeFromSuperview];
 
-                                              
-                                              SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Removed!" andMessage:[NSString stringWithFormat:@"You've removed %@", [_storeObject valueForKey:@"store_name"]]];
-                                              
-                                              [alertView addButtonWithTitle:@"Okay."
-                                                                       type:SIAlertViewButtonTypeDefault
-                                                                    handler:^(SIAlertView *alert) {
-                                                                        [[self modalDelegate] didDismissPresentedViewController];
-                                                                    }];
-                                              [alertView show];
-                                              
-                                              
-                                              [localContext MR_saveToPersistentStoreAndWait];
                                           }];
+                                          
+                                          SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Removed!" andMessage:[NSString stringWithFormat:@"You've removed %@", [_storeObject valueForKey:@"store_name"]]];
+
+                                          
+                                          [alertView addButtonWithTitle:@"Okay."
+                                                                   type:SIAlertViewButtonTypeDefault
+                                                                handler:^(SIAlertView *alert) {
+                                                                    [[self modalDelegate] didDismissPresentedViewController];
+                                                                }];
+                                          [alertView show];
+
                                       }];
                 [warningView show];
 

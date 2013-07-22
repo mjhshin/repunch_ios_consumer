@@ -553,7 +553,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
-				<string key="NSFrame">{{0, 20}, {320, 563}}</string>
+				<string key="NSFrame">{{0, 20}, {320, 715}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSNextKeyView" ref="31085492"/>
 				<object class="NSColor" key="IBUIBackgroundColor">

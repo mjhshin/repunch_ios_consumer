@@ -76,7 +76,7 @@
                     [CoreDataStore saveContext];
                 }
                 
-                [savedStoresTable setFrame:CGRectMake(0, 46, 320, self.view.frame.size.height)];
+                [savedStoresTable setFrame:CGRectMake(0, 46, 320, self.view.frame.size.height - 49)]; //49 is tab bar height
                 [savedStoresTable setContentSize:CGSizeMake(320, 105*savedStores.count)];
                 savedStores = [[savedStores sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]] mutableCopy];
                 [savedStoresTable reloadData];
@@ -103,7 +103,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     
     savedStores = [[NSMutableArray alloc] init];
     savedStoresTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 46, 320, 0) style:UITableViewStylePlain];
@@ -246,7 +245,7 @@
     return 105;
 }
 
-
+#pragma mark - Toolber methods
 
 - (IBAction)openSettings:(id)sender {
     SettingsViewController *settingsVC = [[SettingsViewController alloc] init];

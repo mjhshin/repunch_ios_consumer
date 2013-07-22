@@ -12,6 +12,8 @@
 #import "MessageViewController.h"
 #import "SettingsViewController.h"
 
+#import "MessageAutoLayoutViewController.h"
+
 #import "GlobalToolbar.h"
 #import "MessageCell.h"
 #import "SIAlertView.h"
@@ -40,7 +42,6 @@
         savedMessages = [fetchedMessageStatuses valueForKey:@"Message"];
         savedMessages = [[savedMessages sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO]]] mutableCopy];
         
-        [messageTable setFrame:CGRectMake(0, 46, 320, self.view.frame.size.height)];
         [messageTable setContentSize:CGSizeMake(320, 78*savedMessages.count)];
 
         [messageTable reloadData];
@@ -56,6 +57,8 @@
 {
 
     messageTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 46, 320, 450) style:UITableViewStylePlain];
+    [messageTable setFrame:CGRectMake(0, 46, 320, self.view.frame.size.height - 47)];
+
     [messageTable setDataSource:self];
     [messageTable setDelegate:self];
     //[[self view] addSubview:messageTable];
@@ -122,6 +125,7 @@
     id currentCellMessage = [savedMessages objectAtIndex:indexPath.row];
     id currentCellMessageStatus = [savedMessageStatuses objectAtIndex:indexPath.row];
 
+    
     cell.senderName.text = [currentCellMessage valueForKey:@"sender_name"];
     cell.subjectLabel.text = [NSString stringWithFormat:@"%@ - %@", [currentCellMessage valueForKey:@"subject"], [currentCellMessage valueForKey:@"body"]];
     cell.dateSent.text = [self formattedDateString:[currentCellMessage valueForKey:@"createdAt"]];
@@ -155,16 +159,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    MessageViewController *messageVC = [[MessageViewController alloc] init];
+        
+    MessageAutoLayoutViewController *messageVC = [[MessageAutoLayoutViewController alloc] init];
     messageVC.modalDelegate = self;
     messageVC.message = [savedMessages objectAtIndex:indexPath.row];
-    messageVC.customerName = [NSString stringWithFormat:@"%@ %@", [localUser first_name], [localUser last_name]];
-    messageVC.patronId = [localUser patronId];
+    messageVC.messageStatus = [savedMessageStatuses objectAtIndex:indexPath.row];
     messageVC.messageType = [[savedMessages objectAtIndex:indexPath.row] valueForKey:@"message_type"];
     messageVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    messageVC.messageStatus = [savedMessageStatuses objectAtIndex:indexPath.row];
-        
+    messageVC.customerName = [NSString stringWithFormat:@"%@ %@", [localUser first_name], [localUser last_name]];
+    messageVC.patronId = [localUser patronId];
+
+    
     [[savedMessageStatuses objectAtIndex:indexPath.row] setValue:[NSNumber numberWithBool:TRUE] forKey:@"is_read"];
     [[savedMessageStatuses objectAtIndex:indexPath.row] saveInBackground];
     

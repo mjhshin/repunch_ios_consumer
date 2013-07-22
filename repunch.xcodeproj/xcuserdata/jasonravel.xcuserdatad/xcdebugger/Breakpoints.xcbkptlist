@@ -4,17 +4,30 @@
    version = "1.0">
    <FileBreakpoints>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Repunch/ViewControllers+Views/InboxViewController.m"
-         timestampString = "395962733.212595"
+         filePath = "repunch/ViewControllers+Views/MessageAutoLayoutViewController.m"
+         timestampString = "396216756.025038"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "143"
-         endingLineNumber = "143"
-         landmarkName = "-tableView:cellForRowAtIndexPath:"
+         startingLineNumber = "38"
+         endingLineNumber = "38"
+         landmarkName = "-viewDidLoad"
          landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Repunch/ViewControllers+Views/MessageAutoLayoutViewController.h"
+         timestampString = "396218083.029427"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "58"
+         endingLineNumber = "58"
+         landmarkName = "@interface MessageAutoLayoutViewController"
+         landmarkType = "2">
       </FileBreakpoint>
    </FileBreakpoints>
    <ExceptionBreakpoints>

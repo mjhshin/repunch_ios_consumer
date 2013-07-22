@@ -10,6 +10,8 @@
 
 @protocol ModalDelegate <NSObject>
 - (void)didDismissPresentedViewController;
+
+@optional
 - (void)didDismissPresentedViewControllerWithCompletion;
 
 @end

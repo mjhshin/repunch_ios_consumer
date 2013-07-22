@@ -12,5 +12,6 @@
 +(void)deleteAll;
 +(void)deleteDataForObject:(NSString *)entityName;
 +(void)printDataForObject:(NSString *)entityName;
++(NSString *)patronStoreIdForStore:(NSString *)storeId andPatron: (NSString *)patronId;
 +(void)saveContext;
 @end

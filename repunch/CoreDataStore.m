@@ -77,6 +77,11 @@
     [localContext MR_saveToPersistentStoreAndWait];
 }
 
++(NSString *)patronStoreIdForStore:(NSString *)storeId andPatron: (NSString *)patronId {
+    PatronStore *patronStoreEntity= [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", patronId, storeId]];
+
+    return patronStoreEntity.objectId;
+}
 
 
 @end
