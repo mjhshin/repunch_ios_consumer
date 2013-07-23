@@ -37,10 +37,12 @@
     PFQuery *messageStatusQuery = [messageStatus query];
     [messageStatusQuery includeKey:@"Message"];
     [messageStatusQuery includeKey:@"Message.Reply"];
+
     [messageStatusQuery findObjectsInBackgroundWithBlock:^(NSArray *fetchedMessageStatuses, NSError *error) {
         savedMessageStatuses = fetchedMessageStatuses;
         savedMessages = [fetchedMessageStatuses valueForKey:@"Message"];
-        savedMessages = [[savedMessages sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO]]] mutableCopy];
+        
+        savedMessages = [[savedMessages sortedArrayUsingDescriptors:[NSArray arrayWithObject: [NSSortDescriptor sortDescriptorWithKey:@"updatedAt" ascending:NO]]] mutableCopy];
         
         [messageTable setContentSize:CGSizeMake(320, 78*savedMessages.count)];
 
@@ -57,7 +59,7 @@
 {
 
     messageTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 46, 320, 450) style:UITableViewStylePlain];
-    [messageTable setFrame:CGRectMake(0, 46, 320, self.view.frame.size.height - 47)];
+    [messageTable setFrame:CGRectMake(0, 46, 320, self.view.frame.size.height - 90)];
 
     [messageTable setDataSource:self];
     [messageTable setDelegate:self];
@@ -124,12 +126,21 @@
 
     id currentCellMessage = [savedMessages objectAtIndex:indexPath.row];
     id currentCellMessageStatus = [savedMessageStatuses objectAtIndex:indexPath.row];
+    id currentCellMessageReply = [currentCellMessage objectForKey:@"Reply"];
+    
+    if ([NSNull null] == currentCellMessageReply || currentCellMessageReply == NULL) {
+        cell.senderName.text = [currentCellMessage valueForKey:@"sender_name"];
+        cell.subjectLabel.text = [NSString stringWithFormat:@"%@ - %@", [currentCellMessage valueForKey:@"subject"], [currentCellMessage valueForKey:@"body"]];
+        cell.dateSent.text = [self formattedDateString:[currentCellMessage valueForKey:@"createdAt"]];
+    }
+    else {
+        cell.senderName.text = [currentCellMessageReply valueForKey:@"sender_name"];
+        cell.subjectLabel.text = [NSString stringWithFormat:@"Re :%@ - %@", [currentCellMessage valueForKey:@"subject"], [currentCellMessageReply valueForKey:@"body"]];
+        cell.dateSent.text = [self formattedDateString:[currentCellMessageReply valueForKey:@"createdAt"]];
+
+    }
 
     
-    cell.senderName.text = [currentCellMessage valueForKey:@"sender_name"];
-    cell.subjectLabel.text = [NSString stringWithFormat:@"%@ - %@", [currentCellMessage valueForKey:@"subject"], [currentCellMessage valueForKey:@"body"]];
-    cell.dateSent.text = [self formattedDateString:[currentCellMessage valueForKey:@"createdAt"]];
-    NSLog(@"date is %@", [currentCellMessage valueForKey:@"createdAt"]);
     if ([[currentCellMessage valueForKey:@"message_type"] isEqualToString:@"offer"]){
         [[cell offerPic] setHidden:FALSE];
         [[cell offerPic] setImage:[UIImage imageNamed:@"ico_message_coupon"]];
@@ -149,7 +160,6 @@
     }
     else {
         cell.contentView.backgroundColor = [UIColor whiteColor];
-
     }
 
     return cell;

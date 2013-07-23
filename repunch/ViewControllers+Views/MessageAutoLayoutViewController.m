@@ -37,17 +37,17 @@
     [super viewDidLoad];
     
     [_messageNameLbl setText:[_message objectForKey:@"subject"]];
-    [_sentBodyHeightConstraint setConstant:_sentBodyLbl.contentSize.height];
 
     if ([_messageType isEqualToString:@"basic"]){
 
         [_sentBodyLbl setText:[_message objectForKey:@"body"]];
         [_senderNameLbl setText:[_message valueForKey:@"sender_name"]];
         [_dateSentLbl setText:[self formattedDateString:[_message valueForKey:@"createdAt"]]];
-        
-        //use autolayout to hide response and offer view and adjust accordingly
-
     
+        //use autolayout to hide response and offer view and adjust accordingly
+        [self hideResponseAndAdjustConstraints];
+        [self hideOfferAndAdjustConstraints];
+
     }
     
     if ([_messageType isEqualToString:@"offer"]){
@@ -59,7 +59,9 @@
         [_offerLbl setTitle:[_message valueForKey:@"offer_title"] forState:UIControlStateNormal];
         
         //use autolayout to hide response view and adjust accordingly
-         
+        [self hideResponseAndAdjustConstraints];
+
+        
 
     }
     
@@ -67,16 +69,18 @@
         
         [_responseView setHidden:FALSE];
         
-        _senderNameLbl.text = [[_message objectForKey:@"Reply"]valueForKey:@"sender_name"];
-        _dateSentLbl.text = [self formattedDateString:[[_message objectForKey:@"Reply"] valueForKey:@"createdAt"]];
-        _sentBodyLbl.text = [[_message objectForKey:@"Reply"] valueForKey:@"body"];
+        _replyNameLbl.text = [[_message objectForKey:@"Reply"]valueForKey:@"sender_name"];
+        _dateRepliedLbl.text = [self formattedDateString:[[_message objectForKey:@"Reply"] valueForKey:@"createdAt"]];
+        _repliedBodyLbl.text = [[_message objectForKey:@"Reply"] valueForKey:@"body"];
         
         
-        _replyNameLbl.text = [_message valueForKey:@"sender_name"];
+        _senderNameLbl.text = [_message valueForKey:@"sender_name"];
         _dateRepliedLbl.text = [self formattedDateString:[_message valueForKey:@"createdAt"]];
-        _repliedBodyLbl.text = [_message valueForKey:@"body"];
+        _sentBodyLbl.text = [_message valueForKey:@"body"];
         
         //use autolayout to hide offer view and adjust accordingly
+        [self hideOfferAndAdjustConstraints];
+        [_constraintBtwnMessageAndResponse setConstant:4.0f];
 
     }
     
@@ -92,8 +96,6 @@
         [_replyToMessageLbl setHidden:FALSE];
         [_offerLbl setTitle:[_message valueForKey:@"gift_title"] forState:UIControlStateNormal];
         
-        //use autolayout to hide response view and adjust accordingly
-
         
         if ([_message valueForKey:@"Reply"] != nil) {
             
@@ -104,12 +106,19 @@
             _repliedBodyLbl.text = [[_message objectForKey:@"Reply"] valueForKey:@"body"];
             
             [_offerLbl setUserInteractionEnabled:NO];
+            [_replyToMessageLbl setHidden:TRUE];
+
             
             [_repliedBodyHeightLayout setConstant:_repliedBodyLbl.contentSize.height];
         }
+        else {
+            [self hideResponseAndAdjustConstraints];
+
+        }
         
     }
-
+    
+    [_sentBodyHeightConstraint setConstant:_sentBodyLbl.contentSize.height];
     
 }
 
@@ -178,11 +187,13 @@
 }
 
 -(void)hideOfferAndAdjustConstraints {
-    
+    //[_offerViewHeightConstraint setConstant:0.0f];
+    [_offerView removeFromSuperview];
 }
 
 -(void)hideResponseAndAdjustConstraints {
-    
+    //[_responseViewHeightConstraint setConstant:0.0f];
+    [_responseView removeFromSuperview];
 }
 
          
@@ -237,30 +248,38 @@
         [alertView addButtonWithTitle:@"Yes"
                                  type:SIAlertViewButtonTypeDefault
                               handler:^(SIAlertView *alert) {
+                                  if ([[_messageStatus valueForKey:@"redeem_available"] isEqualToString:@"pending"]){
+                                      SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"This reward is pending."]];
+                                      [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:nil];
+                                      
+                                      [alertView show];
+                                  }
                                   
-                                  [PFCloud callFunctionInBackground:@"request_redeem"
+                                  else if ([[_messageStatus valueForKey:@"redeem_available"] isEqualToString:@"no"]) {
+                                      SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"You've already redeemed this reward."]];
+                                      [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:nil];
+                                      
+                                      [alertView show];
+                                  }
+                                  
+
+                                  else if ([[_messageStatus valueForKey:@"redeem_available"] isEqualToString:@"yes"]) {
+                                      [PFCloud callFunctionInBackground:@"request_redeem"
                                                      withParameters:functionArguments
                                                               block:^(NSString *success, NSError *error) {
                                                                   if (!error){
-                                                                      if ([success isEqualToString:@"validated"]){
-                                                                          SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"You've already redeemed %@!", [_message valueForKey:@"offer_title"]]];
-                                                                          [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
-                                                                              //nothing
-                                                                          }];
-                                                                          
-                                                                          [alertView show];
-                                                                          
-                                                                      }
-                                                                      else{
-                                                                          SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"Your %@ is awaiting validation", [_message valueForKey:@"offer_title"]]];
-                                                                          [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
-                                                                              //nothing
-                                                                          }];
-                                                                          
-                                                                          [alertView show];
-                                                                      }
+
+                                                                      
+                                                                      SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"Your %@ is awaiting validation", [_message valueForKey:@"offer_title"]]];
+                                                                      [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+                                                                          //nothing
+                                                                      }];
+                                                                      
+                                                                      [alertView show];
+                                                                      
                                                                       NSLog(@"function call is :%@", success);
                                                                   }
+                                                                  
                                                                   else{
                                                                       SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Sorry" andMessage:[NSString stringWithFormat:@"Looks like something went wrong."]];
                                                                       [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
@@ -273,6 +292,7 @@
                                                                       NSLog(@"error occurred: %@", error);
                                                                   }
                                                               }];
+                                  }
                                   
                                   
                               }];

@@ -188,8 +188,6 @@
 		7996B43517820DA200CCAFED /* ComposeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7996B41917820DA200CCAFED /* ComposeViewController.xib */; };
 		7996B43617820DA200CCAFED /* InboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7996B41B17820DA200CCAFED /* InboxViewController.m */; };
 		7996B43717820DA200CCAFED /* InboxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7996B41C17820DA200CCAFED /* InboxViewController.xib */; };
-		7996B43A17820DA200CCAFED /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7996B42117820DA200CCAFED /* MessageViewController.m */; };
-		7996B43B17820DA200CCAFED /* MessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7996B42217820DA200CCAFED /* MessageViewController.xib */; };
 		7996B43D17820DA200CCAFED /* PlacesDetailMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7996B42617820DA200CCAFED /* PlacesDetailMapViewController.m */; };
 		7996B43E17820DA200CCAFED /* PlacesDetailMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7996B42717820DA200CCAFED /* PlacesDetailMapViewController.xib */; };
 		7996B43F17820DA200CCAFED /* PlacesDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7996B42917820DA200CCAFED /* PlacesDetailViewController.m */; };
@@ -465,9 +463,6 @@
 		7996B41A17820DA200CCAFED /* InboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InboxViewController.h; path = "Repunch/ViewControllers+Views/InboxViewController.h"; sourceTree = "<group>"; };
 		7996B41B17820DA200CCAFED /* InboxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InboxViewController.m; path = "Repunch/ViewControllers+Views/InboxViewController.m"; sourceTree = "<group>"; };
 		7996B41C17820DA200CCAFED /* InboxViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InboxViewController.xib; path = "Repunch/ViewControllers+Views/InboxViewController.xib"; sourceTree = "<group>"; };
-		7996B42017820DA200CCAFED /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageViewController.h; path = "Repunch/ViewControllers+Views/MessageViewController.h"; sourceTree = "<group>"; };
-		7996B42117820DA200CCAFED /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageViewController.m; path = "Repunch/ViewControllers+Views/MessageViewController.m"; sourceTree = "<group>"; };
-		7996B42217820DA200CCAFED /* MessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageViewController.xib; path = "Repunch/ViewControllers+Views/MessageViewController.xib"; sourceTree = "<group>"; };
 		7996B42517820DA200CCAFED /* PlacesDetailMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlacesDetailMapViewController.h; path = "Repunch/ViewControllers+Views/PlacesDetailMapViewController.h"; sourceTree = "<group>"; };
 		7996B42617820DA200CCAFED /* PlacesDetailMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlacesDetailMapViewController.m; path = "Repunch/ViewControllers+Views/PlacesDetailMapViewController.m"; sourceTree = "<group>"; };
 		7996B42717820DA200CCAFED /* PlacesDetailMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlacesDetailMapViewController.xib; path = "Repunch/ViewControllers+Views/PlacesDetailMapViewController.xib"; sourceTree = "<group>"; };
@@ -836,9 +831,6 @@
 				7996B41A17820DA200CCAFED /* InboxViewController.h */,
 				7996B41B17820DA200CCAFED /* InboxViewController.m */,
 				7996B41C17820DA200CCAFED /* InboxViewController.xib */,
-				7996B42017820DA200CCAFED /* MessageViewController.h */,
-				7996B42117820DA200CCAFED /* MessageViewController.m */,
-				7996B42217820DA200CCAFED /* MessageViewController.xib */,
 				7949D0E5179D96A9007CBEBE /* MessageAutoLayoutViewController.h */,
 				7949D0E6179D96A9007CBEBE /* MessageAutoLayoutViewController.m */,
 				7949D0E7179D96A9007CBEBE /* MessageAutoLayoutViewController.xib */,
@@ -1145,7 +1137,6 @@
 				7996B41517820BC400CCAFED /* SIAlertView.bundle in Resources */,
 				7996B43517820DA200CCAFED /* ComposeViewController.xib in Resources */,
 				7996B43717820DA200CCAFED /* InboxViewController.xib in Resources */,
-				7996B43B17820DA200CCAFED /* MessageViewController.xib in Resources */,
 				7996B43E17820DA200CCAFED /* PlacesDetailMapViewController.xib in Resources */,
 				7996B44017820DA200CCAFED /* PlacesDetailViewController.xib in Resources */,
 				7996B44217820DA200CCAFED /* PlacesSearchViewController.xib in Resources */,
@@ -1333,7 +1324,6 @@
 				7996B41617820BC400CCAFED /* SIAlertView.m in Sources */,
 				7996B43417820DA200CCAFED /* ComposeViewController.m in Sources */,
 				7996B43617820DA200CCAFED /* InboxViewController.m in Sources */,
-				7996B43A17820DA200CCAFED /* MessageViewController.m in Sources */,
 				7996B43D17820DA200CCAFED /* PlacesDetailMapViewController.m in Sources */,
 				7996B43F17820DA200CCAFED /* PlacesDetailViewController.m in Sources */,
 				7996B44117820DA200CCAFED /* PlacesSearchViewController.m in Sources */,
