@@ -28,6 +28,7 @@
     NSMutableArray *savedStores;
     UITableView *savedStoresTable;
     PFObject *patronObject;
+    BOOL searchLoaded;
 }
 
 - (void)setup {
@@ -82,6 +83,7 @@
                 [savedStoresTable reloadData];
                 
             }
+            
         }
         else {
             NSLog(@"places view: error is %@", error);
@@ -110,7 +112,13 @@
     [savedStoresTable setDelegate:self];
     
     [[self view] addSubview:savedStoresTable];
+    
+    localUser = [(AppDelegate *)[[UIApplication sharedApplication] delegate] localUser];
+    patronObject = [(AppDelegate *)[[UIApplication sharedApplication] delegate] patronObject];
 
+    [self setup];
+
+    searchLoaded = false;
 
 }
 
@@ -129,10 +137,6 @@
         
     }
 
-
-    localUser = [(AppDelegate *)[[UIApplication sharedApplication] delegate] localUser];
-    patronObject = [(AppDelegate *)[[UIApplication sharedApplication] delegate] patronObject];
-        
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(setup)
                                                  name:@"receivedPush"
@@ -142,8 +146,6 @@
                                              selector:@selector(receiveLoadedPics:)
                                                  name:@"FinishedLoadingPic"
                                                object:nil];
-
-    [self setup];
 
 
 }
@@ -272,6 +274,8 @@
     placesSearchVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     placesSearchVC.modalDelegate = self;
     [self presentViewController:placesSearchVC animated:YES completion:NULL];
+    
+    
 
 }
 @end

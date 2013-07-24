@@ -42,12 +42,14 @@
         //the array has to be mutable in order to later delete messages
         messagesStatuses = [fetchedMessageStatuses mutableCopy];
         
+        //is sorted by updatedAt as opposed to createdAt, then will sort by reply date value (if there is a reply)
         messagesStatuses = [[messagesStatuses sortedArrayUsingDescriptors:[NSArray arrayWithObject: [NSSortDescriptor sortDescriptorWithKey:@"Message.updatedAt" ascending:NO]]] mutableCopy];
-                
+        
+        //s.t. table is only as tall as there are cells
         [messageTable setContentSize:CGSizeMake(320, 78*messagesStatuses.count)];
-
         [messageTable reloadData];
         [[self view] addSubview:messageTable];
+        
         [spinner stopAnimating];
         [greyedOutView removeFromSuperview];
 
@@ -63,7 +65,6 @@
 
     [messageTable setDataSource:self];
     [messageTable setDelegate:self];
-    //[[self view] addSubview:messageTable];
         
     localUser = [(AppDelegate *)[[UIApplication sharedApplication] delegate] localUser];
     patronObject = [(AppDelegate *)[[UIApplication sharedApplication] delegate] patronObject];

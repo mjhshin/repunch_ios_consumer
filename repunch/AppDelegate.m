@@ -42,29 +42,10 @@
     [Crittercism enableWithAppID: @"51df08478b2e331138000003"];
     
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"repunch_local.sqlite"];
-        
-    //Init Tab Bar and all related view controllers
-    placesVC = [[PlacesViewController alloc] init];
-    inboxVC = [[InboxViewController alloc] init];
-    loginVC = [[LandingViewController alloc] init];
-        
+    
     //Set up default settings for: sorting by alphabetical order, no notifications
     [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Alphabetical Order", [NSNumber numberWithBool:NO], nil] forKeys:[NSArray arrayWithObjects:@"sort", @"notification", nil]]];
-    
-    self.tabBarController = [[UITabBarController alloc] init];
-    self.tabBarController.viewControllers = @[placesVC, inboxVC];
-        
-    UITabBarItem *placeItem = [self.tabBarController.tabBar.items objectAtIndex:0];
-    [placeItem setTitle:@"My Places"];
-    [placeItem setImage:[UIImage imageNamed:@"ico-tab-places@2xsmall.png"]];
-    
-    UITabBarItem *inboxItem = [self.tabBarController.tabBar.items objectAtIndex:1];
-    [inboxItem setTitle:@"Inbox"];
-    [inboxItem setImage:[UIImage imageNamed:@"ico-tab-inbox@2xsmall.png"]];
-    
-    NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary: [[UITabBarItem appearance] titleTextAttributesForState:UIControlStateNormal]];
-    [attributes setValue:[UIFont fontWithName:@"Avenir" size:14] forKey:UITextAttributeFont];
-    [[UITabBarItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
+
 
     //Register for Push Notifications
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
@@ -79,9 +60,12 @@
         [self.tabBarController setSelectedIndex:2];
     }
     
+    //for some reason, Core Data won't persist entities between runs, so just delete all data to clear any weird inconsistencies
     [CoreDataStore deleteDataForObject:@"Store"];
     [CoreDataStore deleteDataForObject:@"User"];
     [CoreDataStore deleteDataForObject:@"PatronStore"];
+    
+    //debugging printing
     [CoreDataStore printDataForObject:@"Store"];
     [CoreDataStore printDataForObject:@"User"];
     [CoreDataStore printDataForObject:@"PatronStore"];
@@ -107,7 +91,7 @@
                         [_localUser setFromParseUserObject:[PFUser currentUser] andPatronObject:fetchedPatronObject];
                     }
                     
-                    self.window.rootViewController = self.tabBarController;
+                    [self login];
                 }
                 else {
                     NSLog(@"error in app delegate: %@", error);
@@ -115,7 +99,7 @@
             }];
         }
         else
-            self.window.rootViewController = self.tabBarController;
+            [self login];
     } else {
         self.window.rootViewController = loginVC;
     }
@@ -185,6 +169,12 @@
 
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"receivedPush" object:self];
+    
+    
+    //ideally, on push, add a button so on click will go directly to message
+    //but can't do this, because not all views implement the modal delegate protocol
+    //so message might possibly be able to dismiss
+    //in the long run, it's probably better to switch to navigation based controller
     
     /*
     if ([[userInfo valueForKey:@"push_type"] isEqualToString:@"receive_message"]) {
@@ -352,6 +342,31 @@
 -(void)logout{
     [PFUser logOut];
     self.window.rootViewController = loginVC;
+}
+
+-(void)login {
+    //Init Tab Bar and all related view controllers
+    placesVC = [[PlacesViewController alloc] init];
+    inboxVC = [[InboxViewController alloc] init];
+    loginVC = [[LandingViewController alloc] init];
+    
+    self.tabBarController = [[UITabBarController alloc] init];
+    self.tabBarController.viewControllers = @[placesVC, inboxVC];
+    
+    UITabBarItem *placeItem = [self.tabBarController.tabBar.items objectAtIndex:0];
+    [placeItem setTitle:@"My Places"];
+    [placeItem setImage:[UIImage imageNamed:@"ico-tab-places@2xsmall.png"]];
+    
+    UITabBarItem *inboxItem = [self.tabBarController.tabBar.items objectAtIndex:1];
+    [inboxItem setTitle:@"Inbox"];
+    [inboxItem setImage:[UIImage imageNamed:@"ico-tab-inbox@2xsmall.png"]];
+    
+    NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary: [[UITabBarItem appearance] titleTextAttributesForState:UIControlStateNormal]];
+    [attributes setValue:[UIFont fontWithName:@"Avenir" size:14] forKey:UITextAttributeFont];
+    [[UITabBarItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    
+    self.window.rootViewController = self.tabBarController;
+
 }
 
 

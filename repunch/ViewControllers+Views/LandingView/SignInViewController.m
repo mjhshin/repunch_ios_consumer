@@ -142,7 +142,7 @@
                     [localUserEntity setFromParseUserObject:[PFUser currentUser] andPatronObject:fetchedPatronObject];
                     [appDelegate setLocalUser:localUserEntity];
                     
-                    [appDelegate.window setRootViewController:appDelegate.tabBarController];
+                    [appDelegate login];
                 }
                 else {
                     [PFUser logOut];
@@ -161,7 +161,7 @@
             [localUserEntity setFromParseUserObject:[PFUser currentUser] andPatronObject:fetchedPatronObject];
             [appDelegate setLocalUser:localUserEntity];
             
-            [appDelegate.window setRootViewController:appDelegate.tabBarController];
+            [appDelegate login];
 
         }
         

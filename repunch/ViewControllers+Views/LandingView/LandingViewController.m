@@ -65,7 +65,7 @@
     [self dismissSemiModalViewWithCompletion:^{
         //go to saved places view
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        [appDelegate.window setRootViewController:appDelegate.tabBarController];
+        [appDelegate login];
 
     }];
 }

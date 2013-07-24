@@ -14,6 +14,6 @@
 @property (nonatomic, retain) id<ModalDelegate> modalDelegate;
 - (IBAction)closeView:(id)sender;
 
-- (void)setup;
+-(void)setup;
 
 @end

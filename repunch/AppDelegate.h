@@ -21,6 +21,7 @@
 
 -(void)makeTabBarHidden:(BOOL)hide;
 -(void)logout;
+-(void)login;
 
 
 

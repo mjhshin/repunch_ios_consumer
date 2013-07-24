@@ -154,11 +154,9 @@
                     
                     [appDelegate setLocalUser:localUserEntity];
                     [appDelegate setPatronObject:createdPatronObject];
-                    
-                    [appDelegate.window setRootViewController:appDelegate.tabBarController];
-                    
+                                        
                     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-                    [appDelegate.window setRootViewController:appDelegate.tabBarController];
+                    [appDelegate login];
                 }
                 else{
                     SIAlertView *errorDialogue = [[SIAlertView alloc] initWithTitle:@"Error" andMessage:@"Something went wrong."];

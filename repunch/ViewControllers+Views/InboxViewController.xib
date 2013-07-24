@@ -106,7 +106,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{100, 11}, {120, 27}}</string>
 								<reference key="NSSuperview" ref="1037174207"/>
-								<reference key="NSNextKeyView" ref="631852765"/>
+								<reference key="NSNextKeyView" ref="570220050"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -125,9 +125,9 @@
 								<reference key="IBUIFontDescription" ref="583267913"/>
 								<reference key="IBUIFont" ref="946368000"/>
 							</object>
-							<object class="IBUIButton" id="631852765">
+							<object class="IBUIButton" id="570220050">
 								<reference key="NSNextResponder" ref="1037174207"/>
-								<int key="NSvFlags">292</int>
+								<int key="NSvFlags">-2147483356</int>
 								<string key="NSFrame">{{245, 10}, {26, 28}}</string>
 								<reference key="NSSuperview" ref="1037174207"/>
 								<reference key="NSNextKeyView" ref="68487762"/>
@@ -233,7 +233,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">refreshPage:</string>
-						<reference key="source" ref="631852765"/>
+						<reference key="source" ref="570220050"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
@@ -274,7 +274,7 @@
 							<reference ref="555588805"/>
 							<reference ref="68487762"/>
 							<reference ref="362434175"/>
-							<reference ref="631852765"/>
+							<reference ref="570220050"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -295,7 +295,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">28</int>
-						<reference key="object" ref="631852765"/>
+						<reference key="object" ref="570220050"/>
 						<reference key="parent" ref="1037174207"/>
 					</object>
 				</array>

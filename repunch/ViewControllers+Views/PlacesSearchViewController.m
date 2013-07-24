@@ -34,57 +34,80 @@
 //set up data model
 - (void)setup {
     //get all locally stored store entitires and set that to be storeList
-    //storeList = [[Store MR_findAll] mutableCopy];
+    storeList = [[Store MR_findAll] mutableCopy];
     
-    //update list with stores from cache+network
-    //will only add new stores, will not check/change any information for locally stored stores
-    if ([CLLocationManager locationServicesEnabled]) {
-        //get user location
-        [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error){
-            userLocation = geoPoint;
-            
-            //only get ten closest stores
-            PFQuery *storeQuery = [PFQuery queryWithClassName:@"Store"];
-            storeQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
-            storeQuery.maxCacheAge = 60 * 60 * 24; //clears cache every 24 hours
-            [storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation];
-
-            [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *fetchedStores, NSError *error){
-                //for (PFObject *store in fetchedStores){
-                for (int i = 0 ; i <[fetchedStores count]; i++) {
-                    PFObject *store = fetchedStores[i];
-                    BOOL storeIsInList = FALSE;
-                    
-                    //check if store is in list
-                    for (id localStore in storeList){
-                        if ([[localStore valueForKey:@"objectId"] isEqualToString:[store objectId]]){
-                            storeIsInList = TRUE;
-                            break;
-                        }
-                    }
-                    
-                    //if not, add it + store on disk
-                     if(!storeIsInList){
-                         Store *newStore = [Store MR_createEntity];
-                         [newStore setFromParseObject:store];
-                         [storeList addObject:newStore];
-                         [searchTable reloadData];
-                         
-
-                     }//end if stores is not in list
-                    
-                    
-                }//end for all fetched loop
+    if ([storeList count] <= 0){
+        //update list with stores from cache+network
+        //will only add new stores, will not check/change any information for locally stored stores
+        if ([CLLocationManager locationServicesEnabled]) {
+            //get user location
+            [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error){
+                userLocation = geoPoint;
                 
-            }]; //end get stores
-        }]; //end get user location
+                PFQuery *storeQuery = [PFQuery queryWithClassName:@"Store"];
+                storeQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
+                storeQuery.maxCacheAge = 60 * 60 * 24; //clears cache every 24 hours
+                [storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation];
+
+                [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *fetchedStores, NSError *error){
+                    //for (PFObject *store in fetchedStores){
+                    for (int i = 0 ; i <[fetchedStores count]; i++) {
+                        PFObject *store = fetchedStores[i];
+                        BOOL storeIsInList = FALSE;
+                        
+                        //check if store is in list
+                        for (id localStore in storeList){
+                            if ([[localStore valueForKey:@"objectId"] isEqualToString:[store objectId]]){
+                                storeIsInList = TRUE;
+                                break;
+                            }
+                        }
+                        
+                        //if not, add it + store on disk
+                         if(!storeIsInList){
+                             Store *newStore = [Store MR_createEntity];
+                             [newStore setFromParseObject:store];
+                             [storeList addObject:newStore];
+                             [searchTable reloadData];
+                             
+
+                         }//end if stores is not in list
+                        
+                        
+                    }//end for all fetched loop
+                    
+                }]; //end get stores
+            }]; //end get user location
+        }
+    }
+    else {
+        [self reload];
     }
 
 }
 
 -(void)reload{
+    //sort by distance to current user location
+    storeList = [[storeList sortedArrayUsingComparator:^(id obj1, id obj2) {
+        PFGeoPoint *storeLocation1 = [PFGeoPoint geoPointWithLatitude:[[obj1 valueForKey:@"latitude"] doubleValue] longitude:[[obj1 valueForKey:@"longitude"] doubleValue]];
+        double distanceToStore1 = [userLocation distanceInMilesTo:storeLocation1];
+        
+        PFGeoPoint *storeLocation2 = [PFGeoPoint geoPointWithLatitude:[[obj2 valueForKey:@"latitude"] doubleValue] longitude:[[obj2 valueForKey:@"longitude"] doubleValue]];
+        double distanceToStore2 = [userLocation distanceInMilesTo:storeLocation2];
+        
+        if (distanceToStore1 > distanceToStore2) {
+            return (NSComparisonResult)NSOrderedDescending;
+        }
+        
+        if (distanceToStore1 < distanceToStore2) {
+            return (NSComparisonResult)NSOrderedAscending;
+        }
+        return (NSComparisonResult)NSOrderedSame;
+        
+    }] mutableCopy];
+    
     [searchTable reloadData];
-    [[self view] setNeedsDisplay];
+    //[[self view] setNeedsDisplay];
 }
 
 
@@ -101,13 +124,15 @@
     [searchTable setDataSource:self];
     [searchTable setDelegate:self];
     [[self view] addSubview:searchTable];
+    
+    [self setup];
 
 
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self setup];
+    //[self setup];
     localUser = [(AppDelegate *)[[UIApplication sharedApplication] delegate] localUser];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -126,7 +151,7 @@
                                                  name:@"addedOrRemovedStore"
                                                object:nil];
 
-
+    //[self reload];
 
 }
 
