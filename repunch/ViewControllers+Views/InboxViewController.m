@@ -9,7 +9,6 @@
 #import "InboxViewController.h"
 #import "AppDelegate.h"
 #import "PlacesSearchViewController.h"
-#import "MessageViewController.h"
 #import "SettingsViewController.h"
 
 #import "MessageAutoLayoutViewController.h"
@@ -24,14 +23,14 @@
 #import <Parse/Parse.h>
 
 @implementation InboxViewController{
-    NSMutableArray *savedMessages;
-    NSArray *savedMessageStatuses;
+    NSMutableArray *messagesStatuses;
     User *localUser;
     PFObject *patronObject;
     UITableView *messageTable;
     UIActivityIndicatorView *spinner;
     UIView *greyedOutView;
 }
+
 -(void)setup{
     PFRelation *messageStatus = [patronObject relationforKey:@"ReceivedMessages"];
     PFQuery *messageStatusQuery = [messageStatus query];
@@ -39,12 +38,13 @@
     [messageStatusQuery includeKey:@"Message.Reply"];
 
     [messageStatusQuery findObjectsInBackgroundWithBlock:^(NSArray *fetchedMessageStatuses, NSError *error) {
-        savedMessageStatuses = fetchedMessageStatuses;
-        savedMessages = [fetchedMessageStatuses valueForKey:@"Message"];
         
-        savedMessages = [[savedMessages sortedArrayUsingDescriptors:[NSArray arrayWithObject: [NSSortDescriptor sortDescriptorWithKey:@"updatedAt" ascending:NO]]] mutableCopy];
+        //the array has to be mutable in order to later delete messages
+        messagesStatuses = [fetchedMessageStatuses mutableCopy];
         
-        [messageTable setContentSize:CGSizeMake(320, 78*savedMessages.count)];
+        messagesStatuses = [[messagesStatuses sortedArrayUsingDescriptors:[NSArray arrayWithObject: [NSSortDescriptor sortDescriptorWithKey:@"Message.updatedAt" ascending:NO]]] mutableCopy];
+                
+        [messageTable setContentSize:CGSizeMake(320, 78*messagesStatuses.count)];
 
         [messageTable reloadData];
         [[self view] addSubview:messageTable];
@@ -64,19 +64,23 @@
     [messageTable setDataSource:self];
     [messageTable setDelegate:self];
     //[[self view] addSubview:messageTable];
+        
+    localUser = [(AppDelegate *)[[UIApplication sharedApplication] delegate] localUser];
+    patronObject = [(AppDelegate *)[[UIApplication sharedApplication] delegate] patronObject];
+    
+    [self setup];
+
 
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
-    localUser = [(AppDelegate *)[[UIApplication sharedApplication] delegate] localUser];
-    patronObject = [(AppDelegate *)[[UIApplication sharedApplication] delegate] patronObject];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(setup)
                                                  name:@"receivedPush"
                                                object:nil];
-    
+    /*
     spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     spinner.center = CGPointMake(160, 260);
     spinner.color = [UIColor blackColor];
@@ -89,6 +93,7 @@
     
 
     [self setup];
+     */
 }
 
 
@@ -110,7 +115,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-   return [savedMessages count];
+   return [messagesStatuses count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -124,8 +129,8 @@
     }
     
 
-    id currentCellMessage = [savedMessages objectAtIndex:indexPath.row];
-    id currentCellMessageStatus = [savedMessageStatuses objectAtIndex:indexPath.row];
+    id currentCellMessageStatus = [messagesStatuses objectAtIndex:indexPath.row];
+    id currentCellMessage = [currentCellMessageStatus objectForKey:@"Message"];
     id currentCellMessageReply = [currentCellMessage objectForKey:@"Reply"];
     
     if ([NSNull null] == currentCellMessageReply || currentCellMessageReply == NULL) {
@@ -137,7 +142,6 @@
         cell.senderName.text = [currentCellMessageReply valueForKey:@"sender_name"];
         cell.subjectLabel.text = [NSString stringWithFormat:@"Re :%@ - %@", [currentCellMessage valueForKey:@"subject"], [currentCellMessageReply valueForKey:@"body"]];
         cell.dateSent.text = [self formattedDateString:[currentCellMessageReply valueForKey:@"createdAt"]];
-
     }
 
     
@@ -171,19 +175,23 @@
 {
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        
+    
+    id currentCellMessageStatus = [messagesStatuses objectAtIndex:indexPath.row];
+    id currentCellMessage = [currentCellMessageStatus objectForKey:@"Message"];
+    
     MessageAutoLayoutViewController *messageVC = [[MessageAutoLayoutViewController alloc] init];
     messageVC.modalDelegate = self;
-    messageVC.message = [savedMessages objectAtIndex:indexPath.row];
-    messageVC.messageStatus = [savedMessageStatuses objectAtIndex:indexPath.row];
-    messageVC.messageType = [[savedMessages objectAtIndex:indexPath.row] valueForKey:@"message_type"];
+    messageVC.message = currentCellMessage;
+    //messageVC.messageStatus currentCellMessage [savedMessageStatuses objectAtIndex:indexPath.row];
+    messageVC.messageStatus = currentCellMessageStatus;
+    messageVC.messageType = [currentCellMessage valueForKey:@"message_type"];
     messageVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     messageVC.customerName = [NSString stringWithFormat:@"%@ %@", [localUser first_name], [localUser last_name]];
     messageVC.patronId = [localUser patronId];
 
     
-    [[savedMessageStatuses objectAtIndex:indexPath.row] setValue:[NSNumber numberWithBool:TRUE] forKey:@"is_read"];
-    [[savedMessageStatuses objectAtIndex:indexPath.row] saveInBackground];
+    [currentCellMessageStatus setValue:[NSNumber numberWithBool:TRUE] forKey:@"is_read"];
+    [currentCellMessageStatus saveInBackground];
     
     [self presentViewController:messageVC animated:YES completion:NULL];
      
@@ -234,7 +242,7 @@
 
 -(void)didDismissPresentedViewControllerWithCompletion{
     [self dismissViewControllerAnimated:YES completion:^{
-        [savedMessages removeAllObjects];
+        [messagesStatuses removeAllObjects];
         [self setup];
     }];
     
@@ -265,6 +273,21 @@
         //nothing happens
     }];
     [alert show];
+
+}
+
+- (IBAction)refreshPage:(id)sender {
+    spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    spinner.center = CGPointMake(160, 260);
+    spinner.color = [UIColor blackColor];
+    [[self view] addSubview:spinner];
+    [spinner startAnimating];
+    greyedOutView = [[UIView alloc]initWithFrame:CGRectMake(0, 47, 320, self.view.frame.size.height - 47)];
+    [greyedOutView setBackgroundColor:[UIColor colorWithRed:127/255 green:127/255 blue:127/255 alpha:0.5]];
+    [[self view] addSubview:greyedOutView];
+    [[self view] bringSubviewToFront:greyedOutView];
+    
+    [self setup];
 
 }
 @end

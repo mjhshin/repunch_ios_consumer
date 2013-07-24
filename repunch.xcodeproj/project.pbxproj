@@ -11,6 +11,7 @@
 		79079E99179599B100097DB4 /* message_gift.png in Resources */ = {isa = PBXBuildFile; fileRef = 79079E98179599B100097DB4 /* message_gift.png */; };
 		7949D0E8179D96A9007CBEBE /* MessageAutoLayoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7949D0E6179D96A9007CBEBE /* MessageAutoLayoutViewController.m */; };
 		7949D0E9179D96A9007CBEBE /* MessageAutoLayoutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7949D0E7179D96A9007CBEBE /* MessageAutoLayoutViewController.xib */; };
+		798AB71117A05E370035B829 /* ic_menu_refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 798AB71017A05E370035B829 /* ic_menu_refresh.png */; };
 		798B8D7C178EFECD000500AC /* splash_background_big.png in Resources */ = {isa = PBXBuildFile; fileRef = 798B8D7B178EFECD000500AC /* splash_background_big.png */; };
 		798B8D7F178F0E0A000500AC /* ParseStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 798B8D7E178F0E0A000500AC /* ParseStore.m */; };
 		798B8D82178F0FF3000500AC /* CoreDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 798B8D81178F0FF3000500AC /* CoreDataStore.m */; };
@@ -243,6 +244,7 @@
 		7949D0E5179D96A9007CBEBE /* MessageAutoLayoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageAutoLayoutViewController.h; path = "repunch/ViewControllers+Views/MessageAutoLayoutViewController.h"; sourceTree = "<group>"; };
 		7949D0E6179D96A9007CBEBE /* MessageAutoLayoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageAutoLayoutViewController.m; path = "repunch/ViewControllers+Views/MessageAutoLayoutViewController.m"; sourceTree = "<group>"; };
 		7949D0E7179D96A9007CBEBE /* MessageAutoLayoutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageAutoLayoutViewController.xib; path = "repunch/ViewControllers+Views/MessageAutoLayoutViewController.xib"; sourceTree = "<group>"; };
+		798AB71017A05E370035B829 /* ic_menu_refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_menu_refresh.png; sourceTree = "<group>"; };
 		798B8D7B178EFECD000500AC /* splash_background_big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash_background_big.png; path = Images/splash_background_big.png; sourceTree = "<group>"; };
 		798B8D7D178F0E0A000500AC /* ParseStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseStore.h; sourceTree = "<group>"; };
 		798B8D7E178F0E0A000500AC /* ParseStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseStore.m; sourceTree = "<group>"; };
@@ -711,6 +713,7 @@
 		7996B3B217820B8600CCAFED /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				798AB71017A05E370035B829 /* ic_menu_refresh.png */,
 				7995DEED17986FD4008D9FEB /* arrow.png */,
 				7995DEDF17985154008D9FEB /* ic_tab_inbox.png */,
 				7995DEE017985154008D9FEB /* ic_tab_my_places.png */,
@@ -1257,6 +1260,7 @@
 				7995DEE217985154008D9FEB /* ic_tab_my_places.png in Resources */,
 				7995DEEE17986FD4008D9FEB /* arrow.png in Resources */,
 				7949D0E9179D96A9007CBEBE /* MessageAutoLayoutViewController.xib in Resources */,
+				798AB71117A05E370035B829 /* ic_menu_refresh.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

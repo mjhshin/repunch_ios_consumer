@@ -106,7 +106,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{100, 11}, {120, 27}}</string>
 								<reference key="NSSuperview" ref="1037174207"/>
-								<reference key="NSNextKeyView" ref="68487762"/>
+								<reference key="NSNextKeyView" ref="631852765"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -121,6 +121,31 @@
 								<object class="NSCustomResource" key="IBUINormalBackgroundImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">repunch-logo@2x.png</string>
+								</object>
+								<reference key="IBUIFontDescription" ref="583267913"/>
+								<reference key="IBUIFont" ref="946368000"/>
+							</object>
+							<object class="IBUIButton" id="631852765">
+								<reference key="NSNextResponder" ref="1037174207"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{245, 10}, {26, 28}}</string>
+								<reference key="NSSuperview" ref="1037174207"/>
+								<reference key="NSNextKeyView" ref="68487762"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<bool key="IBUIOpaque">NO</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<int key="IBUIContentHorizontalAlignment">0</int>
+								<int key="IBUIContentVerticalAlignment">0</int>
+								<int key="IBUIButtonType">1</int>
+								<reference key="IBUIHighlightedTitleColor" ref="146343974"/>
+								<object class="NSColor" key="IBUINormalTitleColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
+								</object>
+								<reference key="IBUINormalTitleShadowColor" ref="1068258699"/>
+								<object class="NSCustomResource" key="IBUINormalBackgroundImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">ic_menu_refresh.png</string>
 								</object>
 								<reference key="IBUIFontDescription" ref="583267913"/>
 								<reference key="IBUIFont" ref="946368000"/>
@@ -205,6 +230,15 @@
 					</object>
 					<int key="connectionID">27</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">refreshPage:</string>
+						<reference key="source" ref="631852765"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">30</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -240,6 +274,7 @@
 							<reference ref="555588805"/>
 							<reference ref="68487762"/>
 							<reference ref="362434175"/>
+							<reference ref="631852765"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -258,6 +293,11 @@
 						<reference key="object" ref="362434175"/>
 						<reference key="parent" ref="1037174207"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">28</int>
+						<reference key="object" ref="631852765"/>
+						<reference key="parent" ref="1037174207"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -270,12 +310,13 @@
 				<string key="20.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="22.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="23.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="28.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">27</int>
+			<int key="maxID">30</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
@@ -285,6 +326,7 @@
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="ab_search.png">{48, 48}</string>
 			<string key="ab_settings.png">{48, 48}</string>
+			<string key="ic_menu_refresh.png">{48, 48}</string>
 			<string key="repunch-logo@2x.png">{236, 50}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>

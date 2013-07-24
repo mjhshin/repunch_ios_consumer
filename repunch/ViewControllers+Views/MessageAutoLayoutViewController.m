@@ -237,66 +237,58 @@
         
         NSLog(@"dictionary is %@", functionArguments);
         
-        
-        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redeem Offer" andMessage:[NSString stringWithFormat:@"Are you sure you want to redeem %@?", [_message valueForKey:@"offer_title"]]];
-        
-        [alertView addButtonWithTitle:@"No"
-                                 type:SIAlertViewButtonTypeCancel
-                              handler:^(SIAlertView *alert) {
-                                  //Nothing Happens
-                              }];
-        [alertView addButtonWithTitle:@"Yes"
-                                 type:SIAlertViewButtonTypeDefault
-                              handler:^(SIAlertView *alert) {
-                                  if ([[_messageStatus valueForKey:@"redeem_available"] isEqualToString:@"pending"]){
-                                      SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"This reward is pending."]];
-                                      [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:nil];
-                                      
-                                      [alertView show];
-                                  }
-                                  
-                                  else if ([[_messageStatus valueForKey:@"redeem_available"] isEqualToString:@"no"]) {
-                                      SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"You've already redeemed this reward."]];
-                                      [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:nil];
-                                      
-                                      [alertView show];
-                                  }
-                                  
+          if ([[_messageStatus valueForKey:@"redeem_available"] isEqualToString:@"pending"]){
+              SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"This reward is pending."]];
+              [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:nil];
+              
+              [alertView show];
+          }
+          
+          else if ([[_messageStatus valueForKey:@"redeem_available"] isEqualToString:@"no"]) {
+              SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"You've already redeemed this reward."]];
+              [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:nil];
+              
+              [alertView show];
+          }
+          
 
-                                  else if ([[_messageStatus valueForKey:@"redeem_available"] isEqualToString:@"yes"]) {
-                                      [PFCloud callFunctionInBackground:@"request_redeem"
-                                                     withParameters:functionArguments
-                                                              block:^(NSString *success, NSError *error) {
-                                                                  if (!error){
+          else if ([[_messageStatus valueForKey:@"redeem_available"] isEqualToString:@"yes"]) {
+              NSDate *offerExpiration = [_message valueForKey:@"date_offer_expiration"];
+              if ([offerExpiration timeIntervalSinceNow] <= 0) {
+                  SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Sorry" andMessage:[NSString stringWithFormat:@"This offer has expired"]];
+                  [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:nil];
+                  
+                  [alertView show];
 
-                                                                      
-                                                                      SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"Your %@ is awaiting validation", [_message valueForKey:@"offer_title"]]];
-                                                                      [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
-                                                                          //nothing
-                                                                      }];
-                                                                      
-                                                                      [alertView show];
-                                                                      
-                                                                      NSLog(@"function call is :%@", success);
-                                                                  }
-                                                                  
-                                                                  else{
-                                                                      SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Sorry" andMessage:[NSString stringWithFormat:@"Looks like something went wrong."]];
-                                                                      [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
-                                                                          //nothing
-                                                                      }];
-                                                                      
-                                                                      
-                                                                      [alertView show];
-                                                                      
-                                                                      NSLog(@"error occurred: %@", error);
-                                                                  }
-                                                              }];
-                                  }
+              }
+              else {
+                  [PFCloud callFunctionInBackground:@"request_redeem"
+                                 withParameters:functionArguments
+                                          block:^(NSString *success, NSError *error) {
+                                              if (!error){
+
+                                                  
+                                                  SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"Your %@ is awaiting validation", [_message valueForKey:@"offer_title"]]];
+                                                  [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:nil];
+                                                  [alertView show];
+                                                  
+                                                  NSLog(@"function call is :%@", success);
+                                              }
+                                              
+                                              else{
+                                                  SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Sorry" andMessage:[NSString stringWithFormat:@"Looks like something went wrong."]];
+                                                  [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:nil];
+                                                  
+                                                  [alertView show];
+                                                  
+                                                  NSLog(@"error occurred: %@", error);
+                                              }
+                                          }];
+              
+                  }
+          }
+        
                                   
-                                  
-                              }];
-        [alertView show];
     }
     if ([_messageType isEqualToString:@"gift"]){
         //check patron store exists
@@ -304,131 +296,120 @@
         
         NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:[_message valueForKey:@"store_id"], @"store_id",[patronStoreEntity objectId], @"patron_store_id", [_message valueForKey:@"gift_title"], @"title", @"0", @"num_punches", _customerName, @"name", [_messageStatus objectId], @"message_status_id", nil];
         
-        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redeem Gift" andMessage:[NSString stringWithFormat:@"Are you sure you want to redeem %@?", [_message valueForKey:@"gift_title"]]];
         
-        [alertView addButtonWithTitle:@"No"
-                                 type:SIAlertViewButtonTypeCancel
-                              handler:^(SIAlertView *alert) {
-                                  //Nothing Happens
-                              }];
-        [alertView addButtonWithTitle:@"Yes"
-                                 type:SIAlertViewButtonTypeDefault
-                              handler:^(SIAlertView *alert) {
-                                  [PFCloud callFunctionInBackground:@"request_redeem"
-                                                     withParameters:functionArguments
-                                                              block:^(NSString *success, NSError *error) {
-                                                                  if (!error){
-                                                                      if ([success isEqualToString:@"validated"]){
-                                                                          SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"You've already redeemed %@!", [_message valueForKey:@"gift_title"]]];
-                                                                          [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
-                                                                              //nothing
-                                                                          }];
-                                                                          
-                                                                          [alertView show];
-                                                                          
-                                                                      }
-                                                                      else{
-                                                                          SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"Your %@ is awaiting validation", [_message valueForKey:@"gift_title"]]];
-                                                                          [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
-                                                                              //nothing
-                                                                          }];
-                                                                          
-                                                                          [alertView show];
-                                                                      }
-                                                                      NSLog(@"function call is :%@", success);
-                                                                  }
-                                                                  else{
-                                                                      SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Sorry" andMessage:[NSString stringWithFormat:@"Looks like something went wrong."]];
-                                                                      [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
-                                                                          //nothing
-                                                                      }];
-                                                                      
-                                                                      
-                                                                      [alertView show];
-                                                                      
-                                                                      NSLog(@"error occurred: %@", error);
-                                                                  }
-                                                              }];
-                              }];
-        [alertView show];
-        
-        
-        
-        
-        //else, add patron store and then redeem gift
-        if (!patronStoreEntity){
-            NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:_patronId, @"patron_id", [_message valueForKey:@"store_id"], @"store_id", nil];
+        if ([[_messageStatus valueForKey:@"redeem_available"] isEqualToString:@"pending"]){
+            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"This reward is pending."]];
+            [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:nil];
             
-            [PFCloud callFunctionInBackground: @"add_patronstore"
-                               withParameters:functionArguments block:^(PFObject *patronStore, NSError *error) {
-                                   if (!error){
-                                       NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:[_message valueForKey:@"store_id"], @"store_id",[patronStoreEntity objectId], @"patron_store_id", [_message valueForKey:@"gift_title"], @"title", @"0", @"num_punches", _customerName, @"name", [_messageStatus objectId], @"message_status_id", nil];
-                                       
-                                       SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redeem Gift" andMessage:[NSString stringWithFormat:@"Are you sure you want to redeem %@?", [_message valueForKey:@"gift_title"]]];
-                                       
-                                       [alertView addButtonWithTitle:@"No"
-                                                                type:SIAlertViewButtonTypeCancel
-                                                             handler:^(SIAlertView *alert) {
-                                                                 //Nothing Happens
-                                                             }];
-                                       [alertView addButtonWithTitle:@"Yes"
-                                                                type:SIAlertViewButtonTypeDefault
-                                                             handler:^(SIAlertView *alert) {
-                                                                 [PFCloud callFunctionInBackground:@"request_redeem"
-                                                                                    withParameters:functionArguments
-                                                                                             block:^(NSString *success, NSError *error) {
-                                                                                                 if (!error){
-                                                                                                     if ([success isEqualToString:@"validated"]){
-                                                                                                         SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"You've already redeemed %@!", [_message valueForKey:@"gift_title"]]];
-                                                                                                         [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
-                                                                                                             //nothing
-                                                                                                         }];
-                                                                                                         
-                                                                                                         [alertView show];
-                                                                                                         
-                                                                                                     }
-                                                                                                     else{
-                                                                                                         SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"You redeemed %@!", [_message valueForKey:@"gift_title"]]];
-                                                                                                         [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
-                                                                                                             //nothing
-                                                                                                         }];
-                                                                                                         
-                                                                                                         [alertView show];
-                                                                                                     }
-                                                                                                     NSLog(@"function call is :%@", success);
-                                                                                                 }
-                                                                                                 else{
-                                                                                                     SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Sorry" andMessage:[NSString stringWithFormat:@"Looks like something went wrong."]];
-                                                                                                     [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
-                                                                                                         //nothing
-                                                                                                     }];
-                                                                                                     
-                                                                                                     
-                                                                                                     [alertView show];
-                                                                                                     
-                                                                                                     NSLog(@"error occurred: %@", error);
-                                                                                                 }
-                                                                                             }];
-                                                                 
-                                                             }];
-                                       [alertView show];
-                                       
-                                       
-                                       
-                                       
-                                   }
-                                   else {
-                                       
-                                       SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Error!" andMessage:[NSString stringWithFormat:@"Sorry, an error occured"]];
-                                       [alertView addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
-                                       }];
-                                       
-                                       NSLog(@"%@", error);
-                                   }
-                               }];
-            
-            
+            [alertView show];
         }
+        
+        else if ([[_messageStatus valueForKey:@"redeem_available"] isEqualToString:@"no"]) {
+            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"You've already redeemed this reward."]];
+            [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:nil];
+            
+            [alertView show];
+        }
+        
+        else if ([[_messageStatus valueForKey:@"redeem_available"] isEqualToString:@"yes"]) {
+            
+            
+            //if user doesn't have patron store, add it
+            if (!patronStoreEntity){
+                NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:_patronId, @"patron_id", [_message valueForKey:@"store_id"], @"store_id", nil];
+                
+                [PFCloud callFunctionInBackground: @"add_patronstore"
+                                   withParameters:functionArguments block:^(PFObject *patronStore, NSError *error) {
+                                       if (!error){
+                                           [PFCloud callFunctionInBackground:@"request_redeem"
+                                                              withParameters:functionArguments
+                                                                       block:^(NSString *success, NSError *error) {
+                                                                           if (!error){
+                                                                               if ([success isEqualToString:@"validated"]){
+                                                                                   SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"You've already redeemed %@!", [_message valueForKey:@"gift_title"]]];
+                                                                                   [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+                                                                                       //nothing
+                                                                                   }];
+                                                                                   
+                                                                                   [alertView show];
+                                                                                   
+                                                                               }
+                                                                               else{
+                                                                                   SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"Your %@ is awaiting validation", [_message valueForKey:@"gift_title"]]];
+                                                                                   [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+                                                                                       //nothing
+                                                                                   }];
+                                                                                   
+                                                                                   [alertView show];
+                                                                               }
+                                                                               NSLog(@"function call is :%@", success);
+                                                                           }
+                                                                           else{
+                                                                               SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Sorry" andMessage:[NSString stringWithFormat:@"Looks like something went wrong."]];
+                                                                               [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+                                                                                   //nothing
+                                                                               }];
+                                                                               
+                                                                               
+                                                                               [alertView show];
+                                                                               
+                                                                               NSLog(@"error occurred: %@", error);
+                                                                           }
+                                                                       }];
+                                           
+                                       }
+                                       else {
+                                           
+                                           SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Error!" andMessage:[NSString stringWithFormat:@"Sorry, an error occured"]];
+                                           [alertView addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+                                           }];
+                                           
+                                           NSLog(@"%@", error);
+                                       }
+                                   }];
+            }
+
+                //else just redeem gift
+              [PFCloud callFunctionInBackground:@"request_redeem"
+                                 withParameters:functionArguments
+                                          block:^(NSString *success, NSError *error) {
+                                              if (!error){
+                                                  if ([success isEqualToString:@"validated"]){
+                                                      SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"You've already redeemed %@!", [_message valueForKey:@"gift_title"]]];
+                                                      [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+                                                          //nothing
+                                                      }];
+                                                      
+                                                      [alertView show];
+                                                      
+                                                  }
+                                                  else{
+                                                      SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Redemption" andMessage:[NSString stringWithFormat:@"Your %@ is awaiting validation", [_message valueForKey:@"gift_title"]]];
+                                                      [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+                                                          //nothing
+                                                      }];
+                                                      
+                                                      [alertView show];
+                                                  }
+                                                  NSLog(@"function call is :%@", success);
+                                              }
+                                              else{
+                                                  SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Sorry" andMessage:[NSString stringWithFormat:@"Looks like something went wrong."]];
+                                                  [alertView addButtonWithTitle:@"Okay." type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+                                                      //nothing
+                                                  }];
+                                                  
+                                                  
+                                                  [alertView show];
+                                                  
+                                                  NSLog(@"error occurred: %@", error);
+                                              }
+                                          }];
+        }
+        
+        
+        
+        
         
     }
 

@@ -10,7 +10,6 @@
 #import "PlacesViewController.h"
 #import "InboxViewController.h"
 #import "LandingViewController.h"
-#import "MessageViewController.h"
 
 #import <Parse/Parse.h>
 #import <FacebookSDK/FacebookSDK.h>

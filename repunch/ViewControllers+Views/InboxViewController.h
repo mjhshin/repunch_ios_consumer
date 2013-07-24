@@ -13,5 +13,6 @@
 - (IBAction)openSettings:(id)sender;
 - (IBAction)openSearch:(id)sender;
 - (IBAction)showPunchCode:(id)sender;
+- (IBAction)refreshPage:(id)sender;
 
 @end
