@@ -36,7 +36,8 @@
     self.objectId = [store objectId];
     
     PFFile *picFile = [store objectForKey:@"store_avatar"];
-    if (!([store objectForKey:@"store_avatar"] == [NSNull null])){
+    self.store_avatar = UIImagePNGRepresentation([UIImage imageNamed:@"listview_placeholder"]);
+    if ([NSNull null] != [store objectForKey:@"store_avatar"] || [store objectForKey:@"store_avatar"]  == nil){
         //add error checking
         [picFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
             self.store_avatar = data;
@@ -46,7 +47,7 @@
              postNotificationName:@"FinishedLoadingPic"
              object:self];
         }];
-    } else self.store_avatar = [NSData dataWithContentsOfFile:@"Icon@2x"];
+    }
     
     self.street = [store objectForKey:@"street"];
     if ([store objectForKey:@"cross_streets"] !=  [NSNull null]) self.cross_streets = [store objectForKey:@"cross_streets"];

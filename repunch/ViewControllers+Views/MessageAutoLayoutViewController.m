@@ -37,6 +37,8 @@
     [super viewDidLoad];
     
     [_messageNameLbl setText:[_message objectForKey:@"subject"]];
+    [[_offerLbl titleLabel] setNumberOfLines:2];
+    [[_offerLbl titleLabel] setTextAlignment:NSTextAlignmentCenter];
 
     if ([_messageType isEqualToString:@"basic"]){
 
@@ -60,7 +62,6 @@
         
         //use autolayout to hide response view and adjust accordingly
         [self hideResponseAndAdjustConstraints];
-
         
 
     }
@@ -217,7 +218,7 @@
 
 - (IBAction)deleteMessageActn:(id)sender {
     [_messageStatus deleteInBackground];
-    [[self modalDelegate] didDismissPresentedViewControllerWithCompletion];
+    [[self modalDelegate] didDismissPresentedViewControllerWithCompletionCode:@"deletedMessage"];
 
 }
 

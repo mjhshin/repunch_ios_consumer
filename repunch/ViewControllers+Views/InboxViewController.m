@@ -99,7 +99,7 @@
 
 
 -(void)viewDidDisappear:(BOOL)animated{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"receivedPush" object:nil];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self name:@"receivedPush" object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -190,8 +190,10 @@
     messageVC.customerName = [NSString stringWithFormat:@"%@ %@", [localUser first_name], [localUser last_name]];
     messageVC.patronId = [localUser patronId];
 
-    
-    [currentCellMessageStatus setValue:[NSNumber numberWithBool:TRUE] forKey:@"is_read"];
+    if ([[currentCellMessage objectForKey:@"is_read"] boolValue] == FALSE) {
+        [currentCellMessageStatus setValue:[NSNumber numberWithBool:TRUE] forKey:@"is_read"];
+        [messageTable reloadData];
+    }
     [currentCellMessageStatus saveInBackground];
     
     [self presentViewController:messageVC animated:YES completion:NULL];
@@ -249,6 +251,23 @@
     
 }
 
+- (void)didDismissPresentedViewControllerWithCompletionCode:(NSString *)dismissString {
+    if ([dismissString isEqualToString:@"deletedMessage"]) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [messagesStatuses removeAllObjects];
+            [self setup];
+        }];
+
+    }
+    
+    if ([dismissString isEqualToString:@"logout"]) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            [appDelegate logout];
+        }];
+
+    }
+}
 - (IBAction)openSettings:(id)sender {
     
     SettingsViewController *settingsVC = [[SettingsViewController alloc] init];

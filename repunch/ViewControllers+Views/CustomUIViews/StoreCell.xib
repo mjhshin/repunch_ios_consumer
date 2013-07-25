@@ -176,7 +176,7 @@
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<string key="IBUIText">distance</string>
+								<string key="IBUIText"/>
 								<reference key="IBUITextColor" ref="961936063"/>
 								<reference key="IBUIHighlightedColor" ref="270580641"/>
 								<int key="IBUIBaselineAdjustment">0</int>

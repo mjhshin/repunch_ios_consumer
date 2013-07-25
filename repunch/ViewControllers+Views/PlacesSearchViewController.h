@@ -10,10 +10,10 @@
 #import "ModalDelegate.h"
 
 @interface PlacesSearchViewController : UIViewController <UIScrollViewDelegate, ModalDelegate, UITableViewDataSource, UITableViewDelegate>
-
+@property BOOL downloadFromNetwork;
 @property (nonatomic, retain) id<ModalDelegate> modalDelegate;
 - (IBAction)closeView:(id)sender;
-
 -(void)setup;
+
 
 @end

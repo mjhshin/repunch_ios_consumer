@@ -48,7 +48,7 @@
 }
 
 - (IBAction)logOut:(id)sender {
-    [[self modalDelegate] didDismissPresentedViewControllerWithCompletion];
+    [[self modalDelegate] didDismissPresentedViewControllerWithCompletionCode:@"logout"];
 }
 
 - (IBAction)closeView:(id)sender {

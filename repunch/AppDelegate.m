@@ -57,6 +57,7 @@
     if (remoteNotif != nil) {
         NSLog(@"opened from push: %@", remoteNotif);
         // app was launched from push notification so open to the inbox
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"receivedPush" object:self];
         [self.tabBarController setSelectedIndex:2];
     }
     

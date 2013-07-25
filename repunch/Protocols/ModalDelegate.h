@@ -13,5 +13,6 @@
 
 @optional
 - (void)didDismissPresentedViewControllerWithCompletion;
+- (void)didDismissPresentedViewControllerWithCompletionCode:(NSString *)dismissString;
 
 @end

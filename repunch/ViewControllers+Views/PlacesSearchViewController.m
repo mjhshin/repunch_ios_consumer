@@ -33,10 +33,9 @@
 
 //set up data model
 - (void)setup {
-    //get all locally stored store entitires and set that to be storeList
+    //get all locally stored store entities and set that to be storeList
     storeList = [[Store MR_findAll] mutableCopy];
     
-    if ([storeList count] <= 0){
         //update list with stores from cache+network
         //will only add new stores, will not check/change any information for locally stored stores
         if ([CLLocationManager locationServicesEnabled]) {
@@ -68,7 +67,6 @@
                              Store *newStore = [Store MR_createEntity];
                              [newStore setFromParseObject:store];
                              [storeList addObject:newStore];
-                             [searchTable reloadData];
                              
 
                          }//end if stores is not in list
@@ -76,38 +74,43 @@
                         
                     }//end for all fetched loop
                     
+                    [searchTable reloadData];
                 }]; //end get stores
             }]; //end get user location
         }
-    }
-    else {
-        [self reload];
-    }
 
 }
 
 -(void)reload{
     //sort by distance to current user location
-    storeList = [[storeList sortedArrayUsingComparator:^(id obj1, id obj2) {
-        PFGeoPoint *storeLocation1 = [PFGeoPoint geoPointWithLatitude:[[obj1 valueForKey:@"latitude"] doubleValue] longitude:[[obj1 valueForKey:@"longitude"] doubleValue]];
-        double distanceToStore1 = [userLocation distanceInMilesTo:storeLocation1];
+    storeList = [[Store MR_findAll] mutableCopy];
+
+    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error){
+        userLocation = geoPoint;
+
+        storeList = [[storeList sortedArrayUsingComparator:^(id obj1, id obj2) {
+            
+            PFGeoPoint *storeLocation1 = [PFGeoPoint geoPointWithLatitude:[[obj1 valueForKey:@"latitude"] doubleValue] longitude:[[obj1 valueForKey:@"longitude"] doubleValue]];
+            double distanceToStore1 = [userLocation distanceInMilesTo:storeLocation1];
+            
+            PFGeoPoint *storeLocation2 = [PFGeoPoint geoPointWithLatitude:[[obj2 valueForKey:@"latitude"] doubleValue] longitude:[[obj2 valueForKey:@"longitude"] doubleValue]];
+            double distanceToStore2 = [userLocation distanceInMilesTo:storeLocation2];
+            
+            if (distanceToStore1 > distanceToStore2) {
+                return (NSComparisonResult)NSOrderedDescending;
+            }
+            
+            if (distanceToStore1 < distanceToStore2) {
+                return (NSComparisonResult)NSOrderedAscending;
+            }
+            return (NSComparisonResult)NSOrderedSame;
+            
+        }] mutableCopy];
         
-        PFGeoPoint *storeLocation2 = [PFGeoPoint geoPointWithLatitude:[[obj2 valueForKey:@"latitude"] doubleValue] longitude:[[obj2 valueForKey:@"longitude"] doubleValue]];
-        double distanceToStore2 = [userLocation distanceInMilesTo:storeLocation2];
-        
-        if (distanceToStore1 > distanceToStore2) {
-            return (NSComparisonResult)NSOrderedDescending;
-        }
-        
-        if (distanceToStore1 < distanceToStore2) {
-            return (NSComparisonResult)NSOrderedAscending;
-        }
-        return (NSComparisonResult)NSOrderedSame;
-        
-    }] mutableCopy];
+        [searchTable reloadData];
+
+    }];
     
-    [searchTable reloadData];
-    //[[self view] setNeedsDisplay];
 }
 
 
@@ -125,7 +128,12 @@
     [searchTable setDelegate:self];
     [[self view] addSubview:searchTable];
     
-    [self setup];
+    if (_downloadFromNetwork) {
+        [self setup];
+    }
+    else {
+        [self reload];
+    }
 
 
 }
@@ -157,10 +165,11 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    /*
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"FinishedLoadingPic" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"receivedPush" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"addedOrRemovedStore" object:nil];
-
+     */
 }
 
 
@@ -208,8 +217,14 @@
      Store *currentCellStore = [storeList objectAtIndex:indexPath.row];
      
       PFGeoPoint *storeLocation = [PFGeoPoint geoPointWithLatitude:currentCellStore.latitude longitude:currentCellStore.longitude];
+     [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error){
+         userLocation = geoPoint;
+
       double distanceToStore = [userLocation distanceInMilesTo:storeLocation];
-     NSLog(@"distance is %g and %g", currentCellStore.latitude, currentCellStore.longitude);
+         cell.distance.text = [NSString stringWithFormat:@"%.2f mi", distanceToStore];
+
+         
+     }];
 
      
      NSString *neighborhood = [currentCellStore valueForKey:@"neighborhood"];
@@ -242,8 +257,6 @@
          [[cell numberOfPunches] setText:[NSString stringWithFormat:@"%d %@", punches, (punches==1)?@"punch":@"punches"]];
      }
      
-     NSLog(@"store: %@ and %@", [currentCellStore valueForKey:@"store_name"], [NSString stringWithFormat:@"%.2f mi", distanceToStore]);
-     cell.distance.text = [NSString stringWithFormat:@"%.2f mi", distanceToStore];
      cell.storeAddressLabel.text = addressString;
      cell.storeNameLabel.text = [currentCellStore valueForKey:@"store_name"];
      cell.storeImageLabel.image = [UIImage imageWithData:[currentCellStore valueForKey:@"store_avatar"]];

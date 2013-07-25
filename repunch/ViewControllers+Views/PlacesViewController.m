@@ -152,8 +152,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"FinishedLoadingPic" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"receivedPush" object:nil];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self name:@"FinishedLoadingPic" object:nil];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self name:@"receivedPush" object:nil];
 
 }
 
@@ -176,12 +176,14 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void)didDismissPresentedViewControllerWithCompletion{
-    [self dismissViewControllerAnimated:YES completion:^{
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        [appDelegate logout];
+-(void)didDismissPresentedViewControllerWithCompletionCode:(NSString *)dismissString {
+    if ([dismissString isEqualToString:@"logout"]) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            [appDelegate logout];
+        }];
         
-    }];
+    }
 
 }
 
@@ -261,9 +263,7 @@
 - (IBAction)showPunchCode:(id)sender {
     
     SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Your Punch Code" andMessage:[NSString stringWithFormat:@"Your punch code is %@", [localUser punch_code]]];
-    [alert addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
-        //nothing happens
-    }];
+    [alert addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:nil];
     [alert show];
 
     
@@ -273,6 +273,8 @@
     PlacesSearchViewController *placesSearchVC = [[PlacesSearchViewController alloc]init];
     placesSearchVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     placesSearchVC.modalDelegate = self;
+    placesSearchVC.downloadFromNetwork = !searchLoaded;
+    if (!searchLoaded) searchLoaded = TRUE;
     [self presentViewController:placesSearchVC animated:YES completion:NULL];
     
     

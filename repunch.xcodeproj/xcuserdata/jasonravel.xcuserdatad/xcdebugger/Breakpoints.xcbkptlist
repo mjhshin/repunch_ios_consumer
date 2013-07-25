@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "repunch/ViewControllers+Views/MessageAutoLayoutViewController.m"
-         timestampString = "396389188.074288"
+         timestampString = "396465495.100493"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "237"
-         endingLineNumber = "237"
+         startingLineNumber = "238"
+         endingLineNumber = "238"
          landmarkName = "-redeemOfferActn:"
          landmarkType = "5">
       </FileBreakpoint>
