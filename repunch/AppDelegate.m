@@ -40,12 +40,16 @@
     [PFFacebookUtils initializeFacebook];
     
     [Crittercism enableWithAppID: @"51df08478b2e331138000003"];
+	
+	if (application.applicationIconBadgeNumber != 0) {
+        application.applicationIconBadgeNumber = 0;
+        //[[PFInstallation currentInstallation] saveEventually];
+    }
     
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"repunch_local.sqlite"];
     
     //Set up default settings for: sorting by alphabetical order, no notifications
     [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Alphabetical Order", [NSNumber numberWithBool:NO], nil] forKeys:[NSArray arrayWithObjects:@"sort", @"notification", nil]]];
-
 
     //Register for Push Notifications
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
@@ -112,7 +116,9 @@
     return YES;
 }
 
-
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [PFFacebookUtils handleOpenURL:url];
+}
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
@@ -139,6 +145,12 @@
         }
     }];
     
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+	if ([error code] != 3010) { // 3010 is for the iPhone Simulator
+        NSLog(@"Application failed to register for push notifications: %@", error);
+	}
 }
 
 - (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
@@ -369,12 +381,6 @@
     
     self.window.rootViewController = self.tabBarController;
 
-}
-
-
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [PFFacebookUtils handleOpenURL:url];
 }
 
 @end
