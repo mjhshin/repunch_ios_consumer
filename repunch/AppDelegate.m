@@ -102,7 +102,8 @@
         else
             [self login];
     } else {
-        self.window.rootViewController = loginVC;
+		loginVC = [[LandingViewController alloc] init];
+        [self.window setRootViewController:loginVC];
     }
     
      
