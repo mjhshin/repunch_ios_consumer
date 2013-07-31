@@ -557,7 +557,7 @@
 							<object class="IBUILabel" id="173708280">
 								<reference key="NSNextResponder" ref="825228980"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{60, 18}, {200, 24}}</string>
+								<string key="NSFrame">{{60, 13}, {200, 24}}</string>
 								<reference key="NSSuperview" ref="825228980"/>
 								<reference key="NSNextKeyView" ref="830588543"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -587,7 +587,7 @@
 							<object class="IBUIButton" id="42736661">
 								<reference key="NSNextResponder" ref="825228980"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{20, 13}, {32, 31}}</string>
+								<string key="NSFrame">{{9, 9}, {32, 32}}</string>
 								<reference key="NSSuperview" ref="825228980"/>
 								<reference key="NSNextKeyView" ref="173708280"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -612,7 +612,7 @@
 							<object class="IBUIButton" id="830588543">
 								<reference key="NSNextResponder" ref="825228980"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{260, 13}, {40, 30}}</string>
+								<string key="NSFrame">{{279, 9}, {32, 32}}</string>
 								<reference key="NSSuperview" ref="825228980"/>
 								<reference key="NSNextKeyView" ref="963332427"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -635,7 +635,7 @@
 								<reference key="IBUIFont" ref="671274650"/>
 							</object>
 						</array>
-						<string key="NSFrame">{{0, -4}, {320, 51}}</string>
+						<string key="NSFrameSize">{320, 50}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSNextKeyView" ref="42736661"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -1055,9 +1055,9 @@
 						<int key="objectID">1886</int>
 						<reference key="object" ref="825228980"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="173708280"/>
 							<reference ref="42736661"/>
 							<reference ref="830588543"/>
+							<reference ref="173708280"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>

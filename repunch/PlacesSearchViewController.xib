@@ -43,7 +43,7 @@
 							<object class="IBUILabel" id="829830668">
 								<reference key="NSNextResponder" ref="431927092"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{60, 14}, {201, 24}}</string>
+								<string key="NSFrame">{{59, 13}, {201, 24}}</string>
 								<reference key="NSSuperview" ref="431927092"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -76,7 +76,7 @@
 							<object class="IBUIButton" id="270713149">
 								<reference key="NSNextResponder" ref="431927092"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{20, 9}, {32, 31}}</string>
+								<string key="NSFrame">{{9, 9}, {32, 32}}</string>
 								<reference key="NSSuperview" ref="431927092"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="829830668"/>
@@ -110,7 +110,7 @@
 								</object>
 							</object>
 						</array>
-						<string key="NSFrameSize">{320, 51}</string>
+						<string key="NSFrameSize">{320, 50}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="270713149"/>
@@ -125,6 +125,7 @@
 				<string key="NSFrame">{{0, 20}, {320, 548}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
+				<reference key="NSNextKeyView" ref="431927092"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MQA</bytes>

@@ -60,8 +60,8 @@
 - (void)viewDidLoad
 {
 
-    messageTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 46, 320, 450) style:UITableViewStylePlain];
-    [messageTable setFrame:CGRectMake(0, 46, 320, self.view.frame.size.height - 90)];
+    messageTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 51, 320, 450) style:UITableViewStylePlain];
+    [messageTable setFrame:CGRectMake(0, 51, 320, self.view.frame.size.height - 90)];
 
     [messageTable setDataSource:self];
     [messageTable setDelegate:self];
@@ -141,7 +141,7 @@
     }
     else {
         cell.senderName.text = [currentCellMessageReply valueForKey:@"sender_name"];
-        cell.subjectLabel.text = [NSString stringWithFormat:@"Re :%@ - %@", [currentCellMessage valueForKey:@"subject"], [currentCellMessageReply valueForKey:@"body"]];
+        cell.subjectLabel.text = [NSString stringWithFormat:@"RE: %@ - %@", [currentCellMessage valueForKey:@"subject"], [currentCellMessageReply valueForKey:@"body"]];
         cell.dateSent.text = [self formattedDateString:[currentCellMessageReply valueForKey:@"createdAt"]];
     }
 
@@ -161,7 +161,7 @@
     }
     
     if ([[currentCellMessageStatus objectForKey:@"is_read"] boolValue]) {
-        cell.contentView.backgroundColor = [UIColor colorWithRed:(float)190/256 green:(float)190/256 blue:(float)190/256 alpha:1];
+        cell.contentView.backgroundColor = [UIColor colorWithRed:(float)192/256 green:(float)192/256 blue:(float)192/256 alpha:(float)65/256]; //ARGB = 0x40C0C0C0
     }
     else {
         cell.contentView.backgroundColor = [UIColor whiteColor];
@@ -202,7 +202,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 78;
+    return 88;
 }
 
 #pragma mark - Helper Methods
@@ -302,7 +302,7 @@
     spinner.color = [UIColor blackColor];
     [[self view] addSubview:spinner];
     [spinner startAnimating];
-    greyedOutView = [[UIView alloc]initWithFrame:CGRectMake(0, 47, 320, self.view.frame.size.height - 47)];
+    greyedOutView = [[UIView alloc]initWithFrame:CGRectMake(0, 51, 320, self.view.frame.size.height - 51)];
     [greyedOutView setBackgroundColor:[UIColor colorWithRed:127/255 green:127/255 blue:127/255 alpha:0.5]];
     [[self view] addSubview:greyedOutView];
     [[self view] bringSubviewToFront:greyedOutView];

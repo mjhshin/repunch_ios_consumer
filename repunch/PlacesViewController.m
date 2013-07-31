@@ -77,7 +77,7 @@
                     [CoreDataStore saveContext];
                 }
                 
-                [savedStoresTable setFrame:CGRectMake(0, 46, 320, self.view.frame.size.height - 49)]; //49 is tab bar height
+                [savedStoresTable setFrame:CGRectMake(0, 51, 320, self.view.frame.size.height - 51)]; //49 is tab bar height
                 [savedStoresTable setContentSize:CGSizeMake(320, 105*savedStores.count)];
                 savedStores = [[savedStores sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]] mutableCopy];
                 [savedStoresTable reloadData];
@@ -107,7 +107,7 @@
     [super viewDidLoad];
     
     savedStores = [[NSMutableArray alloc] init];
-    savedStoresTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 46, 320, 0) style:UITableViewStylePlain];
+    savedStoresTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 51, 320, 0) style:UITableViewStylePlain];
     [savedStoresTable setDataSource:self];
     [savedStoresTable setDelegate:self];
     

@@ -247,8 +247,6 @@
          }
      }
      
-     addressString = [addressString stringByAppendingFormat:@"\n%@", categoryString];
-     
      if ([localUser alreadyHasStoreSaved:[currentCellStore objectId]]){
          PatronStore *patronStore = [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", localUser.patronId, [currentCellStore objectId]]];
          int punches = [[patronStore punch_count] intValue];
@@ -258,6 +256,7 @@
      }
      
      cell.storeAddressLabel.text = addressString;
+	 cell.storeCategoriesLabel.text = categoryString;
      cell.storeNameLabel.text = [currentCellStore valueForKey:@"store_name"];
      cell.storeImageLabel.image = [UIImage imageWithData:[currentCellStore valueForKey:@"store_avatar"]];
      
