@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *subject;
 @property (weak, nonatomic) IBOutlet UILabel *instructionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *storeName;
+@property (weak, nonatomic) IBOutlet UIView *toolbar;
 - (IBAction)sendFeedback:(id)sender;
 - (IBAction)closeButton:(id)sender;
 

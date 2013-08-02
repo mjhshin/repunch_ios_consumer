@@ -7,19 +7,14 @@
 //
 
 #import "ComposeViewController.h"
-#import "Store.h"
-#import "User.h"
 #import "AppDelegate.h"
 #import "SIAlertView.h"
-#import "CustomToolbar.h"
-#import "PatronStore.h"
-#import "CoreDataStore.h"
+#import "GradientBackground.h"
 
 #include <Parse/Parse.h>
-//TODO DATA VALIDATION FOR ALL FIELDS
 
-@implementation ComposeViewController{
-    User *localUser;
+@implementation ComposeViewController
+{
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -47,6 +42,7 @@
     if ([_messageType isEqualToString:@"Feedback"]){
         _subject.placeholder = [NSString stringWithFormat:@"Feedback for %@", [_storeObject store_name]];
     }
+	
     if ([_messageType isEqualToString:@"Gift"]){
         _subject.placeholder = [NSString stringWithFormat:@"Gift for %@", [_recipient valueForKey:@"first_name"]];
         _instructionLabel.hidden = YES;
@@ -56,14 +52,13 @@
         _subject.placeholder = [NSString stringWithFormat:@"Thanks for the gift!"];
         _instructionLabel.hidden = YES;
     }
-
-
-
 }
 
--(void)viewWillAppear:(BOOL)animated {
-    localUser = [(AppDelegate *)[[UIApplication sharedApplication] delegate] localUser];
-
+-(void)viewWillAppear:(BOOL)animated
+{
+	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
+	bgLayer.frame = _toolbar.bounds;
+	[_toolbar.layer insertSublayer:bgLayer atIndex:0];
 }
 
 - (void)didReceiveMemoryWarning

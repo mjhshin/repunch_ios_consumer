@@ -2,26 +2,22 @@
 //  RegisterViewController.h
 //  Repunch
 //
-//  Created by Gwendolyn Weston on 7/11/13.
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "ModalDelegate.h"
-#import "TPKeyboardAvoidingScrollView.h"
 
-@interface RegisterViewController : UIViewController<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
-@property (weak, nonatomic) IBOutlet TPKeyboardAvoidingScrollView *scrollView;
-@property (nonatomic, retain) id<ModalDelegate> modalDelegate;
+@interface RegisterViewController : UIViewController<UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameInput;
 @property (weak, nonatomic) IBOutlet UITextField *passwordInput;
+@property (weak, nonatomic) IBOutlet UITextField *passwordConfirmInput;
 @property (weak, nonatomic) IBOutlet UITextField *firstNameInput;
 @property (weak, nonatomic) IBOutlet UITextField *lastNameInput;
 @property (weak, nonatomic) IBOutlet UITextField *emailInput;
-@property (weak, nonatomic) IBOutlet UITextField *genderInput;
-@property (weak, nonatomic) IBOutlet UITextField *birthdayInput;
-@property (weak, nonatomic) IBOutlet UIButton *registerBtn;
+@property (weak, nonatomic) IBOutlet UITextField *ageInput;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *genderSelector;
+@property (weak, nonatomic) IBOutlet UIButton *registerButton;
 
 - (IBAction)registerWithFB:(id)sender;
 - (IBAction)registerWithEmail:(id)sender;

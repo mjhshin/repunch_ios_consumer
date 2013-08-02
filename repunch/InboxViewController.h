@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ModalDelegate.h"
 
-@interface InboxViewController : UIViewController < UITableViewDataSource, UITableViewDelegate, ModalDelegate>
+@interface InboxViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
 - (IBAction)openSettings:(id)sender;
 - (IBAction)openSearch:(id)sender;
 - (IBAction)showPunchCode:(id)sender;
 - (IBAction)refreshPage:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UIView *toolbar;
 
 @end

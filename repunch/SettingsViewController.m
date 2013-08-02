@@ -1,15 +1,19 @@
 //
 //  SettingsViewController.m
-//  repunch_two
+//  Repunch
 //
-//  Created by Gwendolyn Weston on 6/13/13.
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
 #import "SettingsViewController.h"
 #import "AppDelegate.h"
+#import "GradientBackground.h"
+#import "SharedData.h"
 
 @implementation SettingsViewController
+{
+	SharedData *sharedData;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -22,14 +26,25 @@
 
 - (void)viewDidLoad
 {
-
     [super viewDidLoad];
+	
+	sharedData = [SharedData init];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+	
+	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
+	bgLayer.frame = _toolbar.bounds;
+	[_toolbar.layer insertSublayer:bgLayer atIndex:0];
     
-    _currentLogin.text = [NSString stringWithFormat:@"You are currently logged is as %@", _userName];
+	PFObject* patron = [sharedData patron];
+	NSString* str1 = @"Logged in as ";
+	NSString* firstName = [patron objectForKey:@"first_name"];
+	NSString* str2 = @" ";
+	NSString* lastName = [patron objectForKey:@"last_name"];
+	
+    _currentLogin.text = [NSString stringWithFormat:@"%@%@%@%@", str1, firstName, str2, lastName];
 }
 
 - (void)didReceiveMemoryWarning
@@ -37,7 +52,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 - (IBAction)termsAndConditions:(id)sender {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.repunch.com/terms-mobile"]];
@@ -48,15 +62,13 @@
 }
 
 - (IBAction)logOut:(id)sender {
-    [[self modalDelegate] didDismissPresentedViewControllerWithCompletionCode:@"logout"];
+	AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+	[appDelegate logout];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)closeView:(id)sender {
-    [self dismissPresentedViewController];
-}
-
--(void)dismissPresentedViewController {
-    [[self modalDelegate] didDismissPresentedViewController];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

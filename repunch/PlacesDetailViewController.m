@@ -16,8 +16,10 @@
 #import "AppDelegate.h"
 #import "ComposeViewController.h"
 #import "RepunchFriendsViewController.h"
+#import "GradientBackground.h"
 
-@implementation PlacesDetailViewController{
+@implementation PlacesDetailViewController
+{
     NSMutableArray *placeRewardData;
     PlacesDetailMapViewController *placesDetailMapVC;
     User *localUser;
@@ -35,8 +37,13 @@
     return self;
 }
 
--(void)viewWillAppear:(BOOL)animated{
+-(void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:YES];
+	
+	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
+	bgLayer.frame = _toolbar.bounds;
+	[_toolbar.layer insertSublayer:bgLayer atIndex:0];
     
     [_rewardsTable reloadData];
     
@@ -78,7 +85,8 @@
 
 }
 
--(void)viewDidDisappear:(BOOL)animated{
+-(void)viewDidDisappear:(BOOL)animated
+{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"receivedPush" object:nil];
 
 }
@@ -87,7 +95,6 @@
 {
     [super viewDidLoad];
     
-    localUser = [(AppDelegate *)[[UIApplication sharedApplication] delegate] localUser];
     _isSavedStore = [localUser alreadyHasStoreSaved:[_storeObject objectId]];
     
     _scrollView.scrollEnabled = YES;
@@ -194,7 +201,8 @@
     return lowestPoint;
 }
 
--(NSString *)getHoursString{
+-(NSString *)getHoursString
+{
     NSDateFormatter *formatter_out = [[NSDateFormatter alloc] init];
     [formatter_out setDateFormat:@"h:mm a"];
     
@@ -404,7 +412,7 @@
 -(void)addOrRemovePlace{
     NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
     
-    UIView *greyedOutView = [[UIView alloc]initWithFrame:CGRectMake(0, 47, 320, self.view.frame.size.height - 47)];
+    UIView *greyedOutView = [[UIView alloc]initWithFrame:CGRectMake(0, 50, 320, self.view.frame.size.height - 50)];
     [greyedOutView setBackgroundColor:[UIColor colorWithRed:127/255 green:127/255 blue:127/255 alpha:0.5]];
     [[self view] addSubview:greyedOutView];
     [[self view] bringSubviewToFront:greyedOutView];
@@ -600,7 +608,11 @@
 
 - (IBAction)callButton:(id)sender {
     NSString *number = [_storeObject phone_number];
-    NSString *phoneNumber = [number stringByReplacingOccurrencesOfString:@"[^0-9]" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, [number length])];
+    NSString *phoneNumber = [number stringByReplacingOccurrencesOfString:@"[^0-9]"
+															  withString:@""
+																 options:NSRegularExpressionSearch
+																   range:NSMakeRange(0, [number length])];
+	
     NSString *phoneNumberUrl = [@"tel://" stringByAppendingString:phoneNumber];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumberUrl]];
 

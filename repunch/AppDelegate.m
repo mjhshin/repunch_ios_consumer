@@ -2,52 +2,36 @@
 //  AppDelegate.m
 //  Repunch
 //
-//  Created by Gwendolyn Weston on 7/1/13.
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
 #import "AppDelegate.h"
-#import "PlacesViewController.h"
+#import "MyPlacesViewController.h"
 #import "InboxViewController.h"
 #import "LandingViewController.h"
-
 #import <Parse/Parse.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import "Crittercism.h"
-
-#import "Store.h"
-#import "User.h"
-#import "PatronStore.h"
-
 #import "SIAlertView.h"
+#import "SharedData.h"
 
-#import "CoreDataStore.h"
-
-@implementation AppDelegate{
-    LandingViewController *loginVC;
-    PlacesViewController *placesVC;
+@implementation AppDelegate {
+    LandingViewController *landingVC;
+    MyPlacesViewController *myPlacesVC;
     InboxViewController *inboxVC;
+	SharedData* sharedData;
 }
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     //Set up API keys
     [Parse setApplicationId:@"m0EdwpRYlJwttZLZ5PUk7y13TWCnvSScdn8tfVoh"
                   clientKey:@"XZMybowaEMLHszQTEpxq4Yk2ksivkYj9m1c099ZD"];
     
-    [PFFacebookUtils initializeFacebook];
-    
+    [PFFacebookUtils initializeFacebook];    
     [Crittercism enableWithAppID: @"51df08478b2e331138000003"];
 	
-	if (application.applicationIconBadgeNumber != 0) {
-        application.applicationIconBadgeNumber = 0;
-        //[[PFInstallation currentInstallation] saveEventually];
-    }
-    
-    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"repunch_local.sqlite"];
-    
     //Set up default settings for: sorting by alphabetical order, no notifications
     [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Alphabetical Order", [NSNumber numberWithBool:NO], nil] forKeys:[NSArray arrayWithObjects:@"sort", @"notification", nil]]];
 
@@ -61,103 +45,80 @@
     if (remoteNotif != nil) {
         NSLog(@"opened from push: %@", remoteNotif);
         // app was launched from push notification so open to the inbox
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"receivedPush" object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"receivedPush" object:self]; //TODO: causing duplicate alert
         [self.tabBarController setSelectedIndex:2];
     }
+	
+	sharedData = [SharedData init];
     
-    //for some reason, Core Data won't persist entities between runs, so just delete all data to clear any weird inconsistencies
-    [CoreDataStore deleteDataForObject:@"Store"];
-    [CoreDataStore deleteDataForObject:@"User"];
-    [CoreDataStore deleteDataForObject:@"PatronStore"];
-    
-    //debugging printing
-    [CoreDataStore printDataForObject:@"Store"];
-    [CoreDataStore printDataForObject:@"User"];
-    [CoreDataStore printDataForObject:@"PatronStore"];
-    
-    //[PFUser logOut];
-    
-    //if user is cached, load their cached data
-    //else, go to login page
-    if ([PFUser currentUser])
-    {
-        _localUser = [User MR_findFirstByAttribute:@"username" withValue:[[PFUser currentUser]username]];
-        
-        NSLog(@"user:%@", [_localUser username]);
-        
-        if (!_patronObject){
-            PFObject *patronObject = [[PFUser currentUser] valueForKey:@"Patron"];
-            
-            [patronObject fetchIfNeededInBackgroundWithBlock:^(PFObject *fetchedPatronObject, NSError *error) {
+	PFUser* currentUser = [PFUser currentUser];
+	
+    if (currentUser) {
+		//if patron object is null for some reason
+        if ( ![sharedData patron] ) {
+            PFObject *patron = [currentUser valueForKey:@"Patron"];
+            [patron fetchIfNeededInBackgroundWithBlock:^(PFObject *result, NSError *error) {
                 if (!error) {
-                    _patronObject = fetchedPatronObject;
-                    if (!_localUser){
-                        _localUser = [User MR_createEntity];
-                        [_localUser setFromParseUserObject:[PFUser currentUser] andPatronObject:fetchedPatronObject];
-                    }
-                    
-                    [self login];
+                    [sharedData setPatron:result];
+                    [self presentTabBarController];
                 }
                 else {
-                    NSLog(@"error in app delegate: %@", error);
+                    NSLog(@"Failed to fetch Patron object: %@", error);
                 }
             }];
-        }
-        else
-            [self login];
+			
+        } else {
+            [self presentTabBarController];
+		}
+		
     } else {
-		loginVC = [[LandingViewController alloc] init];
-        [self.window setRootViewController:loginVC];
+		landingVC = [[LandingViewController alloc] init];
+        self.window.rootViewController = landingVC;
     }
-    
      
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+	
     return YES;
 }
 
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     return [PFFacebookUtils handleOpenURL:url];
 }
 
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    [MagicalRecord cleanUp];
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [PFFacebookUtils handleOpenURL:url];
 }
 
-
+- (void)applicationWillTerminate:(UIApplication *)application {
+    //[MagicalRecord cleanUp];
+}
 
 #pragma mark - Push Notification methods
 
-- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
-{
-    NSLog(@"setting installation here");
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"notification"];
+- (void)application:(UIApplication*)application
+	didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken {
+    
+	// Store the deviceToken in the current Installation and save it to Parse.
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:deviceToken];
-    //[currentInstallation setValue:@"ios" forKey:@"deviceType"];
-    [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!error){
-            NSLog(@"%i", succeeded);
-        }
-        else {
-            NSLog(@"%@", error);
-        }
-    }];
-    
+    [currentInstallation saveInBackground];
 }
 
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-	if ([error code] != 3010) { // 3010 is for the iPhone Simulator
+- (void)application:(UIApplication *)application
+	didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+	
+	if ([error code] != 3010) { // 3010 is for the iPhone Simulator. Ignore this
         NSLog(@"Application failed to register for push notifications: %@", error);
 	}
 }
 
-- (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
-{
+- (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo {
+	/*
     [PFPush handlePush:userInfo];
     if ([[userInfo valueForKey:@"push_type"] isEqualToString:@"validate_redeem"]){
-        if ([[_patronObject valueForKey:@"facebook_id"] length]>0){
+        if ([[_patron valueForKey:@"facebook_id"] length]>0){
             SIAlertView *alertView = [[SIAlertView alloc]initWithTitle:@"Want More Punches?" andMessage:@"Would you like to post to Facebook to receive more punches?"];
             [alertView addButtonWithTitle:@"No thanks." type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
                 NSDictionary *functionParameters = [[NSDictionary alloc]initWithObjectsAndKeys:[userInfo valueForKey:@"patron_store_id"], @"patron_store_id", @"false", @"accept", nil];
@@ -181,7 +142,7 @@
             
         }
 
-    }
+    }*/
     [[NSNotificationCenter defaultCenter] postNotificationName:@"receivedPush" object:self];
     
     
@@ -337,10 +298,9 @@
     
 }
 
-/**
- * A function for parsing URL parameters.
- */
-- (NSDictionary*)parseURLParams:(NSString *)query {
+
+//A function for parsing URL parameters.
+- (NSDictionary*)parseURLParams:(NSString*)query {
     NSArray *pairs = [query componentsSeparatedByString:@"&"];
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     for (NSString *pair in pairs) {
@@ -352,35 +312,35 @@
     return params;
 }
 
-
--(void)logout{
-    [PFUser logOut];
-    self.window.rootViewController = loginVC;
-}
-
--(void)login {
-    //Init Tab Bar and all related view controllers
-    placesVC = [[PlacesViewController alloc] init];
+- (void)presentTabBarController
+{
+    // create tab bar controller its child view controllers
+    myPlacesVC = [[MyPlacesViewController alloc] init];
     inboxVC = [[InboxViewController alloc] init];
-    loginVC = [[LandingViewController alloc] init];
     
     self.tabBarController = [[UITabBarController alloc] init];
-    self.tabBarController.viewControllers = @[placesVC, inboxVC];
+    self.tabBarController.viewControllers = @[myPlacesVC, inboxVC];
     
-    UITabBarItem *placeItem = [self.tabBarController.tabBar.items objectAtIndex:0];
-    [placeItem setTitle:@"My Places"];
-    [placeItem setImage:[UIImage imageNamed:@"ico-tab-places@2xsmall.png"]];
+    UITabBarItem *myPlacesTab = [self.tabBarController.tabBar.items objectAtIndex:0];
+    [myPlacesTab setTitle:@"My Places"];
+    [myPlacesTab setImage:[UIImage imageNamed:@"ico-tab-places.png"]];
     
-    UITabBarItem *inboxItem = [self.tabBarController.tabBar.items objectAtIndex:1];
-    [inboxItem setTitle:@"Inbox"];
-    [inboxItem setImage:[UIImage imageNamed:@"ico-tab-inbox@2xsmall.png"]];
+	UITabBarItem *inboxTab = [self.tabBarController.tabBar.items objectAtIndex:1];
+    [inboxTab setTitle:@"Inbox"];
+    [inboxTab setImage:[UIImage imageNamed:@"ico-tab-inbox.png"]];
     
     NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary: [[UITabBarItem appearance] titleTextAttributesForState:UIControlStateNormal]];
     [attributes setValue:[UIFont fontWithName:@"Avenir" size:14] forKey:UITextAttributeFont];
     [[UITabBarItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
     
     self.window.rootViewController = self.tabBarController;
+}
 
+- (void)logout
+{
+    [PFUser logOut];
+	landingVC = [[LandingViewController alloc] init];
+	self.window.rootViewController = landingVC;
 }
 
 @end

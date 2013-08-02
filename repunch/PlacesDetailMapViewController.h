@@ -7,14 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ModalDelegate.h"
-#import "Store.h"
 
 @interface PlacesDetailMapViewController : UIViewController
+
 - (IBAction)closeView:(id)sender;
 - (IBAction)getDirections:(id)sender;
 
-@property (nonatomic, retain) Store *place;
-@property (nonatomic, retain) id<ModalDelegate> modalDelegate;
+@property (weak, nonatomic) IBOutlet UIView *toolbar;
 
 @end

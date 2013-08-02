@@ -7,6 +7,7 @@
 //
 
 #import "GlobalToolbar.h"
+#import "GradientBackground.h"
 
 @implementation GlobalToolbar
 
@@ -16,7 +17,10 @@
     if (self) {
         // Initialization code
         
-        [self setBackgroundImage:[UIImage imageNamed:@"bkg_header"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+		CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
+		bgLayer.frame = self.bounds;
+		[self.layer insertSublayer:bgLayer atIndex:0];
+        //[self setBackgroundImage:[UIImage imageNamed:@"bkg_header"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
         
         UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         

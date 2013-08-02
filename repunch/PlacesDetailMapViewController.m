@@ -9,6 +9,7 @@
 #import "PlacesDetailMapViewController.h"
 #import "MKMapView+ZoomLevel.h"
 #import "MapPin.h"
+#import "GradientBackground.h"
 
 @implementation PlacesDetailMapViewController
 
@@ -21,10 +22,15 @@
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
+	bgLayer.frame = _toolbar.bounds;
+	[_toolbar.layer insertSublayer:bgLayer atIndex:0];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     
     MKMapView *placeMapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 47, self.view.frame.size.width, self.view.frame.size.height - 47)];
     [placeMapView setCenterCoordinate:CLLocationCoordinate2DMake([_place latitude],[_place longitude]) zoomLevel:14 animated:NO];

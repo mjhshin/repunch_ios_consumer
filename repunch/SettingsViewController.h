@@ -1,18 +1,15 @@
 //
 //  SettingsViewController.h
-//  repunch_two
+//	Repunch
 //
-//  Created by Gwendolyn Weston on 6/13/13.
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "ModalDelegate.h"
 
 @interface SettingsViewController : UIViewController <UITableViewDataSource, UITabBarDelegate>
 
-@property (nonatomic, retain) id<ModalDelegate> modalDelegate;
-@property (nonatomic, retain) NSString *userName;
+@property (weak, nonatomic) IBOutlet UIView *toolbar;
 
 - (IBAction)termsAndConditions:(id)sender;
 - (IBAction)privacyPolicy:(id)sender;

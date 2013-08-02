@@ -7,14 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ModalDelegate.h"
 
-@interface LandingViewController : UIViewController <ModalDelegate>
-- (IBAction)signIn:(id)sender;
-- (IBAction)registerUser:(id)sender;
+@interface LandingViewController : UIViewController
 
-//Modal Delegate Methods
-- (void)didDismissPresentedViewController;
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet UIButton *registerButton;
 
+- (IBAction)registerButtonPress:(id)sender;
+- (IBAction)loginButtonPress:(id)sender;
 
 @end

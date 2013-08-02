@@ -70,12 +70,12 @@
         <relationship name="sent_messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Category" positionX="-675" positionY="-360" width="128" height="90"/>
-        <element name="Hour" positionX="-369" positionY="-186" width="128" height="105"/>
-        <element name="Message" positionX="-956" positionY="-81" width="128" height="180"/>
-        <element name="PatronStore" positionX="-441" positionY="270" width="128" height="135"/>
-        <element name="Reward" positionX="-468" positionY="-318" width="128" height="120"/>
-        <element name="Store" positionX="-585" positionY="-51" width="128" height="285"/>
-        <element name="User" positionX="-767" positionY="252" width="128" height="225"/>
+        <element name="Category" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Hour" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Message" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="PatronStore" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Reward" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Store" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="User" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

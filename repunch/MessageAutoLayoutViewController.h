@@ -24,9 +24,9 @@
 
 
 //VIEW UI LABELS + ACTNS
-    //Scroll view
+@property (weak, nonatomic) IBOutlet UIView *toolbar;
 
-    //Toolbar methods + labels
+//Toolbar methods + labels
 @property (weak, nonatomic) IBOutlet UILabel *messageNameLbl;
 @property (weak, nonatomic) IBOutlet UIButton *replyToMessageLbl;
 
@@ -34,15 +34,14 @@
 - (IBAction)deleteMessageActn:(id)sender;
 - (IBAction)closeSettingActn:(id)sender;
 
-    //Received Message labels
+//Received Message labels
 @property (weak, nonatomic) IBOutlet UILabel *senderNameLbl;
 @property (weak, nonatomic) IBOutlet UILabel *dateSentLbl;
 @property (weak, nonatomic) IBOutlet UITextView *sentBodyLbl;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sentBodyHeightConstraint;
 
 
-    //Offer labels
-
+//Offer labels
 @property (weak, nonatomic) IBOutlet UIButton *offerLbl;
 @property (weak, nonatomic) IBOutlet UILabel *offerTimeLeftLbl;
 @property (weak, nonatomic) IBOutlet UILabel *offerCountdownLbl;
@@ -50,7 +49,7 @@
 
 - (IBAction)redeemOfferActn:(id)sender;
 
-    //Reply Message labels
+//Reply Message labels
 @property (weak, nonatomic) IBOutlet UILabel *replyNameLbl;
 @property (weak, nonatomic) IBOutlet UILabel *dateRepliedLbl;
 @property (weak, nonatomic) IBOutlet UITextView *repliedBodyLbl;

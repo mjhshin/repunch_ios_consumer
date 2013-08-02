@@ -8,8 +8,8 @@
 
 #import "MessageAutoLayoutViewController.h"
 #import "ComposeViewController.h"
-#import "PatronStore.h"
 #import "SIAlertView.h"
+#import "GradientBackground.h"
 
 @implementation MessageAutoLayoutViewController {
     NSTimer *timer;
@@ -18,6 +18,10 @@
 #pragma mark - Setup methods
 
 -(void)viewWillAppear:(BOOL)animated {
+	
+	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
+	bgLayer.frame = _toolbar.bounds;
+	[_toolbar.layer insertSublayer:bgLayer atIndex:0];
         
     if([_messageType isEqualToString:@"offer"]){
         timer = [NSTimer scheduledTimerWithTimeInterval:1.0f

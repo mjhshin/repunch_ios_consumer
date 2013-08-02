@@ -8,30 +8,25 @@
 
 #import "InboxViewController.h"
 #import "AppDelegate.h"
-#import "PlacesSearchViewController.h"
+#import "SearchViewController.h"
 #import "SettingsViewController.h"
-
 #import "MessageAutoLayoutViewController.h"
-
-#import "GlobalToolbar.h"
 #import "MessageCell.h"
 #import "SIAlertView.h"
-
-#import "User.h"
-#import "Message.h"
-
+#import "GradientBackground.h"
 #import <Parse/Parse.h>
 
-@implementation InboxViewController{
+@implementation InboxViewController
+{
     NSMutableArray *messagesStatuses;
-    User *localUser;
     PFObject *patronObject;
     UITableView *messageTable;
     UIActivityIndicatorView *spinner;
     UIView *greyedOutView;
 }
 
--(void)setup{
+-(void)setup
+{
     PFRelation *messageStatus = [patronObject relationforKey:@"ReceivedMessages"];
     PFQuery *messageStatusQuery = [messageStatus query];
     [messageStatusQuery includeKey:@"Message"];
@@ -60,22 +55,24 @@
 - (void)viewDidLoad
 {
 
-    messageTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 51, 320, 450) style:UITableViewStylePlain];
-    [messageTable setFrame:CGRectMake(0, 51, 320, self.view.frame.size.height - 90)];
+    messageTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, 320, 450) style:UITableViewStylePlain];
+    [messageTable setFrame:CGRectMake(0, 50, 320, self.view.frame.size.height - 50)];
 
     [messageTable setDataSource:self];
     [messageTable setDelegate:self];
         
-    localUser = [(AppDelegate *)[[UIApplication sharedApplication] delegate] localUser];
-    patronObject = [(AppDelegate *)[[UIApplication sharedApplication] delegate] patronObject];
+    //patronObject = [(AppDelegate *)[[UIApplication sharedApplication] delegate] patron];
     
     [self setup];
-
-
 }
 
--(void)viewWillAppear:(BOOL)animated{
+-(void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:YES];
+	
+	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
+	bgLayer.frame = _toolbar.bounds;
+	[_toolbar.layer insertSublayer:bgLayer atIndex:0];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(setup)
@@ -128,7 +125,6 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"MessageCell" owner:self options:nil]objectAtIndex:0];
     }
-    
 
     id currentCellMessageStatus = [messagesStatuses objectAtIndex:indexPath.row];
     id currentCellMessage = [currentCellMessageStatus objectForKey:@"Message"];
@@ -271,16 +267,14 @@
 - (IBAction)openSettings:(id)sender {
     
     SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
-    settingsVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    settingsVC.modalDelegate = self;
-    settingsVC.userName = [localUser fullName];
+    //settingsVC.userName = [localUser fullName];
     [self presentViewController:settingsVC animated:YES completion:NULL];
 
 }
 
 - (IBAction)openSearch:(id)sender {
     
-    PlacesSearchViewController *placesSearchVC = [[PlacesSearchViewController alloc]init];
+    SearchViewController *placesSearchVC = [[SearchViewController alloc]init];
     placesSearchVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     placesSearchVC.modalDelegate = self;
     [self presentViewController:placesSearchVC animated:YES completion:NULL];
@@ -302,7 +296,7 @@
     spinner.color = [UIColor blackColor];
     [[self view] addSubview:spinner];
     [spinner startAnimating];
-    greyedOutView = [[UIView alloc]initWithFrame:CGRectMake(0, 51, 320, self.view.frame.size.height - 51)];
+    greyedOutView = [[UIView alloc]initWithFrame:CGRectMake(0, 50, 320, self.view.frame.size.height - 50)];
     [greyedOutView setBackgroundColor:[UIColor colorWithRed:127/255 green:127/255 blue:127/255 alpha:0.5]];
     [[self view] addSubview:greyedOutView];
     [[self view] bringSubviewToFront:greyedOutView];
