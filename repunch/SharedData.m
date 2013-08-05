@@ -22,6 +22,7 @@ static SharedData *sharedDataInstance = nil;    // static instance variable
     return sharedDataInstance;
 }
 
+//PatronStore methods
 - (NSDictionary*) getAllPatronStores
 {
 	return _patronStores;
@@ -42,14 +43,26 @@ static SharedData *sharedDataInstance = nil;    // static instance variable
 	return [_patronStores objectForKey:objectId];
 }
 
-- (void)addStore:(PFObject *)store forKey:(NSString *)objectId
+//Store methods
+- (void)addStore:(PFObject *)store
 {
-	[_stores setObject:store forKey:objectId];
+	[_stores setObject:store forKey:[store objectId]];
 }
 
 - (PFObject *)getStore:(NSString *)objectId
 {
 	return [_stores objectForKey:objectId];
+}
+
+//MessageStatus/Message methods
+- (void)addMessage:(PFObject *)messageStatus
+{
+    [_messageStatuses setObject:messageStatus forKey:[messageStatus objectId]];
+}
+
+- (PFObject *)getMessage:(NSString *)objectId
+{
+    return [_messageStatuses objectForKey:objectId];
 }
 
 @end

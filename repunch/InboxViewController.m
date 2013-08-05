@@ -12,48 +12,25 @@
 #import "SettingsViewController.h"
 #import "MessageAutoLayoutViewController.h"
 #import "MessageCell.h"
+#import "SharedData.h"
 #import "SIAlertView.h"
 #import "GradientBackground.h"
 #import <Parse/Parse.h>
 
 @implementation InboxViewController
 {
+    SharedData *sharedData;
+    PFObject *patron;
     NSMutableArray *messagesStatuses;
-    PFObject *patronObject;
     UITableView *messageTable;
     UIActivityIndicatorView *spinner;
     UIView *greyedOutView;
 }
 
--(void)setup
-{
-    PFRelation *messageStatus = [patronObject relationforKey:@"ReceivedMessages"];
-    PFQuery *messageStatusQuery = [messageStatus query];
-    [messageStatusQuery includeKey:@"Message"];
-    [messageStatusQuery includeKey:@"Message.Reply"];
-
-    [messageStatusQuery findObjectsInBackgroundWithBlock:^(NSArray *fetchedMessageStatuses, NSError *error) {
-        
-        //the array has to be mutable in order to later delete messages
-        messagesStatuses = [fetchedMessageStatuses mutableCopy];
-        
-        //is sorted by updatedAt as opposed to createdAt, then will sort by reply date value (if there is a reply)
-        messagesStatuses = [[messagesStatuses sortedArrayUsingDescriptors:[NSArray arrayWithObject: [NSSortDescriptor sortDescriptorWithKey:@"Message.updatedAt" ascending:NO]]] mutableCopy];
-        
-        //s.t. table is only as tall as there are cells
-        [messageTable setContentSize:CGSizeMake(320, 78*messagesStatuses.count)];
-        [messageTable reloadData];
-        [[self view] addSubview:messageTable];
-        
-        [spinner stopAnimating];
-        [greyedOutView removeFromSuperview];
-
-    }];
-
-}
-
 - (void)viewDidLoad
 {
+    sharedData = [SharedData init];
+    patron = [sharedData _patron];
 
     messageTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, 320, 450) style:UITableViewStylePlain];
     [messageTable setFrame:CGRectMake(0, 50, 320, self.view.frame.size.height - 50)];
@@ -61,9 +38,7 @@
     [messageTable setDataSource:self];
     [messageTable setDelegate:self];
         
-    //patronObject = [(AppDelegate *)[[UIApplication sharedApplication] delegate] patron];
-    
-    [self setup];
+    [self loadInbox];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -95,13 +70,48 @@
 }
 
 
--(void)viewDidDisappear:(BOOL)animated{
+-(void)viewDidDisappear:(BOOL)animated
+{
     //[[NSNotificationCenter defaultCenter] removeObserver:self name:@"receivedPush" object:nil];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+-(void)loadInbox
+{
+    PFRelation *messageStatus = [patron relationforKey:@"ReceivedMessages"];
+    PFQuery *messageStatusQuery = [messageStatus query];
+    [messageStatusQuery includeKey:@"Message"];
+    [messageStatusQuery includeKey:@"Message.Reply"];
+    
+    [messageStatusQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+        if(!error) {
+            for(PFObject *messageStatus in results) {
+                [sharedData addMessage:messageStatus];
+            }
+        } else {
+            
+        }
+        
+        //the array has to be mutable in order to later delete messages
+        messagesStatuses = [results mutableCopy];
+        
+        //is sorted by updatedAt as opposed to createdAt, then will sort by reply date value (if there is a reply)
+        messagesStatuses = [[messagesStatuses sortedArrayUsingDescriptors:[NSArray arrayWithObject: [NSSortDescriptor sortDescriptorWithKey:@"Message.updatedAt" ascending:NO]]] mutableCopy];
+        
+        //s.t. table is only as tall as there are cells
+        [messageTable setContentSize:CGSizeMake(320, 78*messagesStatuses.count)];
+        [messageTable reloadData];
+        [[self view] addSubview:messageTable];
+        
+        [spinner stopAnimating];
+        [greyedOutView removeFromSuperview];
+        
+    }];
+    
 }
 
 #pragma mark - Table view data source
