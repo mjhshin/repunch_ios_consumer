@@ -1,0 +1,20 @@
+//
+//  LoginViewController.h
+//  Repunch
+//
+//  Copyright (c) 2013 Repunch. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface LoginViewController : UIViewController
+
+@property (weak, nonatomic) IBOutlet UITextField *usernameInput;
+@property (weak, nonatomic) IBOutlet UITextField *passwordInput;
+
+- (IBAction)cancelLogin:(id)sender;
+- (IBAction)loginWithFB:(id)sender;
+- (IBAction)loginWithEmail:(id)sender;
+- (IBAction)getForgottenPassword:(id)sender;
+
+@end

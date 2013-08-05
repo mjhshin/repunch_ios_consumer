@@ -1,0 +1,20 @@
+//
+//  PlacesSearchViewController.h
+//  Repunch
+//
+//  Created by Gwendolyn Weston on 6/18/13.
+//  Copyright (c) 2013 Repunch. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "ModalDelegate.h"
+
+@interface SearchViewController : UIViewController <UIScrollViewDelegate, ModalDelegate, UITableViewDataSource, UITableViewDelegate>
+@property BOOL downloadFromNetwork;
+@property (nonatomic, retain) id<ModalDelegate> modalDelegate;
+@property (weak, nonatomic) IBOutlet UIView *toolbar;
+- (IBAction)closeView:(id)sender;
+-(void)setup;
+
+
+@end
