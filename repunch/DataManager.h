@@ -12,7 +12,7 @@
 
 + (DataManager *) getSharedInstance;
 
-//TODO: change some of these to NSCache for out-of-memory scenarios
+// TODO: change some of these to NSCache for out-of-memory scenarios
 @property (strong, atomic) NSMutableDictionary *patronStores;
 @property (strong, atomic) NSMutableDictionary *stores;
 @property (strong, atomic) NSMutableDictionary *messageStatuses;
@@ -20,17 +20,21 @@
 @property (strong, atomic) NSCache *storeImageCache;
 @property (strong, atomic) PFObject *patron;
 
-//PatronStore methods
+// PatronStore methods
 - (NSDictionary*) getAllPatronStores;
 - (NSInteger) getPatronStoreCount;
 - (void)addPatronStore:(PFObject *)patronStore forKey:(NSString *)objectId;
 - (PFObject *)getPatronStore:(NSString *)objectId;
 
-//Store methods
+// Store methods
 - (void)addStore:(PFObject *)store;
 - (PFObject *)getStore:(NSString *)objectId;
 
-//MessageStatus/Message methods
+// Store image cache methods
+- (void)addStoreImage:(NSData *)image forKey:(NSString *)storeId;
+- (NSData *)getStoreImage:(NSString *)storeId;
+
+// MessageStatus/Message methods
 - (void)addMessage:(PFObject *)messageStatus;
 - (PFObject *)getMessage:(NSString *)objectId;
 

@@ -6,24 +6,8 @@
 //
 
 #import "MyPlacesViewController.h"
-#import "SearchViewController.h"
-#import "PlacesDetailViewController.h"
-#import "SettingsViewController.h"
-#import "MyPlacesTableViewCell.h"
-#import "GlobalToolbar.h"
-#import "AppDelegate.h"
-#import "GradientBackground.h"
-#import "DataManager.h"
-#import "SIAlertView.h"
-#import <Parse/Parse.h>
 
 @implementation MyPlacesViewController
-{
-	DataManager* sharedData;
-	PFObject* patron;
-	NSMutableArray* storeIdArray;
-    UITableView* myPlacesTableView;
-}
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
 {
@@ -34,19 +18,20 @@
 {
     [super viewDidLoad];
 	
-	sharedData = [DataManager getSharedInstance];
-	patron = [sharedData patron];
-	storeIdArray = [[NSMutableArray alloc] init];
+	self.sharedData = [DataManager getSharedInstance];
+	self.patron = [self.sharedData patron];
+	self.storeIdArray = [NSMutableArray array];
+    self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
 	
 	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
 	bgLayer.frame = _toolbar.bounds;
 	[self.toolbar.layer insertSublayer:bgLayer atIndex:0];
     
 	int navBarOffset = self.view.frame.size.height - 50; //50 is nav bar height
-	myPlacesTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, 320, navBarOffset) style:UITableViewStylePlain];
-    [myPlacesTableView setDataSource:self];
-    [myPlacesTableView setDelegate:self];
-    [[self view] addSubview:myPlacesTableView];
+	self.myPlacesTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, 320, navBarOffset) style:UITableViewStylePlain];
+    [self.myPlacesTableView setDataSource:self];
+    [self.myPlacesTableView setDelegate:self];
+    [[self view] addSubview:self.myPlacesTableView];
 	
 	[self loadMyPlaces];
 }
@@ -55,8 +40,8 @@
     [super viewWillAppear:animated];
     
     //alert to demonstrate how to get the punch code.  will only appear once.
-    if (![@"1" isEqualToString:[[NSUserDefaults standardUserDefaults]
-                                objectForKey:@"showPunchCodeInstructions"]]) {
+    if (![@"1" isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"showPunchCodeInstructions"]])
+    {
         [[NSUserDefaults standardUserDefaults] setValue:@"1" forKey:@"showPunchCodeInstructions"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
@@ -64,70 +49,62 @@
         [punchCodeHelpAlert addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:nil];
         [punchCodeHelpAlert show];
     }
-
-    //[[NSNotificationCenter defaultCenter] addObserver:self
-    //                                         selector:@selector(setup)
-    //                                             name:@"receivedPush"
-    //                                           object:nil];
-    
-    //[[NSNotificationCenter defaultCenter] addObserver:self
-    //                                         selector:@selector(receiveLoadedPics:)
-    //                                             name:@"FinishedLoadingPic"
-    //                                           object:nil];
-
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    //[[NSNotificationCenter defaultCenter] removeObserver:self name:@"FinishedLoadingPic" object:nil];
-    //[[NSNotificationCenter defaultCenter] removeObserver:self name:@"receivedPush" object:nil];
 }
-
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+    
+    // terminate all pending download connections
+    NSArray *allDownloads = [self.imageDownloadsInProgress allValues];
+    [allDownloads makeObjectsPerformSelector:@selector(cancelImageDownload)];
+    
+    [self.imageDownloadsInProgress removeAllObjects];
 }
 
 - (void)loadMyPlaces
 {
-    PFRelation *patronStoreRelation = [patron relationforKey:@"PatronStores"];
+    PFRelation *patronStoreRelation = [self.patron relationforKey:@"PatronStores"];
     PFQuery *patronStoreQuery = [patronStoreRelation query];
     [patronStoreQuery includeKey:@"Store"];
 	//patronStoreQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
-    
-    [patronStoreQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
-        if (!error){
-            for (PFObject *patronStore in results) {
+
+    [patronStoreQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
+    {
+        if (!error)
+        {
+            for (PFObject *patronStore in results)
+            {
 				PFObject *store = [patronStore objectForKey:@"Store"];
 				NSString *storeId = [store objectId];
-				[sharedData addPatronStore:patronStore forKey:storeId];
-				[sharedData addStore:store];
-				[storeIdArray addObject:storeId];
+				[self.sharedData addPatronStore:patronStore forKey:storeId];
+				[self.sharedData addStore:store];
+				[self.storeIdArray addObject:storeId];
             }
 
 			[self sortStoreObjectIdsByPunches];
 			//[myPlacesTableView setContentSize:CGSizeMake(320, 105*results.count)];
-			[myPlacesTableView reloadData];
+			[self.myPlacesTableView reloadData];
         }
-        else {
+        else
+        {
             NSLog(@"places view: error is %@", error);
         }
         
     }];
 }
 
-- (void)receiveLoadedPics:(NSNotification *) notification
+- (void)sortStoreObjectIdsByPunches
 {
-    [myPlacesTableView reloadData];
-}
-
-- (void)sortStoreObjectIdsByPunches {
-	[storeIdArray sortUsingComparator:^NSComparisonResult(NSString *objectId1, NSString *objectId2) {
-		PFObject* patronStore1 = [sharedData getPatronStore:objectId1];
-		PFObject* patronStore2 = [sharedData getPatronStore:objectId2];
+	[self.storeIdArray sortUsingComparator:^NSComparisonResult(NSString *objectId1, NSString *objectId2)
+    {
+		PFObject* patronStore1 = [self.sharedData getPatronStore:objectId1];
+		PFObject* patronStore2 = [self.sharedData getPatronStore:objectId2];
 		
 		NSNumber* n1 = [patronStore1 objectForKey:@"punch_count"];
 		NSNumber* n2 = [patronStore2 objectForKey:@"punch_count"];
@@ -144,7 +121,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [storeIdArray count];
+    return [self.storeIdArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -153,59 +130,108 @@
 	if (cell == nil)
     {
         cell = [MyPlacesTableViewCell cell];
-    } else {
+    }
+    else {
 		NSLog(@" cell reused: ");
-	}
+    }
 	
-	NSString *storeId = [storeIdArray objectAtIndex:indexPath.row];
-	PFObject *patronStore = [sharedData getPatronStore:storeId];
-	PFObject *store = [sharedData getStore:storeId];
+	NSString *storeId = [self.storeIdArray objectAtIndex:indexPath.row];
+	PFObject *patronStore = [self.sharedData getPatronStore:storeId];
+	PFObject *store = [self.sharedData getStore:storeId];
 	
     int punches = [[patronStore objectForKey:@"punch_count"] intValue];
-    cell.storeName.text = [store objectForKey:@"store_name"];
-    //cell.storeImage.image = [UIImage imageWithData:[store objectForKey:@"store_avatar"]];
-	cell.storeImage.image = [UIImage imageNamed:@"placeholder.png"];
-	
     cell.numPunches.text = [NSString stringWithFormat:@"%i %@", punches, (punches == 1) ? @"punch": @"punches"];
+    cell.storeName.text = [store objectForKey:@"store_name"];
     
     NSArray *rewardsArray = [store objectForKey:@"rewards"];
     
-    if ([rewardsArray count] > 0){
-        if (rewardsArray && ([[rewardsArray[0] valueForKey:@"punches"] intValue] <= punches)){
+    if ([rewardsArray count] > 0)
+    {
+        if (rewardsArray && ([[rewardsArray[0] valueForKey:@"punches"] intValue] <= punches))
+        {
             [[cell rewardLabel] setHidden:FALSE];
             [[cell rewardIcon] setHidden:FALSE];
         }
     }
     
+    // Only load cached images; defer new downloads until scrolling ends
+    //if (cell.storeImage == nil)
+    {
+        //if (self.myPlacesTableView.dragging == NO && self.myPlacesTableView.decelerating == NO)
+        PFFile *imageFile = [store objectForKey:@"store_avatar"];
+        if(imageFile != nil)
+        {
+            NSData *data = [self.sharedData getStoreImage:storeId];
+            //if(data !=) {
+                UIImage *storeImage = [UIImage imageWithData:data];
+                if(storeImage == nil)
+                {
+                    [self downloadImage:imageFile forIndexPath:indexPath withStoreId:storeId];
+                } else {
+                    cell.storeImage.image = storeImage;
+                }
+            //}
+        }
+        // if a download is deferred or in progress, return a placeholder image
+        cell.storeImage.image = [UIImage imageNamed:@"listview_placeholder.png"];
+    }
+    
     return cell;
 }
-
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-	
-	NSString *objectId = [storeIdArray objectAtIndex:indexPath.row];
-	PFObject *patronStore = [sharedData getPatronStore:objectId];
-	PFObject *store = [sharedData getStore:objectId];
-	
+	NSString *storeId = [self.storeIdArray objectAtIndex:indexPath.row];
     PlacesDetailViewController *placesDetailVC = [[PlacesDetailViewController alloc]init];
+    placesDetailVC.storeId = storeId;
     [self presentViewController:placesDetailVC animated:YES completion:NULL];
 }
-
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 105;
 }
 
+- (void)downloadImage:(PFFile *)imageFile forIndexPath:(NSIndexPath *)indexPath withStoreId:(NSString *)storeId
+{
+    PFFile *existingImageFile = [self.imageDownloadsInProgress objectForKey:indexPath];
+    if (existingImageFile == nil)
+    {
+        [self.imageDownloadsInProgress setObject:imageFile forKey:indexPath];
+        
+        [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+        {
+            if (!error)
+            {
+                MyPlacesTableViewCell *cell = [self.myPlacesTableView cellForRowAtIndexPath:indexPath];
+                cell.storeImage.image = [UIImage imageWithData:data];
+                [self.imageDownloadsInProgress removeObjectForKey:indexPath]; // Remove the PFFile from the in-progress list
+                [self.sharedData addStoreImage:data forKey:storeId];
+            }
+            else
+            {
+                NSLog(@"image download failed");
+            }
+        }];
+    }
+}
+
+- (void)cancelImageDownload
+{
+    for(PFFile *imageFile in self.imageDownloadsInProgress)
+    {
+        [imageFile cancel];
+    }
+}
+
 #pragma mark - Toolber methods
 
 - (IBAction)showPunchCode:(id)sender
 {
-	NSString *punchCode = [patron objectForKey:@"punch_code"];
+	NSString *punchCode = [self.patron objectForKey:@"punch_code"];
     SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Your Punch Code"
-												 andMessage:[NSString stringWithFormat:@"Your punch code is %@", punchCode]];
+                                                 andMessage:[NSString stringWithFormat:@"Your punch code is %@", punchCode]];
     [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeCancel handler:nil];
     [alert show];
 }

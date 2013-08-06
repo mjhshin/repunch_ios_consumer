@@ -23,54 +23,66 @@ static DataManager *sharedDataManager = nil;    // static instance variable
 - (id) init
 {
 	if (self = [super init]) {
-		_patronStores = [[NSMutableDictionary alloc] init];
-		_stores = [[NSMutableDictionary alloc] init];
-		_messageStatuses = [[NSMutableDictionary alloc] init];
+        self.patronStores = [[NSMutableDictionary alloc] init];
+        self.stores = [[NSMutableDictionary alloc] init];
+        self.storeImageCache = [[NSCache alloc] init];
+        self.messageStatuses = [[NSMutableDictionary alloc] init];
 	}
 	return self;
 }
 
-//PatronStore methods
+// PatronStore methods
 - (NSDictionary*) getAllPatronStores
 {
-	return _patronStores;
+	return self.patronStores;
 }
 
 - (NSInteger) getPatronStoreCount
 {
-	return [_patronStores count];
+	return [self.patronStores count];
 }
 
 - (void)addPatronStore:(PFObject *)patronStore forKey:(NSString *)objectId
 {
-    [_patronStores setObject:patronStore forKey:objectId];
+    [self.patronStores setObject:patronStore forKey:objectId];
 }
 
 - (PFObject *)getPatronStore:(NSString *)objectId
 {
-	return [_patronStores objectForKey:objectId];
+	return [self.patronStores objectForKey:objectId];
 }
 
-//Store methods
+// Store methods
 - (void)addStore:(PFObject *)store
 {
-	[_stores setObject:store forKey:[store objectId]];
+	[self.stores setObject:store forKey:[store objectId]];
 }
 
 - (PFObject *)getStore:(NSString *)objectId
 {
-	return [_stores objectForKey:objectId];
+	return [self.stores objectForKey:objectId];
 }
 
-//MessageStatus/Message methods
+// Store image cache methods
+- (void)addStoreImage:(NSData *)image forKey:(NSString *)storeId
+{
+    [self.storeImageCache setValue:image forKey:storeId];
+}
+
+- (NSData *)getStoreImage:(NSString *)storeId
+{
+    return [self.storeImageCache objectForKey:storeId];
+}
+
+// MessageStatus/Message methods
 - (void)addMessage:(PFObject *)messageStatus
 {
-    [_messageStatuses setObject:messageStatus forKey:[messageStatus objectId]];
+    [self.messageStatuses setObject:messageStatus forKey:[messageStatus objectId]];
 }
 
 - (PFObject *)getMessage:(NSString *)objectId
 {
-    return [_messageStatuses objectForKey:objectId];
+    return [self.messageStatuses objectForKey:objectId];
 }
 
 @end
