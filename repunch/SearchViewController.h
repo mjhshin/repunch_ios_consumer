@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ModalDelegate.h"
 
-@interface SearchViewController : UIViewController <UIScrollViewDelegate, ModalDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface SearchViewController : UIViewController <UIScrollViewDelegate, UITableViewDataSource, UITableViewDelegate>
+
 @property BOOL downloadFromNetwork;
-@property (nonatomic, retain) id<ModalDelegate> modalDelegate;
 @property (weak, nonatomic) IBOutlet UIView *toolbar;
 - (IBAction)closeView:(id)sender;
 -(void)setup;

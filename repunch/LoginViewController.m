@@ -8,11 +8,11 @@
 #import "LoginViewController.h"
 #import "AppDelegate.h"
 #import "GradientBackground.h"
-#import "SharedData.h";
+#import "DataManager.h"
 
 @implementation LoginViewController
 {
-    SharedData* sharedData;
+    DataManager* sharedData;
     UIActivityIndicatorView *spinner;
 }
 
@@ -20,7 +20,7 @@
 {
     [super viewDidLoad];
 	
-	sharedData = [SharedData init];
+	sharedData = [DataManager getSharedInstance];
     
     //gesture to dismiss keyboard
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
@@ -37,6 +37,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+	//self.navigationController.navigationBarHidden = NO;
+	//self.navigationItem.title = @"Login";
 	
 	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
 	bgLayer.frame = self.view.bounds;

@@ -6,13 +6,13 @@
 //
 
 #import "RegisterViewController.h"
-#import "SharedData.h"
+#import "DataManager.h"
 #import "AppDelegate.h"
 #import "GradientBackground.h"
 
 @implementation RegisterViewController
 {
-	SharedData *sharedData;
+	DataManager *sharedData;
     UIActivityIndicatorView *spinner;
     UIDatePicker *datePicker;
     NSArray *pickerItems;
@@ -23,7 +23,7 @@
 {
     [super viewDidLoad];
 	
-	sharedData = [SharedData init];
+	sharedData = [DataManager getSharedInstance];
     
     //tap gesture to dismiss keyboards
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
@@ -39,6 +39,27 @@
     pickerItems = @[@"female", @"male"];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+	//self.navigationController.navigationBarHidden = NO;
+	//self.navigationItem.title = @"Register";
+	
+	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
+	bgLayer.frame = self.view.bounds;
+	[self.view.layer insertSublayer:bgLayer atIndex:0];
+    
+    /*[[NSNotificationCenter defaultCenter] addObserver:self
+	 selector:@selector(goToPlaces)
+	 name:@"finishedLoggingIn"
+	 object:nil];
+	 
+	 [[NSNotificationCenter defaultCenter] addObserver:self
+	 selector:@selector(showError)
+	 name:@"errorLoggingIn"
+	 object:nil];*/
+}
+
 -(void)viewWillDisappear:(BOOL)animated
 {
     [self dismissKeyboard];
@@ -48,25 +69,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:YES];
-	
-	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	bgLayer.frame = self.view.bounds;
-	[self.view.layer insertSublayer:bgLayer atIndex:0];
-    
-    /*[[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(goToPlaces)
-                                                 name:@"finishedLoggingIn"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showError)
-                                                 name:@"errorLoggingIn"
-                                               object:nil];*/  
 }
 
 -(void)viewDidDisappear:(BOOL)animated

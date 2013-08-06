@@ -29,16 +29,16 @@
 		7996B3AC17820B1400CCAFED /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B3AB17820B1400CCAFED /* AdSupport.framework */; };
 		7996B3AE17820B1800CCAFED /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B3AD17820B1800CCAFED /* Social.framework */; };
 		7996B3B017820B1C00CCAFED /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B3AF17820B1C00CCAFED /* Accounts.framework */; };
-		EE28DAE017AC447E00E4C460 /* SharedData.m in Sources */ = {isa = PBXBuildFile; fileRef = EE28DADF17AC447E00E4C460 /* SharedData.m */; };
+		EE28DAE017AC447E00E4C460 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE28DADF17AC447E00E4C460 /* DataManager.m */; };
 		EE9D4C6617A83F4B005E0CC5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B6E17A83F4A005E0CC5 /* main.m */; };
 		EE9D4C6717A83F4B005E0CC5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B7217A83F4A005E0CC5 /* AppDelegate.m */; };
-		EE9D4C6817A83F4B005E0CC5 /* ComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B7417A83F4A005E0CC5 /* ComposeViewController.m */; };
-		EE9D4C6917A83F4B005E0CC5 /* ComposeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B7517A83F4A005E0CC5 /* ComposeViewController.xib */; };
+		EE9D4C6817A83F4B005E0CC5 /* ComposeMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B7417A83F4A005E0CC5 /* ComposeMessageViewController.m */; };
+		EE9D4C6917A83F4B005E0CC5 /* ComposeMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B7517A83F4A005E0CC5 /* ComposeMessageViewController.xib */; };
 		EE9D4C7217A83F4B005E0CC5 /* CustomToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B8917A83F4A005E0CC5 /* CustomToolbar.m */; };
 		EE9D4C7317A83F4B005E0CC5 /* CustomToolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B8A17A83F4A005E0CC5 /* CustomToolbar.xib */; };
 		EE9D4C7417A83F4B005E0CC5 /* GlobalToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B8C17A83F4A005E0CC5 /* GlobalToolbar.m */; };
-		EE9D4C7517A83F4B005E0CC5 /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B8E17A83F4A005E0CC5 /* MessageCell.m */; };
-		EE9D4C7617A83F4B005E0CC5 /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B8F17A83F4A005E0CC5 /* MessageCell.xib */; };
+		EE9D4C7517A83F4B005E0CC5 /* InboxTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B8E17A83F4A005E0CC5 /* InboxTableViewCell.m */; };
+		EE9D4C7617A83F4B005E0CC5 /* InboxTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B8F17A83F4A005E0CC5 /* InboxTableViewCell.xib */; };
 		EE9D4C7717A83F4B005E0CC5 /* RewardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B9117A83F4A005E0CC5 /* RewardCell.m */; };
 		EE9D4C7817A83F4B005E0CC5 /* RewardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B9217A83F4A005E0CC5 /* RewardCell.xib */; };
 		EE9D4C7917A83F4B005E0CC5 /* MyPlacesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B9417A83F4A005E0CC5 /* MyPlacesTableViewCell.m */; };
@@ -49,8 +49,8 @@
 		EE9D4C7F17A83F4B005E0CC5 /* InboxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B9D17A83F4A005E0CC5 /* InboxViewController.xib */; };
 		EE9D4C8017A83F4B005E0CC5 /* LandingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B9F17A83F4A005E0CC5 /* LandingViewController.m */; };
 		EE9D4C8117A83F4B005E0CC5 /* LandingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BA017A83F4A005E0CC5 /* LandingViewController.xib */; };
-		EE9D4C8217A83F4B005E0CC5 /* MessageAutoLayoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BA217A83F4A005E0CC5 /* MessageAutoLayoutViewController.m */; };
-		EE9D4C8317A83F4B005E0CC5 /* MessageAutoLayoutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BA317A83F4A005E0CC5 /* MessageAutoLayoutViewController.xib */; };
+		EE9D4C8217A83F4B005E0CC5 /* IncomingMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BA217A83F4A005E0CC5 /* IncomingMessageViewController.m */; };
+		EE9D4C8317A83F4B005E0CC5 /* IncomingMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BA317A83F4A005E0CC5 /* IncomingMessageViewController.xib */; };
 		EE9D4C8517A83F4B005E0CC5 /* PlacesDetailMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BA717A83F4A005E0CC5 /* PlacesDetailMapViewController.m */; };
 		EE9D4C8617A83F4B005E0CC5 /* PlacesDetailMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BA817A83F4A005E0CC5 /* PlacesDetailMapViewController.xib */; };
 		EE9D4C8717A83F4B005E0CC5 /* PlacesDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BAA17A83F4A005E0CC5 /* PlacesDetailViewController.m */; };
@@ -220,22 +220,22 @@
 		7996B3AB17820B1400CCAFED /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		7996B3AD17820B1800CCAFED /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		7996B3AF17820B1C00CCAFED /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
-		EE28DADE17AC447E00E4C460 /* SharedData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedData.h; sourceTree = "<group>"; };
-		EE28DADF17AC447E00E4C460 /* SharedData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedData.m; sourceTree = "<group>"; };
+		EE28DADE17AC447E00E4C460 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
+		EE28DADF17AC447E00E4C460 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		EE9D4B6E17A83F4A005E0CC5 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EE9D4B7117A83F4A005E0CC5 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EE9D4B7217A83F4A005E0CC5 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		EE9D4B7317A83F4A005E0CC5 /* ComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComposeViewController.h; sourceTree = "<group>"; };
-		EE9D4B7417A83F4A005E0CC5 /* ComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComposeViewController.m; sourceTree = "<group>"; };
-		EE9D4B7517A83F4A005E0CC5 /* ComposeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComposeViewController.xib; sourceTree = "<group>"; };
+		EE9D4B7317A83F4A005E0CC5 /* ComposeMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComposeMessageViewController.h; sourceTree = "<group>"; };
+		EE9D4B7417A83F4A005E0CC5 /* ComposeMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComposeMessageViewController.m; sourceTree = "<group>"; };
+		EE9D4B7517A83F4A005E0CC5 /* ComposeMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComposeMessageViewController.xib; sourceTree = "<group>"; };
 		EE9D4B8817A83F4A005E0CC5 /* CustomToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomToolbar.h; sourceTree = "<group>"; };
 		EE9D4B8917A83F4A005E0CC5 /* CustomToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomToolbar.m; sourceTree = "<group>"; };
 		EE9D4B8A17A83F4A005E0CC5 /* CustomToolbar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomToolbar.xib; sourceTree = "<group>"; };
 		EE9D4B8B17A83F4A005E0CC5 /* GlobalToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalToolbar.h; sourceTree = "<group>"; };
 		EE9D4B8C17A83F4A005E0CC5 /* GlobalToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalToolbar.m; sourceTree = "<group>"; };
-		EE9D4B8D17A83F4A005E0CC5 /* MessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageCell.h; sourceTree = "<group>"; };
-		EE9D4B8E17A83F4A005E0CC5 /* MessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageCell.m; sourceTree = "<group>"; };
-		EE9D4B8F17A83F4A005E0CC5 /* MessageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
+		EE9D4B8D17A83F4A005E0CC5 /* InboxTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InboxTableViewCell.h; sourceTree = "<group>"; };
+		EE9D4B8E17A83F4A005E0CC5 /* InboxTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InboxTableViewCell.m; sourceTree = "<group>"; };
+		EE9D4B8F17A83F4A005E0CC5 /* InboxTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InboxTableViewCell.xib; sourceTree = "<group>"; };
 		EE9D4B9017A83F4A005E0CC5 /* RewardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardCell.h; sourceTree = "<group>"; };
 		EE9D4B9117A83F4A005E0CC5 /* RewardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardCell.m; sourceTree = "<group>"; };
 		EE9D4B9217A83F4A005E0CC5 /* RewardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RewardCell.xib; sourceTree = "<group>"; };
@@ -251,9 +251,9 @@
 		EE9D4B9E17A83F4A005E0CC5 /* LandingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LandingViewController.h; sourceTree = "<group>"; };
 		EE9D4B9F17A83F4A005E0CC5 /* LandingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LandingViewController.m; sourceTree = "<group>"; };
 		EE9D4BA017A83F4A005E0CC5 /* LandingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LandingViewController.xib; sourceTree = "<group>"; };
-		EE9D4BA117A83F4A005E0CC5 /* MessageAutoLayoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageAutoLayoutViewController.h; sourceTree = "<group>"; };
-		EE9D4BA217A83F4A005E0CC5 /* MessageAutoLayoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageAutoLayoutViewController.m; sourceTree = "<group>"; };
-		EE9D4BA317A83F4A005E0CC5 /* MessageAutoLayoutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageAutoLayoutViewController.xib; sourceTree = "<group>"; };
+		EE9D4BA117A83F4A005E0CC5 /* IncomingMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IncomingMessageViewController.h; sourceTree = "<group>"; };
+		EE9D4BA217A83F4A005E0CC5 /* IncomingMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IncomingMessageViewController.m; sourceTree = "<group>"; };
+		EE9D4BA317A83F4A005E0CC5 /* IncomingMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IncomingMessageViewController.xib; sourceTree = "<group>"; };
 		EE9D4BA617A83F4A005E0CC5 /* PlacesDetailMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlacesDetailMapViewController.h; sourceTree = "<group>"; };
 		EE9D4BA717A83F4A005E0CC5 /* PlacesDetailMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacesDetailMapViewController.m; sourceTree = "<group>"; };
 		EE9D4BA817A83F4A005E0CC5 /* PlacesDetailMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlacesDetailMapViewController.xib; sourceTree = "<group>"; };
@@ -292,7 +292,6 @@
 		EE9D4D0F17A84266005E0CC5 /* Repunch-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Repunch-Prefix.pch"; sourceTree = "<group>"; };
 		EE9D4D2817A843EE005E0CC5 /* Repunch 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Repunch 2.xcdatamodel"; sourceTree = "<group>"; };
 		EE9D4D2917A843EE005E0CC5 /* repunch.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = repunch.xcdatamodel; sourceTree = "<group>"; };
-		EE9D4D2B17A844FD005E0CC5 /* ModalDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModalDelegate.h; sourceTree = "<group>"; };
 		EE9D4D2D17A84559005E0CC5 /* Crittercism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crittercism.h; sourceTree = "<group>"; };
 		EE9D4D2E17A84559005E0CC5 /* CrittercismDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrittercismDelegate.h; sourceTree = "<group>"; };
 		EE9D4D2F17A84559005E0CC5 /* dsym_upload.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = dsym_upload.sh; sourceTree = "<group>"; };
@@ -522,9 +521,9 @@
 				EE9D4D2717A843EE005E0CC5 /* repunch.xcdatamodeld */,
 				EE9D4B7117A83F4A005E0CC5 /* AppDelegate.h */,
 				EE9D4B7217A83F4A005E0CC5 /* AppDelegate.m */,
-				EE9D4B7317A83F4A005E0CC5 /* ComposeViewController.h */,
-				EE9D4B7417A83F4A005E0CC5 /* ComposeViewController.m */,
-				EE9D4B7517A83F4A005E0CC5 /* ComposeViewController.xib */,
+				EE9D4B7317A83F4A005E0CC5 /* ComposeMessageViewController.h */,
+				EE9D4B7417A83F4A005E0CC5 /* ComposeMessageViewController.m */,
+				EE9D4B7517A83F4A005E0CC5 /* ComposeMessageViewController.xib */,
 				EE9D4B8717A83F4A005E0CC5 /* CustomUIViews */,
 				EE9D4B9B17A83F4A005E0CC5 /* InboxViewController.h */,
 				EE9D4B9C17A83F4A005E0CC5 /* InboxViewController.m */,
@@ -532,10 +531,9 @@
 				EE9D4B9E17A83F4A005E0CC5 /* LandingViewController.h */,
 				EE9D4B9F17A83F4A005E0CC5 /* LandingViewController.m */,
 				EE9D4BA017A83F4A005E0CC5 /* LandingViewController.xib */,
-				EE9D4BA117A83F4A005E0CC5 /* MessageAutoLayoutViewController.h */,
-				EE9D4BA217A83F4A005E0CC5 /* MessageAutoLayoutViewController.m */,
-				EE9D4BA317A83F4A005E0CC5 /* MessageAutoLayoutViewController.xib */,
-				EE9D4D2B17A844FD005E0CC5 /* ModalDelegate.h */,
+				EE9D4BA117A83F4A005E0CC5 /* IncomingMessageViewController.h */,
+				EE9D4BA217A83F4A005E0CC5 /* IncomingMessageViewController.m */,
+				EE9D4BA317A83F4A005E0CC5 /* IncomingMessageViewController.xib */,
 				EE9D4BA617A83F4A005E0CC5 /* PlacesDetailMapViewController.h */,
 				EE9D4BA717A83F4A005E0CC5 /* PlacesDetailMapViewController.m */,
 				EE9D4BA817A83F4A005E0CC5 /* PlacesDetailMapViewController.xib */,
@@ -562,8 +560,8 @@
 				EE9D4BC417A83F4A005E0CC5 /* LoginViewController.m */,
 				EE9D4BC517A83F4A005E0CC5 /* LoginViewController.xib */,
 				EE9D4BC617A83F4A005E0CC5 /* ThirdPartyViews */,
-				EE28DADE17AC447E00E4C460 /* SharedData.h */,
-				EE28DADF17AC447E00E4C460 /* SharedData.m */,
+				EE28DADE17AC447E00E4C460 /* DataManager.h */,
+				EE28DADF17AC447E00E4C460 /* DataManager.m */,
 			);
 			path = Repunch;
 			sourceTree = "<group>";
@@ -576,9 +574,9 @@
 				EE9D4B8A17A83F4A005E0CC5 /* CustomToolbar.xib */,
 				EE9D4B8B17A83F4A005E0CC5 /* GlobalToolbar.h */,
 				EE9D4B8C17A83F4A005E0CC5 /* GlobalToolbar.m */,
-				EE9D4B8D17A83F4A005E0CC5 /* MessageCell.h */,
-				EE9D4B8E17A83F4A005E0CC5 /* MessageCell.m */,
-				EE9D4B8F17A83F4A005E0CC5 /* MessageCell.xib */,
+				EE9D4B8D17A83F4A005E0CC5 /* InboxTableViewCell.h */,
+				EE9D4B8E17A83F4A005E0CC5 /* InboxTableViewCell.m */,
+				EE9D4B8F17A83F4A005E0CC5 /* InboxTableViewCell.xib */,
 				EE9D4B9017A83F4A005E0CC5 /* RewardCell.h */,
 				EE9D4B9117A83F4A005E0CC5 /* RewardCell.m */,
 				EE9D4B9217A83F4A005E0CC5 /* RewardCell.xib */,
@@ -821,15 +819,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE9D4C6917A83F4B005E0CC5 /* ComposeViewController.xib in Resources */,
+				EE9D4C6917A83F4B005E0CC5 /* ComposeMessageViewController.xib in Resources */,
 				EE9D4C7317A83F4B005E0CC5 /* CustomToolbar.xib in Resources */,
-				EE9D4C7617A83F4B005E0CC5 /* MessageCell.xib in Resources */,
+				EE9D4C7617A83F4B005E0CC5 /* InboxTableViewCell.xib in Resources */,
 				EE9D4C7817A83F4B005E0CC5 /* RewardCell.xib in Resources */,
 				EE9D4C7A17A83F4B005E0CC5 /* MyPlacesTableViewCell.xib in Resources */,
 				EE9D4C7C17A83F4B005E0CC5 /* StoreCell.xib in Resources */,
 				EE9D4C7F17A83F4B005E0CC5 /* InboxViewController.xib in Resources */,
 				EE9D4C8117A83F4B005E0CC5 /* LandingViewController.xib in Resources */,
-				EE9D4C8317A83F4B005E0CC5 /* MessageAutoLayoutViewController.xib in Resources */,
+				EE9D4C8317A83F4B005E0CC5 /* IncomingMessageViewController.xib in Resources */,
 				EE9D4C8617A83F4B005E0CC5 /* PlacesDetailMapViewController.xib in Resources */,
 				EE9D4C8817A83F4B005E0CC5 /* PlacesDetailViewController.xib in Resources */,
 				EE9D4C8A17A83F4B005E0CC5 /* SearchViewController.xib in Resources */,
@@ -980,16 +978,16 @@
 			files = (
 				EE9D4C6617A83F4B005E0CC5 /* main.m in Sources */,
 				EE9D4C6717A83F4B005E0CC5 /* AppDelegate.m in Sources */,
-				EE9D4C6817A83F4B005E0CC5 /* ComposeViewController.m in Sources */,
+				EE9D4C6817A83F4B005E0CC5 /* ComposeMessageViewController.m in Sources */,
 				EE9D4C7217A83F4B005E0CC5 /* CustomToolbar.m in Sources */,
 				EE9D4C7417A83F4B005E0CC5 /* GlobalToolbar.m in Sources */,
-				EE9D4C7517A83F4B005E0CC5 /* MessageCell.m in Sources */,
+				EE9D4C7517A83F4B005E0CC5 /* InboxTableViewCell.m in Sources */,
 				EE9D4C7717A83F4B005E0CC5 /* RewardCell.m in Sources */,
 				EE9D4C7917A83F4B005E0CC5 /* MyPlacesTableViewCell.m in Sources */,
 				EE9D4C7B17A83F4B005E0CC5 /* StoreCell.m in Sources */,
 				EE9D4C7E17A83F4B005E0CC5 /* InboxViewController.m in Sources */,
 				EE9D4C8017A83F4B005E0CC5 /* LandingViewController.m in Sources */,
-				EE9D4C8217A83F4B005E0CC5 /* MessageAutoLayoutViewController.m in Sources */,
+				EE9D4C8217A83F4B005E0CC5 /* IncomingMessageViewController.m in Sources */,
 				EE9D4C8517A83F4B005E0CC5 /* PlacesDetailMapViewController.m in Sources */,
 				EE9D4C8717A83F4B005E0CC5 /* PlacesDetailViewController.m in Sources */,
 				EE9D4C8917A83F4B005E0CC5 /* SearchViewController.m in Sources */,
@@ -1005,7 +1003,7 @@
 				EE9D4D2A17A843EE005E0CC5 /* repunch.xcdatamodeld in Sources */,
 				EE9D4E7217A846B1005E0CC5 /* SIAlertView.m in Sources */,
 				EE9D4F5117A96F5B005E0CC5 /* GradientBackground.m in Sources */,
-				EE28DAE017AC447E00E4C460 /* SharedData.m in Sources */,
+				EE28DAE017AC447E00E4C460 /* DataManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

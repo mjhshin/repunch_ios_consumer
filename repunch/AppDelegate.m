@@ -13,13 +13,13 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "Crittercism.h"
 #import "SIAlertView.h"
-#import "SharedData.h"
+#import "DataManager.h"
 
 @implementation AppDelegate {
     LandingViewController *landingVC;
     MyPlacesViewController *myPlacesVC;
     InboxViewController *inboxVC;
-	SharedData* sharedData;
+	DataManager* sharedData;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -49,7 +49,7 @@
         [self.tabBarController setSelectedIndex:2];
     }
 	
-	sharedData = [SharedData init];
+	sharedData = [DataManager getSharedInstance];
     
 	PFUser* currentUser = [PFUser currentUser];
 	
@@ -72,8 +72,7 @@
 		}
 		
     } else {
-		landingVC = [[LandingViewController alloc] init];
-        self.window.rootViewController = landingVC;
+		[self presentLandingViews];
     }
      
     self.window.backgroundColor = [UIColor whiteColor];
@@ -336,11 +335,20 @@
     self.window.rootViewController = self.tabBarController;
 }
 
+- (void)presentLandingViews
+{
+	landingVC = [[LandingViewController alloc] init];
+	self.window.rootViewController = landingVC;
+	//self.navController = [[UINavigationController alloc] initWithRootViewController:landingVC];
+	//self.window.rootViewController = self.navController;
+    //[self.window makeKeyAndVisible];
+}
+
 - (void)logout
 {
     [PFUser logOut];
-	landingVC = [[LandingViewController alloc] init];
-	self.window.rootViewController = landingVC;
+	//TODO: unload tab bar controller so it isn't see through when you go to register/login
+	[self presentLandingViews];
 }
 
 @end

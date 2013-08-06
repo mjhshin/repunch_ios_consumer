@@ -2,7 +2,6 @@
 //  InboxViewController.m
 //  Repunch
 //
-//  Created by Gwendolyn Weston on 6/17/13.
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
@@ -10,44 +9,50 @@
 #import "AppDelegate.h"
 #import "SearchViewController.h"
 #import "SettingsViewController.h"
-#import "MessageAutoLayoutViewController.h"
-#import "MessageCell.h"
-#import "SharedData.h"
+#import "IncomingMessageViewController.h"
+#import "InboxTableViewCell.h"
+#import "DataManager.h"
 #import "SIAlertView.h"
 #import "GradientBackground.h"
 #import <Parse/Parse.h>
 
 @implementation InboxViewController
 {
-    SharedData *sharedData;
+    DataManager *sharedData;
     PFObject *patron;
-    NSMutableArray *messagesStatuses;
-    UITableView *messageTable;
+    NSMutableArray *messagesArray;
+    UITableView *messageTableView;
     UIActivityIndicatorView *spinner;
     UIView *greyedOutView;
 }
 
-- (void)viewDidLoad
+- (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
 {
-    sharedData = [SharedData init];
-    patron = [sharedData _patron];
-
-    messageTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, 320, 450) style:UITableViewStylePlain];
-    [messageTable setFrame:CGRectMake(0, 50, 320, self.view.frame.size.height - 50)];
-
-    [messageTable setDataSource:self];
-    [messageTable setDelegate:self];
-        
-    [self loadInbox];
+    return [super initWithNibName:nibName bundle:bundle];
 }
 
--(void)viewWillAppear:(BOOL)animated
+- (void)viewDidLoad
 {
-    [super viewWillAppear:YES];
+    sharedData = [DataManager getSharedInstance];
+    patron = [sharedData patron];
+	messagesArray = [[NSMutableArray alloc] init];
 	
 	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
 	bgLayer.frame = _toolbar.bounds;
 	[_toolbar.layer insertSublayer:bgLayer atIndex:0];
+	
+	int navBarOffset = self.view.frame.size.height - 50; //50 is nav bar height
+	messageTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, 320, navBarOffset) style:UITableViewStylePlain];
+    [messageTableView setDataSource:self];
+    [messageTableView setDelegate:self];
+	[[self view] addSubview:messageTableView];
+	
+    [self loadInbox];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(setup)
@@ -63,10 +68,7 @@
     [greyedOutView setBackgroundColor:[UIColor colorWithRed:127/255 green:127/255 blue:127/255 alpha:0.5]];
     [[self view] addSubview:greyedOutView];
     [[self view] bringSubviewToFront:greyedOutView];
-    
-
-    [self setup];
-     */
+	 */
 }
 
 
@@ -82,33 +84,31 @@
 
 -(void)loadInbox
 {
-    PFRelation *messageStatus = [patron relationforKey:@"ReceivedMessages"];
-    PFQuery *messageStatusQuery = [messageStatus query];
-    [messageStatusQuery includeKey:@"Message"];
-    [messageStatusQuery includeKey:@"Message.Reply"];
+    PFRelation *messagesRelation = [patron relationforKey:@"ReceivedMessages"];
+    PFQuery *messageQuery = [messagesRelation query];
+    [messageQuery includeKey:@"Message"];
+    [messageQuery includeKey:@"Message.Reply"];
+	[messageQuery orderByDescending:@"createdAt"];
+	//TODO: paginate!
     
-    [messageStatusQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+    [messageQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+		//[spinner stopAnimating];
+		//[greyedOutView removeFromSuperview];
         if(!error) {
             for(PFObject *messageStatus in results) {
                 [sharedData addMessage:messageStatus];
+				[messagesArray addObject:messageStatus];
             }
         } else {
             
         }
         
-        //the array has to be mutable in order to later delete messages
-        messagesStatuses = [results mutableCopy];
-        
         //is sorted by updatedAt as opposed to createdAt, then will sort by reply date value (if there is a reply)
-        messagesStatuses = [[messagesStatuses sortedArrayUsingDescriptors:[NSArray arrayWithObject: [NSSortDescriptor sortDescriptorWithKey:@"Message.updatedAt" ascending:NO]]] mutableCopy];
+        //messagesArray = [[messagesArray sortedArrayUsingDescriptors:[NSArray arrayWithObject: [NSSortDescriptor sortDescriptorWithKey:@"Message.updatedAt" ascending:NO]]] mutableCopy];
         
         //s.t. table is only as tall as there are cells
-        [messageTable setContentSize:CGSizeMake(320, 78*messagesStatuses.count)];
-        [messageTable reloadData];
-        [[self view] addSubview:messageTable];
-        
-        [spinner stopAnimating];
-        [greyedOutView removeFromSuperview];
+        //[messageTableView setContentSize:CGSizeMake(320, 78*messagesArray.count)];
+        [messageTableView reloadData];
         
     }];
     
@@ -123,50 +123,49 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-   return [messagesStatuses count];
+   return [messagesArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{   
-    static NSString *CellIdentifier = @"MessageCell";
-    MessageCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    [[cell offerPic] setHidden:TRUE];
+{
+	InboxTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[InboxTableViewCell reuseIdentifier]];
+	if (cell == nil)
+    {
+        cell = [InboxTableViewCell cell];
+    } else {
+		NSLog(@" cell reused: ");
+	}
+	[[cell offerPic] setHidden:TRUE];
 
-    if (cell == nil) {
-        cell = [[[NSBundle mainBundle]loadNibNamed:@"MessageCell" owner:self options:nil]objectAtIndex:0];
-    }
-
-    id currentCellMessageStatus = [messagesStatuses objectAtIndex:indexPath.row];
-    id currentCellMessage = [currentCellMessageStatus objectForKey:@"Message"];
-    id currentCellMessageReply = [currentCellMessage objectForKey:@"Reply"];
+    PFObject *messageStatus = [messagesArray objectAtIndex:indexPath.row];
+    PFObject *message = [messageStatus objectForKey:@"Message"];
+    PFObject *reply = [message objectForKey:@"Reply"];
     
-    if ([NSNull null] == currentCellMessageReply || currentCellMessageReply == NULL) {
-        cell.senderName.text = [currentCellMessage valueForKey:@"sender_name"];
-        cell.subjectLabel.text = [NSString stringWithFormat:@"%@ - %@", [currentCellMessage valueForKey:@"subject"], [currentCellMessage valueForKey:@"body"]];
-        cell.dateSent.text = [self formattedDateString:[currentCellMessage valueForKey:@"createdAt"]];
+    if (reply != [NSNull null]) {
+        cell.senderName.text = [reply valueForKey:@"sender_name"];
+        cell.subjectLabel.text = [NSString stringWithFormat:@"RE: %@ - %@", [message valueForKey:@"subject"], [reply valueForKey:@"body"]];
+        cell.dateSent.text = [self formattedDateString:[reply valueForKey:@"createdAt"]];
+		
+    } else {
+		cell.senderName.text = [message valueForKey:@"sender_name"];
+        cell.subjectLabel.text = [NSString stringWithFormat:@"%@ - %@", [message valueForKey:@"subject"], [message valueForKey:@"body"]];
+        cell.dateSent.text = [self formattedDateString:[message valueForKey:@"createdAt"]];
     }
-    else {
-        cell.senderName.text = [currentCellMessageReply valueForKey:@"sender_name"];
-        cell.subjectLabel.text = [NSString stringWithFormat:@"RE: %@ - %@", [currentCellMessage valueForKey:@"subject"], [currentCellMessageReply valueForKey:@"body"]];
-        cell.dateSent.text = [self formattedDateString:[currentCellMessageReply valueForKey:@"createdAt"]];
-    }
-
     
-    if ([[currentCellMessage valueForKey:@"message_type"] isEqualToString:@"offer"]){
+    if ([[message valueForKey:@"message_type"] isEqualToString:@"offer"]){
         [[cell offerPic] setHidden:FALSE];
         [[cell offerPic] setImage:[UIImage imageNamed:@"ico_message_coupon"]];
-    }
-    if ([[currentCellMessage valueForKey:@"message_type"] isEqualToString:@"feedback"]){
+		
+    } else if ([[message valueForKey:@"message_type"] isEqualToString:@"feedback"]){
         [[cell offerPic] setHidden:FALSE];
         [[cell offerPic] setImage:[UIImage imageNamed:@"message_reply"]];
-    }
-    
-    if ([[currentCellMessage valueForKey:@"message_type"] isEqualToString:@"gift"]){
+		
+    } else if ([[message valueForKey:@"message_type"] isEqualToString:@"gift"]){
         [[cell offerPic] setHidden:FALSE];
         [[cell offerPic] setImage:[UIImage imageNamed:@"message_gift"]];
     }
     
-    if ([[currentCellMessageStatus objectForKey:@"is_read"] boolValue]) {
+    if ([[messageStatus objectForKey:@"is_read"] boolValue]) {
         cell.contentView.backgroundColor = [UIColor colorWithRed:(float)192/256 green:(float)192/256 blue:(float)192/256 alpha:(float)65/256]; //ARGB = 0x40C0C0C0
     }
     else {
@@ -174,36 +173,20 @@
     }
 
     return cell;
-     
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];    
+    IncomingMessageViewController *messageVC = [[IncomingMessageViewController alloc] init];
+	PFObject *messageStatus = [messagesArray objectAtIndex:indexPath.row];
+    messageVC.messageStatusId = [messageStatus objectId];
 
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+	//TODO: set message as read here or in messageVC?
+    //[messageStatus saveInBackground];
     
-    id currentCellMessageStatus = [messagesStatuses objectAtIndex:indexPath.row];
-    id currentCellMessage = [currentCellMessageStatus objectForKey:@"Message"];
-    
-    MessageAutoLayoutViewController *messageVC = [[MessageAutoLayoutViewController alloc] init];
-    messageVC.modalDelegate = self;
-    messageVC.message = currentCellMessage;
-    //messageVC.messageStatus currentCellMessage [savedMessageStatuses objectAtIndex:indexPath.row];
-    messageVC.messageStatus = currentCellMessageStatus;
-    messageVC.messageType = [currentCellMessage valueForKey:@"message_type"];
-    messageVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    messageVC.customerName = [NSString stringWithFormat:@"%@ %@", [localUser first_name], [localUser last_name]];
-    messageVC.patronId = [localUser patronId];
-
-    if ([[currentCellMessage objectForKey:@"is_read"] boolValue] == FALSE) {
-        [currentCellMessageStatus setValue:[NSNumber numberWithBool:TRUE] forKey:@"is_read"];
-        [messageTable reloadData];
-    }
-    [currentCellMessageStatus saveInBackground];
-    
-    [self presentViewController:messageVC animated:YES completion:NULL];
-     
+    [self presentViewController:messageVC animated:YES completion:NULL];     
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -213,7 +196,8 @@
 
 #pragma mark - Helper Methods
 
--(NSString *)formattedDateString:(NSDate *)dateCreated{
+- (NSString *)formattedDateString:(NSDate *)dateCreated
+{
     NSString *dateString = @"";
     
     NSCalendar *cal = [NSCalendar currentCalendar];
@@ -242,76 +226,25 @@
     return dateString;
 }
 
-
-#pragma mark - Modal View Delegate
-
-- (void)didDismissPresentedViewController{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
--(void)didDismissPresentedViewControllerWithCompletion{
-    [self dismissViewControllerAnimated:YES completion:^{
-        [messagesStatuses removeAllObjects];
-        [self setup];
-    }];
-    
-}
-
-- (void)didDismissPresentedViewControllerWithCompletionCode:(NSString *)dismissString {
-    if ([dismissString isEqualToString:@"deletedMessage"]) {
-        [self dismissViewControllerAnimated:YES completion:^{
-            [messagesStatuses removeAllObjects];
-            [self setup];
-        }];
-
-    }
-    
-    if ([dismissString isEqualToString:@"logout"]) {
-        [self dismissViewControllerAnimated:YES completion:^{
-            AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-            [appDelegate logout];
-        }];
-
-    }
-}
-- (IBAction)openSettings:(id)sender {
-    
+- (IBAction)openSettings:(id)sender
+{
     SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
-    //settingsVC.userName = [localUser fullName];
     [self presentViewController:settingsVC animated:YES completion:NULL];
-
 }
 
-- (IBAction)openSearch:(id)sender {
-    
+- (IBAction)openSearch:(id)sender
+{
     SearchViewController *placesSearchVC = [[SearchViewController alloc]init];
-    placesSearchVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    placesSearchVC.modalDelegate = self;
     [self presentViewController:placesSearchVC animated:YES completion:NULL];
-
 }
 
-- (IBAction)showPunchCode:(id)sender {
-    SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Your Punch Code" andMessage:[NSString stringWithFormat:@"Your punch code is %@", [localUser punch_code]]];
-    [alert addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
-        //nothing happens
-    }];
+- (IBAction)showPunchCode:(id)sender
+{
+	NSString *punchCode = [patron objectForKey:@"punch_code"];
+    SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Your Punch Code"
+												 andMessage:[NSString stringWithFormat:@"Your punch code is %@", punchCode]];
+    [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeCancel handler:nil];
     [alert show];
-
 }
 
-- (IBAction)refreshPage:(id)sender {
-    spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    spinner.center = CGPointMake(160, 260);
-    spinner.color = [UIColor blackColor];
-    [[self view] addSubview:spinner];
-    [spinner startAnimating];
-    greyedOutView = [[UIView alloc]initWithFrame:CGRectMake(0, 50, 320, self.view.frame.size.height - 50)];
-    [greyedOutView setBackgroundColor:[UIColor colorWithRed:127/255 green:127/255 blue:127/255 alpha:0.5]];
-    [[self view] addSubview:greyedOutView];
-    [[self view] bringSubviewToFront:greyedOutView];
-    
-    [self setup];
-
-}
 @end

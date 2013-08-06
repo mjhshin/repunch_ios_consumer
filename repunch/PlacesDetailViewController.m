@@ -2,43 +2,97 @@
 //  PlacesDetailViewController.m
 //  Repunch
 //
-//  Created by Gwendolyn Weston on 6/19/13.
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
 #import "PlacesDetailViewController.h"
 #import "PlacesDetailMapViewController.h"
 #import "SIAlertView.h"
-#import "User.h"
-#import "PatronStore.h"
-#import "Reward.h"
 #import "RewardCell.h"
 #import "AppDelegate.h"
-#import "ComposeViewController.h"
+#import "ComposeMessageViewController.h"
 #import "RepunchFriendsViewController.h"
 #import "GradientBackground.h"
+#import "DataManager.h"
 
 @implementation PlacesDetailViewController
 {
+	DataManager *sharedData;
     NSMutableArray *placeRewardData;
     PlacesDetailMapViewController *placesDetailMapVC;
-    User *localUser;
     int availablePunches;
-    PatronStore *patronStoreEntity;
-
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+    return [super initWithNibName:nibName bundle:bundle];
 }
 
--(void)viewWillAppear:(BOOL)animated
+- (void)viewDidLoad
 {
+    [super viewDidLoad];
+    
+	sharedData = [DataManager getSharedInstance];
+	_store = [sharedData getStore:_storeId];
+	_patronStore = [sharedData getPatronStore:_storeId];
+    _isSavedStore = (_patronStore != [NSNull null]);
+    _scrollView.scrollEnabled = YES;
+    
+    _storeName.text = [_store valueForKey:@"store_name"];
+    //_storePic.image = [UIImage imageWithData:_store.store_avatar];
+    _storeStreet.text = [_store valueForKey:@"street"];
+	
+	/*
+	 if ([[_storeObject valueForKey:@"cross_streets"] length]>0) {
+	 _storeCrossStreets.text = [_storeObject valueForKey:@"cross_streets"];
+	 _storeCrossStreets.hidden = FALSE;
+	 [_storeNeighborhood setFrame:CGRectMake(_storeNeighborhood.frame.origin.x, _storeNeighborhood.frame.origin.y  + _storeCrossStreets.frame.size.height-8, _storeNeighborhood.frame.size.width, _storeNeighborhood.frame.size.height)];
+	 
+	 [_storeCity setFrame:CGRectMake(_storeCity.frame.origin.x, _storeCity.frame.origin.y +  _storeCrossStreets.frame.size.height-8, _storeCity.frame.size.width, _storeCity.frame.size.height)];
+	 }
+	 if ([[_storeObject valueForKey:@"neighborhood"] length]>0) {
+	 _storeNeighborhood.text = [_storeObject valueForKey:@"neighborhood"];
+	 _storeNeighborhood.hidden = FALSE;
+	 [_storeCity setFrame:CGRectMake(_storeCity.frame.origin.x, _storeCity.frame.origin.y +  _storeNeighborhood.frame.size.height-8, _storeCity.frame.size.width, _storeCity.frame.size.height)];
+	 
+	 }
+	 
+	 _storeCity.text = [NSString stringWithFormat:@"%@, %@ %@",[_storeObject valueForKey:@"city"], [_storeObject valueForKey:@"state"], [_storeObject valueForKey:@"zip"]];
+	 
+	 _storeHours.text = [self getHoursString];
+	 
+	 placeRewardData = [[[_storeObject mutableSetValueForKey:@"rewards"] allObjects] mutableCopy];
+	 NSLog(@"rewards are :%@", [placeRewardData valueForKey:@"reward_name"]);
+	 
+	 [placeRewardData sortUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:@"punches" ascending:YES]]];
+	 
+	 [_rewardsTable setDataSource:self];
+	 [_rewardsTable setDelegate:self];
+	 
+	 [_scrollView setContentSize:CGSizeMake(320, [self bottomOfLowestContent:[self view]])];
+	 
+	 _leftoverFBPostExists = FALSE;
+	 patronStoreEntity= [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", localUser.patronId, _storeObject.objectId]];
+	 availablePunches = [[patronStoreEntity punch_count] intValue];
+*/
+    /*
+	 if (_isSavedStore || _leftoverFBPostExists) {
+	 PFQuery *query = [PFQuery queryWithClassName:@"PatronStore"];
+	 [query includeKey:@"FacebookPost"];
+	 [query getObjectInBackgroundWithId:patronStoreEntity.objectId block:^(PFObject *fetchedPatronStore, NSError *error) {
+	 if ([fetchedPatronStore objectForKey:@"FacebookPost"] == nil) {
+	 [self publishButtonActionWithParameters:[[NSDictionary alloc] initWithObjectsAndKeys:[patronStoreEntity store_id], @"store_id", [patronStoreEntity objectId], @"patron_store_id", [_storeObject store_name], @"store_name", [[_patronStoreObject objectForKey:@"FacebookPost"] valueForKey:@"reward"], @"reward_title", nil]];
+	 _leftoverFBPostExists = FALSE;
+	 _patronStoreObject = fetchedPatronStore;
+	 NSLog(@"there is a facebook post!");
+	 }
+	 }];
+	 }*/
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	/*
     [super viewWillAppear:YES];
 	
 	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
@@ -81,81 +135,17 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"addedOrRemovedStore" object:self];
-
+*/
 
 }
 
--(void)viewDidDisappear:(BOOL)animated
+- (void)viewDidDisappear:(BOOL)animated
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"receivedPush" object:nil];
 
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    _isSavedStore = [localUser alreadyHasStoreSaved:[_storeObject objectId]];
-    
-    _scrollView.scrollEnabled = YES;
-    
-    _storeName.text = [_storeObject valueForKey:@"store_name"];
-    _storePic.image = [UIImage imageWithData:_storeObject.store_avatar];
-
-    _storeStreet.text = [_storeObject valueForKey:@"street"];
-    if ([[_storeObject valueForKey:@"cross_streets"] length]>0) {
-        _storeCrossStreets.text = [_storeObject valueForKey:@"cross_streets"];
-        _storeCrossStreets.hidden = FALSE;
-        [_storeNeighborhood setFrame:CGRectMake(_storeNeighborhood.frame.origin.x, _storeNeighborhood.frame.origin.y  + _storeCrossStreets.frame.size.height-8, _storeNeighborhood.frame.size.width, _storeNeighborhood.frame.size.height)];
-
-        [_storeCity setFrame:CGRectMake(_storeCity.frame.origin.x, _storeCity.frame.origin.y +  _storeCrossStreets.frame.size.height-8, _storeCity.frame.size.width, _storeCity.frame.size.height)];
-    }
-    if ([[_storeObject valueForKey:@"neighborhood"] length]>0) {
-        _storeNeighborhood.text = [_storeObject valueForKey:@"neighborhood"];
-        _storeNeighborhood.hidden = FALSE;
-        [_storeCity setFrame:CGRectMake(_storeCity.frame.origin.x, _storeCity.frame.origin.y +  _storeNeighborhood.frame.size.height-8, _storeCity.frame.size.width, _storeCity.frame.size.height)];
-
-    }
-    
-    _storeCity.text = [NSString stringWithFormat:@"%@, %@ %@",[_storeObject valueForKey:@"city"], [_storeObject valueForKey:@"state"], [_storeObject valueForKey:@"zip"]];
-    
-    _storeHours.text = [self getHoursString];
-    
-    placeRewardData = [[[_storeObject mutableSetValueForKey:@"rewards"] allObjects] mutableCopy];
-    NSLog(@"rewards are :%@", [placeRewardData valueForKey:@"reward_name"]);
-    
-    [placeRewardData sortUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:@"punches" ascending:YES]]];
-    
-    [_rewardsTable setDataSource:self];
-    [_rewardsTable setDelegate:self];
-    
-    [_scrollView setContentSize:CGSizeMake(320, [self bottomOfLowestContent:[self view]])];
-    
-    _leftoverFBPostExists = FALSE;
-    patronStoreEntity= [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", localUser.patronId, _storeObject.objectId]];
-    availablePunches = [[patronStoreEntity punch_count] intValue];
-
-    /*
-    if (_isSavedStore || _leftoverFBPostExists) {
-        PFQuery *query = [PFQuery queryWithClassName:@"PatronStore"];
-        [query includeKey:@"FacebookPost"];
-        [query getObjectInBackgroundWithId:patronStoreEntity.objectId block:^(PFObject *fetchedPatronStore, NSError *error) {
-            if ([fetchedPatronStore objectForKey:@"FacebookPost"] == nil) {
-                [self publishButtonActionWithParameters:[[NSDictionary alloc] initWithObjectsAndKeys:[patronStoreEntity store_id], @"store_id", [patronStoreEntity objectId], @"patron_store_id", [_storeObject store_name], @"store_name", [[_patronStoreObject objectForKey:@"FacebookPost"] valueForKey:@"reward"], @"reward_title", nil]];
-                _leftoverFBPostExists = FALSE;
-                _patronStoreObject = fetchedPatronStore;
-                NSLog(@"there is a facebook post!");
-            }
-        }];
-    }*/
-
-
-
-}
-
-
-#pragma mark - Self Helper Methods
-- (CGFloat) bottomOfLowestContent:(UIView*) view
+- (CGFloat)bottomOfLowestContent:(UIView*)view
 {
     CGFloat lowestPoint = 0.0;
     
@@ -201,8 +191,9 @@
     return lowestPoint;
 }
 
--(NSString *)getHoursString
+- (NSString *)getHoursString
 {
+	/*
     NSDateFormatter *formatter_out = [[NSDateFormatter alloc] init];
     [formatter_out setDateFormat:@"h:mm a"];
     
@@ -256,7 +247,7 @@
     }
 
     return hourstodaystring;
-    
+    */
 }
 
 - (void)didReceiveMemoryWarning
@@ -312,6 +303,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	/*
     if (_isSavedStore){
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         Reward *currentCellReward = [placeRewardData objectAtIndex:indexPath.row];
@@ -588,13 +580,11 @@
         
         
     }];
-    
+    */
 }
 
-/**
- * A function for parsing URL parameters.
- */
-- (NSDictionary*)parseURLParams:(NSString *)query {
+- (NSDictionary*)parseURLParams:(NSString *)query
+{
     NSArray *pairs = [query componentsSeparatedByString:@"&"];
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     for (NSString *pair in pairs) {
@@ -606,7 +596,9 @@
     return params;
 }
 
-- (IBAction)callButton:(id)sender {
+- (IBAction)callButton:(id)sender
+{
+	/*
     NSString *number = [_storeObject phone_number];
     NSString *phoneNumber = [number stringByReplacingOccurrencesOfString:@"[^0-9]"
 															  withString:@""
@@ -615,21 +607,18 @@
 	
     NSString *phoneNumberUrl = [@"tel://" stringByAppendingString:phoneNumber];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumberUrl]];
-
+	 */
 }
 
-- (IBAction)mapButton:(id)sender {
+- (IBAction)mapButton:(id)sender
+{
     placesDetailMapVC = [[PlacesDetailMapViewController alloc] init];
-    [placesDetailMapVC setModalDelegate:self];
-    [placesDetailMapVC setPlace:_storeObject];
-    placesDetailMapVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    [placesDetailMapVC.view setFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
+    //placesDetailMapVC.storeId = [store objectId];
     [self presentViewController:placesDetailMapVC animated:YES completion:NULL];
-    
-
 }
 
-- (IBAction)feedbackButton:(id)sender {
+- (IBAction)feedbackButton:(id)sender
+{
     if (!_isSavedStore){
         SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"I can't do that, Hal." andMessage:@"You can only send feedback to saved stores"];
         
@@ -641,9 +630,7 @@
         [alertView show];
     }
     else{
-        ComposeViewController *composeVC = [[ComposeViewController alloc] init];
-        composeVC.modalDelegate = self;
-        composeVC.storeObject = _storeObject;
+        ComposeMessageViewController *composeVC = [[ComposeMessageViewController alloc] init];
         composeVC.messageType = @"Feedback";
         
         [self presentViewController:composeVC animated:YES completion:NULL];
@@ -652,15 +639,19 @@
 
 }
 
-- (IBAction)addStore:(id)sender {
-    [self addOrRemovePlace];
+- (IBAction)addStore:(id)sender
+{
+    //[self addOrRemovePlace];
 }
 
-- (IBAction)deleteStore:(id)sender {
-    [self addOrRemovePlace];
+- (IBAction)deleteStore:(id)sender
+{
+    //[self addOrRemovePlace];
 }
 
-- (IBAction)closeView:(id)sender {
-    [self didDismissPresentedViewController];
+- (IBAction)closeView:(id)sender
+{
+    //[self didDismissPresentedViewController];
 }
+
 @end

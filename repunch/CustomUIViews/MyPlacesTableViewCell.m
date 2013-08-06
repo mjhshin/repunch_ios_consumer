@@ -9,20 +9,19 @@
 
 @implementation MyPlacesTableViewCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
++ (NSString *)reuseIdentifier
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
-    }
-    return self;
+    return NSStringFromClass(self);
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+- (NSString *)reuseIdentifier
 {
-    [super setSelected:selected animated:animated];
+    return [[self class] reuseIdentifier];
+}
 
-    // Configure the view for the selected state
++ (MyPlacesTableViewCell *)cell
+{
+    return [[[NSBundle mainBundle] loadNibNamed:[self reuseIdentifier] owner:self options:nil] objectAtIndex:0];
 }
 
 @end

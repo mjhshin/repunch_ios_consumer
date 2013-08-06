@@ -8,11 +8,11 @@
 #import "SettingsViewController.h"
 #import "AppDelegate.h"
 #import "GradientBackground.h"
-#import "SharedData.h"
+#import "DataManager.h"
 
 @implementation SettingsViewController
 {
-	SharedData *sharedData;
+	DataManager *sharedData;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -28,7 +28,7 @@
 {
     [super viewDidLoad];
 	
-	sharedData = [SharedData init];
+	sharedData = [DataManager getSharedInstance];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -62,9 +62,9 @@
 }
 
 - (IBAction)logOut:(id)sender {
+	[self dismissViewControllerAnimated:YES completion:nil];
 	AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 	[appDelegate logout];
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)closeView:(id)sender {

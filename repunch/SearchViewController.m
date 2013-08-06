@@ -8,16 +8,11 @@
 #import "SearchViewController.h"
 #import "PlacesDetailViewController.h"
 
-#import "Store.h"
-#import "User.h"
-#import "PatronStore.h"
 #import "StoreCell.h"
-#import "Category.h"
 #import "GradientBackground.h"
 
 #import <Parse/Parse.h>
 #import "AppDelegate.h"
-
 
 @implementation SearchViewController
 {
@@ -25,7 +20,6 @@
     UIToolbar *globalToolbar;
     PFGeoPoint *userLocation;
     UITableView *searchTable;
-    User *localUser;
 }
 
 - (IBAction)closeView:(id)sender {
@@ -33,7 +27,9 @@
 }
 
 //set up data model
-- (void)setup {
+- (void)setup
+{
+	/*
     //get all locally stored store entities and set that to be storeList
     storeList = [[Store MR_findAll] mutableCopy];
     
@@ -81,13 +77,11 @@
                 }]; //end get stores
             }]; //end get user location
         }
-
+	 */
 }
 
--(void)reload{
-    //sort by distance to current user location
-    storeList = [[Store MR_findAll] mutableCopy];
-
+- (void)reload
+{
     [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error){
         userLocation = geoPoint;
 
@@ -168,7 +162,8 @@
 
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
+- (void)viewWillDisappear:(BOOL)animated
+{
     [super viewWillDisappear:animated];
     /*
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"FinishedLoadingPic" object:nil];
@@ -178,36 +173,36 @@
 }
 
 
--(void)receiveLoadedPics:(NSNotification *) notification{
+-(void)receiveLoadedPics:(NSNotification *) notification
+{
     [searchTable reloadData];
 }
 
-- (void)dismissPresentedViewController{
-    [[self modalDelegate] didDismissPresentedViewController];
+- (void)dismissPresentedViewController
+{
+    //[[self modalDelegate] didDismissPresentedViewController];
 }
 
-- (void)didDismissPresentedViewController{
+- (void)didDismissPresentedViewController
+{
     [self dismissViewControllerAnimated:YES completion:NULL];;
 }
-
 
  #pragma mark - Table view data source
  
  - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
  {
- // Return the number of sections.
      return 1;
  }
  
  - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
  {
- // Return the number of rows in the section.
      return [storeList count];
  }
-
  
  - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
  {
+	 /*
      static NSString *CellIdentifier = @"StoreCell";
       StoreCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
      if (cell == nil) {
@@ -266,29 +261,22 @@
      cell.storeImageLabel.image = [UIImage imageWithData:[currentCellStore valueForKey:@"store_avatar"]];
      
      return cell;
-
+	  */
  }
 
 #pragma mark - Table View delegate methods
 
 
- - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
- {
-     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-     PlacesDetailViewController *placesDetailVC = [[PlacesDetailViewController alloc]init];
-     placesDetailVC.modalDelegate = self;
-     placesDetailVC.storeObject = [storeList objectAtIndex:indexPath.row];
-     placesDetailVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-
-     [self presentViewController:placesDetailVC animated:YES completion:NULL];
- }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	PlacesDetailViewController *placesDetailVC = [[PlacesDetailViewController alloc]init];
+	[self presentViewController:placesDetailVC animated:YES completion:NULL];
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 110;
 }
-
-
-
 
 @end

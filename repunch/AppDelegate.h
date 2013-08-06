@@ -12,12 +12,14 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UITabBarController *tabBarController;
+@property (strong, nonatomic) UINavigationController *navController;
 
 @property (strong, nonatomic) NSMutableDictionary *patronStores;
 @property (strong, nonatomic) NSMutableDictionary *stores;
 @property (strong, nonatomic) NSMutableDictionary *messages;
 @property (strong, nonatomic) NSMutableDictionary *messageStatuses;
 
+- (void)presentLandingViews;
 -(void)presentTabBarController;
 -(void)logout;
 

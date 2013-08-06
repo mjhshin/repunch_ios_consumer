@@ -2,7 +2,6 @@
 //  PlacesDetailMapViewController.m
 //  Repunch
 //
-//  Created by Gwendolyn Weston on 6/25/13.
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
@@ -12,6 +11,8 @@
 #import "GradientBackground.h"
 
 @implementation PlacesDetailMapViewController
+{
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,15 +34,15 @@
     [super viewDidLoad];
     
     MKMapView *placeMapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 47, self.view.frame.size.width, self.view.frame.size.height - 47)];
-    [placeMapView setCenterCoordinate:CLLocationCoordinate2DMake([_place latitude],[_place longitude]) zoomLevel:14 animated:NO];
+    //[placeMapView setCenterCoordinate:CLLocationCoordinate2DMake([_place latitude],[_place longitude]) zoomLevel:14 animated:NO];
     
-    NSString *addressString = [NSString stringWithFormat:@"%@\n%@, %@ %@", [_place valueForKey:@"street"], [_place valueForKey:@"city"], [_place valueForKey:@"state"], [_place valueForKey:@"zip"]];
+    //NSString *addressString = [NSString stringWithFormat:@"%@\n%@, %@ %@", [_place valueForKey:@"street"], [_place valueForKey:@"city"], [_place valueForKey:@"state"], [_place valueForKey:@"zip"]];
 
-    MapPin *placePin = [[MapPin alloc] initWithCoordinates:CLLocationCoordinate2DMake([_place latitude], [_place longitude]) placeName:[_place store_name] description:addressString];
+    //MapPin *placePin = [[MapPin alloc] initWithCoordinates:CLLocationCoordinate2DMake([_place latitude], [_place longitude]) placeName:[_place store_name] description:addressString];
     
-    [placeMapView addAnnotation:placePin];
+    //[placeMapView addAnnotation:placePin];
     
-    [self.view addSubview:placeMapView];
+    //[self.view addSubview:placeMapView];
 
 }
 
@@ -53,11 +54,12 @@
 
 
 - (IBAction)closeView:(id)sender {
-    [[self modalDelegate] didDismissPresentedViewController];
+    //[[self modalDelegate] didDismissPresentedViewController];
 
 }
 
 - (IBAction)getDirections:(id)sender {
+	/*
     Class mapItemClass = [MKMapItem class];
     if (mapItemClass && [mapItemClass respondsToSelector:@selector(openMapsWithItems:launchOptions:)])
     {
@@ -80,6 +82,8 @@
         [MKMapItem openMapsWithItems:@[currentLocationMapItem, mapItem]
                        launchOptions:launchOptions];
     }
+	 */
 
 }
+
 @end

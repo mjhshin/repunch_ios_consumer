@@ -19,10 +19,24 @@
     return self;
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+	/*
+	self.navigationController.navigationBarHidden = YES;
 	
+	CAGradientLayer *bgLayer3 = [GradientBackground orangeGradient];
+	bgLayer3.frame = self.navigationController.navigationBar.bounds;
+	[self.navigationController.navigationBar.layer insertSublayer:bgLayer3 atIndex:0];
+	NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary: [[UINavigationBar appearance] titleTextAttributes]];
+	[titleBarAttributes setValue:[UIFont fontWithName:@"Avenir" size:16] forKey:UITextAttributeFont];
+	[[UINavigationBar appearance] setTitleTextAttributes:titleBarAttributes];
+	*/
 	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
 	bgLayer.frame = _loginButton.bounds;
 	[_loginButton.layer insertSublayer:bgLayer atIndex:0];
@@ -36,11 +50,6 @@
 	[_registerButton setClipsToBounds:YES];
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -50,12 +59,14 @@
 {
 	RegisterViewController *registerVC = [[RegisterViewController alloc] init];
     [self presentViewController:registerVC animated:YES completion:nil];
+	//[self.navigationController pushViewController:registerVC animated:YES];
 }
 
 - (IBAction)loginButtonPress:(id)sender
 {
 	LoginViewController *loginVC = [[LoginViewController alloc] init];
 	[self presentViewController:loginVC animated:YES completion:nil];
+	//[self.navigationController pushViewController:loginVC animated:YES];
 }
 
 @end

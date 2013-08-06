@@ -9,41 +9,38 @@
 #import "SearchViewController.h"
 #import "PlacesDetailViewController.h"
 #import "SettingsViewController.h"
-#import "SIAlertView.h"
-#import "User.h"
-#import "Store.h"
-#import "Reward.h"
-#import "PatronStore.h"
 #import "MyPlacesTableViewCell.h"
 #import "GlobalToolbar.h"
-#import <Parse/Parse.h>
 #import "AppDelegate.h"
 #import "GradientBackground.h"
-#import "SharedData.h"
+#import "DataManager.h"
+#import "SIAlertView.h"
+#import <Parse/Parse.h>
 
 @implementation MyPlacesViewController
 {
-	SharedData* sharedData;
-	NSArray* storeObjectIds;
+	DataManager* sharedData;
+	PFObject* patron;
+	NSMutableArray* storeIdArray;
     UITableView* myPlacesTableView;
-    PFObject* patron;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-    }
-    return self;
+    return [super initWithNibName:nibName bundle:bundle];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	
-	sharedData = [SharedData init];
-    
+	sharedData = [DataManager getSharedInstance];
 	patron = [sharedData patron];
+	storeIdArray = [[NSMutableArray alloc] init];
+	
+	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
+	bgLayer.frame = _toolbar.bounds;
+	[self.toolbar.layer insertSublayer:bgLayer atIndex:0];
     
 	int navBarOffset = self.view.frame.size.height - 50; //50 is nav bar height
 	myPlacesTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, 320, navBarOffset) style:UITableViewStylePlain];
@@ -51,15 +48,11 @@
     [myPlacesTableView setDelegate:self];
     [[self view] addSubview:myPlacesTableView];
 	
-    [self loadMyPlaces];
+	[self loadMyPlaces];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-	
-	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	bgLayer.frame = _toolbar.bounds;
-	[_toolbar.layer insertSublayer:bgLayer atIndex:0];
     
     //alert to demonstrate how to get the punch code.  will only appear once.
     if (![@"1" isEqualToString:[[NSUserDefaults standardUserDefaults]
@@ -99,24 +92,24 @@
 }
 
 - (void)loadMyPlaces
-{	
+{
     PFRelation *patronStoreRelation = [patron relationforKey:@"PatronStores"];
     PFQuery *patronStoreQuery = [patronStoreRelation query];
     [patronStoreQuery includeKey:@"Store"];
-	patronStoreQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
+	//patronStoreQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
     
     [patronStoreQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
         if (!error){
             for (PFObject *patronStore in results) {
-				
 				PFObject *store = [patronStore objectForKey:@"Store"];
 				NSString *storeId = [store objectId];
 				[sharedData addPatronStore:patronStore forKey:storeId];
-				[sharedData addStore:store forKey:storeId];
+				[sharedData addStore:store];
+				[storeIdArray addObject:storeId];
             }
 
 			[self sortStoreObjectIdsByPunches];
-			//[myPlacesTableView setContentSize:CGSizeMake(320, 105*patronStores.count)];
+			//[myPlacesTableView setContentSize:CGSizeMake(320, 105*results.count)];
 			[myPlacesTableView reloadData];
         }
         else {
@@ -132,7 +125,7 @@
 }
 
 - (void)sortStoreObjectIdsByPunches {
-	storeObjectIds = [storeObjectIds sortedArrayUsingComparator:^NSComparisonResult(id objectId1, id objectId2) {
+	[storeIdArray sortUsingComparator:^NSComparisonResult(NSString *objectId1, NSString *objectId2) {
 		PFObject* patronStore1 = [sharedData getPatronStore:objectId1];
 		PFObject* patronStore2 = [sharedData getPatronStore:objectId2];
 		
@@ -151,20 +144,22 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [sharedData getPatronStoreCount];
+    return [storeIdArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"MyPlacesTableViewCell";
-    MyPlacesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-	if (cell == nil) {
-        cell = [[[NSBundle mainBundle]loadNibNamed:@"MyPlacesTableViewCell" owner:self options:nil] objectAtIndex:0];        
-    }
+    MyPlacesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[MyPlacesTableViewCell reuseIdentifier]];
+	if (cell == nil)
+    {
+        cell = [MyPlacesTableViewCell cell];
+    } else {
+		NSLog(@" cell reused: ");
+	}
 	
-	NSString *objectId = [storeObjectIds objectAtIndex:indexPath.row];
-	PFObject *patronStore = [sharedData getPatronStore:objectId];
-	PFObject *store = [sharedData getStore:objectId];
+	NSString *storeId = [storeIdArray objectAtIndex:indexPath.row];
+	PFObject *patronStore = [sharedData getPatronStore:storeId];
+	PFObject *store = [sharedData getStore:storeId];
 	
     int punches = [[patronStore objectForKey:@"punch_count"] intValue];
     cell.storeName.text = [store objectForKey:@"store_name"];
@@ -190,12 +185,11 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
-	NSString *objectId = [storeObjectIds objectAtIndex:indexPath.row];
+	NSString *objectId = [storeIdArray objectAtIndex:indexPath.row];
 	PFObject *patronStore = [sharedData getPatronStore:objectId];
 	PFObject *store = [sharedData getStore:objectId];
 	
     PlacesDetailViewController *placesDetailVC = [[PlacesDetailViewController alloc]init];
-    placesDetailVC.storeObject = store;
     [self presentViewController:placesDetailVC animated:YES completion:NULL];
 }
 
@@ -214,7 +208,6 @@
 												 andMessage:[NSString stringWithFormat:@"Your punch code is %@", punchCode]];
     [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeCancel handler:nil];
     [alert show];
-    
 }
 
 - (IBAction)openSettings:(id)sender

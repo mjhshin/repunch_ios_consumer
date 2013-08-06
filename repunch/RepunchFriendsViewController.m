@@ -2,20 +2,19 @@
 //  RepunchFriendsViewController.m
 //  Repunch
 //
-//  Created by Gwendolyn Weston on 7/12/13.
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
 #import "RepunchFriendsViewController.h"
-#import "ComposeViewController.h"
+#import "ComposeMessageViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <Parse/Parse.h>
 
-@implementation RepunchFriendsViewController{
+@implementation RepunchFriendsViewController
+{
     __block NSArray *friendsOnRepunchArray;
     UITableView *friendsTableView;
 }
-
 
 - (void)viewDidLoad
 {
@@ -25,10 +24,10 @@
     [friendsTableView setDelegate:self];
     
     [[self view] addSubview:friendsTableView];
-    
 }
 
--(void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:YES];
     
     // Issue a Facebook Graph API request to get your user's friend list
@@ -93,8 +92,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ComposeViewController *composeVC = [[ComposeViewController alloc] init];
-    composeVC.modalDelegate = self;
+    ComposeMessageViewController *composeVC = [[ComposeMessageViewController alloc] init];
     composeVC.messageType = @"Gift";
     composeVC.sendParameters = _giftParametersDict;
     composeVC.recipient = [friendsOnRepunchArray objectAtIndex:indexPath.row];
@@ -110,6 +108,6 @@
 
 
 - (IBAction)closePage:(id)sender {
-    [[self modalDelegate] didDismissPresentedViewController];
+    //[[self modalDelegate] didDismissPresentedViewController];
 }
 @end
