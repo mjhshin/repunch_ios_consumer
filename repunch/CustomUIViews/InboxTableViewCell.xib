@@ -34,7 +34,7 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 			<object class="IBUITableViewCell" id="799083568">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">292</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUIView" id="305110116">
@@ -46,6 +46,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{12, 12}, {223, 21}}</string>
 								<reference key="NSSuperview" ref="305110116"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="230906801"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -82,6 +83,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{243, 12}, {67, 21}}</string>
 								<reference key="NSSuperview" ref="305110116"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="189534427"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -115,6 +117,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{12, 41}, {258, 41}}</string>
 								<reference key="NSSuperview" ref="305110116"/>
+								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<string key="NSHuggingPriority">{250, 250}</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -146,6 +149,7 @@
 								<int key="NSvFlags">-2147483356</int>
 								<string key="NSFrame">{{278, 51}, {22, 21}}</string>
 								<reference key="NSSuperview" ref="305110116"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="499800794"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -154,6 +158,7 @@
 						</array>
 						<string key="NSFrameSize">{320, 93}</string>
 						<reference key="NSSuperview" ref="799083568"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="69458145"/>
 						<string key="NSReuseIdentifierKey">_NS:11</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -168,11 +173,12 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{320, 94}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="305110116"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<reference key="IBUIContentView" ref="305110116"/>
-				<string key="IBUIReuseIdentifier">MessageCell</string>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -671,6 +677,43 @@
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">InboxTableViewCell</string>
+					<string key="superclassName">UITableViewCell</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="dateSent">UILabel</string>
+						<string key="offerPic">UIImageView</string>
+						<string key="previewLabel">UILabel</string>
+						<string key="senderName">UILabel</string>
+						<string key="subjectLabel">UILabel</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="dateSent">
+							<string key="name">dateSent</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="offerPic">
+							<string key="name">offerPic</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="previewLabel">
+							<string key="name">previewLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="senderName">
+							<string key="name">senderName</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="subjectLabel">
+							<string key="name">subjectLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/InboxTableViewCell.h</string>
+					</object>
+				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSLayoutConstraint</string>
 					<string key="superclassName">NSObject</string>

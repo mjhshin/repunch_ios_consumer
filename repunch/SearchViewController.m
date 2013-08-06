@@ -6,277 +6,262 @@
 //
 
 #import "SearchViewController.h"
-#import "PlacesDetailViewController.h"
-
-#import "StoreCell.h"
-#import "GradientBackground.h"
-
-#import <Parse/Parse.h>
-#import "AppDelegate.h"
 
 @implementation SearchViewController
 {
-    __block NSMutableArray *storeList;
-    UIToolbar *globalToolbar;
-    PFGeoPoint *userLocation;
-    UITableView *searchTable;
+	CLLocationManager *locationManager;
+	PFGeoPoint *userLocation;
+	BOOL searchloaded;
 }
 
-- (IBAction)closeView:(id)sender {
-    [self didDismissPresentedViewController];
-}
-
-//set up data model
-- (void)setup
+- (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
 {
-	/*
-    //get all locally stored store entities and set that to be storeList
-    storeList = [[Store MR_findAll] mutableCopy];
-    
-        //update list with stores from cache+network
-        //will only add new stores, will not check/change any information for locally stored stores
-        if ([CLLocationManager locationServicesEnabled]) {
-            //get user location
-            [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error){
-                userLocation = geoPoint;
-                
-                PFQuery *storeQuery = [PFQuery queryWithClassName:@"Store"];
-                storeQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
-                storeQuery.maxCacheAge = 60 * 60 * 24; //clears cache every 24 hours
-				storeQuery.limit = 20; //TODO: paginate
-                [storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation];
-				[storeQuery whereKey:@"active" equalTo:[NSNumber numberWithBool:YES]];
-
-                [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *fetchedStores, NSError *error){
-                    //for (PFObject *store in fetchedStores){
-                    for (int i = 0 ; i <[fetchedStores count]; i++) {
-                        PFObject *store = fetchedStores[i];
-                        BOOL storeIsInList = FALSE;
-                        
-                        //check if store is in list
-                        for (id localStore in storeList){
-                            if ([[localStore valueForKey:@"objectId"] isEqualToString:[store objectId]]){
-                                storeIsInList = TRUE;
-                                break;
-                            }
-                        }
-                        
-                        //if not, add it + store on disk
-                         if(!storeIsInList){
-                             Store *newStore = [Store MR_createEntity];
-                             [newStore setFromParseObject:store];
-                             [storeList addObject:newStore];
-                             
-
-                         }//end if stores is not in list
-                        
-                        
-                    }//end for all fetched loop
-                    
-                    [searchTable reloadData];
-                }]; //end get stores
-            }]; //end get user location
-        }
-	 */
+    return [super initWithNibName:nibName bundle:bundle];
 }
 
-- (void)reload
-{
-    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error){
-        userLocation = geoPoint;
-
-        storeList = [[storeList sortedArrayUsingComparator:^(id obj1, id obj2) {
-            
-            PFGeoPoint *storeLocation1 = [PFGeoPoint geoPointWithLatitude:[[obj1 valueForKey:@"latitude"] doubleValue] longitude:[[obj1 valueForKey:@"longitude"] doubleValue]];
-            double distanceToStore1 = [userLocation distanceInMilesTo:storeLocation1];
-            
-            PFGeoPoint *storeLocation2 = [PFGeoPoint geoPointWithLatitude:[[obj2 valueForKey:@"latitude"] doubleValue] longitude:[[obj2 valueForKey:@"longitude"] doubleValue]];
-            double distanceToStore2 = [userLocation distanceInMilesTo:storeLocation2];
-            
-            if (distanceToStore1 > distanceToStore2) {
-                return (NSComparisonResult)NSOrderedDescending;
-            }
-            
-            if (distanceToStore1 < distanceToStore2) {
-                return (NSComparisonResult)NSOrderedAscending;
-            }
-            return (NSComparisonResult)NSOrderedSame;
-            
-        }] mutableCopy];
-        
-        [searchTable reloadData];
-
-    }];
-    
-}
-
-
-//set up UI configuration
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self.view addSubview:globalToolbar];
-        
-    storeList = [[NSMutableArray alloc] init];
-    
-    searchTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, self.view.frame.size.width, self.view.frame.size.height-50) style:UITableViewStylePlain];
-    [searchTable setDataSource:self];
-    [searchTable setDelegate:self];
-    [[self view] addSubview:searchTable];
-    
-    if (_downloadFromNetwork) {
-        [self setup];
-    }
-    else {
-        [self reload];
-    }
-
-
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+	
+	locationManager = [[CLLocationManager alloc] init];	
+	locationManager.delegate = self;
+	locationManager.distanceFilter = kCLDistanceFilterNone; //filter out negligible changes in location (disabled for now)
+	locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+	
+	self.sharedData = [DataManager getSharedInstance];
+	self.patron = [self.sharedData patron];
+	self.storeIdArray = [NSMutableArray array];
+    self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
 	
 	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
 	bgLayer.frame = _toolbar.bounds;
-	[_toolbar.layer insertSublayer:bgLayer atIndex:0];
-    
-	[[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(receiveLoadedPics:)
-                                                 name:@"FinishedLoadingPic"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(setup)
-                                                 name:@"receivedPush"
-                                               object:nil];
-    
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(reload)
-                                                 name:@"addedOrRemovedStore"
-                                               object:nil];
+	[self.toolbar.layer insertSublayer:bgLayer atIndex:0];
+	
+	int tableViewHeight = self.view.frame.size.height - 50; //50 is nav bar height
+	self.searchTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, 320, tableViewHeight) style:UITableViewStylePlain]; //TODO: shorten tableView so can scroll to last row hidden by tab bar
+    [self.searchTableView setDataSource:self];
+    [self.searchTableView setDelegate:self];
+    [self.view addSubview:self.searchTableView];
+}
 
-    //[self reload];
-
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+	[locationManager startUpdatingLocation];
+	searchloaded = FALSE;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    /*
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"FinishedLoadingPic" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"receivedPush" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"addedOrRemovedStore" object:nil];
-     */
+	[locationManager stopUpdatingLocation];
 }
 
-
--(void)receiveLoadedPics:(NSNotification *) notification
+- (void)didReceiveMemoryWarning
 {
-    [searchTable reloadData];
+    [super didReceiveMemoryWarning];
+    
+    // terminate all pending image downloads
+    NSArray *allDownloads = [self.imageDownloadsInProgress allValues];
+    [allDownloads makeObjectsPerformSelector:@selector(cancelImageDownload)];
+    
+    [self.imageDownloadsInProgress removeAllObjects];
 }
 
-- (void)dismissPresentedViewController
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    //[[self modalDelegate] didDismissPresentedViewController];
+    if(searchloaded == FALSE)
+	{
+		searchloaded = TRUE;
+		// If it's a relatively recent event, turn off updates to save power
+		CLLocation* location = [locations lastObject];
+		//NSDate* eventDate = location.timestamp;
+		//NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
+		//if (abs(howRecent) < 15.0) {
+			// If the event is recent, do something with it.
+			NSLog(@"latitude %+.6f, longitude %+.6f\n", location.coordinate.latitude, location.coordinate.longitude);
+		
+			userLocation = [PFGeoPoint geoPointWithLocation:location];
+			[self performSearch];
+		//}
+	}
 }
 
-- (void)didDismissPresentedViewController
+- (void) performSearch
+{	
+    PFQuery *storeQuery = [PFQuery queryWithClassName:@"Store"];
+    [storeQuery whereKey:@"active" equalTo:[NSNumber numberWithBool:YES]];
+	[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation];
+	[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation withinMiles:50];
+	[storeQuery setLimit:20];
+	//TODO: paginate!!!
+	
+    [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
+	 {
+		 if (!error)
+		 {
+			 for (PFObject *store in results)
+			 {
+				 NSString *storeId = [store objectId];
+				 [self.sharedData addStore:store];
+				 [self.storeIdArray addObject:storeId];
+			 }
+			 
+			 //[self sortStoreObjectIdsByPunches];
+			 //[myPlacesTableView setContentSize:CGSizeMake(320, 105*results.count)];
+			 [self.searchTableView reloadData];
+		 }
+		 else
+		 {
+			 NSLog(@"search view controller serror: %@", error);
+		 }		 
+	 }];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    [self dismissViewControllerAnimated:YES completion:NULL];;
+	return 1;
 }
 
- #pragma mark - Table view data source
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+	return [self.storeIdArray count];
+}
  
- - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
- {
-     return 1;
- }
- 
- - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
- {
-     return [storeList count];
- }
- 
- - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
- {
-	 /*
-     static NSString *CellIdentifier = @"StoreCell";
-      StoreCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-     if (cell == nil) {
-         //cell = [[StoreCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-         cell = [[[NSBundle mainBundle]loadNibNamed:@"StoreCell" owner:self options:nil]objectAtIndex:0];
-
-     }
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	SearchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[SearchTableViewCell reuseIdentifier]];
+	if (cell == nil)
+    {
+        cell = [SearchTableViewCell cell];
+    }
      
-     [[cell punchesPic] setHidden:TRUE];
-     [[cell numberOfPunches] setHidden:TRUE];
+	//[[cell punchesPic] setHidden:TRUE];
+	//[[cell numberOfPunches] setHidden:TRUE];
+	
+	NSString *storeId = [self.storeIdArray objectAtIndex:indexPath.row];
+	PFObject *store = [self.sharedData getStore:storeId];
      
-     Store *currentCellStore = [storeList objectAtIndex:indexPath.row];
+	PFGeoPoint *storeLocation = [store objectForKey:@"coordinates"];
+	double distanceToStore = [userLocation distanceInMilesTo:storeLocation];
+	cell.distance.text = [NSString stringWithFormat:@"%.2f mi", distanceToStore];
      
-      PFGeoPoint *storeLocation = [PFGeoPoint geoPointWithLatitude:currentCellStore.latitude longitude:currentCellStore.longitude];
-     [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error){
-         userLocation = geoPoint;
-
-      double distanceToStore = [userLocation distanceInMilesTo:storeLocation];
-         cell.distance.text = [NSString stringWithFormat:@"%.2f mi", distanceToStore];
-
-         
-     }];
-
+	NSString *neighborhood = [store valueForKey:@"neighborhood"];
+	NSString *city = [store valueForKey:@"city"];
+	NSString *street = [store valueForKey:@"street"];
      
-     NSString *neighborhood = [currentCellStore valueForKey:@"neighborhood"];
-     NSString *state = [currentCellStore valueForKey:@"state"];
-     NSString *addressString = [currentCellStore valueForKey:@"street"];
+	if (neighborhood.length > 0) {
+		street = [street stringByAppendingFormat:@", %@", neighborhood];
+	}
+	else {
+		street = [street stringByAppendingFormat:@", %@", city];
+	}
      
-     if ([neighborhood length]>0){
-         addressString = [addressString stringByAppendingFormat:@", %@", neighborhood];
-     }
-     else{
-         addressString = [addressString stringByAppendingFormat:@", %@", state];
-     }
-     
-     NSArray *categories = [[currentCellStore mutableSetValueForKey:@"categories"] allObjects];
-     NSString *categoryString = @"";
-     for (int i = 0; i <[categories count]; i++){
-         categoryString = [categoryString stringByAppendingString:[categories[i] valueForKey:@"name"]];
-         if (i!= [categories count]-1){
-             categoryString = [categoryString stringByAppendingFormat:@", "];
-         }
-     }
-     
-     if ([localUser alreadyHasStoreSaved:[currentCellStore objectId]]){
-         PatronStore *patronStore = [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", localUser.patronId, [currentCellStore objectId]]];
-         int punches = [[patronStore punch_count] intValue];
-         [[cell punchesPic] setHidden:FALSE];
-         [[cell numberOfPunches] setHidden:FALSE];
-         [[cell numberOfPunches] setText:[NSString stringWithFormat:@"%d %@", punches, (punches==1)?@"punch":@"punches"]];
-     }
-     
-     cell.storeAddressLabel.text = addressString;
-	 cell.storeCategoriesLabel.text = categoryString;
-     cell.storeNameLabel.text = [currentCellStore valueForKey:@"store_name"];
-     cell.storeImageLabel.image = [UIImage imageWithData:[currentCellStore valueForKey:@"store_avatar"]];
-     
-     return cell;
-	  */
- }
-
-#pragma mark - Table View delegate methods
-
+	NSArray *categories = [[store mutableSetValueForKey:@"categories"] allObjects];
+	NSString *formattedCategories = @"";
+	for (int i = 0; i < categories.count; i++)
+	{
+		formattedCategories = [formattedCategories stringByAppendingString:[categories[i] valueForKey:@"name"]];
+		
+		if (i!= [categories count]-1) {
+			formattedCategories = [formattedCategories stringByAppendingFormat:@", "];
+		}
+	}
+	
+	PFObject *patronStore = [self.sharedData getPatronStore:storeId];
+	
+	if(patronStore == nil)
+	{
+		[cell.punchIcon setHidden:TRUE];
+		[cell.numPunches setHidden:TRUE];
+	}
+	else
+	{
+		int punches = [[patronStore objectForKey:@"punch_count"] intValue];
+		[cell.punchIcon setHidden:FALSE];
+		[cell.numPunches setHidden:FALSE];
+		[cell.numPunches setText:[NSString stringWithFormat:@"%d %@", punches, (punches==1) ? @"punch" : @"punches"]];
+	}
+	
+	cell.storeAddress.text = street;
+	cell.storeCategories.text = formattedCategories;
+	cell.storeName.text = [store objectForKey:@"store_name"];
+	cell.storeImage.image = [UIImage imageNamed:@"listview_placeholder.png"];
+	
+	// Only load cached images; defer new downloads until scrolling ends
+    //if (cell.storeImage == nil)
+    //{
+	//if (self.myPlacesTableView.dragging == NO && self.myPlacesTableView.decelerating == NO)
+	//{
+	PFFile *imageFile = [store objectForKey:@"store_avatar"];
+	if(imageFile != nil)
+	{
+		UIImage *storeImage = [self.sharedData getStoreImage:storeId];
+		if(storeImage == nil)
+		{
+			cell.storeImage.image = [UIImage imageNamed:@"listview_placeholder.png"];
+			[self downloadImage:imageFile forIndexPath:indexPath withStoreId:storeId];
+		} else {
+			cell.storeImage.image = storeImage;
+		}
+	} else {
+		// if a download is deferred or in progress, return a placeholder image
+		cell.storeImage.image = [UIImage imageNamed:@"listview_placeholder.png"];
+	}
+	//}
+    //}
+    
+	return cell;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
-	PlacesDetailViewController *placesDetailVC = [[PlacesDetailViewController alloc]init];
+	StoreViewController *placesDetailVC = [[StoreViewController alloc]init];
 	[self presentViewController:placesDetailVC animated:YES completion:NULL];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 110;
+}
+
+- (void)downloadImage:(PFFile *)imageFile forIndexPath:(NSIndexPath *)indexPath withStoreId:(NSString *)storeId
+{
+    PFFile *existingImageFile = [self.imageDownloadsInProgress objectForKey:indexPath];
+    if (existingImageFile == nil)
+    {
+        [self.imageDownloadsInProgress setObject:imageFile forKey:indexPath];
+        
+        [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+		 {
+			 if (!error)
+			 {
+				 SearchTableViewCell *cell = [self.searchTableView cellForRowAtIndexPath:indexPath]; //TODO: resolve this warning
+				 UIImage *storeImage = [UIImage imageWithData:data];
+				 cell.storeImage.image = storeImage;
+				 [self.imageDownloadsInProgress removeObjectForKey:indexPath]; // Remove the PFFile from the in-progress list
+				 [self.sharedData addStoreImage:storeImage forKey:storeId];
+			 }
+			 else
+			 {
+				 NSLog(@"image download failed");
+			 }
+		 }];
+    }
+}
+
+- (void)cancelImageDownload
+{
+    for(PFFile *imageFile in self.imageDownloadsInProgress)
+    {
+        [imageFile cancel];
+    }
+}
+
+- (IBAction)closeView:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

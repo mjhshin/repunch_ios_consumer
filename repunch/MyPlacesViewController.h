@@ -7,17 +7,16 @@
 
 #import <UIKit/UIKit.h>
 #import "SearchViewController.h"
-#import "PlacesDetailViewController.h"
+#import "StoreViewController.h"
 #import "SettingsViewController.h"
 #import "MyPlacesTableViewCell.h"
-#import "GlobalToolbar.h"
 #import "AppDelegate.h"
 #import "GradientBackground.h"
 #import "DataManager.h"
 #import "SIAlertView.h"
 #import <Parse/Parse.h>
 
-@interface MyPlacesViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@interface MyPlacesViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
 
 - (IBAction)openSettings:(id)sender;
 - (IBAction)showPunchCode:(id)sender;

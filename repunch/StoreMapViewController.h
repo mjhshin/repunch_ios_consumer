@@ -7,7 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PlacesDetailMapViewController : UIViewController
+@interface StoreMapViewController : UIViewController
 
 - (IBAction)closeView:(id)sender;
 - (IBAction)getDirections:(id)sender;

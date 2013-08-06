@@ -1,5 +1,5 @@
 //
-//  PlacesDetailViewController.h
+//  StoreViewController.h
 //  Repunch
 //
 //  Copyright (c) 2013 Repunch. All rights reserved.
@@ -8,7 +8,7 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
-@interface PlacesDetailViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface StoreViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
 @property NSString *storeId;
 @property PFObject *store;

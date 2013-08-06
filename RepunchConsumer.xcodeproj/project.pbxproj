@@ -34,35 +34,32 @@
 		EE9D4C6717A83F4B005E0CC5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B7217A83F4A005E0CC5 /* AppDelegate.m */; };
 		EE9D4C6817A83F4B005E0CC5 /* ComposeMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B7417A83F4A005E0CC5 /* ComposeMessageViewController.m */; };
 		EE9D4C6917A83F4B005E0CC5 /* ComposeMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B7517A83F4A005E0CC5 /* ComposeMessageViewController.xib */; };
-		EE9D4C7217A83F4B005E0CC5 /* CustomToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B8917A83F4A005E0CC5 /* CustomToolbar.m */; };
-		EE9D4C7317A83F4B005E0CC5 /* CustomToolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B8A17A83F4A005E0CC5 /* CustomToolbar.xib */; };
-		EE9D4C7417A83F4B005E0CC5 /* GlobalToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B8C17A83F4A005E0CC5 /* GlobalToolbar.m */; };
 		EE9D4C7517A83F4B005E0CC5 /* InboxTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B8E17A83F4A005E0CC5 /* InboxTableViewCell.m */; };
 		EE9D4C7617A83F4B005E0CC5 /* InboxTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B8F17A83F4A005E0CC5 /* InboxTableViewCell.xib */; };
 		EE9D4C7717A83F4B005E0CC5 /* RewardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B9117A83F4A005E0CC5 /* RewardCell.m */; };
 		EE9D4C7817A83F4B005E0CC5 /* RewardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B9217A83F4A005E0CC5 /* RewardCell.xib */; };
 		EE9D4C7917A83F4B005E0CC5 /* MyPlacesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B9417A83F4A005E0CC5 /* MyPlacesTableViewCell.m */; };
 		EE9D4C7A17A83F4B005E0CC5 /* MyPlacesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B9517A83F4A005E0CC5 /* MyPlacesTableViewCell.xib */; };
-		EE9D4C7B17A83F4B005E0CC5 /* StoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B9717A83F4A005E0CC5 /* StoreCell.m */; };
-		EE9D4C7C17A83F4B005E0CC5 /* StoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B9817A83F4A005E0CC5 /* StoreCell.xib */; };
+		EE9D4C7B17A83F4B005E0CC5 /* SearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B9717A83F4A005E0CC5 /* SearchTableViewCell.m */; };
+		EE9D4C7C17A83F4B005E0CC5 /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B9817A83F4A005E0CC5 /* SearchTableViewCell.xib */; };
 		EE9D4C7E17A83F4B005E0CC5 /* InboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B9C17A83F4A005E0CC5 /* InboxViewController.m */; };
 		EE9D4C7F17A83F4B005E0CC5 /* InboxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B9D17A83F4A005E0CC5 /* InboxViewController.xib */; };
 		EE9D4C8017A83F4B005E0CC5 /* LandingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B9F17A83F4A005E0CC5 /* LandingViewController.m */; };
 		EE9D4C8117A83F4B005E0CC5 /* LandingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BA017A83F4A005E0CC5 /* LandingViewController.xib */; };
 		EE9D4C8217A83F4B005E0CC5 /* IncomingMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BA217A83F4A005E0CC5 /* IncomingMessageViewController.m */; };
 		EE9D4C8317A83F4B005E0CC5 /* IncomingMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BA317A83F4A005E0CC5 /* IncomingMessageViewController.xib */; };
-		EE9D4C8517A83F4B005E0CC5 /* PlacesDetailMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BA717A83F4A005E0CC5 /* PlacesDetailMapViewController.m */; };
-		EE9D4C8617A83F4B005E0CC5 /* PlacesDetailMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BA817A83F4A005E0CC5 /* PlacesDetailMapViewController.xib */; };
-		EE9D4C8717A83F4B005E0CC5 /* PlacesDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BAA17A83F4A005E0CC5 /* PlacesDetailViewController.m */; };
-		EE9D4C8817A83F4B005E0CC5 /* PlacesDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BAB17A83F4A005E0CC5 /* PlacesDetailViewController.xib */; };
+		EE9D4C8517A83F4B005E0CC5 /* StoreMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BA717A83F4A005E0CC5 /* StoreMapViewController.m */; };
+		EE9D4C8617A83F4B005E0CC5 /* StoreMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BA817A83F4A005E0CC5 /* StoreMapViewController.xib */; };
+		EE9D4C8717A83F4B005E0CC5 /* StoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BAA17A83F4A005E0CC5 /* StoreViewController.m */; };
+		EE9D4C8817A83F4B005E0CC5 /* StoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BAB17A83F4A005E0CC5 /* StoreViewController.xib */; };
 		EE9D4C8917A83F4B005E0CC5 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BAD17A83F4A005E0CC5 /* SearchViewController.m */; };
 		EE9D4C8A17A83F4B005E0CC5 /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BAE17A83F4A005E0CC5 /* SearchViewController.xib */; };
 		EE9D4C8B17A83F4B005E0CC5 /* MyPlacesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BB017A83F4A005E0CC5 /* MyPlacesViewController.m */; };
 		EE9D4C8C17A83F4B005E0CC5 /* MyPlacesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BB117A83F4A005E0CC5 /* MyPlacesViewController.xib */; };
 		EE9D4C8F17A83F4B005E0CC5 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BB817A83F4A005E0CC5 /* RegisterViewController.m */; };
 		EE9D4C9017A83F4B005E0CC5 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BB917A83F4A005E0CC5 /* RegisterViewController.xib */; };
-		EE9D4C9217A83F4B005E0CC5 /* RepunchFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BBE17A83F4A005E0CC5 /* RepunchFriendsViewController.m */; };
-		EE9D4C9317A83F4B005E0CC5 /* RepunchFriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BBF17A83F4A005E0CC5 /* RepunchFriendsViewController.xib */; };
+		EE9D4C9217A83F4B005E0CC5 /* FacebookFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BBE17A83F4A005E0CC5 /* FacebookFriendsViewController.m */; };
+		EE9D4C9317A83F4B005E0CC5 /* FacebookFriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BBF17A83F4A005E0CC5 /* FacebookFriendsViewController.xib */; };
 		EE9D4C9417A83F4B005E0CC5 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BC117A83F4A005E0CC5 /* SettingsViewController.m */; };
 		EE9D4C9517A83F4B005E0CC5 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BC217A83F4A005E0CC5 /* SettingsViewController.xib */; };
 		EE9D4C9617A83F4B005E0CC5 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BC417A83F4A005E0CC5 /* LoginViewController.m */; };
@@ -71,7 +68,6 @@
 		EE9D4C9917A83F4B005E0CC5 /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BCA17A83F4A005E0CC5 /* MKMapView+ZoomLevel.m */; };
 		EE9D4C9A17A83F4B005E0CC5 /* NSDate+whenString.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BCC17A83F4A005E0CC5 /* NSDate+whenString.m */; };
 		EE9D4C9B17A83F4B005E0CC5 /* UIViewController+animateView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BCE17A83F4A005E0CC5 /* UIViewController+animateView.m */; };
-		EE9D4D2A17A843EE005E0CC5 /* repunch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4D2717A843EE005E0CC5 /* repunch.xcdatamodeld */; };
 		EE9D4D8117A84559005E0CC5 /* dsym_upload.sh in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4D2F17A84559005E0CC5 /* dsym_upload.sh */; };
 		EE9D4D8217A84559005E0CC5 /* libCrittercism_v4_0_2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE9D4D3017A84559005E0CC5 /* libCrittercism_v4_0_2.a */; };
 		EE9D4DA317A84559005E0CC5 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE9D4D7C17A84559005E0CC5 /* Parse.framework */; };
@@ -228,11 +224,6 @@
 		EE9D4B7317A83F4A005E0CC5 /* ComposeMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComposeMessageViewController.h; sourceTree = "<group>"; };
 		EE9D4B7417A83F4A005E0CC5 /* ComposeMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComposeMessageViewController.m; sourceTree = "<group>"; };
 		EE9D4B7517A83F4A005E0CC5 /* ComposeMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComposeMessageViewController.xib; sourceTree = "<group>"; };
-		EE9D4B8817A83F4A005E0CC5 /* CustomToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomToolbar.h; sourceTree = "<group>"; };
-		EE9D4B8917A83F4A005E0CC5 /* CustomToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomToolbar.m; sourceTree = "<group>"; };
-		EE9D4B8A17A83F4A005E0CC5 /* CustomToolbar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomToolbar.xib; sourceTree = "<group>"; };
-		EE9D4B8B17A83F4A005E0CC5 /* GlobalToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalToolbar.h; sourceTree = "<group>"; };
-		EE9D4B8C17A83F4A005E0CC5 /* GlobalToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalToolbar.m; sourceTree = "<group>"; };
 		EE9D4B8D17A83F4A005E0CC5 /* InboxTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InboxTableViewCell.h; sourceTree = "<group>"; };
 		EE9D4B8E17A83F4A005E0CC5 /* InboxTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InboxTableViewCell.m; sourceTree = "<group>"; };
 		EE9D4B8F17A83F4A005E0CC5 /* InboxTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InboxTableViewCell.xib; sourceTree = "<group>"; };
@@ -242,9 +233,9 @@
 		EE9D4B9317A83F4A005E0CC5 /* MyPlacesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPlacesTableViewCell.h; sourceTree = "<group>"; };
 		EE9D4B9417A83F4A005E0CC5 /* MyPlacesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPlacesTableViewCell.m; sourceTree = "<group>"; };
 		EE9D4B9517A83F4A005E0CC5 /* MyPlacesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPlacesTableViewCell.xib; sourceTree = "<group>"; };
-		EE9D4B9617A83F4A005E0CC5 /* StoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreCell.h; sourceTree = "<group>"; };
-		EE9D4B9717A83F4A005E0CC5 /* StoreCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreCell.m; sourceTree = "<group>"; };
-		EE9D4B9817A83F4A005E0CC5 /* StoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreCell.xib; sourceTree = "<group>"; };
+		EE9D4B9617A83F4A005E0CC5 /* SearchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTableViewCell.h; sourceTree = "<group>"; };
+		EE9D4B9717A83F4A005E0CC5 /* SearchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTableViewCell.m; sourceTree = "<group>"; };
+		EE9D4B9817A83F4A005E0CC5 /* SearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
 		EE9D4B9B17A83F4A005E0CC5 /* InboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InboxViewController.h; sourceTree = "<group>"; };
 		EE9D4B9C17A83F4A005E0CC5 /* InboxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InboxViewController.m; sourceTree = "<group>"; };
 		EE9D4B9D17A83F4A005E0CC5 /* InboxViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InboxViewController.xib; sourceTree = "<group>"; };
@@ -254,12 +245,12 @@
 		EE9D4BA117A83F4A005E0CC5 /* IncomingMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IncomingMessageViewController.h; sourceTree = "<group>"; };
 		EE9D4BA217A83F4A005E0CC5 /* IncomingMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IncomingMessageViewController.m; sourceTree = "<group>"; };
 		EE9D4BA317A83F4A005E0CC5 /* IncomingMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IncomingMessageViewController.xib; sourceTree = "<group>"; };
-		EE9D4BA617A83F4A005E0CC5 /* PlacesDetailMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlacesDetailMapViewController.h; sourceTree = "<group>"; };
-		EE9D4BA717A83F4A005E0CC5 /* PlacesDetailMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacesDetailMapViewController.m; sourceTree = "<group>"; };
-		EE9D4BA817A83F4A005E0CC5 /* PlacesDetailMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlacesDetailMapViewController.xib; sourceTree = "<group>"; };
-		EE9D4BA917A83F4A005E0CC5 /* PlacesDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlacesDetailViewController.h; sourceTree = "<group>"; };
-		EE9D4BAA17A83F4A005E0CC5 /* PlacesDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacesDetailViewController.m; sourceTree = "<group>"; };
-		EE9D4BAB17A83F4A005E0CC5 /* PlacesDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlacesDetailViewController.xib; sourceTree = "<group>"; };
+		EE9D4BA617A83F4A005E0CC5 /* StoreMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreMapViewController.h; sourceTree = "<group>"; };
+		EE9D4BA717A83F4A005E0CC5 /* StoreMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreMapViewController.m; sourceTree = "<group>"; };
+		EE9D4BA817A83F4A005E0CC5 /* StoreMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreMapViewController.xib; sourceTree = "<group>"; };
+		EE9D4BA917A83F4A005E0CC5 /* StoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreViewController.h; sourceTree = "<group>"; };
+		EE9D4BAA17A83F4A005E0CC5 /* StoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreViewController.m; sourceTree = "<group>"; };
+		EE9D4BAB17A83F4A005E0CC5 /* StoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreViewController.xib; sourceTree = "<group>"; };
 		EE9D4BAC17A83F4A005E0CC5 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		EE9D4BAD17A83F4A005E0CC5 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		EE9D4BAE17A83F4A005E0CC5 /* SearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchViewController.xib; sourceTree = "<group>"; };
@@ -269,11 +260,9 @@
 		EE9D4BB717A83F4A005E0CC5 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		EE9D4BB817A83F4A005E0CC5 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		EE9D4BB917A83F4A005E0CC5 /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
-		EE9D4BBB17A83F4A005E0CC5 /* Repunch 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Repunch 2.xcdatamodel"; sourceTree = "<group>"; };
-		EE9D4BBC17A83F4A005E0CC5 /* repunch.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = repunch.xcdatamodel; sourceTree = "<group>"; };
-		EE9D4BBD17A83F4A005E0CC5 /* RepunchFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepunchFriendsViewController.h; sourceTree = "<group>"; };
-		EE9D4BBE17A83F4A005E0CC5 /* RepunchFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepunchFriendsViewController.m; sourceTree = "<group>"; };
-		EE9D4BBF17A83F4A005E0CC5 /* RepunchFriendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RepunchFriendsViewController.xib; sourceTree = "<group>"; };
+		EE9D4BBD17A83F4A005E0CC5 /* FacebookFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookFriendsViewController.h; sourceTree = "<group>"; };
+		EE9D4BBE17A83F4A005E0CC5 /* FacebookFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookFriendsViewController.m; sourceTree = "<group>"; };
+		EE9D4BBF17A83F4A005E0CC5 /* FacebookFriendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FacebookFriendsViewController.xib; sourceTree = "<group>"; };
 		EE9D4BC017A83F4A005E0CC5 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		EE9D4BC117A83F4A005E0CC5 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		EE9D4BC217A83F4A005E0CC5 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
@@ -290,8 +279,6 @@
 		EE9D4BCE17A83F4A005E0CC5 /* UIViewController+animateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+animateView.m"; sourceTree = "<group>"; };
 		EE9D4D0E17A84266005E0CC5 /* Repunch-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Repunch-Info.plist"; sourceTree = "<group>"; };
 		EE9D4D0F17A84266005E0CC5 /* Repunch-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Repunch-Prefix.pch"; sourceTree = "<group>"; };
-		EE9D4D2817A843EE005E0CC5 /* Repunch 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Repunch 2.xcdatamodel"; sourceTree = "<group>"; };
-		EE9D4D2917A843EE005E0CC5 /* repunch.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = repunch.xcdatamodel; sourceTree = "<group>"; };
 		EE9D4D2D17A84559005E0CC5 /* Crittercism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crittercism.h; sourceTree = "<group>"; };
 		EE9D4D2E17A84559005E0CC5 /* CrittercismDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrittercismDelegate.h; sourceTree = "<group>"; };
 		EE9D4D2F17A84559005E0CC5 /* dsym_upload.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = dsym_upload.sh; sourceTree = "<group>"; };
@@ -517,51 +504,49 @@
 		EE9D4B7017A83F4A005E0CC5 /* Repunch */ = {
 			isa = PBXGroup;
 			children = (
-				EE9D4E4D17A846B1005E0CC5 /* SIAlertView */,
-				EE9D4D2717A843EE005E0CC5 /* repunch.xcdatamodeld */,
 				EE9D4B7117A83F4A005E0CC5 /* AppDelegate.h */,
 				EE9D4B7217A83F4A005E0CC5 /* AppDelegate.m */,
 				EE9D4B7317A83F4A005E0CC5 /* ComposeMessageViewController.h */,
 				EE9D4B7417A83F4A005E0CC5 /* ComposeMessageViewController.m */,
 				EE9D4B7517A83F4A005E0CC5 /* ComposeMessageViewController.xib */,
 				EE9D4B8717A83F4A005E0CC5 /* CustomUIViews */,
+				EE28DADE17AC447E00E4C460 /* DataManager.h */,
+				EE28DADF17AC447E00E4C460 /* DataManager.m */,
 				EE9D4B9B17A83F4A005E0CC5 /* InboxViewController.h */,
 				EE9D4B9C17A83F4A005E0CC5 /* InboxViewController.m */,
 				EE9D4B9D17A83F4A005E0CC5 /* InboxViewController.xib */,
-				EE9D4B9E17A83F4A005E0CC5 /* LandingViewController.h */,
-				EE9D4B9F17A83F4A005E0CC5 /* LandingViewController.m */,
-				EE9D4BA017A83F4A005E0CC5 /* LandingViewController.xib */,
 				EE9D4BA117A83F4A005E0CC5 /* IncomingMessageViewController.h */,
 				EE9D4BA217A83F4A005E0CC5 /* IncomingMessageViewController.m */,
 				EE9D4BA317A83F4A005E0CC5 /* IncomingMessageViewController.xib */,
-				EE9D4BA617A83F4A005E0CC5 /* PlacesDetailMapViewController.h */,
-				EE9D4BA717A83F4A005E0CC5 /* PlacesDetailMapViewController.m */,
-				EE9D4BA817A83F4A005E0CC5 /* PlacesDetailMapViewController.xib */,
-				EE9D4BA917A83F4A005E0CC5 /* PlacesDetailViewController.h */,
-				EE9D4BAA17A83F4A005E0CC5 /* PlacesDetailViewController.m */,
-				EE9D4BAB17A83F4A005E0CC5 /* PlacesDetailViewController.xib */,
-				EE9D4BAC17A83F4A005E0CC5 /* SearchViewController.h */,
-				EE9D4BAD17A83F4A005E0CC5 /* SearchViewController.m */,
-				EE9D4BAE17A83F4A005E0CC5 /* SearchViewController.xib */,
-				EE9D4BAF17A83F4A005E0CC5 /* MyPlacesViewController.h */,
-				EE9D4BB017A83F4A005E0CC5 /* MyPlacesViewController.m */,
-				EE9D4BB117A83F4A005E0CC5 /* MyPlacesViewController.xib */,
-				EE9D4BB717A83F4A005E0CC5 /* RegisterViewController.h */,
-				EE9D4BB817A83F4A005E0CC5 /* RegisterViewController.m */,
-				EE9D4BB917A83F4A005E0CC5 /* RegisterViewController.xib */,
-				EE9D4BBA17A83F4A005E0CC5 /* repunch.xcdatamodeld */,
-				EE9D4BBD17A83F4A005E0CC5 /* RepunchFriendsViewController.h */,
-				EE9D4BBE17A83F4A005E0CC5 /* RepunchFriendsViewController.m */,
-				EE9D4BBF17A83F4A005E0CC5 /* RepunchFriendsViewController.xib */,
-				EE9D4BC017A83F4A005E0CC5 /* SettingsViewController.h */,
-				EE9D4BC117A83F4A005E0CC5 /* SettingsViewController.m */,
-				EE9D4BC217A83F4A005E0CC5 /* SettingsViewController.xib */,
+				EE9D4B9E17A83F4A005E0CC5 /* LandingViewController.h */,
+				EE9D4B9F17A83F4A005E0CC5 /* LandingViewController.m */,
+				EE9D4BA017A83F4A005E0CC5 /* LandingViewController.xib */,
 				EE9D4BC317A83F4A005E0CC5 /* LoginViewController.h */,
 				EE9D4BC417A83F4A005E0CC5 /* LoginViewController.m */,
 				EE9D4BC517A83F4A005E0CC5 /* LoginViewController.xib */,
+				EE9D4BAF17A83F4A005E0CC5 /* MyPlacesViewController.h */,
+				EE9D4BB017A83F4A005E0CC5 /* MyPlacesViewController.m */,
+				EE9D4BB117A83F4A005E0CC5 /* MyPlacesViewController.xib */,
+				EE9D4BA617A83F4A005E0CC5 /* StoreMapViewController.h */,
+				EE9D4BA717A83F4A005E0CC5 /* StoreMapViewController.m */,
+				EE9D4BA817A83F4A005E0CC5 /* StoreMapViewController.xib */,
+				EE9D4BB717A83F4A005E0CC5 /* RegisterViewController.h */,
+				EE9D4BB817A83F4A005E0CC5 /* RegisterViewController.m */,
+				EE9D4BB917A83F4A005E0CC5 /* RegisterViewController.xib */,
+				EE9D4BBD17A83F4A005E0CC5 /* FacebookFriendsViewController.h */,
+				EE9D4BBE17A83F4A005E0CC5 /* FacebookFriendsViewController.m */,
+				EE9D4BBF17A83F4A005E0CC5 /* FacebookFriendsViewController.xib */,
+				EE9D4BAC17A83F4A005E0CC5 /* SearchViewController.h */,
+				EE9D4BAD17A83F4A005E0CC5 /* SearchViewController.m */,
+				EE9D4BAE17A83F4A005E0CC5 /* SearchViewController.xib */,
+				EE9D4BC017A83F4A005E0CC5 /* SettingsViewController.h */,
+				EE9D4BC117A83F4A005E0CC5 /* SettingsViewController.m */,
+				EE9D4BC217A83F4A005E0CC5 /* SettingsViewController.xib */,
+				EE9D4E4D17A846B1005E0CC5 /* SIAlertView */,
+				EE9D4BA917A83F4A005E0CC5 /* StoreViewController.h */,
+				EE9D4BAA17A83F4A005E0CC5 /* StoreViewController.m */,
+				EE9D4BAB17A83F4A005E0CC5 /* StoreViewController.xib */,
 				EE9D4BC617A83F4A005E0CC5 /* ThirdPartyViews */,
-				EE28DADE17AC447E00E4C460 /* DataManager.h */,
-				EE28DADF17AC447E00E4C460 /* DataManager.m */,
 			);
 			path = Repunch;
 			sourceTree = "<group>";
@@ -569,11 +554,6 @@
 		EE9D4B8717A83F4A005E0CC5 /* CustomUIViews */ = {
 			isa = PBXGroup;
 			children = (
-				EE9D4B8817A83F4A005E0CC5 /* CustomToolbar.h */,
-				EE9D4B8917A83F4A005E0CC5 /* CustomToolbar.m */,
-				EE9D4B8A17A83F4A005E0CC5 /* CustomToolbar.xib */,
-				EE9D4B8B17A83F4A005E0CC5 /* GlobalToolbar.h */,
-				EE9D4B8C17A83F4A005E0CC5 /* GlobalToolbar.m */,
 				EE9D4B8D17A83F4A005E0CC5 /* InboxTableViewCell.h */,
 				EE9D4B8E17A83F4A005E0CC5 /* InboxTableViewCell.m */,
 				EE9D4B8F17A83F4A005E0CC5 /* InboxTableViewCell.xib */,
@@ -583,9 +563,9 @@
 				EE9D4B9317A83F4A005E0CC5 /* MyPlacesTableViewCell.h */,
 				EE9D4B9417A83F4A005E0CC5 /* MyPlacesTableViewCell.m */,
 				EE9D4B9517A83F4A005E0CC5 /* MyPlacesTableViewCell.xib */,
-				EE9D4B9617A83F4A005E0CC5 /* StoreCell.h */,
-				EE9D4B9717A83F4A005E0CC5 /* StoreCell.m */,
-				EE9D4B9817A83F4A005E0CC5 /* StoreCell.xib */,
+				EE9D4B9617A83F4A005E0CC5 /* SearchTableViewCell.h */,
+				EE9D4B9717A83F4A005E0CC5 /* SearchTableViewCell.m */,
+				EE9D4B9817A83F4A005E0CC5 /* SearchTableViewCell.xib */,
 				EE9D4F4F17A96F5B005E0CC5 /* GradientBackground.h */,
 				EE9D4F5017A96F5B005E0CC5 /* GradientBackground.m */,
 			);
@@ -820,20 +800,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE9D4C6917A83F4B005E0CC5 /* ComposeMessageViewController.xib in Resources */,
-				EE9D4C7317A83F4B005E0CC5 /* CustomToolbar.xib in Resources */,
 				EE9D4C7617A83F4B005E0CC5 /* InboxTableViewCell.xib in Resources */,
 				EE9D4C7817A83F4B005E0CC5 /* RewardCell.xib in Resources */,
 				EE9D4C7A17A83F4B005E0CC5 /* MyPlacesTableViewCell.xib in Resources */,
-				EE9D4C7C17A83F4B005E0CC5 /* StoreCell.xib in Resources */,
+				EE9D4C7C17A83F4B005E0CC5 /* SearchTableViewCell.xib in Resources */,
 				EE9D4C7F17A83F4B005E0CC5 /* InboxViewController.xib in Resources */,
 				EE9D4C8117A83F4B005E0CC5 /* LandingViewController.xib in Resources */,
 				EE9D4C8317A83F4B005E0CC5 /* IncomingMessageViewController.xib in Resources */,
-				EE9D4C8617A83F4B005E0CC5 /* PlacesDetailMapViewController.xib in Resources */,
-				EE9D4C8817A83F4B005E0CC5 /* PlacesDetailViewController.xib in Resources */,
+				EE9D4C8617A83F4B005E0CC5 /* StoreMapViewController.xib in Resources */,
+				EE9D4C8817A83F4B005E0CC5 /* StoreViewController.xib in Resources */,
 				EE9D4C8A17A83F4B005E0CC5 /* SearchViewController.xib in Resources */,
 				EE9D4C8C17A83F4B005E0CC5 /* MyPlacesViewController.xib in Resources */,
 				EE9D4C9017A83F4B005E0CC5 /* RegisterViewController.xib in Resources */,
-				EE9D4C9317A83F4B005E0CC5 /* RepunchFriendsViewController.xib in Resources */,
+				EE9D4C9317A83F4B005E0CC5 /* FacebookFriendsViewController.xib in Resources */,
 				EE9D4C9517A83F4B005E0CC5 /* SettingsViewController.xib in Resources */,
 				EE9D4C9717A83F4B005E0CC5 /* LoginViewController.xib in Resources */,
 				EE9D4E7117A846B1005E0CC5 /* SIAlertView.bundle in Resources */,
@@ -979,28 +958,25 @@
 				EE9D4C6617A83F4B005E0CC5 /* main.m in Sources */,
 				EE9D4C6717A83F4B005E0CC5 /* AppDelegate.m in Sources */,
 				EE9D4C6817A83F4B005E0CC5 /* ComposeMessageViewController.m in Sources */,
-				EE9D4C7217A83F4B005E0CC5 /* CustomToolbar.m in Sources */,
-				EE9D4C7417A83F4B005E0CC5 /* GlobalToolbar.m in Sources */,
 				EE9D4C7517A83F4B005E0CC5 /* InboxTableViewCell.m in Sources */,
 				EE9D4C7717A83F4B005E0CC5 /* RewardCell.m in Sources */,
 				EE9D4C7917A83F4B005E0CC5 /* MyPlacesTableViewCell.m in Sources */,
-				EE9D4C7B17A83F4B005E0CC5 /* StoreCell.m in Sources */,
+				EE9D4C7B17A83F4B005E0CC5 /* SearchTableViewCell.m in Sources */,
 				EE9D4C7E17A83F4B005E0CC5 /* InboxViewController.m in Sources */,
 				EE9D4C8017A83F4B005E0CC5 /* LandingViewController.m in Sources */,
 				EE9D4C8217A83F4B005E0CC5 /* IncomingMessageViewController.m in Sources */,
-				EE9D4C8517A83F4B005E0CC5 /* PlacesDetailMapViewController.m in Sources */,
-				EE9D4C8717A83F4B005E0CC5 /* PlacesDetailViewController.m in Sources */,
+				EE9D4C8517A83F4B005E0CC5 /* StoreMapViewController.m in Sources */,
+				EE9D4C8717A83F4B005E0CC5 /* StoreViewController.m in Sources */,
 				EE9D4C8917A83F4B005E0CC5 /* SearchViewController.m in Sources */,
 				EE9D4C8B17A83F4B005E0CC5 /* MyPlacesViewController.m in Sources */,
 				EE9D4C8F17A83F4B005E0CC5 /* RegisterViewController.m in Sources */,
-				EE9D4C9217A83F4B005E0CC5 /* RepunchFriendsViewController.m in Sources */,
+				EE9D4C9217A83F4B005E0CC5 /* FacebookFriendsViewController.m in Sources */,
 				EE9D4C9417A83F4B005E0CC5 /* SettingsViewController.m in Sources */,
 				EE9D4C9617A83F4B005E0CC5 /* LoginViewController.m in Sources */,
 				EE9D4C9817A83F4B005E0CC5 /* MapPin.m in Sources */,
 				EE9D4C9917A83F4B005E0CC5 /* MKMapView+ZoomLevel.m in Sources */,
 				EE9D4C9A17A83F4B005E0CC5 /* NSDate+whenString.m in Sources */,
 				EE9D4C9B17A83F4B005E0CC5 /* UIViewController+animateView.m in Sources */,
-				EE9D4D2A17A843EE005E0CC5 /* repunch.xcdatamodeld in Sources */,
 				EE9D4E7217A846B1005E0CC5 /* SIAlertView.m in Sources */,
 				EE9D4F5117A96F5B005E0CC5 /* GradientBackground.m in Sources */,
 				EE28DAE017AC447E00E4C460 /* DataManager.m in Sources */,
@@ -1214,31 +1190,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		EE9D4BBA17A83F4A005E0CC5 /* repunch.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				EE9D4BBB17A83F4A005E0CC5 /* Repunch 2.xcdatamodel */,
-				EE9D4BBC17A83F4A005E0CC5 /* repunch.xcdatamodel */,
-			);
-			currentVersion = EE9D4BBB17A83F4A005E0CC5 /* Repunch 2.xcdatamodel */;
-			path = repunch.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-		EE9D4D2717A843EE005E0CC5 /* repunch.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				EE9D4D2817A843EE005E0CC5 /* Repunch 2.xcdatamodel */,
-				EE9D4D2917A843EE005E0CC5 /* repunch.xcdatamodel */,
-			);
-			currentVersion = EE9D4D2817A843EE005E0CC5 /* Repunch 2.xcdatamodel */;
-			path = repunch.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 7996B35117820A9700CCAFED /* Project object */;
 }

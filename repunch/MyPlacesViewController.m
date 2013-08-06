@@ -27,11 +27,12 @@
 	bgLayer.frame = _toolbar.bounds;
 	[self.toolbar.layer insertSublayer:bgLayer atIndex:0];
     
-	int navBarOffset = self.view.frame.size.height - 50; //50 is nav bar height
-	self.myPlacesTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, 320, navBarOffset) style:UITableViewStylePlain];
+	int tableViewHeight = self.view.frame.size.height - 50; //50 is nav bar height
+	//int tabBarSize = self.tabBarController.tabBar.frame.size.height;
+	self.myPlacesTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, 320, tableViewHeight) style:UITableViewStylePlain]; //TODO: shorten tableView so can scroll to last row hidden by tab bar
     [self.myPlacesTableView setDataSource:self];
     [self.myPlacesTableView setDelegate:self];
-    [[self view] addSubview:self.myPlacesTableView];
+    [self.view addSubview:self.myPlacesTableView];
 	
 	[self loadMyPlaces];
 }
@@ -60,7 +61,7 @@
 {
     [super didReceiveMemoryWarning];
     
-    // terminate all pending download connections
+    // terminate all pending image downloads
     NSArray *allDownloads = [self.imageDownloadsInProgress allValues];
     [allDownloads makeObjectsPerformSelector:@selector(cancelImageDownload)];
     
@@ -72,7 +73,8 @@
     PFRelation *patronStoreRelation = [self.patron relationforKey:@"PatronStores"];
     PFQuery *patronStoreQuery = [patronStoreRelation query];
     [patronStoreQuery includeKey:@"Store"];
-	//patronStoreQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
+	[patronStoreQuery setLimit:20];
+	//TODO: paginate!!!
 
     [patronStoreQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
     {
@@ -131,9 +133,6 @@
     {
         cell = [MyPlacesTableViewCell cell];
     }
-    else {
-		NSLog(@" cell reused: ");
-    }
 	
 	NSString *storeId = [self.storeIdArray objectAtIndex:indexPath.row];
 	PFObject *patronStore = [self.sharedData getPatronStore:storeId];
@@ -156,25 +155,26 @@
     
     // Only load cached images; defer new downloads until scrolling ends
     //if (cell.storeImage == nil)
-    {
+    //{
         //if (self.myPlacesTableView.dragging == NO && self.myPlacesTableView.decelerating == NO)
+		//{
         PFFile *imageFile = [store objectForKey:@"store_avatar"];
         if(imageFile != nil)
         {
-            NSData *data = [self.sharedData getStoreImage:storeId];
-            //if(data !=) {
-                UIImage *storeImage = [UIImage imageWithData:data];
-                if(storeImage == nil)
-                {
-                    [self downloadImage:imageFile forIndexPath:indexPath withStoreId:storeId];
-                } else {
-                    cell.storeImage.image = storeImage;
-                }
-            //}
-        }
-        // if a download is deferred or in progress, return a placeholder image
-        cell.storeImage.image = [UIImage imageNamed:@"listview_placeholder.png"];
-    }
+            UIImage *storeImage = [self.sharedData getStoreImage:storeId];
+			if(storeImage == nil)
+			{
+				cell.storeImage.image = [UIImage imageNamed:@"listview_placeholder.png"];
+				[self downloadImage:imageFile forIndexPath:indexPath withStoreId:storeId];
+			} else {
+				cell.storeImage.image = storeImage;
+			}
+        } else {
+			// if a download is deferred or in progress, return a placeholder image
+			cell.storeImage.image = [UIImage imageNamed:@"listview_placeholder.png"];
+		}
+		//}
+    //}
     
     return cell;
 }
@@ -183,7 +183,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 	NSString *storeId = [self.storeIdArray objectAtIndex:indexPath.row];
-    PlacesDetailViewController *placesDetailVC = [[PlacesDetailViewController alloc]init];
+    StoreViewController *placesDetailVC = [[StoreViewController alloc]init];
     placesDetailVC.storeId = storeId;
     [self presentViewController:placesDetailVC animated:YES completion:NULL];
 }
@@ -204,10 +204,11 @@
         {
             if (!error)
             {
-                MyPlacesTableViewCell *cell = [self.myPlacesTableView cellForRowAtIndexPath:indexPath];
-                cell.storeImage.image = [UIImage imageWithData:data];
-                [self.imageDownloadsInProgress removeObjectForKey:indexPath]; // Remove the PFFile from the in-progress list
-                [self.sharedData addStoreImage:data forKey:storeId];
+                MyPlacesTableViewCell *cell = [self.myPlacesTableView cellForRowAtIndexPath:indexPath]; //TODO: resolve this warning
+				UIImage *storeImage = [UIImage imageWithData:data];
+                cell.storeImage.image = storeImage;
+				[self.imageDownloadsInProgress removeObjectForKey:indexPath]; // Remove the PFFile from the in-progress list
+                [self.sharedData addStoreImage:storeImage forKey:storeId];
             }
             else
             {
@@ -224,6 +225,42 @@
         [imageFile cancel];
     }
 }
+
+/*
+// -------------------------------------------------------------------------------
+//	loadImagesForOnscreenRows
+//  This method is used in case the user scrolled into a set of cells that don't
+//  have their app icons yet.
+// -------------------------------------------------------------------------------
+- (void)loadImagesForOnscreenRows
+{
+	if ([self.entries count] > 0)
+    {
+        NSArray *visiblePaths = [self.myPlacesTableView indexPathsForVisibleRows];
+        for (NSIndexPath *indexPath in visiblePaths)
+        {
+            MyPlacesTableViewCell *cell = [self.entries objectAtIndex:indexPath.row];
+            
+            if (!cell.storeImage.image) // Avoid the app icon download if the app already has an icon
+            {
+                [self downloadImage:cell forIndexPath:indexPath];
+            }
+        }
+	}
+}
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (!decelerate)
+	{
+        [self loadImagesForOnscreenRows];
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self loadImagesForOnscreenRows];
+}
+ */
 
 #pragma mark - Toolber methods
 

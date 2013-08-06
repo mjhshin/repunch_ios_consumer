@@ -31,8 +31,8 @@
 - (PFObject *)getStore:(NSString *)objectId;
 
 // Store image cache methods
-- (void)addStoreImage:(NSData *)image forKey:(NSString *)storeId;
-- (NSData *)getStoreImage:(NSString *)storeId;
+- (void)addStoreImage:(UIImage *)image forKey:(NSString *)storeId;
+- (UIImage *)getStoreImage:(NSString *)storeId;
 
 // MessageStatus/Message methods
 - (void)addMessage:(PFObject *)messageStatus;

@@ -5,12 +5,12 @@
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
-#import "PlacesDetailMapViewController.h"
+#import "StoreMapViewController.h"
 #import "MKMapView+ZoomLevel.h"
 #import "MapPin.h"
 #import "GradientBackground.h"
 
-@implementation PlacesDetailMapViewController
+@implementation StoreMapViewController
 {
 }
 

@@ -22,7 +22,8 @@ static DataManager *sharedDataManager = nil;    // static instance variable
 
 - (id) init
 {
-	if (self = [super init]) {
+	if (self = [super init])
+	{
         self.patronStores = [[NSMutableDictionary alloc] init];
         self.stores = [[NSMutableDictionary alloc] init];
         self.storeImageCache = [[NSCache alloc] init];
@@ -64,12 +65,12 @@ static DataManager *sharedDataManager = nil;    // static instance variable
 }
 
 // Store image cache methods
-- (void)addStoreImage:(NSData *)image forKey:(NSString *)storeId
+- (void)addStoreImage:(UIImage *)image forKey:(NSString *)storeId
 {
-    [self.storeImageCache setValue:image forKey:storeId];
+    [self.storeImageCache setObject:image forKey:storeId];
 }
 
-- (NSData *)getStoreImage:(NSString *)storeId
+- (UIImage *)getStoreImage:(NSString *)storeId
 {
     return [self.storeImageCache objectForKey:storeId];
 }

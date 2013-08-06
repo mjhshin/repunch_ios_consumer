@@ -46,6 +46,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{111, 8}, {149, 16}}</string>
 								<reference key="NSSuperview" ref="113803123"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="412152991"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -84,6 +85,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{111, 33}, {202, 18}}</string>
 								<reference key="NSSuperview" ref="113803123"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="931298212"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -118,6 +120,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{111, 55}, {202, 18}}</string>
 								<reference key="NSSuperview" ref="113803123"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="592221034"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -138,6 +141,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{9, 8}, {88, 93}}</string>
 								<reference key="NSSuperview" ref="113803123"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="75078319"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -147,6 +151,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{132, 77}, {70, 21}}</string>
 								<reference key="NSSuperview" ref="113803123"/>
+								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -166,6 +171,7 @@
 								<int key="NSvFlags">-2147483356</int>
 								<string key="NSFrame">{{111, 81}, {13, 13}}</string>
 								<reference key="NSSuperview" ref="113803123"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="519413990"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -180,6 +186,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{265, 8}, {48, 16}}</string>
 								<reference key="NSSuperview" ref="113803123"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="206595145"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -208,6 +215,7 @@
 						</array>
 						<string key="NSFrameSize">{320, 110}</string>
 						<reference key="NSSuperview" ref="314729337"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="513328506"/>
 						<string key="NSReuseIdentifierKey">_NS:11</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -223,56 +231,16 @@
 				</array>
 				<string key="NSFrameSize">{320, 111}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="113803123"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<reference key="IBUIContentView" ref="113803123"/>
-				<string key="IBUIReuseIdentifier">StoreCell</string>
 				<real value="99" key="IBUIRowHeight"/>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<array class="NSMutableArray" key="connectionRecords">
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">storeImageLabel</string>
-						<reference key="source" ref="314729337"/>
-						<reference key="destination" ref="513328506"/>
-					</object>
-					<int key="connectionID">25</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">storeNameLabel</string>
-						<reference key="source" ref="314729337"/>
-						<reference key="destination" ref="75078319"/>
-					</object>
-					<int key="connectionID">26</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">storeAddressLabel</string>
-						<reference key="source" ref="314729337"/>
-						<reference key="destination" ref="206595145"/>
-					</object>
-					<int key="connectionID">27</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">numberOfPunches</string>
-						<reference key="source" ref="314729337"/>
-						<reference key="destination" ref="519413990"/>
-					</object>
-					<int key="connectionID">100</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">punchesPic</string>
-						<reference key="source" ref="314729337"/>
-						<reference key="destination" ref="592221034"/>
-					</object>
-					<int key="connectionID">101</int>
-				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">distance</string>
@@ -283,11 +251,51 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">storeCategoriesLabel</string>
+						<string key="label">storeName</string>
+						<reference key="source" ref="314729337"/>
+						<reference key="destination" ref="75078319"/>
+					</object>
+					<int key="connectionID">618</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">storeAddress</string>
+						<reference key="source" ref="314729337"/>
+						<reference key="destination" ref="206595145"/>
+					</object>
+					<int key="connectionID">619</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">storeCategories</string>
 						<reference key="source" ref="314729337"/>
 						<reference key="destination" ref="931298212"/>
 					</object>
-					<int key="connectionID">617</int>
+					<int key="connectionID">620</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">storeImage</string>
+						<reference key="source" ref="314729337"/>
+						<reference key="destination" ref="513328506"/>
+					</object>
+					<int key="connectionID">621</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">numPunches</string>
+						<reference key="source" ref="314729337"/>
+						<reference key="destination" ref="519413990"/>
+					</object>
+					<int key="connectionID">622</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">punchIcon</string>
+						<reference key="source" ref="314729337"/>
+						<reference key="destination" ref="592221034"/>
+					</object>
+					<int key="connectionID">623</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1019,7 +1027,7 @@
 					<reference ref="139386754"/>
 				</array>
 				<boolean value="NO" key="19.IBViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
-				<string key="2.CustomClassName">StoreCell</string>
+				<string key="2.CustomClassName">SearchTableViewCell</string>
 				<string key="2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<array key="2.IBViewMetadataConstraints">
 					<reference ref="184445910"/>
@@ -1105,11 +1113,73 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">617</int>
+			<int key="maxID">623</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">NSLayoutConstraint</string>
+					<string key="superclassName">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NSLayoutConstraint.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SearchTableViewCell</string>
+					<string key="superclassName">UITableViewCell</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="distance">UILabel</string>
+						<string key="numPunches">UILabel</string>
+						<string key="punchIcon">UIImageView</string>
+						<string key="storeAddress">UILabel</string>
+						<string key="storeCategories">UILabel</string>
+						<string key="storeImage">UIImageView</string>
+						<string key="storeName">UILabel</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="distance">
+							<string key="name">distance</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="numPunches">
+							<string key="name">numPunches</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="punchIcon">
+							<string key="name">punchIcon</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="storeAddress">
+							<string key="name">storeAddress</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="storeCategories">
+							<string key="name">storeCategories</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="storeImage">
+							<string key="name">storeImage</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="storeName">
+							<string key="name">storeName</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/SearchTableViewCell.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.InterfaceBuilder3</string>
+			<real value="4600" key="NS.object.0"/>
+		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">

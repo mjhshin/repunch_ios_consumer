@@ -89,6 +89,7 @@
     [messageQuery includeKey:@"Message"];
     [messageQuery includeKey:@"Message.Reply"];
 	[messageQuery orderByDescending:@"createdAt"];
+	[messageQuery setLimit:20];
 	//TODO: paginate!
     
     [messageQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
@@ -132,10 +133,7 @@
 	if (cell == nil)
     {
         cell = [InboxTableViewCell cell];
-    } else {
-		NSLog(@" cell reused: ");
-	}
-	[[cell offerPic] setHidden:TRUE];
+    }
 
     PFObject *messageStatus = [messagesArray objectAtIndex:indexPath.row];
     PFObject *message = [messageStatus objectForKey:@"Message"];
@@ -163,7 +161,9 @@
     } else if ([[message valueForKey:@"message_type"] isEqualToString:@"gift"]){
         [[cell offerPic] setHidden:FALSE];
         [[cell offerPic] setImage:[UIImage imageNamed:@"message_gift"]];
-    }
+    } else {
+		[[cell offerPic] setHidden:TRUE];
+	}
     
     if ([[messageStatus objectForKey:@"is_read"] boolValue]) {
         cell.contentView.backgroundColor = [UIColor colorWithRed:(float)192/256 green:(float)192/256 blue:(float)192/256 alpha:(float)65/256]; //ARGB = 0x40C0C0C0

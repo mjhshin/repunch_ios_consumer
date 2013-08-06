@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RepunchFriendsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface FacebookFriendsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, retain) NSDictionary *giftParametersDict;
 - (IBAction)closePage:(id)sender;

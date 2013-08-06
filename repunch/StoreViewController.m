@@ -1,25 +1,25 @@
 //
-//  PlacesDetailViewController.m
+//  StoreViewController.m
 //  Repunch
 //
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
-#import "PlacesDetailViewController.h"
-#import "PlacesDetailMapViewController.h"
+#import "StoreViewController.h"
+#import "StoreMapViewController.h"
 #import "SIAlertView.h"
 #import "RewardCell.h"
 #import "AppDelegate.h"
 #import "ComposeMessageViewController.h"
-#import "RepunchFriendsViewController.h"
+#import "FacebookFriendsViewController.h"
 #import "GradientBackground.h"
 #import "DataManager.h"
 
-@implementation PlacesDetailViewController
+@implementation StoreViewController
 {
 	DataManager *sharedData;
     NSMutableArray *placeRewardData;
-    PlacesDetailMapViewController *placesDetailMapVC;
+    StoreMapViewController *placesDetailMapVC;
     int availablePunches;
 }
 
@@ -612,7 +612,7 @@
 
 - (IBAction)mapButton:(id)sender
 {
-    placesDetailMapVC = [[PlacesDetailMapViewController alloc] init];
+    placesDetailMapVC = [[StoreMapViewController alloc] init];
     //placesDetailMapVC.storeId = [store objectId];
     [self presentViewController:placesDetailMapVC animated:YES completion:NULL];
 }

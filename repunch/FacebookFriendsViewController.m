@@ -5,12 +5,12 @@
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
-#import "RepunchFriendsViewController.h"
+#import "FacebookFriendsViewController.h"
 #import "ComposeMessageViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <Parse/Parse.h>
 
-@implementation RepunchFriendsViewController
+@implementation FacebookFriendsViewController
 {
     __block NSArray *friendsOnRepunchArray;
     UITableView *friendsTableView;

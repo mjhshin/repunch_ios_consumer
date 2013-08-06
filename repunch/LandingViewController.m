@@ -2,7 +2,6 @@
 //  LandingViewController.m
 //  Repunch
 //
-//  Created by Gwendolyn Weston on 7/11/13.
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 

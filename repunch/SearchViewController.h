@@ -2,18 +2,27 @@
 //  PlacesSearchViewController.h
 //  Repunch
 //
-//  Created by Gwendolyn Weston on 6/18/13.
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+#import "StoreViewController.h"
+#import "SearchTableViewCell.h"
+#import "GradientBackground.h"
+#import <Parse/Parse.h>
+#import "AppDelegate.h"
+#import "DataManager.h"
 
-@interface SearchViewController : UIViewController <UIScrollViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface SearchViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
-@property BOOL downloadFromNetwork;
-@property (weak, nonatomic) IBOutlet UIView *toolbar;
+@property (nonatomic, weak) IBOutlet UIView *toolbar;
+
+@property (nonatomic, strong) DataManager* sharedData;
+@property (nonatomic, strong) PFObject* patron;
+@property (nonatomic, strong) NSMutableArray *storeIdArray;
+@property (nonatomic, strong) UITableView *searchTableView;
+@property (nonatomic, strong) NSMutableDictionary *imageDownloadsInProgress;
+
 - (IBAction)closeView:(id)sender;
--(void)setup;
-
 
 @end
