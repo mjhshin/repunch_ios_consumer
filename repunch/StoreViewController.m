@@ -6,21 +6,15 @@
 //
 
 #import "StoreViewController.h"
-#import "StoreMapViewController.h"
-#import "SIAlertView.h"
-#import "RewardCell.h"
-#import "AppDelegate.h"
-#import "ComposeMessageViewController.h"
-#import "FacebookFriendsViewController.h"
-#import "GradientBackground.h"
-#import "DataManager.h"
 
 @implementation StoreViewController
 {
 	DataManager *sharedData;
-    NSMutableArray *placeRewardData;
-    StoreMapViewController *placesDetailMapVC;
-    int availablePunches;
+	PFObject *store;
+	PFObject *patron;
+	PFObject *patronStore;
+	BOOL patronStoreExists;
+    int punchCount;
 }
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
@@ -33,162 +27,100 @@
     [super viewDidLoad];
     
 	sharedData = [DataManager getSharedInstance];
-	_store = [sharedData getStore:_storeId];
-	_patronStore = [sharedData getPatronStore:_storeId];
-    _isSavedStore = (_patronStore != [NSNull null]);
-    _scrollView.scrollEnabled = YES;
-    
-    _storeName.text = [_store valueForKey:@"store_name"];
-    //_storePic.image = [UIImage imageWithData:_store.store_avatar];
-    _storeStreet.text = [_store valueForKey:@"street"];
+	store = [sharedData getStore:self.storeId];
+	patron = [sharedData patron];
+	patronStore = [sharedData getPatronStore:_storeId];
+    patronStoreExists = (patronStore != [NSNull null]);
+	punchCount = [[patronStore objectForKey:@"punch_count"] intValue];
+	self.rewardArray = [NSMutableArray init];
 	
-	/*
-	 if ([[_storeObject valueForKey:@"cross_streets"] length]>0) {
-	 _storeCrossStreets.text = [_storeObject valueForKey:@"cross_streets"];
-	 _storeCrossStreets.hidden = FALSE;
-	 [_storeNeighborhood setFrame:CGRectMake(_storeNeighborhood.frame.origin.x, _storeNeighborhood.frame.origin.y  + _storeCrossStreets.frame.size.height-8, _storeNeighborhood.frame.size.width, _storeNeighborhood.frame.size.height)];
-	 
-	 [_storeCity setFrame:CGRectMake(_storeCity.frame.origin.x, _storeCity.frame.origin.y +  _storeCrossStreets.frame.size.height-8, _storeCity.frame.size.width, _storeCity.frame.size.height)];
-	 }
-	 if ([[_storeObject valueForKey:@"neighborhood"] length]>0) {
-	 _storeNeighborhood.text = [_storeObject valueForKey:@"neighborhood"];
-	 _storeNeighborhood.hidden = FALSE;
-	 [_storeCity setFrame:CGRectMake(_storeCity.frame.origin.x, _storeCity.frame.origin.y +  _storeNeighborhood.frame.size.height-8, _storeCity.frame.size.width, _storeCity.frame.size.height)];
-	 
-	 }
-	 
-	 _storeCity.text = [NSString stringWithFormat:@"%@, %@ %@",[_storeObject valueForKey:@"city"], [_storeObject valueForKey:@"state"], [_storeObject valueForKey:@"zip"]];
-	 
-	 _storeHours.text = [self getHoursString];
-	 
-	 placeRewardData = [[[_storeObject mutableSetValueForKey:@"rewards"] allObjects] mutableCopy];
-	 NSLog(@"rewards are :%@", [placeRewardData valueForKey:@"reward_name"]);
-	 
-	 [placeRewardData sortUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:@"punches" ascending:YES]]];
-	 
-	 [_rewardsTable setDataSource:self];
-	 [_rewardsTable setDelegate:self];
-	 
-	 [_scrollView setContentSize:CGSizeMake(320, [self bottomOfLowestContent:[self view]])];
-	 
-	 _leftoverFBPostExists = FALSE;
-	 patronStoreEntity= [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", localUser.patronId, _storeObject.objectId]];
-	 availablePunches = [[patronStoreEntity punch_count] intValue];
-*/
-    /*
-	 if (_isSavedStore || _leftoverFBPostExists) {
-	 PFQuery *query = [PFQuery queryWithClassName:@"PatronStore"];
-	 [query includeKey:@"FacebookPost"];
-	 [query getObjectInBackgroundWithId:patronStoreEntity.objectId block:^(PFObject *fetchedPatronStore, NSError *error) {
-	 if ([fetchedPatronStore objectForKey:@"FacebookPost"] == nil) {
-	 [self publishButtonActionWithParameters:[[NSDictionary alloc] initWithObjectsAndKeys:[patronStoreEntity store_id], @"store_id", [patronStoreEntity objectId], @"patron_store_id", [_storeObject store_name], @"store_name", [[_patronStoreObject objectForKey:@"FacebookPost"] valueForKey:@"reward"], @"reward_title", nil]];
-	 _leftoverFBPostExists = FALSE;
-	 _patronStoreObject = fetchedPatronStore;
-	 NSLog(@"there is a facebook post!");
-	 }
-	 }];
-	 }*/
+	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
+	bgLayer.frame = _toolbar.bounds;
+	[self.toolbar.layer insertSublayer:bgLayer atIndex:0];
+	
+	[self setStoreInformation];
+	[self setStoreButtons];
+	[self setRewardTableView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-	/*
     [super viewWillAppear:YES];
-	
-	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	bgLayer.frame = _toolbar.bounds;
-	[_toolbar.layer insertSublayer:bgLayer atIndex:0];
-    
-    [_rewardsTable reloadData];
-    
-    placeRewardData = [[[_storeObject mutableSetValueForKey:@"rewards"] allObjects] mutableCopy];
-    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"punches"  ascending:YES];
-    placeRewardData = [[placeRewardData sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]] mutableCopy];
-
-    patronStoreEntity= [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", localUser.patronId, _storeObject.objectId]];
-    availablePunches = [[patronStoreEntity punch_count] intValue];
-    
-    if (!_isSavedStore) {
-        //[_numPunches setText:@""];
-        [_feedbackBtn setImage:[UIImage imageNamed:@"ico-feedback-block"] forState:UIControlStateNormal];
-        [_feedbackBtn setHidden:TRUE];
-        [_feedbackLbl setHidden:TRUE];
-        
-        [_callView setFrame:CGRectMake(_callView.frame.origin.x + 43, _callView.frame.origin.y, _callView.frame.size.width, _callView.frame.size.height)];
-        [_mapView setFrame:CGRectMake(_mapView.frame.origin.x + 73, _mapView.frame.origin.y, _mapView.frame.size.width, _mapView.frame.size.height)];
-
-    }
-    else{
-        int punches = [[patronStoreEntity punch_count] intValue];
-        [_addPlaceBtn setTitle:[NSString stringWithFormat:@"%d %@", punches, (punches==1)?@"punch":@"punches"] forState:UIControlStateNormal];
-        [_addPlaceBtn setUserInteractionEnabled:FALSE];
-                
-    }
-    
-    if (!_isSavedStore){
-        [_deleteButton setHidden:YES];
-    }
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(viewWillAppear:)
-                                                 name:@"receivedPush"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"addedOrRemovedStore" object:self];
-*/
-
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"receivedPush" object:nil];
-
 }
 
-- (CGFloat)bottomOfLowestContent:(UIView*)view
+- (void)setStoreInformation
 {
-    CGFloat lowestPoint = 0.0;
-    
-    BOOL restoreHorizontal = NO;
-    BOOL restoreVertical = NO;
-    
-    if ([view respondsToSelector:@selector(setShowsHorizontalScrollIndicator:)] && [view respondsToSelector:@selector(setShowsVerticalScrollIndicator:)])
-    {
-        if ([(UIScrollView*)view showsHorizontalScrollIndicator])
-        {
-            restoreHorizontal = YES;
-            [(UIScrollView*)view setShowsHorizontalScrollIndicator:NO];
-        }
-        if ([(UIScrollView*)view showsVerticalScrollIndicator])
-        {
-            restoreVertical = YES;
-            [(UIScrollView*)view setShowsVerticalScrollIndicator:NO];
-        }
-    }
-    for (UIView *subView in view.subviews)
-    {
-        if (!subView.hidden)
-        {
-            CGFloat maxY = CGRectGetMaxY(subView.frame);
-            if (maxY > lowestPoint)
-            {
-                lowestPoint = maxY;
-            }
-        }
-    }
-    if ([view respondsToSelector:@selector(setShowsHorizontalScrollIndicator:)] && [view respondsToSelector:@selector(setShowsVerticalScrollIndicator:)])
-    {
-        if (restoreHorizontal)
-        {
-            [(UIScrollView*)view setShowsHorizontalScrollIndicator:YES];
-        }
-        if (restoreVertical)
-        {
-            [(UIScrollView*)view setShowsVerticalScrollIndicator:YES];
-        }
-    }
-    
-    return lowestPoint;
+	NSString *name = [store objectForKey:@"store_name"];
+	NSString *street = [store objectForKey:@"street"];
+	NSString *crossStreets = [store objectForKey:@"cross_streets"];
+	NSString *neighborhood = [store objectForKey:@"neighborhood"];
+	NSString *city = [store objectForKey:@"city"];
+	NSString *state = [store objectForKey:@"state"];
+	NSString *zip = [store objectForKey:@"zip"];
+	//NSString *category = [store objectForKey:@"categories"];
+	
+	_storeName.text = name;
+	
+	if(crossStreets != nil) {
+		street = [street stringByAppendingString:@"\n"];
+		street = [street stringByAppendingString:crossStreets];		
+	}
+	
+	if(neighborhood != nil ) {
+		street = [street stringByAppendingString:@"\n"];
+		street = [street stringByAppendingString:neighborhood];
+	}
+	
+	street = [street stringByAppendingString:@"\n"];
+	street = [street stringByAppendingString:[NSString stringWithFormat:@"%@/%@/%@/%@/%@", city, @", ", state, @" ", zip]];
+	
+	_storeAddress.text = street;
+	
+	PFFile *imageFile = [store objectForKey:@"store_avatar"];
+	if(imageFile != nil)
+	{
+		UIImage *storeImage = [sharedData getStoreImage:self.storeId];
+		if(storeImage == nil)
+		{
+			_storePic.image = [UIImage imageNamed:@"listview_placeholder.png"];
+			[imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+			 {
+				 if (!error) {
+					 UIImage *storeImage = [UIImage imageWithData:data];
+					 _storePic.image = storeImage;
+					 [sharedData addStoreImage:storeImage forKey:self.storeId];
+				 }
+				 else
+				 {
+					 NSLog(@"image download failed");
+				 }
+			 }];
+		} else {
+			_storePic.image = storeImage;
+		}
+	} else {
+		_storePic.image = [UIImage imageNamed:@"listview_placeholder.png"];
+	}
+}
+
+- (void)setStoreButtons
+{
+	//hide feedback button
+}
+
+- (void)setRewardTableView
+{
+	int tableViewHeight = self.view.frame.size.height - 50; //50 is nav bar height
+	//int tabBarSize = self.tabBarController.tabBar.frame.size.height;
+	self.rewardTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, 320, tableViewHeight) style:UITableViewStylePlain];
+    [self.rewardTableView setDataSource:self];
+    [self.rewardTableView setDelegate:self];
+    [self.view addSubview:self.rewardTableView];
 }
 
 - (NSString *)getHoursString
@@ -253,44 +185,43 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    return [placeRewardData count];
+    return [self.rewardArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"RewardCell";
-    RewardCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[NSBundle mainBundle]loadNibNamed:@"RewardCell" owner:self options:nil]objectAtIndex:0];
+    RewardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[RewardTableViewCell reuseIdentifier]];
+	if (cell == nil)
+    {
+        cell = [RewardTableViewCell cell];
     }
     
-    // Configure the cell...
+    cell.rewardTitle.text = [[self.rewardArray objectAtIndex:indexPath.row] valueForKey:@"reward_name"];
+    cell.rewardDescription.text = [[self.rewardArray objectAtIndex:indexPath.row] valueForKey:@"reward_description"];
+    int rewardPunches = [[[self.rewardArray objectAtIndex:indexPath.row] valueForKey:@"punches"] intValue];
+    cell.rewardPunches.text = [NSString stringWithFormat:(rewardPunches == 1 ? @"%i Punch" :  @"%i Punches"), rewardPunches];
     
-    cell.rewardName.text = [[placeRewardData objectAtIndex:indexPath.row] valueForKey:@"reward_name"];
-    cell.rewardDescription.text = [[placeRewardData objectAtIndex:indexPath.row] valueForKey:@"reward_description"];
-    int required = [[[placeRewardData objectAtIndex:indexPath.row] valueForKey:@"punches"] intValue];
-    cell.numberOfPunches.text = [NSString stringWithFormat:(required == 1 ? @"%i Punch" :  @"%i Punches"), required];
-    if (availablePunches >= required){
-        cell.padlockPic.image = [UIImage imageNamed:@"reward_unlocked"];
-    }
+	if (punchCount < rewardPunches) {
+        cell.rewardStatusIcon.image = [UIImage imageNamed:@"reward_locked"];
+    } else {
+		cell.rewardStatusIcon.image = [UIImage imageNamed:@"reward_unlocked"];
+	}
     
-    if (!_isSavedStore){
+    if (!patronStoreExists) {
         [cell setUserInteractionEnabled:NO];
     }
+	
     return cell;
 }
 
@@ -392,18 +323,8 @@
 
 }
 
-#pragma mark - Modal Delegate
-
-
--(void)closePlaceDetail{
-    [[self modalDelegate] didDismissPresentedViewController];
-}
-
-#pragma mark - Other methods
-
--(void)addOrRemovePlace{
-    NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
-    
+-(void)addOrRemovePlace
+{
     UIView *greyedOutView = [[UIView alloc]initWithFrame:CGRectMake(0, 50, 320, self.view.frame.size.height - 50)];
     [greyedOutView setBackgroundColor:[UIColor colorWithRed:127/255 green:127/255 blue:127/255 alpha:0.5]];
     [[self view] addSubview:greyedOutView];
@@ -503,11 +424,8 @@
 
 }
 
-- (void)didDismissPresentedViewController{
-    [self dismissViewControllerAnimated:YES completion:NULL];;
-}
-
-- (void)publishButtonActionWithParameters:(NSDictionary*)userInfo{
+- (void)publishButtonActionWithParameters:(NSDictionary*)userInfo
+{
     PFQuery *getStore = [PFQuery queryWithClassName:@"Store"];
     [getStore getObjectInBackgroundWithId:[userInfo valueForKey:@"store_id"] block:^(PFObject *fetchedStore, NSError *error) {
         NSString *picURL = [[fetchedStore objectForKey:@"store_avatar"] url];
@@ -583,23 +501,9 @@
     */
 }
 
-- (NSDictionary*)parseURLParams:(NSString *)query
-{
-    NSArray *pairs = [query componentsSeparatedByString:@"&"];
-    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    for (NSString *pair in pairs) {
-        NSArray *kv = [pair componentsSeparatedByString:@"="];
-        NSString *val =
-        [kv[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        params[kv[0]] = val;
-    }
-    return params;
-}
-
 - (IBAction)callButton:(id)sender
 {
-	/*
-    NSString *number = [_storeObject phone_number];
+    NSString *number = [store objectForKey:@"phone_number"];
     NSString *phoneNumber = [number stringByReplacingOccurrencesOfString:@"[^0-9]"
 															  withString:@""
 																 options:NSRegularExpressionSearch
@@ -607,36 +511,19 @@
 	
     NSString *phoneNumberUrl = [@"tel://" stringByAppendingString:phoneNumber];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumberUrl]];
-	 */
 }
 
 - (IBAction)mapButton:(id)sender
 {
-    placesDetailMapVC = [[StoreMapViewController alloc] init];
-    //placesDetailMapVC.storeId = [store objectId];
-    [self presentViewController:placesDetailMapVC animated:YES completion:NULL];
+    StoreMapViewController *storeMapVC = [[StoreMapViewController alloc] init];
+    [self presentViewController:storeMapVC animated:YES completion:NULL];
 }
 
 - (IBAction)feedbackButton:(id)sender
 {
-    if (!_isSavedStore){
-        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"I can't do that, Hal." andMessage:@"You can only send feedback to saved stores"];
-        
-        [alertView addButtonWithTitle:@"Ok."
-                                 type:SIAlertViewButtonTypeDefault
-                              handler:^(SIAlertView *alert) {
-                                  //Nothing Happens
-                              }];
-        [alertView show];
-    }
-    else{
-        ComposeMessageViewController *composeVC = [[ComposeMessageViewController alloc] init];
-        composeVC.messageType = @"Feedback";
-        
-        [self presentViewController:composeVC animated:YES completion:NULL];
-        
-    }
-
+	ComposeMessageViewController *composeVC = [[ComposeMessageViewController alloc] init];
+	composeVC.messageType = @"Feedback";
+	[self presentViewController:composeVC animated:YES completion:NULL];
 }
 
 - (IBAction)addStore:(id)sender
@@ -651,7 +538,7 @@
 
 - (IBAction)closeView:(id)sender
 {
-    //[self didDismissPresentedViewController];
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

@@ -73,6 +73,7 @@
     PFRelation *patronStoreRelation = [self.patron relationforKey:@"PatronStores"];
     PFQuery *patronStoreQuery = [patronStoreRelation query];
     [patronStoreQuery includeKey:@"Store"];
+	[patronStoreQuery includeKey:@"FacebookPost"];
 	[patronStoreQuery setLimit:20];
 	//TODO: paginate!!!
 
@@ -204,7 +205,7 @@
         {
             if (!error)
             {
-                MyPlacesTableViewCell *cell = [self.myPlacesTableView cellForRowAtIndexPath:indexPath]; //TODO: resolve this warning
+                MyPlacesTableViewCell *cell = [self.myPlacesTableView cellForRowAtIndexPath:indexPath]; //TODO: this warning
 				UIImage *storeImage = [UIImage imageWithData:data];
                 cell.storeImage.image = storeImage;
 				[self.imageDownloadsInProgress removeObjectForKey:indexPath]; // Remove the PFFile from the in-progress list

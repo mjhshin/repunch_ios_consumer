@@ -36,8 +36,8 @@
 		EE9D4C6917A83F4B005E0CC5 /* ComposeMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B7517A83F4A005E0CC5 /* ComposeMessageViewController.xib */; };
 		EE9D4C7517A83F4B005E0CC5 /* InboxTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B8E17A83F4A005E0CC5 /* InboxTableViewCell.m */; };
 		EE9D4C7617A83F4B005E0CC5 /* InboxTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B8F17A83F4A005E0CC5 /* InboxTableViewCell.xib */; };
-		EE9D4C7717A83F4B005E0CC5 /* RewardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B9117A83F4A005E0CC5 /* RewardCell.m */; };
-		EE9D4C7817A83F4B005E0CC5 /* RewardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B9217A83F4A005E0CC5 /* RewardCell.xib */; };
+		EE9D4C7717A83F4B005E0CC5 /* RewardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B9117A83F4A005E0CC5 /* RewardTableViewCell.m */; };
+		EE9D4C7817A83F4B005E0CC5 /* RewardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B9217A83F4A005E0CC5 /* RewardTableViewCell.xib */; };
 		EE9D4C7917A83F4B005E0CC5 /* MyPlacesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B9417A83F4A005E0CC5 /* MyPlacesTableViewCell.m */; };
 		EE9D4C7A17A83F4B005E0CC5 /* MyPlacesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B9517A83F4A005E0CC5 /* MyPlacesTableViewCell.xib */; };
 		EE9D4C7B17A83F4B005E0CC5 /* SearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B9717A83F4A005E0CC5 /* SearchTableViewCell.m */; };
@@ -227,9 +227,9 @@
 		EE9D4B8D17A83F4A005E0CC5 /* InboxTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InboxTableViewCell.h; sourceTree = "<group>"; };
 		EE9D4B8E17A83F4A005E0CC5 /* InboxTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InboxTableViewCell.m; sourceTree = "<group>"; };
 		EE9D4B8F17A83F4A005E0CC5 /* InboxTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InboxTableViewCell.xib; sourceTree = "<group>"; };
-		EE9D4B9017A83F4A005E0CC5 /* RewardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardCell.h; sourceTree = "<group>"; };
-		EE9D4B9117A83F4A005E0CC5 /* RewardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardCell.m; sourceTree = "<group>"; };
-		EE9D4B9217A83F4A005E0CC5 /* RewardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RewardCell.xib; sourceTree = "<group>"; };
+		EE9D4B9017A83F4A005E0CC5 /* RewardTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardTableViewCell.h; sourceTree = "<group>"; };
+		EE9D4B9117A83F4A005E0CC5 /* RewardTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardTableViewCell.m; sourceTree = "<group>"; };
+		EE9D4B9217A83F4A005E0CC5 /* RewardTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RewardTableViewCell.xib; sourceTree = "<group>"; };
 		EE9D4B9317A83F4A005E0CC5 /* MyPlacesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPlacesTableViewCell.h; sourceTree = "<group>"; };
 		EE9D4B9417A83F4A005E0CC5 /* MyPlacesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPlacesTableViewCell.m; sourceTree = "<group>"; };
 		EE9D4B9517A83F4A005E0CC5 /* MyPlacesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPlacesTableViewCell.xib; sourceTree = "<group>"; };
@@ -557,9 +557,9 @@
 				EE9D4B8D17A83F4A005E0CC5 /* InboxTableViewCell.h */,
 				EE9D4B8E17A83F4A005E0CC5 /* InboxTableViewCell.m */,
 				EE9D4B8F17A83F4A005E0CC5 /* InboxTableViewCell.xib */,
-				EE9D4B9017A83F4A005E0CC5 /* RewardCell.h */,
-				EE9D4B9117A83F4A005E0CC5 /* RewardCell.m */,
-				EE9D4B9217A83F4A005E0CC5 /* RewardCell.xib */,
+				EE9D4B9017A83F4A005E0CC5 /* RewardTableViewCell.h */,
+				EE9D4B9117A83F4A005E0CC5 /* RewardTableViewCell.m */,
+				EE9D4B9217A83F4A005E0CC5 /* RewardTableViewCell.xib */,
 				EE9D4B9317A83F4A005E0CC5 /* MyPlacesTableViewCell.h */,
 				EE9D4B9417A83F4A005E0CC5 /* MyPlacesTableViewCell.m */,
 				EE9D4B9517A83F4A005E0CC5 /* MyPlacesTableViewCell.xib */,
@@ -801,7 +801,7 @@
 			files = (
 				EE9D4C6917A83F4B005E0CC5 /* ComposeMessageViewController.xib in Resources */,
 				EE9D4C7617A83F4B005E0CC5 /* InboxTableViewCell.xib in Resources */,
-				EE9D4C7817A83F4B005E0CC5 /* RewardCell.xib in Resources */,
+				EE9D4C7817A83F4B005E0CC5 /* RewardTableViewCell.xib in Resources */,
 				EE9D4C7A17A83F4B005E0CC5 /* MyPlacesTableViewCell.xib in Resources */,
 				EE9D4C7C17A83F4B005E0CC5 /* SearchTableViewCell.xib in Resources */,
 				EE9D4C7F17A83F4B005E0CC5 /* InboxViewController.xib in Resources */,
@@ -959,7 +959,7 @@
 				EE9D4C6717A83F4B005E0CC5 /* AppDelegate.m in Sources */,
 				EE9D4C6817A83F4B005E0CC5 /* ComposeMessageViewController.m in Sources */,
 				EE9D4C7517A83F4B005E0CC5 /* InboxTableViewCell.m in Sources */,
-				EE9D4C7717A83F4B005E0CC5 /* RewardCell.m in Sources */,
+				EE9D4C7717A83F4B005E0CC5 /* RewardTableViewCell.m in Sources */,
 				EE9D4C7917A83F4B005E0CC5 /* MyPlacesTableViewCell.m in Sources */,
 				EE9D4C7B17A83F4B005E0CC5 /* SearchTableViewCell.m in Sources */,
 				EE9D4C7E17A83F4B005E0CC5 /* InboxViewController.m in Sources */,

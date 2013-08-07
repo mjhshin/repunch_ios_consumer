@@ -31,7 +31,8 @@
 	sharedData = [DataManager getSharedInstance];
 }
 
--(void)viewWillAppear:(BOOL)animated{
+-(void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:YES];
 	
 	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
@@ -53,21 +54,25 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)termsAndConditions:(id)sender {
+- (IBAction)termsAndConditions:(id)sender
+{
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.repunch.com/terms-mobile"]];
 }
 
-- (IBAction)privacyPolicy:(id)sender {
+- (IBAction)privacyPolicy:(id)sender
+{
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.repunch.com/privacy-mobile"]];
 }
 
-- (IBAction)logOut:(id)sender {
+- (IBAction)logOut:(id)sender
+{
 	[self dismissViewControllerAnimated:YES completion:nil];
 	AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 	[appDelegate logout];
 }
 
-- (IBAction)closeView:(id)sender {
+- (IBAction)closeView:(id)sender
+{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

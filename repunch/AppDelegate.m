@@ -333,6 +333,8 @@
     [[UITabBarItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
     
     self.window.rootViewController = self.tabBarController;
+	
+	[inboxVC view]; //pre-load second tab
 }
 
 - (void)presentLandingViews

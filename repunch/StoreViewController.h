@@ -5,30 +5,30 @@
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
+#import "StoreMapViewController.h"
+#import "SIAlertView.h"
+#import "RewardTableViewCell.h"
+#import "AppDelegate.h"
+#import "ComposeMessageViewController.h"
+#import "FacebookFriendsViewController.h"
+#import "GradientBackground.h"
+#import "DataManager.h"
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
 @interface StoreViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
-@property NSString *storeId;
-@property PFObject *store;
-@property PFObject *patronStore;
-@property BOOL isSavedStore;
-@property PFObject *patronStoreObject;
-@property BOOL leftoverFBPostExists;
+@property (nonatomic, strong) NSString *storeId;
+@property (nonatomic, strong) NSMutableArray *rewardArray;
+@property (nonatomic, strong) UITableView *rewardTableView;
 
-//UI STUFF
 @property (weak, nonatomic) IBOutlet UIView *toolbar;
-@property (weak, nonatomic) IBOutlet UILabel *storeName;
 @property (weak, nonatomic) IBOutlet UIImageView *storePic;
-@property (weak, nonatomic) IBOutlet UILabel *storeStreet;
-@property (weak, nonatomic) IBOutlet UILabel *storeCrossStreets;
-@property (weak, nonatomic) IBOutlet UILabel *storeNeighborhood;
-@property (weak, nonatomic) IBOutlet UILabel *storeCity;
+@property (weak, nonatomic) IBOutlet UILabel *storeName;
+@property (weak, nonatomic) IBOutlet UILabel *storeAddress;
 @property (weak, nonatomic) IBOutlet UILabel *storeHours;
 @property (weak, nonatomic) IBOutlet UILabel *storeOpen;
 @property (weak, nonatomic) IBOutlet UILabel *numPunches;
-@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *feedbackBtn;
 @property (weak, nonatomic) IBOutlet UIButton *addPlaceBtn;
 @property (weak, nonatomic) IBOutlet UILabel *feedbackLbl;
@@ -42,7 +42,5 @@
 - (IBAction)addStore:(id)sender;
 - (IBAction)deleteStore:(id)sender;
 - (IBAction)closeView:(id)sender;
-
-@property (strong, nonatomic) IBOutlet UITableView *rewardsTable;
 
 @end
