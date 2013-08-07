@@ -32,6 +32,13 @@ static DataManager *sharedDataManager = nil;    // static instance variable
 	return self;
 }
 
+- (void) clearData
+{
+	[self.patronStores removeAllObjects];
+	[self.stores removeAllObjects];
+	[self.messageStatuses removeAllObjects];
+}
+
 // PatronStore methods
 - (NSDictionary*) getAllPatronStores
 {

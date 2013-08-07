@@ -24,20 +24,38 @@
     self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
 	
 	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	bgLayer.frame = _toolbar.bounds;
+	bgLayer.frame = self.toolbar.bounds;
 	[self.toolbar.layer insertSublayer:bgLayer atIndex:0];
     
-	int tableViewHeight = self.view.frame.size.height - 50; //50 is nav bar height
-	//int tabBarSize = self.tabBarController.tabBar.frame.size.height;
-	self.myPlacesTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, 320, tableViewHeight) style:UITableViewStylePlain]; //TODO: shorten tableView so can scroll to last row hidden by tab bar
+	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
+	CGFloat screenWidth = screenRect.size.width;
+	CGFloat screenHeight = screenRect.size.height;
+	int toolBarHeight = self.toolbar.frame.size.height;
+	int tabBarHeight = self.tabBarController.tabBar.frame.size.height;
+	int tableViewHeight = screenHeight - toolBarHeight;
+	
+	self.myPlacesTableView = [[UITableView alloc]
+							  initWithFrame:CGRectMake(0, toolBarHeight, screenWidth, tableViewHeight - tabBarHeight)
+									  style:UITableViewStylePlain];
+	
     [self.myPlacesTableView setDataSource:self];
     [self.myPlacesTableView setDelegate:self];
     [self.view addSubview:self.myPlacesTableView];
+	[self.myPlacesTableView setHidden:TRUE];
+	
+	CGFloat xCenter = screenWidth/2;
+	CGFloat yCenter = screenHeight/2;
+	CGFloat xOffset = self.activityIndicatorView.frame.size.width/2;
+	CGFloat yOffset = self.activityIndicatorView.frame.size.height/2;
+	CGRect frame = self.activityIndicatorView.frame;
+	frame.origin = CGPointMake(xCenter - xOffset, yCenter - yOffset);
+	self.activityIndicatorView.frame = frame;
 	
 	[self loadMyPlaces];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:animated];
     
     //alert to demonstrate how to get the punch code.  will only appear once.
@@ -70,6 +88,10 @@
 
 - (void)loadMyPlaces
 {
+	[self.activityIndicatorView setHidden:FALSE];
+	[self.activityIndicator startAnimating];
+	[self.myPlacesTableView setHidden:TRUE];
+	
     PFRelation *patronStoreRelation = [self.patron relationforKey:@"PatronStores"];
     PFQuery *patronStoreQuery = [patronStoreRelation query];
     [patronStoreQuery includeKey:@"Store"];
@@ -79,20 +101,30 @@
 
     [patronStoreQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
     {
+		[self.activityIndicatorView setHidden:TRUE];
+		[self.activityIndicator stopAnimating];
+		
         if (!error)
         {
-            for (PFObject *patronStore in results)
-            {
-				PFObject *store = [patronStore objectForKey:@"Store"];
-				NSString *storeId = [store objectId];
-				[self.sharedData addPatronStore:patronStore forKey:storeId];
-				[self.sharedData addStore:store];
-				[self.storeIdArray addObject:storeId];
-            }
+			if(results.count > 0)
+			{
+				for (PFObject *patronStore in results)
+				{
+					PFObject *store = [patronStore objectForKey:@"Store"];
+					NSString *storeId = [store objectId];
+					[self.sharedData addPatronStore:patronStore forKey:storeId];
+					[self.sharedData addStore:store];
+					[self.storeIdArray addObject:storeId];
+				}
 
-			[self sortStoreObjectIdsByPunches];
-			//[myPlacesTableView setContentSize:CGSizeMake(320, 105*results.count)];
-			[self.myPlacesTableView reloadData];
+				[self sortStoreObjectIdsByPunches];
+				[self.myPlacesTableView reloadData];
+				[self.myPlacesTableView setHidden:FALSE];
+			}
+			else
+			{
+				//TODO: show empty my places label
+			}
         }
         else
         {

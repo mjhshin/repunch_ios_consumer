@@ -23,6 +23,8 @@
 - (IBAction)openSearch:(id)sender;
 
 @property (nonatomic, weak) IBOutlet UIView *toolbar;
+@property (weak, nonatomic) IBOutlet UIView *activityIndicatorView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @property (nonatomic, strong) DataManager *sharedData;
 @property (nonatomic, strong) PFObject *patron;

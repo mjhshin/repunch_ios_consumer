@@ -15,14 +15,16 @@
 #import "SIAlertView.h"
 #import "DataManager.h"
 
-@implementation AppDelegate {
+@implementation AppDelegate
+{
     LandingViewController *landingVC;
     MyPlacesViewController *myPlacesVC;
     InboxViewController *inboxVC;
 	DataManager* sharedData;
 }
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     //Set up API keys
@@ -81,24 +83,27 @@
     return YES;
 }
 
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
     return [PFFacebookUtils handleOpenURL:url];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
     return [PFFacebookUtils handleOpenURL:url];
 }
 
-- (void)applicationWillTerminate:(UIApplication *)application {
-    //[MagicalRecord cleanUp];
+- (void)applicationWillTerminate:(UIApplication *)application
+{
+
 }
 
 #pragma mark - Push Notification methods
 
 - (void)application:(UIApplication*)application
-	didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken {
-    
+	didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+{
 	// Store the deviceToken in the current Installation and save it to Parse.
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:deviceToken];
@@ -106,14 +111,15 @@
 }
 
 - (void)application:(UIApplication *)application
-	didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-	
+	didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{	
 	if ([error code] != 3010) { // 3010 is for the iPhone Simulator. Ignore this
         NSLog(@"Application failed to register for push notifications: %@", error);
 	}
 }
 
-- (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo {
+- (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
+{
 	/*
     [PFPush handlePush:userInfo];
     if ([[userInfo valueForKey:@"push_type"] isEqualToString:@"validate_redeem"]){
@@ -221,7 +227,8 @@
 }
 #pragma mark - Facebook SDK helper methods
 
-- (void)publishButtonActionWithParameters:(NSDictionary*)userInfo{
+- (void)publishButtonActionWithParameters:(NSDictionary*)userInfo
+{
     PFQuery *getStore = [PFQuery queryWithClassName:@"Store"];
     [getStore getObjectInBackgroundWithId:[userInfo valueForKey:@"id"] block:^(PFObject *fetchedStore, NSError *error) {
         NSString *picURL = [[fetchedStore objectForKey:@"store_avatar"] url];
@@ -348,6 +355,7 @@
 
 - (void)logout
 {
+	[sharedData clearData];
     [PFUser logOut];
 	//TODO: unload tab bar controller so it isn't see through when you go to register/login
 	[self presentLandingViews];

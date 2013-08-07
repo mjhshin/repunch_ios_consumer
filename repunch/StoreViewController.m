@@ -30,13 +30,15 @@
 	store = [sharedData getStore:self.storeId];
 	patron = [sharedData patron];
 	patronStore = [sharedData getPatronStore:_storeId];
-    patronStoreExists = (patronStore != [NSNull null]);
+    patronStoreExists = (patronStore != (id)[NSNull null]);
 	punchCount = [[patronStore objectForKey:@"punch_count"] intValue];
-	self.rewardArray = [NSMutableArray init];
+	self.rewardArray = [NSMutableArray array];
 	
 	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	bgLayer.frame = _toolbar.bounds;
+	bgLayer.frame = self.toolbar.bounds;
 	[self.toolbar.layer insertSublayer:bgLayer atIndex:0];
+	
+	[[NSBundle mainBundle] loadNibNamed:@"StoreHeaderView" owner:self options:nil];
 	
 	[self setStoreInformation];
 	[self setStoreButtons];
@@ -55,6 +57,19 @@
 
 - (void)setStoreInformation
 {
+	CAGradientLayer *bgLayer2 = [GradientBackground orangeGradient];
+	bgLayer2.frame = self.addToMyPlacesButton.bounds;
+	[self.addToMyPlacesButton.layer insertSublayer:bgLayer2 atIndex:0];
+	
+	if(!patronStoreExists) {
+		self.addToMyPlacesButton.titleLabel.text = @"Add to My Places";
+		[self.addToMyPlacesButton setEnabled:FALSE];
+	} else {
+		[self.addToMyPlacesButton addTarget:self
+									 action:@selector(addStore)
+						   forControlEvents:UIControlEventTouchUpInside];
+	}
+	
 	NSString *name = [store objectForKey:@"store_name"];
 	NSString *street = [store objectForKey:@"street"];
 	NSString *crossStreets = [store objectForKey:@"cross_streets"];
@@ -63,23 +78,25 @@
 	NSString *state = [store objectForKey:@"state"];
 	NSString *zip = [store objectForKey:@"zip"];
 	//NSString *category = [store objectForKey:@"categories"];
+	self.rewardArray = [store objectForKey:@"rewards"];
+
 	
-	_storeName.text = name;
+	self.storeName.text = name;
 	
-	if(crossStreets != nil) {
+	if(crossStreets != (id)[NSNull null]) {
 		street = [street stringByAppendingString:@"\n"];
 		street = [street stringByAppendingString:crossStreets];		
 	}
 	
-	if(neighborhood != nil ) {
+	if(neighborhood != (id)[NSNull null]) {
 		street = [street stringByAppendingString:@"\n"];
 		street = [street stringByAppendingString:neighborhood];
 	}
 	
 	street = [street stringByAppendingString:@"\n"];
-	street = [street stringByAppendingString:[NSString stringWithFormat:@"%@/%@/%@/%@/%@", city, @", ", state, @" ", zip]];
+	street = [street stringByAppendingString:[NSString stringWithFormat:@"%@%@%@%@%@", city, @", ", state, @" ", zip]];
 	
-	_storeAddress.text = street;
+	self.storeAddress.text = street;
 	
 	PFFile *imageFile = [store objectForKey:@"store_avatar"];
 	if(imageFile != nil)
@@ -87,12 +104,12 @@
 		UIImage *storeImage = [sharedData getStoreImage:self.storeId];
 		if(storeImage == nil)
 		{
-			_storePic.image = [UIImage imageNamed:@"listview_placeholder.png"];
+			self.storeImage.image = [UIImage imageNamed:@"listview_placeholder.png"];
 			[imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
 			 {
 				 if (!error) {
 					 UIImage *storeImage = [UIImage imageWithData:data];
-					 _storePic.image = storeImage;
+					 self.storeImage.image = storeImage;
 					 [sharedData addStoreImage:storeImage forKey:self.storeId];
 				 }
 				 else
@@ -101,26 +118,50 @@
 				 }
 			 }];
 		} else {
-			_storePic.image = storeImage;
+			self.storeImage.image = storeImage;
 		}
 	} else {
-		_storePic.image = [UIImage imageNamed:@"listview_placeholder.png"];
+		self.storeImage.image = [UIImage imageNamed:@"listview_placeholder.png"];
 	}
 }
 
 - (void)setStoreButtons
 {
+	if(patronStoreExists) {
+		//self.addToMyPlacesButton
+	}
+	/*
 	//hide feedback button
+	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
+	CGFloat screenWidth = screenRect.size.width;
+	CGFloat screenHeight = screenRect.size.height;
+	CGFloat xCenter = screenWidth/2;
+	CGFloat yCenter = screenHeight/2;
+	CGFloat xOffset = self.activityIndicatorView.frame.size.width/2;
+	CGFloat yOffset = self.activityIndicatorView.frame.size.height/2;
+	CGRect frame = self.activityIndicatorView.frame;
+	frame.origin = CGPointMake(xCenter - xOffset, yCenter - yOffset);
+	self.activityIndicatorView.frame = frame;
+	 */
 }
 
 - (void)setRewardTableView
 {
-	int tableViewHeight = self.view.frame.size.height - 50; //50 is nav bar height
-	//int tabBarSize = self.tabBarController.tabBar.frame.size.height;
-	self.rewardTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, 320, tableViewHeight) style:UITableViewStylePlain];
+	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
+	CGFloat screenWidth = screenRect.size.width;
+	CGFloat screenHeight = screenRect.size.height;
+	int toolBarHeight = self.toolbar.frame.size.height;
+	int tableViewHeight = screenHeight - toolBarHeight;
+	
+	self.rewardTableView = [[UITableView alloc]
+							  initWithFrame:CGRectMake(0, toolBarHeight, screenWidth, tableViewHeight)
+							  style:UITableViewStylePlain];
+	
     [self.rewardTableView setDataSource:self];
     [self.rewardTableView setDelegate:self];
     [self.view addSubview:self.rewardTableView];
+	
+	self.rewardTableView.tableHeaderView = self.headerView;
 }
 
 - (NSString *)getHoursString
@@ -196,7 +237,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.rewardArray count];
+    return self.rewardArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -206,10 +247,12 @@
     {
         cell = [RewardTableViewCell cell];
     }
+	
+	id reward = [self.rewardArray objectAtIndex:indexPath.row];
     
-    cell.rewardTitle.text = [[self.rewardArray objectAtIndex:indexPath.row] valueForKey:@"reward_name"];
-    cell.rewardDescription.text = [[self.rewardArray objectAtIndex:indexPath.row] valueForKey:@"reward_description"];
-    int rewardPunches = [[[self.rewardArray objectAtIndex:indexPath.row] valueForKey:@"punches"] intValue];
+    cell.rewardTitle.text = [reward objectForKey:@"reward_name"];
+    cell.rewardDescription.text = [reward objectForKey:@"description"];
+    int rewardPunches = [[reward objectForKey:@"punches"] intValue];
     cell.rewardPunches.text = [NSString stringWithFormat:(rewardPunches == 1 ? @"%i Punch" :  @"%i Punches"), rewardPunches];
     
 	if (punchCount < rewardPunches) {
@@ -394,7 +437,8 @@
 
                                           [spinner startAnimating];
                                           
-                                          NSDictionary *cloudFunctionParameters = [[NSDictionary alloc] initWithObjectsAndKeys:patronStoreEntity.objectId, @"patron_store_id", localUser.patronId, @"patron_id", _storeObject.objectId, @"store_id", nil];
+                                          NSDictionary *cloudFunctionParameters = [[NSDictionary a
+	 lloc] initWithObjectsAndKeys:patronStoreEntity.objectId, @"patron_store_id", localUser.patronId, @"patron_id", _storeObject.objectId, @"store_id", nil];
                                           
                                           
                                           [PFCloud callFunctionInBackground:@"delete_patronstore" withParameters:cloudFunctionParameters block:^(id object, NSError *error) {
@@ -501,7 +545,7 @@
     */
 }
 
-- (IBAction)callButton:(id)sender
+- (void)callButton
 {
     NSString *number = [store objectForKey:@"phone_number"];
     NSString *phoneNumber = [number stringByReplacingOccurrencesOfString:@"[^0-9]"
@@ -513,21 +557,22 @@
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumberUrl]];
 }
 
-- (IBAction)mapButton:(id)sender
+- (void)mapButton
 {
     StoreMapViewController *storeMapVC = [[StoreMapViewController alloc] init];
     [self presentViewController:storeMapVC animated:YES completion:NULL];
 }
 
-- (IBAction)feedbackButton:(id)sender
+- (void)feedbackButton
 {
 	ComposeMessageViewController *composeVC = [[ComposeMessageViewController alloc] init];
 	composeVC.messageType = @"Feedback";
 	[self presentViewController:composeVC animated:YES completion:NULL];
 }
 
-- (IBAction)addStore:(id)sender
+- (void)addStore
 {
+	NSLog(@"add to my places button pressed");
     //[self addOrRemovePlace];
 }
 

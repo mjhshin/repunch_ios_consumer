@@ -25,4 +25,7 @@
 
 - (IBAction)closeView:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIView *activityIndicatorView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+
 @end

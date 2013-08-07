@@ -159,10 +159,10 @@
     //[[self view] addSubview:spinner];
     //[spinner startAnimating];
     
-    [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+	{
 		//[spinner stopAnimating];
         if (!error){
-            AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
             
             NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
 										[[PFUser currentUser] objectId], @"user_id",
@@ -177,8 +177,7 @@
             [PFCloud callFunctionInBackground:@"register_patron"
 							   withParameters:parameters
 										block:^(PFObject* patron, NSError *error) {
-                if (!error){
-                    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                if (!error) {
                     [sharedData setPatron:patron];
 					
 					NSString *patronId = [patron objectId];
@@ -231,6 +230,35 @@
 - (IBAction)cancelRegistration:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [self animateTextField:textField shiftScreenUp:YES];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [self animateTextField:textField shiftScreenUp:NO];
+}
+
+- (void) animateTextField: (UITextField*)textField shiftScreenUp:(BOOL)up
+{
+	/*
+	int movementDistance;
+	
+	if(textField == _usernameInput)					movementDistance = 80;
+	else if(textField == _passwordInput)			movementDistance = 120;
+	else if(textField == _passwordConfirmInput)		movementDistance = 160;
+	else if(textField == _firstNameInput)			movementDistance = 200;
+	else if(textField == _lastNameInput)			movementDistance = 240;
+	else if(textField == _emailInput)				movementDistance = 280;
+	else if(textField == _ageInput)					movementDistance = 320;
+	
+    int movement = (up ? 0 : movementDistance);
+	
+    [self.scrollView setContentOffset:CGPointMake(0, movement) animated:YES];
+	 */
 }
 
 - (void)dismissKeyboard

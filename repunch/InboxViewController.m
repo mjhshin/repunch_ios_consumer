@@ -22,8 +22,6 @@
     PFObject *patron;
     NSMutableArray *messagesArray;
     UITableView *messageTableView;
-    UIActivityIndicatorView *spinner;
-    UIView *greyedOutView;
 }
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
@@ -38,14 +36,31 @@
 	messagesArray = [[NSMutableArray alloc] init];
 	
 	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	bgLayer.frame = _toolbar.bounds;
-	[_toolbar.layer insertSublayer:bgLayer atIndex:0];
+	bgLayer.frame = self.toolbar.bounds;
+	[self.toolbar.layer insertSublayer:bgLayer atIndex:0];
 	
-	int navBarOffset = self.view.frame.size.height - 50; //50 is nav bar height
-	messageTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, 320, navBarOffset) style:UITableViewStylePlain];
+	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
+	CGFloat screenWidth = screenRect.size.width;
+	CGFloat screenHeight = screenRect.size.height;
+	int toolBarHeight = self.toolbar.frame.size.height;
+	int tabBarHeight = self.tabBarController.tabBar.frame.size.height;
+	int tableViewHeight = screenHeight - toolBarHeight;
+	
+	messageTableView = [[UITableView alloc]
+						initWithFrame:CGRectMake(0, toolBarHeight, screenWidth, tableViewHeight - tabBarHeight)
+								style:UITableViewStylePlain];
+	
     [messageTableView setDataSource:self];
     [messageTableView setDelegate:self];
 	[[self view] addSubview:messageTableView];
+	
+	CGFloat xCenter = screenWidth/2;
+	CGFloat yCenter = screenHeight/2;
+	CGFloat xOffset = self.activityIndicatorView.frame.size.width/2;
+	CGFloat yOffset = self.activityIndicatorView.frame.size.height/2;
+	CGRect frame = self.activityIndicatorView.frame;
+	frame.origin = CGPointMake(xCenter - xOffset, yCenter - yOffset);
+	self.activityIndicatorView.frame = frame;
 	
     [self loadInbox];
 }
@@ -58,17 +73,6 @@
                                              selector:@selector(setup)
                                                  name:@"receivedPush"
                                                object:nil];
-    /*
-    spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    spinner.center = CGPointMake(160, 260);
-    spinner.color = [UIColor blackColor];
-    [[self view] addSubview:spinner];
-    [spinner startAnimating];
-    greyedOutView = [[UIView alloc]initWithFrame:CGRectMake(0, 47, 320, self.view.frame.size.height - 47)];
-    [greyedOutView setBackgroundColor:[UIColor colorWithRed:127/255 green:127/255 blue:127/255 alpha:0.5]];
-    [[self view] addSubview:greyedOutView];
-    [[self view] bringSubviewToFront:greyedOutView];
-	 */
 }
 
 
@@ -84,6 +88,10 @@
 
 -(void)loadInbox
 {
+	[self.activityIndicatorView setHidden:FALSE];
+	[self.activityIndicator startAnimating];
+	[messageTableView setHidden:TRUE];
+	
     PFRelation *messagesRelation = [patron relationforKey:@"ReceivedMessages"];
     PFQuery *messageQuery = [messagesRelation query];
     [messageQuery includeKey:@"Message"];
@@ -92,25 +100,29 @@
 	[messageQuery setLimit:20];
 	//TODO: paginate!
     
-    [messageQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
-		//[spinner stopAnimating];
-		//[greyedOutView removeFromSuperview];
-        if(!error) {
-            for(PFObject *messageStatus in results) {
-                [sharedData addMessage:messageStatus];
-				[messagesArray addObject:messageStatus];
-            }
+    [messageQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
+	{
+		[self.activityIndicatorView setHidden:TRUE];
+		[self.activityIndicator stopAnimating];
+		
+        if(!error)
+		{
+			if(results.count > 0)
+			{
+				for(PFObject *messageStatus in results) {
+					[sharedData addMessage:messageStatus];
+					[messagesArray addObject:messageStatus];
+				}
+				[messageTableView reloadData];
+				[messageTableView setHidden:FALSE];
+			}
+			else
+			{
+				//TODO: show empty inbox label
+			}
         } else {
             
         }
-        
-        //is sorted by updatedAt as opposed to createdAt, then will sort by reply date value (if there is a reply)
-        //messagesArray = [[messagesArray sortedArrayUsingDescriptors:[NSArray arrayWithObject: [NSSortDescriptor sortDescriptorWithKey:@"Message.updatedAt" ascending:NO]]] mutableCopy];
-        
-        //s.t. table is only as tall as there are cells
-        //[messageTableView setContentSize:CGSizeMake(320, 78*messagesArray.count)];
-        [messageTableView reloadData];
-        
     }];
     
 }

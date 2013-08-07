@@ -22,25 +22,28 @@
 @property (nonatomic, strong) NSMutableArray *rewardArray;
 @property (nonatomic, strong) UITableView *rewardTableView;
 
-@property (weak, nonatomic) IBOutlet UIView *toolbar;
-@property (weak, nonatomic) IBOutlet UIImageView *storePic;
-@property (weak, nonatomic) IBOutlet UILabel *storeName;
-@property (weak, nonatomic) IBOutlet UILabel *storeAddress;
-@property (weak, nonatomic) IBOutlet UILabel *storeHours;
-@property (weak, nonatomic) IBOutlet UILabel *storeOpen;
-@property (weak, nonatomic) IBOutlet UILabel *numPunches;
-@property (weak, nonatomic) IBOutlet UIButton *feedbackBtn;
-@property (weak, nonatomic) IBOutlet UIButton *addPlaceBtn;
-@property (weak, nonatomic) IBOutlet UILabel *feedbackLbl;
-@property (weak, nonatomic) IBOutlet UIView *callView;
-@property (weak, nonatomic) IBOutlet UIView *mapView;
-@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
+@property (strong, nonatomic) IBOutlet UIView *headerView;
 
-- (IBAction)callButton:(id)sender;
-- (IBAction)mapButton:(id)sender;
-- (IBAction)feedbackButton:(id)sender;
-- (IBAction)addStore:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *toolbar;
+@property (weak, nonatomic) IBOutlet UILabel *storeName;
+@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 - (IBAction)deleteStore:(id)sender;
 - (IBAction)closeView:(id)sender;
+
+// store header
+@property (weak, nonatomic) IBOutlet UIImageView *storeImage;
+@property (weak, nonatomic) IBOutlet UILabel *storeAddress;
+@property (weak, nonatomic) IBOutlet UILabel *storeHoursToday;
+@property (weak, nonatomic) IBOutlet UILabel *storeHoursOpen;
+@property (weak, nonatomic) IBOutlet UILabel *storeHours;
+@property (weak, nonatomic) IBOutlet UIButton *addToMyPlacesButton;
+
+@property (weak, nonatomic) IBOutlet UIView *callButtonView;
+@property (weak, nonatomic) IBOutlet UIView *mapButtonView;
+@property (weak, nonatomic) IBOutlet UIView *feedbackButtonView;
+
+@property (weak, nonatomic) IBOutlet UIButton *feedbackButton;
+@property (weak, nonatomic) IBOutlet UIButton *callButton;
+@property (weak, nonatomic) IBOutlet UIButton *mapButton;
 
 @end

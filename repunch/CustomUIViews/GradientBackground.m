@@ -10,21 +10,38 @@
 
 @implementation GradientBackground
 
-//Blue gradient background
-+ (CAGradientLayer*) orangeGradient {
++ (CAGradientLayer*) orangeGradient
+{
 	
 	//Orange RGB: 0xf08c13
 	//Gradient Alpha: 0xd9 -> 0xff
 	
-    UIColor *repunchOrange1 = [UIColor colorWithRed:(240/255.0) green:(140/255.0) blue:(19/255.0) alpha:1.0];
-	UIColor *repunchOrange2 = [UIColor colorWithRed:(240/255.0) green:(140/255.0) blue:(19/255.0) alpha:(217/255.0)];
+    UIColor *orange1 = [UIColor colorWithRed:(240/255.0) green:(140/255.0) blue:(19/255.0) alpha:1.0];
+	UIColor *orange2 = [UIColor colorWithRed:(240/255.0) green:(140/255.0) blue:(19/255.0) alpha:(217/255.0)];
 	
-    NSArray *colors = [NSArray arrayWithObjects:(id)repunchOrange1.CGColor, repunchOrange2.CGColor, nil];
+    NSArray *colors = [NSArray arrayWithObjects:(id)orange1.CGColor, orange2.CGColor, nil];
 	
     CAGradientLayer *headerLayer = [CAGradientLayer layer];
     headerLayer.colors = colors;
 	
     return headerLayer;	
+}
+
++ (CAGradientLayer*) orangeGradientPressed
+{
+	
+	//Orange Pressed RGB: 0xBF6804
+	//Gradient Alpha: 0xc0 -> 0xff
+	
+    UIColor *orangeSelected1 = [UIColor colorWithRed:(191/255.0) green:(104/255.0) blue:(4/255.0) alpha:1.0];
+	UIColor *orangeSelected2 = [UIColor colorWithRed:(191/255.0) green:(104/255.0) blue:(4/255.0) alpha:(192/255.0)];
+	
+    NSArray *colors = [NSArray arrayWithObjects:(id)orangeSelected1.CGColor, orangeSelected2.CGColor, nil];
+	
+    CAGradientLayer *headerLayer = [CAGradientLayer layer];
+    headerLayer.colors = colors;
+	
+    return headerLayer;
 }
 
 @end

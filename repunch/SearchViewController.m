@@ -37,11 +37,24 @@
 	bgLayer.frame = _toolbar.bounds;
 	[self.toolbar.layer insertSublayer:bgLayer atIndex:0];
 	
-	int tableViewHeight = self.view.frame.size.height - 50; //50 is nav bar height
-	self.searchTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, 320, tableViewHeight) style:UITableViewStylePlain]; //TODO: shorten tableView so can scroll to last row hidden by tab bar
+	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
+	CGFloat screenWidth = screenRect.size.width;
+	CGFloat screenHeight = screenRect.size.height;
+	int toolBarHeight = self.toolbar.frame.size.height;
+	int tableViewHeight = screenHeight - toolBarHeight;
+	self.searchTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, toolBarHeight, 320, tableViewHeight)
+														style:UITableViewStylePlain];
     [self.searchTableView setDataSource:self];
     [self.searchTableView setDelegate:self];
     [self.view addSubview:self.searchTableView];
+	
+	CGFloat xCenter = screenWidth/2;
+	CGFloat yCenter = (screenHeight + toolBarHeight)/2;
+	CGFloat xOffset = self.activityIndicatorView.frame.size.width/2;
+	CGFloat yOffset = self.activityIndicatorView.frame.size.height/2;
+	CGRect frame = self.activityIndicatorView.frame;
+	frame.origin = CGPointMake(xCenter - xOffset, yCenter - yOffset);
+	self.activityIndicatorView.frame = frame;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -88,7 +101,11 @@
 }
 
 - (void) performSearch
-{	
+{
+	[self.activityIndicatorView setHidden:FALSE];
+	[self.activityIndicator startAnimating];
+	[self.searchTableView setHidden:TRUE];
+	
     PFQuery *storeQuery = [PFQuery queryWithClassName:@"Store"];
     [storeQuery whereKey:@"active" equalTo:[NSNumber numberWithBool:YES]];
 	[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation];
@@ -98,6 +115,10 @@
 	
     [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
 	 {
+		 [self.activityIndicatorView setHidden:TRUE];
+		 [self.activityIndicator stopAnimating];
+		 [self.searchTableView setHidden:FALSE];
+		 
 		 if (!error)
 		 {
 			 for (PFObject *store in results)

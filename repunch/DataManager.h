@@ -20,6 +20,8 @@
 @property (strong, atomic) NSCache *storeImageCache;
 @property (strong, atomic) PFObject *patron;
 
+- (void) clearData;
+
 // PatronStore methods
 - (NSDictionary*) getAllPatronStores;
 - (NSInteger) getPatronStoreCount;

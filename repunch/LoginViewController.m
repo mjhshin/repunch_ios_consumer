@@ -27,11 +27,6 @@
                                    initWithTarget:self
                                    action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
-
-    //spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    //spinner.center = CGPointMake(160, 100);
-    //spinner.color = [UIColor grayColor];
-    //[[self view] addSubview:spinner];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -43,30 +38,40 @@
 	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
 	bgLayer.frame = self.view.bounds;
 	[self.view.layer insertSublayer:bgLayer atIndex:0];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(goToPlaces)
-                                                 name:@"finishedLoggingIn"
-                                               object:nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showError)
-                                                 name:@"errorLoggingIn"
-                                               object:nil];    
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:YES];
-
-    //[[NSNotificationCenter defaultCenter] removeObserver:self name:@"finishedLoggingIn" object:nil];
-    //[[NSNotificationCenter defaultCenter] removeObserver:self name:@"errorLoggingIn" object:nil];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [self animateTextField:textField shiftScreenUp:YES];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [self animateTextField:textField shiftScreenUp:NO];
+}
+
+- (void) animateTextField: (UITextField*)textField shiftScreenUp:(BOOL)up
+{
+    const int movementDistance = 100; // tweak as needed
+    const float movementDuration = 0.3f; // tweak as needed
+	
+    int movement = (up ? -movementDistance : movementDistance);
+	
+    [UIView beginAnimations: @"anim" context: nil];
+    [UIView setAnimationBeginsFromCurrentState: YES];
+    [UIView setAnimationDuration: movementDuration];
+    self.view.frame = CGRectOffset(self.view.frame, 0, movement);
+    [UIView commitAnimations];
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField*)textField;
@@ -76,8 +81,7 @@
 		[_passwordInput becomeFirstResponder];
 		
 	} else if(textField == _passwordInput) {
-		[_passwordInput resignFirstResponder];
-		
+		[_passwordInput resignFirstResponder];		
 	}
 	
 	return NO; // We do not want UITextField to insert line-breaks.
@@ -124,12 +128,11 @@
 }
 
 - (void)fetchPatronPFObject:(NSString*)patronId
-{
-	AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-	
+{	
 	PFQuery *query = [PFQuery queryWithClassName:@"Patron"];
 	
-	[query getObjectInBackgroundWithId:patronId block:^(PFObject *patron, NSError *error) {
+	[query getObjectInBackgroundWithId:patronId block:^(PFObject *patron, NSError *error)
+	{
 		//[spinner stopAnimating];
 		
 		if(!error) {
