@@ -556,11 +556,6 @@
 						<reference key="parent" ref="799083568"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">452</int>
-						<reference key="object" ref="402537147"/>
-						<reference key="parent" ref="230906801"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">454</int>
 						<reference key="object" ref="582891783"/>
 						<reference key="parent" ref="799083568"/>
@@ -586,9 +581,9 @@
 						<reference key="parent" ref="189534427"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">464</int>
-						<reference key="object" ref="437360139"/>
-						<reference key="parent" ref="799083568"/>
+						<int key="objectID">470</int>
+						<reference key="object" ref="149101883"/>
+						<reference key="parent" ref="189534427"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">467</int>
@@ -601,14 +596,19 @@
 						<reference key="parent" ref="799083568"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">469</int>
-						<reference key="object" ref="541394742"/>
+						<int key="objectID">452</int>
+						<reference key="object" ref="402537147"/>
+						<reference key="parent" ref="230906801"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">464</int>
+						<reference key="object" ref="437360139"/>
 						<reference key="parent" ref="799083568"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">470</int>
-						<reference key="object" ref="149101883"/>
-						<reference key="parent" ref="189534427"/>
+						<int key="objectID">469</int>
+						<reference key="object" ref="541394742"/>
+						<reference key="parent" ref="799083568"/>
 					</object>
 				</array>
 			</object>
@@ -673,7 +673,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">470</int>
+			<int key="maxID">482</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -683,7 +683,6 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="dateSent">UILabel</string>
 						<string key="offerPic">UIImageView</string>
-						<string key="previewLabel">UILabel</string>
 						<string key="senderName">UILabel</string>
 						<string key="subjectLabel">UILabel</string>
 					</dictionary>
@@ -695,10 +694,6 @@
 						<object class="IBToOneOutletInfo" key="offerPic">
 							<string key="name">offerPic</string>
 							<string key="candidateClassName">UIImageView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="previewLabel">
-							<string key="name">previewLabel</string>
-							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="senderName">
 							<string key="name">senderName</string>

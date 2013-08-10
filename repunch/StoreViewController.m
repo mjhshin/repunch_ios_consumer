@@ -29,9 +29,6 @@
 	sharedData = [DataManager getSharedInstance];
 	store = [sharedData getStore:self.storeId];
 	patron = [sharedData patron];
-	patronStore = [sharedData getPatronStore:_storeId];
-    patronStoreExists = (patronStore != (id)[NSNull null]);
-	punchCount = [[patronStore objectForKey:@"punch_count"] intValue];
 	self.rewardArray = [NSMutableArray array];
 	
 	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
@@ -41,35 +38,40 @@
 	[[NSBundle mainBundle] loadNibNamed:@"StoreHeaderView" owner:self options:nil];
 	
 	[self setStoreInformation];
-	[self setStoreButtons];
+	[self checkPatronStore];
 	[self setRewardTableView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(checkPatronStore)
+												 name:@"Punch"
+											   object:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"receivedPush" object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)checkPatronStore
+{
+	patronStore = [sharedData getPatronStore:self.storeId];
+    patronStoreExists = (patronStore != nil);
+	if(patronStoreExists) {
+		punchCount = [[patronStore objectForKey:@"punch_count"] intValue];
+	} else {
+		punchCount = 0;
+	}
+	
+	[self setStoreButtons];
 }
 
 - (void)setStoreInformation
-{
-	CAGradientLayer *bgLayer2 = [GradientBackground orangeGradient];
-	bgLayer2.frame = self.addToMyPlacesButton.bounds;
-	[self.addToMyPlacesButton.layer insertSublayer:bgLayer2 atIndex:0];
-	
-	if(!patronStoreExists) {
-		self.addToMyPlacesButton.titleLabel.text = @"Add to My Places";
-		[self.addToMyPlacesButton setEnabled:FALSE];
-	} else {
-		[self.addToMyPlacesButton addTarget:self
-									 action:@selector(addStore)
-						   forControlEvents:UIControlEventTouchUpInside];
-	}
-	
+{	
 	NSString *name = [store objectForKey:@"store_name"];
 	NSString *street = [store objectForKey:@"street"];
 	NSString *crossStreets = [store objectForKey:@"cross_streets"];
@@ -127,21 +129,36 @@
 
 - (void)setStoreButtons
 {
-	if(patronStoreExists) {
-		//self.addToMyPlacesButton
+	CAGradientLayer *bgLayer2 = [GradientBackground orangeGradient];
+	bgLayer2.frame = self.addToMyPlacesButton.bounds;
+	[self.addToMyPlacesButton.layer insertSublayer:bgLayer2 atIndex:0];
+	
+	if(!patronStoreExists)
+	{
+		[self.addToMyPlacesButton setTitle:@"Add to My Places" forState:UIControlStateNormal];
+		[self.addToMyPlacesButton setEnabled:TRUE];
+		[self.addToMyPlacesButton addTarget:self
+									 action:@selector(addStore)
+						   forControlEvents:UIControlEventTouchUpInside];
+		[self.deleteButton setHidden:TRUE];
 	}
+	else
+	{
+		NSString *buttonText = [NSString stringWithFormat:@"%i %@", punchCount, (punchCount == 1) ? @"Punch": @"Punches"];
+		[self.addToMyPlacesButton setTitle:buttonText forState:UIControlStateNormal];
+		[self.addToMyPlacesButton setEnabled:FALSE];
+		[self.deleteButton setHidden:FALSE];
+	}
+	
+	//set button actions
+	[self.callButton addTarget:self action:@selector(callButtonPressed) forControlEvents:UIControlEventTouchUpInside];	
+	[self.mapButton addTarget:self action:@selector(mapButtonPressed) forControlEvents:UIControlEventTouchUpInside];	
+	[self.feedbackButton addTarget:self action:@selector(feedbackButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+	
 	/*
-	//hide feedback button
-	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
-	CGFloat screenWidth = screenRect.size.width;
-	CGFloat screenHeight = screenRect.size.height;
-	CGFloat xCenter = screenWidth/2;
-	CGFloat yCenter = screenHeight/2;
-	CGFloat xOffset = self.activityIndicatorView.frame.size.width/2;
-	CGFloat yOffset = self.activityIndicatorView.frame.size.height/2;
-	CGRect frame = self.activityIndicatorView.frame;
-	frame.origin = CGPointMake(xCenter - xOffset, yCenter - yOffset);
-	self.activityIndicatorView.frame = frame;
+	[self.callButton addTarget:self action:@selector(callButtonTouchDown) forControlEvents:UIControlEventTouchDown];
+	[self.mapButton addTarget:self action:@selector(mapButtonTouchDown) forControlEvents:UIControlEventTouchDown];
+	[self.feedbackButton addTarget:self action:@selector(feedbackButtonTouchDown) forControlEvents:UIControlEventTouchDown];
 	 */
 }
 
@@ -277,102 +294,123 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	/*
-    if (_isSavedStore){
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        Reward *currentCellReward = [placeRewardData objectAtIndex:indexPath.row];
+	if(!patronStoreExists) {
+		return;
+	}
 
-        int required = [[currentCellReward punches] intValue];
-        if (availablePunches >= required){
-            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%@.", [currentCellReward reward_name]] andMessage:[NSString stringWithFormat:@"It'll cost you %@.", [NSString stringWithFormat:(required == 1 ? @"%i Punch" :  @"%i Punches"), required]]];
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	id reward = [self.rewardArray objectAtIndex:indexPath.row];
+
+	int rewardPunches = [[reward objectForKey:@"punches"] intValue];
+	int rewardId = [[reward objectForKey:@"reward_id"] intValue];
+	NSString *rewardPunchesString = [NSString stringWithFormat:@"%d", rewardPunches];
+	NSString *rewardIdString = [NSString stringWithFormat:@"%d", rewardId];
+	NSString *rewardName = [reward objectForKey:@"reward_name"];
+	NSString *patronName = [NSString stringWithFormat:@"%@ %@", [patron objectForKey:@"first_name"], [patron objectForKey:@"last_name"]];
+	
+	if (punchCount >= rewardPunches)
+	{
+		SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:[reward objectForKey:@"reward_name"]
+														 andMessage:[NSString stringWithFormat:(rewardPunches == 1 ? @"%i Punch" :  @"%i Punches"), rewardPunches]];
+		[alertView addButtonWithTitle:@"Redeem"
+								 type:SIAlertViewButtonTypeDefault
+							  handler:^(SIAlertView *alert)
+		{
+			NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:
+													[store objectId],			@"store_id",
+													[patronStore objectId],		@"patron_store_id",
+													rewardName,					@"title",
+													rewardIdString,				@"reward_id",
+													rewardPunchesString,		@"num_punches",
+													patronName,					@"name",
+													nil];
+
+			[PFCloud callFunctionInBackground:@"request_redeem"
+							   withParameters:functionArguments
+										block:^(NSString *success, NSError *error)
+			{
+				if (!error)
+				{
+					if ([success isEqualToString:@"pending"])
+					{
+						NSLog(@"function call is: %@", success);
+						SIAlertView *confirmDialogue = [[SIAlertView alloc] initWithTitle:@"Pending" andMessage:@"You already have a pending reward"];
+						[confirmDialogue addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
+							//nothing
+						}];
+						[confirmDialogue show];
+					}
+					else
+					{
+						NSLog(@"function call is: %@", success);
+						SIAlertView *confirmDialogue = [[SIAlertView alloc] initWithTitle:@"Waiting for confirmation" andMessage:@"Please wait for your reward to be validated"];
+						[confirmDialogue addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
+							//nothing
+						}];
+						[confirmDialogue show];
+					}
+				}
+				else
+				{
+					NSLog(@"error occurred: %@", error);
+					SIAlertView *errorDialogue = [[SIAlertView alloc] initWithTitle:@"Error" andMessage:@"Please wait for your reward to be validated"];
+					[errorDialogue addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
+						//nothing
+					}];
+					[errorDialogue show];
+				}
+			}];
+		}];
+
+		[alertView addButtonWithTitle:@"Gift"
+								 type:SIAlertViewButtonTypeDefault
+							  handler:^(SIAlertView *alert)
+		 {
+			 /*
+			 FacebookFriendsViewController *friendsVC = [[FacebookFriendsViewController alloc] init];
+                                      
+			 NSDictionary *giftDictionary = [NSDictionary dictionaryWithObjectsAndKeys:[store objectId], @"store_id",
+											 [patronStore objectId], @"patron_store_id",
+											 [localUser patronId], @"user_id",
+											 [localUser fullName], @"sender_name",
+											 [currentCellReward reward_name], @"gift_title",
+											 [currentCellReward reward_description], @"gift_description",
+											 [currentCellReward punches] ,@"gift_punches",
+											 nil];
+                                      
+                                      
+			 friendsVC.giftParametersDict = giftDictionary;
+                                      
+			 [self presentViewController:friendsVC animated:YES completion:nil];
+			  */
+		 }];
             
-            [alertView addButtonWithTitle:@"Redeem"
-                                     type:SIAlertViewButtonTypeDefault
-                                  handler:^(SIAlertView *alert) {
-                                      NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:[_storeObject objectId], @"store_id",[patronStoreEntity objectId], @"patron_store_id", [currentCellReward reward_name], @"title", [currentCellReward objectId], @"reward_id", [currentCellReward punches], @"num_punches",   [localUser fullName], @"name", nil];
-
-                                      [PFCloud callFunctionInBackground:@"request_redeem"
-                                                         withParameters:functionArguments
-                                                                  block:^(NSString *success, NSError *error) {
-                                                                      if (!error) {
-                                                                          if ([success isEqualToString:@"pending"]){
-                                                                              NSLog(@"function call is :%@", success);
-                                                                              SIAlertView *confirmDialogue = [[SIAlertView alloc] initWithTitle:@"Pending" andMessage:@"You already have a pending reward"];
-                                                                              [confirmDialogue addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
-                                                                                  //nothing
-                                                                              }];
-                                                                              [confirmDialogue show];
-                                                                          }
-                                                                          else {
-                                                                              NSLog(@"function call is :%@", success);
-                                                                              SIAlertView *confirmDialogue = [[SIAlertView alloc] initWithTitle:@"Waiting for confirmation" andMessage:@"Please wait for your reward to be validated"];
-                                                                              [confirmDialogue addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
-                                                                                  //nothing
-                                                                              }];
-                                                                              [confirmDialogue show];
-                                                                          }
-                                                                      }
-                                                                      else {
-                                                                          NSLog(@"error occurred: %@", error);
-                                                                          SIAlertView *errorDialogue = [[SIAlertView alloc] initWithTitle:@"Error" andMessage:@"Please wait for your reward to be validated"];
-                                                                          [errorDialogue addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
-                                                                              //nothing
-                                                                          }];
-                                                                          [errorDialogue show];
-                                                                      }
-                                                                  }];
-                                      NSLog(@"Redeem Clicked");
-                                  }];
-            [alertView addButtonWithTitle:@"Gift"
-                                     type:SIAlertViewButtonTypeDefault
-                                  handler:^(SIAlertView *alert) {
-                                      RepunchFriendsViewController *friendsVC = [[RepunchFriendsViewController alloc]init];
-                                      friendsVC.modalDelegate = self;
-                                      
-                                      NSDictionary *giftDictionary = [NSDictionary dictionaryWithObjectsAndKeys:[_storeObject objectId], @"store_id", patronStoreEntity.objectId, @"patron_store_id", [localUser patronId], @"user_id", [localUser fullName], @"sender_name", [currentCellReward reward_name], @"gift_title", [currentCellReward reward_description], @"gift_description", [currentCellReward punches] ,@"gift_punches", nil];
-                                      
-                                      
-                                      friendsVC.giftParametersDict = giftDictionary;
-                                      
-                                      [self presentViewController:friendsVC animated:YES completion:nil];
-
-
-                                      
-                                      NSLog(@"Gift Clicked");
-                                  }];
+		[alertView addButtonWithTitle:@"Cancel"
+								 type:SIAlertViewButtonTypeDefault
+							  handler:^(SIAlertView *alert) {
+								  [alert dismissAnimated:TRUE];
+							  }];
+		alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
+		[alertView show];
+	}
+	else
+	{
+		SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Sorry, not enough punches"]
+														 andMessage:nil];
             
-            [alertView addButtonWithTitle:@"Cancel"
-                                     type:SIAlertViewButtonTypeDefault
-                                  handler:^(SIAlertView *alert) {
-                                      //Nothing Happens
-                                  }];
-
-            alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
-
-            [alertView show];
-        }
-        else {
-            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%@.", [[placeRewardData objectAtIndex:indexPath.row] valueForKey:@"reward_name"]] andMessage:[NSString stringWithFormat:@"You don't have %@.", [NSString stringWithFormat:(required == 1 ? @"%i Punch" :  @"%i Punches"), required]]];
-            
-            [alertView addButtonWithTitle:@"Okay."
-                                     type:SIAlertViewButtonTypeDefault
-                                  handler:^(SIAlertView *alert) {
-                                      //Nothing Happens
-                                  }];
-
-        }
-     }
-
-
+		[alertView addButtonWithTitle:@"OK"
+								 type:SIAlertViewButtonTypeDefault
+							  handler:^(SIAlertView *alert) {
+								  [alert dismissAnimated:TRUE];
+		}];
+		[alertView show];
+	}
 }
+
 
 -(void)addOrRemovePlace
 {
-    UIView *greyedOutView = [[UIView alloc]initWithFrame:CGRectMake(0, 50, 320, self.view.frame.size.height - 50)];
-    [greyedOutView setBackgroundColor:[UIColor colorWithRed:127/255 green:127/255 blue:127/255 alpha:0.5]];
-    [[self view] addSubview:greyedOutView];
-    [[self view] bringSubviewToFront:greyedOutView];
-
+    /*
 
     PFQuery *patronQuery = [PFQuery queryWithClassName:@"Patron"];
     [patronQuery getObjectInBackgroundWithId:localUser.patronId block:^(PFObject *patronObject, NSError *error) {
@@ -465,11 +503,13 @@
             
         } else NSLog(@"error is %@", error);
     }];
+	 */
 
 }
 
 - (void)publishButtonActionWithParameters:(NSDictionary*)userInfo
 {
+	/*
     PFQuery *getStore = [PFQuery queryWithClassName:@"Store"];
     [getStore getObjectInBackgroundWithId:[userInfo valueForKey:@"store_id"] block:^(PFObject *fetchedStore, NSError *error) {
         NSString *picURL = [[fetchedStore objectForKey:@"store_avatar"] url];
@@ -545,8 +585,10 @@
     */
 }
 
-- (void)callButton
+- (void)callButtonPressed
 {
+	//[self.callButtonView setBackgroundColor:[UIColor clearColor]];
+	
     NSString *number = [store objectForKey:@"phone_number"];
     NSString *phoneNumber = [number stringByReplacingOccurrencesOfString:@"[^0-9]"
 															  withString:@""
@@ -557,28 +599,122 @@
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumberUrl]];
 }
 
-- (void)mapButton
+- (void)mapButtonPressed
 {
+	//[self.mapButtonView setBackgroundColor:[UIColor clearColor]];
+	
     StoreMapViewController *storeMapVC = [[StoreMapViewController alloc] init];
+	storeMapVC.storeId = self.storeId;
     [self presentViewController:storeMapVC animated:YES completion:NULL];
 }
 
-- (void)feedbackButton
+- (void)feedbackButtonPressed
 {
+	//[self.feedbackButtonView setBackgroundColor:[UIColor clearColor]];
+	
+	if(!patronStoreExists) //temp
+		return;
+	
 	ComposeMessageViewController *composeVC = [[ComposeMessageViewController alloc] init];
-	composeVC.messageType = @"Feedback";
+	composeVC.messageType = @"feedback"; //TODO: make this enum
+	composeVC.storeId = self.storeId;
 	[self presentViewController:composeVC animated:YES completion:NULL];
 }
 
 - (void)addStore
 {
-	NSLog(@"add to my places button pressed");
-    //[self addOrRemovePlace];
+	//http://stackoverflow.com/questions/5210535/passing-data-between-view-controllers
+	[self.addToMyPlacesButton setTitle:@"" forState:UIControlStateNormal];
+	[self.addToMyPlacesButton setEnabled:FALSE];
+	
+	UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+	spinner.frame = self.addToMyPlacesButton.bounds;
+	[self.addToMyPlacesButton addSubview:spinner];
+	spinner.hidesWhenStopped = YES;
+	[spinner startAnimating];
+	
+	NSDictionary *inputArgs = [NSDictionary dictionaryWithObjectsAndKeys:
+									[patron objectId],		@"patron_id",
+									[store objectId],		@"store_id",
+									nil];
+	
+	[PFCloud callFunctionInBackground: @"add_patronstore"
+					   withParameters:inputArgs
+								block:^(PFObject *result, NSError *error)
+	{
+		[spinner stopAnimating];
+		
+		if(!error)
+		{
+			[sharedData addPatronStore:result forKey:self.storeId];
+			[self checkPatronStore];
+			[self alertParentViewController:TRUE];
+		}
+		else
+		{
+			NSLog(@"add_patronStore error: %@", error);
+		}
+	}];
 }
 
 - (IBAction)deleteStore:(id)sender
 {
-    //[self addOrRemovePlace];
+	SIAlertView *warningView = [[SIAlertView alloc] initWithTitle:@"Remove from My Places" andMessage:@"WARNING: you will lose all your punches!"];
+	[warningView addButtonWithTitle:@"Cancel"
+							   type:SIAlertViewButtonTypeDefault
+							handler:^(SIAlertView *alert) {
+								[alert dismissAnimated:YES];
+							}];
+	
+	
+	[warningView addButtonWithTitle:@"Remove"
+							   type:SIAlertViewButtonTypeDestructive
+							handler:^(SIAlertView *alert) {
+								[self performDelete];
+								[alert dismissAnimated:YES];
+							}];
+	[warningView show];
+}
+
+- (void) performDelete
+{
+	[self.addToMyPlacesButton setTitle:@"" forState:UIControlStateNormal];
+	[self.addToMyPlacesButton setEnabled:FALSE];
+	
+	UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+	spinner.frame = self.addToMyPlacesButton.bounds;
+	[self.addToMyPlacesButton addSubview:spinner];
+	spinner.hidesWhenStopped = YES;
+	[spinner startAnimating];
+	
+	NSDictionary *inputArgs = [NSDictionary dictionaryWithObjectsAndKeys:
+							   [patronStore objectId],	@"patron_store_id",
+							   [patron objectId],		@"patron_id",
+							   [store objectId],		@"store_id",
+							   nil];
+	
+	[PFCloud callFunctionInBackground: @"delete_patronstore"
+					   withParameters:inputArgs
+								block:^(NSString *result, NSError *error)
+	 {
+		 [spinner stopAnimating];
+		 
+		 if(!error)
+		 {
+			 [sharedData deletePatronStore:self.storeId];
+			 [self checkPatronStore];
+			 [self alertParentViewController:TRUE];
+		 }
+		 else
+		 {
+			 NSLog(@"delete_patronStore error: %@", error);
+		 }
+	 }];
+}
+
+- (void)alertParentViewController:(BOOL)isAddRemove
+{
+	[self.delegate updateTableViewFromStore:self forStoreId:self.storeId andAddRemove:isAddRemove];
 }
 
 - (IBAction)closeView:(id)sender

@@ -30,6 +30,8 @@
 		7996B3AE17820B1800CCAFED /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B3AD17820B1800CCAFED /* Social.framework */; };
 		7996B3B017820B1C00CCAFED /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B3AF17820B1C00CCAFED /* Accounts.framework */; };
 		EE28DAE017AC447E00E4C460 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE28DADF17AC447E00E4C460 /* DataManager.m */; };
+		EE3F36D417B585B300D28FC9 /* PunchHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3F36D317B585B300D28FC9 /* PunchHandler.m */; };
+		EE3F36D817B586ED00D28FC9 /* RedeemHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3F36D717B586ED00D28FC9 /* RedeemHandler.m */; };
 		EE5378BD17B2E8D6002D8B18 /* StoreHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE5378BC17B2E8D6002D8B18 /* StoreHeaderView.xib */; };
 		EE5378C117B2F39B002D8B18 /* call_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE5378BE17B2F39B002D8B18 /* call_button@2x.png */; };
 		EE5378C217B2F39B002D8B18 /* feedback_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE5378BF17B2F39B002D8B18 /* feedback_button@2x.png */; };
@@ -122,9 +124,6 @@
 		EE9D4F0417A84ABB005E0CC5 /* btn_x-orange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4E9817A84ABB005E0CC5 /* btn_x-orange@2x.png */; };
 		EE9D4F0517A84ABB005E0CC5 /* bump_diagram.png in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4E9917A84ABB005E0CC5 /* bump_diagram.png */; };
 		EE9D4F0617A84ABB005E0CC5 /* bump_diagram2.png in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4E9A17A84ABB005E0CC5 /* bump_diagram2.png */; };
-		EE9D4F0717A84ABB005E0CC5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4E9B17A84ABB005E0CC5 /* Default-568h@2x.png */; };
-		EE9D4F0817A84ABB005E0CC5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4E9C17A84ABB005E0CC5 /* Default.png */; };
-		EE9D4F0917A84ABB005E0CC5 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4E9D17A84ABB005E0CC5 /* Default@2x.png */; };
 		EE9D4F0A17A84ABB005E0CC5 /* ic_menu_refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4E9E17A84ABB005E0CC5 /* ic_menu_refresh.png */; };
 		EE9D4F0B17A84ABB005E0CC5 /* ic_tab_inbox.png in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4E9F17A84ABB005E0CC5 /* ic_tab_inbox.png */; };
 		EE9D4F0C17A84ABB005E0CC5 /* ic_tab_inbox_small.png in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4EA017A84ABB005E0CC5 /* ic_tab_inbox_small.png */; };
@@ -218,6 +217,10 @@
 		7996B3AF17820B1C00CCAFED /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		EE28DADE17AC447E00E4C460 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		EE28DADF17AC447E00E4C460 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
+		EE3F36D217B585B300D28FC9 /* PunchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PunchHandler.h; sourceTree = "<group>"; };
+		EE3F36D317B585B300D28FC9 /* PunchHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PunchHandler.m; sourceTree = "<group>"; };
+		EE3F36D617B586ED00D28FC9 /* RedeemHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedeemHandler.h; sourceTree = "<group>"; };
+		EE3F36D717B586ED00D28FC9 /* RedeemHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedeemHandler.m; sourceTree = "<group>"; };
 		EE5378BC17B2E8D6002D8B18 /* StoreHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreHeaderView.xib; sourceTree = "<group>"; };
 		EE5378BE17B2F39B002D8B18 /* call_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "call_button@2x.png"; sourceTree = "<group>"; };
 		EE5378BF17B2F39B002D8B18 /* feedback_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "feedback_button@2x.png"; sourceTree = "<group>"; };
@@ -491,6 +494,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		EE3F36D517B5865800D28FC9 /* Push */ = {
+			isa = PBXGroup;
+			children = (
+				EE3F36D217B585B300D28FC9 /* PunchHandler.h */,
+				EE3F36D317B585B300D28FC9 /* PunchHandler.m */,
+				EE3F36D617B586ED00D28FC9 /* RedeemHandler.h */,
+				EE3F36D717B586ED00D28FC9 /* RedeemHandler.m */,
+			);
+			name = Push;
+			sourceTree = "<group>";
+		};
 		EE9D4B1017A83F4A005E0CC5 /* External */ = {
 			isa = PBXGroup;
 			children = (
@@ -504,6 +518,7 @@
 		EE9D4B7017A83F4A005E0CC5 /* Repunch */ = {
 			isa = PBXGroup;
 			children = (
+				EE3F36D517B5865800D28FC9 /* Push */,
 				EE9D4B7117A83F4A005E0CC5 /* AppDelegate.h */,
 				EE9D4B7217A83F4A005E0CC5 /* AppDelegate.m */,
 				EE9D4B7317A83F4A005E0CC5 /* ComposeMessageViewController.h */,
@@ -852,9 +867,6 @@
 				EE9D4F0417A84ABB005E0CC5 /* btn_x-orange@2x.png in Resources */,
 				EE9D4F0517A84ABB005E0CC5 /* bump_diagram.png in Resources */,
 				EE9D4F0617A84ABB005E0CC5 /* bump_diagram2.png in Resources */,
-				EE9D4F0717A84ABB005E0CC5 /* Default-568h@2x.png in Resources */,
-				EE9D4F0817A84ABB005E0CC5 /* Default.png in Resources */,
-				EE9D4F0917A84ABB005E0CC5 /* Default@2x.png in Resources */,
 				EE9D4F0A17A84ABB005E0CC5 /* ic_menu_refresh.png in Resources */,
 				EE9D4F0B17A84ABB005E0CC5 /* ic_tab_inbox.png in Resources */,
 				EE9D4F0C17A84ABB005E0CC5 /* ic_tab_inbox_small.png in Resources */,
@@ -980,6 +992,8 @@
 				EE9D4E7217A846B1005E0CC5 /* SIAlertView.m in Sources */,
 				EE9D4F5117A96F5B005E0CC5 /* GradientBackground.m in Sources */,
 				EE28DAE017AC447E00E4C460 /* DataManager.m in Sources */,
+				EE3F36D417B585B300D28FC9 /* PunchHandler.m in Sources */,
+				EE3F36D817B586ED00D28FC9 /* RedeemHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

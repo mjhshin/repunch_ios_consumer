@@ -45,19 +45,24 @@ static DataManager *sharedDataManager = nil;    // static instance variable
 	return self.patronStores;
 }
 
-- (NSInteger) getPatronStoreCount
+- (PFObject *)getPatronStore:(NSString *)storeId
 {
-	return [self.patronStores count];
+	return [self.patronStores objectForKey:storeId];
 }
 
-- (void)addPatronStore:(PFObject *)patronStore forKey:(NSString *)objectId
+- (void)addPatronStore:(PFObject *)patronStore forKey:(NSString *)storeId
 {
-    [self.patronStores setObject:patronStore forKey:objectId];
+    [self.patronStores setObject:patronStore forKey:storeId];
 }
 
-- (PFObject *)getPatronStore:(NSString *)objectId
+- (void) deletePatronStore:(NSString *)storeId
 {
-	return [self.patronStores objectForKey:objectId];
+	[self.patronStores removeObjectForKey:storeId];
+}
+
+- (void)updatePatronStore:(NSString *)storeId withPunches:(int)punches
+{
+	[[self.patronStores objectForKey:storeId] setObject:[NSNumber numberWithInt:punches] forKey:@"punch_count"];
 }
 
 // Store methods

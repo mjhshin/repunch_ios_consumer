@@ -23,6 +23,8 @@
 {
     [super viewDidLoad];
 	
+	NSLog(@"Search viewDidLoad");
+	
 	locationManager = [[CLLocationManager alloc] init];	
 	locationManager.delegate = self;
 	locationManager.distanceFilter = kCLDistanceFilterNone; //filter out negligible changes in location (disabled for now)
@@ -60,19 +62,32 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+	
+	NSLog(@"Search viewWillAppear");
+	
 	[locationManager startUpdatingLocation];
 	searchloaded = FALSE;
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(receiveRefreshNotification)
+												 name:@"Punch"
+											   object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+	
+	NSLog(@"Search viewWillDisappear");
+	
 	[locationManager stopUpdatingLocation];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+	NSLog(@"Search didReceiveMemoryWarning");
     
     // terminate all pending image downloads
     NSArray *allDownloads = [self.imageDownloadsInProgress allValues];
@@ -100,7 +115,7 @@
 	}
 }
 
-- (void) performSearch
+- (void)performSearch
 {
 	[self.activityIndicatorView setHidden:FALSE];
 	[self.activityIndicator startAnimating];
@@ -238,8 +253,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
-	StoreViewController *placesDetailVC = [[StoreViewController alloc]init];
-	[self presentViewController:placesDetailVC animated:YES completion:NULL];
+	NSString *storeId = [self.storeIdArray objectAtIndex:indexPath.row];
+	StoreViewController *storeVC = [[StoreViewController alloc]init];
+	storeVC.storeId = storeId;
+	storeVC.delegate = self;
+	[self presentViewController:storeVC animated:YES completion:NULL];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -278,6 +296,18 @@
     {
         [imageFile cancel];
     }
+}
+
+- (void)updateTableViewFromStore:(StoreViewController *)controller forStoreId:(NSString *)storeId andAddRemove:(BOOL)isAddRemove
+{
+	NSLog(@"storeVC->searchVC delegate:update TableView");
+    [self.searchTableView reloadData];
+	[self.delegate updateTableViewFromSearch:self forStoreId:storeId andAddRemove:isAddRemove];
+}
+
+- (void)receiveRefreshNotification
+{
+	[self.searchTableView reloadData];
 }
 
 - (IBAction)closeView:(id)sender

@@ -24,9 +24,10 @@
 
 // PatronStore methods
 - (NSDictionary*) getAllPatronStores;
-- (NSInteger) getPatronStoreCount;
-- (void)addPatronStore:(PFObject *)patronStore forKey:(NSString *)objectId;
-- (PFObject *)getPatronStore:(NSString *)objectId;
+- (PFObject *)getPatronStore:(NSString *)storeId;
+- (void)addPatronStore:(PFObject *)patronStore forKey:(NSString *)storeId;
+- (void)deletePatronStore:(NSString *)storeId;
+- (void)updatePatronStore:(NSString *)storeId withPunches:(int)punches;
 
 // Store methods
 - (void)addStore:(PFObject *)store;

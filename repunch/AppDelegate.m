@@ -6,14 +6,6 @@
 //
 
 #import "AppDelegate.h"
-#import "MyPlacesViewController.h"
-#import "InboxViewController.h"
-#import "LandingViewController.h"
-#import <Parse/Parse.h>
-#import <FacebookSDK/FacebookSDK.h>
-#import "Crittercism.h"
-#import "SIAlertView.h"
-#import "DataManager.h"
 
 @implementation AppDelegate
 {
@@ -32,52 +24,22 @@
                   clientKey:@"XZMybowaEMLHszQTEpxq4Yk2ksivkYj9m1c099ZD"];
     
     [PFFacebookUtils initializeFacebook];    
-    [Crittercism enableWithAppID: @"51df08478b2e331138000003"];
+    //[Crittercism enableWithAppID: @"51df08478b2e331138000003"];
 	
-    //Set up default settings for: sorting by alphabetical order, no notifications
-    [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Alphabetical Order", [NSNumber numberWithBool:NO], nil] forKeys:[NSArray arrayWithObjects:@"sort", @"notification", nil]]];
-
-    //Register for Push Notifications
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-    
-    NSLog(@"%u",[[UIApplication sharedApplication] enabledRemoteNotificationTypes]);
-
+	[application registerForRemoteNotificationTypes:
+	 UIRemoteNotificationTypeBadge |
+	 UIRemoteNotificationTypeAlert |
+	 UIRemoteNotificationTypeSound];
+	
+	//For push when app not loaded in memory
     NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-    if (remoteNotif != nil) {
-        NSLog(@"opened from push: %@", remoteNotif);
-        // app was launched from push notification so open to the inbox
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"receivedPush" object:self]; //TODO: causing duplicate alert
-        [self.tabBarController setSelectedIndex:2];
+    if (remoteNotif)
+	{
+        //TODO
     }
 	
 	sharedData = [DataManager getSharedInstance];
-    
-	PFUser* currentUser = [PFUser currentUser];
-	
-    if (currentUser) {
-		//if patron object is null for some reason
-        if ( ![sharedData patron] ) {
-            PFObject *patron = [currentUser valueForKey:@"Patron"];
-            [patron fetchIfNeededInBackgroundWithBlock:^(PFObject *result, NSError *error) {
-                if (!error) {
-                    [sharedData setPatron:result];
-                    [self presentTabBarController];
-                }
-                else {
-                    NSLog(@"Failed to fetch Patron object: %@", error);
-                }
-            }];
-			
-        } else {
-            [self presentTabBarController];
-		}
-		
-    } else {
-		[self presentLandingViews];
-    }
-     
-    self.window.backgroundColor = [UIColor whiteColor];
+	[self checkLoginState];
     [self.window makeKeyAndVisible];
 	
     return YES;
@@ -101,8 +63,7 @@
 
 #pragma mark - Push Notification methods
 
-- (void)application:(UIApplication*)application
-	didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
 	// Store the deviceToken in the current Installation and save it to Parse.
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
@@ -120,113 +81,23 @@
 
 - (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
 {
-	/*
     [PFPush handlePush:userInfo];
-    if ([[userInfo valueForKey:@"push_type"] isEqualToString:@"validate_redeem"]){
-        if ([[_patron valueForKey:@"facebook_id"] length]>0){
-            SIAlertView *alertView = [[SIAlertView alloc]initWithTitle:@"Want More Punches?" andMessage:@"Would you like to post to Facebook to receive more punches?"];
-            [alertView addButtonWithTitle:@"No thanks." type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
-                NSDictionary *functionParameters = [[NSDictionary alloc]initWithObjectsAndKeys:[userInfo valueForKey:@"patron_store_id"], @"patron_store_id", @"false", @"accept", nil];
-                [PFCloud callFunctionInBackground:@"facebook_post" withParameters:functionParameters block:^(id object, NSError *error) {
-                    if (!error){
-                        NSLog(@"facebook function call is :%@", object);
-                    }
-                    else {
-                        NSLog(@"error is %@", error);
-                    }
-                }];
 
-            }];
-            
-            [alertView addButtonWithTitle:@"Sure!" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
-                [self publishButtonActionWithParameters:userInfo];
-
-            }];
-            
-            [alertView show];
-            
-        }
-
-    }*/
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"receivedPush" object:self];
-    
-    
-    //ideally, on push, add a button so on click will go directly to message
-    //but can't do this, because not all views implement the modal delegate protocol
-    //so message might possibly be able to dismiss
-    //in the long run, it's probably better to switch to navigation based controller
-    
-    /*
-    if ([[userInfo valueForKey:@"push_type"] isEqualToString:@"receive_message"]) {
-        NSString *messageStatusIdString = [userInfo valueForKey:@"message_status_id"];
-        PFQuery *messageStatusQuery = [PFQuery queryWithClassName:@"MessageStatus"];
-        [messageStatusQuery includeKey:@"Message"];
-        [messageStatusQuery includeKey:@"Message.Reply"];
-        
-        [messageStatusQuery getObjectInBackgroundWithId:messageStatusIdString block:^(PFObject *fetchedMessageStatus, NSError *error) {
-            MessageViewController *messageVC = [[MessageViewController alloc] init];
-            messageVC.modalDelegate = [[self window] rootViewController];
-            messageVC.message = [fetchedMessageStatus objectForKey:@"Message"];
-            messageVC.customerName = [NSString stringWithFormat:@"%@ %@", [_localUser first_name], [_localUser last_name]];
-            messageVC.patronId = [_localUser patronId];
-            messageVC.messageType = [fetchedMessageStatus objectForKey:@"Message"];
-            messageVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-            messageVC.messageStatus = fetchedMessageStatus;
-            
-            self.window.rootViewController = messageVC;
-            
-        }];
-
-
-    }
-    
-    if ([[userInfo valueForKey:@"push_type"] isEqualToString:@"receive_gift"]) {
-        NSString *messageStatusIdString = [userInfo valueForKey:@"message_status_id"];
-        PFQuery *messageStatusQuery = [PFQuery queryWithClassName:@"MessageStatus"];
-        [messageStatusQuery includeKey:@"Message"];
-        [messageStatusQuery includeKey:@"Message.Reply"];
-        
-        [messageStatusQuery getObjectInBackgroundWithId:messageStatusIdString block:^(PFObject *fetchedMessageStatus, NSError *error) {
-            MessageViewController *messageVC = [[MessageViewController alloc] init];
-            messageVC.modalDelegate = [[self window] rootViewController];
-            messageVC.message = [fetchedMessageStatus objectForKey:@"Message"];
-            messageVC.customerName = [NSString stringWithFormat:@"%@ %@", [_localUser first_name], [_localUser last_name]];
-            messageVC.patronId = [_localUser patronId];
-            messageVC.messageType = [fetchedMessageStatus objectForKey:@"Message"];
-            messageVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-            messageVC.messageStatus = fetchedMessageStatus;
-            
-            self.window.rootViewController = messageVC;
-
-        }];
-    }
-
-    if ([[userInfo valueForKey:@"push_type"] isEqualToString:@"receive_gift_reply"]) {
-        NSString *messageStatusIdString = [userInfo valueForKey:@"message_status_id"];
-        PFQuery *messageStatusQuery = [PFQuery queryWithClassName:@"MessageStatus"];
-        [messageStatusQuery includeKey:@"Message"];
-        [messageStatusQuery includeKey:@"Message.Reply"];
-        
-        [messageStatusQuery getObjectInBackgroundWithId:messageStatusIdString block:^(PFObject *fetchedMessageStatus, NSError *error) {
-            MessageViewController *messageVC = [[MessageViewController alloc] init];
-            messageVC.modalDelegate = [[self window] rootViewController];
-            messageVC.message = [fetchedMessageStatus objectForKey:@"Message"];
-            messageVC.customerName = [NSString stringWithFormat:@"%@ %@", [_localUser first_name], [_localUser last_name]];
-            messageVC.patronId = [_localUser patronId];
-            messageVC.messageType = [fetchedMessageStatus objectForKey:@"Message"];
-            messageVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-            messageVC.messageStatus = fetchedMessageStatus;
-            
-            self.window.rootViewController = messageVC;
-
-        }];
-
-     
-    }*/
-    
+	NSString *pushType = [userInfo objectForKey:@"push_type"];
+	if( [pushType isEqualToString:@"punch"] )
+	{
+		NSLog(@"push_type: punch");
+		[PunchHandler handlePunch:userInfo];
+	}
+	else if( [pushType isEqualToString:@"validate_redeem"] )
+	{
+		NSLog(@"push_type: validate_redeem");
+		[RedeemHandler handleRedeem:userInfo];
+	}
 }
-#pragma mark - Facebook SDK helper methods
 
+#pragma mark - Facebook SDK helper methods
+/*
 - (void)publishButtonActionWithParameters:(NSDictionary*)userInfo
 {
     PFQuery *getStore = [PFQuery queryWithClassName:@"Store"];
@@ -306,7 +177,8 @@
 
 
 //A function for parsing URL parameters.
-- (NSDictionary*)parseURLParams:(NSString*)query {
+- (NSDictionary*)parseURLParams:(NSString*)query
+{
     NSArray *pairs = [query componentsSeparatedByString:@"&"];
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     for (NSString *pair in pairs) {
@@ -316,6 +188,35 @@
         params[kv[0]] = val;
     }
     return params;
+}
+*/
+
+- (void)checkLoginState
+{
+	PFUser* currentUser = [PFUser currentUser];
+	
+    if (currentUser)
+	{
+		//if patron object is null for some reason
+        if ( ![sharedData patron] ) {
+            PFObject *patron = [currentUser valueForKey:@"Patron"];
+            [patron fetchIfNeededInBackgroundWithBlock:^(PFObject *result, NSError *error) {
+                if (!error) {
+                    [sharedData setPatron:result];
+                    [self presentTabBarController];
+                }
+                else {
+                    NSLog(@"Failed to fetch Patron object: %@", error);
+                }
+            }];
+			
+        } else {
+            [self presentTabBarController];
+		}
+		
+    } else {
+		[self presentLandingViews];
+    }
 }
 
 - (void)presentTabBarController

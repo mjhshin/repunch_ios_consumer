@@ -18,6 +18,8 @@
 {
     [super viewDidLoad];
 	
+	NSLog(@"My Places viewDidLoad");
+	
 	self.sharedData = [DataManager getSharedInstance];
 	self.patron = [self.sharedData patron];
 	self.storeIdArray = [NSMutableArray array];
@@ -57,6 +59,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+	
+	NSLog(@"My Places viewWillAppear");
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(receiveRefreshNotification)
+												 name:@"Punch"
+											   object:nil];
     
     //alert to demonstrate how to get the punch code.  will only appear once.
     if (![@"1" isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"showPunchCodeInstructions"]])
@@ -73,11 +82,16 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+	
+	NSLog(@"My Places viewWillDisappear");
+	
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+	NSLog(@"My Places didReceiveMemoryWarning");
     
     // terminate all pending image downloads
     NSArray *allDownloads = [self.imageDownloadsInProgress allValues];
@@ -177,13 +191,18 @@
     
     NSArray *rewardsArray = [store objectForKey:@"rewards"];
     
-    if ([rewardsArray count] > 0)
+    if (rewardsArray.count > 0)
     {
-        if (rewardsArray && ([[rewardsArray[0] valueForKey:@"punches"] intValue] <= punches))
+        if ([[rewardsArray[0] objectForKey:@"punches"] intValue] <= punches)
         {
             [[cell rewardLabel] setHidden:FALSE];
             [[cell rewardIcon] setHidden:FALSE];
         }
+		else
+		{
+			[[cell rewardLabel] setHidden:TRUE];
+            [[cell rewardIcon] setHidden:TRUE];
+		}
     }
     
     // Only load cached images; defer new downloads until scrolling ends
@@ -216,9 +235,10 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 	NSString *storeId = [self.storeIdArray objectAtIndex:indexPath.row];
-    StoreViewController *placesDetailVC = [[StoreViewController alloc]init];
-    placesDetailVC.storeId = storeId;
-    [self presentViewController:placesDetailVC animated:YES completion:NULL];
+    StoreViewController *storeVC = [[StoreViewController alloc]init];
+    storeVC.storeId = storeId;
+	storeVC.delegate = self;
+    [self presentViewController:storeVC animated:YES completion:NULL];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -238,10 +258,13 @@
             if (!error)
             {
                 MyPlacesTableViewCell *cell = [self.myPlacesTableView cellForRowAtIndexPath:indexPath]; //TODO: this warning
-				UIImage *storeImage = [UIImage imageWithData:data];
-                cell.storeImage.image = storeImage;
 				[self.imageDownloadsInProgress removeObjectForKey:indexPath]; // Remove the PFFile from the in-progress list
-                [self.sharedData addStoreImage:storeImage forKey:storeId];
+				
+				UIImage *storeImage = [UIImage imageWithData:data];
+				if(storeImage) {
+					cell.storeImage.image = storeImage;
+					[self.sharedData addStoreImage:storeImage forKey:storeId];
+				}
             }
             else
             {
@@ -257,6 +280,41 @@
     {
         [imageFile cancel];
     }
+}
+
+- (void)updateTableViewFromStore:(StoreViewController *)controller forStoreId:(NSString *)storeId andAddRemove:(BOOL)isAddRemove
+{
+	NSLog(@"storeVC->myPlacesVC delegate:update TableView");
+	[self updateTableView:storeId andAddRemove:isAddRemove];
+}
+
+- (void)updateTableViewFromSearch:(StoreViewController *)controller forStoreId:(NSString *)storeId andAddRemove:(BOOL)isAddRemove
+{
+	NSLog(@"searchVC->myPlacesVC delegate:update TableView");
+	[self updateTableView:storeId andAddRemove:isAddRemove];
+}
+
+- (void) updateTableView:(NSString *)storeId andAddRemove:(BOOL)isAddRemove
+{
+	if(isAddRemove)
+	{
+		NSUInteger index = [self.storeIdArray indexOfObject:storeId];
+		
+		if(index == NSNotFound) {
+			NSLog(@"storeId not found, adding it");
+			[self.storeIdArray addObject:storeId];
+		} else {
+			NSLog(@"storeId found, removing it");
+			[self.storeIdArray removeObjectAtIndex:index];
+		}
+	}
+	
+    [self.myPlacesTableView reloadData];
+}
+
+- (void)receiveRefreshNotification
+{
+	[self.myPlacesTableView reloadData];
 }
 
 /*
@@ -315,6 +373,7 @@
 - (IBAction)openSearch:(id)sender
 {
     SearchViewController *placesSearchVC = [[SearchViewController alloc]init];
+	placesSearchVC.delegate = self;
     [self presentViewController:placesSearchVC animated:YES completion:NULL];
 }
 

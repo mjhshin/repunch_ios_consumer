@@ -11,7 +11,7 @@
 
 @interface GradientBackground : NSObject
 
-+(CAGradientLayer*) orangeGradient;
-+(CAGradientLayer*) orangeGradientPressed;
++ (CAGradientLayer*) orangeGradient;
++ (CAGradientLayer*) orangeGradientPressed;
 
 @end

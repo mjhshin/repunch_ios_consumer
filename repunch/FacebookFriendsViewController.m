@@ -93,9 +93,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ComposeMessageViewController *composeVC = [[ComposeMessageViewController alloc] init];
-    composeVC.messageType = @"Gift";
-    composeVC.sendParameters = _giftParametersDict;
-    composeVC.recipient = [friendsOnRepunchArray objectAtIndex:indexPath.row];
+    composeVC.messageType = @"gift";
+    //composeVC.sendParameters = _giftParametersDict;
+    //composeVC.recipient = [friendsOnRepunchArray objectAtIndex:indexPath.row];
     
     [self presentViewController:composeVC animated:YES completion:NULL];
 }

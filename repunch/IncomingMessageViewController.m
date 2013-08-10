@@ -23,9 +23,9 @@
     [super viewDidLoad];
 	
 	sharedData = [DataManager getSharedInstance];
-	_messageStatus = [sharedData getMessage:_messageStatusId];
-	_message = [_messageStatus objectForKey:@"Message"];
-	_messageType = [_message objectForKey:@"message_type"];
+	self.messageStatus = [sharedData getMessage:_messageStatusId];
+	self.message = [_messageStatus objectForKey:@"Message"];
+	self.messageType = [_message objectForKey:@"message_type"];
 	_customerName = [_message objectForKey:@"customer_name"];
     
     [_messageHeader setText:[_message objectForKey:@"subject"]];
@@ -217,11 +217,10 @@
 
 - (IBAction)replyToMessageActn:(id)sender {
     ComposeMessageViewController *composeVC = [[ComposeMessageViewController alloc] init];
-    composeVC.messageType = @"GiftReply";
-    composeVC.sendParameters = [[NSDictionary alloc] initWithObjectsAndKeys:[_message objectId], @"message_id", nil];
+	//composeVC.storeId =
+    composeVC.messageType = @"gift_reply"; //TODO: make this an enum
     
     [self presentViewController:composeVC animated:YES completion:NULL];
-
 }
 
 - (IBAction)deleteMessageActn:(id)sender {

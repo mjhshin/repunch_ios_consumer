@@ -6,124 +6,151 @@
 //
 
 #import "ComposeMessageViewController.h"
-#import "AppDelegate.h"
-#import "SIAlertView.h"
-#import "GradientBackground.h"
-
-#include <Parse/Parse.h>
 
 @implementation ComposeMessageViewController
 {
+	DataManager *sharedData;
+	PFObject *store;
+	PFObject *patron;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+    return [super initWithNibName:nibName bundle:bundle];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
+	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
+	bgLayer.frame = _toolbar.bounds;
+	[_toolbar.layer insertSublayer:bgLayer atIndex:0];
+	
+	sharedData = [DataManager getSharedInstance];
+	store = [sharedData getStore:self.storeId];
+	patron = [sharedData patron];
 
-    //_storeName.text = [_storeObject valueForKey:@"store_name"];
+    self.storeName.text = [store objectForKey:@"store_name"];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self
                                    action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
     
-    _body.delegate = self;
+	//self.subject.delegate = self;
+    self.body.delegate = self;
     
-    if ([_messageType isEqualToString:@"Feedback"]){
-    //    _subject.placeholder = [NSString stringWithFormat:@"Feedback for %@", [_storeObject store_name]];
+    if ([self.messageType isEqualToString:@"feedback"])
+	{
+        self.subject.placeholder = [NSString stringWithFormat:@"Feedback for %@", [store objectForKey:@"store_name"]];
+		self.bodyPlaceholder.text = @"How can we improve?";
     }
-	
-    if ([_messageType isEqualToString:@"Gift"]){
-        _subject.placeholder = [NSString stringWithFormat:@"Gift for %@", [_recipient valueForKey:@"first_name"]];
-        _instructionLabel.hidden = YES;
+	else if ([self.messageType isEqualToString:@"gift"])
+	{
+        self.subject.text = [NSString stringWithFormat:@"Add a message with your gift!"];
+		[self.subject setEnabled:FALSE];
     }
-    
-    if ([_messageType isEqualToString:@"GiftReply"]){
-        _subject.placeholder = [NSString stringWithFormat:@"Thanks for the gift!"];
-        _instructionLabel.hidden = YES;
+	else if ([self.messageType isEqualToString:@"gift_reply"])
+	{
+        self.subject.text = [NSString stringWithFormat:@"Say thanks!"];
+		[self.subject setEnabled:FALSE];
     }
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	bgLayer.frame = _toolbar.bounds;
-	[_toolbar.layer insertSublayer:bgLayer atIndex:0];
+	
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-
-- (BOOL)textView:(UITextView*)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString*)text
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
-    if ([text isEqualToString:@"\n"]) {
-        [self dismissKeyboard];
-        //[self sendMessage];
+    //Has Focus
+	[self.bodyPlaceholder setHidden:TRUE];
+    return YES;
+}
 
-        return NO;
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView
+{
+    if(textView.text.length == 0)
+	{
+		[self.bodyPlaceholder setHidden:FALSE];
+	}
+    return YES;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text isEqualToString:@"\n"])
+    {
+        [self sendMessage];
     }
     return YES;
 }
-/*
--(void)sendMessage{
-    
-    UIView *greyedOutView = [[UIView alloc]initWithFrame:CGRectMake(0, 47, 320, self.view.frame.size.height - 47)];
-    [greyedOutView setBackgroundColor:[UIColor colorWithRed:127/255 green:127/255 blue:127/255 alpha:0.5]];
-    [[self view] addSubview:greyedOutView];
-    [[self view] bringSubviewToFront:greyedOutView];
-     
-    
-    if ([_messageType isEqualToString:@"Feedback"]){
-        NSString *subject = ([[_subject text] length]>0)? [_subject text]:[NSString stringWithFormat:@"Feedback for %@", [_storeObject store_name]];
-        NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:[localUser patronId], @"patron_id", [_storeObject objectId], @"store_id", [_body text], @"body", subject, @"subject", [localUser fullName], @"sender_name", nil];
-        
-        [PFCloud callFunctionInBackground:@"send_feedback" withParameters:dictionary block:^(NSString *result, NSError *error) {
-            if (!error){
-                
-                SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Sent!" andMessage:@"Your feedback was sent."];
-                
-                [alertView addButtonWithTitle:@"Ok."
-                                         type:SIAlertViewButtonTypeDefault
-                                      handler:^(SIAlertView *alert) {
-                                          [[self modalDelegate] didDismissPresentedViewController];
-                                      }];
-                [alertView show];
-                NSLog(@"result is: %@", result);
-                 
-            }
-            else NSLog(@"error occured: %@", error);
-            
-        }];
-        [[self modalDelegate] didDismissPresentedViewController];
 
+-(void)sendMessage
+{
+	[self dismissKeyboard];
+	
+	if(self.body.text.length == 0) {
+		[self showDialog:@"Your message is blank" withMessage:nil];
+		return;
+	}
+	
+	if(self.subject.text.length == 0) {
+		self.subject.text = self.subject.placeholder;
+	}
+    
+    if ([self.messageType isEqualToString:@"feedback"])
+	{
+		NSString *senderName = [NSString stringWithFormat:@"%@ %@", [patron objectForKey:@"first_name"], [patron objectForKey:@"last_name"]];
+		
+        NSDictionary *inputsArgs = [NSDictionary dictionaryWithObjectsAndKeys:
+									[patron objectId], @"patron_id",
+									[store objectId], @"store_id",
+									self.body.text, @"body",
+									self.subject.text, @"subject",
+									senderName, @"sender_name",
+									nil];
+        
+        [PFCloud callFunctionInBackground:@"send_feedback"
+						   withParameters:inputsArgs
+									block:^(NSString *result, NSError *error)
+		{
+            if (!error)
+			{
+                [self showDialog:@"Thanks for your feedback!" withMessage:nil];
+				[self dismissViewControllerAnimated:YES completion:nil];
+                NSLog(@"send_feedback result: %@", result);
+            }
+            else
+			{
+				[self showDialog:@"Send Failed"
+					 withMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
+				NSLog(@"send_feedback error: %@", error);
+			}
+        }];
     }
-    if ([_messageType isEqualToString:@"Gift"]){
-        
-        UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        
-        spinner.center = CGPointMake(160, 260);
-        spinner.color = [UIColor blackColor];
-        [[self view] addSubview:spinner];
-        
-        [spinner startAnimating];
-         
-        
-        NSString *subjectText = ([[_subject text] length]>0)? [_subject text] : [NSString stringWithFormat:@"Gift for %@", [_recipient valueForKey:@"first_name"]];
-                                          
-        NSDictionary *functionParameters = [NSDictionary dictionaryWithObjectsAndKeys:[_sendParameters valueForKey:@"store_id"], @"store_id", [_sendParameters valueForKey:@"patron_store_id"], @"patron_store_id", [localUser patronId], @"patron_id", [localUser fullName], @"sender_name", subjectText, @"subject", [_body text], @"body", [_recipient objectId], @"recepient_id", [_sendParameters valueForKey:@"gift_title"],@"gift_title", [_sendParameters valueForKey:@"gift_description"], @"gift_description", [_sendParameters valueForKey:@"gift_punches"], @"gift_punches", nil];
+    else if ([self.messageType isEqualToString:@"gift"])
+	{
+		/*
+        NSDictionary *inputsArgs = [NSDictionary dictionaryWithObjectsAndKeys:
+									[_sendParameters valueForKey:@"store_id"], @"store_id",
+									[_sendParameters valueForKey:@"patron_store_id"], @"patron_store_id",
+									[localUser patronId], @"patron_id",
+									[localUser fullName], @"sender_name",
+									subjectText, @"subject",
+									[_body text], @"body",
+									[_recipient objectId], @"recepient_id",
+									[_sendParameters valueForKey:@"gift_title"],@"gift_title",
+									[_sendParameters valueForKey:@"gift_description"], @"gift_description",
+									[_sendParameters valueForKey:@"gift_punches"], @"gift_punches",
+									nil];
 
         [PFCloud callFunctionInBackground:@"send_gift" withParameters:functionParameters block:^(id object, NSError *error) {
            if (!error){
@@ -158,43 +185,44 @@
            }
         }];
         [[self modalDelegate] didDismissPresentedViewController];
-
-    }
-    
-    if ([_messageType isEqualToString:@"GiftReply"]){
-
+		 */
+    }    
+    else if ([self.messageType isEqualToString:@"gift_reply"])
+	{
+		/*
         NSDictionary *functionParameters = [[NSDictionary alloc] initWithObjectsAndKeys:[_sendParameters valueForKey:@"message_id"], @"message_id", [localUser patronId], @"patron_id", [localUser fullName], @"sender_name", [_body text], @"body", nil];
         
         [PFCloud callFunctionInBackground:@"reply_to_gift" withParameters:functionParameters block:^(id object, NSError *error) {
             //
         }];
         [[self modalDelegate] didDismissPresentedViewController];
-
+		 */
     }
-
-}
-*/
-- (void)closeView
-{
-    //[[self modalDelegate] didDismissPresentedViewController];
 }
 
 - (void)dismissKeyboard
 {
-    [_subject resignFirstResponder];
-    [_body resignFirstResponder];
-    
+    [self.subject resignFirstResponder];
+    [self.body resignFirstResponder];
 }
 
 - (IBAction)sendFeedback:(id)sender
 {
-    //[self sendMessage];
+    [self sendMessage];
 }
 
 - (IBAction)closeButton:(id)sender
 {
-    [self closeView];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
+- (void)showDialog:(NSString*)title withMessage:(NSString*)message
+{
+	[[[UIAlertView alloc] initWithTitle:title
+								message:message
+							   delegate:self
+					  cancelButtonTitle:@"OK"
+					  otherButtonTitles: nil] show];
 }
 
 @end

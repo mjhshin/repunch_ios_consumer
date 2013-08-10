@@ -47,7 +47,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{69, 13}, {182, 24}}</string>
 								<reference key="NSSuperview" ref="197369775"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="937905743"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -64,14 +63,14 @@
 								<int key="IBUIBaselineAdjustment">0</int>
 								<float key="IBUIMinimumFontSize">9</float>
 								<int key="IBUITextAlignment">1</int>
-								<object class="IBUIFontDescription" key="IBUIFontDescription" id="971960728">
-									<string key="name">Avenir-Medium</string>
+								<object class="IBUIFontDescription" key="IBUIFontDescription" id="889996509">
+									<string key="name">Avenir-Heavy</string>
 									<string key="family">Avenir</string>
-									<int key="traits">0</int>
+									<int key="traits">2</int>
 									<double key="pointSize">17</double>
 								</object>
-								<object class="NSFont" key="IBUIFont" id="839330244">
-									<string key="NSName">Avenir-Medium</string>
+								<object class="NSFont" key="IBUIFont" id="335564709">
+									<string key="NSName">Avenir-Heavy</string>
 									<double key="NSSize">17</double>
 									<int key="NSfFlags">16</int>
 								</object>
@@ -81,7 +80,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{279, 9}, {32, 32}}</string>
 								<reference key="NSSuperview" ref="197369775"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="531652809"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -117,7 +115,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{9, 9}, {32, 32}}</string>
 								<reference key="NSSuperview" ref="197369775"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="344217373"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -143,7 +140,6 @@
 								<int key="NSvFlags">-2147483356</int>
 								<string key="NSFrame">{{237, 11}, {32, 31}}</string>
 								<reference key="NSSuperview" ref="197369775"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1008775647"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -166,7 +162,6 @@
 						</array>
 						<string key="NSFrameSize">{320, 50}</string>
 						<reference key="NSSuperview" ref="191373211"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="628106813"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -176,7 +171,6 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{200, 65}, {88, 35}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="30614307"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -210,7 +204,6 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{29, 68}, {163, 36}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="261979409"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -244,7 +237,6 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{20, 108}, {280, 105}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="576947105"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -256,15 +248,23 @@
 							<int key="IBUIAutocapitalizationType">2</int>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						</object>
-						<reference key="IBUIFontDescription" ref="971960728"/>
-						<reference key="IBUIFont" ref="839330244"/>
+						<object class="IBUIFontDescription" key="IBUIFontDescription" id="971960728">
+							<string key="name">Avenir-Medium</string>
+							<string key="family">Avenir</string>
+							<int key="traits">0</int>
+							<double key="pointSize">17</double>
+						</object>
+						<object class="NSFont" key="IBUIFont" id="20028885">
+							<string key="NSName">Avenir-Medium</string>
+							<double key="NSSize">17</double>
+							<int key="NSfFlags">16</int>
+						</object>
 					</object>
 					<object class="IBUILabel" id="30614307">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{26, 98}, {262, 2}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="307558880"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -300,7 +300,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{45, 84}, {115, 40}}</string>
 								<reference key="NSSuperview" ref="543960324"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="930534054"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -331,7 +330,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{20, 20}, {262, 56}}</string>
 								<reference key="NSSuperview" ref="543960324"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="647520204"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
@@ -347,24 +345,14 @@
 								<reference key="IBUIHighlightedTitleColor" ref="716211957"/>
 								<reference key="IBUINormalTitleColor" ref="716211957"/>
 								<reference key="IBUINormalTitleShadowColor" ref="661651798"/>
-								<object class="IBUIFontDescription" key="IBUIFontDescription">
-									<string key="name">Avenir-Heavy</string>
-									<string key="family">Avenir</string>
-									<int key="traits">2</int>
-									<double key="pointSize">17</double>
-								</object>
-								<object class="NSFont" key="IBUIFont">
-									<string key="NSName">Avenir-Heavy</string>
-									<double key="NSSize">17</double>
-									<int key="NSfFlags">16</int>
-								</object>
+								<reference key="IBUIFontDescription" ref="889996509"/>
+								<reference key="IBUIFont" ref="335564709"/>
 							</object>
 							<object class="IBUILabel" id="930534054">
 								<reference key="NSNextResponder" ref="543960324"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{155, 84}, {103, 40}}</string>
 								<reference key="NSSuperview" ref="543960324"/>
-								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -382,7 +370,6 @@
 						</array>
 						<string key="NSFrame">{{6, 206}, {302, 131}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="98824798"/>
 						<string key="NSReuseIdentifierKey">_NS:10</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -403,7 +390,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{26, 53}, {262, 2}}</string>
 								<reference key="NSSuperview" ref="576947105"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="891798631"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
@@ -428,7 +414,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{29, 21}, {163, 36}}</string>
 								<reference key="NSSuperview" ref="576947105"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="997750376"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -449,7 +434,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{20, 63}, {280, 105}}</string>
 								<reference key="NSSuperview" ref="576947105"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="543960324"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -462,14 +446,13 @@
 									<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								</object>
 								<reference key="IBUIFontDescription" ref="971960728"/>
-								<reference key="IBUIFont" ref="839330244"/>
+								<reference key="IBUIFont" ref="20028885"/>
 							</object>
 							<object class="IBUILabel" id="997750376">
 								<reference key="NSNextResponder" ref="576947105"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{200, 20}, {88, 35}}</string>
 								<reference key="NSSuperview" ref="576947105"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="548781485"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -489,7 +472,6 @@
 						</array>
 						<string key="NSFrame">{{0, 307}, {320, 188}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="616928663"/>
 						<string key="NSReuseIdentifierKey">_NS:10</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -502,7 +484,6 @@
 				</array>
 				<string key="NSFrame">{{0, 20}, {320, 671}}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="197369775"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
@@ -2592,139 +2573,7 @@
 			<nil key="sourceID"/>
 			<int key="maxID">1648</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes">
-			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<object class="IBPartialClassDescription">
-					<string key="className">IncomingMessageViewController</string>
-					<string key="superclassName">UIViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="closeSettingActn:">id</string>
-						<string key="deleteMessageActn:">id</string>
-						<string key="redeemOfferActn:">id</string>
-						<string key="replyToMessageActn:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="closeSettingActn:">
-							<string key="name">closeSettingActn:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="deleteMessageActn:">
-							<string key="name">deleteMessageActn:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="redeemOfferActn:">
-							<string key="name">redeemOfferActn:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="replyToMessageActn:">
-							<string key="name">replyToMessageActn:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="constraintBtwnMessageAndResponse">NSLayoutConstraint</string>
-						<string key="dateRepliedLbl">UILabel</string>
-						<string key="dateSentLbl">UILabel</string>
-						<string key="messageHeader">UILabel</string>
-						<string key="offerCountdownLbl">UILabel</string>
-						<string key="offerLbl">UIButton</string>
-						<string key="offerTimeLeftLbl">UILabel</string>
-						<string key="offerView">UIView</string>
-						<string key="repliedBodyHeightLayout">NSLayoutConstraint</string>
-						<string key="repliedBodyLbl">UITextView</string>
-						<string key="replyNameLbl">UILabel</string>
-						<string key="replyToMessageLbl">UIButton</string>
-						<string key="responseView">UIView</string>
-						<string key="senderNameLbl">UILabel</string>
-						<string key="sentBodyHeightConstraint">NSLayoutConstraint</string>
-						<string key="sentBodyLbl">UITextView</string>
-						<string key="toolbar">UIView</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="constraintBtwnMessageAndResponse">
-							<string key="name">constraintBtwnMessageAndResponse</string>
-							<string key="candidateClassName">NSLayoutConstraint</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="dateRepliedLbl">
-							<string key="name">dateRepliedLbl</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="dateSentLbl">
-							<string key="name">dateSentLbl</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="messageHeader">
-							<string key="name">messageHeader</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="offerCountdownLbl">
-							<string key="name">offerCountdownLbl</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="offerLbl">
-							<string key="name">offerLbl</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="offerTimeLeftLbl">
-							<string key="name">offerTimeLeftLbl</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="offerView">
-							<string key="name">offerView</string>
-							<string key="candidateClassName">UIView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="repliedBodyHeightLayout">
-							<string key="name">repliedBodyHeightLayout</string>
-							<string key="candidateClassName">NSLayoutConstraint</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="repliedBodyLbl">
-							<string key="name">repliedBodyLbl</string>
-							<string key="candidateClassName">UITextView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="replyNameLbl">
-							<string key="name">replyNameLbl</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="replyToMessageLbl">
-							<string key="name">replyToMessageLbl</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="responseView">
-							<string key="name">responseView</string>
-							<string key="candidateClassName">UIView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="senderNameLbl">
-							<string key="name">senderNameLbl</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="sentBodyHeightConstraint">
-							<string key="name">sentBodyHeightConstraint</string>
-							<string key="candidateClassName">NSLayoutConstraint</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="sentBodyLbl">
-							<string key="name">sentBodyLbl</string>
-							<string key="candidateClassName">UITextView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="toolbar">
-							<string key="name">toolbar</string>
-							<string key="candidateClassName">UIView</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/IncomingMessageViewController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSLayoutConstraint</string>
-					<string key="superclassName">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/NSLayoutConstraint.h</string>
-					</object>
-				</object>
-			</array>
-		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>

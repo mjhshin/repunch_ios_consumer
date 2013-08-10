@@ -5,8 +5,18 @@
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
+#import "MyPlacesViewController.h"
+#import "InboxViewController.h"
+#import "LandingViewController.h"
+#import <Parse/Parse.h>
+#import <FacebookSDK/FacebookSDK.h>
+#import "Crittercism.h"
+#import "SIAlertView.h"
+#import "DataManager.h"
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import "PunchHandler.h"
+#import "RedeemHandler.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
