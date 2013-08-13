@@ -20,6 +20,16 @@
 	
 	NSLog(@"My Places viewDidLoad");
 	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(receiveRefreshNotification:)
+												 name:@"Punch"
+											   object:nil];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(receiveRefreshNotification:)
+												 name:@"Redeem"
+											   object:nil];
+	
 	self.sharedData = [DataManager getSharedInstance];
 	self.patron = [self.sharedData patron];
 	self.storeIdArray = [NSMutableArray array];
@@ -28,6 +38,14 @@
 	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
 	bgLayer.frame = self.toolbar.bounds;
 	[self.toolbar.layer insertSublayer:bgLayer atIndex:0];
+	
+	self.tableViewController = [[UITableViewController alloc]initWithStyle:UITableViewStylePlain];
+	[self addChildViewController:self.tableViewController];
+	
+	self.tableViewController.refreshControl = [[UIRefreshControl alloc]init];
+	[self.tableViewController.refreshControl addTarget:self
+										   action:@selector(loadMyPlaces)
+								 forControlEvents:UIControlEventValueChanged];
     
 	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
 	CGFloat screenWidth = screenRect.size.width;
@@ -44,6 +62,7 @@
     [self.myPlacesTableView setDelegate:self];
     [self.view addSubview:self.myPlacesTableView];
 	[self.myPlacesTableView setHidden:TRUE];
+	self.tableViewController.tableView = self.myPlacesTableView;
 	
 	CGFloat xCenter = screenWidth/2;
 	CGFloat yCenter = screenHeight/2;
@@ -53,6 +72,12 @@
 	frame.origin = CGPointMake(xCenter - xOffset, yCenter - yOffset);
 	self.activityIndicatorView.frame = frame;
 	
+	CGFloat xOffset2 = self.emptyMyPlacesLabel.frame.size.width/2;
+	CGFloat yOffset2 = self.emptyMyPlacesLabel.frame.size.height/2;
+	CGRect frame2 = self.emptyMyPlacesLabel.frame;
+	frame2.origin = CGPointMake(xCenter - xOffset2, yCenter - yOffset2);
+	self.emptyMyPlacesLabel.frame = frame2;
+	
 	[self loadMyPlaces];
 }
 
@@ -61,11 +86,6 @@
     [super viewWillAppear:animated];
 	
 	NSLog(@"My Places viewWillAppear");
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(receiveRefreshNotification)
-												 name:@"Punch"
-											   object:nil];
     
     //alert to demonstrate how to get the punch code.  will only appear once.
     if (![@"1" isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"showPunchCodeInstructions"]])
@@ -84,8 +104,6 @@
     [super viewWillDisappear:animated];
 	
 	NSLog(@"My Places viewWillDisappear");
-	
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -98,10 +116,12 @@
     [allDownloads makeObjectsPerformSelector:@selector(cancelImageDownload)];
     
     [self.imageDownloadsInProgress removeAllObjects];
+	
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)loadMyPlaces
-{
+{	
 	[self.activityIndicatorView setHidden:FALSE];
 	[self.activityIndicator startAnimating];
 	[self.myPlacesTableView setHidden:TRUE];
@@ -117,9 +137,12 @@
     {
 		[self.activityIndicatorView setHidden:TRUE];
 		[self.activityIndicator stopAnimating];
+		[self.tableViewController.refreshControl endRefreshing];
 		
         if (!error)
         {
+			[self.storeIdArray removeAllObjects];
+			
 			if(results.count > 0)
 			{
 				for (PFObject *patronStore in results)
@@ -134,10 +157,11 @@
 				[self sortStoreObjectIdsByPunches];
 				[self.myPlacesTableView reloadData];
 				[self.myPlacesTableView setHidden:FALSE];
+				[self.emptyMyPlacesLabel setHidden:TRUE];
 			}
 			else
 			{
-				//TODO: show empty my places label
+				[self.emptyMyPlacesLabel setHidden:FALSE];
 			}
         }
         else
@@ -312,8 +336,26 @@
     [self.myPlacesTableView reloadData];
 }
 
-- (void)receiveRefreshNotification
+- (void)receiveRefreshNotification:(NSNotification *)notification
 {
+	NSLog(@"received notificationcenter notification");
+	NSString *storeId = [[notification userInfo] objectForKey:@"store_id"];
+	
+	if(storeId != nil)
+	{
+		NSUInteger index = [self.storeIdArray indexOfObject:storeId];
+		
+		if(index == NSNotFound) {
+			NSLog(@"storeId not found, good");
+			[self.storeIdArray addObject:storeId];
+			[self sortStoreObjectIdsByPunches];
+			//[self.storeIdArray addObject:storeId];
+		} else {
+			NSLog(@"storeId found, WTF");
+			//[self.storeIdArray removeObjectAtIndex:index];
+		}
+	}
+	
 	[self.myPlacesTableView reloadData];
 }
 

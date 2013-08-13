@@ -24,7 +24,7 @@
                   clientKey:@"XZMybowaEMLHszQTEpxq4Yk2ksivkYj9m1c099ZD"];
     
     [PFFacebookUtils initializeFacebook];    
-    //[Crittercism enableWithAppID: @"51df08478b2e331138000003"];
+    [Crittercism enableWithAppID: @"51df08478b2e331138000003"];
 	
 	[application registerForRemoteNotificationTypes:
 	 UIRemoteNotificationTypeBadge |
@@ -83,15 +83,15 @@
 {
     [PFPush handlePush:userInfo];
 
-	NSString *pushType = [userInfo objectForKey:@"push_type"];
+	NSString *pushType = [userInfo objectForKey:@"type"];
 	if( [pushType isEqualToString:@"punch"] )
 	{
-		NSLog(@"push_type: punch");
+		NSLog(@" push type: punch");
 		[PunchHandler handlePunch:userInfo];
 	}
-	else if( [pushType isEqualToString:@"validate_redeem"] )
+	else if( [pushType isEqualToString:@"redeem"] )
 	{
-		NSLog(@"push_type: validate_redeem");
+		NSLog(@"push type: validate_redeem");
 		[RedeemHandler handleRedeem:userInfo];
 	}
 }

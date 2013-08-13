@@ -25,6 +25,16 @@
 	
 	NSLog(@"Search viewDidLoad");
 	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(reloadTableView)
+												 name:@"Punch"
+											   object:nil];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(reloadTableView)
+												 name:@"Redeem"
+											   object:nil];
+	
 	locationManager = [[CLLocationManager alloc] init];	
 	locationManager.delegate = self;
 	locationManager.distanceFilter = kCLDistanceFilterNone; //filter out negligible changes in location (disabled for now)
@@ -67,11 +77,6 @@
 	
 	[locationManager startUpdatingLocation];
 	searchloaded = FALSE;
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(receiveRefreshNotification)
-												 name:@"Punch"
-											   object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -81,7 +86,6 @@
 	NSLog(@"Search viewWillDisappear");
 	
 	[locationManager stopUpdatingLocation];
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -94,6 +98,8 @@
     [allDownloads makeObjectsPerformSelector:@selector(cancelImageDownload)];
     
     [self.imageDownloadsInProgress removeAllObjects];
+	
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
@@ -305,7 +311,7 @@
 	[self.delegate updateTableViewFromSearch:self forStoreId:storeId andAddRemove:isAddRemove];
 }
 
-- (void)receiveRefreshNotification
+- (void)reloadTableView
 {
 	[self.searchTableView reloadData];
 }

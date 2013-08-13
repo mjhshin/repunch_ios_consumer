@@ -6,23 +6,8 @@
 //
 
 #import "InboxViewController.h"
-#import "AppDelegate.h"
-#import "SearchViewController.h"
-#import "SettingsViewController.h"
-#import "IncomingMessageViewController.h"
-#import "InboxTableViewCell.h"
-#import "DataManager.h"
-#import "SIAlertView.h"
-#import "GradientBackground.h"
-#import <Parse/Parse.h>
 
 @implementation InboxViewController
-{
-    DataManager *sharedData;
-    PFObject *patron;
-    NSMutableArray *messagesArray;
-    UITableView *messageTableView;
-}
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
 {
@@ -31,13 +16,21 @@
 
 - (void)viewDidLoad
 {
-    sharedData = [DataManager getSharedInstance];
-    patron = [sharedData patron];
-	messagesArray = [[NSMutableArray alloc] init];
+    self.sharedData = [DataManager getSharedInstance];
+    self.patron = [self.sharedData patron];
+	self.messagesArray = [[NSMutableArray alloc] init];
 	
 	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
 	bgLayer.frame = self.toolbar.bounds;
 	[self.toolbar.layer insertSublayer:bgLayer atIndex:0];
+	
+	self.tableViewController = [[UITableViewController alloc]initWithStyle:UITableViewStylePlain];
+	[self addChildViewController:self.tableViewController];
+	
+	self.tableViewController.refreshControl = [[UIRefreshControl alloc]init];
+	[self.tableViewController.refreshControl addTarget:self
+												action:@selector(loadInbox)
+									  forControlEvents:UIControlEventValueChanged];
 	
 	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
 	CGFloat screenWidth = screenRect.size.width;
@@ -46,13 +39,14 @@
 	int tabBarHeight = self.tabBarController.tabBar.frame.size.height;
 	int tableViewHeight = screenHeight - toolBarHeight;
 	
-	messageTableView = [[UITableView alloc]
+	self.messageTableView = [[UITableView alloc]
 						initWithFrame:CGRectMake(0, toolBarHeight, screenWidth, tableViewHeight - tabBarHeight)
 								style:UITableViewStylePlain];
 	
-    [messageTableView setDataSource:self];
-    [messageTableView setDelegate:self];
-	[[self view] addSubview:messageTableView];
+    [self.messageTableView setDataSource:self];
+    [self.messageTableView setDelegate:self];
+	[self.view addSubview:self.messageTableView];
+	self.tableViewController.tableView = self.messageTableView;
 	
 	CGFloat xCenter = screenWidth/2;
 	CGFloat yCenter = screenHeight/2;
@@ -61,6 +55,12 @@
 	CGRect frame = self.activityIndicatorView.frame;
 	frame.origin = CGPointMake(xCenter - xOffset, yCenter - yOffset);
 	self.activityIndicatorView.frame = frame;
+	
+	CGFloat xOffset2 = self.emptyInboxLabel.frame.size.width/2;
+	CGFloat yOffset2 = self.emptyInboxLabel.frame.size.height/2;
+	CGRect frame2 = self.emptyInboxLabel.frame;
+	frame2.origin = CGPointMake(xCenter - xOffset2, yCenter - yOffset2);
+	self.emptyInboxLabel.frame = frame2;
 	
     [self loadInbox];
 }
@@ -87,12 +87,12 @@
 }
 
 -(void)loadInbox
-{
+{	
 	[self.activityIndicatorView setHidden:FALSE];
 	[self.activityIndicator startAnimating];
-	[messageTableView setHidden:TRUE];
+	[self.messageTableView setHidden:TRUE];
 	
-    PFRelation *messagesRelation = [patron relationforKey:@"ReceivedMessages"];
+    PFRelation *messagesRelation = [self.patron relationforKey:@"ReceivedMessages"];
     PFQuery *messageQuery = [messagesRelation query];
     [messageQuery includeKey:@"Message"];
     [messageQuery includeKey:@"Message.Reply"];
@@ -104,21 +104,25 @@
 	{
 		[self.activityIndicatorView setHidden:TRUE];
 		[self.activityIndicator stopAnimating];
+		[self.tableViewController.refreshControl endRefreshing];
 		
         if(!error)
 		{
+			[self.messagesArray removeAllObjects];
+			
 			if(results.count > 0)
 			{
 				for(PFObject *messageStatus in results) {
-					[sharedData addMessage:messageStatus];
-					[messagesArray addObject:messageStatus];
+					[self.sharedData addMessage:messageStatus];
+					[self.messagesArray addObject:messageStatus];
 				}
-				[messageTableView reloadData];
-				[messageTableView setHidden:FALSE];
+				[self.messageTableView reloadData];
+				[self.messageTableView setHidden:FALSE];
+				[self.emptyInboxLabel setHidden:TRUE];
 			}
 			else
 			{
-				//TODO: show empty inbox label
+				[self.emptyInboxLabel setHidden:FALSE];
 			}
         } else {
             
@@ -136,7 +140,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-   return [messagesArray count];
+   return [self.messagesArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -147,7 +151,7 @@
         cell = [InboxTableViewCell cell];
     }
 
-    PFObject *messageStatus = [messagesArray objectAtIndex:indexPath.row];
+    PFObject *messageStatus = [self.messagesArray objectAtIndex:indexPath.row];
     PFObject *message = [messageStatus objectForKey:@"Message"];
     PFObject *reply = [message objectForKey:@"Reply"];
     
@@ -192,7 +196,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];    
     IncomingMessageViewController *messageVC = [[IncomingMessageViewController alloc] init];
-	PFObject *messageStatus = [messagesArray objectAtIndex:indexPath.row];
+	PFObject *messageStatus = [self.messagesArray objectAtIndex:indexPath.row];
     messageVC.messageStatusId = [messageStatus objectId];
 
 	//TODO: set message as read here or in messageVC?
@@ -252,7 +256,7 @@
 
 - (IBAction)showPunchCode:(id)sender
 {
-	NSString *punchCode = [patron objectForKey:@"punch_code"];
+	NSString *punchCode = [self.patron objectForKey:@"punch_code"];
     SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Your Punch Code"
 												 andMessage:[NSString stringWithFormat:@"Your punch code is %@", punchCode]];
     [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeCancel handler:nil];

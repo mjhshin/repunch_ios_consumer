@@ -13,7 +13,7 @@
 @implementation LoginViewController
 {
     DataManager* sharedData;
-    UIActivityIndicatorView *spinner;
+	UIActivityIndicatorView *spinner;
 }
 
 - (void)viewDidLoad
@@ -38,6 +38,15 @@
 	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
 	bgLayer.frame = self.view.bounds;
 	[self.view.layer insertSublayer:bgLayer atIndex:0];
+	
+	CAGradientLayer *bgLayer2 = [GradientBackground blackButtonGradient];
+	bgLayer2.frame = self.loginButton.bounds;
+	[self.loginButton.layer insertSublayer:bgLayer2 atIndex:0];
+	[self.loginButton.layer setCornerRadius:5];
+	[self.loginButton setClipsToBounds:YES];
+	
+	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+	spinner.frame = self.loginButton.bounds;
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -103,11 +112,16 @@
 		return;
 	}
 	
-	//[spinner startAnimating];
+	[self.loginButton setTitle:@"" forState:UIControlStateNormal];
+	[self.loginButton setEnabled:FALSE];
+	[self.loginButton addSubview:spinner];
+	spinner.hidesWhenStopped = YES;
+	[spinner startAnimating];
         
-	[PFUser logInWithUsernameInBackground:username password:password block:^(PFUser *user, NSError *error) {
-		//[spinner stopAnimating];
-		if (user) {
+	[PFUser logInWithUsernameInBackground:username password:password block:^(PFUser *user, NSError *error)
+	{
+		if (user)
+		{
 			NSString *accountType = [user objectForKey:@"account_type"];
 			
 			if( [accountType isEqualToString:@"patron"] ) {
@@ -118,11 +132,18 @@
 				NSLog(@"Account exists but is not of type 'patron'");
 				[PFUser logOut];
 				[self showDialog:@"Login Failed" withResultMessage:@"Please check your username/password"];
+				[spinner stopAnimating];
+				[self.loginButton setTitle:@"Sign In" forState:UIControlStateNormal];
+				[self.loginButton setEnabled:TRUE];
 			}
-                
-		} else {
-			[self showDialog:@"Login Failed" withResultMessage:@"Please check your username/password"];
+		}
+		else
+		{
 			NSLog(@"Here is the ERROR: %@", error);
+			[self showDialog:@"Login Failed" withResultMessage:@"Please check your username/password"];
+			[spinner stopAnimating];
+			[self.loginButton setTitle:@"Sign In" forState:UIControlStateNormal];
+			[self.loginButton setEnabled:TRUE];
 		}
 	}]; //end get user block
 }
@@ -133,8 +154,6 @@
 	
 	[query getObjectInBackgroundWithId:patronId block:^(PFObject *patron, NSError *error)
 	{
-		//[spinner stopAnimating];
-		
 		if(!error) {
 			NSLog(@"Fetched Patron object: %@", patron);
 			
@@ -148,6 +167,9 @@
 		} else {
 			[self showDialog:@"Login Failed" withResultMessage:@"Sorry, something went wrong"];
 			[PFUser logOut];
+			[spinner stopAnimating];
+			[self.loginButton setTitle:@"Sign In" forState:UIControlStateNormal];
+			[self.loginButton setEnabled:TRUE];
 		}
 	}];
 }
@@ -158,8 +180,11 @@
 	
 	[[PFInstallation currentInstallation] setObject:patronId forKey:@"patron_id"];
 	[[PFInstallation currentInstallation] setObject:punchCode forKey:@"punch_code"];
-	[[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-		//[spinner stopAnimating];
+	[[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+	{
+		[spinner stopAnimating];
+		[self.loginButton setTitle:@"Sign In" forState:UIControlStateNormal];
+		[self.loginButton setEnabled:TRUE];
 		
 		if(!error) {
 			//login complete
@@ -191,7 +216,7 @@
 
 - (IBAction)loginWithFB:(id)sender
 {
-    [spinner startAnimating];
+    //[spinner startAnimating];
 }
 
 - (void)dismissKeyboard

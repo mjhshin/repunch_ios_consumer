@@ -14,35 +14,38 @@
 {
 	DataManager *sharedData = [DataManager getSharedInstance];
 	
-	NSString *storeId = [pushPayload objectForKey:@"id"];
-	PFObject *store = [sharedData getStore:storeId];
-	PFObject *patronStore = [sharedData getPatronStore:storeId];
-	int punches = [[pushPayload objectForKey:@"punches"] intValue];
+	NSString *storeId = [pushPayload objectForKey:@"store_id"];
+	NSString *patronStoreId = [pushPayload objectForKey:@"patron_store_id"];
+	//int punches = [[pushPayload objectForKey:@"punches"] intValue];
 	int totalPunches = [[pushPayload objectForKey:@"total_punches"] intValue];
 	
-	if(store == nil)
-	{
-		//download store
-	}
-	else
-	{
-		
-	}
-	
-	if(patronStore == nil)
-	{
-		//download patronStore - update punch function to send PatronStore.objectId??
-	}
-	else
-	{
-		
-	}
+	PFObject *store = [sharedData getStore:storeId];
+	PFObject *patronStore = [sharedData getPatronStore:storeId];
 	
 	if(store != nil && patronStore != nil)
 	{
 		[sharedData updatePatronStore:storeId withPunches:totalPunches];
-		
+
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"Punch" object:self];
+	}
+	else
+	{
+		//delay notification if possible
+		
+		PFQuery *query = [PFQuery queryWithClassName:@"PatronStore"];
+		[query includeKey:@"Store"];
+		[query includeKey:@"FacebookPost"];
+		
+		[query getObjectInBackgroundWithId:patronStoreId block:^(PFObject *result, NSError *error)
+		{
+			NSLog(@"Received punch where PatronStore/Store not in sharedData: %@", result);
+			[sharedData addPatronStore:result forKey:storeId];
+			[sharedData addStore:[result objectForKey:@"Store"]];
+			
+			NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:storeId, @"store_id", nil];
+			
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"Punch" object:self userInfo:args];
+		}];
 	}
 }
 

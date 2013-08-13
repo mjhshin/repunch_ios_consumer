@@ -13,10 +13,7 @@
 @implementation RegisterViewController
 {
 	DataManager *sharedData;
-    UIActivityIndicatorView *spinner;
-    UIDatePicker *datePicker;
-    NSArray *pickerItems;
-    UIPickerView *genderPicker;
+	UIActivityIndicatorView *spinner;
 }
 
 - (void)viewDidLoad
@@ -30,13 +27,6 @@
                                    initWithTarget:self
                                    action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
-    
-    spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    spinner.center = CGPointMake(160, 100);
-    spinner.color = [UIColor grayColor];
-    [[self view] addSubview:spinner];
-    
-    pickerItems = @[@"female", @"male"];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -48,16 +38,15 @@
 	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
 	bgLayer.frame = self.view.bounds;
 	[self.view.layer insertSublayer:bgLayer atIndex:0];
-    
-    /*[[NSNotificationCenter defaultCenter] addObserver:self
-	 selector:@selector(goToPlaces)
-	 name:@"finishedLoggingIn"
-	 object:nil];
-	 
-	 [[NSNotificationCenter defaultCenter] addObserver:self
-	 selector:@selector(showError)
-	 name:@"errorLoggingIn"
-	 object:nil];*/
+	
+	CAGradientLayer *bgLayer2 = [GradientBackground blackButtonGradient];
+	bgLayer2.frame = self.registerButton.bounds;
+	[self.registerButton.layer insertSublayer:bgLayer2 atIndex:0];
+	[self.registerButton.layer setCornerRadius:5];
+	[self.registerButton setClipsToBounds:YES];
+	
+	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+	spinner.frame = self.registerButton.bounds;
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -128,7 +117,7 @@
 
 - (IBAction)registerWithFB:(id)sender
 {
-    [spinner startAnimating];
+    //[spinner startAnimating];
 }
 
 - (IBAction)registerWithEmail:(id)sender
@@ -152,39 +141,51 @@
     [newUser setEmail:email];
     [newUser setValue:@"patron" forKey:@"account_type"];
     
-    //spinner to run while fetches happen
-    //spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    //spinner.center = CGPointMake(160, 480);
-    //spinner.color = [UIColor blackColor];
-    //[[self view] addSubview:spinner];
-    //[spinner startAnimating];
+    [self.registerButton setTitle:@"" forState:UIControlStateNormal];
+	[self.registerButton setEnabled:FALSE];
+	[self.registerButton addSubview:spinner];
+	spinner.hidesWhenStopped = YES;
+	[spinner startAnimating];
     
     [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
 	{
-		//[spinner stopAnimating];
-        if (!error){
+        if (!error) {
+			
+			NSDateComponents *components = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:[NSDate date]];
+			int birthYear = [components year] - [age intValue];
+			NSString *birthday = [NSString stringWithFormat:@"01/01/%i", birthYear];
+			
+			NSString *gender = (self.genderSelector.selectedSegmentIndex == 0) ? @"female" : @"male";
             
             NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
 										[[PFUser currentUser] objectId], @"user_id",
 										username, @"username",
 										email, @"email",
-										@"male", @"gender",	//TODO
-										@"05/15/88", @"birthday",	//TODO
+										gender, @"gender",	//TODO
+										birthday, @"birthday",	//TODO
 										firstName, @"first_name",
 										lastName, @"last_name",
 										nil];
             
             [PFCloud callFunctionInBackground:@"register_patron"
 							   withParameters:parameters
-										block:^(PFObject* patron, NSError *error) {
-                if (!error) {
+										block:^(PFObject* patron, NSError *error)
+			{
+                if (!error)
+				{
                     [sharedData setPatron:patron];
 					
 					NSString *patronId = [patron objectId];
 					NSString *punchCode = [patron objectForKey:@"punch_code"];
                     [self setupPFInstallation:patronId withPunchCode:punchCode];
                 
-				} else {
+				}
+				else
+				{
+					[spinner stopAnimating];
+					[self.registerButton setTitle:@"Sign In" forState:UIControlStateNormal];
+					[self.registerButton setEnabled:TRUE];
+					
 					NSDictionary *parseError = [error userInfo];
 					NSInteger errorCode = [[parseError valueForKey:@"error"] intValue];
 					
@@ -214,8 +215,11 @@
 	
 	[[PFInstallation currentInstallation] setObject:patronId forKey:@"patron_id"];
 	[[PFInstallation currentInstallation] setObject:punchCode forKey:@"punch_code"];
-	[[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-		//[spinner stopAnimating];
+	[[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+	{
+		[spinner stopAnimating];
+		[self.registerButton setTitle:@"Sign In" forState:UIControlStateNormal];
+		[self.registerButton setEnabled:TRUE];
 		
 		if(!error) { //login complete
 			[appDelegate presentTabBarController];
@@ -234,31 +238,17 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    [self animateTextField:textField shiftScreenUp:YES];
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    [self animateTextField:textField shiftScreenUp:NO];
-}
-
-- (void) animateTextField: (UITextField*)textField shiftScreenUp:(BOOL)up
-{
-	/*
-	int movementDistance;
+    int movementDistance = 0;
 	
-	if(textField == _usernameInput)					movementDistance = 80;
-	else if(textField == _passwordInput)			movementDistance = 120;
-	else if(textField == _passwordConfirmInput)		movementDistance = 160;
-	else if(textField == _firstNameInput)			movementDistance = 200;
-	else if(textField == _lastNameInput)			movementDistance = 240;
-	else if(textField == _emailInput)				movementDistance = 280;
-	else if(textField == _ageInput)					movementDistance = 320;
+	if(textField == _usernameInput)					movementDistance = _usernameInput.frame.origin.y;
+	else if(textField == _passwordInput)			movementDistance = _passwordInput.frame.origin.y;
+	else if(textField == _passwordConfirmInput)		movementDistance = _passwordConfirmInput.frame.origin.y;
+	else if(textField == _firstNameInput)			movementDistance = _firstNameInput.frame.origin.y;
+	else if(textField == _lastNameInput)			movementDistance = _lastNameInput.frame.origin.y;
+	else if(textField == _emailInput)				movementDistance = _emailInput.frame.origin.y;
+	else if(textField == _ageInput)					movementDistance = _ageInput.frame.origin.y;
 	
-    int movement = (up ? 0 : movementDistance);
-	
-    [self.scrollView setContentOffset:CGPointMake(0, movement) animated:YES];
-	 */
+    [self.scrollView setContentOffset:CGPointMake(0, movementDistance - 25) animated:YES];
 }
 
 - (void)dismissKeyboard
@@ -288,6 +278,11 @@
     
     if ( ![_passwordInput.text isEqualToString:_passwordConfirmInput.text] ) {
 		[self showDialog:@"Passwords don't match" withResultMessage:nil];
+		return NO;
+	}
+	
+	if ( [_ageInput.text intValue] < 13 ) {
+		[self showDialog:@"Sorry, but you must be at least 13 years old to sign up" withResultMessage:nil];
 		return NO;
 	}
     

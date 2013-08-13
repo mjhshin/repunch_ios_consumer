@@ -25,6 +25,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(checkPatronStore)
+												 name:@"Punch"
+											   object:nil];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(checkPatronStore)
+												 name:@"Redeem"
+											   object:nil];
     
 	sharedData = [DataManager getSharedInstance];
 	store = [sharedData getStore:self.storeId];
@@ -37,6 +47,10 @@
 	
 	[[NSBundle mainBundle] loadNibNamed:@"StoreHeaderView" owner:self options:nil];
 	
+	CAGradientLayer *bgLayer2 = [GradientBackground orangeGradient];
+	bgLayer2.frame = self.addToMyPlacesButton.bounds;
+	[self.addToMyPlacesButton.layer insertSublayer:bgLayer2 atIndex:0];
+	
 	[self setStoreInformation];
 	[self checkPatronStore];
 	[self setRewardTableView];
@@ -45,15 +59,17 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(checkPatronStore)
-												 name:@"Punch"
-											   object:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
+
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -128,11 +144,7 @@
 }
 
 - (void)setStoreButtons
-{
-	CAGradientLayer *bgLayer2 = [GradientBackground orangeGradient];
-	bgLayer2.frame = self.addToMyPlacesButton.bounds;
-	[self.addToMyPlacesButton.layer insertSublayer:bgLayer2 atIndex:0];
-	
+{	
 	if(!patronStoreExists)
 	{
 		[self.addToMyPlacesButton setTitle:@"Add to My Places" forState:UIControlStateNormal];
@@ -238,11 +250,6 @@
 
     return hourstodaystring;
     */
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
 }
 
 #pragma mark - Table view data source
@@ -390,7 +397,7 @@
 							  handler:^(SIAlertView *alert) {
 								  [alert dismissAnimated:TRUE];
 							  }];
-		alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
+		alertView.transitionStyle = SIAlertViewTransitionStyleSlideFromBottom;
 		[alertView show];
 	}
 	else
@@ -405,106 +412,6 @@
 		}];
 		[alertView show];
 	}
-}
-
-
--(void)addOrRemovePlace
-{
-    /*
-
-    PFQuery *patronQuery = [PFQuery queryWithClassName:@"Patron"];
-    [patronQuery getObjectInBackgroundWithId:localUser.patronId block:^(PFObject *patronObject, NSError *error) {
-        if (!error){
-            
-            //add store
-            if (!_isSavedStore){
-                UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-                
-                spinner.center = CGPointMake(160, 260);
-                spinner.color = [UIColor blackColor];
-                [[self view] addSubview:spinner];
-                
-                //[spinner startAnimating];
-                
-                PatronStore *newPatronStoreEntity = [PatronStore MR_createEntity];
-                [newPatronStoreEntity setFromPatronObject:patronObject andStoreEntity:_storeObject andUserEntity:localUser andPatronStore:nil];
-                [localUser addSaved_storesObject:newPatronStoreEntity];
-                [localContext MR_saveToPersistentStoreAndWait];
-                
-                SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Added!" andMessage:[NSString stringWithFormat:@"You've saved %@", [_storeObject valueForKey:@"store_name"]]];
-                
-                [alertView addButtonWithTitle:@"Okay."
-                                         type:SIAlertViewButtonTypeDefault
-                                      handler:^(SIAlertView *alert) {
-                                          _isSavedStore = TRUE;
-                                          [self viewWillAppear:YES];
-                                      }];
-                [alertView show];
-
-                NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:[patronObject objectId], @"patron_id", [_storeObject objectId], @"store_id", nil];
-                
-                [PFCloud callFunctionInBackground: @"add_patronstore"
-                                   withParameters:functionArguments block:^(PFObject *patronStore, NSError *error) {
-                                       //[spinner stopAnimating];
-                                       [greyedOutView removeFromSuperview];
-                                       newPatronStoreEntity.objectId = [patronStore objectId];
-                                   }];
-
-
-            }
-            
-            //remove store
-            else{
-                SIAlertView *warningView = [[SIAlertView alloc] initWithTitle:@"Warning!" andMessage:[NSString stringWithFormat:@"Are you sure you want to remove %@? You will lose all your punches", [_storeObject valueForKey:@"store_name"]]];
-                [warningView addButtonWithTitle:@"Cancel"
-                                         type:SIAlertViewButtonTypeDefault
-                                      handler:^(SIAlertView *alert) {
-                                          //[greyedOutView removeFromSuperview];
-                                          
-                                      }];
-
-                
-                [warningView addButtonWithTitle:@"Okay"
-                                         type:SIAlertViewButtonTypeDefault
-                                      handler:^(SIAlertView *alert) {
-                                          UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-                                          
-                                          spinner.center = CGPointMake(160, 260);
-                                          spinner.color = [UIColor blackColor];
-                                          [[self view] addSubview:spinner];
-
-                                          [spinner startAnimating];
-                                          
-                                          NSDictionary *cloudFunctionParameters = [[NSDictionary a
-	 lloc] initWithObjectsAndKeys:patronStoreEntity.objectId, @"patron_store_id", localUser.patronId, @"patron_id", _storeObject.objectId, @"store_id", nil];
-                                          
-                                          
-                                          [PFCloud callFunctionInBackground:@"delete_patronstore" withParameters:cloudFunctionParameters block:^(id object, NSError *error) {
-                                              //get patronStore and delete it
-                                              PatronStore *storeToDelete = [PatronStore MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"patron_id = %@ && store_id = %@", localUser.patronId, _storeObject.objectId]];
-                                              [localContext deleteObject:storeToDelete];
-
-                                          }];
-                                          
-                                          SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Removed!" andMessage:[NSString stringWithFormat:@"You've removed %@", [_storeObject valueForKey:@"store_name"]]];
-
-                                          
-                                          [alertView addButtonWithTitle:@"Okay."
-                                                                   type:SIAlertViewButtonTypeDefault
-                                                                handler:^(SIAlertView *alert) {
-                                                                    [[self modalDelegate] didDismissPresentedViewController];
-                                                                }];
-                                          [alertView show];
-
-                                      }];
-                [warningView show];
-
-            }
-            
-        } else NSLog(@"error is %@", error);
-    }];
-	 */
-
 }
 
 - (void)publishButtonActionWithParameters:(NSDictionary*)userInfo
@@ -623,7 +530,6 @@
 
 - (void)addStore
 {
-	//http://stackoverflow.com/questions/5210535/passing-data-between-view-controllers
 	[self.addToMyPlacesButton setTitle:@"" forState:UIControlStateNormal];
 	[self.addToMyPlacesButton setEnabled:FALSE];
 	

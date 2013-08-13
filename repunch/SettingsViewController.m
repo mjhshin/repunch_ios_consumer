@@ -66,14 +66,35 @@
 
 - (IBAction)logOut:(id)sender
 {
-	[self dismissViewControllerAnimated:YES completion:nil];
-	AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-	[appDelegate logout];
+	//set blank "patron_id" and "punch_code" in installation so push notifications not received when logged out.
+	[[PFInstallation currentInstallation] setObject:@"" forKey:@"punch_code"];
+	[[PFInstallation currentInstallation] setObject:@"" forKey:@"patron_id"];
+	[[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+		//[spinner stopAnimating];
+		
+		if(!error) {
+			[self dismissViewControllerAnimated:YES completion:nil];
+			AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+			[appDelegate logout];
+			
+		} else {
+			[self showDialog:@"Failed to Log Out" withResultMessage:@"Sorry, something went wrong"];
+		}
+	}];
 }
 
 - (IBAction)closeView:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)showDialog:(NSString*)resultTitle withResultMessage:(NSString*)resultMessage
+{
+	[[[UIAlertView alloc] initWithTitle:resultTitle
+								message:resultMessage
+							   delegate:self
+					  cancelButtonTitle:@"OK"
+					  otherButtonTitles: nil] show];
 }
 
 @end
