@@ -221,17 +221,16 @@
 
 - (void)dismissKeyboard
 {
-    [_usernameInput resignFirstResponder];
-    [_passwordInput resignFirstResponder];
+    [self.usernameInput resignFirstResponder];
+    [self.passwordInput resignFirstResponder];
 }
 
 - (void)showDialog:(NSString*)resultTitle withResultMessage:(NSString*)resultMessage
-{
-	[[[UIAlertView alloc] initWithTitle:resultTitle
-								message:resultMessage
-							   delegate:self
-					  cancelButtonTitle:@"OK"
-					  otherButtonTitles: nil] show];
+{	
+	SIAlertView *alert = [[SIAlertView alloc] initWithTitle:resultTitle
+                                                 andMessage:resultMessage];
+    [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeCancel handler:nil];
+    [alert show];
 }
 
 @end

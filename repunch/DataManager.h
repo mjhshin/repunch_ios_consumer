@@ -40,5 +40,6 @@
 // MessageStatus/Message methods
 - (void)addMessage:(PFObject *)messageStatus;
 - (PFObject *)getMessage:(NSString *)objectId;
+- (void)removeMessage:(NSString *)objectId;
 
 @end

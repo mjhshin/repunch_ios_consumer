@@ -264,7 +264,7 @@
 
 - (BOOL)validateForm
 {
-    if (_usernameInput.text.length == 0 || _passwordInput.text.length == 0 || _passwordConfirmInput.text.length == 0 || 
+    if(_usernameInput.text.length == 0 || _passwordInput.text.length == 0 || _passwordConfirmInput.text.length == 0 || 
 		_firstNameInput.text.length == 0 || _lastNameInput.text.length == 0 || _emailInput.text.length == 0 ||
 		_ageInput.text.length == 0) {
 		[self showDialog:@"Please fill in all fields" withResultMessage:nil];
@@ -276,12 +276,17 @@
 		return NO;
 	}
     
-    if ( ![_passwordInput.text isEqualToString:_passwordConfirmInput.text] ) {
+    if( ![_passwordInput.text isEqualToString:_passwordConfirmInput.text] ) {
 		[self showDialog:@"Passwords don't match" withResultMessage:nil];
 		return NO;
 	}
 	
-	if ( [_ageInput.text intValue] < 13 ) {
+	if( _passwordInput.text.length < 6 ) {
+		[self showDialog:@"Passwords must be at least 6 characters" withResultMessage:nil];
+		return NO;
+	}
+	
+	if( [_ageInput.text intValue] < 13 ) {
 		[self showDialog:@"Sorry, but you must be at least 13 years old to sign up" withResultMessage:nil];
 		return NO;
 	}
@@ -291,11 +296,10 @@
 
 - (void)showDialog:(NSString*)resultTitle withResultMessage:(NSString*)resultMessage
 {
-	[[[UIAlertView alloc] initWithTitle:resultTitle
-								message:resultMessage
-							   delegate:self
-					  cancelButtonTitle:@"OK"
-					  otherButtonTitles: nil] show];
+	SIAlertView *alert = [[SIAlertView alloc] initWithTitle:resultTitle
+                                                 andMessage:resultMessage];
+    [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeCancel handler:nil];
+    [alert show];
 }
 
 @end

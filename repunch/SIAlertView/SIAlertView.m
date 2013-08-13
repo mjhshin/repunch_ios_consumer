@@ -174,9 +174,12 @@ static SIAlertView *__si_alert_current_view;
     SIAlertView *appearance = [self appearance];
     appearance.titleColor = [UIColor blackColor];
     appearance.messageColor = [UIColor darkGrayColor];
-    appearance.titleFont = [UIFont boldSystemFontOfSize:20];
-    appearance.messageFont = [UIFont systemFontOfSize:16];
-    appearance.buttonFont = [UIFont systemFontOfSize:[UIFont buttonFontSize]];
+    //appearance.titleFont = [UIFont boldSystemFontOfSize:20];
+	appearance.titleFont =[UIFont fontWithName:@"Avenir-Heavy" size:20];
+    //appearance.messageFont = [UIFont systemFontOfSize:16];
+	appearance.messageFont = [UIFont fontWithName:@"Avenir" size:16];
+    //appearance.buttonFont = [UIFont systemFontOfSize:[UIFont buttonFontSize]];
+	appearance.buttonFont = [UIFont fontWithName:@"Avenir-Heavy" size:[UIFont buttonFontSize]];
     appearance.cornerRadius = 2;
     appearance.shadowRadius = 8;
 }

@@ -23,6 +23,8 @@
 {
     [super viewDidLoad];
 	
+	[Crittercism leaveBreadcrumb:@"SearcH: viewDidLoad"];
+	
 	NSLog(@"Search viewDidLoad");
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
@@ -35,10 +37,14 @@
 												 name:@"Redeem"
 											   object:nil];
 	
+	[Crittercism leaveBreadcrumb:@"SearcH: viewDidLoad - done registering observers"];
+	
 	locationManager = [[CLLocationManager alloc] init];	
 	locationManager.delegate = self;
 	locationManager.distanceFilter = kCLDistanceFilterNone; //filter out negligible changes in location (disabled for now)
 	locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+	
+	[Crittercism leaveBreadcrumb:@"SearcH: viewDidLoad - done setting Loc Manager"];
 	
 	self.sharedData = [DataManager getSharedInstance];
 	self.patron = [self.sharedData patron];
@@ -46,7 +52,7 @@
     self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
 	
 	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	bgLayer.frame = _toolbar.bounds;
+	bgLayer.frame = self.toolbar.bounds;
 	[self.toolbar.layer insertSublayer:bgLayer atIndex:0];
 	
 	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
@@ -74,6 +80,8 @@
     [super viewWillAppear:animated];
 	
 	NSLog(@"Search viewWillAppear");
+	
+	[Crittercism leaveBreadcrumb:@"SearcH: viewWillAppear"];
 	
 	[locationManager startUpdatingLocation];
 	searchloaded = FALSE;
@@ -104,6 +112,8 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
+	[Crittercism leaveBreadcrumb:@"Search: Loc Manager: didUpdateLocations"];
+	
     if(searchloaded == FALSE)
 	{
 		searchloaded = TRUE;
@@ -114,6 +124,8 @@
 		//if (abs(howRecent) < 15.0) {
 			// If the event is recent, do something with it.
 			NSLog(@"latitude %+.6f, longitude %+.6f\n", location.coordinate.latitude, location.coordinate.longitude);
+		
+		[Crittercism leaveBreadcrumb:@"Search: Loc Manager done getting location"];
 		
 			userLocation = [PFGeoPoint geoPointWithLocation:location];
 			[self performSearch];
@@ -139,6 +151,8 @@
 		 [self.activityIndicatorView setHidden:TRUE];
 		 [self.activityIndicator stopAnimating];
 		 [self.searchTableView setHidden:FALSE];
+		 
+		 [Crittercism leaveBreadcrumb:@"Search: performSearch callback"];
 		 
 		 if (!error)
 		 {
@@ -177,6 +191,8 @@
     {
         cell = [SearchTableViewCell cell];
     }
+	
+	[Crittercism leaveBreadcrumb:@"Search: cellForRowAtIndexPath"];
      
 	//[[cell punchesPic] setHidden:TRUE];
 	//[[cell numberOfPunches] setHidden:TRUE];
@@ -188,11 +204,11 @@
 	double distanceToStore = [userLocation distanceInMilesTo:storeLocation];
 	cell.distance.text = [NSString stringWithFormat:@"%.2f mi", distanceToStore];
      
-	NSString *neighborhood = [store valueForKey:@"neighborhood"];
-	NSString *city = [store valueForKey:@"city"];
-	NSString *street = [store valueForKey:@"street"];
+	NSString *neighborhood = [store objectForKey:@"neighborhood"];
+	NSString *city = [store objectForKey:@"city"];
+	NSString *street = [store objectForKey:@"street"];
      
-	if (neighborhood.length > 0) {
+	if (neighborhood != nil) {
 		street = [street stringByAppendingFormat:@", %@", neighborhood];
 	}
 	else {
@@ -203,7 +219,7 @@
 	NSString *formattedCategories = @"";
 	for (int i = 0; i < categories.count; i++)
 	{
-		formattedCategories = [formattedCategories stringByAppendingString:[categories[i] valueForKey:@"name"]];
+		formattedCategories = [formattedCategories stringByAppendingString:[categories[i] objectForKey:@"name"]];
 		
 		if (i!= [categories count]-1) {
 			formattedCategories = [formattedCategories stringByAppendingFormat:@", "];

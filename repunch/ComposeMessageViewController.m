@@ -218,11 +218,10 @@
 
 - (void)showDialog:(NSString*)title withMessage:(NSString*)message
 {
-	[[[UIAlertView alloc] initWithTitle:title
-								message:message
-							   delegate:self
-					  cancelButtonTitle:@"OK"
-					  otherButtonTitles: nil] show];
+	SIAlertView *alert = [[SIAlertView alloc] initWithTitle:title
+                                                 andMessage:message];
+    [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeCancel handler:nil];
+    [alert show];
 }
 
 @end

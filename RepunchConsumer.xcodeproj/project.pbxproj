@@ -42,6 +42,8 @@
 		EE5378CD17B2FEA9002D8B18 /* feedback_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE5378C717B2FEA9002D8B18 /* feedback_button@2x.png */; };
 		EE5378CE17B2FEA9002D8B18 /* map_button.png in Resources */ = {isa = PBXBuildFile; fileRef = EE5378C817B2FEA9002D8B18 /* map_button.png */; };
 		EE5378CF17B2FEA9002D8B18 /* map_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE5378C917B2FEA9002D8B18 /* map_button@2x.png */; };
+		EE79DF4F17BAA37C00E92DE5 /* MessageAttachment.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE79DF4E17BAA37C00E92DE5 /* MessageAttachment.xib */; };
+		EE79DF5117BAA38E00E92DE5 /* MessageReply.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE79DF5017BAA38E00E92DE5 /* MessageReply.xib */; };
 		EE9D4C6617A83F4B005E0CC5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B6E17A83F4A005E0CC5 /* main.m */; };
 		EE9D4C6717A83F4B005E0CC5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B7217A83F4A005E0CC5 /* AppDelegate.m */; };
 		EE9D4C6817A83F4B005E0CC5 /* ComposeMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B7417A83F4A005E0CC5 /* ComposeMessageViewController.m */; };
@@ -231,6 +233,8 @@
 		EE5378C717B2FEA9002D8B18 /* feedback_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "feedback_button@2x.png"; sourceTree = "<group>"; };
 		EE5378C817B2FEA9002D8B18 /* map_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_button.png; sourceTree = "<group>"; };
 		EE5378C917B2FEA9002D8B18 /* map_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_button@2x.png"; sourceTree = "<group>"; };
+		EE79DF4E17BAA37C00E92DE5 /* MessageAttachment.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageAttachment.xib; sourceTree = "<group>"; };
+		EE79DF5017BAA38E00E92DE5 /* MessageReply.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageReply.xib; sourceTree = "<group>"; };
 		EE9D4B6E17A83F4A005E0CC5 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EE9D4B7117A83F4A005E0CC5 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EE9D4B7217A83F4A005E0CC5 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -584,6 +588,8 @@
 				EE9D4F4F17A96F5B005E0CC5 /* GradientBackground.h */,
 				EE9D4F5017A96F5B005E0CC5 /* GradientBackground.m */,
 				EE5378BC17B2E8D6002D8B18 /* StoreHeaderView.xib */,
+				EE79DF4E17BAA37C00E92DE5 /* MessageAttachment.xib */,
+				EE79DF5017BAA38E00E92DE5 /* MessageReply.xib */,
 			);
 			path = CustomUIViews;
 			sourceTree = "<group>";
@@ -933,6 +939,8 @@
 				EE5378CD17B2FEA9002D8B18 /* feedback_button@2x.png in Resources */,
 				EE5378CE17B2FEA9002D8B18 /* map_button.png in Resources */,
 				EE5378CF17B2FEA9002D8B18 /* map_button@2x.png in Resources */,
+				EE79DF4F17BAA37C00E92DE5 /* MessageAttachment.xib in Resources */,
+				EE79DF5117BAA38E00E92DE5 /* MessageReply.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

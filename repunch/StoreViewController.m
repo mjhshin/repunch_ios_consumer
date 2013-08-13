@@ -565,7 +565,7 @@
 
 - (IBAction)deleteStore:(id)sender
 {
-	SIAlertView *warningView = [[SIAlertView alloc] initWithTitle:@"Remove from My Places" andMessage:@"WARNING: you will lose all your punches!"];
+	SIAlertView *warningView = [[SIAlertView alloc] initWithTitle:@"Remove from My Places" andMessage:@"WARNING: You will lose all your punches!"];
 	[warningView addButtonWithTitle:@"Cancel"
 							   type:SIAlertViewButtonTypeDefault
 							handler:^(SIAlertView *alert) {

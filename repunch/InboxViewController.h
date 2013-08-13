@@ -16,7 +16,7 @@
 #import "GradientBackground.h"
 #import <Parse/Parse.h>
 
-@interface InboxViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface InboxViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, IncomingMessageVCDelegate>
 
 - (IBAction)openSettings:(id)sender;
 - (IBAction)openSearch:(id)sender;

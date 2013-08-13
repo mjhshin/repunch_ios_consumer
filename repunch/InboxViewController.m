@@ -68,17 +68,12 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(setup)
-                                                 name:@"receivedPush"
-                                               object:nil];
 }
 
 
 -(void)viewDidDisappear:(BOOL)animated
 {
-    //[[NSNotificationCenter defaultCenter] removeObserver:self name:@"receivedPush" object:nil];
+	
 }
 
 - (void)didReceiveMemoryWarning
@@ -198,11 +193,12 @@
     IncomingMessageViewController *messageVC = [[IncomingMessageViewController alloc] init];
 	PFObject *messageStatus = [self.messagesArray objectAtIndex:indexPath.row];
     messageVC.messageStatusId = [messageStatus objectId];
-
-	//TODO: set message as read here or in messageVC?
-    //[messageStatus saveInBackground];
-    
-    [self presentViewController:messageVC animated:YES completion:NULL];     
+	messageVC.delegate = self;
+    [self presentViewController:messageVC animated:YES completion:NULL];
+	
+	[messageStatus setObject:[NSNumber numberWithBool:YES] forKey:@"is_read"]; //does this change is_read in shareddata?
+	[messageStatus saveInBackground];
+	[self.messageTableView reloadData];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -242,6 +238,13 @@
     return dateString;
 }
 
+- (void)removeMessage:(IncomingMessageViewController *)controller forMsgStatus:(PFObject *)msgStatus
+{
+	NSLog(@"IncomingMessageVC->InboxVC IncomingMessageVCDelegate");
+	[self.messagesArray removeObject:msgStatus];	
+    [self.messageTableView reloadData];
+}
+
 - (IBAction)openSettings:(id)sender
 {
     SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
@@ -258,7 +261,10 @@
 {
 	NSString *punchCode = [self.patron objectForKey:@"punch_code"];
     SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Your Punch Code"
-												 andMessage:[NSString stringWithFormat:@"Your punch code is %@", punchCode]];
+                                                 andMessage:punchCode];
+	
+	[alert setTitleFont:[UIFont fontWithName:@"Avenir" size:20]];
+	[alert setMessageFont:[UIFont fontWithName:@"Avenir-Heavy" size:32]];
     [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeCancel handler:nil];
     [alert show];
 }

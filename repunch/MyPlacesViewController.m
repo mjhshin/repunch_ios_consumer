@@ -401,7 +401,10 @@
 {
 	NSString *punchCode = [self.patron objectForKey:@"punch_code"];
     SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Your Punch Code"
-                                                 andMessage:[NSString stringWithFormat:@"Your punch code is %@", punchCode]];
+                                                 andMessage:punchCode];
+	
+	[alert setTitleFont:[UIFont fontWithName:@"Avenir" size:20]];
+	[alert setMessageFont:[UIFont fontWithName:@"Avenir-Heavy" size:32]];
     [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeCancel handler:nil];
     [alert show];
 }

@@ -6,121 +6,31 @@
 //
 
 #import "IncomingMessageViewController.h"
-#import "ComposeMessageViewController.h"
-#import "SIAlertView.h"
-#import "GradientBackground.h"
-#import "DataManager.h"
 
 @implementation IncomingMessageViewController
-{
-	DataManager *sharedData;
-	PFObject *patron;
-    NSTimer *timer;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	
-	sharedData = [DataManager getSharedInstance];
-	self.messageStatus = [sharedData getMessage:_messageStatusId];
-	self.message = [_messageStatus objectForKey:@"Message"];
-	self.messageType = [_message objectForKey:@"message_type"];
-	_customerName = [_message objectForKey:@"customer_name"];
-    
-    [_messageHeader setText:[_message objectForKey:@"subject"]];
-    [[_offerLbl titleLabel] setNumberOfLines:2];
-    [[_offerLbl titleLabel] setTextAlignment:NSTextAlignmentCenter];
-
-    if ([_messageType isEqualToString:@"basic"]){
-
-        [_sentBodyLbl setText:[_message objectForKey:@"body"]];
-        [_senderNameLbl setText:[_message valueForKey:@"sender_name"]];
-        [_dateSentLbl setText:[self formattedDateString:[_message valueForKey:@"createdAt"]]];
-    
-        //use autolayout to hide response and offer view and adjust accordingly
-        [self hideResponseAndAdjustConstraints];
-        [self hideOfferAndAdjustConstraints];
-
-    }
-    
-    if ([_messageType isEqualToString:@"offer"]){
-        [_sentBodyLbl setText:[_message objectForKey:@"body"]];
-        [_senderNameLbl setText:[_message valueForKey:@"sender_name"]];
-        [_dateSentLbl setText:[self formattedDateString:[_message valueForKey:@"createdAt"]]];
-        
-        [_offerView setHidden:FALSE];
-        [_offerLbl setTitle:[_message valueForKey:@"offer_title"] forState:UIControlStateNormal];
-        
-        //use autolayout to hide response view and adjust accordingly
-        [self hideResponseAndAdjustConstraints];
-        
-
-    }
-    
-    if ([_messageType isEqualToString:@"feedback"]){
-        
-        [_responseView setHidden:FALSE];
-        
-        _replyNameLbl.text = [[_message objectForKey:@"Reply"]valueForKey:@"sender_name"];
-        _dateRepliedLbl.text = [self formattedDateString:[[_message objectForKey:@"Reply"] valueForKey:@"createdAt"]];
-        _repliedBodyLbl.text = [[_message objectForKey:@"Reply"] valueForKey:@"body"];
-        
-        
-        _senderNameLbl.text = [_message valueForKey:@"sender_name"];
-        _dateRepliedLbl.text = [self formattedDateString:[_message valueForKey:@"createdAt"]];
-        _sentBodyLbl.text = [_message valueForKey:@"body"];
-        
-        //use autolayout to hide offer view and adjust accordingly
-        [self hideOfferAndAdjustConstraints];
-        [_constraintBtwnMessageAndResponse setConstant:4.0f];
-
-    }
-    
-    if ([_messageType isEqualToString:@"gift"]){
-        _senderNameLbl.text = [_message valueForKey:@"sender_name"];
-        _dateSentLbl.text = [self formattedDateString:[_message valueForKey:@"createdAt"]];
-        _sentBodyLbl.text = [_message valueForKey:@"body"];
-        
-        [_offerView setHidden:FALSE];
-        [_offerCountdownLbl setHidden:TRUE];
-        [_offerTimeLeftLbl setHidden:TRUE];
-        
-        [_replyToMessageLbl setHidden:FALSE];
-        [_offerLbl setTitle:[_message valueForKey:@"gift_title"] forState:UIControlStateNormal];
-        
-        
-        if ([_message valueForKey:@"Reply"] != nil) {
-            
-            [_responseView setHidden:FALSE];
-            
-            _replyNameLbl.text = [[_message objectForKey:@"Reply"]valueForKey:@"sender_name"];
-            _dateRepliedLbl.text = [self formattedDateString:[[_message objectForKey:@"Reply"] valueForKey:@"createdAt"]];
-            _repliedBodyLbl.text = [[_message objectForKey:@"Reply"] valueForKey:@"body"];
-            
-            [_offerLbl setUserInteractionEnabled:NO];
-            [_replyToMessageLbl setHidden:TRUE];
-
-            
-            [_repliedBodyHeightLayout setConstant:_repliedBodyLbl.contentSize.height];
-        }
-        else {
-            [self hideResponseAndAdjustConstraints];
-
-        }
-        
-    }
-    
-    [_sentBodyHeightConstraint setConstant:_sentBodyLbl.contentSize.height];
-    
+	self.sharedData = [DataManager getSharedInstance];
+	self.messageStatus = [self.sharedData getMessage:_messageStatusId];
+	self.message = [self.messageStatus objectForKey:@"Message"];
+	self.reply = [self.message objectForKey:@"Reply"];
+	self.messageType = [self.message objectForKey:@"message_type"];
+	
+	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
+	bgLayer.frame = self.toolbar.bounds;
+	[self.toolbar.layer insertSublayer:bgLayer atIndex:0];
+	
+	[self.messageTitle setText:[self.message objectForKey:@"subject"]];
+	
+	[self setupMessage];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	bgLayer.frame = _toolbar.bounds;
-	[_toolbar.layer insertSublayer:bgLayer atIndex:0];
-	
+	/*
     if([_messageType isEqualToString:@"offer"]){
         timer = [NSTimer scheduledTimerWithTimeInterval:1.0f
                                                  target:self
@@ -130,6 +40,7 @@
         
         [self updateTimer];
     }
+	 */
 }
 
 - (void)didReceiveMemoryWarning
@@ -137,12 +48,59 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)setupMessage
+{
+	self.dateLabel.text = [self formattedDateString:self.message.createdAt];
+	self.senderLabel.text = [self.message objectForKey:@"sender_name"];
+	self.bodyTextView.text = [self.message objectForKey:@"body"];
+	
+	if(self.reply != [NSNull null])
+	{
+		//[self setupReply];
+	}
+	
+	if ([self.messageType isEqualToString:@"basic"])
+	{
+		
+    }
+    else if ([self.messageType isEqualToString:@"offer"])
+	{
+		
+    }
+    else if ([self.messageType isEqualToString:@"feedback"])
+	{
+		
+    }
+    else if ([_messageType isEqualToString:@"gift"])
+	{
+        
+    }
+}
+
+- (void)setupReply
+{
+	[[NSBundle mainBundle] loadNibNamed:@"MessageReply" owner:self options:nil];
+	
+	CGRect frame = self.replyView.frame;
+	frame.origin = CGPointMake(0, self.messageView.frame.size.height);
+	self.replyView.frame = frame;
+	self.replyView.hidden = FALSE;
+	[self.scrollView addSubview:self.replyView];
+	
+	self.replyDateLabel.text = [self formattedDateString:self.reply.createdAt];
+	self.replySenderLabel.text = [self.reply objectForKey:@"sender_name"];
+	self.replyBodyTextView.text = [self.reply objectForKey:@"body"];
+}
+
+- (void)setupAttachment
+{
+	[[NSBundle mainBundle] loadNibNamed:@"MessageAttachment" owner:self options:nil];
+}
 
 #pragma mark - Helper Methods
          
- -(NSString *)formattedDateString:(NSDate *)dateCreated {
-     NSString *dateString = @"";
-     
+ - (NSString *)formattedDateString:(NSDate *)dateCreated
+{     
      NSCalendar *cal = [NSCalendar currentCalendar];
      NSDateComponents *components = [cal components:(NSEraCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit) fromDate:[NSDate date]];
      NSDate *today = [cal dateFromComponents:components];
@@ -152,33 +110,33 @@
      NSLocale *locale = [NSLocale currentLocale];
      NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
      
-     if([today isEqualToDate:otherDate]) {
+     if([today isEqualToDate:otherDate])
+	 {
          [formatter setDateFormat:@"hh:mm a"];
          [formatter setLocale:locale];
          [formatter setTimeZone:[NSTimeZone localTimeZone]];
-         dateString = [formatter stringFromDate:dateCreated];
-         
-     } else {
+     }
+	 else
+	 {
          [formatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"MM/dd" options:0 locale:locale]];
          [formatter setLocale:locale];
-         dateString = [formatter stringFromDate:dateCreated];
      }
      
-     return dateString;
- }
+     return [formatter stringFromDate:dateCreated];
+}
 
--(void)updateTimer {
-    NSDate *offer = [_message valueForKey:@"date_offer_expiration"];
-    NSDate *curDate = [NSDate date];
+- (void)updateTimer
+{
+    NSDate *offer = [self.message objectForKey:@"date_offer_expiration"];
+    NSDate *currentDate = [NSDate date];
     
-    NSTimeInterval timeLeft = [offer timeIntervalSinceDate:curDate];
-    _offerCountdownLbl.text = [self stringFromInterval:timeLeft];
+    NSTimeInterval timeLeft = [offer timeIntervalSinceDate:currentDate];
+    self.giftTimerLabel.text = [self stringFromInterval:timeLeft];
     
-    if (timeLeft<=0){
-        _offerCountdownLbl.text = @"Expired";
-        timer = nil;
+    if (timeLeft <= 0) {
+        self.giftTimerLabel.text = @"Expired";
+        self.timer = nil;
     }
-    
 }
 
 -(NSString *)stringFromInterval:(NSTimeInterval)timeInterval
@@ -196,41 +154,43 @@
     
 }
 
--(void)hideOfferAndAdjustConstraints {
-    //[_offerViewHeightConstraint setConstant:0.0f];
-    [_offerView removeFromSuperview];
-}
-
--(void)hideResponseAndAdjustConstraints {
-    //[_responseViewHeightConstraint setConstant:0.0f];
-    [_responseView removeFromSuperview];
-}
-
-         
-#pragma mark - Modal Delegate methods
-
--(void)didDismissPresentedViewController {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
 #pragma mark - Toolbar Methods
 
-- (IBAction)replyToMessageActn:(id)sender {
+/*
+- (IBAction)replyToMessageActn:(id)sender
+{
     ComposeMessageViewController *composeVC = [[ComposeMessageViewController alloc] init];
 	//composeVC.storeId =
     composeVC.messageType = @"gift_reply"; //TODO: make this an enum
     
     [self presentViewController:composeVC animated:YES completion:NULL];
 }
+*/
 
-- (IBAction)deleteMessageActn:(id)sender {
-    [_messageStatus deleteInBackground];
-    //[[self modalDelegate] didDismissPresentedViewControllerWithCompletionCode:@"deletedMessage"];
-
+- (IBAction)deleteButtonAction:(id)sender
+{	
+	SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Delete this message?" andMessage:nil];
+	[alert addButtonWithTitle:@"Cancel"
+							   type:SIAlertViewButtonTypeDefault
+							handler:^(SIAlertView *alert) {
+								[alert dismissAnimated:YES];
+							}];
+	
+	
+	[alert addButtonWithTitle:@"Delete"
+							   type:SIAlertViewButtonTypeDestructive
+							handler:^(SIAlertView *alert) {
+								[self.sharedData removeMessage:self.messageStatusId];
+								[self.delegate removeMessage:self forMsgStatus:self.messageStatus];
+								[self dismissViewControllerAnimated:YES completion:nil];
+								[alert dismissAnimated:YES];
+							}];
+	[alert show];
 }
 
-- (IBAction)closeSettingActn:(id)sender {
-    [self didDismissPresentedViewController];
+- (IBAction)closeButtonAction:(id)sender
+{
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 /*
@@ -420,5 +380,18 @@
     
 }
  */
+
+- (IBAction)giftButtonAction:(id)sender
+{
+	
+}
+
+- (void)showDialog:(NSString*)title withMessage:(NSString*)message
+{
+	SIAlertView *alert = [[SIAlertView alloc] initWithTitle:title
+                                                 andMessage:message];
+    [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeCancel handler:nil];
+    [alert show];
+}
 
 @end

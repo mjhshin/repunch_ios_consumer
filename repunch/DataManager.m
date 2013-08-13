@@ -98,4 +98,14 @@ static DataManager *sharedDataManager = nil;    // static instance variable
     return [self.messageStatuses objectForKey:objectId];
 }
 
+- (void)removeMessage:(NSString *)objectId
+{
+	PFObject *msgStatus = [self.messageStatuses objectForKey:objectId];
+	[self.messageStatuses removeObjectForKey:objectId];
+	
+    PFRelation *relation = [self.patron relationforKey:@"ReceivedMessages"];
+	[relation removeObject:msgStatus];
+	[self.patron saveInBackground];
+}
+
 @end

@@ -1,57 +1,63 @@
 //
-//  MessageAutoLayoutViewController.h
-//  repunch
+//  IncomingMessageViewController.h
+//  Repunch
 //
-//  Created by Gwendolyn Weston on 7/22/13.
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+#import "ComposeMessageViewController.h"
+#import "SIAlertView.h"
+#import "GradientBackground.h"
+#import "DataManager.h"
 #import <Parse/Parse.h>
+
+@class IncomingMessageViewController;
+
+@protocol IncomingMessageVCDelegate <NSObject>
+- (void)removeMessage:(IncomingMessageViewController *)controller forMsgStatus:(PFObject *)msgStatus;
+@end
 
 @interface IncomingMessageViewController : UIViewController
 
-//VIEW DATA SOURCE
-@property (nonatomic, retain) NSString *messageStatusId;
-@property (nonatomic, retain) PFObject *message;
-@property (nonatomic, retain) PFObject *messageStatus;
-@property (nonatomic, retain) NSString *messageType;
-@property (nonatomic, retain) NSString *customerName;
+@property (nonatomic, weak) id <IncomingMessageVCDelegate> delegate;
 
-//VIEW UI LABELS + ACTNS
+@property (strong, nonatomic) DataManager *sharedData;
+@property (strong, nonatomic) PFObject *patron;
+@property (strong, nonatomic) NSTimer *timer;
+
+@property (strong, nonatomic) NSString *messageType;
+@property (strong, nonatomic) NSString *messageStatusId;
+@property (strong, nonatomic) PFObject *messageStatus;
+@property (strong, nonatomic) PFObject *message;
+@property (strong, nonatomic) PFObject *reply;
+
 @property (weak, nonatomic) IBOutlet UIView *toolbar;
+@property (weak, nonatomic) IBOutlet UILabel *messageTitle;
 
-//Toolbar methods + labels
-@property (weak, nonatomic) IBOutlet UILabel *messageHeader;
-@property (weak, nonatomic) IBOutlet UIButton *replyToMessageLbl;
+- (IBAction)deleteButtonAction:(id)sender;
+- (IBAction)closeButtonAction:(id)sender;
 
-- (IBAction)replyToMessageActn:(id)sender;
-- (IBAction)deleteMessageActn:(id)sender;
-- (IBAction)closeSettingActn:(id)sender;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
-//Received Message labels
-@property (weak, nonatomic) IBOutlet UILabel *senderNameLbl;
-@property (weak, nonatomic) IBOutlet UILabel *dateSentLbl;
-@property (weak, nonatomic) IBOutlet UITextView *sentBodyLbl;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sentBodyHeightConstraint;
+// Original Message
+@property (strong, nonatomic) IBOutlet UIView *messageView;
+@property (weak, nonatomic) IBOutlet UILabel *senderLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UITextView *bodyTextView;
 
+// Attachment (gift/offer)
+@property (strong, nonatomic) IBOutlet UIView *giftView;
+@property (weak, nonatomic) IBOutlet UIButton *giftButton;
+@property (weak, nonatomic) IBOutlet UILabel *giftTimerLabel;
 
-//Offer labels
-@property (weak, nonatomic) IBOutlet UIButton *offerLbl;
-@property (weak, nonatomic) IBOutlet UILabel *offerTimeLeftLbl;
-@property (weak, nonatomic) IBOutlet UILabel *offerCountdownLbl;
-@property (weak, nonatomic) IBOutlet UIView *offerView;
+- (IBAction)giftButtonAction:(id)sender;
 
-- (IBAction)redeemOfferActn:(id)sender;
-
-//Reply Message labels
-@property (weak, nonatomic) IBOutlet UILabel *replyNameLbl;
-@property (weak, nonatomic) IBOutlet UILabel *dateRepliedLbl;
-@property (weak, nonatomic) IBOutlet UITextView *repliedBodyLbl;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *repliedBodyHeightLayout;
-
-@property (weak, nonatomic) IBOutlet UIView *responseView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintBtwnMessageAndResponse;
+// Reply
+@property (strong, nonatomic) IBOutlet UIView *replyView;
+@property (weak, nonatomic) IBOutlet UILabel *replySenderLabel;
+@property (weak, nonatomic) IBOutlet UILabel *replyDateLabel;
+@property (weak, nonatomic) IBOutlet UITextView *replyBodyTextView;
 
 
 @end
