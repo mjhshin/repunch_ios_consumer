@@ -11,6 +11,6 @@
 
 @interface RedeemHandler : NSObject
 
-+ (void) handleRedeem:(NSDictionary *)pushPayload;
++ (void) handlePush:(NSDictionary *)pushPayload;
 
 @end

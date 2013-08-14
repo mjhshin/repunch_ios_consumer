@@ -23,7 +23,7 @@
 	bgLayer.frame = self.toolbar.bounds;
 	[self.toolbar.layer insertSublayer:bgLayer atIndex:0];
 	
-	[self.messageTitle setText:[self.message objectForKey:@"subject"]];
+	[self.messageTitle setText:[self.message objectForKey:@"subject"]]; //add "RE: "
 	
 	[self setupMessage];
 }
@@ -50,13 +50,24 @@
 
 - (void)setupMessage
 {
-	self.dateLabel.text = [self formattedDateString:self.message.createdAt];
+    CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
+	CGFloat screenHeight = screenRect.size.height;
+	int toolBarHeight = self.toolbar.frame.size.height;
+
+	CGRect scrollViewFrame = self.scrollView.frame;
+    scrollViewFrame.size.height = screenHeight - toolBarHeight;
+    self.scrollView.frame = scrollViewFrame;
+    
+    self.dateLabel.text = [self formattedDateString:self.message.createdAt];
 	self.senderLabel.text = [self.message objectForKey:@"sender_name"];
 	self.bodyTextView.text = [self.message objectForKey:@"body"];
+    CGRect frame = self.bodyTextView.frame;
+    frame.size.height = self.bodyTextView.contentSize.height;
+    self.bodyTextView.frame = frame;
 	
 	if(self.reply != [NSNull null])
 	{
-		//[self setupReply];
+		[self setupReply];
 	}
 	
 	if ([self.messageType isEqualToString:@"basic"])
@@ -75,21 +86,31 @@
 	{
         
     }
+    
+    //[self.scrollView sizeToFit];
+    //[self.scrollView flashScrollIndicators];
 }
 
 - (void)setupReply
 {
-	[[NSBundle mainBundle] loadNibNamed:@"MessageReply" owner:self options:nil];
-	
-	CGRect frame = self.replyView.frame;
-	frame.origin = CGPointMake(0, self.messageView.frame.size.height);
-	self.replyView.frame = frame;
-	self.replyView.hidden = FALSE;
-	[self.scrollView addSubview:self.replyView];
-	
-	self.replyDateLabel.text = [self formattedDateString:self.reply.createdAt];
+    [[NSBundle mainBundle] loadNibNamed:@"MessageReply" owner:self options:nil];
+    
+    self.replyDateLabel.text = [self formattedDateString:self.reply.createdAt];
 	self.replySenderLabel.text = [self.reply objectForKey:@"sender_name"];
 	self.replyBodyTextView.text = [self.reply objectForKey:@"body"];
+	
+    CGRect msgFrame = self.bodyTextView.frame;
+    CGRect replyViewFrame = self.replyView.frame;
+    CGRect replyTextViewFrame = self.replyBodyTextView.frame;
+    
+    replyViewFrame.origin.y = msgFrame.origin.y + msgFrame.size.height + 20;
+    replyTextViewFrame.size.height = self.replyBodyTextView.contentSize.height;
+    self.replyView.frame = replyViewFrame;
+    self.replyBodyTextView.frame = replyTextViewFrame;
+	self.replyView.hidden = FALSE;
+    
+    [self.scrollView addSubview:self.replyView];
+    self.scrollView.contentSize = CGSizeMake(320, 900); //TODO: calculate height properly.
 }
 
 - (void)setupAttachment

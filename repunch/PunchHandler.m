@@ -10,7 +10,7 @@
 
 @implementation PunchHandler
 
-+ (void)handlePunch:(NSDictionary *)pushPayload
++ (void)handlePush:(NSDictionary *)pushPayload
 {
 	DataManager *sharedData = [DataManager getSharedInstance];
 	
@@ -38,20 +38,23 @@
 		
 		[query getObjectInBackgroundWithId:patronStoreId block:^(PFObject *result, NSError *error)
 		{
-			NSLog(@"Received punch where PatronStore/Store not in sharedData: %@", result);
-			[sharedData addPatronStore:result forKey:storeId];
-			[sharedData addStore:[result objectForKey:@"Store"]];
-			
-			NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:storeId, @"store_id", nil];
-			
-			[[NSNotificationCenter defaultCenter] postNotificationName:@"Punch" object:self userInfo:args];
-		}];
+            if(!result)
+            {
+                //handle error
+                NSLog(@"PatronStore query failed.");
+            }
+            else
+            {
+                NSLog(@"Received punch where PatronStore/Store not in sharedData: %@", result);
+                [sharedData addPatronStore:result forKey:storeId];
+                [sharedData addStore:[result objectForKey:@"Store"]];
+                
+                NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:storeId, @"store_id", nil];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"Punch" object:self userInfo:args];
+            }
+        }];
 	}
-}
-
-- (void)downloadStore:(NSString *)storeId
-{
-	
 }
 
 @end

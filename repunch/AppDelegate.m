@@ -86,13 +86,26 @@
 	NSString *pushType = [userInfo objectForKey:@"type"];
 	if( [pushType isEqualToString:@"punch"] )
 	{
-		NSLog(@" push type: punch");
-		[PunchHandler handlePunch:userInfo];
+		NSLog(@"Push received: punch");
+		[PunchHandler handlePush:userInfo];
 	}
 	else if( [pushType isEqualToString:@"redeem"] )
 	{
-		NSLog(@"push type: validate_redeem");
-		[RedeemHandler handleRedeem:userInfo];
+		NSLog(@"Push received: redeem");
+		[RedeemHandler handlePush:userInfo];
+	}
+    else if( [pushType isEqualToString:@"message"] )
+	{
+		NSLog(@"Push received: message");
+        [MessageHandler handlePush:userInfo];
+	}
+    else if( [pushType isEqualToString:@"gift"] )
+	{
+		NSLog(@"Push received: gift");
+	}
+    else if( [pushType isEqualToString:@"gift_reply"] )
+	{
+		NSLog(@"Push received: gift_reply");
 	}
 }
 

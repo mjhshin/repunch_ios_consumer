@@ -16,6 +16,11 @@
 
 - (void)viewDidLoad
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(receiveRefreshNotification:)
+												 name:@"Message"
+											   object:nil];
+    
     self.sharedData = [DataManager getSharedInstance];
     self.patron = [self.sharedData patron];
 	self.messagesArray = [[NSMutableArray alloc] init];
@@ -70,7 +75,6 @@
     [super viewWillAppear:YES];
 }
 
-
 -(void)viewDidDisappear:(BOOL)animated
 {
 	
@@ -79,6 +83,8 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)loadInbox
@@ -89,7 +95,6 @@
 	
     PFRelation *messagesRelation = [self.patron relationforKey:@"ReceivedMessages"];
     PFQuery *messageQuery = [messagesRelation query];
-    [messageQuery includeKey:@"Message"];
     [messageQuery includeKey:@"Message.Reply"];
 	[messageQuery orderByDescending:@"createdAt"];
 	[messageQuery setLimit:20];

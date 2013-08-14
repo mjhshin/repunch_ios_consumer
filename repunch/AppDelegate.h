@@ -17,6 +17,7 @@
 #import <Parse/Parse.h>
 #import "PunchHandler.h"
 #import "RedeemHandler.h"
+#import "MessageHandler.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

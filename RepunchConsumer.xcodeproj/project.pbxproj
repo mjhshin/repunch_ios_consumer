@@ -32,6 +32,7 @@
 		EE28DAE017AC447E00E4C460 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE28DADF17AC447E00E4C460 /* DataManager.m */; };
 		EE3F36D417B585B300D28FC9 /* PunchHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3F36D317B585B300D28FC9 /* PunchHandler.m */; };
 		EE3F36D817B586ED00D28FC9 /* RedeemHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3F36D717B586ED00D28FC9 /* RedeemHandler.m */; };
+		EE460EC317BB5C7A00AC3588 /* MessageHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EE460EC217BB5C7A00AC3588 /* MessageHandler.m */; };
 		EE5378BD17B2E8D6002D8B18 /* StoreHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE5378BC17B2E8D6002D8B18 /* StoreHeaderView.xib */; };
 		EE5378C117B2F39B002D8B18 /* call_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE5378BE17B2F39B002D8B18 /* call_button@2x.png */; };
 		EE5378C217B2F39B002D8B18 /* feedback_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE5378BF17B2F39B002D8B18 /* feedback_button@2x.png */; };
@@ -223,6 +224,8 @@
 		EE3F36D317B585B300D28FC9 /* PunchHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PunchHandler.m; sourceTree = "<group>"; };
 		EE3F36D617B586ED00D28FC9 /* RedeemHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedeemHandler.h; sourceTree = "<group>"; };
 		EE3F36D717B586ED00D28FC9 /* RedeemHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedeemHandler.m; sourceTree = "<group>"; };
+		EE460EC117BB5C7A00AC3588 /* MessageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageHandler.h; path = repunch/MessageHandler.h; sourceTree = SOURCE_ROOT; };
+		EE460EC217BB5C7A00AC3588 /* MessageHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageHandler.m; path = repunch/MessageHandler.m; sourceTree = SOURCE_ROOT; };
 		EE5378BC17B2E8D6002D8B18 /* StoreHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreHeaderView.xib; sourceTree = "<group>"; };
 		EE5378BE17B2F39B002D8B18 /* call_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "call_button@2x.png"; sourceTree = "<group>"; };
 		EE5378BF17B2F39B002D8B18 /* feedback_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "feedback_button@2x.png"; sourceTree = "<group>"; };
@@ -505,6 +508,8 @@
 				EE3F36D317B585B300D28FC9 /* PunchHandler.m */,
 				EE3F36D617B586ED00D28FC9 /* RedeemHandler.h */,
 				EE3F36D717B586ED00D28FC9 /* RedeemHandler.m */,
+				EE460EC117BB5C7A00AC3588 /* MessageHandler.h */,
+				EE460EC217BB5C7A00AC3588 /* MessageHandler.m */,
 			);
 			name = Push;
 			sourceTree = "<group>";
@@ -1002,6 +1007,7 @@
 				EE28DAE017AC447E00E4C460 /* DataManager.m in Sources */,
 				EE3F36D417B585B300D28FC9 /* PunchHandler.m in Sources */,
 				EE3F36D817B586ED00D28FC9 /* RedeemHandler.m in Sources */,
+				EE460EC317BB5C7A00AC3588 /* MessageHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

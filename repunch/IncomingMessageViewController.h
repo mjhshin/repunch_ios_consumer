@@ -41,7 +41,7 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 // Original Message
-@property (strong, nonatomic) IBOutlet UIView *messageView;
+//@property (strong, nonatomic) IBOutlet UIView *messageView;
 @property (weak, nonatomic) IBOutlet UILabel *senderLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UITextView *bodyTextView;

@@ -10,7 +10,7 @@
 
 @implementation RedeemHandler
 
-+ (void) handleRedeem:(NSDictionary *)pushPayload
++ (void) handlePush:(NSDictionary *)pushPayload
 {
 	DataManager *sharedData = [DataManager getSharedInstance];
 	

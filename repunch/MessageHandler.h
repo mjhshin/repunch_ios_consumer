@@ -1,16 +1,15 @@
 //
-//  PunchHandler.h
+//  MessageHandler.h
 //  RepunchConsumer
 //
-//  Created by Michael Shin on 8/9/13.
+//  Created by Michael Shin on 8/14/13.
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import <Parse/Parse.h>
 #import "DataManager.h"
 
-@interface PunchHandler : NSObject
+@interface MessageHandler : NSObject
 
 + (void) handlePush:(NSDictionary *)pushPayload;
 
