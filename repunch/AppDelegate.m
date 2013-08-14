@@ -35,7 +35,7 @@
     NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (remoteNotif)
 	{
-        //TODO
+        //TODO? If app always refreshes after didFinishLaunchingWithOptions, no need.
     }
 	
 	sharedData = [DataManager getSharedInstance];
@@ -81,7 +81,7 @@
 
 - (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
 {
-    [PFPush handlePush:userInfo];
+    //[PFPush handlePush:userInfo];
 
 	NSString *pushType = [userInfo objectForKey:@"type"];
 	if( [pushType isEqualToString:@"punch"] )

@@ -116,6 +116,8 @@
 	
 	self.storeAddress.text = street;
 	
+	[self setStoreHours];
+	
 	PFFile *imageFile = [store objectForKey:@"store_avatar"];
 	if(imageFile != nil)
 	{
@@ -143,8 +145,73 @@
 	}
 }
 
+- (void)setStoreHours
+{
+	NSDateFormatter *format = [[NSDateFormatter alloc] init];
+	[format setDateFormat:@"h:mm a"];
+
+	NSArray *hoursArray = [store objectForKey:@"hours"];
+	
+	NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+	NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit
+										   fromDate:[NSDate date]];
+	int weekday = [comps weekday];
+
+	NSDate *now = [gregorian dateFromComponents:comps];
+	
+	NSDictionary *today;
+	
+	for(NSDictionary *hours in hoursArray)
+	{
+		if ([[hours objectForKey:@"day"] integerValue] == weekday) {
+			today = hours;
+			break;
+		}
+	}
+	
+	if(today == nil) {
+		self.storeHoursOpen.hidden = YES;
+		self.storeHoursToday.hidden = YES;
+		self.storeHours.hidden = YES;
+		return;
+	}
+	
+	NSDateFormatter *inFormat = [[NSDateFormatter alloc] init];
+	inFormat.dateFormat = @"HHmm";
+	NSDateFormatter *outFormat = [[NSDateFormatter alloc] init];
+	outFormat.dateFormat = @"h:mm a";
+	outFormat.timeZone = [NSTimeZone systemTimeZone];
+	//[inFormat setLocale:[NSLocale currentLocale]];
+	NSDate *openTime = [inFormat dateFromString:[today objectForKey:@"open_time"]];
+	NSDate *closeTime = [inFormat dateFromString:[today objectForKey:@"close_time"]];
+	
+	NSDateComponents *compsOpen = [gregorian components:NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit
+										   fromDate:openTime];
+	NSDateComponents *compsClose = [gregorian components:NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit
+											   fromDate:closeTime];
+	openTime = [gregorian dateFromComponents:compsOpen];
+	closeTime = [gregorian dateFromComponents:compsClose];
+	
+	NSString *openTimeFormatted = [outFormat stringFromDate:openTime];
+	NSString *closeTimeFormatted = [outFormat stringFromDate:closeTime];
+	
+	if([now compare:openTime] != NSOrderedAscending && [now compare:closeTime] == NSOrderedAscending)
+	{
+		self.storeHoursOpen.text = @"Open";
+		self.storeHoursOpen.textColor = [UIColor colorWithRed:0.0 green:(187/255.0) blue:0.0 alpha:1.0];
+	}
+	else
+	{
+		self.storeHoursOpen.text = @"Closed";
+		self.storeHoursOpen.textColor = [UIColor colorWithRed:(187/255.0) green:0.0 blue:0.0 alpha:1.0];
+	}
+	
+	self.storeHours.text = [NSString stringWithFormat:@"%@ - %@", openTimeFormatted, closeTimeFormatted];
+	[self.storeHours sizeToFit];
+}
+
 - (void)setStoreButtons
-{	
+{
 	if(!patronStoreExists)
 	{
 		[self.addToMyPlacesButton setTitle:@"Add to My Places" forState:UIControlStateNormal];
@@ -191,65 +258,6 @@
     [self.view addSubview:self.rewardTableView];
 	
 	self.rewardTableView.tableHeaderView = self.headerView;
-}
-
-- (NSString *)getHoursString
-{
-	/*
-    NSDateFormatter *formatter_out = [[NSDateFormatter alloc] init];
-    [formatter_out setDateFormat:@"h:mm a"];
-    
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
-    int weekday = [comps weekday];
-    if (weekday>1)
-        weekday--;
-    else
-        weekday=7;
-    
-    bool open = false;
-    NSString *hourstodaystring = @"";
-    NSArray *hoursArray = [[NSArray alloc] initWithArray:[[_storeObject valueForKey:@"hours"] allObjects]];
-    for(NSDictionary *hours in hoursArray) {
-        if ([[hours valueForKey:@"day"] integerValue] == weekday) {
-            
-            NSString *openHour = [[hours valueForKey:@"open_time"] substringToIndex:2];
-            NSString *openMinute = [[hours valueForKey:@"open_time"]  substringFromIndex:2];
-            
-            NSString *closeHour = [[hours valueForKey:@"close_time"]  substringToIndex:2];
-            NSString *closeMinute = [[hours valueForKey:@"close_time"]  substringFromIndex:2];
-            
-            NSDate *now = [NSDate date];
-            NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-            NSDateComponents *components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:now];
-            [components setHour:[openHour integerValue]];
-            [components setMinute:[openMinute integerValue]];
-            
-            NSDate *openDate = [calendar dateFromComponents:components];
-            
-            [components setHour:[closeHour integerValue]];
-            [components setMinute:[closeMinute integerValue]];
-            NSDate *closeDate = [calendar dateFromComponents:components];
-            
-            hourstodaystring = [NSString stringWithFormat:@"%@ - %@",[formatter_out stringFromDate:openDate],[formatter_out stringFromDate:closeDate]];
-            
-            open = (([now compare:openDate] != NSOrderedAscending) && ([now compare:closeDate] != NSOrderedDescending));
-        }
-    }
-    
-    if (![hourstodaystring isEqualToString:@""]){
-        hourstodaystring = @"Unavailable";
-        _storeOpen.text = @"";
-    } else{
-        _storeOpen.text = (open)?@"Open":@"Closed";
-        UIColor *openColor = [UIColor colorWithRed:104/255.f green:136/255.f blue:13/255.f alpha:1];
-        UIColor *closedColor = [UIColor blackColor];
-        _storeOpen.textColor = (open ? openColor : closedColor);
-
-    }
-
-    return hourstodaystring;
-    */
 }
 
 #pragma mark - Table view data source
@@ -317,10 +325,13 @@
 	
 	if (punchCount >= rewardPunches)
 	{
+		NSString *str1 = [NSString stringWithFormat:(rewardPunches == 1 ? @"%i Punch" :  @"%i Punches"), rewardPunches];
+		NSString *message = [[reward objectForKey:@"description"] stringByAppendingFormat:@"\n\n%@", str1];
+		
 		SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:[reward objectForKey:@"reward_name"]
-														 andMessage:[NSString stringWithFormat:(rewardPunches == 1 ? @"%i Punch" :  @"%i Punches"), rewardPunches]];
+														 andMessage:message];
 		[alertView addButtonWithTitle:@"Redeem"
-								 type:SIAlertViewButtonTypeDefault
+								 type:SIAlertViewButtonTypeCancel
 							  handler:^(SIAlertView *alert)
 		{
 			NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -342,7 +353,7 @@
 					{
 						NSLog(@"function call is: %@", success);
 						SIAlertView *confirmDialogue = [[SIAlertView alloc] initWithTitle:@"Pending" andMessage:@"You already have a pending reward"];
-						[confirmDialogue addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
+						[confirmDialogue addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
 							//nothing
 						}];
 						[confirmDialogue show];
@@ -351,7 +362,7 @@
 					{
 						NSLog(@"function call is: %@", success);
 						SIAlertView *confirmDialogue = [[SIAlertView alloc] initWithTitle:@"Waiting for confirmation" andMessage:@"Please wait for your reward to be validated"];
-						[confirmDialogue addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
+						[confirmDialogue addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
 							//nothing
 						}];
 						[confirmDialogue show];
@@ -360,8 +371,9 @@
 				else
 				{
 					NSLog(@"error occurred: %@", error);
-					SIAlertView *errorDialogue = [[SIAlertView alloc] initWithTitle:@"Error" andMessage:@"Please wait for your reward to be validated"];
-					[errorDialogue addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
+					SIAlertView *errorDialogue = [[SIAlertView alloc] initWithTitle:@"Error"
+						andMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
+					[errorDialogue addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
 						//nothing
 					}];
 					[errorDialogue show];
@@ -370,7 +382,7 @@
 		}];
 
 		[alertView addButtonWithTitle:@"Gift"
-								 type:SIAlertViewButtonTypeDefault
+								 type:SIAlertViewButtonTypeCancel
 							  handler:^(SIAlertView *alert)
 		 {
 			 /*
@@ -393,11 +405,10 @@
 		 }];
             
 		[alertView addButtonWithTitle:@"Cancel"
-								 type:SIAlertViewButtonTypeDefault
+								 type:SIAlertViewButtonTypeCancel
 							  handler:^(SIAlertView *alert) {
 								  [alert dismissAnimated:TRUE];
 							  }];
-		alertView.transitionStyle = SIAlertViewTransitionStyleSlideFromBottom;
 		[alertView show];
 	}
 	else
@@ -406,7 +417,7 @@
 														 andMessage:nil];
             
 		[alertView addButtonWithTitle:@"OK"
-								 type:SIAlertViewButtonTypeDefault
+								 type:SIAlertViewButtonTypeCancel
 							  handler:^(SIAlertView *alert) {
 								  [alert dismissAnimated:TRUE];
 		}];
@@ -609,6 +620,7 @@
 		 {
 			 [sharedData deletePatronStore:self.storeId];
 			 [self checkPatronStore];
+			 [self.rewardTableView reloadData];
 			 [self alertParentViewController:TRUE];
 		 }
 		 else

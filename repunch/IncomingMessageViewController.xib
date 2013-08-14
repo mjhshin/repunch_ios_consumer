@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1552</int>
-		<string key="IBDocument.SystemVersion">11G63b</string>
+		<string key="IBDocument.SystemVersion">12E55</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1138.51</string>
-		<string key="IBDocument.HIToolboxVersion">569.00</string>
+		<string key="IBDocument.AppKitVersion">1187.39</string>
+		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			<string key="NS.object.0">2083</string>
@@ -67,11 +67,11 @@
 								<object class="IBUIFontDescription" key="IBUIFontDescription" id="889996509">
 									<string key="name">Avenir-Heavy</string>
 									<string key="family">Avenir</string>
-									<int key="traits">0</int>
+									<int key="traits">2</int>
 									<double key="pointSize">17</double>
 								</object>
-								<object class="NSFont" key="IBUIFont" id="922362241">
-									<string key="NSName">Helvetica</string>
+								<object class="NSFont" key="IBUIFont" id="536703217">
+									<string key="NSName">Avenir-Heavy</string>
 									<double key="NSSize">17</double>
 									<int key="NSfFlags">16</int>
 								</object>
@@ -153,7 +153,7 @@
 							<object class="IBUILabel" id="261979409">
 								<reference key="NSNextResponder" ref="946881723"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{218, 20}, {82, 30}}</string>
+								<string key="NSFrame">{{232, 20}, {68, 30}}</string>
 								<reference key="NSSuperview" ref="946881723"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="30614307"/>
@@ -163,7 +163,7 @@
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<string key="IBUIText">5:15 pm</string>
+								<string key="IBUIText">12:15 pm</string>
 								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
@@ -171,19 +171,23 @@
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">0</int>
 								<int key="IBUITextAlignment">2</int>
-								<object class="IBUIFontDescription" key="IBUIFontDescription" id="245505285">
+								<object class="IBUIFontDescription" key="IBUIFontDescription">
 									<string key="name">Avenir-Medium</string>
 									<string key="family">Avenir</string>
 									<int key="traits">0</int>
-									<double key="pointSize">17</double>
+									<double key="pointSize">15</double>
 								</object>
-								<reference key="IBUIFont" ref="922362241"/>
+								<object class="NSFont" key="IBUIFont">
+									<string key="NSName">Avenir-Medium</string>
+									<double key="NSSize">15</double>
+									<int key="NSfFlags">16</int>
+								</object>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 							<object class="IBUILabel" id="531652809">
 								<reference key="NSNextResponder" ref="946881723"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{20, 20}, {190, 30}}</string>
+								<string key="NSFrame">{{20, 20}, {204, 30}}</string>
 								<reference key="NSSuperview" ref="946881723"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="261979409"/>
@@ -202,7 +206,7 @@
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">0</int>
 								<reference key="IBUIFontDescription" ref="889996509"/>
-								<reference key="IBUIFont" ref="922362241"/>
+								<reference key="IBUIFont" ref="536703217"/>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 							<object class="IBUITextView" id="307558880">
@@ -211,6 +215,7 @@
 								<string key="NSFrame">{{12, 68}, {296, 105}}</string>
 								<reference key="NSSuperview" ref="946881723"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<bool key="IBUIMultipleTouchEnabled">YES</bool>
@@ -224,8 +229,17 @@
 									<int key="IBUIAutocapitalizationType">2</int>
 									<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								</object>
-								<reference key="IBUIFontDescription" ref="245505285"/>
-								<reference key="IBUIFont" ref="922362241"/>
+								<object class="IBUIFontDescription" key="IBUIFontDescription">
+									<string key="name">Avenir-Medium</string>
+									<string key="family">Avenir</string>
+									<int key="traits">0</int>
+									<double key="pointSize">17</double>
+								</object>
+								<object class="NSFont" key="IBUIFont">
+									<string key="NSName">Avenir-Medium</string>
+									<double key="NSSize">17</double>
+									<int key="NSfFlags">16</int>
+								</object>
 							</object>
 							<object class="IBUILabel" id="30614307">
 								<reference key="NSNextResponder" ref="946881723"/>
@@ -252,7 +266,11 @@
 									<int key="type">1</int>
 									<double key="pointSize">17</double>
 								</object>
-								<reference key="IBUIFont" ref="922362241"/>
+								<object class="NSFont" key="IBUIFont">
+									<string key="NSName">Helvetica</string>
+									<double key="NSSize">17</double>
+									<int key="NSfFlags">16</int>
+								</object>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 						</array>

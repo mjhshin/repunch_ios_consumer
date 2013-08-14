@@ -17,7 +17,7 @@
 - (void)viewDidLoad
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(receiveRefreshNotification:)
+											 selector:@selector(addMessageFromPush:)
 												 name:@"Message"
 											   object:nil];
     
@@ -182,10 +182,15 @@
 	}
     
     if ([[messageStatus objectForKey:@"is_read"] boolValue]) {
-        cell.contentView.backgroundColor = [UIColor colorWithRed:(float)192/256 green:(float)192/256 blue:(float)192/256 alpha:(float)65/256]; //ARGB = 0x40C0C0C0
+        cell.contentView.backgroundColor = [UIColor colorWithRed:(float)192/256 //ARGB = 0x40C0C0C0
+														   green:(float)192/256
+															blue:(float)192/256
+														   alpha:(float)65/256];
+		cell.senderName.font = [UIFont fontWithName:@"Avenir" size:17];
     }
     else {
         cell.contentView.backgroundColor = [UIColor whiteColor];
+		cell.senderName.font = [UIFont fontWithName:@"Avenir-Heavy" size:17];
     }
 
     return cell;
@@ -203,7 +208,10 @@
 	
 	[messageStatus setObject:[NSNumber numberWithBool:YES] forKey:@"is_read"]; //does this change is_read in shareddata?
 	[messageStatus saveInBackground];
-	[self.messageTableView reloadData];
+	
+	[self.messageTableView beginUpdates];
+	[self.messageTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+	[self.messageTableView endUpdates];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -241,6 +249,23 @@
     }
 
     return dateString;
+}
+
+- (void)addMessageFromPush:(NSNotification *)notification
+{
+	NSString *msgStatusId = [[notification userInfo] objectForKey:@"message_status_id"];
+	
+	for(PFObject* msg in self.messagesArray)
+	{
+		if( [msg.objectId isEqualToString:msgStatusId] )
+		{
+			[self.messagesArray removeObject:msg];
+			break;
+		}
+	}
+	
+	[self.messagesArray insertObject:[self.sharedData getMessage:msgStatusId] atIndex:0];
+	[self.messageTableView reloadData];
 }
 
 - (void)removeMessage:(IncomingMessageViewController *)controller forMsgStatus:(PFObject *)msgStatus

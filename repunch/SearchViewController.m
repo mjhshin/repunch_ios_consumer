@@ -23,10 +23,6 @@
 {
     [super viewDidLoad];
 	
-	[Crittercism leaveBreadcrumb:@"SearcH: viewDidLoad"];
-	
-	NSLog(@"Search viewDidLoad");
-	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(reloadTableView)
 												 name:@"Punch"
@@ -79,10 +75,6 @@
 {
     [super viewWillAppear:animated];
 	
-	NSLog(@"Search viewWillAppear");
-	
-	[Crittercism leaveBreadcrumb:@"SearcH: viewWillAppear"];
-	
 	[locationManager startUpdatingLocation];
 	searchloaded = FALSE;
 }
@@ -90,8 +82,6 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-	
-	NSLog(@"Search viewWillDisappear");
 	
 	[locationManager stopUpdatingLocation];
 }
@@ -111,9 +101,7 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
-	[Crittercism leaveBreadcrumb:@"Search: Loc Manager: didUpdateLocations"];
-	
+{	
     if(searchloaded == FALSE)
 	{
 		searchloaded = TRUE;

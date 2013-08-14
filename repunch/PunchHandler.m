@@ -18,15 +18,20 @@
 	NSString *patronStoreId = [pushPayload objectForKey:@"patron_store_id"];
 	//int punches = [[pushPayload objectForKey:@"punches"] intValue];
 	int totalPunches = [[pushPayload objectForKey:@"total_punches"] intValue];
+	NSString *alert = [[pushPayload objectForKey:@"aps"] objectForKey:@"alert"];
 	
 	PFObject *store = [sharedData getStore:storeId];
 	PFObject *patronStore = [sharedData getPatronStore:storeId];
-	
+
 	if(store != nil && patronStore != nil)
 	{
 		[sharedData updatePatronStore:storeId withPunches:totalPunches];
 
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"Punch" object:self];
+		
+		SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Punch!" andMessage:alert];
+		[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeCancel handler:nil];
+		[alertView show];
 	}
 	else
 	{
@@ -52,6 +57,10 @@
                 NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:storeId, @"store_id", nil];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"Punch" object:self userInfo:args];
+				
+				SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Punch!" andMessage:alert];
+				[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeCancel handler:nil];
+				[alertView show];
             }
         }];
 	}

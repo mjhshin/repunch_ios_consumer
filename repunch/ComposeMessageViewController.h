@@ -15,19 +15,20 @@
 
 @class Store;
 
-@interface ComposeMessageViewController : UIViewController <UITextViewDelegate>
+@interface ComposeMessageViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate>
 
 @property (nonatomic, strong) NSString *storeId;
 @property (nonatomic, strong) NSString *messageType;
 @property (nonatomic, strong) NSString *recepientName;
 
 @property (weak, nonatomic) IBOutlet UIView *toolbar;
+@property (weak, nonatomic) IBOutlet UIButton *sendButton;
 @property (weak, nonatomic) IBOutlet UILabel *storeName;
 @property (weak, nonatomic) IBOutlet UITextField *subject;
 @property (weak, nonatomic) IBOutlet UITextView *body;
 @property (weak, nonatomic) IBOutlet UILabel *bodyPlaceholder;
 
-- (IBAction)sendFeedback:(id)sender;
+- (IBAction)sendButtonAction:(id)sender;
 - (IBAction)closeButton:(id)sender;
 
 @end

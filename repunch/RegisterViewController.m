@@ -27,6 +27,15 @@
                                    initWithTarget:self
                                    action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
+	
+	UIToolbar* numberToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
+    numberToolbar.barStyle = UIBarStyleBlack;
+    numberToolbar.items = [NSArray arrayWithObjects:
+						   [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+						   [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(dismissKeyboard)],
+						   nil];
+    [numberToolbar sizeToFit];
+    self.ageInput.inputAccessoryView = numberToolbar;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -60,16 +69,12 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)viewDidDisappear:(BOOL)animated
+- (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:YES];
-    
-    //[[NSNotificationCenter defaultCenter] removeObserver:self name:@"finishedLoggingIn" object:nil];
-    //[[NSNotificationCenter defaultCenter] removeObserver:self name:@"errorLoggingIn" object:nil];
-    
 }
 
--(BOOL)textFieldShouldReturn:(UITextField*)textField;
+- (BOOL)textFieldShouldReturn:(UITextField*)textField;
 {
 	if(textField == _usernameInput) {
 		[_usernameInput resignFirstResponder];
@@ -94,9 +99,6 @@
 	} else if(textField == _emailInput) {
 		[_emailInput resignFirstResponder];
 		[_ageInput becomeFirstResponder];
-		
-	} else if(textField == _ageInput) {
-		[_ageInput resignFirstResponder];
 		
 	}
 	

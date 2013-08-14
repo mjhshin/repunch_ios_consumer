@@ -14,8 +14,8 @@
 {
 	DataManager *sharedData = [DataManager getSharedInstance];
 	
-	NSString *storeId = [pushPayload objectForKey:@"store_id"];
     NSString *messageId = [pushPayload objectForKey:@"message_id"];
+	NSString *alert = [[pushPayload objectForKey:@"aps"] objectForKey:@"alert"];
     
     PFQuery *msgQuery = [PFQuery queryWithClassName:@"Message"];
     [msgQuery whereKey:@"objectId" equalTo:messageId];
@@ -35,9 +35,13 @@
         {
             [sharedData addMessage:result];
             
-            NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:storeId, @"store_id", nil];
+            NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:[result objectId], @"message_status_id", nil];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"Message" object:self userInfo:args];
+			
+			SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"New Message" andMessage:alert];
+			[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeCancel handler:nil];
+			[alertView show];
         }
     }];
 }

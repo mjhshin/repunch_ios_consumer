@@ -68,6 +68,14 @@
     [super didReceiveMemoryWarning];
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField*)textField;
+{
+	[textField resignFirstResponder];
+	[self.body becomeFirstResponder];
+	
+	return NO; // We do not want UITextField to insert line-breaks.
+}
+
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
     //Has Focus
@@ -105,6 +113,13 @@
 	if(self.subject.text.length == 0) {
 		self.subject.text = self.subject.placeholder;
 	}
+	
+	UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+	spinner.frame = self.sendButton.frame;
+	[self.toolbar addSubview:spinner];
+	self.sendButton.hidden = YES;
+	spinner.hidesWhenStopped = YES;
+	[spinner startAnimating];
     
     if ([self.messageType isEqualToString:@"feedback"])
 	{
@@ -122,6 +137,9 @@
 						   withParameters:inputsArgs
 									block:^(NSString *result, NSError *error)
 		{
+			[spinner stopAnimating];
+			self.sendButton.hidden = NO;
+			
             if (!error)
 			{
                 [self showDialog:@"Thanks for your feedback!" withMessage:nil];
@@ -206,7 +224,7 @@
     [self.body resignFirstResponder];
 }
 
-- (IBAction)sendFeedback:(id)sender
+- (IBAction)sendButtonAction:(id)sender
 {
     [self sendMessage];
 }

@@ -18,8 +18,6 @@
 {
     [super viewDidLoad];
 	
-	NSLog(@"My Places viewDidLoad");
-	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(receiveRefreshNotification:)
 												 name:@"Punch"
@@ -84,8 +82,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-	
-	NSLog(@"My Places viewWillAppear");
     
     //alert to demonstrate how to get the punch code.  will only appear once.
     if (![@"1" isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"showPunchCodeInstructions"]])
@@ -102,8 +98,6 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-	
-	NSLog(@"My Places viewWillDisappear");
 }
 
 - (void)didReceiveMemoryWarning
@@ -395,7 +389,7 @@
 }
  */
 
-#pragma mark - Toolber methods
+#pragma mark - Toolbar methods
 
 - (IBAction)showPunchCode:(id)sender
 {
