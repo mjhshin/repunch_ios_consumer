@@ -13,5 +13,6 @@
 @interface RedeemHandler : NSObject
 
 + (void) handlePush:(NSDictionary *)pushPayload;
++ (void) handleOfferGiftPush:(NSDictionary *)pushPayload;
 
 @end

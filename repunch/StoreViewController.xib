@@ -76,7 +76,7 @@
 							<object class="IBUIButton" id="42736661">
 								<reference key="NSNextResponder" ref="825228980"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{9, 9}, {32, 32}}</string>
+								<string key="NSFrameSize">{50, 50}</string>
 								<reference key="NSSuperview" ref="825228980"/>
 								<reference key="NSNextKeyView" ref="173708280"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -84,7 +84,6 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<int key="IBUIButtonType">1</int>
 								<reference key="IBUIHighlightedTitleColor" ref="877214542"/>
 								<object class="NSColor" key="IBUINormalTitleColor">
 									<int key="NSColorSpace">1</int>
@@ -94,9 +93,9 @@
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MC41AA</bytes>
 								</object>
-								<object class="NSCustomResource" key="IBUINormalBackgroundImage">
+								<object class="NSCustomResource" key="IBUINormalImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">ab_contextual_cancel.png</string>
+									<string key="NSResourceName">nav_exit.png</string>
 								</object>
 								<object class="IBUIFontDescription" key="IBUIFontDescription" id="82075276">
 									<int key="type">2</int>
@@ -111,23 +110,23 @@
 							<object class="IBUIButton" id="830588543">
 								<reference key="NSNextResponder" ref="825228980"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{279, 9}, {32, 32}}</string>
+								<string key="NSFrame">{{270, 0}, {50, 50}}</string>
 								<reference key="NSSuperview" ref="825228980"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<int key="IBUIButtonType">1</int>
 								<reference key="IBUIHighlightedTitleColor" ref="877214542"/>
 								<object class="NSColor" key="IBUINormalTitleColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 								</object>
 								<reference key="IBUINormalTitleShadowColor" ref="359023175"/>
-								<object class="NSCustomResource" key="IBUINormalBackgroundImage">
+								<object class="NSCustomResource" key="IBUINormalImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">ab_message_delete.png</string>
+									<string key="NSResourceName">nav_delete.png</string>
 								</object>
 								<reference key="IBUIFontDescription" ref="82075276"/>
 								<reference key="IBUIFont" ref="166925986"/>
@@ -292,8 +291,8 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="ab_contextual_cancel.png">{48, 48}</string>
-			<string key="ab_message_delete.png">{40, 40}</string>
+			<string key="nav_delete.png">{16, 16}</string>
+			<string key="nav_exit.png">{16, 16}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>

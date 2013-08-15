@@ -177,7 +177,7 @@
                [greyedOutView removeFromSuperview];
                
                SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Sent!" andMessage:[NSString stringWithFormat:@"You sent %@ to %@", [_sendParameters valueForKey:@"gift_title"], [_recipient valueForKey:@"first_name"]]];
-               [alertView addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+               [alertView addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
                    [[self modalDelegate] didDismissPresentedViewController];
                }];
                
@@ -191,7 +191,7 @@
                [greyedOutView removeFromSuperview];
                
                SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Error!" andMessage:[NSString stringWithFormat:@"Sorry, an error occured"]];
-               [alertView addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+               [alertView addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
                }];
 
                NSLog(@"%@", error);
@@ -238,7 +238,7 @@
 {
 	SIAlertView *alert = [[SIAlertView alloc] initWithTitle:title
                                                  andMessage:message];
-    [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeCancel handler:nil];
+    [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
     [alert show];
 }
 

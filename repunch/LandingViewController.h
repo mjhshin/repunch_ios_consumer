@@ -11,6 +11,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
+@property (weak, nonatomic) IBOutlet UIImageView *background;
 
 - (IBAction)registerButtonPress:(id)sender;
 - (IBAction)loginButtonPress:(id)sender;

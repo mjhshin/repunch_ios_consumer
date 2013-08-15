@@ -69,6 +69,8 @@
 	CGRect frame = self.activityIndicatorView.frame;
 	frame.origin = CGPointMake(xCenter - xOffset, yCenter - yOffset);
 	self.activityIndicatorView.frame = frame;
+	
+	searchloaded = FALSE;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -76,7 +78,6 @@
     [super viewWillAppear:animated];
 	
 	[locationManager startUpdatingLocation];
-	searchloaded = FALSE;
 }
 
 - (void)viewWillDisappear:(BOOL)animated

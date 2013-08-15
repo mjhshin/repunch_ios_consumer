@@ -21,6 +21,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
+	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
+	bgLayer.frame = self.loginButton.bounds;
+	[self.loginButton.layer insertSublayer:bgLayer atIndex:0];
+	[self.loginButton.layer setCornerRadius:5];
+	[self.loginButton setClipsToBounds:YES];
+	
+	CAGradientLayer *bgLayer2 = [GradientBackground orangeGradient];
+	bgLayer2.frame = self.registerButton.bounds;
+	[self.registerButton.layer insertSublayer:bgLayer2 atIndex:0];
+	[self.registerButton.layer setCornerRadius:5];
+	[self.registerButton setClipsToBounds:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -36,18 +48,6 @@
 	[titleBarAttributes setValue:[UIFont fontWithName:@"Avenir" size:16] forKey:UITextAttributeFont];
 	[[UINavigationBar appearance] setTitleTextAttributes:titleBarAttributes];
 	*/
-	
-	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	bgLayer.frame = self.loginButton.bounds;
-	[self.loginButton.layer insertSublayer:bgLayer atIndex:0];
-	[self.loginButton.layer setCornerRadius:5];
-	[self.loginButton setClipsToBounds:YES];
-	
-	CAGradientLayer *bgLayer2 = [GradientBackground orangeGradient];
-	bgLayer2.frame = self.registerButton.bounds;
-	[self.registerButton.layer insertSublayer:bgLayer2 atIndex:0];
-	[self.registerButton.layer setCornerRadius:5];
-	[self.registerButton setClipsToBounds:YES];
 }
 
 - (void)didReceiveMemoryWarning

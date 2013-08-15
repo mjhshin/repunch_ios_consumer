@@ -40,7 +40,7 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:@"Message" object:self userInfo:args];
 			
 			SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"New Message" andMessage:alert];
-			[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeCancel handler:nil];
+			[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
 			[alertView show];
         }
     }];

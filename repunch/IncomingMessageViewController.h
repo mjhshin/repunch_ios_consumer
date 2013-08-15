@@ -48,6 +48,7 @@
 
 // Attachment (gift/offer)
 @property (strong, nonatomic) IBOutlet UIView *giftView;
+@property (weak, nonatomic) IBOutlet UILabel *giftTitle;
 @property (weak, nonatomic) IBOutlet UIButton *giftButton;
 @property (weak, nonatomic) IBOutlet UILabel *giftTimerLabel;
 

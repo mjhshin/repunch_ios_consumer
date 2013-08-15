@@ -199,12 +199,12 @@
 	if([now compare:openTime] != NSOrderedAscending && [now compare:closeTime] == NSOrderedAscending)
 	{
 		self.storeHoursOpen.text = @"Open";
-		self.storeHoursOpen.textColor = [UIColor colorWithRed:0.0 green:(187/255.0) blue:0.0 alpha:1.0];
+		self.storeHoursOpen.textColor = [UIColor colorWithRed:0.0 green:(204/255.0) blue:0.0 alpha:1.0];
 	}
 	else
 	{
 		self.storeHoursOpen.text = @"Closed";
-		self.storeHoursOpen.textColor = [UIColor colorWithRed:(187/255.0) green:0.0 blue:0.0 alpha:1.0];
+		self.storeHoursOpen.textColor = [UIColor colorWithRed:(224/255.0) green:0.0 blue:0.0 alpha:1.0];
 	}
 	
 	self.storeHours.text = [NSString stringWithFormat:@"%@ - %@", openTimeFormatted, closeTimeFormatted];
@@ -332,7 +332,7 @@
 		SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:[reward objectForKey:@"reward_name"]
 														 andMessage:message];
 		[alertView addButtonWithTitle:@"Redeem"
-								 type:SIAlertViewButtonTypeCancel
+								 type:SIAlertViewButtonTypeDefault
 							  handler:^(SIAlertView *alert)
 		{
 			NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -354,7 +354,7 @@
 					{
 						NSLog(@"function call is: %@", success);
 						SIAlertView *confirmDialogue = [[SIAlertView alloc] initWithTitle:@"Pending" andMessage:@"You already have a pending reward"];
-						[confirmDialogue addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+						[confirmDialogue addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
 							//nothing
 						}];
 						[confirmDialogue show];
@@ -363,7 +363,7 @@
 					{
 						NSLog(@"function call is: %@", success);
 						SIAlertView *confirmDialogue = [[SIAlertView alloc] initWithTitle:@"Waiting for confirmation" andMessage:@"Please wait for your reward to be validated"];
-						[confirmDialogue addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+						[confirmDialogue addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
 							//nothing
 						}];
 						[confirmDialogue show];
@@ -374,7 +374,7 @@
 					NSLog(@"error occurred: %@", error);
 					SIAlertView *errorDialogue = [[SIAlertView alloc] initWithTitle:@"Error"
 						andMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
-					[errorDialogue addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:^(SIAlertView *alertView) {
+					[errorDialogue addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
 						//nothing
 					}];
 					[errorDialogue show];
@@ -383,32 +383,15 @@
 		}];
 
 		[alertView addButtonWithTitle:@"Gift"
-								 type:SIAlertViewButtonTypeCancel
+								 type:SIAlertViewButtonTypeDefault
 							  handler:^(SIAlertView *alert)
 		 {
-			 /*
-			 FacebookFriendsViewController *friendsVC = [[FacebookFriendsViewController alloc] init];
-                                      
-			 NSDictionary *giftDictionary = [NSDictionary dictionaryWithObjectsAndKeys:[store objectId], @"store_id",
-											 [patronStore objectId], @"patron_store_id",
-											 [localUser patronId], @"user_id",
-											 [localUser fullName], @"sender_name",
-											 [currentCellReward reward_name], @"gift_title",
-											 [currentCellReward reward_description], @"gift_description",
-											 [currentCellReward punches] ,@"gift_punches",
-											 nil];
-                                      
-                                      
-			 friendsVC.giftParametersDict = giftDictionary;
-                                      
-			 [self presentViewController:friendsVC animated:YES completion:nil];
-			  */
+			 [self gift];
 		 }];
             
 		[alertView addButtonWithTitle:@"Cancel"
-								 type:SIAlertViewButtonTypeCancel
+								 type:SIAlertViewButtonTypeDefault
 							  handler:^(SIAlertView *alert) {
-								  [alert dismissAnimated:TRUE];
 							  }];
 		[alertView show];
 	}
@@ -418,9 +401,8 @@
 														 andMessage:nil];
             
 		[alertView addButtonWithTitle:@"OK"
-								 type:SIAlertViewButtonTypeCancel
+								 type:SIAlertViewButtonTypeDefault
 							  handler:^(SIAlertView *alert) {
-								  [alert dismissAnimated:TRUE];
 		}];
 		[alertView show];
 	}
@@ -629,6 +611,41 @@
 			 NSLog(@"delete_patronStore error: %@", error);
 		 }
 	 }];
+}
+
+- (void)gift
+{
+	if( [patron objectForKey:@"facebook_id"] == nil)
+	{
+		SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"It's better together"]
+														 andMessage:@"Log in with Facebook to send gifts to your friends"];
+	
+		[alertView addButtonWithTitle:@"OK"
+								 type:SIAlertViewButtonTypeDefault
+							  handler:^(SIAlertView *alert) {
+							  }];
+		[alertView show];
+	}
+	else
+	{
+		/*
+		 FacebookFriendsViewController *friendsVC = [[FacebookFriendsViewController alloc] init];
+		 
+		 NSDictionary *giftDictionary = [NSDictionary dictionaryWithObjectsAndKeys:[store objectId], @"store_id",
+		 [patronStore objectId], @"patron_store_id",
+		 [localUser patronId], @"user_id",
+		 [localUser fullName], @"sender_name",
+		 [currentCellReward reward_name], @"gift_title",
+		 [currentCellReward reward_description], @"gift_description",
+		 [currentCellReward punches] ,@"gift_punches",
+		 nil];
+		 
+		 
+		 friendsVC.giftParametersDict = giftDictionary;
+		 
+		 [self presentViewController:friendsVC animated:YES completion:nil];
+		 */
+	}
 }
 
 - (void)alertParentViewController:(BOOL)isAddRemove

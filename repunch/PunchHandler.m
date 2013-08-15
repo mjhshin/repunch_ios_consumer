@@ -30,7 +30,7 @@
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"Punch" object:self];
 		
 		SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Punch!" andMessage:alert];
-		[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeCancel handler:nil];
+		[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
 		[alertView show];
 	}
 	else
@@ -59,7 +59,7 @@
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"Punch" object:self userInfo:args];
 				
 				SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Punch!" andMessage:alert];
-				[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeCancel handler:nil];
+				[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
 				[alertView show];
             }
         }];

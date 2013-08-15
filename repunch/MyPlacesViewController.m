@@ -90,7 +90,7 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         SIAlertView *punchCodeHelpAlert = [[SIAlertView alloc] initWithTitle:@"A Friendly Tip" andMessage:@"Click on the Repunch logo in order to get your punch code"];
-        [punchCodeHelpAlert addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeCancel handler:nil];
+        [punchCodeHelpAlert addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeDefault handler:nil];
         [punchCodeHelpAlert show];
     }
 }
@@ -399,7 +399,7 @@
 	
 	[alert setTitleFont:[UIFont fontWithName:@"Avenir" size:20]];
 	[alert setMessageFont:[UIFont fontWithName:@"Avenir-Heavy" size:32]];
-    [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeCancel handler:nil];
+    [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
     [alert show];
 }
 

@@ -94,6 +94,11 @@
 		NSLog(@"Push received: redeem");
 		[RedeemHandler handlePush:userInfo];
 	}
+	else if( [pushType isEqualToString:@"redeem_offer_gift"] )
+	{
+		NSLog(@"Push received: redeem offer/gift");
+		[RedeemHandler handleOfferGiftPush:userInfo];
+	}
     else if( [pushType isEqualToString:@"message"] )
 	{
 		NSLog(@"Push received: message");

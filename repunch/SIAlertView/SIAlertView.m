@@ -831,8 +831,8 @@ static SIAlertView *__si_alert_current_view;
 	UIImage *highlightedImage = nil;
 	switch (item.type) {
 		case SIAlertViewButtonTypeCancel:
-			normalImage = [UIImage imageNamed:@"SIAlertView.bundle/button-cancel"];
-			highlightedImage = [UIImage imageNamed:@"SIAlertView.bundle/button-cancel-d"];
+			normalImage = [UIImage imageNamed:@"SIAlertView.bundle/button-default"];
+			highlightedImage = [UIImage imageNamed:@"SIAlertView.bundle/button-default-d"];
 			[button setTitleColor:[UIColor colorWithWhite:0.3 alpha:1] forState:UIControlStateNormal];
             [button setTitleColor:[UIColor colorWithWhite:0.3 alpha:0.8] forState:UIControlStateHighlighted];
 			break;
@@ -844,8 +844,8 @@ static SIAlertView *__si_alert_current_view;
 			break;
 		case SIAlertViewButtonTypeDefault:
 		default:
-			normalImage = [UIImage imageNamed:@"SIAlertView.bundle/button-default"];
-			highlightedImage = [UIImage imageNamed:@"SIAlertView.bundle/button-default-d"];
+			normalImage = [UIImage imageNamed:@"SIAlertView.bundle/button-cancel"];
+			highlightedImage = [UIImage imageNamed:@"SIAlertView.bundle/button-cancel-d"];
 			[button setTitleColor:[UIColor colorWithWhite:0.4 alpha:1] forState:UIControlStateNormal];
             [button setTitleColor:[UIColor colorWithWhite:0.4 alpha:0.8] forState:UIControlStateHighlighted];
 			break;

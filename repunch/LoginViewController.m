@@ -229,7 +229,7 @@
 {	
 	SIAlertView *alert = [[SIAlertView alloc] initWithTitle:resultTitle
                                                  andMessage:resultMessage];
-    [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeCancel handler:nil];
+    [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
     [alert show];
 }
 

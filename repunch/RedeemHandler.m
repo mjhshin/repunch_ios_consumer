@@ -30,13 +30,29 @@
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"Redeem" object:self];
 		
 		SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Success!" andMessage:alert];
-		[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeCancel handler:nil];
+		[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
 		[alertView show];
 	}
 	else
 	{
 		// User must have deleted the store from My Places. In that case, there's no need to notify them of anything.
 	}
+}
+
++ (void) handleOfferGiftPush:(NSDictionary *)pushPayload
+{
+	DataManager *sharedData = [DataManager getSharedInstance];
+	
+	NSString *msgStatusId = [pushPayload objectForKey:@"message_status_id"];
+	NSString *alert = [[pushPayload objectForKey:@"aps"] objectForKey:@"alert"];
+	
+	PFObject *messageStatus = [sharedData getMessage:msgStatusId];
+	[
+	 messageStatus setObject:@"pending" forKey:@"redeem_available"];
+	
+	SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Success!" andMessage:alert];
+	[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
+	[alertView show];
 }
 
 @end

@@ -77,7 +77,7 @@
 
 -(void)viewDidDisappear:(BOOL)animated
 {
-	
+	[super viewDidDisappear:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -205,13 +205,16 @@
     messageVC.messageStatusId = [messageStatus objectId];
 	messageVC.delegate = self;
     [self presentViewController:messageVC animated:YES completion:NULL];
+	 
+	if( [[messageStatus objectForKey:@"is_read"] boolValue] == NO )
+	{
+		[messageStatus setObject:[NSNumber numberWithBool:YES] forKey:@"is_read"]; //does this change is_read in shareddata?
+		[messageStatus saveInBackground];
 	
-	[messageStatus setObject:[NSNumber numberWithBool:YES] forKey:@"is_read"]; //does this change is_read in shareddata?
-	[messageStatus saveInBackground];
-	
-	[self.messageTableView beginUpdates];
-	[self.messageTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-	[self.messageTableView endUpdates];
+		[self.messageTableView beginUpdates];
+		[self.messageTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+		[self.messageTableView endUpdates];
+	}
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -295,7 +298,7 @@
 	
 	[alert setTitleFont:[UIFont fontWithName:@"Avenir" size:20]];
 	[alert setMessageFont:[UIFont fontWithName:@"Avenir-Heavy" size:32]];
-    [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeCancel handler:nil];
+    [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
     [alert show];
 }
 

@@ -29,15 +29,10 @@
     [super viewDidLoad];
 	
 	sharedData = [DataManager getSharedInstance];
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:YES];
 	
 	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	bgLayer.frame = _toolbar.bounds;
-	[_toolbar.layer insertSublayer:bgLayer atIndex:0];
+	bgLayer.frame = self.toolbar.bounds;
+	[self.toolbar.layer insertSublayer:bgLayer atIndex:0];
     
 	PFObject* patron = [sharedData patron];
 	NSString* str1 = @"Logged in as ";
@@ -46,6 +41,11 @@
 	NSString* lastName = [patron objectForKey:@"last_name"];
 	
     _currentLogin.text = [NSString stringWithFormat:@"%@%@%@%@", str1, firstName, str2, lastName];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
 }
 
 - (void)didReceiveMemoryWarning
