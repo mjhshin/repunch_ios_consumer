@@ -75,7 +75,7 @@
 
 - (void)checkPatronStore
 {
-	patronStore = [sharedData getPatronStore:self.storeId];
+    patronStore = [sharedData getPatronStore:self.storeId];
     patronStoreExists = (patronStore != nil);
 	if(patronStoreExists) {
 		punchCount = [[patronStore objectForKey:@"punch_count"] intValue];
@@ -84,6 +84,7 @@
 	}
 	
 	[self setStoreButtons];
+    [self.rewardTableView reloadData];
 }
 
 - (void)setStoreInformation
