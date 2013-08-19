@@ -40,7 +40,6 @@
 	
 	sharedData = [DataManager getSharedInstance];
 	[self checkLoginState];
-    [self.window makeKeyAndVisible];
 	
     return YES;
 }
@@ -114,101 +113,6 @@
 	}
 }
 
-#pragma mark - Facebook SDK helper methods
-/*
-- (void)publishButtonActionWithParameters:(NSDictionary*)userInfo
-{
-    PFQuery *getStore = [PFQuery queryWithClassName:@"Store"];
-    [getStore getObjectInBackgroundWithId:[userInfo valueForKey:@"id"] block:^(PFObject *fetchedStore, NSError *error) {
-        NSString *picURL = [[fetchedStore objectForKey:@"store_avatar"] url];
-        
-        // Put together the dialog parameters
-        NSMutableDictionary *params =
-        [NSMutableDictionary dictionaryWithObjectsAndKeys:
-         [NSString stringWithFormat:@"Just redeemed %@ with Repunch", [userInfo valueForKey:@"title"]], @"name",
-         [NSString stringWithFormat:@"%@", [userInfo valueForKey:@"store"]], @"caption",
-         picURL, @"picture",
-         nil];
-        
-        // Invoke the dialog
-        [FBWebDialogs presentFeedDialogModallyWithSession:nil
-                                               parameters:params
-                                                  handler:
-         ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
-             if (error) {
-                 // Error launching the dialog or publishing a story.
-                 NSLog(@"Error publishing story.");
-             } else {
-                 if (result == FBWebDialogResultDialogNotCompleted) {
-                     // User clicked the "x" icon
-                     NSLog(@"User canceled story publishing.");
-                 } else {
-                     // Handle the publish feed callback
-                     NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
-                     if (![urlParams valueForKey:@"post_id"]) {
-                         // User clicked the Cancel button
-                         NSLog(@"User canceled story publishing.");
-                         NSDictionary *functionParameters = [[NSDictionary alloc]initWithObjectsAndKeys:[userInfo valueForKey:@"patron_store_id"], @"patron_store_id", @"false", @"accept", nil];
-                         [PFCloud callFunctionInBackground:@"facebook_post" withParameters:functionParameters block:^(id object, NSError *error) {
-                             if (!error){
-                                 NSLog(@"facebook function call is :%@", object);
-                             }
-                             else {
-                                 NSLog(@"error is %@", error);
-                             }
-                         }];
-
-                     } else {
-                         // User clicked the Share button
-                         NSString *msg = [NSString stringWithFormat:
-                                          @"Posted the status!"];
-                         NSLog(@"%@", msg);
-                         // Show the result in an alert
-                         [[[UIAlertView alloc] initWithTitle:@"Yay! More punches for you!"
-                                                     message:msg
-                                                    delegate:nil
-                                           cancelButtonTitle:@"OK!"
-                                           otherButtonTitles:nil]
-                          show];
-                         
-                         NSDictionary *functionParameters = [[NSDictionary alloc]initWithObjectsAndKeys:[userInfo valueForKey:@"patron_store_id"], @"patron_store_id", @"true", @"accept", nil];
-                         [PFCloud callFunctionInBackground:@"facebook_post" withParameters:functionParameters block:^(id object, NSError *error) {
-                             if (!error){
-                                 NSLog(@"facebook function call is :%@", object);
-                                 
-                             }
-                             
-                             else {
-                                 NSLog(@"error is %@", error);
-                             }
-                         }];
-                         
-                     }
-                 }
-             }
-         }];
-
-        
-    }];
-    
-}
-
-
-//A function for parsing URL parameters.
-- (NSDictionary*)parseURLParams:(NSString*)query
-{
-    NSArray *pairs = [query componentsSeparatedByString:@"&"];
-    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    for (NSString *pair in pairs) {
-        NSArray *kv = [pair componentsSeparatedByString:@"="];
-        NSString *val =
-        [kv[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        params[kv[0]] = val;
-    }
-    return params;
-}
-*/
-
 - (void)checkLoginState
 {
 	PFUser* currentUser = [PFUser currentUser];
@@ -216,9 +120,11 @@
     if (currentUser)
 	{
 		//if patron object is null for some reason
-        if ( ![sharedData patron] ) {
+        if ( ![sharedData patron] )
+		{
             PFObject *patron = [currentUser valueForKey:@"Patron"];
-            [patron fetchIfNeededInBackgroundWithBlock:^(PFObject *result, NSError *error) {
+            [patron fetchIfNeededInBackgroundWithBlock:^(PFObject *result, NSError *error)
+			{
                 if (!error) {
                     [sharedData setPatron:result];
                     [self presentTabBarController];
@@ -228,7 +134,9 @@
                 }
             }];
 			
-        } else {
+        }
+		else
+		{
             [self presentTabBarController];
 		}
 		
@@ -255,10 +163,11 @@
     [inboxTab setImage:[UIImage imageNamed:@"ico-tab-inbox.png"]];
     
     NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary: [[UITabBarItem appearance] titleTextAttributesForState:UIControlStateNormal]];
-    [attributes setValue:[UIFont fontWithName:@"Avenir" size:14] forKey:UITextAttributeFont];
+    [attributes setValue:[UIFont fontWithName:@"Avenir-Heavy" size:12] forKey:UITextAttributeFont];
     [[UITabBarItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
     
     self.window.rootViewController = self.tabBarController;
+	[self.window makeKeyAndVisible];
 	
 	[inboxVC view]; //pre-load second tab
 }
@@ -267,6 +176,7 @@
 {
 	landingVC = [[LandingViewController alloc] init];
 	self.window.rootViewController = landingVC;
+	[self.window makeKeyAndVisible];
 	//self.navController = [[UINavigationController alloc] initWithRootViewController:landingVC];
 	//self.window.rootViewController = self.navController;
     //[self.window makeKeyAndVisible];

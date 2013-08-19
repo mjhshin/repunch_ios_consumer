@@ -47,8 +47,7 @@
 	NSString *alert = [[pushPayload objectForKey:@"aps"] objectForKey:@"alert"];
 	
 	PFObject *messageStatus = [sharedData getMessage:msgStatusId];
-	[
-	 messageStatus setObject:@"pending" forKey:@"redeem_available"];
+	[messageStatus setObject:@"no" forKey:@"redeem_available"];
 	
 	SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Success!" andMessage:alert];
 	[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];

@@ -87,7 +87,7 @@
 	{
 		[self setupAttachment];
     }
-    else if ([_messageType isEqualToString:@"gift"])
+    else if ([self.messageType isEqualToString:@"gift"])
 	{
         
     }
@@ -207,7 +207,12 @@
 }
 
 - (IBAction)giftButtonAction:(id)sender
-{	
+{
+	if(self.timer == nil && ![self.messageType isEqualToString:@"gift"]) { //timer is nil when it expires.
+		return;
+	}
+	
+	
 	if( [[self.messageStatus objectForKey:@"redeem_available"] isEqualToString:@"yes"] )
 	{
 		self.giftButton.enabled = NO;

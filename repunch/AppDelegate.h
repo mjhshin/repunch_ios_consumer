@@ -14,7 +14,6 @@
 #import "SIAlertView.h"
 #import "DataManager.h"
 #import <UIKit/UIKit.h>
-#import <Parse/Parse.h>
 #import "PunchHandler.h"
 #import "RedeemHandler.h"
 #import "MessageHandler.h"

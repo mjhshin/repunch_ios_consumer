@@ -6,16 +6,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppDelegate.h"
+#import "GradientBackground.h"
+#import "DataManager.h"
 
 @interface LoginViewController : UIViewController <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameInput;
 @property (weak, nonatomic) IBOutlet UITextField *passwordInput;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet UIButton *facebookButton;
+@property (weak, nonatomic) IBOutlet UILabel *facebookButtonLabel;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *facebookSpinner;
 
 - (IBAction)cancelLogin:(id)sender;
-- (IBAction)loginWithFB:(id)sender;
-- (IBAction)loginWithEmail:(id)sender;
-- (IBAction)getForgottenPassword:(id)sender;
+- (IBAction)loginWithRepunch:(id)sender;
+- (IBAction)loginWithFacebook:(id)sender;
+- (IBAction)forgotPassword:(id)sender;
 
 @end

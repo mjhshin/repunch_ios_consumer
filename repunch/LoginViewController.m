@@ -6,9 +6,6 @@
 //
 
 #import "LoginViewController.h"
-#import "AppDelegate.h"
-#import "GradientBackground.h"
-#import "DataManager.h"
 
 @implementation LoginViewController
 {
@@ -47,6 +44,9 @@
 	
 	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 	spinner.frame = self.loginButton.bounds;
+	spinner.hidesWhenStopped = YES;
+	[self.loginButton addSubview:spinner];
+	self.facebookSpinner.hidesWhenStopped = YES;
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -96,7 +96,7 @@
 	return NO; // We do not want UITextField to insert line-breaks.
 }
 
-- (IBAction)loginWithEmail:(id)sender
+- (IBAction)loginWithRepunch:(id)sender
 {
 	[self dismissKeyboard];
 	
@@ -113,9 +113,8 @@
 	}
 	
 	[self.loginButton setTitle:@"" forState:UIControlStateNormal];
-	[self.loginButton setEnabled:FALSE];
-	[self.loginButton addSubview:spinner];
-	spinner.hidesWhenStopped = YES;
+	[self.loginButton setEnabled:NO];
+	[self.facebookButton setEnabled:NO];
 	[spinner startAnimating];
         
 	[PFUser logInWithUsernameInBackground:username password:password block:^(PFUser *user, NSError *error)
@@ -130,20 +129,12 @@
 				
 			} else {
 				NSLog(@"Account exists but is not of type 'patron'");
-				[PFUser logOut];
-				[self showDialog:@"Login Failed" withResultMessage:@"Please check your username/password"];
-				[spinner stopAnimating];
-				[self.loginButton setTitle:@"Sign In" forState:UIControlStateNormal];
-				[self.loginButton setEnabled:TRUE];
+				[self handleError:nil withTitle:@"Login Failed" andMessage:@"Please check your username/password"];
 			}
 		}
 		else
 		{
-			NSLog(@"Here is the ERROR: %@", error);
-			[self showDialog:@"Login Failed" withResultMessage:@"Please check your username/password"];
-			[spinner stopAnimating];
-			[self.loginButton setTitle:@"Sign In" forState:UIControlStateNormal];
-			[self.loginButton setEnabled:TRUE];
+			[self handleError:nil withTitle:@"Login Failed" andMessage:@"Please check your username/password"];
 		}
 	}]; //end get user block
 }
@@ -165,11 +156,7 @@
 			[self setupPFInstallation:patronId withPunchCode:punchCode];
 			
 		} else {
-			[self showDialog:@"Login Failed" withResultMessage:@"Sorry, something went wrong"];
-			[PFUser logOut];
-			[spinner stopAnimating];
-			[self.loginButton setTitle:@"Sign In" forState:UIControlStateNormal];
-			[self.loginButton setEnabled:TRUE];
+			[self handleError:nil withTitle:@"Login Failed" andMessage:@"Sorry, something went wrong"];
 		}
 	}];
 }
@@ -183,21 +170,23 @@
 	[[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
 	{
 		[spinner stopAnimating];
+		[self.facebookSpinner stopAnimating];
 		[self.loginButton setTitle:@"Sign In" forState:UIControlStateNormal];
-		[self.loginButton setEnabled:TRUE];
+		[self.loginButton setEnabled:YES];
+		[self.facebookButton setEnabled:YES];
+		[self.facebookButtonLabel setHidden:NO];
 		
 		if(!error) {
 			//login complete
 			[appDelegate presentTabBarController];
 			
 		} else {
-			[self showDialog:@"Login Failed" withResultMessage:@"Sorry, something went wrong"];
-			[PFUser logOut];
+			[self handleError:nil withTitle:@"Login Failed" andMessage:@"Sorry, something went wrong"];
 		}
 	}];
 }
 
-- (IBAction)getForgottenPassword:(id)sender
+- (IBAction)forgotPassword:(id)sender
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Forgot Password?"
 													message:@"Enter your email address and we'll help you reset your password."
@@ -208,21 +197,113 @@
     [alert show];
 }
 
-
 - (IBAction)cancelLogin:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)loginWithFB:(id)sender
+- (IBAction)loginWithFacebook:(id)sender
 {
-    //[spinner startAnimating];
+	[self.loginButton setEnabled:NO];
+	[self.facebookButton setEnabled:NO];
+	[self.facebookSpinner startAnimating];
+	[self.facebookButtonLabel setHidden:YES];
+	
+    NSArray *permissions = @[@"email", @"user_birthday"];
+	
+	[PFFacebookUtils logInWithPermissions:permissions block:^(PFUser *user, NSError *error)
+	 {
+		 if (!user)
+		 {
+			 NSLog(@"Uh oh. The user cancelled the Facebook login.");
+			 [self handleError:nil withTitle:@"Login Failed" andMessage:@"Sorry, something went wrong"];
+		 }
+		 else if (user.isNew)
+		 {
+			 NSLog(@"User signed up and logged in through Facebook!");
+			 //get publish permissions
+			 [self performFacebookSignup:user];
+		 }
+		 else
+		 {
+			 NSLog(@"User logged in through Facebook! User Object: %@", user);
+			 NSString *patronId = [[user objectForKey:@"Patron"] objectId];
+			 [self fetchPatronPFObject:patronId];
+		 }
+	 }];
+}
+
+- (void)performFacebookSignup:(PFUser *)currentUser
+{
+	[[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error)
+	 {
+		 if (!error)
+		 {
+			 NSString *facebookId = user.id;
+			 NSString *firstName = user.first_name;
+			 NSString *lastName = user.last_name;
+			 NSString *birthday = user.birthday;
+			 NSString *gender = [user objectForKey:@"gender"];
+			 NSString *email = [user objectForKey:@"email"];
+			 
+			 //register patron
+			 NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+										 currentUser.objectId,	@"user_id",
+										 currentUser.username,	@"username",
+										 email,					@"email",
+										 gender,				@"gender",
+										 birthday,				@"birthday",
+										 firstName,				@"first_name",
+										 lastName,				@"last_name",
+										 facebookId,			@"facebook_id",
+										 nil];
+			 
+			 [PFCloud callFunctionInBackground:@"register_patron"
+								withParameters:parameters
+										 block:^(PFObject* patron, NSError *error)
+			  {
+				  if (!error)
+				  {
+					  [sharedData setPatron:patron];
+					  [self setupPFInstallation:patron.objectId withPunchCode:[patron objectForKey:@"punch_code"]];
+				  }
+				  else
+				  {
+					  //TODO
+					  [self handleError:error withTitle:@"Login Failed" andMessage:@"Sorry, something went wrong"];
+				  }
+			  }];
+			 
+		 }
+		 else
+		 {
+			 [self handleError:nil withTitle:@"Login Failed" andMessage:@"Sorry, something went wrong"];
+		 }
+	 }];
 }
 
 - (void)dismissKeyboard
 {
     [self.usernameInput resignFirstResponder];
     [self.passwordInput resignFirstResponder];
+}
+
+- (void)handleError:(NSError *)error withTitle:(NSString *)title andMessage:(NSString *)message
+{
+	NSLog(@"Here is the ERROR: %@", error);
+	
+	if([PFUser currentUser]) {
+		[PFUser logOut];
+	}
+	
+	[self showDialog:title withResultMessage:message];
+	
+	[spinner stopAnimating];
+	[self.facebookSpinner stopAnimating];
+	[self.loginButton setTitle:@"Sign In" forState:UIControlStateNormal];
+	[self.facebookButtonLabel setHidden:NO];
+	[self.loginButton setEnabled:YES];
+	[self.facebookButton setEnabled:YES];
 }
 
 - (void)showDialog:(NSString*)resultTitle withResultMessage:(NSString*)resultMessage

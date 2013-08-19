@@ -6,6 +6,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DataManager.h"
+#import "AppDelegate.h"
+#import "GradientBackground.h"
 
 @interface RegisterViewController : UIViewController<UITextFieldDelegate, UIScrollViewDelegate>
 
@@ -19,8 +22,11 @@
 @property (weak, nonatomic) IBOutlet UITextField *ageInput;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *genderSelector;
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *facebookSpinner;
+@property (weak, nonatomic) IBOutlet UILabel *facebookButtonLabel;
+@property (weak, nonatomic) IBOutlet UIButton *facebookButton;
 
-- (IBAction)registerWithFB:(id)sender;
-- (IBAction)registerWithEmail:(id)sender;
+- (IBAction)registerWithFacebook:(id)sender;
+- (IBAction)registerWithRepunch:(id)sender;
 
 @end

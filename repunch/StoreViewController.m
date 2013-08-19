@@ -77,6 +77,7 @@
 {
     patronStore = [sharedData getPatronStore:self.storeId];
     patronStoreExists = (patronStore != nil);
+	
 	if(patronStoreExists) {
 		punchCount = [[patronStore objectForKey:@"punch_count"] intValue];
 	} else {
@@ -213,6 +214,9 @@
 
 - (void)setStoreButtons
 {
+	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
+	CGFloat screenWidth = screenRect.size.width;
+	
 	if(!patronStoreExists)
 	{
 		[self.addToMyPlacesButton setTitle:@"Add to My Places" forState:UIControlStateNormal];
@@ -221,6 +225,16 @@
 									 action:@selector(addStore)
 						   forControlEvents:UIControlEventTouchUpInside];
 		[self.deleteButton setHidden:TRUE];
+		
+		self.feedbackButtonView.hidden = YES;
+		
+		CGPoint callButtonCenter = self.callButtonView.center;
+		callButtonCenter.x = screenWidth/4;
+		self.callButtonView.center = callButtonCenter;
+		
+		CGPoint mapButtonCenter = self.mapButtonView.center;
+		mapButtonCenter.x = screenWidth*3/4;
+		self.mapButtonView.center = mapButtonCenter;
 	}
 	else
 	{
@@ -228,6 +242,20 @@
 		[self.addToMyPlacesButton setTitle:buttonText forState:UIControlStateNormal];
 		[self.addToMyPlacesButton setEnabled:FALSE];
 		[self.deleteButton setHidden:FALSE];
+		
+		self.feedbackButtonView.hidden = NO;
+		
+		CGPoint callButtonCenter = self.callButtonView.center;
+		callButtonCenter.x = screenWidth/6;
+		self.callButtonView.center = callButtonCenter;
+		
+		CGPoint mapButtonCenter = self.mapButtonView.center;
+		mapButtonCenter.x = screenWidth/2;
+		self.mapButtonView.center = mapButtonCenter;
+		
+		CGPoint feedbackButtonCenter = self.feedbackButtonView.center;
+		feedbackButtonCenter.x = screenWidth*5/6;
+		self.feedbackButtonView.center = feedbackButtonCenter;
 	}
 	
 	//set button actions

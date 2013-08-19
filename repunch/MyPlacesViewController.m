@@ -90,7 +90,7 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         SIAlertView *punchCodeHelpAlert = [[SIAlertView alloc] initWithTitle:@"A Friendly Tip" andMessage:@"Click on the Repunch logo in order to get your punch code"];
-        [punchCodeHelpAlert addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeDefault handler:nil];
+        [punchCodeHelpAlert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
         [punchCodeHelpAlert show];
     }
 }
@@ -337,19 +337,10 @@
 	
 	if(storeId != nil)
 	{
-		NSUInteger index = [self.storeIdArray indexOfObject:storeId];
-		
-		if(index == NSNotFound) {
-			NSLog(@"storeId not found, good");
-			[self.storeIdArray addObject:storeId];
-			[self sortStoreObjectIdsByPunches];
-			//[self.storeIdArray addObject:storeId];
-		} else {
-			NSLog(@"storeId found, WTF");
-			//[self.storeIdArray removeObjectAtIndex:index];
-		}
+		[self.storeIdArray addObject:storeId];
 	}
 	
+	[self sortStoreObjectIdsByPunches];
 	[self.myPlacesTableView reloadData];
 }
 

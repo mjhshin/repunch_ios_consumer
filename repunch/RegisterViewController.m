@@ -6,9 +6,7 @@
 //
 
 #import "RegisterViewController.h"
-#import "DataManager.h"
-#import "AppDelegate.h"
-#import "GradientBackground.h"
+
 
 @implementation RegisterViewController
 {
@@ -36,11 +34,7 @@
 						   nil];
     [numberToolbar sizeToFit];
     self.ageInput.inputAccessoryView = numberToolbar;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:YES];
+	
 	//self.navigationController.navigationBarHidden = NO;
 	//self.navigationItem.title = @"Register";
 	
@@ -56,6 +50,19 @@
 	
 	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 	spinner.frame = self.registerButton.bounds;
+	[self.registerButton addSubview:spinner];
+	spinner.hidesWhenStopped = YES;
+	self.facebookSpinner.hidesWhenStopped = YES;
+	
+	NSDictionary *attributes = [NSDictionary dictionaryWithObject:[UIFont fontWithName:@"Avenir-Heavy" size:17]
+														   forKey:UITextAttributeFont];
+	[self.genderSelector setTitleTextAttributes:attributes
+									forState:UIControlStateNormal];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -105,24 +112,40 @@
 	return NO; // We do not want UITextField to insert line-breaks.
 }
 
--(void)showError {
-    UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"There was an error."
-                          message:@"Sorry, something went wrong."
-                          delegate:self
-                          cancelButtonTitle:@"Okay"
-                          otherButtonTitles: nil];
-    [alert show];
-}
-
 #pragma mark - registration methods
 
-- (IBAction)registerWithFB:(id)sender
+- (IBAction)registerWithFacebook:(id)sender
 {
-    //[spinner startAnimating];
+    [self.facebookButtonLabel setHidden:YES];
+	[self.facebookButton setEnabled:NO];
+	[self.registerButton setEnabled:NO];
+	[self.facebookSpinner startAnimating];
+	
+    NSArray *permissions = @[@"email", @"user_birthday"];
+	
+	[PFFacebookUtils logInWithPermissions:permissions block:^(PFUser *user, NSError *error)
+	 {
+		 if (!user)
+		 {
+			 NSLog(@"Uh oh. The user cancelled the Facebook login.");
+			 [self handleError:nil withTitle:@"Login Failed" andMessage:@"Sorry, something went wrong"];
+		 }
+		 else if (user.isNew)
+		 {
+			 NSLog(@"User signed up and logged in through Facebook!");
+			 //get publish permissions
+			 [self performFacebookSignup:user];
+		 }
+		 else
+		 {
+			 NSLog(@"User logged in through Facebook! User Object: %@", user);
+			 NSString *patronId = [[user objectForKey:@"Patron"] objectId];
+			 [self fetchPatronPFObject:patronId];
+		 }
+	 }];
 }
 
-- (IBAction)registerWithEmail:(id)sender
+- (IBAction)registerWithRepunch:(id)sender
 {
 	[self dismissKeyboard];
 	
@@ -144,9 +167,8 @@
     [newUser setValue:@"patron" forKey:@"account_type"];
     
     [self.registerButton setTitle:@"" forState:UIControlStateNormal];
-	[self.registerButton setEnabled:FALSE];
-	[self.registerButton addSubview:spinner];
-	spinner.hidesWhenStopped = YES;
+	[self.registerButton setEnabled:NO];
+	[self.facebookButton setEnabled:NO];
 	[spinner startAnimating];
     
     [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
@@ -160,13 +182,13 @@
 			NSString *gender = (self.genderSelector.selectedSegmentIndex == 0) ? @"female" : @"male";
             
             NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-										[[PFUser currentUser] objectId], @"user_id",
-										username, @"username",
-										email, @"email",
-										gender, @"gender",	//TODO
-										birthday, @"birthday",	//TODO
-										firstName, @"first_name",
-										lastName, @"last_name",
+										[[PFUser currentUser] objectId],	@"user_id",
+										username,							@"username",
+										email,								@"email",
+										gender,								@"gender",	
+										birthday,							@"birthday",
+										firstName,							@"first_name",
+										lastName,							@"last_name",
 										nil];
             
             [PFCloud callFunctionInBackground:@"register_patron"
@@ -183,11 +205,7 @@
                 
 				}
 				else
-				{
-					[spinner stopAnimating];
-					[self.registerButton setTitle:@"Sign In" forState:UIControlStateNormal];
-					[self.registerButton setEnabled:TRUE];
-					
+				{					
 					NSDictionary *parseError = [error userInfo];
 					NSInteger errorCode = [[parseError valueForKey:@"error"] intValue];
 					
@@ -195,18 +213,19 @@
 						NSString *msgPart1 = @"Sorry, the email ";
 						NSString *msgPart2 = @" is already taken";
 					
-						[self showDialog:@"Registration failed"
-					   withResultMessage:[NSString stringWithFormat:@"%@%@%@", msgPart1, email, msgPart2]];
+						[self handleError:nil
+								withTitle:@"Registration failed"
+							   andMessage:[NSString stringWithFormat:@"%@%@%@", msgPart1, email, msgPart2]];
 						
 					} else { //TODO: error codes!!!
-						[self showDialog:@"Registration Failed" withResultMessage:@"Sorry, something went wrong"];
+						[self handleError:nil withTitle:@"Registration Failed" andMessage:@"Sorry, something went wrong"];
                     
 					}
 				}
             }];
             
         } else {
-            [self showDialog:@"Registration Failed" withResultMessage:@"Sorry, something went wrong"];
+            [self handleError:nil withTitle:@"Registration Failed" andMessage:@"Sorry, something went wrong"];
         }
     }];
 }
@@ -220,15 +239,17 @@
 	[[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
 	{
 		[spinner stopAnimating];
+		[self.facebookSpinner stopAnimating];
 		[self.registerButton setTitle:@"Sign In" forState:UIControlStateNormal];
-		[self.registerButton setEnabled:TRUE];
+		[self.registerButton setEnabled:YES];
+		[self.facebookButtonLabel setHidden:NO];
+		[self.facebookButton setEnabled:YES];
 		
 		if(!error) { //login complete
 			[appDelegate presentTabBarController];
 			
 		} else {
-			[self showDialog:@"Registration Failed" withResultMessage:@"Sorry, something went wrong"];
-			[PFUser logOut];
+			[self handleError:nil withTitle:@"Registration Failed" andMessage:@"Sorry, something went wrong"];
 		}
 	}];
 }
@@ -294,6 +315,93 @@
 	}
     
     return YES;
+}
+
+- (void)performFacebookSignup:(PFUser *)currentUser
+{
+	[[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error)
+	 {
+		 if (!error)
+		 {
+			 NSString *facebookId = user.id;
+			 NSString *firstName = user.first_name;
+			 NSString *lastName = user.last_name;
+			 NSString *birthday = user.birthday;
+			 NSString *gender = [user objectForKey:@"gender"];
+			 NSString *email = [user objectForKey:@"email"];
+			 
+			 //register patron
+			 NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+										 currentUser.objectId,	@"user_id",
+										 currentUser.username,	@"username",
+										 email,					@"email",
+										 gender,				@"gender",
+										 birthday,				@"birthday",
+										 firstName,				@"first_name",
+										 lastName,				@"last_name",
+										 facebookId,			@"facebook_id",
+										 nil];
+			 
+			 [PFCloud callFunctionInBackground:@"register_patron"
+								withParameters:parameters
+										 block:^(PFObject* patron, NSError *error)
+			  {
+				  if (!error)
+				  {
+					  [sharedData setPatron:patron];
+					  [self setupPFInstallation:patron.objectId withPunchCode:[patron objectForKey:@"punch_code"]];
+				  }
+				  else
+				  {
+					  //TODO
+					  [self handleError:error withTitle:@"Registration Failed" andMessage:@"Sorry, something went wrong"];
+				  }
+			  }];
+			 
+		 }
+		 else
+		 {
+			 [self handleError:nil withTitle:@"Registration Failed" andMessage:@"Sorry, something went wrong"];
+		 }
+	 }];
+}
+
+- (void)fetchPatronPFObject:(NSString*)patronId
+{
+	PFQuery *query = [PFQuery queryWithClassName:@"Patron"];
+	
+	[query getObjectInBackgroundWithId:patronId block:^(PFObject *patron, NSError *error)
+	 {
+		 if(!error) {
+			 NSLog(@"Fetched Patron object: %@", patron);
+			 
+			 [sharedData setPatron:patron];
+			 
+			 //setup PFInstallation
+			 NSString *patronId = [patron objectId];
+			 NSString *punchCode = [patron objectForKey:@"punch_code"];
+			 [self setupPFInstallation:patronId withPunchCode:punchCode];
+			 
+		 } else {
+			 [self handleError:nil withTitle:@"Registration Failed" andMessage:@"Sorry, something went wrong"];
+		 }
+	 }];
+}
+
+- (void)handleError:(NSError *)error withTitle:(NSString *)title andMessage:(NSString *)message
+{
+	NSLog(@"Here is the ERROR: %@", error);
+	
+	if([PFUser currentUser]) {
+		[PFUser logOut];
+	}
+	
+	[self showDialog:title withResultMessage:message];
+	[spinner stopAnimating];
+	[self.facebookSpinner stopAnimating];
+	[self.registerButton setTitle:@"Sign In" forState:UIControlStateNormal];
+	[self.registerButton setEnabled:YES];
+	[self.facebookButton setEnabled:YES];
 }
 
 - (void)showDialog:(NSString*)resultTitle withResultMessage:(NSString*)resultMessage
