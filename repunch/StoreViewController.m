@@ -117,6 +117,7 @@
 	street = [street stringByAppendingString:[NSString stringWithFormat:@"%@%@%@%@%@", city, @", ", state, @" ", zip]];
 	
 	self.storeAddress.text = street;
+	[self.storeAddress sizeToFit];
 	
 	[self setStoreHours];
 	

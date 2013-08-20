@@ -1,3 +1,4 @@
+
 //
 //  LoginViewController.h
 //  Repunch
@@ -245,6 +246,10 @@
 			 NSString *birthday = user.birthday;
 			 NSString *gender = [user objectForKey:@"gender"];
 			 NSString *email = [user objectForKey:@"email"];
+			 
+			 if(email == nil) {
+				 email = [NSNull null];
+			 }
 			 
 			 //register patron
 			 NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:

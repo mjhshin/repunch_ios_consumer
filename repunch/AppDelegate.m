@@ -130,10 +130,11 @@
                     [self presentTabBarController];
                 }
                 else {
+					[PFUser logOut];
+					[self checkLoginState];
                     NSLog(@"Failed to fetch Patron object: %@", error);
                 }
             }];
-			
         }
 		else
 		{

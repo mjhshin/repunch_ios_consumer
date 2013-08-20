@@ -147,16 +147,9 @@
 					[self.sharedData addStore:store];
 					[self.storeIdArray addObject:storeId];
 				}
-
-				[self sortStoreObjectIdsByPunches];
-				[self.myPlacesTableView reloadData];
-				[self.myPlacesTableView setHidden:FALSE];
-				[self.emptyMyPlacesLabel setHidden:TRUE];
 			}
-			else
-			{
-				[self.emptyMyPlacesLabel setHidden:FALSE];
-			}
+			
+			[self refreshTableView];
         }
         else
         {
@@ -312,7 +305,7 @@
 	[self updateTableView:storeId andAddRemove:isAddRemove];
 }
 
-- (void) updateTableView:(NSString *)storeId andAddRemove:(BOOL)isAddRemove
+- (void)updateTableView:(NSString *)storeId andAddRemove:(BOOL)isAddRemove
 {
 	if(isAddRemove)
 	{
@@ -327,7 +320,7 @@
 		}
 	}
 	
-    [self.myPlacesTableView reloadData];
+    [self refreshTableView];
 }
 
 - (void)receiveRefreshNotification:(NSNotification *)notification
@@ -338,6 +331,22 @@
 	if(storeId != nil)
 	{
 		[self.storeIdArray addObject:storeId];
+	}
+	
+	[self refreshTableView];
+}
+
+- (void)refreshTableView
+{
+	if(self.storeIdArray.count > 0)
+	{
+		[self.myPlacesTableView setHidden:NO];
+		[self.emptyMyPlacesLabel setHidden:YES];
+	}
+	else
+	{
+		[self.myPlacesTableView setHidden:YES];
+		[self.emptyMyPlacesLabel setHidden:NO];
 	}
 	
 	[self sortStoreObjectIdsByPunches];

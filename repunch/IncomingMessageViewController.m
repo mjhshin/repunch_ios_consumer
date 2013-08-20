@@ -131,7 +131,7 @@
 	CGRect msgFrame = self.bodyTextView.frame;
     CGRect giftViewFrame = self.giftView.frame;
     
-    giftViewFrame.origin.y = msgFrame.origin.y + msgFrame.size.height + 15;
+    giftViewFrame.origin.y = msgFrame.origin.y + msgFrame.size.height + 40;
     self.giftView.frame = giftViewFrame;
 	[self.giftView.layer setCornerRadius:14];
 	[self.giftView setClipsToBounds:YES];
@@ -199,8 +199,10 @@
 	int minutes = (ti - days*SECONDS_IN_DAY - hours*SECONDS_IN_HOUR)/SECONDS_IN_MINUTE;
 	int seconds = (ti - days*SECONDS_IN_DAY - hours*SECONDS_IN_HOUR - minutes*SECONDS_IN_MINUTE);
 	
-	if(days > 0) {
+	if(days > 1) {
 		return [NSString stringWithFormat:@"%i days, %.2d:%.2d:%.2d", days, hours, minutes, seconds];
+	} else if(days == 1) {
+		return [NSString stringWithFormat:@"1 day, %.2d:%.2d:%.2d", hours, minutes, seconds];
 	} else {
 		return [NSString stringWithFormat:@"%.2d:%.2d:%.2d", hours, minutes, seconds];
 	}

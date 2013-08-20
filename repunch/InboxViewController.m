@@ -8,6 +8,10 @@
 #import "InboxViewController.h"
 
 @implementation InboxViewController
+{
+	NSInteger alertBadgeCount;
+	int paginateCount;
+}
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
 {
@@ -67,6 +71,9 @@
 	frame2.origin = CGPointMake(xCenter - xOffset2, yCenter - yOffset2);
 	self.emptyInboxLabel.frame = frame2;
 	
+	alertBadgeCount = 0;
+	paginateCount = 0;
+	
     [self loadInbox];
 }
 
@@ -109,26 +116,30 @@
         if(!error)
 		{
 			[self.messagesArray removeAllObjects];
+			alertBadgeCount = 0;
 			
 			if(results.count > 0)
 			{
 				for(PFObject *messageStatus in results) {
 					[self.sharedData addMessage:messageStatus];
 					[self.messagesArray addObject:messageStatus];
+					
+					if( ![[messageStatus objectForKey:@"is_read"] boolValue] ) {
+						++alertBadgeCount;
+					}
 				}
-				[self.messageTableView reloadData];
-				[self.messageTableView setHidden:FALSE];
-				[self.emptyInboxLabel setHidden:TRUE];
 			}
-			else
-			{
-				[self.emptyInboxLabel setHidden:FALSE];
-			}
-        } else {
+			[self refreshTableView];
+        }
+		else {
             
         }
     }];
-    
+}
+
+- (void)paginate
+{
+	
 }
 
 #pragma mark - Table view data source
@@ -187,10 +198,12 @@
 															blue:(float)192/256
 														   alpha:(float)65/256];
 		cell.senderName.font = [UIFont fontWithName:@"Avenir" size:17];
+		cell.dateSent.textColor = [UIColor darkGrayColor];
     }
     else {
         cell.contentView.backgroundColor = [UIColor whiteColor];
 		cell.senderName.font = [UIFont fontWithName:@"Avenir-Heavy" size:17];
+		cell.dateSent.textColor = [UIColor colorWithRed:(240/255.0) green:(140/255.0) blue:(19/255.0) alpha:1.0];
     }
 
     return cell;
@@ -208,6 +221,9 @@
 	 
 	if( [[messageStatus objectForKey:@"is_read"] boolValue] == NO )
 	{
+		--alertBadgeCount;
+		[self updateBadgeCount];
+		
 		[messageStatus setObject:[NSNumber numberWithBool:YES] forKey:@"is_read"]; //does this change is_read in shareddata?
 		[messageStatus saveInBackground];
 	
@@ -258,24 +274,55 @@
 {
 	NSString *msgStatusId = [[notification userInfo] objectForKey:@"message_status_id"];
 	
-	for(PFObject* msg in self.messagesArray)
+	for(PFObject* msg in self.messagesArray) //if this is a reply, replace the original message
 	{
 		if( [msg.objectId isEqualToString:msgStatusId] )
 		{
+			if( ![[msg objectForKey:@"is_read"] boolValue] ) { //avoid incrementing badge count if it was already unread
+				--alertBadgeCount;
+			}
 			[self.messagesArray removeObject:msg];
 			break;
 		}
 	}
 	
 	[self.messagesArray insertObject:[self.sharedData getMessage:msgStatusId] atIndex:0];
-	[self.messageTableView reloadData];
+	[self refreshTableView];
+	
+	++alertBadgeCount;
+	[self updateBadgeCount];
 }
 
 - (void)removeMessage:(IncomingMessageViewController *)controller forMsgStatus:(PFObject *)msgStatus
 {
+	//no need to update alert badge count because only read messages can be deleted
 	NSLog(@"IncomingMessageVC->InboxVC IncomingMessageVCDelegate");
 	[self.messagesArray removeObject:msgStatus];	
-    [self.messageTableView reloadData];
+    [self refreshTableView];
+}
+
+- (void)refreshTableView
+{
+	[self updateBadgeCount];
+	
+	if(self.messagesArray.count > 0)
+	{
+		[self.messageTableView setHidden:NO];
+		[self.emptyInboxLabel setHidden:YES];
+	}
+	else
+	{
+		[self.messageTableView setHidden:YES];
+		[self.emptyInboxLabel setHidden:NO];
+	}
+	[self.messageTableView reloadData];
+}
+
+- (void)updateBadgeCount
+{
+	UITabBarItem *tab = [self.tabBarController.tabBar.items objectAtIndex:1];	
+	tab.badgeValue = (alertBadgeCount == 0) ? nil : [NSString stringWithFormat:@"%i", alertBadgeCount];
+	[UIApplication sharedApplication].applicationIconBadgeNumber = alertBadgeCount;
 }
 
 - (IBAction)openSettings:(id)sender
@@ -295,7 +342,6 @@
 	NSString *punchCode = [self.patron objectForKey:@"punch_code"];
     SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Your Punch Code"
                                                  andMessage:punchCode];
-	
 	[alert setTitleFont:[UIFont fontWithName:@"Avenir" size:20]];
 	[alert setMessageFont:[UIFont fontWithName:@"Avenir-Heavy" size:32]];
     [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
