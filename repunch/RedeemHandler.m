@@ -15,23 +15,34 @@
 	DataManager *sharedData = [DataManager getSharedInstance];
 	
 	NSString *storeId = [pushPayload objectForKey:@"store_id"];
-	//NSString *patronStoreId = [pushPayload objectForKey:@"patron_store_id"];
-	//int punches = [[pushPayload objectForKey:@"punches"] intValue];
+	NSString *rewardTitle = [pushPayload objectForKey:@"reward_title"];
 	int totalPunches = [[pushPayload objectForKey:@"total_punches"] intValue];
 	NSString *alert = [[pushPayload objectForKey:@"aps"] objectForKey:@"alert"];
 	
+	PFObject *patron = [sharedData patron];
 	PFObject *store = [sharedData getStore:storeId];
 	PFObject *patronStore = [sharedData getPatronStore:storeId];
 	
 	if(store != nil && patronStore != nil)
 	{
-		[sharedData updatePatronStore:storeId withPunches:totalPunches];
+		int currentPunches = [[patronStore objectForKey:@"punch_count"] intValue];
+		
+		if(totalPunches < currentPunches) {
+			[sharedData updatePatronStore:storeId withPunches:totalPunches];
+		}
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"Redeem" object:self];
 		
-		SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Success!" andMessage:alert];
-		[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
-		[alertView show];
+		if( [patron objectForKey:@"facebook_id"] == nil )
+		{
+			SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Success!" andMessage:alert];
+			[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
+			[alertView show];
+		}
+		else
+		{
+			[FacebookUtils postToFacebook:storeId withRewardTitle:rewardTitle];
+		}
 	}
 	else
 	{

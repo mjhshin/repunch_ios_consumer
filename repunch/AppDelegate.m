@@ -171,6 +171,7 @@
 	[self.window makeKeyAndVisible];
 	
 	[inboxVC view]; //pre-load second tab
+	[FBFriendPickerViewController class]; //pre-load Facebook friend picker
 }
 
 - (void)presentLandingViews

@@ -15,6 +15,7 @@
 	PFObject *patronStore;
 	BOOL patronStoreExists;
     int punchCount;
+	id selectedReward;
 }
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
@@ -34,6 +35,11 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(checkPatronStore)
 												 name:@"Redeem"
+											   object:nil];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(checkPatronStore)
+												 name:@"FacebookPost"
 											   object:nil];
     
 	sharedData = [DataManager getSharedInstance];
@@ -63,7 +69,7 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-
+	[super viewDidDisappear:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -80,7 +86,16 @@
 	
 	if(patronStoreExists) {
 		punchCount = [[patronStore objectForKey:@"punch_count"] intValue];
-	} else {
+		
+		PFObject *facebookPost = [patronStore objectForKey:@"FacebookPost"];
+		if( facebookPost != nil && facebookPost != (id)[NSNull null] )
+		{
+			NSString *rewardTitle = [facebookPost objectForKey:@"reward"];
+			[FacebookUtils postToFacebook:self.storeId withRewardTitle:rewardTitle];
+		}
+	}
+	else
+	{
 		punchCount = 0;
 	}
 	
@@ -101,7 +116,7 @@
 	self.rewardArray = [store objectForKey:@"rewards"];
 
 	
-	self.storeName.text = name;
+	self.storeNameLabel.text = name;
 	
 	if(crossStreets != (id)[NSNull null]) {
 		street = [street stringByAppendingString:@"\n"];
@@ -345,6 +360,7 @@
 
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	id reward = [self.rewardArray objectAtIndex:indexPath.row];
+	selectedReward = reward;
 
 	int rewardPunches = [[reward objectForKey:@"punches"] intValue];
 	int rewardId = [[reward objectForKey:@"reward_id"] intValue];
@@ -420,8 +436,7 @@
             
 		[alertView addButtonWithTitle:@"Cancel"
 								 type:SIAlertViewButtonTypeDefault
-							  handler:^(SIAlertView *alert) {
-							  }];
+							  handler:nil];
 		[alertView show];
 	}
 	else
@@ -431,88 +446,9 @@
             
 		[alertView addButtonWithTitle:@"OK"
 								 type:SIAlertViewButtonTypeDefault
-							  handler:^(SIAlertView *alert) {
-		}];
+							  handler:nil];
 		[alertView show];
 	}
-}
-
-- (void)publishButtonActionWithParameters:(NSDictionary*)userInfo
-{
-	/*
-    PFQuery *getStore = [PFQuery queryWithClassName:@"Store"];
-    [getStore getObjectInBackgroundWithId:[userInfo valueForKey:@"store_id"] block:^(PFObject *fetchedStore, NSError *error) {
-        NSString *picURL = [[fetchedStore objectForKey:@"store_avatar"] url];
-        
-        // Put together the dialog parameters
-        NSMutableDictionary *params =
-        [NSMutableDictionary dictionaryWithObjectsAndKeys:
-         [NSString stringWithFormat:@"Just redeemed %@ with Repunch", [userInfo valueForKey:@"reward_title"]], @"name",
-         [NSString stringWithFormat:@"%@", [userInfo valueForKey:@"store_name"]], @"caption",
-         picURL, @"picture",
-         nil];
-        
-        // Invoke the dialog
-        [FBWebDialogs presentFeedDialogModallyWithSession:nil
-                                               parameters:params
-                                                  handler:
-         ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
-             if (error) {
-                 // Error launching the dialog or publishing a story.
-                 NSLog(@"Error publishing story.");
-             } else {
-                 if (result == FBWebDialogResultDialogNotCompleted) {
-                     // User clicked the "x" icon
-                     NSLog(@"User canceled story publishing.");
-                 } else {
-                     // Handle the publish feed callback
-                     NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
-                     if (![urlParams valueForKey:@"post_id"]) {
-                         // User clicked the Cancel button
-                         NSLog(@"User canceled story publishing.");
-                         NSDictionary *functionParameters = [[NSDictionary alloc]initWithObjectsAndKeys:[userInfo valueForKey:@"patron_store_id"], @"patron_store_id", @"false", @"accept", nil];
-                         [PFCloud callFunctionInBackground:@"facebook_post" withParameters:functionParameters block:^(id object, NSError *error) {
-                             if (!error){
-                                 NSLog(@"facebook function call is :%@", object);
-                             }
-                             else {
-                                 NSLog(@"error is %@", error);
-                             }
-                         }];
-
-                     } else {
-                         // User clicked the Share button
-                         NSString *msg = [NSString stringWithFormat:
-                                          @"Posted the status!"];
-                         NSLog(@"%@", msg);
-                         // Show the result in an alert
-                         [[[UIAlertView alloc] initWithTitle:@"Yay! More punches for you!"
-                                                     message:msg
-                                                    delegate:nil
-                                           cancelButtonTitle:@"OK!"
-                                           otherButtonTitles:nil]
-                          show];
-                         
-                         NSDictionary *functionParameters = [[NSDictionary alloc]initWithObjectsAndKeys:[userInfo valueForKey:@"patron_store_id"], @"patron_store_id", @"true", @"accept", nil];
-                         [PFCloud callFunctionInBackground:@"facebook_post" withParameters:functionParameters block:^(id object, NSError *error) {
-                             if (!error){
-                                 NSLog(@"facebook function call is :%@", object);
-                                 
-                             }
-                             
-                             else {
-                                 NSLog(@"error is %@", error);
-                             }
-                         }];
-                         
-                     }
-                 }
-             }
-         }];
-        
-        
-    }];
-    */
 }
 
 - (void)callButtonPressed
@@ -657,24 +593,24 @@
 	}
 	else
 	{
-		/*
-		 FacebookFriendsViewController *friendsVC = [[FacebookFriendsViewController alloc] init];
-		 
-		 NSDictionary *giftDictionary = [NSDictionary dictionaryWithObjectsAndKeys:[store objectId], @"store_id",
-		 [patronStore objectId], @"patron_store_id",
-		 [localUser patronId], @"user_id",
-		 [localUser fullName], @"sender_name",
-		 [currentCellReward reward_name], @"gift_title",
-		 [currentCellReward reward_description], @"gift_description",
-		 [currentCellReward punches] ,@"gift_punches",
-		 nil];
-		 
-		 
-		 friendsVC.giftParametersDict = giftDictionary;
-		 
-		 [self presentViewController:friendsVC animated:YES completion:nil];
-		 */
+		FacebookFriendsViewController *facebookFriendsVC = [[FacebookFriendsViewController alloc] init];
+		facebookFriendsVC.myDelegate = self;
+		[self presentViewController:facebookFriendsVC animated:YES completion:NULL];
 	}
+}
+
+- (void)onFriendSelected:(FacebookFriendsViewController *)controller forFriendId:(NSString *)friendId withName:(NSString *)name
+{
+	ComposeMessageViewController *composeVC = [[ComposeMessageViewController alloc] init];
+	composeVC.messageType = @"gift";
+	composeVC.storeId = self.storeId;
+	composeVC.giftRecepientId = friendId;
+	composeVC.giftTitle = [selectedReward objectForKey:@"reward_name"];
+	composeVC.giftDescription = [selectedReward objectForKey:@"description"];
+	composeVC.giftPunches = [[selectedReward objectForKey:@"punches"] intValue];
+	composeVC.recepientName = name;
+	
+	[self presentViewController:composeVC animated:YES completion:nil];
 }
 
 - (void)alertParentViewController:(BOOL)isAddRemove
@@ -683,7 +619,7 @@
 }
 
 - (IBAction)closeView:(id)sender
-{
+{	
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
 

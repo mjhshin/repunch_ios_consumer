@@ -83,8 +83,8 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField*)textField;
 {
-	if(textField == _usernameInput) {
-		[_usernameInput resignFirstResponder];
+	if(textField == _emailInput) {
+		[_emailInput resignFirstResponder];
 		[_passwordInput becomeFirstResponder];
 		
 	} else if(textField == _passwordInput) {
@@ -101,10 +101,6 @@
 		
 	} else if(textField == _lastNameInput) {
 		[_lastNameInput resignFirstResponder];
-		[_emailInput becomeFirstResponder];
-		
-	} else if(textField == _emailInput) {
-		[_emailInput resignFirstResponder];
 		[_ageInput becomeFirstResponder];
 		
 	}
@@ -153,15 +149,14 @@
 		return;
 	}
 	
-    NSString *username = [_usernameInput text];
+    NSString *email = [_emailInput text];
     NSString *password = [_passwordInput text];
 	NSString *firstName = [_firstNameInput text];
 	NSString *lastName = [_lastNameInput text];
 	NSString *age = [_ageInput text];
-    NSString *email = [_emailInput text];
     
 	PFUser *newUser = [PFUser user];
-	[newUser setUsername:username];
+	[newUser setUsername:email];
     [newUser setPassword:password];
     [newUser setEmail:email];
     [newUser setValue:@"patron" forKey:@"account_type"];
@@ -183,7 +178,7 @@
             
             NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
 										[[PFUser currentUser] objectId],	@"user_id",
-										username,							@"username",
+										email,								@"username",
 										email,								@"email",
 										gender,								@"gender",	
 										birthday,							@"birthday",
@@ -261,35 +256,24 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    int movementDistance = 0;
-	
-	if(textField == _usernameInput)					movementDistance = _usernameInput.frame.origin.y;
-	else if(textField == _passwordInput)			movementDistance = _passwordInput.frame.origin.y;
-	else if(textField == _passwordConfirmInput)		movementDistance = _passwordConfirmInput.frame.origin.y;
-	else if(textField == _firstNameInput)			movementDistance = _firstNameInput.frame.origin.y;
-	else if(textField == _lastNameInput)			movementDistance = _lastNameInput.frame.origin.y;
-	else if(textField == _emailInput)				movementDistance = _emailInput.frame.origin.y;
-	else if(textField == _ageInput)					movementDistance = _ageInput.frame.origin.y;
-	
+    int movementDistance = textField.frame.origin.y;	
     [self.scrollView setContentOffset:CGPointMake(0, movementDistance - 25) animated:YES];
 }
 
 - (void)dismissKeyboard
 {
-    [_usernameInput resignFirstResponder];
+    [_emailInput resignFirstResponder];
     [_passwordInput resignFirstResponder];
 	[_passwordConfirmInput resignFirstResponder];
     [_firstNameInput resignFirstResponder];
     [_lastNameInput resignFirstResponder];
-    [_emailInput resignFirstResponder];
     [_ageInput resignFirstResponder];
 }
 
 - (BOOL)validateForm
 {
-    if(_usernameInput.text.length == 0 || _passwordInput.text.length == 0 || _passwordConfirmInput.text.length == 0 || 
-		_firstNameInput.text.length == 0 || _lastNameInput.text.length == 0 || _emailInput.text.length == 0 ||
-		_ageInput.text.length == 0) {
+    if(_emailInput.text.length == 0 || _passwordInput.text.length == 0 || _passwordConfirmInput.text.length == 0 ||
+		_firstNameInput.text.length == 0 || _lastNameInput.text.length == 0 || _ageInput.text.length == 0) {
 		[self showDialog:@"Please fill in all fields" withResultMessage:nil];
         return NO;
     }

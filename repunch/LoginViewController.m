@@ -122,14 +122,14 @@
 	{
 		if (user)
 		{
-			NSString *accountType = [user objectForKey:@"account_type"];
+			PFObject *patronObject = [user objectForKey:@"Patron"];
 			
-			if( [accountType isEqualToString:@"patron"] ) {
+			if( patronObject == (id)[NSNull null] ) {
 				NSString *patronId = [[user objectForKey:@"Patron"] objectId];
 				[self fetchPatronPFObject:patronId];
 				
 			} else {
-				NSLog(@"Account exists but is not of type 'patron'");
+				NSLog(@"Account exists but has Patron is null");
 				[self handleError:nil withTitle:@"Login Failed" andMessage:@"Please check your username/password"];
 			}
 		}
@@ -210,7 +210,7 @@
 	[self.facebookSpinner startAnimating];
 	[self.facebookButtonLabel setHidden:YES];
 	
-    NSArray *permissions = @[@"email", @"user_birthday"];
+    NSArray *permissions = @[@"email", @"user_birthday", @"publish_actions"];
 	
 	[PFFacebookUtils logInWithPermissions:permissions block:^(PFUser *user, NSError *error)
 	 {
@@ -248,7 +248,7 @@
 			 NSString *email = [user objectForKey:@"email"];
 			 
 			 if(email == nil) {
-				 email = [NSNull null];
+				 email = (id)[NSNull null];
 			 }
 			 
 			 //register patron

@@ -24,8 +24,18 @@
 											   object:nil];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(receiveRefreshNotification:)
+											 selector:@selector(refreshTableView)
 												 name:@"Redeem"
+											   object:nil];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(refreshTableView)
+												 name:@"FacebookPost"
+											   object:nil];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(loadMyPlaces)
+												 name:UIApplicationWillEnterForegroundNotification
 											   object:nil];
 	
 	self.sharedData = [DataManager getSharedInstance];
@@ -268,7 +278,7 @@
         {
             if (!error)
             {
-                MyPlacesTableViewCell *cell = [self.myPlacesTableView cellForRowAtIndexPath:indexPath]; //TODO: this warning
+                MyPlacesTableViewCell *cell = (id)[self.myPlacesTableView cellForRowAtIndexPath:indexPath];
 				[self.imageDownloadsInProgress removeObjectForKey:indexPath]; // Remove the PFFile from the in-progress list
 				
 				UIImage *storeImage = [UIImage imageWithData:data];

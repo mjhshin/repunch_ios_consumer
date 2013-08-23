@@ -80,8 +80,8 @@
         MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
         mapItem.name = [store objectForKey:@"store_name"];
         
-        // Set the directions mode to "Walking"
-        NSDictionary *launchOptions = @{MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeWalking};
+        // Set the directions mode to "Driving"
+        NSDictionary *launchOptions = @{MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving};
         
         // Get the "Current User Location" MKMapItem
         MKMapItem *currentLocationMapItem = [MKMapItem mapItemForCurrentLocation];
@@ -89,7 +89,7 @@
         // Pass the current location and destination map items to the Maps app
         // Set the direction mode in the launchOptions dictionary
         [MKMapItem openMapsWithItems:@[currentLocationMapItem, mapItem]
-                       launchOptions:nil];
+                       launchOptions:launchOptions];
     }
 
 }

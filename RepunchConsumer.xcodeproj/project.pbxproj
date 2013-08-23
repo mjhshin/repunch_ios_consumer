@@ -88,8 +88,6 @@
 		EE9D4C8C17A83F4B005E0CC5 /* MyPlacesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BB117A83F4A005E0CC5 /* MyPlacesViewController.xib */; };
 		EE9D4C8F17A83F4B005E0CC5 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BB817A83F4A005E0CC5 /* RegisterViewController.m */; };
 		EE9D4C9017A83F4B005E0CC5 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BB917A83F4A005E0CC5 /* RegisterViewController.xib */; };
-		EE9D4C9217A83F4B005E0CC5 /* FacebookFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BBE17A83F4A005E0CC5 /* FacebookFriendsViewController.m */; };
-		EE9D4C9317A83F4B005E0CC5 /* FacebookFriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BBF17A83F4A005E0CC5 /* FacebookFriendsViewController.xib */; };
 		EE9D4C9417A83F4B005E0CC5 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BC117A83F4A005E0CC5 /* SettingsViewController.m */; };
 		EE9D4C9517A83F4B005E0CC5 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BC217A83F4A005E0CC5 /* SettingsViewController.xib */; };
 		EE9D4C9617A83F4B005E0CC5 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BC417A83F4A005E0CC5 /* LoginViewController.m */; };
@@ -194,6 +192,9 @@
 		EE9D4F4D17A84ABB005E0CC5 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4EE117A84ABB005E0CC5 /* iTunesArtwork.png */; };
 		EE9D4F4E17A84ABB005E0CC5 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4EE217A84ABB005E0CC5 /* iTunesArtwork@2x.png */; };
 		EE9D4F5117A96F5B005E0CC5 /* GradientBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4F5017A96F5B005E0CC5 /* GradientBackground.m */; };
+		EEA181A317C5894B00553336 /* FacebookUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA181A217C5894B00553336 /* FacebookUtils.m */; };
+		EEA181AC17C6FD9B00553336 /* FacebookFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA181AA17C6FD9A00553336 /* FacebookFriendsViewController.m */; };
+		EEA181AD17C6FD9B00553336 /* FacebookFriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEA181AB17C6FD9A00553336 /* FacebookFriendsViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -306,9 +307,6 @@
 		EE9D4BB717A83F4A005E0CC5 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		EE9D4BB817A83F4A005E0CC5 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		EE9D4BB917A83F4A005E0CC5 /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
-		EE9D4BBD17A83F4A005E0CC5 /* FacebookFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookFriendsViewController.h; sourceTree = "<group>"; };
-		EE9D4BBE17A83F4A005E0CC5 /* FacebookFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookFriendsViewController.m; sourceTree = "<group>"; };
-		EE9D4BBF17A83F4A005E0CC5 /* FacebookFriendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FacebookFriendsViewController.xib; sourceTree = "<group>"; };
 		EE9D4BC017A83F4A005E0CC5 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		EE9D4BC117A83F4A005E0CC5 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		EE9D4BC217A83F4A005E0CC5 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
@@ -426,6 +424,11 @@
 		EE9D4EE217A84ABB005E0CC5 /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
 		EE9D4F4F17A96F5B005E0CC5 /* GradientBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientBackground.h; sourceTree = "<group>"; };
 		EE9D4F5017A96F5B005E0CC5 /* GradientBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientBackground.m; sourceTree = "<group>"; };
+		EEA181A117C5894B00553336 /* FacebookUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookUtils.h; sourceTree = "<group>"; };
+		EEA181A217C5894B00553336 /* FacebookUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookUtils.m; sourceTree = "<group>"; };
+		EEA181A917C6FD9A00553336 /* FacebookFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookFriendsViewController.h; sourceTree = "<group>"; };
+		EEA181AA17C6FD9A00553336 /* FacebookFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookFriendsViewController.m; sourceTree = "<group>"; };
+		EEA181AB17C6FD9A00553336 /* FacebookFriendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FacebookFriendsViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -559,9 +562,6 @@
 				EE9D4B7517A83F4A005E0CC5 /* ComposeMessageViewController.xib */,
 				EE28DADE17AC447E00E4C460 /* DataManager.h */,
 				EE28DADF17AC447E00E4C460 /* DataManager.m */,
-				EE9D4BBD17A83F4A005E0CC5 /* FacebookFriendsViewController.h */,
-				EE9D4BBE17A83F4A005E0CC5 /* FacebookFriendsViewController.m */,
-				EE9D4BBF17A83F4A005E0CC5 /* FacebookFriendsViewController.xib */,
 				EE9D4B9B17A83F4A005E0CC5 /* InboxViewController.h */,
 				EE9D4B9C17A83F4A005E0CC5 /* InboxViewController.m */,
 				EE9D4B9D17A83F4A005E0CC5 /* InboxViewController.xib */,
@@ -594,6 +594,11 @@
 				EE9D4BAB17A83F4A005E0CC5 /* StoreViewController.xib */,
 				EE79DF8417BE9EBA00E92DE5 /* FacebookAuthentication.h */,
 				EE79DF8517BE9EBB00E92DE5 /* FacebookAuthentication.m */,
+				EEA181A117C5894B00553336 /* FacebookUtils.h */,
+				EEA181A217C5894B00553336 /* FacebookUtils.m */,
+				EEA181A917C6FD9A00553336 /* FacebookFriendsViewController.h */,
+				EEA181AA17C6FD9A00553336 /* FacebookFriendsViewController.m */,
+				EEA181AB17C6FD9A00553336 /* FacebookFriendsViewController.xib */,
 			);
 			path = Repunch;
 			sourceTree = "<group>";
@@ -870,7 +875,6 @@
 				EE9D4C8A17A83F4B005E0CC5 /* SearchViewController.xib in Resources */,
 				EE9D4C8C17A83F4B005E0CC5 /* MyPlacesViewController.xib in Resources */,
 				EE9D4C9017A83F4B005E0CC5 /* RegisterViewController.xib in Resources */,
-				EE9D4C9317A83F4B005E0CC5 /* FacebookFriendsViewController.xib in Resources */,
 				EE9D4C9517A83F4B005E0CC5 /* SettingsViewController.xib in Resources */,
 				EE9D4C9717A83F4B005E0CC5 /* LoginViewController.xib in Resources */,
 				EE9D4E7117A846B1005E0CC5 /* SIAlertView.bundle in Resources */,
@@ -987,6 +991,7 @@
 				EE79DF8117BD702500E92DE5 /* nav_search@2x.png in Resources */,
 				EE79DF8217BD702500E92DE5 /* nav_settings.png in Resources */,
 				EE79DF8317BD702500E92DE5 /* nav_settings@2x.png in Resources */,
+				EEA181AD17C6FD9B00553336 /* FacebookFriendsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1036,7 +1041,6 @@
 				EE9D4C8917A83F4B005E0CC5 /* SearchViewController.m in Sources */,
 				EE9D4C8B17A83F4B005E0CC5 /* MyPlacesViewController.m in Sources */,
 				EE9D4C8F17A83F4B005E0CC5 /* RegisterViewController.m in Sources */,
-				EE9D4C9217A83F4B005E0CC5 /* FacebookFriendsViewController.m in Sources */,
 				EE9D4C9417A83F4B005E0CC5 /* SettingsViewController.m in Sources */,
 				EE9D4C9617A83F4B005E0CC5 /* LoginViewController.m in Sources */,
 				EE9D4C9817A83F4B005E0CC5 /* MapPin.m in Sources */,
@@ -1050,6 +1054,8 @@
 				EE3F36D817B586ED00D28FC9 /* RedeemHandler.m in Sources */,
 				EE460EC317BB5C7A00AC3588 /* MessageHandler.m in Sources */,
 				EE79DF8617BE9EBC00E92DE5 /* FacebookAuthentication.m in Sources */,
+				EEA181A317C5894B00553336 /* FacebookUtils.m in Sources */,
+				EEA181AC17C6FD9B00553336 /* FacebookFriendsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

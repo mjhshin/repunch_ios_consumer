@@ -66,6 +66,8 @@
 
 - (IBAction)logOut:(id)sender
 {
+	[UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+	
 	//set blank "patron_id" and "punch_code" in installation so push notifications not received when logged out.
 	[[PFInstallation currentInstallation] setObject:@"" forKey:@"punch_code"];
 	[[PFInstallation currentInstallation] setObject:@"" forKey:@"patron_id"];

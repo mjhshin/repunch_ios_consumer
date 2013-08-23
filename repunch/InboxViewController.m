@@ -24,6 +24,11 @@
 											 selector:@selector(addMessageFromPush:)
 												 name:@"Message"
 											   object:nil];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(loadInbox)
+												 name:UIApplicationWillEnterForegroundNotification
+											   object:nil];
     
     self.sharedData = [DataManager getSharedInstance];
     self.patron = [self.sharedData patron];
@@ -85,6 +90,7 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
 	[super viewDidDisappear:YES];
+	[UIApplication sharedApplication].applicationIconBadgeNumber = alertBadgeCount;
 }
 
 - (void)didReceiveMemoryWarning
@@ -166,7 +172,7 @@
     PFObject *message = [messageStatus objectForKey:@"Message"];
     PFObject *reply = [message objectForKey:@"Reply"];
     
-    if (reply != [NSNull null]) {
+    if (reply != (id)[NSNull null] && reply != nil) {
         cell.senderName.text = [reply valueForKey:@"sender_name"];
         cell.subjectLabel.text = [NSString stringWithFormat:@"RE: %@ - %@", [message valueForKey:@"subject"], [reply valueForKey:@"body"]];
         cell.dateSent.text = [self formattedDateString:[reply valueForKey:@"createdAt"]];
@@ -323,6 +329,10 @@
 	UITabBarItem *tab = [self.tabBarController.tabBar.items objectAtIndex:1];	
 	tab.badgeValue = (alertBadgeCount == 0) ? nil : [NSString stringWithFormat:@"%i", alertBadgeCount];
 	[UIApplication sharedApplication].applicationIconBadgeNumber = alertBadgeCount;
+	
+	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+	currentInstallation.badge = alertBadgeCount;
+	[currentInstallation saveInBackground];
 }
 
 - (IBAction)openSettings:(id)sender

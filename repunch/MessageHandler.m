@@ -37,7 +37,9 @@
             
             NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:[result objectId], @"message_status_id", nil];
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"Message" object:self userInfo:args];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"Message"
+																object:self
+															  userInfo:args];
 			
 			SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"New Message" andMessage:alert];
 			[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];

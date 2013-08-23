@@ -19,10 +19,12 @@
 #import "FacebookFriendsViewController.h"
 #import "GradientBackground.h"
 #import "DataManager.h"
+#import <FacebookSDK/FacebookSDK.h>
+#import "FacebookUtils.h"
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
-@interface StoreViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface StoreViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, FacebookFriendsDelegate>
 
 @property (nonatomic, weak) id <StoreViewControllerDelegate> delegate;
 
@@ -33,7 +35,7 @@
 @property (strong, nonatomic) IBOutlet UIView *headerView;
 
 @property (weak, nonatomic) IBOutlet UIView *toolbar;
-@property (weak, nonatomic) IBOutlet UILabel *storeName;
+@property (weak, nonatomic) IBOutlet UILabel *storeNameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 
 - (IBAction)deleteStore:(id)sender;

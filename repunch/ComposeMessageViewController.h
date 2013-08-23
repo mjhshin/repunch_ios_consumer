@@ -20,6 +20,10 @@
 @property (nonatomic, strong) NSString *storeId;
 @property (nonatomic, strong) NSString *messageType;
 @property (nonatomic, strong) NSString *recepientName;
+@property (nonatomic, strong) NSString *giftRecepientId;
+@property (nonatomic, strong) NSString *giftTitle;
+@property (nonatomic, strong) NSString *giftDescription;
+@property int giftPunches;
 
 @property (weak, nonatomic) IBOutlet UIView *toolbar;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;

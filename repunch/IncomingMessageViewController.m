@@ -8,6 +8,9 @@
 #import "IncomingMessageViewController.h"
 
 @implementation IncomingMessageViewController
+{
+	BOOL containsReply;
+}
 
 - (void)viewDidLoad
 {
@@ -20,11 +23,13 @@
 	self.reply = [self.message objectForKey:@"Reply"];
 	self.messageType = [self.message objectForKey:@"message_type"];
 	
+	containsReply = (self.reply != (id)[NSNull null] && self.reply != nil);
+	
 	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
 	bgLayer.frame = self.toolbar.bounds;
 	[self.toolbar.layer insertSublayer:bgLayer atIndex:0];
 	
-	if(self.reply == [NSNull null]) {
+	if(containsReply) {
 		[self.messageTitle setText:[self.message objectForKey:@"subject"]];
 	} else {
 		NSString *title = [NSString stringWithFormat:@"RE: %@", [self.message objectForKey:@"subject"]];
@@ -81,18 +86,16 @@
     frame.size.height = self.bodyTextView.contentSize.height;
     self.bodyTextView.frame = frame;
 	
-	
-	
 	if ([self.messageType isEqualToString:@"offer"])
 	{
-		[self setupAttachment];
+		[self setupOffer];
     }
     else if ([self.messageType isEqualToString:@"gift"])
 	{
-        
+        [self setupGift];
     }
 	
-	if(self.reply != [NSNull null])
+	if(containsReply)
 	{
 		[self setupReply];
 	}
@@ -124,7 +127,7 @@
     
 }
 
-- (void)setupAttachment
+- (void)setupOffer
 {
 	[[NSBundle mainBundle] loadNibNamed:@"MessageAttachment" owner:self options:nil];
 	
@@ -139,6 +142,27 @@
 	[self.giftButton setClipsToBounds:YES];
 	
 	self.giftTitle.text = [NSString stringWithFormat:@"Offer: %@",[self.message objectForKey:@"offer_title"]];
+	
+	[self.scrollView addSubview:self.giftView];
+}
+
+- (void)setupGift
+{
+	[[NSBundle mainBundle] loadNibNamed:@"MessageAttachment" owner:self options:nil];
+	
+	CGRect msgFrame = self.bodyTextView.frame;
+    CGRect giftViewFrame = self.giftView.frame;
+    
+    giftViewFrame.origin.y = msgFrame.origin.y + msgFrame.size.height + 40;
+    self.giftView.frame = giftViewFrame;
+	[self.giftView.layer setCornerRadius:14];
+	[self.giftView setClipsToBounds:YES];
+	[self.giftButton.layer setCornerRadius:5];
+	[self.giftButton setClipsToBounds:YES];
+	
+	self.giftTitle.text = [NSString stringWithFormat:@"Gift: %@",[self.message objectForKey:@"gift_title"]];
+	self.giftTimerLabel.text = [self.message objectForKey:@"gift_description"];
+	self.giftTimerLabel.numberOfLines = 3;
 	
 	[self.scrollView addSubview:self.giftView];
 }

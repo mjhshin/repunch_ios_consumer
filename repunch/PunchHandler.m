@@ -25,7 +25,11 @@
 
 	if(store != nil && patronStore != nil)
 	{
-		[sharedData updatePatronStore:storeId withPunches:totalPunches];
+		int currentPunches = [[patronStore objectForKey:@"punch_count"] intValue];
+		
+		if(totalPunches > currentPunches) {
+			[sharedData updatePatronStore:storeId withPunches:totalPunches];
+		}
 
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"Punch" object:self];
 		

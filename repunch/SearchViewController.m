@@ -287,7 +287,7 @@
 		 {
 			 if (!error)
 			 {
-				 SearchTableViewCell *cell = [self.searchTableView cellForRowAtIndexPath:indexPath]; //TODO: resolve this warning
+				 SearchTableViewCell *cell = (id)[self.searchTableView cellForRowAtIndexPath:indexPath]; //TODO: resolve this warning
 				 UIImage *storeImage = [UIImage imageWithData:data];
 				 cell.storeImage.image = storeImage;
 				 [self.imageDownloadsInProgress removeObjectForKey:indexPath]; // Remove the PFFile from the in-progress list

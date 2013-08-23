@@ -12,6 +12,8 @@
 	DataManager *sharedData;
 	PFObject *store;
 	PFObject *patron;
+	PFObject *patronStore;
+	UIActivityIndicatorView *spinner;
 }
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
@@ -27,8 +29,14 @@
 	bgLayer.frame = _toolbar.bounds;
 	[_toolbar.layer insertSublayer:bgLayer atIndex:0];
 	
+	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+	spinner.frame = self.sendButton.frame;
+	spinner.hidesWhenStopped = YES;
+	[self.toolbar addSubview:spinner];
+	
 	sharedData = [DataManager getSharedInstance];
 	store = [sharedData getStore:self.storeId];
+	patronStore = [sharedData getPatronStore:self.storeId];
 	patron = [sharedData patron];
 
     self.storeName.text = [store objectForKey:@"store_name"];
@@ -48,7 +56,8 @@
     }
 	else if ([self.messageType isEqualToString:@"gift"])
 	{
-        self.subject.text = [NSString stringWithFormat:@"Add a message with your gift!"];
+        self.subject.text = [NSString stringWithFormat:@"Gift for %@", self.recepientName];
+		self.bodyPlaceholder.text = @"Add a message with your gift!";
 		[self.subject setEnabled:FALSE];
     }
 	else if ([self.messageType isEqualToString:@"gift_reply"])
@@ -92,16 +101,42 @@
     return YES;
 }
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
-    if ([text isEqualToString:@"\n"])
-    {
-        [self sendMessage];
-    }
-    return YES;
+//limits subject to 50 characters
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{	
+    NSUInteger newLength = textField.text.length + string.length - range.length;
+    return (newLength > 50) ? NO : YES;
 }
 
--(void)sendMessage
+//limits body to 750 characters
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)string
+{
+    if ([string isEqualToString:@"\n"]) //set behavior for done button
+    {
+        [self send];
+    }
+	
+	NSUInteger newLength = textView.text.length + string.length - range.length;
+    return (newLength > 750) ? NO : YES;
+}
+
+- (void)send
+{
+	if ([self.messageType isEqualToString:@"feedback"])
+	{
+		[self sendMessage];
+    }
+	else if ([self.messageType isEqualToString:@"gift"])
+	{
+		[self sendGift];
+    }
+	else if ([self.messageType isEqualToString:@"gift_reply"])
+	{
+        //[self sendGiftReply];
+    }
+}
+
+- (void)sendMessage
 {
 	[self dismissKeyboard];
 	
@@ -114,108 +149,97 @@
 		self.subject.text = self.subject.placeholder;
 	}
 	
-	UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-	spinner.frame = self.sendButton.frame;
-	[self.toolbar addSubview:spinner];
 	self.sendButton.hidden = YES;
-	spinner.hidesWhenStopped = YES;
 	[spinner startAnimating];
     
-    if ([self.messageType isEqualToString:@"feedback"])
-	{
-		NSString *senderName = [NSString stringWithFormat:@"%@ %@", [patron objectForKey:@"first_name"], [patron objectForKey:@"last_name"]];
+	NSString *senderName = [NSString stringWithFormat:@"%@ %@", [patron objectForKey:@"first_name"], [patron objectForKey:@"last_name"]];
 		
-        NSDictionary *inputsArgs = [NSDictionary dictionaryWithObjectsAndKeys:
-									[patron objectId], @"patron_id",
-									[store objectId], @"store_id",
-									self.body.text, @"body",
-									self.subject.text, @"subject",
-									senderName, @"sender_name",
-									nil];
+	NSDictionary *inputsArgs = [NSDictionary dictionaryWithObjectsAndKeys:
+								patron.objectId,		@"patron_id",
+								store.objectId,			@"store_id",
+								self.body.text,			@"body",
+								self.subject.text,		@"subject",
+								senderName,				@"sender_name",
+								nil];
         
-        [PFCloud callFunctionInBackground:@"send_feedback"
-						   withParameters:inputsArgs
-									block:^(NSString *result, NSError *error)
+	[PFCloud callFunctionInBackground:@"send_feedback"
+						withParameters:inputsArgs
+								block:^(NSString *result, NSError *error)
+	{
+		[spinner stopAnimating];
+		self.sendButton.hidden = NO;
+		
+		if (!error)
 		{
-			[spinner stopAnimating];
-			self.sendButton.hidden = NO;
-			
-            if (!error)
-			{
-                [self showDialog:@"Thanks for your feedback!" withMessage:nil];
-				[self dismissViewControllerAnimated:YES completion:nil];
-                NSLog(@"send_feedback result: %@", result);
-            }
-            else
-			{
-				[self showDialog:@"Send Failed"
-					 withMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
-				NSLog(@"send_feedback error: %@", error);
-			}
-        }];
-    }
-    else if ([self.messageType isEqualToString:@"gift"])
-	{
-		/*
-        NSDictionary *inputsArgs = [NSDictionary dictionaryWithObjectsAndKeys:
-									[_sendParameters valueForKey:@"store_id"], @"store_id",
-									[_sendParameters valueForKey:@"patron_store_id"], @"patron_store_id",
-									[localUser patronId], @"patron_id",
-									[localUser fullName], @"sender_name",
-									subjectText, @"subject",
-									[_body text], @"body",
-									[_recipient objectId], @"recepient_id",
-									[_sendParameters valueForKey:@"gift_title"],@"gift_title",
-									[_sendParameters valueForKey:@"gift_description"], @"gift_description",
-									[_sendParameters valueForKey:@"gift_punches"], @"gift_punches",
-									nil];
+			[self showDialog:@"Thanks for your feedback!" withMessage:nil];
+			[self dismissViewControllerAnimated:YES completion:nil];
+			NSLog(@"send_feedback result: %@", result);
+		}
+		else
+		{
+			[self showDialog:@"Send Failed"
+				 withMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
+			NSLog(@"send_feedback error: %@", error);
+		}
+	}];
+}
 
-        [PFCloud callFunctionInBackground:@"send_gift" withParameters:functionParameters block:^(id object, NSError *error) {
-           if (!error){
-               
-               [spinner stopAnimating];
-               [greyedOutView removeFromSuperview];
-               
-               SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Sent!" andMessage:[NSString stringWithFormat:@"You sent %@ to %@", [_sendParameters valueForKey:@"gift_title"], [_recipient valueForKey:@"first_name"]]];
-               [alertView addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
-                   [[self modalDelegate] didDismissPresentedViewController];
-               }];
-               
-               [alertView show];
-                
+- (void)sendGift
+{
+	[self dismissKeyboard];
+	
+	if(self.body.text.length == 0) {
+		[self showDialog:@"Your message is blank" withMessage:nil];
+		return;
+	}
+	
+	if(self.subject.text.length == 0) {
+		self.subject.text = self.subject.placeholder;
+	}
+	
+	self.sendButton.hidden = YES;
+	[spinner startAnimating];
+    
+	NSString *senderName = [NSString stringWithFormat:@"%@ %@", [patron objectForKey:@"first_name"], [patron objectForKey:@"last_name"]];
+	
+	NSDictionary *inputsArgs = [NSDictionary dictionaryWithObjectsAndKeys:
+								patron.objectId,		@"patron_id",
+								store.objectId,			@"store_id",
+								patronStore.objectId,	@"patron_store_id",
+								senderName,				@"sender_name",
+								self.subject.text,		@"subject",
+								self.body.text,			@"body",
+								self.giftRecepientId,	@"recepient_id",
+								self.giftTitle,			@"gift_title",
+								self.giftDescription,	@"gift_description",
+								[NSString stringWithFormat:@"%i", self.giftPunches],		@"gift_punches",
+								nil];
+	
+	[PFCloud callFunctionInBackground:@"send_gift"
+					   withParameters:inputsArgs
+								block:^(NSString *result, NSError *error)
+	 {
+		 [spinner stopAnimating];
+		 self.sendButton.hidden = NO;
+		 
+		 if (!error)
+		 {
+			 [self showDialog:@"Your gift has been sent!" withMessage:nil];
+			 [self dismissViewControllerAnimated:YES completion:nil];
+			 NSLog(@"send_gift result: %@", result);
+		 }
+		 else
+		 {
+			 [self showDialog:@"Send Failed"
+				  withMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
+			 NSLog(@"send_gift error: %@", error);
+		 }
+	 }];
+}
 
-           }
-           else {
-               
-               [spinner stopAnimating];
-               [greyedOutView removeFromSuperview];
-               
-               SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Error!" andMessage:[NSString stringWithFormat:@"Sorry, an error occured"]];
-               [alertView addButtonWithTitle:@"Okay" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
-               }];
-
-               NSLog(@"%@", error);
-               
-               [alertView show];
-                
-
-
-           }
-        }];
-        [[self modalDelegate] didDismissPresentedViewController];
-		 */
-    }    
-    else if ([self.messageType isEqualToString:@"gift_reply"])
-	{
-		/*
-        NSDictionary *functionParameters = [[NSDictionary alloc] initWithObjectsAndKeys:[_sendParameters valueForKey:@"message_id"], @"message_id", [localUser patronId], @"patron_id", [localUser fullName], @"sender_name", [_body text], @"body", nil];
-        
-        [PFCloud callFunctionInBackground:@"reply_to_gift" withParameters:functionParameters block:^(id object, NSError *error) {
-            //
-        }];
-        [[self modalDelegate] didDismissPresentedViewController];
-		 */
-    }
+- (void)sendGiftReply
+{
+	[self dismissKeyboard];
 }
 
 - (void)dismissKeyboard
@@ -226,7 +250,7 @@
 
 - (IBAction)sendButtonAction:(id)sender
 {
-    [self sendMessage];
+    [self send];
 }
 
 - (IBAction)closeButton:(id)sender

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "DataManager.h"
 #import "SIAlertView.h"
+#import "FacebookUtils.h"
 
 @interface RedeemHandler : NSObject
 

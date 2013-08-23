@@ -1,16 +1,26 @@
 //
-//  RepunchFriendsViewController.h
-//  Repunch
+//  FacebookFriendsViewController.h
+//  RepunchConsumer
 //
-//  Created by Gwendolyn Weston on 7/12/13.
+//  Created by Michael Shin on 8/22/13.
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
+#import "GradientBackground.h"
+#import <Parse/Parse.h>
+#import "SIAlertView.h"
+#import "ComposeMessageViewController.h"
 
-@interface FacebookFriendsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@class FacebookFriendsViewController;
 
-@property (nonatomic, retain) NSDictionary *giftParametersDict;
-- (IBAction)closePage:(id)sender;
+@protocol FacebookFriendsDelegate <NSObject>
+- (void)onFriendSelected:(FacebookFriendsViewController *)controller forFriendId:(NSString *)friendId withName:(NSString *)name;
+@end
+
+@interface FacebookFriendsViewController : FBFriendPickerViewController <FBFriendPickerDelegate>
+
+@property (nonatomic, weak) id <FacebookFriendsDelegate> myDelegate;
+@property (nonatomic, strong) NSMutableDictionary *friendDictionary;
 
 @end
