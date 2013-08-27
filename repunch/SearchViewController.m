@@ -11,7 +11,11 @@
 {
 	CLLocationManager *locationManager;
 	PFGeoPoint *userLocation;
-	BOOL searchloaded;
+	BOOL searchResultsLoaded;
+	int paginateCount;
+	BOOL paginateReachEnd;
+	UIActivityIndicatorView *spinner;
+	UIButton *paginateButton;
 }
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
@@ -33,14 +37,10 @@
 												 name:@"Redeem"
 											   object:nil];
 	
-	[Crittercism leaveBreadcrumb:@"SearcH: viewDidLoad - done registering observers"];
-	
 	locationManager = [[CLLocationManager alloc] init];	
-	locationManager.delegate = self;
+	locationManager.delegate = (id)self;
 	locationManager.distanceFilter = kCLDistanceFilterNone; //filter out negligible changes in location (disabled for now)
 	locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-	
-	[Crittercism leaveBreadcrumb:@"SearcH: viewDidLoad - done setting Loc Manager"];
 	
 	self.sharedData = [DataManager getSharedInstance];
 	self.patron = [self.sharedData patron];
@@ -70,7 +70,28 @@
 	frame.origin = CGPointMake(xCenter - xOffset, yCenter - yOffset);
 	self.activityIndicatorView.frame = frame;
 	
-	searchloaded = FALSE;
+	CGFloat xOffset2 = self.emptyResultsLabel.frame.size.width/2;
+	CGFloat yOffset2 = self.emptyResultsLabel.frame.size.height/2;
+	CGRect frame2 = self.emptyResultsLabel.frame;
+	frame2.origin = CGPointMake(xCenter - xOffset2, yCenter - yOffset2);
+	self.emptyResultsLabel.frame = frame2;
+	
+	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+	
+	paginateButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 260, 50)];
+	paginateButton.titleLabel.font = [UIFont fontWithName:@"Avenir-Heavy" size:17];
+	[paginateButton.layer setCornerRadius:10];
+	[paginateButton setClipsToBounds:YES];
+	[paginateButton addTarget:self action:@selector(performSearch:) forControlEvents:UIControlEventTouchUpInside];
+	
+	CAGradientLayer *bgLayer2 = [GradientBackground orangeGradient];
+	bgLayer2.frame = paginateButton.bounds;
+	[paginateButton.layer insertSublayer:bgLayer2 atIndex:0];
+	
+	spinner.hidesWhenStopped = YES;
+	paginateCount = 0;
+	paginateReachEnd = NO;
+	searchResultsLoaded = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -102,64 +123,76 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{	
-    if(searchloaded == FALSE)
+{
+	CLLocation* location = [locations lastObject];
+	NSDate* eventDate = location.timestamp;
+	NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
+	
+    if(abs(howRecent) > 120 || !searchResultsLoaded) //if result is older than 2 minutes
 	{
-		searchloaded = TRUE;
-		// If it's a relatively recent event, turn off updates to save power
-		CLLocation* location = [locations lastObject];
-		//NSDate* eventDate = location.timestamp;
-		//NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
-		//if (abs(howRecent) < 15.0) {
-			// If the event is recent, do something with it.
-			NSLog(@"latitude %+.6f, longitude %+.6f\n", location.coordinate.latitude, location.coordinate.longitude);
+		NSLog(@"latitude %+.6f, longitude %+.6f\n", location.coordinate.latitude, location.coordinate.longitude);
+		userLocation = [PFGeoPoint geoPointWithLocation:location];
 		
-		[Crittercism leaveBreadcrumb:@"Search: Loc Manager done getting location"];
+		searchResultsLoaded = YES;
+		paginateCount = 0;
+		paginateReachEnd = NO;
 		
-			userLocation = [PFGeoPoint geoPointWithLocation:location];
-			[self performSearch];
-		//}
+		[self performSearch:NO];
 	}
 }
 
-- (void)performSearch
-{
-	[self.activityIndicatorView setHidden:FALSE];
-	[self.activityIndicator startAnimating];
-	[self.searchTableView setHidden:TRUE];
-	
+- (void)performSearch:(BOOL)paginate
+{	
     PFQuery *storeQuery = [PFQuery queryWithClassName:@"Store"];
     [storeQuery whereKey:@"active" equalTo:[NSNumber numberWithBool:YES]];
 	[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation];
 	[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation withinMiles:50];
 	[storeQuery setLimit:20];
-	//TODO: paginate!!!
+	
+	if(paginate == NO)
+	{
+		[self.activityIndicatorView setHidden:FALSE];
+		[self.activityIndicator startAnimating];
+		[self.searchTableView setHidden:TRUE];
+	}
+	else
+	{
+		++paginateCount;
+		[storeQuery setSkip:paginateCount*20];
+	}
+	[self setFooter:YES];
 	
     [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
-	 {
-		 [self.activityIndicatorView setHidden:TRUE];
-		 [self.activityIndicator stopAnimating];
-		 [self.searchTableView setHidden:FALSE];
-		 
-		 [Crittercism leaveBreadcrumb:@"Search: performSearch callback"];
+	{
+		 if(paginate == NO)
+		 {
+			 [self.activityIndicatorView setHidden:TRUE];
+			 [self.activityIndicator stopAnimating];
+			 [self.searchTableView setHidden:FALSE];
+			 [self.storeIdArray removeAllObjects];
+		 }
 		 
 		 if (!error)
 		 {
-			 for (PFObject *store in results)
-			 {
-				 NSString *storeId = [store objectId];
-				 [self.sharedData addStore:store];
-				 [self.storeIdArray addObject:storeId];
-			 }
+				for (PFObject *store in results)
+				{
+					NSString *storeId = [store objectId];
+					[self.sharedData addStore:store];
+					[self.storeIdArray addObject:storeId];
+				}
+				 
+				if(paginate != NO && results.count == 0) {
+					paginateReachEnd = YES;
+				}
 			 
-			 //[self sortStoreObjectIdsByPunches];
-			 //[myPlacesTableView setContentSize:CGSizeMake(320, 105*results.count)];
-			 [self.searchTableView reloadData];
+				[self refreshTableView];
+				[self setFooter:NO];
 		 }
 		 else
 		 {
 			 NSLog(@"search view controller serror: %@", error);
-		 }		 
+			 [RepunchUtils showDefaultErrorMessage];
+		 }
 	 }];
 }
 
@@ -181,11 +214,6 @@
         cell = [SearchTableViewCell cell];
     }
 	
-	[Crittercism leaveBreadcrumb:@"Search: cellForRowAtIndexPath"];
-     
-	//[[cell punchesPic] setHidden:TRUE];
-	//[[cell numberOfPunches] setHidden:TRUE];
-	
 	NSString *storeId = [self.storeIdArray objectAtIndex:indexPath.row];
 	PFObject *store = [self.sharedData getStore:storeId];
      
@@ -197,7 +225,7 @@
 	NSString *city = [store objectForKey:@"city"];
 	NSString *street = [store objectForKey:@"street"];
      
-	if (neighborhood != nil) {
+	if (neighborhood != nil && neighborhood != (id)[NSNull null]) {
 		street = [street stringByAppendingFormat:@", %@", neighborhood];
 	}
 	else {
@@ -287,7 +315,7 @@
 		 {
 			 if (!error)
 			 {
-				 SearchTableViewCell *cell = (id)[self.searchTableView cellForRowAtIndexPath:indexPath]; //TODO: resolve this warning
+				 SearchTableViewCell *cell = (id)[self.searchTableView cellForRowAtIndexPath:indexPath];
 				 UIImage *storeImage = [UIImage imageWithData:data];
 				 cell.storeImage.image = storeImage;
 				 [self.imageDownloadsInProgress removeObjectForKey:indexPath]; // Remove the PFFile from the in-progress list
@@ -318,6 +346,59 @@
 
 - (void)reloadTableView
 {
+	[self.searchTableView reloadData];
+}
+
+- (void)setFooter:(BOOL)loadInProgress
+{	
+	if(self.storeIdArray.count >= 20 && !paginateReachEnd)
+	{
+		UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 70)];
+		footer.backgroundColor = [UIColor clearColor];
+		self.searchTableView.tableFooterView = footer;
+		
+		CGRect paginateButtonFrame = CGRectMake(footer.frame.size.width/2 - paginateButton.frame.size.width/2,
+												footer.frame.size.height/2 - paginateButton.frame.size.height/2,
+												paginateButton.frame.size.width,
+												paginateButton.frame.size.height);
+		paginateButton.enabled = !loadInProgress;
+		paginateButton.frame = paginateButtonFrame;
+		[self.searchTableView.tableFooterView addSubview:paginateButton];
+	
+		if(loadInProgress)
+		{
+			[paginateButton setTitle:@"" forState:UIControlStateNormal];
+			spinner.frame = paginateButton.bounds;
+			[paginateButton addSubview:spinner];
+			[spinner startAnimating];
+		}
+		else
+		{
+			[paginateButton setTitle:@"More Results" forState:UIControlStateNormal];
+			[spinner removeFromSuperview];
+			[spinner stopAnimating];
+		}
+	}
+	else
+	{
+		UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
+		footer.backgroundColor = [UIColor clearColor];
+		[self.searchTableView setTableFooterView:footer];
+	}
+}
+
+- (void)refreshTableView
+{
+	if(self.storeIdArray.count > 0)
+	{
+		[self.searchTableView setHidden:NO];
+		[self.emptyResultsLabel setHidden:YES];
+	}
+	else
+	{
+		[self.searchTableView setHidden:YES];
+		[self.emptyResultsLabel setHidden:NO];
+	}
 	[self.searchTableView reloadData];
 }
 

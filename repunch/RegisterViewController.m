@@ -200,7 +200,12 @@
                 
 				}
 				else
-				{					
+				{
+					NSString *errorString = [[error userInfo] objectForKey:@"error"];
+					[self handleError:nil
+							withTitle:@"Registration failed"
+						   andMessage:errorString];
+					/*
 					NSDictionary *parseError = [error userInfo];
 					NSInteger errorCode = [[parseError valueForKey:@"error"] intValue];
 					
@@ -216,11 +221,13 @@
 						[self handleError:nil withTitle:@"Registration Failed" andMessage:@"Sorry, something went wrong"];
                     
 					}
+					 */
 				}
             }];
             
         } else {
-            [self handleError:nil withTitle:@"Registration Failed" andMessage:@"Sorry, something went wrong"];
+			NSString *errorString = [[error userInfo] objectForKey:@"error"];
+            [self handleError:nil withTitle:@"Registration Failed" andMessage:errorString];
         }
     }];
 }
@@ -289,12 +296,12 @@
 	}
 	
 	if( _passwordInput.text.length < 6 ) {
-		[self showDialog:@"Passwords must be at least 6 characters" withResultMessage:nil];
+		[self showDialog:@"Registration Failed" withResultMessage:@"Passwords must be at least 6 characters"];
 		return NO;
 	}
 	
 	if( [_ageInput.text intValue] < 13 ) {
-		[self showDialog:@"Sorry, but you must be at least 13 years old to sign up" withResultMessage:nil];
+		[self showDialog:@"Registration Failed" withResultMessage:@"Sorry, but you must be at least 13 years old to sign up"];
 		return NO;
 	}
     
@@ -313,6 +320,10 @@
 			 NSString *birthday = user.birthday;
 			 NSString *gender = [user objectForKey:@"gender"];
 			 NSString *email = [user objectForKey:@"email"];
+			 
+			 if(email == nil) {
+				 email = (id)[NSNull null];
+			 }
 			 
 			 //register patron
 			 NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -337,8 +348,8 @@
 				  }
 				  else
 				  {
-					  //TODO
-					  [self handleError:error withTitle:@"Registration Failed" andMessage:@"Sorry, something went wrong"];
+					  NSString *errorString = [[error userInfo] objectForKey:@"error"];
+					  [self handleError:error withTitle:@"Registration Failed" andMessage:errorString];
 				  }
 			  }];
 			 
@@ -352,6 +363,10 @@
 
 - (void)fetchPatronPFObject:(NSString*)patronId
 {
+	if(patronId == (id)[NSNull null] || patronId == nil) {
+		[self handleError:nil withTitle:@"Login Failed" andMessage:@"Sorry, something went wrong"];
+	}
+	
 	PFQuery *query = [PFQuery queryWithClassName:@"Patron"];
 	
 	[query getObjectInBackgroundWithId:patronId block:^(PFObject *patron, NSError *error)
@@ -386,12 +401,17 @@
 	[self.registerButton setTitle:@"Sign In" forState:UIControlStateNormal];
 	[self.registerButton setEnabled:YES];
 	[self.facebookButton setEnabled:YES];
+	[self.facebookButtonLabel setHidden:NO];
 }
 
 - (void)showDialog:(NSString*)resultTitle withResultMessage:(NSString*)resultMessage
 {
+	NSString *capitalisedSentence =
+		[resultMessage stringByReplacingCharactersInRange:NSMakeRange(0,1)
+											   withString:[[resultMessage  substringToIndex:1] capitalizedString]];
+	
 	SIAlertView *alert = [[SIAlertView alloc] initWithTitle:resultTitle
-                                                 andMessage:resultMessage];
+                                                 andMessage:capitalisedSentence];
     [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
     [alert show];
 }

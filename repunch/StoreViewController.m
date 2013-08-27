@@ -153,6 +153,7 @@
 				 else
 				 {
 					 NSLog(@"image download failed");
+					 [RepunchUtils showDefaultErrorMessage];
 				 }
 			 }];
 		} else {
@@ -230,6 +231,7 @@
 
 - (void)setStoreButtons
 {
+	[self.addToMyPlacesButton setBackgroundImage:[UIImage imageNamed:@"btn-edit.png"] forState:UIControlStateHighlighted];
 	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
 	CGFloat screenWidth = screenRect.size.width;
 	
@@ -303,6 +305,15 @@
     [self.view addSubview:self.rewardTableView];
 	
 	self.rewardTableView.tableHeaderView = self.headerView;
+	
+	self.tableViewController = [[UITableViewController alloc]initWithStyle:UITableViewStylePlain];
+	[self addChildViewController:self.tableViewController];
+	
+	self.tableViewController.refreshControl = [[UIRefreshControl alloc]init];
+	[self.tableViewController.refreshControl addTarget:self
+												action:@selector(refreshStoreObject)
+									  forControlEvents:UIControlEventValueChanged];
+	self.tableViewController.tableView = self.rewardTableView;
 }
 
 #pragma mark - Table view data source
@@ -338,9 +349,7 @@
 		cell.rewardStatusIcon.image = [UIImage imageNamed:@"reward_unlocked"];
 	}
     
-    if (!patronStoreExists) {
-        [cell setUserInteractionEnabled:NO];
-    }
+    [cell setUserInteractionEnabled:patronStoreExists];
 	
     return cell;
 }
@@ -381,8 +390,9 @@
 							  handler:^(SIAlertView *alert)
 		{
 			NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:
-													[store objectId],			@"store_id",
-													[patronStore objectId],		@"patron_store_id",
+													patron.objectId,			@"patron_id",
+													store.objectId,				@"store_id",
+													patronStore.objectId,		@"patron_store_id",
 													rewardName,					@"title",
 													rewardIdString,				@"reward_id",
 													rewardPunchesString,		@"num_punches",
@@ -417,12 +427,7 @@
 				else
 				{
 					NSLog(@"error occurred: %@", error);
-					SIAlertView *errorDialogue = [[SIAlertView alloc] initWithTitle:@"Error"
-						andMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
-					[errorDialogue addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
-						//nothing
-					}];
-					[errorDialogue show];
+					[RepunchUtils showDefaultErrorMessage];
 				}
 			}];
 		}];
@@ -518,6 +523,8 @@
 		else
 		{
 			NSLog(@"add_patronStore error: %@", error);
+			[self.addToMyPlacesButton setTitle:@"Add to My Places" forState:UIControlStateNormal];
+			[RepunchUtils showDefaultErrorMessage];
 		}
 	}];
 }
@@ -574,6 +581,9 @@
 		 else
 		 {
 			 NSLog(@"delete_patronStore error: %@", error);
+			 NSString *buttonText = [NSString stringWithFormat:@"%i %@", punchCount, (punchCount == 1) ? @"Punch": @"Punches"];
+			 [self.addToMyPlacesButton setTitle:buttonText forState:UIControlStateNormal];
+			 [RepunchUtils showDefaultErrorMessage];
 		 }
 	 }];
 }
@@ -597,6 +607,26 @@
 		facebookFriendsVC.myDelegate = self;
 		[self presentViewController:facebookFriendsVC animated:YES completion:NULL];
 	}
+}
+
+- (void) refreshStoreObject
+{
+	PFQuery *query = [PFQuery queryWithClassName:@"Store"];
+	[query getObjectInBackgroundWithId:self.storeId block:^(PFObject *result, NSError *error)
+	{
+		if(!error)
+		{
+			[sharedData addStore:result];
+			store = result;
+			[self setStoreInformation];
+			[self setRewardTableView];
+		}
+		else
+		{
+			NSLog(@"error fetching Store: %@", error);
+			[RepunchUtils showDefaultErrorMessage];
+		}
+	}];
 }
 
 - (void)onFriendSelected:(FacebookFriendsViewController *)controller forFriendId:(NSString *)friendId withName:(NSString *)name

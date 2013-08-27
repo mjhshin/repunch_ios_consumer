@@ -18,7 +18,7 @@
 - (void)removeMessage:(IncomingMessageViewController *)controller forMsgStatus:(PFObject *)msgStatus;
 @end
 
-@interface IncomingMessageViewController : UIViewController
+@interface IncomingMessageViewController : UIViewController<ComposeMessageDelegate>
 
 @property (nonatomic, weak) id <IncomingMessageVCDelegate> delegate;
 
@@ -48,11 +48,14 @@
 
 // Attachment (gift/offer)
 @property (strong, nonatomic) IBOutlet UIView *giftView;
+@property (weak, nonatomic) IBOutlet UILabel *giftHeader;
 @property (weak, nonatomic) IBOutlet UILabel *giftTitle;
 @property (weak, nonatomic) IBOutlet UIButton *giftButton;
 @property (weak, nonatomic) IBOutlet UILabel *giftTimerLabel;
+@property (weak, nonatomic) IBOutlet UIButton *giftReplyButton;
 
 - (IBAction)giftButtonAction:(id)sender;
+- (IBAction)giftReplyButtonAction:(id)sender;
 
 // Reply
 @property (strong, nonatomic) IBOutlet UIView *replyView;

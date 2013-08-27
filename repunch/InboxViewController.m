@@ -10,7 +10,10 @@
 @implementation InboxViewController
 {
 	NSInteger alertBadgeCount;
+	BOOL loadInProgress;
 	int paginateCount;
+	BOOL paginateReachEnd;
+	UIActivityIndicatorView *spinner;
 }
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
@@ -26,7 +29,7 @@
 											   object:nil];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(loadInbox)
+											 selector:@selector(loadInbox:)
 												 name:UIApplicationWillEnterForegroundNotification
 											   object:nil];
     
@@ -43,7 +46,7 @@
 	
 	self.tableViewController.refreshControl = [[UIRefreshControl alloc]init];
 	[self.tableViewController.refreshControl addTarget:self
-												action:@selector(loadInbox)
+												action:@selector(loadInbox:)
 									  forControlEvents:UIControlEventValueChanged];
 	
 	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
@@ -60,6 +63,11 @@
     [self.messageTableView setDataSource:self];
     [self.messageTableView setDelegate:self];
 	[self.view addSubview:self.messageTableView];
+	
+	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
+	footer.backgroundColor = [UIColor clearColor];
+	[self.messageTableView setTableFooterView:footer];
+	
 	self.tableViewController.tableView = self.messageTableView;
 	
 	CGFloat xCenter = screenWidth/2;
@@ -78,8 +86,12 @@
 	
 	alertBadgeCount = 0;
 	paginateCount = 0;
+	loadInProgress = NO;
+	paginateReachEnd = NO;
+	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+	spinner.hidesWhenStopped = YES;
 	
-    [self loadInbox];
+    [self loadInbox:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -100,52 +112,70 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
--(void)loadInbox
-{	
-	[self.activityIndicatorView setHidden:FALSE];
-	[self.activityIndicator startAnimating];
-	[self.messageTableView setHidden:TRUE];
+-(void)loadInbox:(BOOL)paginate
+{
+	loadInProgress = YES;
 	
     PFRelation *messagesRelation = [self.patron relationforKey:@"ReceivedMessages"];
     PFQuery *messageQuery = [messagesRelation query];
     [messageQuery includeKey:@"Message.Reply"];
 	[messageQuery orderByDescending:@"createdAt"];
-	[messageQuery setLimit:20];
-	//TODO: paginate!
+	messageQuery.limit = 20;
+	
+	if(paginate == YES)
+	{
+		++paginateCount;
+		messageQuery.skip = 20*paginateCount;
+		
+		[self setFooter:YES];
+	}
+	else
+	{
+		[self.activityIndicatorView setHidden:FALSE];
+		[self.activityIndicator startAnimating];
+		[self.messageTableView setHidden:TRUE];
+	}
     
     [messageQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
 	{
-		[self.activityIndicatorView setHidden:TRUE];
-		[self.activityIndicator stopAnimating];
-		[self.tableViewController.refreshControl endRefreshing];
-		
-        if(!error)
+		if(paginate == YES)
+		{
+			[self setFooter:NO];
+		}
+		else
 		{
 			[self.messagesArray removeAllObjects];
 			alertBadgeCount = 0;
-			
-			if(results.count > 0)
+			paginateReachEnd = NO;
+			[self.activityIndicatorView setHidden:TRUE];
+			[self.activityIndicator stopAnimating];
+			[self.tableViewController.refreshControl endRefreshing];
+		}
+		
+        if(!error)
+		{
+			for(PFObject *messageStatus in results)
 			{
-				for(PFObject *messageStatus in results) {
-					[self.sharedData addMessage:messageStatus];
-					[self.messagesArray addObject:messageStatus];
-					
-					if( ![[messageStatus objectForKey:@"is_read"] boolValue] ) {
-						++alertBadgeCount;
-					}
+				[self.sharedData addMessage:messageStatus];
+				[self.messagesArray addObject:messageStatus];
+				
+				if( ![[messageStatus objectForKey:@"is_read"] boolValue] ) {
+					++alertBadgeCount;
 				}
 			}
+
 			[self refreshTableView];
+			
+			if(paginate == YES && results.count == 0) {
+				paginateReachEnd = YES;
+			}
+			loadInProgress = NO;
         }
-		else {
-            
+		else
+		{
+            [RepunchUtils showDefaultErrorMessage];
         }
     }];
-}
-
-- (void)paginate
-{
-	
 }
 
 #pragma mark - Table view data source
@@ -173,14 +203,15 @@
     PFObject *reply = [message objectForKey:@"Reply"];
     
     if (reply != (id)[NSNull null] && reply != nil) {
-        cell.senderName.text = [reply valueForKey:@"sender_name"];
-        cell.subjectLabel.text = [NSString stringWithFormat:@"RE: %@ - %@", [message valueForKey:@"subject"], [reply valueForKey:@"body"]];
-        cell.dateSent.text = [self formattedDateString:[reply valueForKey:@"createdAt"]];
+        cell.senderName.text = [reply objectForKey:@"sender_name"];
+        cell.subjectLabel.text = [NSString stringWithFormat:@"RE: %@ - %@",
+										[message objectForKey:@"subject"], [reply objectForKey:@"body"]];
+        cell.dateSent.text = [self formattedDateString:reply.createdAt];
 		
     } else {
-		cell.senderName.text = [message valueForKey:@"sender_name"];
-        cell.subjectLabel.text = [NSString stringWithFormat:@"%@ - %@", [message valueForKey:@"subject"], [message valueForKey:@"body"]];
-        cell.dateSent.text = [self formattedDateString:[message valueForKey:@"createdAt"]];
+		cell.senderName.text = [message objectForKey:@"sender_name"];
+        cell.subjectLabel.text = [NSString stringWithFormat:@"%@ - %@", [message objectForKey:@"subject"], [message objectForKey:@"body"]];
+        cell.dateSent.text = [self formattedDateString:message.createdAt];
     }
     
     if ([[message valueForKey:@"message_type"] isEqualToString:@"offer"]){
@@ -244,6 +275,38 @@
     return 88;
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    float scrollLocation = scrollView.contentOffset.y + scrollView.bounds.size.height - scrollView.contentInset.bottom;
+    float scrollHeight = scrollView.contentSize.height;
+
+    if(self.messagesArray.count >= 20 && scrollLocation >= scrollHeight + 5 && !loadInProgress && !paginateReachEnd)
+	{
+		[self loadInbox:YES];
+    }
+}
+
+- (void)setFooter:(BOOL)paginateInProgress
+{
+	UIView *footer = self.messageTableView.tableFooterView;
+	CGRect footerFrame = footer.frame;
+	footerFrame.size.height = paginateInProgress ? 50 : 1;
+	footer.frame = footerFrame;
+	self.messageTableView.tableFooterView = footer;
+	
+	if(paginateInProgress)
+	{
+		spinner.frame = self.messageTableView.tableFooterView.bounds;
+		[self.messageTableView.tableFooterView addSubview:spinner];
+		[spinner startAnimating];
+	}
+	else
+	{
+		[spinner removeFromSuperview];
+		[spinner stopAnimating];
+	}
+}
+
 #pragma mark - Helper Methods
 
 - (NSString *)formattedDateString:(NSDate *)dateCreated
@@ -303,7 +366,9 @@
 {
 	//no need to update alert badge count because only read messages can be deleted
 	NSLog(@"IncomingMessageVC->InboxVC IncomingMessageVCDelegate");
-	[self.messagesArray removeObject:msgStatus];	
+	if(msgStatus != nil) {
+		[self.messagesArray removeObject:msgStatus];
+	}
     [self refreshTableView];
 }
 

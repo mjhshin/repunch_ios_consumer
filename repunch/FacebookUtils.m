@@ -49,7 +49,7 @@
 {
 	PFFile *image = [store objectForKey:@"store_avatar"];
 	NSString *caption = [NSString stringWithFormat:@"At %@", [store objectForKey:@"store_name"]];
-	
+
 	NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
 	[params setObject:@"Redeemed a reward using Repunch!"		forKey:@"name"];
 	[params setObject:caption									forKey:@"caption"];
@@ -68,8 +68,7 @@
 		 else
 		 {
 			 NSLog(@"FBRequestConnection POST error: %@", error);
-			 SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"(DEBUG) Facebook Post Failed"
-														  andMessage:error.localizedDescription];
+			 SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Sorry, something went wrong" andMessage:nil];
 			 [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
 			 [alert show];
 		 }
@@ -106,8 +105,8 @@
 		 else
 		 {
 			 NSLog(@"facebook_post error: %@", error);
-			 SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"(DEBUG) Cloud Code Error"
-														  andMessage:error.localizedDescription];
+			 SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Sorry, something went wrong" andMessage:nil];
+			 [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
 			 [alert show];
 		 }
 	 }];

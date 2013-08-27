@@ -117,6 +117,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
+								<bool key="IBUIShowsTouchWhenHighlighted">YES</bool>
 								<object class="NSColor" key="IBUIHighlightedTitleColor" id="146343974">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MQA</bytes>
@@ -155,6 +156,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
+								<bool key="IBUIShowsTouchWhenHighlighted">YES</bool>
 								<reference key="IBUIHighlightedTitleColor" ref="146343974"/>
 								<object class="NSColor" key="IBUINormalTitleColor">
 									<int key="NSColorSpace">1</int>
@@ -180,6 +182,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
+								<bool key="IBUIShowsTouchWhenHighlighted">YES</bool>
 								<reference key="IBUIHighlightedTitleColor" ref="146343974"/>
 								<object class="NSColor" key="IBUINormalTitleColor">
 									<int key="NSColorSpace">1</int>
@@ -352,9 +355,9 @@
 						<int key="objectID">19</int>
 						<reference key="object" ref="1037174207"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="68487762"/>
 							<reference ref="555588805"/>
 							<reference ref="362434175"/>
+							<reference ref="68487762"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>

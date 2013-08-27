@@ -62,7 +62,8 @@
     }
 	else if ([self.messageType isEqualToString:@"gift_reply"])
 	{
-        self.subject.text = [NSString stringWithFormat:@"Say thanks!"];
+        self.subject.text = [NSString stringWithFormat:@"To: %@", self.recepientName];
+		self.bodyPlaceholder.text = @"Thanks for the gift!";
 		[self.subject setEnabled:FALSE];
     }
 }
@@ -132,7 +133,7 @@
     }
 	else if ([self.messageType isEqualToString:@"gift_reply"])
 	{
-        //[self sendGiftReply];
+        [self sendGiftReply];
     }
 }
 
@@ -168,11 +169,11 @@
 	{
 		[spinner stopAnimating];
 		self.sendButton.hidden = NO;
+		[self dismissViewControllerAnimated:YES completion:nil];
 		
 		if (!error)
 		{
 			[self showDialog:@"Thanks for your feedback!" withMessage:nil];
-			[self dismissViewControllerAnimated:YES completion:nil];
 			NSLog(@"send_feedback result: %@", result);
 		}
 		else
@@ -191,10 +192,6 @@
 	if(self.body.text.length == 0) {
 		[self showDialog:@"Your message is blank" withMessage:nil];
 		return;
-	}
-	
-	if(self.subject.text.length == 0) {
-		self.subject.text = self.subject.placeholder;
 	}
 	
 	self.sendButton.hidden = YES;
@@ -221,11 +218,24 @@
 	 {
 		 [spinner stopAnimating];
 		 self.sendButton.hidden = NO;
+		 [self dismissViewControllerAnimated:YES completion:nil];
 		 
 		 if (!error)
 		 {
-			 [self showDialog:@"Your gift has been sent!" withMessage:nil];
-			 [self dismissViewControllerAnimated:YES completion:nil];
+			 if([result isEqualToString:@"insufficient"])
+			 {
+				 [self showDialog:@"Sorry, not enough punches" withMessage:nil];
+			 }
+			 else
+			 {
+				 int punches = [[patronStore objectForKey:@"punch_count"] intValue];
+				 NSNumber *newPunches = [NSNumber numberWithInt:punches - self.giftPunches];
+				 [patronStore setObject:newPunches forKey:@"punch_count"];
+				 punches -= self.giftPunches;
+				 
+				 [self showDialog:@"Your gift has been sent!" withMessage:nil];
+				 [[NSNotificationCenter defaultCenter] postNotificationName:@"Punch" object:self];
+			 }
 			 NSLog(@"send_gift result: %@", result);
 		 }
 		 else
@@ -240,6 +250,47 @@
 - (void)sendGiftReply
 {
 	[self dismissKeyboard];
+	
+	if(self.body.text.length == 0) {
+		[self showDialog:@"Your message is blank" withMessage:nil];
+		return;
+	}
+	
+	self.sendButton.hidden = YES;
+	[spinner startAnimating];
+    
+	NSString *senderName = [NSString stringWithFormat:@"%@ %@", [patron objectForKey:@"first_name"], [patron objectForKey:@"last_name"]];
+	
+	NSDictionary *inputsArgs = [NSDictionary dictionaryWithObjectsAndKeys:
+								self.giftReplyMessageId,		@"message_id",
+								senderName,						@"sender_name",
+								self.body.text,					@"body",
+								nil];
+	
+	[PFCloud callFunctionInBackground:@"reply_to_gift"
+					   withParameters:inputsArgs
+								block:^(PFObject *reply, NSError *error)
+	 {
+		 [spinner stopAnimating];
+		 self.sendButton.hidden = NO;
+		 [self dismissViewControllerAnimated:YES completion:nil];
+		 
+		 if (!error)
+		 {			 
+			 [self showDialog:@"Your reply has been sent!" withMessage:nil];
+			 PFObject *originalMessage = [[sharedData getMessage:self.giftMessageStatusId] objectForKey:@"Message"];
+			 [originalMessage setObject:reply forKey:@"Reply"];
+			 
+			 [self.delegate giftReplySent:self];
+			 NSLog(@"send_gift result: %@", reply);
+		 }
+		 else
+		 {
+			 [self showDialog:@"Send Failed"
+				  withMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
+			 NSLog(@"send_gift error: %@", error);
+		 }
+	 }];
 }
 
 - (void)dismissKeyboard

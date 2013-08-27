@@ -70,6 +70,11 @@
     [self.myPlacesTableView setDelegate:self];
     [self.view addSubview:self.myPlacesTableView];
 	[self.myPlacesTableView setHidden:TRUE];
+	
+	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
+	footer.backgroundColor = [UIColor clearColor];
+	[self.myPlacesTableView setTableFooterView:footer];
+	
 	self.tableViewController.tableView = self.myPlacesTableView;
 	
 	CGFloat xCenter = screenWidth/2;
@@ -134,8 +139,7 @@
     PFQuery *patronStoreQuery = [patronStoreRelation query];
     [patronStoreQuery includeKey:@"Store"];
 	[patronStoreQuery includeKey:@"FacebookPost"];
-	[patronStoreQuery setLimit:20];
-	//TODO: paginate!!!
+	//[patronStoreQuery setLimit:20];
 
     [patronStoreQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
     {
@@ -164,6 +168,7 @@
         else
         {
             NSLog(@"places view: error is %@", error);
+			[RepunchUtils showDefaultErrorMessage];
         }
         
     }];

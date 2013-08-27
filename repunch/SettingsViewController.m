@@ -65,22 +65,28 @@
 }
 
 - (IBAction)logOut:(id)sender
-{
-	[UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-	
+{	
 	//set blank "patron_id" and "punch_code" in installation so push notifications not received when logged out.
 	[[PFInstallation currentInstallation] setObject:@"" forKey:@"punch_code"];
 	[[PFInstallation currentInstallation] setObject:@"" forKey:@"patron_id"];
 	[[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 		//[spinner stopAnimating];
 		
-		if(!error) {
+		if(!error)
+		{
 			[self dismissViewControllerAnimated:YES completion:nil];
+			[UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 			AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 			[appDelegate logout];
-			
-		} else {
-			[self showDialog:@"Failed to Log Out" withResultMessage:@"Sorry, something went wrong"];
+		}
+		else
+		{
+			SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Failed to Log Out"
+														 andMessage:@"Sorry, something went wrong"];
+			[alert addButtonWithTitle:@"OK"
+								 type:SIAlertViewButtonTypeDefault
+							  handler:nil];
+			[alert show];
 		}
 	}];
 }

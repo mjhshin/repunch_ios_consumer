@@ -34,6 +34,7 @@
 	UIButton *closeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
 	[closeButton setImage:[UIImage imageNamed:@"nav_exit.png"] forState:UIControlStateNormal];
 	[closeButton addTarget:self action:@selector(closeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+	closeButton.showsTouchWhenHighlighted = YES;
 	[toolbar addSubview:closeButton];
 	
 	UILabel *titleLabel = [[UILabel alloc] init];
@@ -50,6 +51,10 @@
 	tableFrame.origin.y = toolbar.frame.size.height;
 	self.tableView.frame = tableFrame;
 	
+	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
+	footer.backgroundColor = [UIColor clearColor];
+	[self.tableView setTableFooterView:footer];
+	
 	self.allowsMultipleSelection = NO;
 	self.itemPicturesEnabled = YES;
 	self.sortOrdering = FBFriendSortByFirstName;
@@ -58,7 +63,16 @@
 	self.cancelButton = nil;
 	
 	self.delegate = (id)self;
-	self.spinner.hidesWhenStopped;
+	
+	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
+	CGFloat xCenter = screenRect.size.width/2;
+	CGFloat yCenter = screenRect.size.height/2;
+	CGFloat xOffset = self.spinnerView.frame.size.width/2;
+	CGFloat yOffset = (self.spinnerView.frame.size.height - toolbar.frame.size.height)/2;
+	CGRect spinnerFrame = self.spinnerView.frame;
+	spinnerFrame.origin = CGPointMake(xCenter - xOffset, yCenter - yOffset);
+	self.spinnerView.frame = spinnerFrame;
+	
 	[self loadFriends];
 }
 
@@ -70,8 +84,8 @@
 
 - (void)loadFriends
 {
-	[self.spinner startAnimating];
-	self.tableView.hidden = YES;
+	self.spinnerView.hidden = NO;
+	[self.mySpinner startAnimating];
 	
 	[FBRequestConnection startForMyFriendsWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error)
 	{
@@ -98,36 +112,32 @@
 						NSLog(@"patronid: %@, fbookId: %@", patron.objectId, [patron objectForKey:@"facebook_id"]);
 					}
 					[self loadData];
-					self.tableView.hidden = NO;
+					self.spinner.hidden = YES;
 				}
 				else
 				{
-					//TODO
-					NSLog(@"Error 1: %@", error);
-					SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"(DEBUG) patron query fucked up"
-																	 andMessage:error.localizedDescription];
+					self.spinnerView.hidden = YES;
+					[self.mySpinner stopAnimating];
 					
-					[alertView addButtonWithTitle:@"OK"
-											 type:SIAlertViewButtonTypeDefault
-										  handler:nil];
-					[alertView show];
+					[RepunchUtils showDefaultErrorMessage];
+					[self dismissViewControllerAnimated:NO completion:nil];
 				}
-				[self.spinner stopAnimating];
 			}];
 		}
 		else
 		{
-			[self.spinner startAnimating];
-			//TODO
-			NSLog(@"Error 2: %@", error);
-			NSLog(@"Error 1: %@", error);
-			SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"(DEBUG) FBRequestConnection fucked up"
-															 andMessage:error.localizedDescription];
+			self.spinnerView.hidden = YES;
+			[self.mySpinner stopAnimating];
 			
+			//TODO
+			//NSLog(@"Error 2: %@", error);
+			//NSLog(@"Error 1: %@", error);
+			SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Sorry, something went wrong" andMessage:nil];
 			[alertView addButtonWithTitle:@"OK"
 									 type:SIAlertViewButtonTypeDefault
 								  handler:nil];
 			[alertView show];
+			[self dismissViewControllerAnimated:NO completion:nil];
 		}
 	}];
 }
@@ -137,13 +147,16 @@
                        handleError:(NSError *)error
 {
 	NSLog(@"Error during data fetch.");
+	self.spinnerView.hidden = YES;
+	[self.mySpinner stopAnimating];
 }
 
 // Event: Data loaded
 - (void)friendPickerViewControllerDataDidChange:(FBFriendPickerViewController *)friendPicker
 {
     NSLog(@"Friend data loaded.");
-	//friendpicker.
+	self.spinnerView.hidden = YES;
+	[self.mySpinner stopAnimating];
 }
 
 // Event: Decide if a given user should be displayed

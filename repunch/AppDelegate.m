@@ -80,8 +80,6 @@
 
 - (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
 {
-    //[PFPush handlePush:userInfo];
-
 	NSString *pushType = [userInfo objectForKey:@"type"];
 	if( [pushType isEqualToString:@"punch"] )
 	{
@@ -106,10 +104,12 @@
     else if( [pushType isEqualToString:@"gift"] )
 	{
 		NSLog(@"Push received: gift");
+		[MessageHandler handleGiftPush:userInfo forReply:NO];
 	}
     else if( [pushType isEqualToString:@"gift_reply"] )
 	{
 		NSLog(@"Push received: gift_reply");
+		[MessageHandler handleGiftPush:userInfo forReply:YES];
 	}
 }
 
@@ -119,10 +119,12 @@
 	
     if (currentUser)
 	{
+		NSLog(@"PFUser is non-null");
+		
 		//if patron object is null for some reason
         if ( ![sharedData patron] )
 		{
-            PFObject *patron = [currentUser valueForKey:@"Patron"];
+            PFObject *patron = [currentUser objectForKey:@"Patron"];
             [patron fetchIfNeededInBackgroundWithBlock:^(PFObject *result, NSError *error)
 			{
                 if (!error) {
@@ -130,6 +132,7 @@
                     [self presentTabBarController];
                 }
                 else {
+					[RepunchUtils showDefaultErrorMessage];
 					[PFUser logOut];
 					[self checkLoginState];
                     NSLog(@"Failed to fetch Patron object: %@", error);
@@ -141,7 +144,9 @@
             [self presentTabBarController];
 		}
 		
-    } else {
+    }
+	else
+	{
 		[self presentLandingViews];
     }
 }

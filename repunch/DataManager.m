@@ -79,7 +79,9 @@ static DataManager *sharedDataManager = nil;    // static instance variable
 // Store image cache methods
 - (void)addStoreImage:(UIImage *)image forKey:(NSString *)storeId
 {
-    [self.storeImageCache setObject:image forKey:storeId];
+	if(image != nil) {
+		[self.storeImageCache setObject:image forKey:storeId];
+	}
 }
 
 - (UIImage *)getStoreImage:(NSString *)storeId

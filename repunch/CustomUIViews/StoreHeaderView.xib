@@ -207,13 +207,16 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<bool key="IBUIShowsTouchWhenHighlighted">YES</bool>
 								<reference key="IBUIHighlightedTitleColor" ref="333791653"/>
 								<object class="NSColor" key="IBUINormalTitleColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 								</object>
 								<reference key="IBUINormalTitleShadowColor" ref="522933242"/>
+								<object class="NSCustomResource" key="IBUIHighlightedImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">call_button_highlighted.png</string>
+								</object>
 								<object class="NSCustomResource" key="IBUINormalImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">call_button.png</string>
@@ -287,13 +290,16 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<bool key="IBUIShowsTouchWhenHighlighted">YES</bool>
 								<reference key="IBUIHighlightedTitleColor" ref="333791653"/>
 								<object class="NSColor" key="IBUINormalTitleColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 								</object>
 								<reference key="IBUINormalTitleShadowColor" ref="522933242"/>
+								<object class="NSCustomResource" key="IBUIHighlightedImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">map_button_highlighted.png</string>
+								</object>
 								<object class="NSCustomResource" key="IBUINormalImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">map_button.png</string>
@@ -348,13 +354,16 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<bool key="IBUIShowsTouchWhenHighlighted">YES</bool>
 								<reference key="IBUIHighlightedTitleColor" ref="333791653"/>
 								<object class="NSColor" key="IBUINormalTitleColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 								</object>
 								<reference key="IBUINormalTitleShadowColor" ref="522933242"/>
+								<object class="NSCustomResource" key="IBUIHighlightedImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">feedback_button_highlighted.png</string>
+								</object>
 								<object class="NSCustomResource" key="IBUINormalImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">feedback_button.png</string>
@@ -431,6 +440,7 @@
 						<string key="NSFrame">{{0, 194}, {320, 1}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -737,13 +747,16 @@
 				<string key="12.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="13.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="16.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<real value="0.0" key="16.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="17.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="176.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="27.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="3.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="33.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<real value="0.0" key="33.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="40.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<real value="0.0" key="40.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="41.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -790,7 +803,7 @@
 						<string key="storeHoursOpen">UILabel</string>
 						<string key="storeHoursToday">UILabel</string>
 						<string key="storeImage">UIImageView</string>
-						<string key="storeName">UILabel</string>
+						<string key="storeNameLabel">UILabel</string>
 						<string key="toolbar">UIView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -850,8 +863,8 @@
 							<string key="name">storeImage</string>
 							<string key="candidateClassName">UIImageView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="storeName">
-							<string key="name">storeName</string>
+						<object class="IBToOneOutletInfo" key="storeNameLabel">
+							<string key="name">storeNameLabel</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="toolbar">
@@ -876,8 +889,11 @@
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="call_button.png">{24, 24}</string>
+			<string key="call_button_highlighted.png">{32, 32}</string>
 			<string key="feedback_button.png">{24, 24}</string>
+			<string key="feedback_button_highlighted.png">{32, 32}</string>
 			<string key="map_button.png">{24, 24}</string>
+			<string key="map_button_highlighted.png">{32, 32}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>

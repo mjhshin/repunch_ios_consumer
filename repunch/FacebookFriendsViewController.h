@@ -22,5 +22,7 @@
 
 @property (nonatomic, weak) id <FacebookFriendsDelegate> myDelegate;
 @property (nonatomic, strong) NSMutableDictionary *friendDictionary;
+@property (weak, nonatomic) IBOutlet UIView *spinnerView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *mySpinner;
 
 @end

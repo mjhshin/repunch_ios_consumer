@@ -33,15 +33,17 @@
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"Redeem" object:self];
 		
-		if( [patron objectForKey:@"facebook_id"] == nil )
+		NSString *facebookId = [patron objectForKey:@"facebook_id"];
+		int freePunches = [[store objectForKey:@"punches_facebook"] intValue];
+		if( facebookId != nil && facebookId != (id)[NSNull null] &&  freePunches > 0)
+		{
+			[FacebookUtils postToFacebook:storeId withRewardTitle:rewardTitle];
+		}
+		else
 		{
 			SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Success!" andMessage:alert];
 			[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
 			[alertView show];
-		}
-		else
-		{
-			[FacebookUtils postToFacebook:storeId withRewardTitle:rewardTitle];
 		}
 	}
 	else

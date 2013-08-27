@@ -35,5 +35,6 @@
 
 @property (weak, nonatomic) IBOutlet UIView *activityIndicatorView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UILabel *emptyResultsLabel;
 
 @end

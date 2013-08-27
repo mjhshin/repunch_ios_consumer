@@ -2,7 +2,6 @@
 //  ComposeViewController.h
 //  Repunch
 //
-//  Created by Gwendolyn Weston on 6/27/13.
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
@@ -12,10 +11,17 @@
 #include <Parse/Parse.h>
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import "RepunchUtils.h"
 
-@class Store;
+@class ComposeMessageViewController;
+
+@protocol ComposeMessageDelegate <NSObject>
+- (void) giftReplySent:(ComposeMessageViewController *)controller;
+@end
 
 @interface ComposeMessageViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate>
+
+@property (nonatomic, weak) id <ComposeMessageDelegate> delegate;
 
 @property (nonatomic, strong) NSString *storeId;
 @property (nonatomic, strong) NSString *messageType;
@@ -24,6 +30,8 @@
 @property (nonatomic, strong) NSString *giftTitle;
 @property (nonatomic, strong) NSString *giftDescription;
 @property int giftPunches;
+@property (nonatomic, strong) NSString *giftReplyMessageId;
+@property (nonatomic, strong) NSString *giftMessageStatusId;
 
 @property (weak, nonatomic) IBOutlet UIView *toolbar;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;

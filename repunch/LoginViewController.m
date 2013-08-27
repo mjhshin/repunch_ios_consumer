@@ -124,13 +124,15 @@
 		{
 			PFObject *patronObject = [user objectForKey:@"Patron"];
 			
-			if( patronObject == (id)[NSNull null] ) {
-				NSString *patronId = [[user objectForKey:@"Patron"] objectId];
-				[self fetchPatronPFObject:patronId];
-				
-			} else {
+			if( patronObject == (id)[NSNull null] )
+			{
 				NSLog(@"Account exists but has Patron is null");
 				[self handleError:nil withTitle:@"Login Failed" andMessage:@"Please check your username/password"];
+			}
+			else
+			{
+				NSString *patronId = [[user objectForKey:@"Patron"] objectId];
+				[self fetchPatronPFObject:patronId];
 			}
 		}
 		else
@@ -141,7 +143,11 @@
 }
 
 - (void)fetchPatronPFObject:(NSString*)patronId
-{	
+{
+	if(patronId == (id)[NSNull null] || patronId == nil) {
+		[self handleError:nil withTitle:@"Login Failed" andMessage:@"Sorry, something went wrong"];
+	}
+	
 	PFQuery *query = [PFQuery queryWithClassName:@"Patron"];
 	
 	[query getObjectInBackgroundWithId:patronId block:^(PFObject *patron, NSError *error)
@@ -274,8 +280,8 @@
 				  }
 				  else
 				  {
-					  //TODO
-					  [self handleError:error withTitle:@"Login Failed" andMessage:@"Sorry, something went wrong"];
+					  NSString *errorString = [[error userInfo] objectForKey:@"error"];
+					  [self handleError:error withTitle:@"Login Failed" andMessage:errorString];
 				  }
 			  }];
 			 
@@ -306,15 +312,19 @@
 	[spinner stopAnimating];
 	[self.facebookSpinner stopAnimating];
 	[self.loginButton setTitle:@"Sign In" forState:UIControlStateNormal];
-	[self.facebookButtonLabel setHidden:NO];
 	[self.loginButton setEnabled:YES];
+	[self.facebookButtonLabel setHidden:NO];
 	[self.facebookButton setEnabled:YES];
 }
 
 - (void)showDialog:(NSString*)resultTitle withResultMessage:(NSString*)resultMessage
-{	
+{
+	NSString *capitalisedSentence =
+		[resultMessage stringByReplacingCharactersInRange:NSMakeRange(0,1)
+											   withString:[[resultMessage  substringToIndex:1] capitalizedString]];
+	
 	SIAlertView *alert = [[SIAlertView alloc] initWithTitle:resultTitle
-                                                 andMessage:resultMessage];
+                                                 andMessage:capitalisedSentence];
     [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
     [alert show];
 }

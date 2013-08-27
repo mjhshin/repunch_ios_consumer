@@ -31,6 +31,7 @@
 @property (nonatomic, strong) NSString *storeId;
 @property (nonatomic, strong) NSMutableArray *rewardArray;
 @property (nonatomic, strong) UITableView *rewardTableView;
+@property (nonatomic, strong) UITableViewController *tableViewController;
 
 @property (strong, nonatomic) IBOutlet UIView *headerView;
 

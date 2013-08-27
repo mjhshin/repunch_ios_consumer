@@ -10,6 +10,7 @@
 @implementation IncomingMessageViewController
 {
 	BOOL containsReply;
+	UIActivityIndicatorView *giftSpinner;
 }
 
 - (void)viewDidLoad
@@ -18,7 +19,7 @@
 	
 	self.sharedData = [DataManager getSharedInstance];
 	self.patron = self.sharedData.patron;
-	self.messageStatus = [self.sharedData getMessage:_messageStatusId];
+	self.messageStatus = [self.sharedData getMessage:self.messageStatusId];
 	self.message = [self.messageStatus objectForKey:@"Message"];
 	self.reply = [self.message objectForKey:@"Reply"];
 	self.messageType = [self.message objectForKey:@"message_type"];
@@ -30,10 +31,10 @@
 	[self.toolbar.layer insertSublayer:bgLayer atIndex:0];
 	
 	if(containsReply) {
-		[self.messageTitle setText:[self.message objectForKey:@"subject"]];
-	} else {
 		NSString *title = [NSString stringWithFormat:@"RE: %@", [self.message objectForKey:@"subject"]];
 		[self.messageTitle setText:title];
+	} else {
+		[self.messageTitle setText:[self.message objectForKey:@"subject"]];
 	}
 	
 	[self setupMessage];
@@ -86,23 +87,26 @@
     frame.size.height = self.bodyTextView.contentSize.height;
     self.bodyTextView.frame = frame;
 	
+	CGFloat contentHeight = frame.origin.y + frame.size.height;
+	
 	if ([self.messageType isEqualToString:@"offer"])
 	{
 		[self setupOffer];
+		contentHeight = self.giftView.frame.origin.y + self.giftView.frame.size.height;
     }
     else if ([self.messageType isEqualToString:@"gift"])
 	{
         [self setupGift];
+		contentHeight = self.giftView.frame.origin.y + self.giftView.frame.size.height;
     }
 	
 	if(containsReply)
 	{
 		[self setupReply];
+		contentHeight = self.replyView.frame.origin.y + self.replyView.frame.size.height;
 	}
-    
-    //[self.scrollView sizeToFit];
-    //[self.scrollView flashScrollIndicators];
-	self.scrollView.contentSize = CGSizeMake(320, 1200); //TODO: calculate height properly.
+	
+	self.scrollView.contentSize = CGSizeMake(320, contentHeight + 40);
 }
 
 - (void)setupReply
@@ -112,37 +116,27 @@
     self.replyDateLabel.text = [self formattedDateString:self.reply.createdAt];
 	self.replySenderLabel.text = [self.reply objectForKey:@"sender_name"];
 	self.replyBodyTextView.text = [self.reply objectForKey:@"body"];
+	[self.replyBodyTextView sizeToFit];
 	
-    CGRect msgFrame = self.bodyTextView.frame;
+    CGRect msgFrame = [self.messageType isEqualToString:@"gift"] ? self.giftView.frame : self.bodyTextView.frame;
     CGRect replyViewFrame = self.replyView.frame;
-    CGRect replyTextViewFrame = self.replyBodyTextView.frame;
     
     replyViewFrame.origin.y = msgFrame.origin.y + msgFrame.size.height + 20;
-    replyTextViewFrame.size.height = self.replyBodyTextView.contentSize.height;
-    self.replyView.frame = replyViewFrame;
-    self.replyBodyTextView.frame = replyTextViewFrame;
+	replyViewFrame.size.height = self.replyBodyTextView.frame.origin.y + self.replyBodyTextView.frame.size.height;
+	self.replyView.frame = replyViewFrame;
 	self.replyView.hidden = FALSE;
     
     [self.scrollView addSubview:self.replyView];
-    
 }
 
 - (void)setupOffer
 {
 	[[NSBundle mainBundle] loadNibNamed:@"MessageAttachment" owner:self options:nil];
 	
-	CGRect msgFrame = self.bodyTextView.frame;
-    CGRect giftViewFrame = self.giftView.frame;
-    
-    giftViewFrame.origin.y = msgFrame.origin.y + msgFrame.size.height + 40;
-    self.giftView.frame = giftViewFrame;
-	[self.giftView.layer setCornerRadius:14];
-	[self.giftView setClipsToBounds:YES];
-	[self.giftButton.layer setCornerRadius:5];
-	[self.giftButton setClipsToBounds:YES];
+	self.giftHeader.text = @"Offer";
+	self.giftTitle.text = [self.message objectForKey:@"offer_title"];
 	
-	self.giftTitle.text = [NSString stringWithFormat:@"Offer: %@",[self.message objectForKey:@"offer_title"]];
-	
+	[self positionAttachmentViews:NO];
 	[self.scrollView addSubview:self.giftView];
 }
 
@@ -150,21 +144,131 @@
 {
 	[[NSBundle mainBundle] loadNibNamed:@"MessageAttachment" owner:self options:nil];
 	
+	NSString *storeId = [self.message objectForKey:@"store_id"];
+	PFObject *store = [self.sharedData getStore:storeId];	
+	
+	self.giftTitle.text = [self.message objectForKey:@"gift_title"];
+	self.giftTimerLabel.text = [self.message objectForKey:@"gift_description"];
+	self.giftTimerLabel.font = [UIFont fontWithName:@"Avenir" size:17];
+	
+	if(store)
+	{
+		self.giftHeader.text = [store objectForKey:@"store_name"];
+	}
+	else
+	{
+		giftSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+		giftSpinner.frame = self.giftHeader.bounds;
+		[self.giftHeader addSubview:giftSpinner];
+		giftSpinner.hidesWhenStopped = YES;
+		[giftSpinner startAnimating];
+		
+		PFQuery *query = [PFQuery queryWithClassName:@"Store"];
+		[query getObjectInBackgroundWithId:storeId block:^(PFObject *result, NSError *error)
+		{
+			if(result)
+			{
+				[giftSpinner stopAnimating];
+				[self.sharedData addStore:result];
+				self.giftHeader.text = [result objectForKey:@"store_name"];
+			}
+			else
+			{
+				[RepunchUtils showDefaultErrorMessage];
+			}
+		}];
+	}
+	
+	[self positionAttachmentViews:YES];
+	[self.scrollView addSubview:self.giftView];
+}
+
+- (void)positionAttachmentViews:(BOOL)isGift
+{
 	CGRect msgFrame = self.bodyTextView.frame;
     CGRect giftViewFrame = self.giftView.frame;
-    
-    giftViewFrame.origin.y = msgFrame.origin.y + msgFrame.size.height + 40;
+    giftViewFrame.origin.y = msgFrame.origin.y + msgFrame.size.height + 30;
     self.giftView.frame = giftViewFrame;
+	
 	[self.giftView.layer setCornerRadius:14];
 	[self.giftView setClipsToBounds:YES];
+	
+	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
+	bgLayer.frame = self.giftButton.bounds;
+	[self.giftButton.layer insertSublayer:bgLayer atIndex:0];
 	[self.giftButton.layer setCornerRadius:5];
 	[self.giftButton setClipsToBounds:YES];
 	
-	self.giftTitle.text = [NSString stringWithFormat:@"Gift: %@",[self.message objectForKey:@"gift_title"]];
-	self.giftTimerLabel.text = [self.message objectForKey:@"gift_description"];
-	self.giftTimerLabel.numberOfLines = 3;
+	if(isGift)
+	{
+		if( [[self.message objectForKey:@"patron_id"] isEqualToString:self.patron.objectId] )
+		{
+			self.giftButton.hidden = YES;
+			self.giftReplyButton.hidden = YES;
+		}
+		else if(!containsReply)
+		{
+			self.giftReplyButton.hidden = NO;
+			CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
+			bgLayer.frame = self.giftReplyButton.bounds;
+			[self.giftReplyButton.layer insertSublayer:bgLayer atIndex:0];
+			[self.giftReplyButton.layer setCornerRadius:5];
+			[self.giftReplyButton setClipsToBounds:YES];
+		}
+		else
+		{
+			self.giftReplyButton.hidden = YES;
+			CGRect frame = self.giftButton.frame;
+			frame.origin.x = (self.giftView.frame.size.width - frame.size.width)/2;
+			self.giftButton.frame = frame;
+		}
+	}
+	else
+	{
+		self.giftReplyButton.hidden = YES;
+		CGRect frame = self.giftButton.frame;
+		frame.origin.x = (self.giftView.frame.size.width - frame.size.width)/2;
+		self.giftButton.frame = frame;
+		
+	}
 	
-	[self.scrollView addSubview:self.giftView];
+	CGRect giftFrame = self.giftView.frame;
+	CGRect titleFrame = self.giftTitle.frame;
+	CGRect timerFrame = self.giftTimerLabel.frame;
+	CGRect buttonFrame = self.giftButton.frame;
+	CGRect replyButtonFrame = self.giftReplyButton.frame;
+	
+	[self.giftTitle sizeToFit];
+	[self.giftTimerLabel sizeToFit];
+
+	titleFrame.origin.y = self.giftHeader.frame.origin.y + self.giftHeader.frame.size.height + 25;
+	titleFrame.size.height = self.giftTitle.frame.size.height;
+	self.giftTitle.frame = titleFrame;
+	
+	timerFrame.origin.y = self.giftTitle.frame.origin.y + self.giftTitle.frame.size.height + 25;
+	timerFrame.size.height = self.giftTimerLabel.frame.size.height;
+	self.giftTimerLabel.frame = timerFrame;
+	
+	buttonFrame.origin.y = self.giftTimerLabel.frame.origin.y + self.giftTimerLabel.frame.size.height + 25;
+	self.giftButton.frame = buttonFrame;
+	
+	replyButtonFrame.origin.y = buttonFrame.origin.y;
+	self.giftReplyButton.frame = replyButtonFrame;
+	
+	if(isGift)
+	{
+		if( [[self.message objectForKey:@"patron_id"] isEqualToString:self.patron.objectId] ) {
+			giftFrame.size.height = self.giftTimerLabel.frame.origin.y + self.giftTimerLabel.frame.size.height + 25;
+		} else {
+			giftFrame.size.height = self.giftButton.frame.origin.y + self.giftButton.frame.size.height + 25;
+		}
+	}
+	else
+	{
+		giftFrame.size.height = self.giftButton.frame.origin.y + self.giftButton.frame.size.height + 25;
+	}
+	
+	self.giftView.frame = giftFrame;
 }
 
 #pragma mark - Helper Methods
@@ -245,17 +349,19 @@
 		
 		NSString *storeId = [[self.sharedData getStore:[self.message objectForKey:@"store_id"]] objectId];
 		NSString *patronStoreId = [[self.sharedData getPatronStore:storeId] objectId];
-		NSString *rewardTitle = [self.message objectForKey:@"offer_title"];
+		NSString *rewardTitle = [self.messageType isEqualToString:@"offer"] ?
+										[self.message objectForKey:@"offer_title"] : [self.message objectForKey:@"gift_title"];
 		NSString *customerName = [NSString stringWithFormat:@"%@ %@", [self.patron objectForKey:@"first_name"],
 								  [self.patron objectForKey:@"last_name"]];
 	
 		NSDictionary *inputArgs = [NSDictionary dictionaryWithObjectsAndKeys:
-							   storeId,							@"store_id",
-							   patronStoreId,					@"patron_store_id",
-							   rewardTitle,						@"title",
-							   customerName,					@"name",
-							   self.messageStatus.objectId,		@"message_status_id",
-							   nil];
+								   self.patron.objectId,			@"patron_id",
+								   storeId,							@"store_id",
+								   patronStoreId,					@"patron_store_id",
+								   rewardTitle,						@"title",
+								   customerName,					@"name",
+								   self.messageStatus.objectId,		@"message_status_id",
+								   nil];
 	
 		[PFCloud callFunctionInBackground: @"request_redeem"
 						   withParameters:inputArgs
@@ -268,7 +374,7 @@
 				 [self.messageStatus setObject:@"pending" forKey:@"redeem_available"];
 				 
 				 SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Waiting for confirmation"
-															  andMessage:@"Please wait for this offer to be validated"];
+															  andMessage:@"Please wait for this item to be validated"];
 				 [alert addButtonWithTitle:@"OK"
 									  type:SIAlertViewButtonTypeDefault
 								   handler:^(SIAlertView *alertView) {}];
@@ -277,6 +383,7 @@
 			 else
 			 {
 				 NSLog(@"request_redeem error: %@", error);
+				 [RepunchUtils showDefaultErrorMessage];
 			 }
 		 }];
 		
@@ -284,7 +391,7 @@
 	else if( [[self.messageStatus objectForKey:@"redeem_available"] isEqualToString:@"pending"] )
 	{
 		SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Offer pending"
-													 andMessage:@"You can only request this offer once"];
+													 andMessage:@"You can only request this item once"];
 		[alert addButtonWithTitle:@"OK"
 							 type:SIAlertViewButtonTypeDefault
 						  handler:^(SIAlertView *alertView) {}];
@@ -293,7 +400,7 @@
 	else
 	{
 		SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Offer redeemed"
-													 andMessage:@"You have already redeemed this reward"];
+													 andMessage:@"You have already redeemed this item"];
 		[alert addButtonWithTitle:@"OK"
 							 type:SIAlertViewButtonTypeDefault
 						  handler:^(SIAlertView *alertView) {}];
@@ -301,12 +408,19 @@
 	}
 }
 
-/*
-- (IBAction)replyButtonAction:(id)sender
-{
-
+- (IBAction)giftReplyButtonAction:(id)sender
+{	
+	NSString *storeId = [[self.sharedData getStore:[self.message objectForKey:@"store_id"]] objectId];
+	
+	ComposeMessageViewController *composeVC = [[ComposeMessageViewController alloc] init];
+	composeVC.delegate = self;
+	composeVC.messageType = @"gift_reply";
+	composeVC.storeId = storeId;
+	composeVC.recepientName = [self.message objectForKey:@"sender_name"];
+	composeVC.giftReplyMessageId = self.message.objectId;
+	composeVC.giftMessageStatusId = self.messageStatusId;
+	[self presentViewController:composeVC animated:YES completion:nil];
 }
-*/
 
 - (IBAction)deleteButtonAction:(id)sender
 {	
@@ -332,6 +446,15 @@
 - (IBAction)closeButtonAction:(id)sender
 {
 	[self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)giftReplySent:(ComposeMessageViewController *)controller
+{
+	self.reply = [self.message objectForKey:@"Reply"];
+	containsReply = (self.reply != (id)[NSNull null] && self.reply != nil);
+	[self.giftView removeFromSuperview];
+	[self setupMessage];
+	[self.delegate removeMessage:self forMsgStatus:nil];
 }
 
 - (void)showDialog:(NSString*)title withMessage:(NSString*)message

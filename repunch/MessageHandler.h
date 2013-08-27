@@ -13,5 +13,6 @@
 @interface MessageHandler : NSObject
 
 + (void) handlePush:(NSDictionary *)pushPayload;
++ (void) handleGiftPush:(NSDictionary *)pushPayload forReply:(BOOL)isReply;
 
 @end

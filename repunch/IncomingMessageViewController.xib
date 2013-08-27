@@ -45,8 +45,9 @@
 							<object class="IBUILabel" id="344217373">
 								<reference key="NSNextResponder" ref="197369775"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{69, 13}, {182, 24}}</string>
+								<string key="NSFrame">{{50, 13}, {220, 24}}</string>
 								<reference key="NSSuperview" ref="197369775"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1008775647"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -80,12 +81,14 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{270, 0}, {50, 50}}</string>
 								<reference key="NSSuperview" ref="197369775"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="946881723"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
+								<bool key="IBUIShowsTouchWhenHighlighted">YES</bool>
 								<reference key="IBUIHighlightedTitleColor" ref="716211957"/>
 								<object class="NSColor" key="IBUINormalTitleColor">
 									<int key="NSColorSpace">1</int>
@@ -114,12 +117,14 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrameSize">{50, 50}</string>
 								<reference key="NSSuperview" ref="197369775"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="344217373"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
+								<bool key="IBUIShowsTouchWhenHighlighted">YES</bool>
 								<reference key="IBUIHighlightedTitleColor" ref="716211957"/>
 								<object class="NSColor" key="IBUINormalTitleColor">
 									<int key="NSColorSpace">1</int>
@@ -136,6 +141,7 @@
 						</array>
 						<string key="NSFrameSize">{320, 50}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="628106813"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -149,6 +155,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{232, 20}, {68, 30}}</string>
 								<reference key="NSSuperview" ref="946881723"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="30614307"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -182,6 +189,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{20, 20}, {204, 30}}</string>
 								<reference key="NSSuperview" ref="946881723"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="261979409"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -206,6 +214,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{12, 68}, {296, 105}}</string>
 								<reference key="NSSuperview" ref="946881723"/>
+								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<bool key="IBUIMultipleTouchEnabled">YES</bool>
@@ -236,6 +245,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{20, 58}, {280, 2}}</string>
 								<reference key="NSSuperview" ref="946881723"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="307558880"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
@@ -265,6 +275,7 @@
 						</array>
 						<string key="NSFrame">{{0, 50}, {320, 416}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="531652809"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -278,6 +289,7 @@
 				</array>
 				<string key="NSFrame">{{0, 20}, {320, 460}}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="197369775"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
@@ -487,6 +499,7 @@
 						<string key="closeButtonAction:">id</string>
 						<string key="deleteButtonAction:">id</string>
 						<string key="giftButtonAction:">id</string>
+						<string key="giftReplyButtonAction:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="closeButtonAction:">
@@ -501,11 +514,17 @@
 							<string key="name">giftButtonAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="giftReplyButtonAction:">
+							<string key="name">giftReplyButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="bodyTextView">UITextView</string>
 						<string key="dateLabel">UILabel</string>
 						<string key="giftButton">UIButton</string>
+						<string key="giftHeader">UILabel</string>
+						<string key="giftReplyButton">UIButton</string>
 						<string key="giftTimerLabel">UILabel</string>
 						<string key="giftTitle">UILabel</string>
 						<string key="giftView">UIView</string>
@@ -529,6 +548,14 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="giftButton">
 							<string key="name">giftButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="giftHeader">
+							<string key="name">giftHeader</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="giftReplyButton">
+							<string key="name">giftReplyButton</string>
 							<string key="candidateClassName">UIButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="giftTimerLabel">

@@ -45,6 +45,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{60, 13}, {200, 24}}</string>
 								<reference key="NSSuperview" ref="825228980"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="830588543"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -78,12 +79,14 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrameSize">{50, 50}</string>
 								<reference key="NSSuperview" ref="825228980"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="173708280"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
+								<bool key="IBUIShowsTouchWhenHighlighted">YES</bool>
 								<reference key="IBUIHighlightedTitleColor" ref="877214542"/>
 								<object class="NSColor" key="IBUINormalTitleColor">
 									<int key="NSColorSpace">1</int>
@@ -112,11 +115,13 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{270, 0}, {50, 50}}</string>
 								<reference key="NSSuperview" ref="825228980"/>
+								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
+								<bool key="IBUIShowsTouchWhenHighlighted">YES</bool>
 								<reference key="IBUIHighlightedTitleColor" ref="877214542"/>
 								<object class="NSColor" key="IBUINormalTitleColor">
 									<int key="NSColorSpace">1</int>
@@ -133,6 +138,7 @@
 						</array>
 						<string key="NSFrameSize">{320, 50}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="42736661"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -140,6 +146,7 @@
 				</array>
 				<string key="NSFrame">{{0, 20}, {320, 460}}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="825228980"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
@@ -314,7 +321,7 @@
 						<string key="storeHoursOpen">UILabel</string>
 						<string key="storeHoursToday">UILabel</string>
 						<string key="storeImage">UIImageView</string>
-						<string key="storeName">UILabel</string>
+						<string key="storeNameLabel">UILabel</string>
 						<string key="toolbar">UIView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -374,8 +381,8 @@
 							<string key="name">storeImage</string>
 							<string key="candidateClassName">UIImageView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="storeName">
-							<string key="name">storeName</string>
+						<object class="IBToOneOutletInfo" key="storeNameLabel">
+							<string key="name">storeNameLabel</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="toolbar">
