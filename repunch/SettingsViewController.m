@@ -40,7 +40,8 @@
 	NSString* str2 = @" ";
 	NSString* lastName = [patron objectForKey:@"last_name"];
 	
-    _currentLogin.text = [NSString stringWithFormat:@"%@%@%@%@", str1, firstName, str2, lastName];
+    self.currentLogin.text = [NSString stringWithFormat:@"%@%@%@%@", str1, firstName, str2, lastName];
+	self.spinner.hidesWhenStopped = YES;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -65,12 +66,17 @@
 }
 
 - (IBAction)logOut:(id)sender
-{	
+{
+	[self.spinner startAnimating];
+	[self.logoutButton setEnabled:NO];
+	
 	//set blank "patron_id" and "punch_code" in installation so push notifications not received when logged out.
 	[[PFInstallation currentInstallation] setObject:@"" forKey:@"punch_code"];
 	[[PFInstallation currentInstallation] setObject:@"" forKey:@"patron_id"];
-	[[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-		//[spinner stopAnimating];
+	[[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+	{
+		[self.spinner stopAnimating];
+		[self.logoutButton setEnabled:YES];
 		
 		if(!error)
 		{

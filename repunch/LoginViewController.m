@@ -124,7 +124,7 @@
 		{
 			PFObject *patronObject = [user objectForKey:@"Patron"];
 			
-			if( patronObject == (id)[NSNull null] )
+			if(patronObject == (id)[NSNull null] || patronObject == nil)
 			{
 				NSLog(@"Account exists but has Patron is null");
 				[self handleError:nil withTitle:@"Login Failed" andMessage:@"Please check your username/password"];
@@ -137,7 +137,12 @@
 		}
 		else
 		{
-			[self handleError:nil withTitle:@"Login Failed" andMessage:@"Please check your username/password"];
+			int errorCode = [[[error userInfo] objectForKey:@"code"] intValue];
+			if(errorCode == kPFErrorObjectNotFound) {
+				[self handleError:nil withTitle:@"Login Failed" andMessage:@"Please check your username/password"];
+			} else {
+				[RepunchUtils showDefaultErrorMessage];
+			}
 		}
 	}]; //end get user block
 }
@@ -199,7 +204,7 @@
 													message:@"Enter your email address and we'll help you reset your password."
 												   delegate:self
 										  cancelButtonTitle:@"Cancel"
-										  otherButtonTitles:@"OK",nil];
+										  otherButtonTitles:@"OK", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     [alert show];
 }

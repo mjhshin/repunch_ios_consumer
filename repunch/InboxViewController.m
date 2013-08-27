@@ -131,9 +131,10 @@
 	}
 	else
 	{
-		[self.activityIndicatorView setHidden:FALSE];
+		self.activityIndicatorView.hidden = NO;
 		[self.activityIndicator startAnimating];
-		[self.messageTableView setHidden:TRUE];
+		self.messageTableView.hidden = YES;
+		self.emptyInboxLabel.hidden = YES;
 	}
     
     [messageQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)

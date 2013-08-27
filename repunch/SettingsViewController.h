@@ -16,5 +16,8 @@
 - (IBAction)logOut:(id)sender;
 - (IBAction)closeView:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+@property (weak, nonatomic) IBOutlet UIButton *logoutButton;
+
 @property (weak, nonatomic) IBOutlet UILabel *currentLogin;
 @end

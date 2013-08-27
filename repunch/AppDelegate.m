@@ -24,7 +24,7 @@
                   clientKey:@"XZMybowaEMLHszQTEpxq4Yk2ksivkYj9m1c099ZD"];
     
     [PFFacebookUtils initializeFacebook];    
-    [Crittercism enableWithAppID: @"51df08478b2e331138000003"];
+    //[Crittercism enableWithAppID: @"51df08478b2e331138000003"];
 	
 	[application registerForRemoteNotificationTypes:
 	 UIRemoteNotificationTypeBadge |
@@ -124,6 +124,7 @@
 		//if patron object is null for some reason
         if ( ![sharedData patron] )
 		{
+			
             PFObject *patron = [currentUser objectForKey:@"Patron"];
             [patron fetchIfNeededInBackgroundWithBlock:^(PFObject *result, NSError *error)
 			{

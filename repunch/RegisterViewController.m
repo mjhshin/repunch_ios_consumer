@@ -117,7 +117,7 @@
 	[self.registerButton setEnabled:NO];
 	[self.facebookSpinner startAnimating];
 	
-    NSArray *permissions = @[@"email", @"user_birthday"];
+    NSArray *permissions = @[@"email", @"user_birthday", @"publish_actions"];
 	
 	[PFFacebookUtils logInWithPermissions:permissions block:^(PFUser *user, NSError *error)
 	 {
@@ -159,7 +159,6 @@
 	[newUser setUsername:email];
     [newUser setPassword:password];
     [newUser setEmail:email];
-    [newUser setValue:@"patron" forKey:@"account_type"];
     
     [self.registerButton setTitle:@"" forState:UIControlStateNormal];
 	[self.registerButton setEnabled:NO];
@@ -168,7 +167,8 @@
     
     [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
 	{
-        if (!error) {
+        if (!error)
+		{
 			
 			NSDateComponents *components = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:[NSDate date]];
 			int birthYear = [components year] - [age intValue];
@@ -205,29 +205,22 @@
 					[self handleError:nil
 							withTitle:@"Registration failed"
 						   andMessage:errorString];
-					/*
-					NSDictionary *parseError = [error userInfo];
-					NSInteger errorCode = [[parseError valueForKey:@"error"] intValue];
-					
-					if( errorCode == kPFErrorUserEmailTaken ) {
-						NSString *msgPart1 = @"Sorry, the email ";
-						NSString *msgPart2 = @" is already taken";
-					
-						[self handleError:nil
-								withTitle:@"Registration failed"
-							   andMessage:[NSString stringWithFormat:@"%@%@%@", msgPart1, email, msgPart2]];
-						
-					} else { //TODO: error codes!!!
-						[self handleError:nil withTitle:@"Registration Failed" andMessage:@"Sorry, something went wrong"];
-                    
-					}
-					 */
 				}
             }];
             
-        } else {
-			NSString *errorString = [[error userInfo] objectForKey:@"error"];
-            [self handleError:nil withTitle:@"Registration Failed" andMessage:errorString];
+        }
+		else
+		{
+			int errorCode = [[[error userInfo] objectForKey:@"code"] intValue];
+			if(errorCode == kPFErrorInvalidEmailAddress ||
+			   errorCode == kPFErrorUserEmailTaken ||
+			   errorCode == kPFErrorUsernameTaken)
+			{
+				NSString *errorString = [[error userInfo] objectForKey:@"error"];
+				[self handleError:nil withTitle:@"Registration Failed" andMessage:errorString];
+			} else {
+				[RepunchUtils showDefaultErrorMessage];
+			}
         }
     }];
 }
@@ -302,6 +295,11 @@
 	
 	if( [_ageInput.text intValue] < 13 ) {
 		[self showDialog:@"Registration Failed" withResultMessage:@"Sorry, but you must be at least 13 years old to sign up"];
+		return NO;
+	}
+	
+	if( [_ageInput.text intValue] > 125 ) {
+		[self showDialog:@"Please enter your real age" withResultMessage:nil];
 		return NO;
 	}
     

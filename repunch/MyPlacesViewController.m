@@ -131,9 +131,10 @@
 
 - (void)loadMyPlaces
 {	
-	[self.activityIndicatorView setHidden:FALSE];
+	self.activityIndicatorView.hidden = NO;
 	[self.activityIndicator startAnimating];
-	[self.myPlacesTableView setHidden:TRUE];
+	self.myPlacesTableView.hidden = YES;
+	self.emptyMyPlacesLabel.hidden = YES;
 	
     PFRelation *patronStoreRelation = [self.patron relationforKey:@"PatronStores"];
     PFQuery *patronStoreQuery = [patronStoreRelation query];
