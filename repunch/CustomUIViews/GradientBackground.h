@@ -19,4 +19,6 @@
 + (UIImage *) blackButtonNormal:(UIButton *)button;
 + (UIImage *) blackButtonHighlighted:(UIButton *)button;
 
++ (UIImage *) greyDisabledButton:(UIButton *)button;
+
 @end

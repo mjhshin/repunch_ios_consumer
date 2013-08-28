@@ -193,10 +193,19 @@
 	[self.giftView.layer setCornerRadius:14];
 	[self.giftView setClipsToBounds:YES];
 	
-	[self.giftButton setBackgroundImage:[GradientBackground orangeButtonNormal:self.giftButton]
-									forState:UIControlStateNormal];
-	[self.giftButton setBackgroundImage:[GradientBackground orangeButtonHighlighted:self.giftButton]
-									forState:UIControlStateHighlighted];
+	if( [[self.messageStatus objectForKey:@"redeem_available"] isEqualToString:@"yes"] )
+	{
+		[self.giftButton setBackgroundImage:[GradientBackground orangeButtonNormal:self.giftButton]
+										forState:UIControlStateNormal];
+		[self.giftButton setBackgroundImage:[GradientBackground orangeButtonHighlighted:self.giftButton]
+										forState:UIControlStateHighlighted];
+	}
+	else
+	{
+		[self.giftButton setBackgroundImage:[GradientBackground greyDisabledButton:self.giftButton]
+								   forState:UIControlStateNormal];
+	}
+	
 	[self.giftButton.layer setCornerRadius:5];
 	[self.giftButton setClipsToBounds:YES];
 	
@@ -373,10 +382,13 @@
 			 
 			 if(!error)
 			 {
-				 [self.messageStatus setObject:@"pending" forKey:@"redeem_available"];
-				 
 				 SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Waiting for confirmation"
 															  andMessage:@"Please wait for this item to be validated"];
+				 
+				 [self.messageStatus setObject:@"pending" forKey:@"redeem_available"];
+				 [self.giftButton setBackgroundImage:[GradientBackground greyDisabledButton:self.giftButton]
+											forState:UIControlStateNormal];
+				 
 				 [alert addButtonWithTitle:@"OK"
 									  type:SIAlertViewButtonTypeDefault
 								   handler:^(SIAlertView *alertView) {}];

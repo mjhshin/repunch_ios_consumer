@@ -119,7 +119,8 @@
 	
     if (currentUser)
 	{
-		NSLog(@"PFUser is non-null");
+		//NSLog(@"PFUser is non-null");
+		[Crittercism setUsername:currentUser.username];
 		
 		//if patron object is null for some reason
         if ( ![sharedData patron] )
