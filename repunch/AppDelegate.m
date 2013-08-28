@@ -24,7 +24,7 @@
                   clientKey:@"XZMybowaEMLHszQTEpxq4Yk2ksivkYj9m1c099ZD"];
     
     [PFFacebookUtils initializeFacebook];    
-    //[Crittercism enableWithAppID: @"51df08478b2e331138000003"];
+    [Crittercism enableWithAppID: @"51df08478b2e331138000003"];
 	
 	[application registerForRemoteNotificationTypes:
 	 UIRemoteNotificationTypeBadge |
@@ -124,21 +124,32 @@
 		//if patron object is null for some reason
         if ( ![sharedData patron] )
 		{
+			Reachability *reachability = [Reachability reachabilityForInternetConnection];
+			NetworkStatus internetStatus = [reachability currentReachabilityStatus];
 			
-            PFObject *patron = [currentUser objectForKey:@"Patron"];
-            [patron fetchIfNeededInBackgroundWithBlock:^(PFObject *result, NSError *error)
+			if (internetStatus != NotReachable)
 			{
-                if (!error) {
-                    [sharedData setPatron:result];
-                    [self presentTabBarController];
-                }
-                else {
-					[RepunchUtils showDefaultErrorMessage];
-					[PFUser logOut];
-					[self checkLoginState];
-                    NSLog(@"Failed to fetch Patron object: %@", error);
-                }
-            }];
+				PFObject *patron = [currentUser objectForKey:@"Patron"];
+				[patron fetchIfNeededInBackgroundWithBlock:^(PFObject *result, NSError *error)
+				 {
+					 if (!error) {
+						 [sharedData setPatron:result];
+						 [self presentTabBarController];
+					 }
+					 else {
+						 [RepunchUtils showDefaultErrorMessage];
+						 [PFUser logOut];
+						 [self checkLoginState];
+						 NSLog(@"Failed to fetch Patron object: %@", error);
+					 }
+				 }];
+			}
+			else
+			{
+				[RepunchUtils showDefaultErrorMessage];
+				[PFUser logOut];
+				[self checkLoginState];
+			}
         }
 		else
 		{

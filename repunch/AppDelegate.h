@@ -17,6 +17,7 @@
 #import "PunchHandler.h"
 #import "RedeemHandler.h"
 #import "MessageHandler.h"
+#import "Reachability.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

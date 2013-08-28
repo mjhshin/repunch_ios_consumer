@@ -42,9 +42,10 @@
 	bgLayer.frame = self.view.bounds;
 	[self.view.layer insertSublayer:bgLayer atIndex:0];
 	
-	CAGradientLayer *bgLayer2 = [GradientBackground blackButtonGradient];
-	bgLayer2.frame = self.registerButton.bounds;
-	[self.registerButton.layer insertSublayer:bgLayer2 atIndex:0];
+	[self.registerButton setBackgroundImage:[GradientBackground blackButtonNormal:self.registerButton]
+								forState:UIControlStateNormal];
+	[self.registerButton setBackgroundImage:[GradientBackground blackButtonHighlighted:self.registerButton]
+								forState:UIControlStateHighlighted];
 	[self.registerButton.layer setCornerRadius:5];
 	[self.registerButton setClipsToBounds:YES];
 	
@@ -219,7 +220,9 @@
 				NSString *errorString = [[error userInfo] objectForKey:@"error"];
 				[self handleError:nil withTitle:@"Registration Failed" andMessage:errorString];
 			} else {
-				[RepunchUtils showDefaultErrorMessage];
+				[self handleError:nil
+						withTitle:@"Registration Failed"
+					   andMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
 			}
         }
     }];
@@ -350,7 +353,6 @@
 					  [self handleError:error withTitle:@"Registration Failed" andMessage:errorString];
 				  }
 			  }];
-			 
 		 }
 		 else
 		 {

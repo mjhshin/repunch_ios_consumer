@@ -37,9 +37,10 @@
 	bgLayer.frame = self.view.bounds;
 	[self.view.layer insertSublayer:bgLayer atIndex:0];
 	
-	CAGradientLayer *bgLayer2 = [GradientBackground blackButtonGradient];
-	bgLayer2.frame = self.loginButton.bounds;
-	[self.loginButton.layer insertSublayer:bgLayer2 atIndex:0];
+	[self.loginButton setBackgroundImage:[GradientBackground blackButtonNormal:self.loginButton]
+								   forState:UIControlStateNormal];
+	[self.loginButton setBackgroundImage:[GradientBackground blackButtonHighlighted:self.loginButton]
+								   forState:UIControlStateHighlighted];
 	[self.loginButton.layer setCornerRadius:5];
 	[self.loginButton setClipsToBounds:YES];
 	
@@ -138,10 +139,15 @@
 		else
 		{
 			int errorCode = [[[error userInfo] objectForKey:@"code"] intValue];
-			if(errorCode == kPFErrorObjectNotFound) {
+			if(errorCode == kPFErrorObjectNotFound || errorCode == kPFErrorUserWithEmailNotFound)
+			{
 				[self handleError:nil withTitle:@"Login Failed" andMessage:@"Please check your username/password"];
-			} else {
-				[RepunchUtils showDefaultErrorMessage];
+			}
+			else
+			{
+				[self handleError:nil
+						withTitle:@"Login Failed"
+					   andMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
 			}
 		}
 	}]; //end get user block
@@ -196,22 +202,6 @@
 			[self handleError:nil withTitle:@"Login Failed" andMessage:@"Sorry, something went wrong"];
 		}
 	}];
-}
-
-- (IBAction)forgotPassword:(id)sender
-{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Forgot Password?"
-													message:@"Enter your email address and we'll help you reset your password."
-												   delegate:self
-										  cancelButtonTitle:@"Cancel"
-										  otherButtonTitles:@"OK", nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [alert show];
-}
-
-- (IBAction)cancelLogin:(id)sender
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)loginWithFacebook:(id)sender
@@ -332,6 +322,66 @@
                                                  andMessage:capitalisedSentence];
     [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
     [alert show];
+}
+
+- (IBAction)forgotPassword:(id)sender
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Forgot Password?"
+													message:@"Enter your email address and we'll help you reset your password."
+												   delegate:self
+										  cancelButtonTitle:@"Cancel"
+										  otherButtonTitles:@"OK", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        NSString *email = [[alertView textFieldAtIndex:0] text];
+		
+		if(email.length == 0) {
+			return;
+		}
+		
+        [PFUser requestPasswordResetForEmailInBackground:email block:^(BOOL succeeded, NSError *error)
+		{
+			NSString *titleString;
+			NSString *messageString;
+			
+			if(!error)
+			{
+				titleString = @"Success!";
+				messageString = @"Instructions to reset your password have been sent to your email";
+			}
+			else
+			{
+				titleString = @"Error";
+				int errorCode = [[[error userInfo] objectForKey:@"code"] intValue];
+				if(errorCode == kPFErrorInvalidEmailAddress) {
+					messageString = [[error userInfo] objectForKey:@"error"];
+				} else if(errorCode == kPFErrorUserWithEmailNotFound) {
+					messageString = [[error userInfo] objectForKey:@"error"];
+				} else {
+					messageString = @"There was a problem connecting to Repunch. Please check your connection and try again.";
+				}
+			}
+			
+			NSString *capitalisedSentence =
+			[messageString stringByReplacingCharactersInRange:NSMakeRange(0,1)
+												   withString:[[messageString  substringToIndex:1] capitalizedString]];
+			
+			SIAlertView *alert = [[SIAlertView alloc] initWithTitle:titleString
+														 andMessage:capitalisedSentence];
+			[alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
+			[alert show];
+		}];
+    }
+}
+
+- (IBAction)cancelLogin:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

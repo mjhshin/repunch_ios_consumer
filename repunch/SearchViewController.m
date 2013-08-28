@@ -80,13 +80,15 @@
 	
 	paginateButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 260, 50)];
 	paginateButton.titleLabel.font = [UIFont fontWithName:@"Avenir-Heavy" size:17];
+	paginateButton.adjustsImageWhenDisabled = NO;
 	[paginateButton.layer setCornerRadius:10];
 	[paginateButton setClipsToBounds:YES];
 	[paginateButton addTarget:self action:@selector(performSearch:) forControlEvents:UIControlEventTouchUpInside];
 	
-	CAGradientLayer *bgLayer2 = [GradientBackground orangeGradient];
-	bgLayer2.frame = paginateButton.bounds;
-	[paginateButton.layer insertSublayer:bgLayer2 atIndex:0];
+	[paginateButton setBackgroundImage:[GradientBackground orangeButtonNormal:paginateButton]
+									forState:UIControlStateNormal];
+	[paginateButton setBackgroundImage:[GradientBackground orangeButtonHighlighted:paginateButton]
+									forState:UIControlStateHighlighted];
 	
 	spinner.hidesWhenStopped = YES;
 	paginateCount = 0;

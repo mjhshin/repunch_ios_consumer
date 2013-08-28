@@ -193,9 +193,10 @@
 	[self.giftView.layer setCornerRadius:14];
 	[self.giftView setClipsToBounds:YES];
 	
-	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	bgLayer.frame = self.giftButton.bounds;
-	[self.giftButton.layer insertSublayer:bgLayer atIndex:0];
+	[self.giftButton setBackgroundImage:[GradientBackground orangeButtonNormal:self.giftButton]
+									forState:UIControlStateNormal];
+	[self.giftButton setBackgroundImage:[GradientBackground orangeButtonHighlighted:self.giftButton]
+									forState:UIControlStateHighlighted];
 	[self.giftButton.layer setCornerRadius:5];
 	[self.giftButton setClipsToBounds:YES];
 	
@@ -209,9 +210,10 @@
 		else if(!containsReply)
 		{
 			self.giftReplyButton.hidden = NO;
-			CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-			bgLayer.frame = self.giftReplyButton.bounds;
-			[self.giftReplyButton.layer insertSublayer:bgLayer atIndex:0];
+			[self.giftReplyButton setBackgroundImage:[GradientBackground orangeButtonNormal:self.giftReplyButton]
+												forState:UIControlStateNormal];
+			[self.giftReplyButton setBackgroundImage:[GradientBackground orangeButtonHighlighted:self.giftReplyButton]
+												forState:UIControlStateHighlighted];
 			[self.giftReplyButton.layer setCornerRadius:5];
 			[self.giftReplyButton setClipsToBounds:YES];
 		}

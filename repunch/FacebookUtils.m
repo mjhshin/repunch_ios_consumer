@@ -55,6 +55,7 @@
 	[params setObject:caption									forKey:@"caption"];
 	[params setObject:rewardTitle								forKey:@"description"];
 	[params setObject:image.url									forKey:@"picture"];
+	[params setObject:@"https://www.repunch.com/"				forKey:@"link"];
 	
 	[FBRequestConnection startWithGraphPath:@"me/feed"
 								 parameters:params

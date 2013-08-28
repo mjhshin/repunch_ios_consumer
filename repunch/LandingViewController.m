@@ -22,15 +22,17 @@
 {
     [super viewDidLoad];
 	
-	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	bgLayer.frame = self.loginButton.bounds;
-	[self.loginButton.layer insertSublayer:bgLayer atIndex:0];
+	[self.loginButton setBackgroundImage:[GradientBackground orangeButtonNormal:self.loginButton]
+								   forState:UIControlStateNormal];
+	[self.loginButton setBackgroundImage:[GradientBackground orangeButtonHighlighted:self.loginButton]
+								   forState:UIControlStateHighlighted];
 	[self.loginButton.layer setCornerRadius:5];
 	[self.loginButton setClipsToBounds:YES];
 	
-	CAGradientLayer *bgLayer2 = [GradientBackground orangeGradient];
-	bgLayer2.frame = self.registerButton.bounds;
-	[self.registerButton.layer insertSublayer:bgLayer2 atIndex:0];
+	[self.registerButton setBackgroundImage:[GradientBackground orangeButtonNormal:self.registerButton]
+						 forState:UIControlStateNormal];
+	[self.registerButton setBackgroundImage:[GradientBackground orangeButtonHighlighted:self.registerButton]
+						 forState:UIControlStateHighlighted];
 	[self.registerButton.layer setCornerRadius:5];
 	[self.registerButton setClipsToBounds:YES];
 }
@@ -56,7 +58,7 @@
 }
 
 - (IBAction)registerButtonPress:(id)sender
-{	
+{
 	RegisterViewController *registerVC = [[RegisterViewController alloc] init];
     [self presentViewController:registerVC animated:YES completion:nil];
 	//[self.navigationController pushViewController:registerVC animated:YES];
@@ -68,5 +70,4 @@
 	[self presentViewController:loginVC animated:YES completion:nil];
 	//[self.navigationController pushViewController:loginVC animated:YES];
 }
-
 @end

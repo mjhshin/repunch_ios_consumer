@@ -53,9 +53,10 @@
 	
 	[[NSBundle mainBundle] loadNibNamed:@"StoreHeaderView" owner:self options:nil];
 	
-	CAGradientLayer *bgLayer2 = [GradientBackground orangeGradient];
-	bgLayer2.frame = self.addToMyPlacesButton.bounds;
-	[self.addToMyPlacesButton.layer insertSublayer:bgLayer2 atIndex:0];
+	[self.addToMyPlacesButton setBackgroundImage:[GradientBackground orangeButtonNormal:self.addToMyPlacesButton]
+								   forState:UIControlStateNormal];
+	[self.addToMyPlacesButton setBackgroundImage:[GradientBackground orangeButtonHighlighted:self.addToMyPlacesButton]
+								   forState:UIControlStateHighlighted];
 	
 	[self setStoreInformation];
 	[self checkPatronStore];
@@ -231,7 +232,6 @@
 
 - (void)setStoreButtons
 {
-	[self.addToMyPlacesButton setBackgroundImage:[UIImage imageNamed:@"btn-edit.png"] forState:UIControlStateHighlighted];
 	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
 	CGFloat screenWidth = screenRect.size.width;
 	

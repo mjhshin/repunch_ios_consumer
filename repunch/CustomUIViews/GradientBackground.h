@@ -11,9 +11,12 @@
 
 @interface GradientBackground : NSObject
 
-+ (CAGradientLayer *) orangeGradient;
-+ (CAGradientLayer *) orangeGradientPressed;
++ (CAGradientLayer*) orangeGradient;
 
-+ (CAGradientLayer *) blackButtonGradient;
++ (UIImage *) orangeButtonNormal:(UIButton *)button;
++ (UIImage *) orangeButtonHighlighted:(UIButton *)button;
+
++ (UIImage *) blackButtonNormal:(UIButton *)button;
++ (UIImage *) blackButtonHighlighted:(UIButton *)button;
 
 @end
