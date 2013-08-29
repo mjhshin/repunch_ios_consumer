@@ -114,6 +114,7 @@
 
 -(void)loadInbox:(BOOL)paginate
 {
+    
 	loadInProgress = YES;
 	
     PFRelation *messagesRelation = [self.patron relationforKey:@"ReceivedMessages"];
@@ -133,7 +134,7 @@
 	{
 		self.activityIndicatorView.hidden = NO;
 		[self.activityIndicator startAnimating];
-		self.messageTableView.hidden = YES;
+        self.messageTableView.hidden = YES;
 		self.emptyInboxLabel.hidden = YES;
 	}
     
@@ -145,16 +146,21 @@
 		}
 		else
 		{
-			[self.messagesArray removeAllObjects];
-			alertBadgeCount = 0;
-			paginateReachEnd = NO;
-			[self.activityIndicatorView setHidden:TRUE];
+			[self.activityIndicatorView setHidden:YES];
 			[self.activityIndicator stopAnimating];
 			[self.tableViewController.refreshControl endRefreshing];
 		}
 		
         if(!error)
 		{
+        
+            if (paginate != YES)
+            {
+                [self.messagesArray removeAllObjects];
+                alertBadgeCount = 0;
+                paginateReachEnd = NO;
+            }
+
 			for(PFObject *messageStatus in results)
 			{
 				[self.sharedData addMessage:messageStatus];
@@ -175,6 +181,8 @@
 		else
 		{
             [RepunchUtils showDefaultErrorMessage];
+            self.messageTableView.hidden = NO;
+
         }
     }];
 }
@@ -198,7 +206,7 @@
     {
         cell = [InboxTableViewCell cell];
     }
-
+    
     PFObject *messageStatus = [self.messagesArray objectAtIndex:indexPath.row];
     PFObject *message = [messageStatus objectForKey:@"Message"];
     PFObject *reply = [message objectForKey:@"Reply"];
@@ -275,6 +283,7 @@
 {
     return 88;
 }
+
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
