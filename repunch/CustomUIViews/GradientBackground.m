@@ -121,7 +121,7 @@
 + (UIImage *) greyDisabledButton:(UIButton *)button
 {
 	UIColor *black2 = [UIColor colorWithRed:(168/255.0) green:(168/255.0) blue:(168/255.0) alpha:1.0];
-    UIColor *black1 = [UIColor colorWithRed:(128/255.0) green:(128/255.0) blue:(128/255.0) alpha:1.0];
+    UIColor *black1 = [UIColor colorWithRed:(136/255.0) green:(136/255.0) blue:(136/255.0) alpha:1.0];
 	
     NSArray *colors = [NSArray arrayWithObjects:(id)black1.CGColor, black2.CGColor, nil];
 	

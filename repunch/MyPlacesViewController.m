@@ -133,7 +133,7 @@
 {	
 	self.activityIndicatorView.hidden = NO;
 	[self.activityIndicator startAnimating];
-	self.myPlacesTableView.hidden = YES;
+	//self.myPlacesTableView.hidden = YES;
 	self.emptyMyPlacesLabel.hidden = YES;
 	
     PFRelation *patronStoreRelation = [self.patron relationforKey:@"PatronStores"];

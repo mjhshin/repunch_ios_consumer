@@ -244,15 +244,15 @@
 						   forControlEvents:UIControlEventTouchUpInside];
 		[self.deleteButton setHidden:TRUE];
 		
-		self.feedbackButtonView.hidden = YES;
+		self.feedbackButton.hidden = YES;
 		
-		CGPoint callButtonCenter = self.callButtonView.center;
+		CGPoint callButtonCenter = self.callButton.center;
 		callButtonCenter.x = screenWidth/4;
-		self.callButtonView.center = callButtonCenter;
+		self.callButton.center = callButtonCenter;
 		
-		CGPoint mapButtonCenter = self.mapButtonView.center;
+		CGPoint mapButtonCenter = self.mapButton.center;
 		mapButtonCenter.x = screenWidth*3/4;
-		self.mapButtonView.center = mapButtonCenter;
+		self.mapButton.center = mapButtonCenter;
 	}
 	else
 	{
@@ -261,31 +261,20 @@
 		[self.addToMyPlacesButton setEnabled:FALSE];
 		[self.deleteButton setHidden:FALSE];
 		
-		self.feedbackButtonView.hidden = NO;
+		self.feedbackButton.hidden = NO;
 		
-		CGPoint callButtonCenter = self.callButtonView.center;
+		CGPoint callButtonCenter = self.callButton.center;
 		callButtonCenter.x = screenWidth/6;
-		self.callButtonView.center = callButtonCenter;
+		self.callButton.center = callButtonCenter;
 		
-		CGPoint mapButtonCenter = self.mapButtonView.center;
+		CGPoint mapButtonCenter = self.mapButton.center;
 		mapButtonCenter.x = screenWidth/2;
-		self.mapButtonView.center = mapButtonCenter;
+		self.mapButton.center = mapButtonCenter;
 		
-		CGPoint feedbackButtonCenter = self.feedbackButtonView.center;
+		CGPoint feedbackButtonCenter = self.feedbackButton.center;
 		feedbackButtonCenter.x = screenWidth*5/6;
-		self.feedbackButtonView.center = feedbackButtonCenter;
+		self.feedbackButton.center = feedbackButtonCenter;
 	}
-	
-	//set button actions
-	[self.callButton addTarget:self action:@selector(callButtonPressed) forControlEvents:UIControlEventTouchUpInside];	
-	[self.mapButton addTarget:self action:@selector(mapButtonPressed) forControlEvents:UIControlEventTouchUpInside];	
-	[self.feedbackButton addTarget:self action:@selector(feedbackButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-	
-	/*
-	[self.callButton addTarget:self action:@selector(callButtonTouchDown) forControlEvents:UIControlEventTouchDown];
-	[self.mapButton addTarget:self action:@selector(mapButtonTouchDown) forControlEvents:UIControlEventTouchDown];
-	[self.feedbackButton addTarget:self action:@selector(feedbackButtonTouchDown) forControlEvents:UIControlEventTouchDown];
-	 */
 }
 
 - (void)setRewardTableView
@@ -456,7 +445,7 @@
 	}
 }
 
-- (void)callButtonPressed
+- (IBAction)callButtonAction:(id)sender
 {
 	//[self.callButtonView setBackgroundColor:[UIColor clearColor]];
 	
@@ -470,7 +459,7 @@
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumberUrl]];
 }
 
-- (void)mapButtonPressed
+- (IBAction)mapButtonAction:(id)sender
 {
 	//[self.mapButtonView setBackgroundColor:[UIColor clearColor]];
 	
@@ -479,7 +468,7 @@
     [self presentViewController:storeMapVC animated:YES completion:NULL];
 }
 
-- (void)feedbackButtonPressed
+- (IBAction)feedbackButtonAction:(id)sender
 {
 	//[self.feedbackButtonView setBackgroundColor:[UIColor clearColor]];
 	

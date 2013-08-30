@@ -87,8 +87,8 @@
 
 -(BOOL)textFieldShouldReturn:(UITextField*)textField;
 {
-	if(textField == _usernameInput) {
-		[_usernameInput resignFirstResponder];
+	if(textField == _emailInput) {
+		[_emailInput resignFirstResponder];
 		[_passwordInput becomeFirstResponder];
 		
 	} else if(textField == _passwordInput) {
@@ -102,11 +102,11 @@
 {
 	[self dismissKeyboard];
 	
-	NSString *username = [_usernameInput text];
+	NSString *email = [_emailInput text];
 	NSString *password = [_passwordInput text];
 	
-	if(username.length == 0) {
-		[self showDialog:@"Please enter your username" withResultMessage:nil];
+	if(email.length == 0) {
+		[self showDialog:@"Please enter your email" withResultMessage:nil];
 		return;
 		
 	} else if(password.length == 0) {
@@ -119,7 +119,7 @@
 	[self.facebookButton setEnabled:NO];
 	[spinner startAnimating];
         
-	[PFUser logInWithUsernameInBackground:username password:password block:^(PFUser *user, NSError *error)
+	[PFUser logInWithUsernameInBackground:email password:password block:^(PFUser *user, NSError *error)
 	{
 		if (user)
 		{
@@ -290,7 +290,7 @@
 
 - (void)dismissKeyboard
 {
-    [self.usernameInput resignFirstResponder];
+    [self.emailInput resignFirstResponder];
     [self.passwordInput resignFirstResponder];
 }
 

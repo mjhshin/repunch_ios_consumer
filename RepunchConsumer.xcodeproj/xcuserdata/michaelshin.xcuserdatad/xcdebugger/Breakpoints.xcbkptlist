@@ -136,11 +136,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Repunch/StoreViewController.m"
-         timestampString = "399340517.054783"
+         timestampString = "399585383.561635"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "634"
-         endingLineNumber = "634"
+         startingLineNumber = "623"
+         endingLineNumber = "623"
          landmarkName = "-onFriendSelected:forFriendId:withName:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -162,11 +162,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Repunch/StoreViewController.m"
-         timestampString = "399340517.054783"
+         timestampString = "399585383.561635"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "641"
-         endingLineNumber = "641"
+         startingLineNumber = "630"
+         endingLineNumber = "630"
          landmarkName = "-onFriendSelected:forFriendId:withName:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -227,11 +227,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Repunch/InboxViewController.m"
-         timestampString = "399323788.702368"
+         timestampString = "399566788.526996"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "209"
-         endingLineNumber = "209"
+         startingLineNumber = "206"
+         endingLineNumber = "206"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -240,11 +240,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Repunch/InboxViewController.m"
-         timestampString = "399227398.638807"
+         timestampString = "399566788.526996"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "132"
-         endingLineNumber = "132"
+         startingLineNumber = "131"
+         endingLineNumber = "131"
          landmarkName = "-loadInbox:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -253,11 +253,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Repunch/InboxViewController.m"
-         timestampString = "399323788.702368"
+         timestampString = "399566788.526996"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "167"
-         endingLineNumber = "167"
+         startingLineNumber = "165"
+         endingLineNumber = "165"
          landmarkName = "-loadInbox:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -266,11 +266,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Repunch/InboxViewController.m"
-         timestampString = "399227398.638807"
+         timestampString = "399566788.526996"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "117"
-         endingLineNumber = "117"
+         startingLineNumber = "116"
+         endingLineNumber = "116"
          landmarkName = "-loadInbox:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -305,11 +305,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Repunch/IncomingMessageViewController.m"
-         timestampString = "399347667.631315"
+         timestampString = "399569073.188526"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "212"
-         endingLineNumber = "212"
+         startingLineNumber = "214"
+         endingLineNumber = "214"
          landmarkName = "-positionAttachmentViews:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -318,11 +318,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Repunch/InboxViewController.m"
-         timestampString = "399323788.702368"
+         timestampString = "399566788.526996"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "142"
-         endingLineNumber = "142"
+         startingLineNumber = "141"
+         endingLineNumber = "141"
          landmarkName = "-loadInbox:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -331,24 +331,24 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Repunch/InboxViewController.m"
-         timestampString = "399323788.702368"
+         timestampString = "399566788.526996"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "196"
-         endingLineNumber = "196"
-         landmarkName = "-tableView:cellForRowAtIndexPath:"
-         landmarkType = "5">
+         startingLineNumber = "193"
+         endingLineNumber = "193"
+         landmarkName = "@implementation InboxViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Repunch/InboxViewController.m"
-         timestampString = "399323788.702368"
+         timestampString = "399566788.526996"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "140"
-         endingLineNumber = "140"
+         startingLineNumber = "139"
+         endingLineNumber = "139"
          landmarkName = "-loadInbox:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -370,11 +370,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Repunch/StoreViewController.m"
-         timestampString = "399340517.054783"
+         timestampString = "399585383.561635"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "515"
-         endingLineNumber = "515"
+         startingLineNumber = "504"
+         endingLineNumber = "504"
          landmarkName = "-addStore"
          landmarkType = "5">
       </FileBreakpoint>
@@ -383,11 +383,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Repunch/StoreViewController.m"
-         timestampString = "399340517.054783"
+         timestampString = "399585383.561635"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "366"
-         endingLineNumber = "366"
+         startingLineNumber = "355"
+         endingLineNumber = "355"
          landmarkName = "-tableView:didSelectRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -422,11 +422,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Repunch/InboxViewController.m"
-         timestampString = "399323788.702368"
+         timestampString = "399566788.526996"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "144"
-         endingLineNumber = "144"
+         startingLineNumber = "142"
+         endingLineNumber = "142"
          landmarkName = "-loadInbox:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -535,7 +535,7 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "No"
+         shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Repunch/AppDelegate.m"
@@ -559,6 +559,84 @@
          endingLineNumber = "127"
          landmarkName = "-checkLoginState"
          landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Repunch/AppDelegate.m"
+         timestampString = "399495973.16156"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "136"
+         endingLineNumber = "136"
+         landmarkName = "-checkLoginState"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Repunch/AppDelegate.m"
+         timestampString = "399567658.220318"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "49"
+         endingLineNumber = "49"
+         landmarkName = "-application:handleOpenURL:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Repunch/AppDelegate.m"
+         timestampString = "399567663.800101"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "55"
+         endingLineNumber = "55"
+         landmarkName = "-application:openURL:sourceApplication:annotation:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Repunch/AppDelegate.m"
+         timestampString = "399567667.119008"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "68"
+         endingLineNumber = "68"
+         landmarkName = "-application:didRegisterForRemoteNotificationsWithDeviceToken:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Repunch/AppDelegate.m"
+         timestampString = "399567671.270285"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "83"
+         endingLineNumber = "83"
+         landmarkName = "-application:didReceiveRemoteNotification:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Repunch/StoreViewController.h"
+         timestampString = "399584510.111279"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "38"
+         endingLineNumber = "38"
+         landmarkName = "toolbar"
+         landmarkType = "19">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>

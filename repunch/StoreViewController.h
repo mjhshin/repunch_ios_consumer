@@ -50,12 +50,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *storeHours;
 @property (weak, nonatomic) IBOutlet UIButton *addToMyPlacesButton;
 
-@property (weak, nonatomic) IBOutlet UIView *callButtonView;
-@property (weak, nonatomic) IBOutlet UIView *mapButtonView;
-@property (weak, nonatomic) IBOutlet UIView *feedbackButtonView;
-
 @property (weak, nonatomic) IBOutlet UIButton *callButton;
 @property (weak, nonatomic) IBOutlet UIButton *mapButton;
 @property (weak, nonatomic) IBOutlet UIButton *feedbackButton;
+
+- (IBAction)callButtonAction:(id)sender;
+- (IBAction)mapButtonAction:(id)sender;
+- (IBAction)feedbackButtonAction:(id)sender;
 
 @end

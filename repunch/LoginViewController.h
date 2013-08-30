@@ -12,7 +12,7 @@
 
 @interface LoginViewController : UIViewController <UITextFieldDelegate>
 
-@property (weak, nonatomic) IBOutlet UITextField *usernameInput;
+@property (weak, nonatomic) IBOutlet UITextField *emailInput;
 @property (weak, nonatomic) IBOutlet UITextField *passwordInput;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *facebookButton;

@@ -114,7 +114,6 @@
 
 -(void)loadInbox:(BOOL)paginate
 {
-    
 	loadInProgress = YES;
 	
     PFRelation *messagesRelation = [self.patron relationforKey:@"ReceivedMessages"];
@@ -134,7 +133,7 @@
 	{
 		self.activityIndicatorView.hidden = NO;
 		[self.activityIndicator startAnimating];
-        self.messageTableView.hidden = YES;
+        //self.messageTableView.hidden = YES;
 		self.emptyInboxLabel.hidden = YES;
 	}
     
@@ -153,7 +152,6 @@
 		
         if(!error)
 		{
-        
             if (paginate != YES)
             {
                 [self.messagesArray removeAllObjects];
@@ -181,8 +179,7 @@
 		else
 		{
             [RepunchUtils showDefaultErrorMessage];
-            self.messageTableView.hidden = NO;
-
+            //self.messageTableView.hidden = NO;
         }
     }];
 }

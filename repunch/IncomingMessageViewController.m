@@ -204,6 +204,8 @@
 	{
 		[self.giftButton setBackgroundImage:[GradientBackground greyDisabledButton:self.giftButton]
 								   forState:UIControlStateNormal];
+		[self.giftButton setBackgroundImage:[GradientBackground greyDisabledButton:self.giftButton]
+								   forState:UIControlStateHighlighted];
 	}
 	
 	[self.giftButton.layer setCornerRadius:5];
@@ -318,9 +320,14 @@
     NSTimeInterval timeLeft = [offer timeIntervalSinceDate:currentDate];
     self.giftTimerLabel.text = [NSString stringWithFormat:@"Time Left: %@", [self stringFromInterval:timeLeft]];
     
-    if (timeLeft <= 0) {
+    if (timeLeft <= 0)
+	{
         self.giftTimerLabel.text = @"Expired";
         self.timer = nil;
+		
+		[self.giftButton setBackgroundImage:[GradientBackground greyDisabledButton:self.giftButton]
+								   forState:UIControlStateNormal];
+		self.giftButton.enabled = NO;
     }
 }
 
@@ -388,6 +395,8 @@
 				 [self.messageStatus setObject:@"pending" forKey:@"redeem_available"];
 				 [self.giftButton setBackgroundImage:[GradientBackground greyDisabledButton:self.giftButton]
 											forState:UIControlStateNormal];
+				 [self.giftButton setBackgroundImage:[GradientBackground greyDisabledButton:self.giftButton]
+											forState:UIControlStateHighlighted];
 				 
 				 [alert addButtonWithTitle:@"OK"
 									  type:SIAlertViewButtonTypeDefault
