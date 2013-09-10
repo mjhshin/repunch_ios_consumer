@@ -80,7 +80,14 @@
 
 - (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
 {
+	//setting badge number to 0 resets notifications
+	NSInteger badgeCount = [UIApplication sharedApplication].applicationIconBadgeNumber;
+	[UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+	[UIApplication sharedApplication].applicationIconBadgeNumber = badgeCount;
+	[[UIApplication sharedApplication] cancelAllLocalNotifications];	// make sure no pending local notifications
+	
 	NSString *pushType = [userInfo objectForKey:@"type"];
+	
 	if( [pushType isEqualToString:@"punch"] )
 	{
 		NSLog(@"Push received: punch");
@@ -171,6 +178,9 @@
     inboxVC = [[InboxViewController alloc] init];
     
     self.tabBarController = [[UITabBarController alloc] init];
+	//[self.tabBarController.tabBar.subviews[0] removeFromSuperview]; //removes glossy layer
+	//self.tabBarController.tabBar.selectionIndicatorImage = [[UIImage alloc] init];
+	self.tabBarController.tabBar.selectedImageTintColor = [UIColor orangeColor];
     self.tabBarController.viewControllers = @[myPlacesVC, inboxVC];
     
     UITabBarItem *myPlacesTab = [self.tabBarController.tabBar.items objectAtIndex:0];
@@ -198,6 +208,7 @@
 	self.window.rootViewController = landingVC;
 	[self.window makeKeyAndVisible];
 	//self.navController = [[UINavigationController alloc] initWithRootViewController:landingVC];
+	//self.navController.navigationBarHidden = YES;
 	//self.window.rootViewController = self.navController;
     //[self.window makeKeyAndVisible];
 }

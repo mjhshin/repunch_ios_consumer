@@ -59,13 +59,16 @@
 
 - (IBAction)registerButtonPress:(id)sender
 {
+	//self.navigationController.navigationBarHidden = NO;
 	RegisterViewController *registerVC = [[RegisterViewController alloc] init];
     [self presentViewController:registerVC animated:YES completion:nil];
 	//[self.navigationController pushViewController:registerVC animated:YES];
+	
 }
 
 - (IBAction)loginButtonPress:(id)sender
 {
+	//self.navigationController.navigationBarHidden = NO;
 	LoginViewController *loginVC = [[LoginViewController alloc] init];
 	[self presentViewController:loginVC animated:YES completion:nil];
 	//[self.navigationController pushViewController:loginVC animated:YES];

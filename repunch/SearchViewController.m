@@ -271,7 +271,7 @@
 	//if (self.myPlacesTableView.dragging == NO && self.myPlacesTableView.decelerating == NO)
 	//{
 	PFFile *imageFile = [store objectForKey:@"store_avatar"];
-	if(imageFile != nil)
+	if(imageFile != nil && imageFile != (id)[NSNull null])
 	{
 		UIImage *storeImage = [self.sharedData getStoreImage:storeId];
 		if(storeImage == nil)

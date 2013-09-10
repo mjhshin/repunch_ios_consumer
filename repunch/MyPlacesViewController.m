@@ -238,7 +238,7 @@
         //if (self.myPlacesTableView.dragging == NO && self.myPlacesTableView.decelerating == NO)
 		//{
         PFFile *imageFile = [store objectForKey:@"store_avatar"];
-        if(imageFile != nil)
+		if(imageFile != nil && imageFile != (id)[NSNull null])
         {
             UIImage *storeImage = [self.sharedData getStoreImage:storeId];
 			if(storeImage == nil)
@@ -284,11 +284,11 @@
         {
             if (!error)
             {
-                MyPlacesTableViewCell *cell = (id)[self.myPlacesTableView cellForRowAtIndexPath:indexPath];
 				[self.imageDownloadsInProgress removeObjectForKey:indexPath]; // Remove the PFFile from the in-progress list
 				
 				UIImage *storeImage = [UIImage imageWithData:data];
 				if(storeImage) {
+					MyPlacesTableViewCell *cell = (id)[self.myPlacesTableView cellForRowAtIndexPath:indexPath];
 					cell.storeImage.image = storeImage;
 					[self.sharedData addStoreImage:storeImage forKey:storeId];
 				}

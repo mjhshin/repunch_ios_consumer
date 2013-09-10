@@ -161,7 +161,7 @@
 	
 	PFQuery *query = [PFQuery queryWithClassName:@"Patron"];
 	
-	[query getObjectInBackgroundWithId:patronId block:^(PFObject *patron, NSError *error)
+	[query getObjectInBackgroundWithId:patronId block:^(PFObject *patron, NSError *error) 
 	{
 		if(!error) {
 			NSLog(@"Fetched Patron object: %@", patron);

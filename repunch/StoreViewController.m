@@ -138,7 +138,7 @@
 	[self setStoreHours];
 	
 	PFFile *imageFile = [store objectForKey:@"store_avatar"];
-	if(imageFile != nil)
+	if(imageFile != nil && imageFile != (id)[NSNull null])
 	{
 		UIImage *storeImage = [sharedData getStoreImage:self.storeId];
 		if(storeImage == nil)
