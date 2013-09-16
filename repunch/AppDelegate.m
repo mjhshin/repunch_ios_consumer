@@ -9,15 +9,14 @@
 
 @implementation AppDelegate
 {
-    LandingViewController *landingVC;
-    MyPlacesViewController *myPlacesVC;
-    InboxViewController *inboxVC;
 	DataManager* sharedData;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	
+	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     //Set up API keys
     [Parse setApplicationId:@"m0EdwpRYlJwttZLZ5PUk7y13TWCnvSScdn8tfVoh"
@@ -173,15 +172,17 @@
 
 - (void)presentTabBarController
 {
-    // create tab bar controller its child view controllers
-    myPlacesVC = [[MyPlacesViewController alloc] init];
-    inboxVC = [[InboxViewController alloc] init];
+    MyPlacesViewController *myPlacesVC = [[MyPlacesViewController alloc] init];
+    InboxViewController *inboxVC = [[InboxViewController alloc] init];
+	
+	UINavigationController *myPlacesNavController = [[UINavigationController alloc] initWithRootViewController:myPlacesVC];
+	UINavigationController *inboxNavController = [[UINavigationController alloc] initWithRootViewController:inboxVC];
+	[self setupNavigationController:myPlacesNavController];
+	[self setupNavigationController:inboxNavController];
     
     self.tabBarController = [[UITabBarController alloc] init];
-	//[self.tabBarController.tabBar.subviews[0] removeFromSuperview]; //removes glossy layer
-	//self.tabBarController.tabBar.selectionIndicatorImage = [[UIImage alloc] init];
-	self.tabBarController.tabBar.selectedImageTintColor = [UIColor orangeColor];
-    self.tabBarController.viewControllers = @[myPlacesVC, inboxVC];
+	self.tabBarController.tabBar.tintColor = [UIColor colorWithRed:(240/255.0) green:(140/255.0) blue:(19/255.0) alpha:1.0];
+    self.tabBarController.viewControllers = @[myPlacesNavController, inboxNavController];
     
     UITabBarItem *myPlacesTab = [self.tabBarController.tabBar.items objectAtIndex:0];
     [myPlacesTab setTitle:@"My Places"];
@@ -190,27 +191,51 @@
 	UITabBarItem *inboxTab = [self.tabBarController.tabBar.items objectAtIndex:1];
     [inboxTab setTitle:@"Inbox"];
     [inboxTab setImage:[UIImage imageNamed:@"ico-tab-inbox.png"]];
-    
+
     NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary: [[UITabBarItem appearance] titleTextAttributesForState:UIControlStateNormal]];
-    [attributes setValue:[UIFont fontWithName:@"Avenir-Heavy" size:12] forKey:UITextAttributeFont];
+    [attributes setValue:[UIFont fontWithName:@"Avenir-Heavy" size:12] forKey:NSFontAttributeName];
     [[UITabBarItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
-    
-    self.window.rootViewController = self.tabBarController;
+	
+	self.window.rootViewController = self.tabBarController;
 	[self.window makeKeyAndVisible];
 	
 	[inboxVC view]; //pre-load second tab
 	[FBFriendPickerViewController class]; //pre-load Facebook friend picker
 }
 
+- (void)setupNavigationController:(UINavigationController *)navController
+{
+	[[UIBarButtonItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor],
+														   NSFontAttributeName: [UIFont fontWithName:@"Avenir" size:15]} forState:UIControlStateNormal];
+	[[UINavigationBar appearance] setTitleTextAttributes: @{NSForegroundColorAttributeName: [UIColor whiteColor],
+															NSFontAttributeName: [UIFont fontWithName:@"Avenir-Heavy" size:17]}];
+	
+	navController.navigationBar.tintColor = [UIColor whiteColor];
+	navController.navigationBar.barTintColor = [UIColor colorWithRed:(240/255.0) green:(140/255.0) blue:(19/255.0) alpha:1.0];
+	navController.navigationBar.translucent = NO;
+}
+
 - (void)presentLandingViews
 {
-	landingVC = [[LandingViewController alloc] init];
-	self.window.rootViewController = landingVC;
-	[self.window makeKeyAndVisible];
-	//self.navController = [[UINavigationController alloc] initWithRootViewController:landingVC];
-	//self.navController.navigationBarHidden = YES;
-	//self.window.rootViewController = self.navController;
-    //[self.window makeKeyAndVisible];
+	LandingViewController *landingVC = [[LandingViewController alloc] init];
+	self.navController = [[UINavigationController alloc] initWithRootViewController:landingVC];
+	self.navController.navigationBar.tintColor = [UIColor whiteColor];
+	self.navController.navigationBar.barTintColor = [UIColor colorWithRed:(240/255.0) green:(140/255.0) blue:(19/255.0) alpha:1.0];
+	self.navController.navigationBar.translucent = NO;
+	
+	[[UIBarButtonItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor],
+														   NSFontAttributeName: [UIFont fontWithName:@"Avenir" size:15]} forState:UIControlStateNormal];
+	[[UINavigationBar appearance] setTitleTextAttributes: @{NSForegroundColorAttributeName: [UIColor whiteColor],
+															NSFontAttributeName: [UIFont fontWithName:@"Avenir-Heavy" size:17]}];
+	
+	
+	self.window.rootViewController = self.navController;
+    [self.window makeKeyAndVisible];
+}
+
+- (void)showSettings
+{
+	
 }
 
 - (void)logout

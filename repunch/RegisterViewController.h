@@ -9,6 +9,7 @@
 #import "DataManager.h"
 #import "AppDelegate.h"
 #import "GradientBackground.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface RegisterViewController : UIViewController<UITextFieldDelegate, UIScrollViewDelegate>
 

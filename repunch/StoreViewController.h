@@ -35,13 +35,6 @@
 
 @property (strong, nonatomic) IBOutlet UIView *headerView;
 
-@property (weak, nonatomic) IBOutlet UIView *toolbar;
-@property (weak, nonatomic) IBOutlet UILabel *storeNameLabel;
-@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
-
-- (IBAction)deleteStore:(id)sender;
-- (IBAction)closeView:(id)sender;
-
 // store header
 @property (weak, nonatomic) IBOutlet UIImageView *storeImage;
 @property (weak, nonatomic) IBOutlet UILabel *storeAddress;

@@ -29,6 +29,13 @@
 		7996B3AC17820B1400CCAFED /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B3AB17820B1400CCAFED /* AdSupport.framework */; };
 		7996B3AE17820B1800CCAFED /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B3AD17820B1800CCAFED /* Social.framework */; };
 		7996B3B017820B1C00CCAFED /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B3AF17820B1C00CCAFED /* Accounts.framework */; };
+		EE06E65E17E7525000073AAF /* app_icon_29x29.png in Resources */ = {isa = PBXBuildFile; fileRef = EE06E65817E7525000073AAF /* app_icon_29x29.png */; };
+		EE06E65F17E7525000073AAF /* app_icon_57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = EE06E65917E7525000073AAF /* app_icon_57x57.png */; };
+		EE06E66017E7525000073AAF /* app_icon_58x58.png in Resources */ = {isa = PBXBuildFile; fileRef = EE06E65A17E7525000073AAF /* app_icon_58x58.png */; };
+		EE06E66117E7525000073AAF /* app_icon_80x80.png in Resources */ = {isa = PBXBuildFile; fileRef = EE06E65B17E7525000073AAF /* app_icon_80x80.png */; };
+		EE06E66217E7525000073AAF /* app_icon_114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = EE06E65C17E7525000073AAF /* app_icon_114x114.png */; };
+		EE06E66317E7525000073AAF /* app_icon_120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = EE06E65D17E7525000073AAF /* app_icon_120x120.png */; };
+		EE06E66517E7AB0100073AAF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE06E66417E7AB0100073AAF /* Images.xcassets */; };
 		EE28DAE017AC447E00E4C460 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE28DADF17AC447E00E4C460 /* DataManager.m */; };
 		EE3F36D417B585B300D28FC9 /* PunchHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3F36D317B585B300D28FC9 /* PunchHandler.m */; };
 		EE3F36D817B586ED00D28FC9 /* RedeemHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3F36D717B586ED00D28FC9 /* RedeemHandler.m */; };
@@ -185,6 +192,13 @@
 		7996B3AB17820B1400CCAFED /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		7996B3AD17820B1800CCAFED /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		7996B3AF17820B1C00CCAFED /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		EE06E65817E7525000073AAF /* app_icon_29x29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_29x29.png; sourceTree = "<group>"; };
+		EE06E65917E7525000073AAF /* app_icon_57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_57x57.png; sourceTree = "<group>"; };
+		EE06E65A17E7525000073AAF /* app_icon_58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_58x58.png; sourceTree = "<group>"; };
+		EE06E65B17E7525000073AAF /* app_icon_80x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_80x80.png; sourceTree = "<group>"; };
+		EE06E65C17E7525000073AAF /* app_icon_114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_114x114.png; sourceTree = "<group>"; };
+		EE06E65D17E7525000073AAF /* app_icon_120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_120x120.png; sourceTree = "<group>"; };
+		EE06E66417E7AB0100073AAF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		EE28DADE17AC447E00E4C460 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		EE28DADF17AC447E00E4C460 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		EE3F36D217B585B300D28FC9 /* PunchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PunchHandler.h; sourceTree = "<group>"; };
@@ -510,6 +524,7 @@
 				EE9D4BAA17A83F4A005E0CC5 /* StoreViewController.m */,
 				EE9D4BAB17A83F4A005E0CC5 /* StoreViewController.xib */,
 				EE9D4BC617A83F4A005E0CC5 /* ThirdPartyViews */,
+				EE06E66417E7AB0100073AAF /* Images.xcassets */,
 			);
 			path = Repunch;
 			sourceTree = "<group>";
@@ -584,6 +599,12 @@
 				EE9D4EDD17A84ABB005E0CC5 /* Icon-Small.png */,
 				EE9D4EDE17A84ABB005E0CC5 /* Icon-Small@2x.png */,
 				EE9D4EDF17A84ABB005E0CC5 /* Icon.png */,
+				EE06E65817E7525000073AAF /* app_icon_29x29.png */,
+				EE06E65917E7525000073AAF /* app_icon_57x57.png */,
+				EE06E65A17E7525000073AAF /* app_icon_58x58.png */,
+				EE06E65B17E7525000073AAF /* app_icon_80x80.png */,
+				EE06E65C17E7525000073AAF /* app_icon_114x114.png */,
+				EE06E65D17E7525000073AAF /* app_icon_120x120.png */,
 				EE9D4EE017A84ABB005E0CC5 /* Icon@2x.png */,
 				EE9D4EE117A84ABB005E0CC5 /* iTunesArtwork.png */,
 				EE9D4EE217A84ABB005E0CC5 /* iTunesArtwork@2x.png */,
@@ -726,10 +747,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE9D4C6917A83F4B005E0CC5 /* ComposeMessageViewController.xib in Resources */,
+				EE06E66517E7AB0100073AAF /* Images.xcassets in Resources */,
 				EE9D4C7617A83F4B005E0CC5 /* InboxTableViewCell.xib in Resources */,
 				EE9D4C7817A83F4B005E0CC5 /* RewardTableViewCell.xib in Resources */,
 				EE9D4C7A17A83F4B005E0CC5 /* MyPlacesTableViewCell.xib in Resources */,
 				EE9D4C7C17A83F4B005E0CC5 /* SearchTableViewCell.xib in Resources */,
+				EE06E65F17E7525000073AAF /* app_icon_57x57.png in Resources */,
 				EE9D4C7F17A83F4B005E0CC5 /* InboxViewController.xib in Resources */,
 				EE9D4C8117A83F4B005E0CC5 /* LandingViewController.xib in Resources */,
 				EE9D4C8317A83F4B005E0CC5 /* IncomingMessageViewController.xib in Resources */,
@@ -771,6 +794,7 @@
 				EE9D4F3F17A84ABB005E0CC5 /* repunch-logo@2x.png in Resources */,
 				EE9D4F4017A84ABB005E0CC5 /* repunch@2x.png in Resources */,
 				EE9D4F4117A84ABB005E0CC5 /* reward_locked.png in Resources */,
+				EE06E66017E7525000073AAF /* app_icon_58x58.png in Resources */,
 				EE9D4F4217A84ABB005E0CC5 /* reward_unlocked.png in Resources */,
 				EE9D4F4317A84ABB005E0CC5 /* reward_unlocked_tiny.png in Resources */,
 				EE9D4F4917A84ABB005E0CC5 /* Icon-Small.png in Resources */,
@@ -786,6 +810,7 @@
 				EE5378CA17B2FEA9002D8B18 /* call_button.png in Resources */,
 				EE5378CB17B2FEA9002D8B18 /* call_button@2x.png in Resources */,
 				EE5378CC17B2FEA9002D8B18 /* feedback_button.png in Resources */,
+				EE06E66217E7525000073AAF /* app_icon_114x114.png in Resources */,
 				EE5378CD17B2FEA9002D8B18 /* feedback_button@2x.png in Resources */,
 				EE5378CE17B2FEA9002D8B18 /* map_button.png in Resources */,
 				EE5378CF17B2FEA9002D8B18 /* map_button@2x.png in Resources */,
@@ -796,6 +821,7 @@
 				EE79DF5717BD590000E92DE5 /* Default@2x.png in Resources */,
 				EE79DF7C17BD702500E92DE5 /* nav_delete.png in Resources */,
 				EE79DF7D17BD702500E92DE5 /* nav_delete@2x.png in Resources */,
+				EE06E66317E7525000073AAF /* app_icon_120x120.png in Resources */,
 				EE79DF7E17BD702500E92DE5 /* nav_exit.png in Resources */,
 				EE79DF7F17BD702500E92DE5 /* nav_exit@2x.png in Resources */,
 				EE79DF8017BD702500E92DE5 /* nav_search.png in Resources */,
@@ -805,11 +831,13 @@
 				EEA181AD17C6FD9B00553336 /* FacebookFriendsViewController.xib in Resources */,
 				EEA181B017C95D1D00553336 /* nav_reply.png in Resources */,
 				EEA181B117C95D1D00553336 /* nav_reply@2x.png in Resources */,
+				EE06E66117E7525000073AAF /* app_icon_80x80.png in Resources */,
 				EEA181C217CD20D300553336 /* map_button_highlighted.png in Resources */,
 				EEA181C317CD20D300553336 /* map_button_highlighted@2x.png in Resources */,
 				EE48FA5417D90A490084B47B /* landing.png in Resources */,
 				EE48FA5517D90A490084B47B /* landing@2x.png in Resources */,
 				EE48FA5717D90A600084B47B /* landing-568h@2x.png in Resources */,
+				EE06E65E17E7525000073AAF /* app_icon_29x29.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -964,7 +992,9 @@
 		7996B39217820A9700CCAFED /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Jinhee Shin (X587Y4AVH9)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -975,12 +1005,13 @@
 				GCC_PREFIX_HEADER = "Repunch-Prefix.pch";
 				INFOPLIST_FILE = "Repunch-Info.plist";
 				"INFOPLIST_FILE[sdk=*]" = "Repunch-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/External/CrittercismSDK\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "C77A8DAF-9171-4EED-9829-288686C928DA";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -989,7 +1020,9 @@
 		7996B39317820A9700CCAFED /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jinhee Shin (5XRCS768D8)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1000,12 +1033,13 @@
 				GCC_PREFIX_HEADER = "Repunch-Prefix.pch";
 				INFOPLIST_FILE = "Repunch-Info.plist";
 				"INFOPLIST_FILE[sdk=*]" = "Repunch-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/External/CrittercismSDK\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "2E552446-2C5A-4EC8-82A3-5C70ABA6862A";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};

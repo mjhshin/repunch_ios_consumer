@@ -52,12 +52,10 @@
 	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
 	CGFloat screenWidth = screenRect.size.width;
 	CGFloat screenHeight = screenRect.size.height;
-	int toolBarHeight = self.toolbar.frame.size.height;
 	int tabBarHeight = self.tabBarController.tabBar.frame.size.height;
-	int tableViewHeight = screenHeight - toolBarHeight;
 	
 	self.messageTableView = [[UITableView alloc]
-						initWithFrame:CGRectMake(0, toolBarHeight, screenWidth, tableViewHeight - tabBarHeight)
+						initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - tabBarHeight)
 								style:UITableViewStylePlain];
 	
     [self.messageTableView setDataSource:self];
@@ -70,19 +68,23 @@
 	
 	self.tableViewController.tableView = self.messageTableView;
 	
-	CGFloat xCenter = screenWidth/2;
-	CGFloat yCenter = screenHeight/2;
-	CGFloat xOffset = self.activityIndicatorView.frame.size.width/2;
-	CGFloat yOffset = self.activityIndicatorView.frame.size.height/2;
-	CGRect frame = self.activityIndicatorView.frame;
-	frame.origin = CGPointMake(xCenter - xOffset, yCenter - yOffset);
-	self.activityIndicatorView.frame = frame;
-	
-	CGFloat xOffset2 = self.emptyInboxLabel.frame.size.width/2;
-	CGFloat yOffset2 = self.emptyInboxLabel.frame.size.height/2;
-	CGRect frame2 = self.emptyInboxLabel.frame;
-	frame2.origin = CGPointMake(xCenter - xOffset2, yCenter - yOffset2);
-	self.emptyInboxLabel.frame = frame2;
+	//set up navigationbar
+	UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc]
+									   initWithImage:[UIImage imageNamed:@"nav_settings.png"]
+									   style:UIBarButtonItemStylePlain
+									   target:self
+									   action:@selector(openSettings:)];
+	UIBarButtonItem *searchButton = [[UIBarButtonItem alloc]
+									 initWithImage:[UIImage imageNamed:@"nav_search.png"]
+									 style:UIBarButtonItemStylePlain
+									 target:self
+									 action:@selector(openSearch:)];
+	UIButton *punchCodeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, 50)];
+	[punchCodeButton setImage:[UIImage imageNamed:@"repunch-logo.png"] forState:UIControlStateNormal];
+	[punchCodeButton addTarget:self action:@selector(showPunchCode:) forControlEvents:UIControlEventTouchUpInside];
+	self.navigationItem.leftBarButtonItem = settingsButton;
+	self.navigationItem.rightBarButtonItem = searchButton;
+	self.navigationItem.titleView = punchCodeButton;
 	
 	alertBadgeCount = 0;
 	paginateCount = 0;
@@ -155,18 +157,14 @@
             if (paginate != YES)
             {
                 [self.messagesArray removeAllObjects];
-                alertBadgeCount = 0;
                 paginateReachEnd = NO;
+				[self fetchBadgeCount];
             }
 
 			for(PFObject *messageStatus in results)
 			{
 				[self.sharedData addMessage:messageStatus];
 				[self.messagesArray addObject:messageStatus];
-				
-				if( ![[messageStatus objectForKey:@"is_read"] boolValue] ) {
-					++alertBadgeCount;
-				}
 			}
 
 			[self refreshTableView];
@@ -210,11 +208,10 @@
     
     if (reply != (id)[NSNull null] && reply != nil) {
         cell.senderName.text = [reply objectForKey:@"sender_name"];
-        cell.subjectLabel.text = [NSString stringWithFormat:@"RE: %@ - %@",
-										[message objectForKey:@"subject"], [reply objectForKey:@"body"]];
+        cell.subjectLabel.text = [NSString stringWithFormat:@"RE: %@ - %@", [message objectForKey:@"subject"], [reply objectForKey:@"body"]];
         cell.dateSent.text = [self formattedDateString:reply.createdAt];
-		
-    } else {
+    }
+	else {
 		cell.senderName.text = [message objectForKey:@"sender_name"];
         cell.subjectLabel.text = [NSString stringWithFormat:@"%@ - %@", [message objectForKey:@"subject"], [message objectForKey:@"body"]];
         cell.dateSent.text = [self formattedDateString:message.createdAt];
@@ -260,7 +257,7 @@
 	PFObject *messageStatus = [self.messagesArray objectAtIndex:indexPath.row];
     messageVC.messageStatusId = [messageStatus objectId];
 	messageVC.delegate = self;
-    [self presentViewController:messageVC animated:YES completion:NULL];
+    [self.navigationController pushViewController:messageVC animated:YES];
 	 
 	if( [[messageStatus objectForKey:@"is_read"] boolValue] == NO )
 	{
@@ -280,8 +277,7 @@
 {
     return 88;
 }
-
-
+  
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     float scrollLocation = scrollView.contentOffset.y + scrollView.bounds.size.height - scrollView.contentInset.bottom;
@@ -381,8 +377,6 @@
 
 - (void)refreshTableView
 {
-	[self updateBadgeCount];
-	
 	if(self.messagesArray.count > 0)
 	{
 		[self.messageTableView setHidden:NO];
@@ -394,6 +388,22 @@
 		[self.emptyInboxLabel setHidden:NO];
 	}
 	[self.messageTableView reloadData];
+}
+
+- (void)fetchBadgeCount
+{
+	PFRelation *messagesRelation = [self.patron relationforKey:@"ReceivedMessages"];
+    PFQuery *messageQuery = [messagesRelation query];
+	[messageQuery whereKey:@"is_read" equalTo:[NSNumber numberWithBool:NO]];
+	[messageQuery countObjectsInBackgroundWithBlock:^(int count, NSError *error)
+	{
+		if (!error) {
+			alertBadgeCount = count;
+			[self updateBadgeCount];
+		} else {
+			// The request failed
+		}
+	}];
 }
 
 - (void)updateBadgeCount

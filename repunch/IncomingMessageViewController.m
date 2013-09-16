@@ -26,16 +26,19 @@
 	
 	containsReply = (self.reply != (id)[NSNull null] && self.reply != nil);
 	
-	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	bgLayer.frame = self.toolbar.bounds;
-	[self.toolbar.layer insertSublayer:bgLayer atIndex:0];
-	
 	if(containsReply) {
 		NSString *title = [NSString stringWithFormat:@"RE: %@", [self.message objectForKey:@"subject"]];
-		[self.messageTitle setText:title];
+		self.navigationItem.title = title;
 	} else {
-		[self.messageTitle setText:[self.message objectForKey:@"subject"]];
+		self.navigationItem.title = [self.message objectForKey:@"subject"];
 	}
+	
+	UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc]
+					initWithImage:[UIImage imageNamed:@"nav_delete.png"]
+					style:UIBarButtonItemStylePlain
+					target:self
+					action:@selector(deleteButtonAction:)];
+	self.navigationItem.rightBarButtonItem = deleteButton;
 	
 	[self setupMessage];
 }
@@ -72,12 +75,8 @@
 
 - (void)setupMessage
 {
-    CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
-	CGFloat screenHeight = screenRect.size.height;
-	int toolBarHeight = self.toolbar.frame.size.height;
-
-	CGRect scrollViewFrame = self.scrollView.frame;
-    scrollViewFrame.size.height = screenHeight - toolBarHeight;
+    CGRect scrollViewFrame = self.scrollView.frame;
+    scrollViewFrame.size.height = [[UIScreen mainScreen] applicationFrame].size.height;
     self.scrollView.frame = scrollViewFrame;
     
     self.dateLabel.text = [self formattedDateString:self.message.createdAt];
@@ -86,6 +85,8 @@
     CGRect frame = self.bodyTextView.frame;
     frame.size.height = self.bodyTextView.contentSize.height;
     self.bodyTextView.frame = frame;
+	
+	[self.bodyTextView sizeToFit];
 	
 	CGFloat contentHeight = frame.origin.y + frame.size.height;
 	
@@ -124,7 +125,7 @@
     replyViewFrame.origin.y = msgFrame.origin.y + msgFrame.size.height + 20;
 	replyViewFrame.size.height = self.replyBodyTextView.frame.origin.y + self.replyBodyTextView.frame.size.height;
 	self.replyView.frame = replyViewFrame;
-	self.replyView.hidden = FALSE;
+	self.replyView.hidden = NO;
     
     [self.scrollView addSubview:self.replyView];
 }

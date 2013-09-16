@@ -28,6 +28,12 @@
 {
     [super viewDidLoad];
 	
+	if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
+		CGRect frame = self.navBar.frame;
+		frame.size.height += 10;
+		self.navBar.frame = frame;
+	}
+	
 	sharedData = [DataManager getSharedInstance];
 	
 	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];

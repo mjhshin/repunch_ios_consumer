@@ -35,16 +35,16 @@
     [numberToolbar sizeToFit];
     self.ageInput.inputAccessoryView = numberToolbar;
 	
-	//self.navigationController.navigationBarHidden = NO;
-	//self.navigationItem.title = @"Register";
+	self.navigationController.navigationBarHidden = NO;
+	self.navigationItem.title = @"Register";
 	
-	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	bgLayer.frame = self.view.bounds;
-	[self.view.layer insertSublayer:bgLayer atIndex:0];
+	//CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
+	//bgLayer.frame = self.view.bounds;
+	//[self.view.layer insertSublayer:bgLayer atIndex:0];
 	
-	[self.registerButton setBackgroundImage:[GradientBackground blackButtonNormal:self.registerButton]
+	[self.registerButton setBackgroundImage:[GradientBackground orangeButtonNormal:self.registerButton]
 								forState:UIControlStateNormal];
-	[self.registerButton setBackgroundImage:[GradientBackground blackButtonHighlighted:self.registerButton]
+	[self.registerButton setBackgroundImage:[GradientBackground orangeButtonHighlighted:self.registerButton]
 								forState:UIControlStateHighlighted];
 	[self.registerButton.layer setCornerRadius:5];
 	[self.registerButton setClipsToBounds:YES];
@@ -56,9 +56,10 @@
 	self.facebookSpinner.hidesWhenStopped = YES;
 	
 	NSDictionary *attributes = [NSDictionary dictionaryWithObject:[UIFont fontWithName:@"Avenir-Heavy" size:17]
-														   forKey:UITextAttributeFont];
+														   forKey:NSFontAttributeName];
 	[self.genderSelector setTitleTextAttributes:attributes
 									forState:UIControlStateNormal];
+	
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -250,11 +251,6 @@
 			[self handleError:nil withTitle:@"Registration Failed" andMessage:@"Sorry, something went wrong"];
 		}
 	}];
-}
-
-- (IBAction)cancelRegistration:(id)sender
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField

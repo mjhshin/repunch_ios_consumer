@@ -12,13 +12,18 @@
 
 + (CAGradientLayer*) orangeGradient
 {
+	//DEPRECATED
 	//Orange RGB: 0xf08c13
 	//Gradient Alpha: 0xd9 -> 0xff
 	
-    UIColor *orange1 = [UIColor colorWithRed:(235/255.0) green:(135/255.0) blue:(14/255.0) alpha:1.0];
-	UIColor *orange2 = [UIColor colorWithRed:(246/255.0) green:(146/255.0) blue:(25/255.0) alpha:1.0];
+	//OFFICIAL GRADIENT
+	//FFB940FF
+	//F08C13FF
 	
-    NSArray *colors = [NSArray arrayWithObjects:(id)orange1.CGColor, orange2.CGColor, nil];
+    UIColor *orange1 = [UIColor colorWithRed:(235/255.0) green:(165/255.0) blue:(44/255.0) alpha:1.0];
+	UIColor *orange2 = [UIColor colorWithRed:(240/255.0) green:(140/255.0) blue:(19/255.0) alpha:1.0];
+	
+    NSArray *colors = [NSArray arrayWithObjects:(id)orange2.CGColor, orange1.CGColor, nil];
 	
     CAGradientLayer *headerLayer = [CAGradientLayer layer];
     headerLayer.colors = colors;

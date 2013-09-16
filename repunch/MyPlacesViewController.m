@@ -76,20 +76,23 @@
 	[self.myPlacesTableView setTableFooterView:footer];
 	
 	self.tableViewController.tableView = self.myPlacesTableView;
-	
-	CGFloat xCenter = screenWidth/2;
-	CGFloat yCenter = screenHeight/2;
-	CGFloat xOffset = self.activityIndicatorView.frame.size.width/2;
-	CGFloat yOffset = self.activityIndicatorView.frame.size.height/2;
-	CGRect frame = self.activityIndicatorView.frame;
-	frame.origin = CGPointMake(xCenter - xOffset, yCenter - yOffset);
-	self.activityIndicatorView.frame = frame;
-	
-	CGFloat xOffset2 = self.emptyMyPlacesLabel.frame.size.width/2;
-	CGFloat yOffset2 = self.emptyMyPlacesLabel.frame.size.height/2;
-	CGRect frame2 = self.emptyMyPlacesLabel.frame;
-	frame2.origin = CGPointMake(xCenter - xOffset2, yCenter - yOffset2);
-	self.emptyMyPlacesLabel.frame = frame2;
+
+	UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc]
+									 initWithImage:[UIImage imageNamed:@"nav_settings.png"]
+									 style:UIBarButtonItemStylePlain
+									 target:self
+									 action:@selector(openSettings:)];
+	UIBarButtonItem *searchButton = [[UIBarButtonItem alloc]
+								   initWithImage:[UIImage imageNamed:@"nav_search.png"]
+								   style:UIBarButtonItemStylePlain
+								   target:self
+								   action:@selector(openSearch:)];
+	UIButton *punchCodeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, 50)];
+	[punchCodeButton setImage:[UIImage imageNamed:@"repunch-logo.png"] forState:UIControlStateNormal];
+	[punchCodeButton addTarget:self action:@selector(showPunchCode:) forControlEvents:UIControlEventTouchUpInside];
+	self.navigationItem.leftBarButtonItem = settingsButton;
+	self.navigationItem.rightBarButtonItem = searchButton;
+	self.navigationItem.titleView = punchCodeButton;
 	
 	[self loadMyPlaces];
 }
@@ -265,7 +268,7 @@
     StoreViewController *storeVC = [[StoreViewController alloc]init];
     storeVC.storeId = storeId;
 	storeVC.delegate = self;
-    [self presentViewController:storeVC animated:YES completion:NULL];
+    [self.navigationController pushViewController:storeVC animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -354,14 +357,16 @@
 
 - (void)refreshTableView
 {
+	[self.myPlacesTableView setHidden:NO];
+	
 	if(self.storeIdArray.count > 0)
 	{
-		[self.myPlacesTableView setHidden:NO];
+		//[self.myPlacesTableView setHidden:NO];
 		[self.emptyMyPlacesLabel setHidden:YES];
 	}
 	else
 	{
-		[self.myPlacesTableView setHidden:YES];
+		//[self.myPlacesTableView setHidden:YES];
 		[self.emptyMyPlacesLabel setHidden:NO];
 	}
 	

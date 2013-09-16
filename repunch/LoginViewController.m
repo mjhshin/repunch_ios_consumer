@@ -30,16 +30,16 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-	//self.navigationController.navigationBarHidden = NO;
-	//self.navigationItem.title = @"Login";
+	self.navigationController.navigationBarHidden = NO;
+	self.navigationItem.title = @"Sign In";
 	
-	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	bgLayer.frame = self.view.bounds;
-	[self.view.layer insertSublayer:bgLayer atIndex:0];
+	//CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
+	//bgLayer.frame = self.view.bounds;
+	//[self.view.layer insertSublayer:bgLayer atIndex:0];
 	
-	[self.loginButton setBackgroundImage:[GradientBackground blackButtonNormal:self.loginButton]
+	[self.loginButton setBackgroundImage:[GradientBackground orangeButtonNormal:self.loginButton]
 								   forState:UIControlStateNormal];
-	[self.loginButton setBackgroundImage:[GradientBackground blackButtonHighlighted:self.loginButton]
+	[self.loginButton setBackgroundImage:[GradientBackground orangeButtonHighlighted:self.loginButton]
 								   forState:UIControlStateHighlighted];
 	[self.loginButton.layer setCornerRadius:5];
 	[self.loginButton setClipsToBounds:YES];
@@ -49,6 +49,9 @@
 	spinner.hidesWhenStopped = YES;
 	[self.loginButton addSubview:spinner];
 	self.facebookSpinner.hidesWhenStopped = YES;
+	
+	//AVCaptureDevice *flashLight = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+	//[flashLight setTorchMode:AVCaptureTorchModeOff];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -85,7 +88,7 @@
     [UIView commitAnimations];
 }
 
--(BOOL)textFieldShouldReturn:(UITextField*)textField;
+- (BOOL)textFieldShouldReturn:(UITextField*)textField;
 {
 	if(textField == _emailInput) {
 		[_emailInput resignFirstResponder];
@@ -377,11 +380,6 @@
 			[alert show];
 		}];
     }
-}
-
-- (IBAction)cancelLogin:(id)sender
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

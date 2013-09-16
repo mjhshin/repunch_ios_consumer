@@ -16,6 +16,7 @@
 	BOOL patronStoreExists;
     int punchCount;
 	id selectedReward;
+	UIBarButtonItem *deleteButton;
 }
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
@@ -47,16 +48,19 @@
 	patron = [sharedData patron];
 	self.rewardArray = [NSMutableArray array];
 	
-	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	bgLayer.frame = self.toolbar.bounds;
-	[self.toolbar.layer insertSublayer:bgLayer atIndex:0];
-	
 	[[NSBundle mainBundle] loadNibNamed:@"StoreHeaderView" owner:self options:nil];
 	
 	[self.addToMyPlacesButton setBackgroundImage:[GradientBackground orangeButtonNormal:self.addToMyPlacesButton]
 								   forState:UIControlStateNormal];
 	[self.addToMyPlacesButton setBackgroundImage:[GradientBackground orangeButtonHighlighted:self.addToMyPlacesButton]
 								   forState:UIControlStateHighlighted];
+	
+	deleteButton = [[UIBarButtonItem alloc]
+									 initWithImage:[UIImage imageNamed:@"nav_delete.png"]
+									 style:UIBarButtonItemStylePlain
+									 target:self
+									 action:@selector(deleteStore:)];
+	
 	
 	[self setStoreInformation];
 	[self checkPatronStore];
@@ -116,8 +120,7 @@
 	//NSString *category = [store objectForKey:@"categories"];
 	self.rewardArray = [store objectForKey:@"rewards"];
 
-	
-	self.storeNameLabel.text = name;
+	self.navigationItem.title = name;
 	
 	if(crossStreets != (id)[NSNull null]) {
 		street = [street stringByAppendingString:@"\n"];
@@ -238,11 +241,11 @@
 	if(!patronStoreExists)
 	{
 		[self.addToMyPlacesButton setTitle:@"Add to My Places" forState:UIControlStateNormal];
-		[self.addToMyPlacesButton setEnabled:TRUE];
+		[self.addToMyPlacesButton setEnabled:YES];
 		[self.addToMyPlacesButton addTarget:self
 									 action:@selector(addStore)
 						   forControlEvents:UIControlEventTouchUpInside];
-		[self.deleteButton setHidden:TRUE];
+		self.navigationItem.rightBarButtonItem = nil;
 		
 		self.feedbackButton.hidden = YES;
 		
@@ -258,8 +261,8 @@
 	{
 		NSString *buttonText = [NSString stringWithFormat:@"%i %@", punchCount, (punchCount == 1) ? @"Punch": @"Punches"];
 		[self.addToMyPlacesButton setTitle:buttonText forState:UIControlStateNormal];
-		[self.addToMyPlacesButton setEnabled:FALSE];
-		[self.deleteButton setHidden:FALSE];
+		[self.addToMyPlacesButton setEnabled:YES];
+		self.navigationItem.rightBarButtonItem = deleteButton;
 		
 		self.feedbackButton.hidden = NO;
 		
@@ -280,13 +283,8 @@
 - (void)setRewardTableView
 {
 	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
-	CGFloat screenWidth = screenRect.size.width;
-	CGFloat screenHeight = screenRect.size.height;
-	int toolBarHeight = self.toolbar.frame.size.height;
-	int tableViewHeight = screenHeight - toolBarHeight;
-	
 	self.rewardTableView = [[UITableView alloc]
-							  initWithFrame:CGRectMake(0, toolBarHeight, screenWidth, tableViewHeight)
+							  initWithFrame:CGRectMake(0, 0, screenRect.size.width, screenRect.size.height)
 							  style:UITableViewStylePlain];
 	
     [self.rewardTableView setDataSource:self];
@@ -537,7 +535,7 @@
 	[warningView show];
 }
 
-- (void) performDelete
+- (void)performDelete
 {
 	[self.addToMyPlacesButton setTitle:@"" forState:UIControlStateNormal];
 	[self.addToMyPlacesButton setEnabled:FALSE];
@@ -635,11 +633,6 @@
 - (void)alertParentViewController:(BOOL)isAddRemove
 {
 	[self.delegate updateTableViewFromStore:self forStoreId:self.storeId andAddRemove:isAddRemove];
-}
-
-- (IBAction)closeView:(id)sender
-{	
-	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

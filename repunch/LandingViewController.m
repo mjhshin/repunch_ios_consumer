@@ -40,6 +40,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+	self.navigationController.navigationBarHidden = YES;
 	/*
 	self.navigationController.navigationBarHidden = YES;
 	
@@ -61,8 +62,8 @@
 {
 	//self.navigationController.navigationBarHidden = NO;
 	RegisterViewController *registerVC = [[RegisterViewController alloc] init];
-    [self presentViewController:registerVC animated:YES completion:nil];
-	//[self.navigationController pushViewController:registerVC animated:YES];
+    //[self presentViewController:registerVC animated:YES completion:nil];
+	[self.navigationController pushViewController:registerVC animated:YES];
 	
 }
 
@@ -70,7 +71,7 @@
 {
 	//self.navigationController.navigationBarHidden = NO;
 	LoginViewController *loginVC = [[LoginViewController alloc] init];
-	[self presentViewController:loginVC animated:YES completion:nil];
-	//[self.navigationController pushViewController:loginVC animated:YES];
+	//[self presentViewController:loginVC animated:YES completion:nil];
+	[self.navigationController pushViewController:loginVC animated:YES];
 }
 @end

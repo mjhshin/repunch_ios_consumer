@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "GradientBackground.h"
 #import "DataManager.h"
+//#import <AVFoundation/AVFoundation.h>
 
 @interface LoginViewController : UIViewController <UITextFieldDelegate>
 
@@ -19,7 +20,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *facebookButtonLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *facebookSpinner;
 
-- (IBAction)cancelLogin:(id)sender;
 - (IBAction)loginWithRepunch:(id)sender;
 - (IBAction)loginWithFacebook:(id)sender;
 - (IBAction)forgotPassword:(id)sender;

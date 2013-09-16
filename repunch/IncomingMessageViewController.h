@@ -32,12 +32,6 @@
 @property (strong, nonatomic) PFObject *message;
 @property (strong, nonatomic) PFObject *reply;
 
-@property (weak, nonatomic) IBOutlet UIView *toolbar;
-@property (weak, nonatomic) IBOutlet UILabel *messageTitle;
-
-- (IBAction)deleteButtonAction:(id)sender;
-- (IBAction)closeButtonAction:(id)sender;
-
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 // Original Message
