@@ -27,6 +27,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+	self.tabBarController.tabBar.hidden = YES;
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(checkPatronStore)
@@ -72,9 +74,10 @@
     [super viewWillAppear:YES];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
+- (void)viewWillDisappear:(BOOL)animated
 {
-	[super viewDidDisappear:YES];
+	[super viewWillDisappear:YES];
+	self.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -283,8 +286,9 @@
 - (void)setRewardTableView
 {
 	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
+	CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
 	self.rewardTableView = [[UITableView alloc]
-							  initWithFrame:CGRectMake(0, 0, screenRect.size.width, screenRect.size.height)
+							  initWithFrame:CGRectMake(0, 0, screenRect.size.width, screenRect.size.height - navBarHeight)
 							  style:UITableViewStylePlain];
 	
     [self.rewardTableView setDataSource:self];
@@ -296,9 +300,9 @@
 	self.tableViewController = [[UITableViewController alloc]initWithStyle:UITableViewStylePlain];
 	[self addChildViewController:self.tableViewController];
 	
-	self.tableViewController.refreshControl = [[UIRefreshControl alloc]init];
+	self.tableViewController.refreshControl = [[UIRefreshControl alloc] init];
 	[self.tableViewController.refreshControl addTarget:self
-												action:@selector(refreshStoreObject)
+												action:@selector(refreshPatronStoreObject)
 									  forControlEvents:UIControlEventValueChanged];
 	self.tableViewController.tableView = self.rewardTableView;
 }
@@ -459,24 +463,25 @@
 
 - (IBAction)mapButtonAction:(id)sender
 {
-	//[self.mapButtonView setBackgroundColor:[UIColor clearColor]];
-	
-    StoreMapViewController *storeMapVC = [[StoreMapViewController alloc] init];
+	StoreMapViewController *storeMapVC = [[StoreMapViewController alloc] init];
 	storeMapVC.storeId = self.storeId;
-    [self presentViewController:storeMapVC animated:YES completion:NULL];
+	
+	UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:storeMapVC];
+	[RepunchUtils setupNavigationController:navController];
+	
+    [self presentViewController:navController animated:YES completion:nil];
 }
 
 - (IBAction)feedbackButtonAction:(id)sender
 {
-	//[self.feedbackButtonView setBackgroundColor:[UIColor clearColor]];
-	
-	if(!patronStoreExists) //temp
-		return;
-	
 	ComposeMessageViewController *composeVC = [[ComposeMessageViewController alloc] init];
 	composeVC.messageType = @"feedback"; //TODO: make this enum
 	composeVC.storeId = self.storeId;
-	[self presentViewController:composeVC animated:YES completion:NULL];
+	
+	UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:composeVC];
+	[RepunchUtils setupNavigationController:navController];
+	
+	[self presentViewController:navController animated:YES completion:nil];
 }
 
 - (void)addStore
@@ -592,28 +597,58 @@
 	{
 		FacebookFriendsViewController *facebookFriendsVC = [[FacebookFriendsViewController alloc] init];
 		facebookFriendsVC.myDelegate = self;
-		[self presentViewController:facebookFriendsVC animated:YES completion:NULL];
+		
+		UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:facebookFriendsVC];
+		[RepunchUtils setupNavigationController:navController];
+		
+		[self presentViewController:navController animated:YES completion:nil];
 	}
 }
 
-- (void) refreshStoreObject
+- (void)refreshPatronStoreObject
 {
-	PFQuery *query = [PFQuery queryWithClassName:@"Store"];
-	[query getObjectInBackgroundWithId:self.storeId block:^(PFObject *result, NSError *error)
+	if(patronStoreExists)
 	{
-		if(!error)
+		PFQuery *query = [PFQuery queryWithClassName:@"PatronStore"];
+		[query includeKey:@"Store"];
+		[query getObjectInBackgroundWithId:patronStore.objectId block:^(PFObject *result, NSError *error)
+		 {
+			 if(!error)
+			 {
+				 patronStore = result;
+				 store = [result objectForKey:@"Store"];
+				 [sharedData addPatronStore:patronStore forKey:self.storeId];
+				 [sharedData addStore:store];
+				 [self setStoreInformation];
+				 [self checkPatronStore];
+				 [self setRewardTableView];
+			 }
+			 else
+			 {
+				 NSLog(@"error fetching Store: %@", error);
+				 [RepunchUtils showDefaultErrorMessage];
+			 }
+		 }];
+	}
+	else
+	{
+		PFQuery *query = [PFQuery queryWithClassName:@"Store"];
+		[query getObjectInBackgroundWithId:self.storeId block:^(PFObject *result, NSError *error)
 		{
-			[sharedData addStore:result];
-			store = result;
-			[self setStoreInformation];
-			[self setRewardTableView];
-		}
-		else
-		{
-			NSLog(@"error fetching Store: %@", error);
-			[RepunchUtils showDefaultErrorMessage];
-		}
-	}];
+			 if(!error)
+			 {
+				 store = result;
+				 [sharedData addStore:store];
+				 [self setStoreInformation];
+				 [self setRewardTableView];
+			 }
+			 else
+			 {
+				 NSLog(@"error fetching Store: %@", error);
+				 [RepunchUtils showDefaultErrorMessage];
+			 }
+		 }];
+	}
 }
 
 - (void)onFriendSelected:(FacebookFriendsViewController *)controller forFriendId:(NSString *)friendId withName:(NSString *)name
@@ -627,7 +662,10 @@
 	composeVC.giftPunches = [[selectedReward objectForKey:@"punches"] intValue];
 	composeVC.recepientName = name;
 	
-	[self presentViewController:composeVC animated:YES completion:nil];
+	UINavigationController *composeNavController = [[UINavigationController alloc] initWithRootViewController:composeVC];
+	[RepunchUtils setupNavigationController:composeNavController];
+	
+	[self presentViewController:composeNavController animated:YES completion:nil];
 }
 
 - (void)alertParentViewController:(BOOL)isAddRemove

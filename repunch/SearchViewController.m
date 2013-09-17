@@ -37,6 +37,15 @@
 												 name:@"Redeem"
 											   object:nil];
 	
+	self.navigationItem.title = @"Search";
+	
+	UIBarButtonItem *exitButton = [[UIBarButtonItem alloc]
+								   initWithImage:[UIImage imageNamed:@"nav_exit.png"]
+								   style:UIBarButtonItemStylePlain
+								   target:self
+								   action:@selector(closeView:)];
+	self.navigationItem.leftBarButtonItem = exitButton;
+	
 	locationManager = [[CLLocationManager alloc] init];	
 	locationManager.delegate = (id)self;
 	locationManager.distanceFilter = kCLDistanceFilterNone; //filter out negligible changes in location (disabled for now)
@@ -47,36 +56,18 @@
 	self.storeIdArray = [NSMutableArray array];
     self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
 	
-	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	bgLayer.frame = self.toolbar.bounds;
-	[self.toolbar.layer insertSublayer:bgLayer atIndex:0];
-	
 	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
 	CGFloat screenWidth = screenRect.size.width;
 	CGFloat screenHeight = screenRect.size.height;
-	int toolBarHeight = self.toolbar.frame.size.height;
-	int tableViewHeight = screenHeight - toolBarHeight;
-	self.searchTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, toolBarHeight, 320, tableViewHeight)
+	CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
+	self.searchTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - navBarHeight)
 														style:UITableViewStylePlain];
     [self.searchTableView setDataSource:self];
     [self.searchTableView setDelegate:self];
     [self.view addSubview:self.searchTableView];
+	self.searchTableView.layer.zPosition = -1.0;
 	
-	CGFloat xCenter = screenWidth/2;
-	CGFloat yCenter = (screenHeight + toolBarHeight)/2;
-	CGFloat xOffset = self.activityIndicatorView.frame.size.width/2;
-	CGFloat yOffset = self.activityIndicatorView.frame.size.height/2;
-	CGRect frame = self.activityIndicatorView.frame;
-	frame.origin = CGPointMake(xCenter - xOffset, yCenter - yOffset);
-	self.activityIndicatorView.frame = frame;
-	
-	CGFloat xOffset2 = self.emptyResultsLabel.frame.size.width/2;
-	CGFloat yOffset2 = self.emptyResultsLabel.frame.size.height/2;
-	CGRect frame2 = self.emptyResultsLabel.frame;
-	frame2.origin = CGPointMake(xCenter - xOffset2, yCenter - yOffset2);
-	self.emptyResultsLabel.frame = frame2;
-	
-	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 	
 	paginateButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 260, 50)];
 	paginateButton.titleLabel.font = [UIFont fontWithName:@"Avenir-Heavy" size:17];
@@ -89,6 +80,8 @@
 									forState:UIControlStateNormal];
 	[paginateButton setBackgroundImage:[GradientBackground orangeButtonHighlighted:paginateButton]
 									forState:UIControlStateHighlighted];
+	
+	[paginateButton setTitle:@"More Results" forState:UIControlStateNormal];
 	
 	spinner.hidesWhenStopped = YES;
 	paginateCount = 0;
@@ -153,9 +146,9 @@
 	
 	if(paginate == NO)
 	{
-		[self.activityIndicatorView setHidden:FALSE];
+		[self.activityIndicatorView setHidden:NO];
 		[self.activityIndicator startAnimating];
-		[self.searchTableView setHidden:TRUE];
+		//[self.searchTableView setHidden:TRUE];
 	}
 	else
 	{
@@ -168,9 +161,9 @@
 	{
 		 if(paginate == NO)
 		 {
-			 [self.activityIndicatorView setHidden:TRUE];
+			 [self.activityIndicatorView setHidden:YES];
 			 [self.activityIndicator stopAnimating];
-			 [self.searchTableView setHidden:FALSE];
+			 //[self.searchTableView setHidden:FALSE];
 			 [self.storeIdArray removeAllObjects];
 		 }
 		 
@@ -298,7 +291,7 @@
 	StoreViewController *storeVC = [[StoreViewController alloc]init];
 	storeVC.storeId = storeId;
 	storeVC.delegate = self;
-	[self presentViewController:storeVC animated:YES completion:NULL];
+	[self.navigationController pushViewController:storeVC animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -369,14 +362,14 @@
 	
 		if(loadInProgress)
 		{
-			[paginateButton setTitle:@"" forState:UIControlStateNormal];
-			spinner.frame = paginateButton.bounds;
-			[paginateButton addSubview:spinner];
+			[paginateButton setHidden:YES];
+			spinner.frame = self.searchTableView.tableFooterView.bounds;
+			[self.searchTableView.tableFooterView addSubview:spinner];
 			[spinner startAnimating];
 		}
 		else
 		{
-			[paginateButton setTitle:@"More Results" forState:UIControlStateNormal];
+			[paginateButton setHidden:NO];
 			[spinner removeFromSuperview];
 			[spinner stopAnimating];
 		}
@@ -391,14 +384,10 @@
 
 - (void)refreshTableView
 {
-	if(self.storeIdArray.count > 0)
-	{
-		[self.searchTableView setHidden:NO];
+	if(self.storeIdArray.count > 0) {
 		[self.emptyResultsLabel setHidden:YES];
 	}
-	else
-	{
-		[self.searchTableView setHidden:YES];
+	else {
 		[self.emptyResultsLabel setHidden:NO];
 	}
 	[self.searchTableView reloadData];

@@ -18,11 +18,6 @@
 
 @interface InboxViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, IncomingMessageVCDelegate>
 
-- (IBAction)openSettings:(id)sender;
-- (IBAction)openSearch:(id)sender;
-- (IBAction)showPunchCode:(id)sender;
-
-@property (weak, nonatomic) IBOutlet UIView *toolbar;
 @property (weak, nonatomic) IBOutlet UIView *activityIndicatorView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *emptyInboxLabel;

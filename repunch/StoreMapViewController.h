@@ -16,9 +16,4 @@
 
 @property (nonatomic, strong) NSString *storeId;
 
-@property (weak, nonatomic) IBOutlet UIView *toolbar;
-
-- (IBAction)closeView:(id)sender;
-- (IBAction)getDirections:(id)sender;
-
 @end

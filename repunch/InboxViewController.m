@@ -37,10 +37,6 @@
     self.patron = [self.sharedData patron];
 	self.messagesArray = [[NSMutableArray alloc] init];
 	
-	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	bgLayer.frame = self.toolbar.bounds;
-	[self.toolbar.layer insertSublayer:bgLayer atIndex:0];
-	
 	self.tableViewController = [[UITableViewController alloc]initWithStyle:UITableViewStylePlain];
 	[self addChildViewController:self.tableViewController];
 	
@@ -53,14 +49,16 @@
 	CGFloat screenWidth = screenRect.size.width;
 	CGFloat screenHeight = screenRect.size.height;
 	int tabBarHeight = self.tabBarController.tabBar.frame.size.height;
+	CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
 	
 	self.messageTableView = [[UITableView alloc]
-						initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - tabBarHeight)
+						initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - tabBarHeight - navBarHeight)
 								style:UITableViewStylePlain];
 	
     [self.messageTableView setDataSource:self];
     [self.messageTableView setDelegate:self];
 	[self.view addSubview:self.messageTableView];
+	self.messageTableView.layer.zPosition = -1.0;
 	
 	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
 	footer.backgroundColor = [UIColor clearColor];
@@ -133,9 +131,10 @@
 	}
 	else
 	{
-		self.activityIndicatorView.hidden = NO;
-		[self.activityIndicator startAnimating];
-        //self.messageTableView.hidden = YES;
+		if(self.messagesArray.count == 0) {
+			self.activityIndicatorView.hidden = NO;
+			[self.activityIndicator startAnimating];
+		}
 		self.emptyInboxLabel.hidden = YES;
 	}
     
@@ -379,12 +378,12 @@
 {
 	if(self.messagesArray.count > 0)
 	{
-		[self.messageTableView setHidden:NO];
+		//[self.messageTableView setHidden:NO];
 		[self.emptyInboxLabel setHidden:YES];
 	}
 	else
 	{
-		[self.messageTableView setHidden:YES];
+		//[self.messageTableView setHidden:YES];
 		[self.emptyInboxLabel setHidden:NO];
 	}
 	[self.messageTableView reloadData];
@@ -420,13 +419,17 @@
 - (IBAction)openSettings:(id)sender
 {
     SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
-    [self presentViewController:settingsVC animated:YES completion:NULL];
+	UINavigationController *searchNavController = [[UINavigationController alloc] initWithRootViewController:settingsVC];
+	[RepunchUtils setupNavigationController:searchNavController];
+    [self presentViewController:searchNavController animated:YES completion:nil];
 }
 
 - (IBAction)openSearch:(id)sender
 {
-    SearchViewController *placesSearchVC = [[SearchViewController alloc]init];
-    [self presentViewController:placesSearchVC animated:YES completion:NULL];
+    SearchViewController *searchVC = [[SearchViewController alloc] init];
+	UINavigationController *searchNavController = [[UINavigationController alloc] initWithRootViewController:searchVC];
+	[RepunchUtils setupNavigationController:searchNavController];
+    [self presentViewController:searchNavController animated:YES completion:nil];
 }
 
 - (IBAction)showPunchCode:(id)sender

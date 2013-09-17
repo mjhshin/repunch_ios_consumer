@@ -25,31 +25,14 @@
 	
 	self.friendDictionary = [NSMutableDictionary dictionary];
 	
-	UIView *toolbar = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 320, 50)];
+	self.navigationItem.title = @"Choose A Friend";
 	
-	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	bgLayer.frame = toolbar.bounds;
-	[toolbar.layer insertSublayer:bgLayer atIndex:0];
-	
-	UIButton *closeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-	[closeButton setImage:[UIImage imageNamed:@"nav_exit.png"] forState:UIControlStateNormal];
-	[closeButton addTarget:self action:@selector(closeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-	closeButton.showsTouchWhenHighlighted = YES;
-	[toolbar addSubview:closeButton];
-	
-	UILabel *titleLabel = [[UILabel alloc] init];
-	titleLabel.backgroundColor = [UIColor clearColor];
-	titleLabel.font = [UIFont fontWithName:@"Avenir-Heavy" size:22];
-	titleLabel.textColor = [UIColor whiteColor];
-	titleLabel.text = @"Choose A Friend";
-	[titleLabel sizeToFit];
-	[toolbar addSubview:titleLabel];
-	[titleLabel setCenter:toolbar.center];
-	[self.view addSubview:toolbar];
-	
-	CGRect tableFrame = self.tableView.frame;
-	tableFrame.origin.y = toolbar.frame.size.height;
-	self.tableView.frame = tableFrame;
+	UIBarButtonItem *exitButton = [[UIBarButtonItem alloc]
+								   initWithImage:[UIImage imageNamed:@"nav_exit.png"]
+								   style:UIBarButtonItemStylePlain
+								   target:self
+								   action:@selector(closeButtonPressed)];
+	self.navigationItem.leftBarButtonItem = exitButton;
 	
 	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
 	footer.backgroundColor = [UIColor clearColor];
@@ -68,7 +51,7 @@
 	CGFloat xCenter = screenRect.size.width/2;
 	CGFloat yCenter = screenRect.size.height/2;
 	CGFloat xOffset = self.spinnerView.frame.size.width/2;
-	CGFloat yOffset = (self.spinnerView.frame.size.height - toolbar.frame.size.height)/2;
+	CGFloat yOffset = self.spinnerView.frame.size.height/2;
 	CGRect spinnerFrame = self.spinnerView.frame;
 	spinnerFrame.origin = CGPointMake(xCenter - xOffset, yCenter - yOffset);
 	self.spinnerView.frame = spinnerFrame;

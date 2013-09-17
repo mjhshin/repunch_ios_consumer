@@ -14,6 +14,7 @@
 	PFObject *patron;
 	PFObject *patronStore;
 	UIActivityIndicatorView *spinner;
+	UIBarButtonItem *sendButton;
 }
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
@@ -25,21 +26,27 @@
 {
     [super viewDidLoad];
 	
-	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	bgLayer.frame = _toolbar.bounds;
-	[_toolbar.layer insertSublayer:bgLayer atIndex:0];
+	UIBarButtonItem *exitButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_exit.png"]
+																   style:UIBarButtonItemStylePlain
+																  target:self
+																  action:@selector(closeButton:)];
+	
+	sendButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_send.png"]
+																   style:UIBarButtonItemStylePlain
+																  target:self
+																  action:@selector(sendButtonAction:)];
+	self.navigationItem.leftBarButtonItem = exitButton;
+	self.navigationItem.rightBarButtonItem = sendButton;
 	
 	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-	spinner.frame = self.sendButton.frame;
 	spinner.hidesWhenStopped = YES;
-	[self.toolbar addSubview:spinner];
 	
 	sharedData = [DataManager getSharedInstance];
 	store = [sharedData getStore:self.storeId];
 	patronStore = [sharedData getPatronStore:self.storeId];
 	patron = [sharedData patron];
-
-    self.storeName.text = [store objectForKey:@"store_name"];
+	
+	self.navigationItem.title = [store objectForKey:@"store_name"];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self
@@ -150,7 +157,7 @@
 		self.subject.text = self.subject.placeholder;
 	}
 	
-	self.sendButton.hidden = YES;
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
 	[spinner startAnimating];
     
 	NSString *senderName = [NSString stringWithFormat:@"%@ %@", [patron objectForKey:@"first_name"], [patron objectForKey:@"last_name"]];
@@ -168,7 +175,7 @@
 								block:^(NSString *result, NSError *error)
 	{
 		[spinner stopAnimating];
-		self.sendButton.hidden = NO;
+		self.navigationItem.rightBarButtonItem = sendButton;
 		[self dismissViewControllerAnimated:YES completion:nil];
 		
 		if (!error)
@@ -194,7 +201,7 @@
 		return;
 	}
 	
-	self.sendButton.hidden = YES;
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
 	[spinner startAnimating];
     
 	NSString *senderName = [NSString stringWithFormat:@"%@ %@", [patron objectForKey:@"first_name"], [patron objectForKey:@"last_name"]];
@@ -217,7 +224,7 @@
 								block:^(NSString *result, NSError *error)
 	 {
 		 [spinner stopAnimating];
-		 self.sendButton.hidden = NO;
+		 self.navigationItem.rightBarButtonItem = sendButton;
 		 [self dismissViewControllerAnimated:YES completion:nil];
 		 
 		 if (!error)
@@ -256,7 +263,7 @@
 		return;
 	}
 	
-	self.sendButton.hidden = YES;
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
 	[spinner startAnimating];
     
 	NSString *senderName = [NSString stringWithFormat:@"%@ %@", [patron objectForKey:@"first_name"], [patron objectForKey:@"last_name"]];
@@ -272,7 +279,7 @@
 								block:^(PFObject *reply, NSError *error)
 	 {
 		 [spinner stopAnimating];
-		 self.sendButton.hidden = NO;
+		 self.navigationItem.rightBarButtonItem = sendButton;
 		 [self dismissViewControllerAnimated:YES completion:nil];
 		 
 		 if (!error)

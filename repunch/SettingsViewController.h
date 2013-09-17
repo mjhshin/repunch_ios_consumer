@@ -9,15 +9,11 @@
 
 @interface SettingsViewController : UIViewController <UITableViewDataSource, UITabBarDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *toolbar;
-
 - (IBAction)termsAndConditions:(id)sender;
 - (IBAction)privacyPolicy:(id)sender;
 - (IBAction)logOut:(id)sender;
-- (IBAction)closeView:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 @property (weak, nonatomic) IBOutlet UIButton *logoutButton;
-@property (weak, nonatomic) IBOutlet UIView *navBar;
 @property (weak, nonatomic) IBOutlet UILabel *currentLogin;
 @end

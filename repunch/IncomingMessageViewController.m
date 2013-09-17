@@ -17,6 +17,8 @@
 {
     [super viewDidLoad];
 	
+	self.tabBarController.tabBar.hidden = YES;
+	
 	self.sharedData = [DataManager getSharedInstance];
 	self.patron = self.sharedData.patron;
 	self.messageStatus = [self.sharedData getMessage:self.messageStatusId];
@@ -66,6 +68,8 @@
 	if(self.timer != nil) {
 		[self.timer invalidate];
 	}
+	
+	self.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -76,7 +80,8 @@
 - (void)setupMessage
 {
     CGRect scrollViewFrame = self.scrollView.frame;
-    scrollViewFrame.size.height = [[UIScreen mainScreen] applicationFrame].size.height;
+    scrollViewFrame.size.height = [[UIScreen mainScreen] applicationFrame].size.height
+										- self.navigationController.navigationBar.frame.size.height;
     self.scrollView.frame = scrollViewFrame;
     
     self.dateLabel.text = [self formattedDateString:self.message.createdAt];
@@ -443,7 +448,10 @@
 	composeVC.recepientName = [self.message objectForKey:@"sender_name"];
 	composeVC.giftReplyMessageId = self.message.objectId;
 	composeVC.giftMessageStatusId = self.messageStatusId;
-	[self presentViewController:composeVC animated:YES completion:nil];
+	
+	UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:composeVC];
+	[RepunchUtils setupNavigationController:navController];
+	[self presentViewController:navController animated:YES completion:nil];
 }
 
 - (IBAction)deleteButtonAction:(id)sender

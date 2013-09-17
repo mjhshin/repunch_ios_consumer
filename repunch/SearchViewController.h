@@ -23,15 +23,11 @@
 
 @property (nonatomic, weak) id <SearchViewControllerDelegate> delegate;
 
-@property (nonatomic, weak) IBOutlet UIView *toolbar;
-
 @property (nonatomic, strong) DataManager* sharedData;
 @property (nonatomic, strong) PFObject* patron;
 @property (nonatomic, strong) NSMutableArray *storeIdArray;
 @property (nonatomic, strong) UITableView *searchTableView;
 @property (nonatomic, strong) NSMutableDictionary *imageDownloadsInProgress;
-
-- (IBAction)closeView:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIView *activityIndicatorView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;

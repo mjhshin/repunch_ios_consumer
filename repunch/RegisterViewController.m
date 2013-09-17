@@ -37,10 +37,7 @@
 	
 	self.navigationController.navigationBarHidden = NO;
 	self.navigationItem.title = @"Register";
-	
-	//CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	//bgLayer.frame = self.view.bounds;
-	//[self.view.layer insertSublayer:bgLayer atIndex:0];
+	self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
 	
 	[self.registerButton setBackgroundImage:[GradientBackground orangeButtonNormal:self.registerButton]
 								forState:UIControlStateNormal];
@@ -55,10 +52,16 @@
 	spinner.hidesWhenStopped = YES;
 	self.facebookSpinner.hidesWhenStopped = YES;
 	
-	NSDictionary *attributes = [NSDictionary dictionaryWithObject:[UIFont fontWithName:@"Avenir-Heavy" size:17]
-														   forKey:NSFontAttributeName];
-	[self.genderSelector setTitleTextAttributes:attributes
-									forState:UIControlStateNormal];
+	if( [RepunchUtils isiOSSeven] ) {
+		NSDictionary *attributes = [NSDictionary dictionaryWithObject:[UIFont fontWithName:@"Avenir-Heavy" size:17]
+															   forKey:NSFontAttributeName];
+		[self.genderSelector setTitleTextAttributes:attributes forState:UIControlStateNormal];
+	}
+	else {
+		NSDictionary *attributes = [NSDictionary dictionaryWithObject:[UIFont fontWithName:@"Avenir-Heavy" size:17]
+															   forKey:UITextAttributeFont];
+		[self.genderSelector setTitleTextAttributes:attributes forState:UIControlStateNormal];
+	}
 	
 }
 

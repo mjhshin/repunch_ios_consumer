@@ -28,17 +28,16 @@
 {
     [super viewDidLoad];
 	
-	if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
-		CGRect frame = self.navBar.frame;
-		frame.size.height += 10;
-		self.navBar.frame = frame;
-	}
+	self.navigationItem.title = @"Settings";
+	
+	UIBarButtonItem *exitButton = [[UIBarButtonItem alloc]
+					initWithImage:[UIImage imageNamed:@"nav_exit.png"]
+					style:UIBarButtonItemStylePlain
+					target:self
+					action:@selector(closeView:)];
+	self.navigationItem.leftBarButtonItem = exitButton;
 	
 	sharedData = [DataManager getSharedInstance];
-	
-	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	bgLayer.frame = self.toolbar.bounds;
-	[self.toolbar.layer insertSublayer:bgLayer atIndex:0];
     
 	PFObject* patron = [sharedData patron];
 	NSString* str1 = @"Logged in as ";

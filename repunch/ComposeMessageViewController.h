@@ -33,14 +33,8 @@
 @property (nonatomic, strong) NSString *giftReplyMessageId;
 @property (nonatomic, strong) NSString *giftMessageStatusId;
 
-@property (weak, nonatomic) IBOutlet UIView *toolbar;
-@property (weak, nonatomic) IBOutlet UIButton *sendButton;
-@property (weak, nonatomic) IBOutlet UILabel *storeName;
 @property (weak, nonatomic) IBOutlet UITextField *subject;
 @property (weak, nonatomic) IBOutlet UITextView *body;
 @property (weak, nonatomic) IBOutlet UILabel *bodyPlaceholder;
-
-- (IBAction)sendButtonAction:(id)sender;
-- (IBAction)closeButton:(id)sender;
 
 @end

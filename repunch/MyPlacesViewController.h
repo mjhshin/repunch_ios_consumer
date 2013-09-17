@@ -18,11 +18,6 @@
 
 @interface MyPlacesViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, StoreViewControllerDelegate, SearchViewControllerDelegate>
 
-- (IBAction)openSettings:(id)sender;
-- (IBAction)showPunchCode:(id)sender;
-- (IBAction)openSearch:(id)sender;
-
-@property (nonatomic, weak) IBOutlet UIView *toolbar;
 @property (weak, nonatomic) IBOutlet UIView *activityIndicatorView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *emptyMyPlacesLabel;

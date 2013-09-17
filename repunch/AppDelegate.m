@@ -16,7 +16,7 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+	//[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     //Set up API keys
     [Parse setApplicationId:@"m0EdwpRYlJwttZLZ5PUk7y13TWCnvSScdn8tfVoh"
@@ -177,18 +177,25 @@
 	
 	UINavigationController *myPlacesNavController = [[UINavigationController alloc] initWithRootViewController:myPlacesVC];
 	UINavigationController *inboxNavController = [[UINavigationController alloc] initWithRootViewController:inboxVC];
-	[self setupNavigationController:myPlacesNavController];
-	[self setupNavigationController:inboxNavController];
+	[RepunchUtils setupNavigationController:myPlacesNavController];
+	[RepunchUtils setupNavigationController:inboxNavController];
     
-    self.tabBarController = [[UITabBarController alloc] init];
-	self.tabBarController.tabBar.tintColor = [UIColor colorWithRed:(240/255.0) green:(140/255.0) blue:(19/255.0) alpha:1.0];
-    self.tabBarController.viewControllers = @[myPlacesNavController, inboxNavController];
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+	tabBarController.viewControllers = @[myPlacesNavController, inboxNavController];
+	
+	if( [RepunchUtils isiOSSeven] ) {
+		tabBarController.tabBar.tintColor = [RepunchUtils repunchOrangeColor];
+		tabBarController.tabBar.barStyle = UIBarStyleDefault;
+	}
+	else {
+		tabBarController.tabBar.selectedImageTintColor = [RepunchUtils repunchOrangeColor];
+	}
     
-    UITabBarItem *myPlacesTab = [self.tabBarController.tabBar.items objectAtIndex:0];
+    UITabBarItem *myPlacesTab = [tabBarController.tabBar.items objectAtIndex:0];
     [myPlacesTab setTitle:@"My Places"];
     [myPlacesTab setImage:[UIImage imageNamed:@"ico-tab-places.png"]];
     
-	UITabBarItem *inboxTab = [self.tabBarController.tabBar.items objectAtIndex:1];
+	UITabBarItem *inboxTab = [tabBarController.tabBar.items objectAtIndex:1];
     [inboxTab setTitle:@"Inbox"];
     [inboxTab setImage:[UIImage imageNamed:@"ico-tab-inbox.png"]];
 
@@ -196,46 +203,20 @@
     [attributes setValue:[UIFont fontWithName:@"Avenir-Heavy" size:12] forKey:NSFontAttributeName];
     [[UITabBarItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
 	
-	self.window.rootViewController = self.tabBarController;
+	self.window.rootViewController = tabBarController;
 	[self.window makeKeyAndVisible];
 	
 	[inboxVC view]; //pre-load second tab
 	[FBFriendPickerViewController class]; //pre-load Facebook friend picker
 }
 
-- (void)setupNavigationController:(UINavigationController *)navController
-{
-	[[UIBarButtonItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor],
-														   NSFontAttributeName: [UIFont fontWithName:@"Avenir" size:15]} forState:UIControlStateNormal];
-	[[UINavigationBar appearance] setTitleTextAttributes: @{NSForegroundColorAttributeName: [UIColor whiteColor],
-															NSFontAttributeName: [UIFont fontWithName:@"Avenir-Heavy" size:17]}];
-	
-	navController.navigationBar.tintColor = [UIColor whiteColor];
-	navController.navigationBar.barTintColor = [UIColor colorWithRed:(240/255.0) green:(140/255.0) blue:(19/255.0) alpha:1.0];
-	navController.navigationBar.translucent = NO;
-}
-
 - (void)presentLandingViews
 {
 	LandingViewController *landingVC = [[LandingViewController alloc] init];
-	self.navController = [[UINavigationController alloc] initWithRootViewController:landingVC];
-	self.navController.navigationBar.tintColor = [UIColor whiteColor];
-	self.navController.navigationBar.barTintColor = [UIColor colorWithRed:(240/255.0) green:(140/255.0) blue:(19/255.0) alpha:1.0];
-	self.navController.navigationBar.translucent = NO;
-	
-	[[UIBarButtonItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor],
-														   NSFontAttributeName: [UIFont fontWithName:@"Avenir" size:15]} forState:UIControlStateNormal];
-	[[UINavigationBar appearance] setTitleTextAttributes: @{NSForegroundColorAttributeName: [UIColor whiteColor],
-															NSFontAttributeName: [UIFont fontWithName:@"Avenir-Heavy" size:17]}];
-	
-	
-	self.window.rootViewController = self.navController;
+	UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:landingVC];
+	[RepunchUtils setupNavigationController:navController];
+	self.window.rootViewController = navController;
     [self.window makeKeyAndVisible];
-}
-
-- (void)showSettings
-{
-	
 }
 
 - (void)logout

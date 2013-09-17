@@ -43,10 +43,6 @@
 	self.storeIdArray = [NSMutableArray array];
     self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
 	
-	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	bgLayer.frame = self.toolbar.bounds;
-	[self.toolbar.layer insertSublayer:bgLayer atIndex:0];
-	
 	self.tableViewController = [[UITableViewController alloc]initWithStyle:UITableViewStylePlain];
 	[self addChildViewController:self.tableViewController];
 	
@@ -58,20 +54,20 @@
 	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
 	CGFloat screenWidth = screenRect.size.width;
 	CGFloat screenHeight = screenRect.size.height;
-	int toolBarHeight = self.toolbar.frame.size.height;
 	int tabBarHeight = self.tabBarController.tabBar.frame.size.height;
-	int tableViewHeight = screenHeight - toolBarHeight;
+	CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
 	
 	self.myPlacesTableView = [[UITableView alloc]
-							  initWithFrame:CGRectMake(0, toolBarHeight, screenWidth, tableViewHeight - tabBarHeight)
+							  initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - tabBarHeight - navBarHeight)
 									  style:UITableViewStylePlain];
 	
     [self.myPlacesTableView setDataSource:self];
     [self.myPlacesTableView setDelegate:self];
     [self.view addSubview:self.myPlacesTableView];
-	[self.myPlacesTableView setHidden:TRUE];
+	//[self.myPlacesTableView setHidden:TRUE];
+	self.myPlacesTableView.layer.zPosition = -1.0;
 	
-	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
+	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 1)];
 	footer.backgroundColor = [UIColor clearColor];
 	[self.myPlacesTableView setTableFooterView:footer];
 	
@@ -133,10 +129,11 @@
 }
 
 - (void)loadMyPlaces
-{	
-	self.activityIndicatorView.hidden = NO;
-	[self.activityIndicator startAnimating];
-	//self.myPlacesTableView.hidden = YES;
+{
+	if(self.storeIdArray.count == 0) {
+		self.activityIndicatorView.hidden = NO;
+		[self.activityIndicator startAnimating];
+	}
 	self.emptyMyPlacesLabel.hidden = YES;
 	
     PFRelation *patronStoreRelation = [self.patron relationforKey:@"PatronStores"];
@@ -357,7 +354,7 @@
 
 - (void)refreshTableView
 {
-	[self.myPlacesTableView setHidden:NO];
+	//[self.myPlacesTableView setHidden:NO];
 	
 	if(self.storeIdArray.count > 0)
 	{
@@ -427,14 +424,18 @@
 - (IBAction)openSettings:(id)sender
 {
     SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
-    [self presentViewController:settingsVC animated:YES completion:NULL];
+	UINavigationController *searchNavController = [[UINavigationController alloc] initWithRootViewController:settingsVC];
+	[RepunchUtils setupNavigationController:searchNavController];
+    [self presentViewController:searchNavController animated:YES completion:nil];
 }
 
 - (IBAction)openSearch:(id)sender
 {
-    SearchViewController *placesSearchVC = [[SearchViewController alloc]init];
-	placesSearchVC.delegate = self;
-    [self presentViewController:placesSearchVC animated:YES completion:NULL];
+    SearchViewController *searchVC = [[SearchViewController alloc] init];
+	searchVC.delegate = self;
+	UINavigationController *searchNavController = [[UINavigationController alloc] initWithRootViewController:searchVC];
+	[RepunchUtils setupNavigationController:searchNavController];
+    [self presentViewController:searchNavController animated:YES completion:nil];
 }
 
 @end

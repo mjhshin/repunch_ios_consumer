@@ -22,16 +22,24 @@
 {
     [super viewDidLoad];
 	
-	CAGradientLayer *bgLayer = [GradientBackground orangeGradient];
-	bgLayer.frame = self.toolbar.bounds;
-	[self.toolbar.layer insertSublayer:bgLayer atIndex:0];
+	UIBarButtonItem *exitButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_exit.png"]
+																   style:UIBarButtonItemStylePlain
+																  target:self
+																  action:@selector(closeView:)];
+	
+	UIBarButtonItem *directionsButton = [[UIBarButtonItem alloc] initWithTitle:@"Directions"
+																		 style:UIBarButtonItemStylePlain
+																		target:self
+																		action:@selector(getDirections:)];
+	self.navigationItem.leftBarButtonItem = exitButton;
+	self.navigationItem.rightBarButtonItem = directionsButton;
 	
 	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
 	CGFloat screenWidth = screenRect.size.width;
 	CGFloat screenHeight = screenRect.size.height;
-	int toolBarHeight = self.toolbar.frame.size.height;
+	CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
     
-    MKMapView *placeMapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, toolBarHeight, screenWidth, screenHeight - toolBarHeight)];
+    MKMapView *placeMapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - navBarHeight)];
 	
 	DataManager *sharedData = [DataManager getSharedInstance];
 	store = [sharedData getStore:self.storeId];
