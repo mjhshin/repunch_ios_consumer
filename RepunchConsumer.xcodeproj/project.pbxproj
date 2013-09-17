@@ -997,7 +997,7 @@
 				GCC_PREFIX_HEADER = "Repunch-Prefix.pch";
 				INFOPLIST_FILE = "Repunch-Info.plist";
 				"INFOPLIST_FILE[sdk=*]" = "Repunch-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/External/CrittercismSDK\"",
@@ -1026,7 +1026,7 @@
 				GCC_PREFIX_HEADER = "Repunch-Prefix.pch";
 				INFOPLIST_FILE = "Repunch-Info.plist";
 				"INFOPLIST_FILE[sdk=*]" = "Repunch-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/External/CrittercismSDK\"",

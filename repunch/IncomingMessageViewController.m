@@ -17,8 +17,6 @@
 {
     [super viewDidLoad];
 	
-	self.tabBarController.tabBar.hidden = YES;
-	
 	self.sharedData = [DataManager getSharedInstance];
 	self.patron = self.sharedData.patron;
 	self.messageStatus = [self.sharedData getMessage:self.messageStatusId];
@@ -68,8 +66,6 @@
 	if(self.timer != nil) {
 		[self.timer invalidate];
 	}
-	
-	self.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -469,7 +465,7 @@
 							handler:^(SIAlertView *alert) {
 								[self.sharedData removeMessage:self.messageStatusId];
 								[self.delegate removeMessage:self forMsgStatus:self.messageStatus];
-								[self dismissViewControllerAnimated:YES completion:nil];
+								[self.navigationController popViewControllerAnimated:NO];
 								[alert dismissAnimated:YES];
 							}];
 	[alert show];

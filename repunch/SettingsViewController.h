@@ -7,7 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SettingsViewController : UIViewController <UITableViewDataSource, UITabBarDelegate>
+@interface SettingsViewController : UIViewController
 
 - (IBAction)termsAndConditions:(id)sender;
 - (IBAction)privacyPolicy:(id)sender;

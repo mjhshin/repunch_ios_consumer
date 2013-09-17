@@ -1,7 +1,8 @@
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
 
-@interface MapPin : NSObject<MKAnnotation> {
+@interface MapPin : NSObject<MKAnnotation>
+{
     CLLocationCoordinate2D coordinate;
     NSString *title;
     NSString *subtitle;

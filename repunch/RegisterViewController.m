@@ -52,16 +52,18 @@
 	spinner.hidesWhenStopped = YES;
 	self.facebookSpinner.hidesWhenStopped = YES;
 	
-	if( [RepunchUtils isiOSSeven] ) {
+	//if( [RepunchUtils isiOSSeven] ) {
 		NSDictionary *attributes = [NSDictionary dictionaryWithObject:[UIFont fontWithName:@"Avenir-Heavy" size:17]
 															   forKey:NSFontAttributeName];
 		[self.genderSelector setTitleTextAttributes:attributes forState:UIControlStateNormal];
+	/*
 	}
 	else {
 		NSDictionary *attributes = [NSDictionary dictionaryWithObject:[UIFont fontWithName:@"Avenir-Heavy" size:17]
 															   forKey:UITextAttributeFont];
 		[self.genderSelector setTitleTextAttributes:attributes forState:UIControlStateNormal];
 	}
+	 */
 	
 }
 

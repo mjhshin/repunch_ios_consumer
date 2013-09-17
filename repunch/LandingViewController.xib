@@ -22,15 +22,15 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" image="landing-568h.png" translatesAutoresizingMaskIntoConstraints="NO" id="48">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" image="landing.png" translatesAutoresizingMaskIntoConstraints="NO" id="48">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9">
-                            <rect key="frame" x="50" y="484" width="220" height="44"/>
+                            <rect key="frame" x="175" y="457" width="125" height="50"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="220" id="167"/>
+                                <constraint firstAttribute="width" constant="125" id="167"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
                             <state key="normal" title="Sign In">
@@ -45,11 +45,11 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="149">
-                            <rect key="frame" x="50" y="414" width="220" height="44"/>
+                            <rect key="frame" x="20" y="457" width="125" height="50"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="220" id="154"/>
-                                <constraint firstAttribute="height" constant="44" id="166"/>
+                                <constraint firstAttribute="width" constant="125" id="154"/>
+                                <constraint firstAttribute="height" constant="50" id="166"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
                             <state key="normal" title="Register">
@@ -66,12 +66,12 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="149" firstAttribute="bottom" secondItem="9" secondAttribute="bottom" constant="-70" id="181"/>
-                        <constraint firstItem="149" firstAttribute="top" secondItem="9" secondAttribute="top" constant="-70" id="182"/>
-                        <constraint firstAttribute="centerX" secondItem="9" secondAttribute="centerX" id="56Q-W2-m5m"/>
-                        <constraint firstAttribute="bottom" secondItem="9" secondAttribute="bottom" constant="40" id="N8g-Op-E10"/>
-                        <constraint firstAttribute="centerX" secondItem="149" secondAttribute="centerX" id="hyD-ID-V58"/>
-                        <constraint firstAttribute="bottom" secondItem="149" secondAttribute="bottom" constant="110" id="zC9-9R-dbC"/>
+                        <constraint firstItem="149" firstAttribute="bottom" secondItem="9" secondAttribute="bottom" id="181"/>
+                        <constraint firstItem="149" firstAttribute="top" secondItem="9" secondAttribute="top" id="182"/>
+                        <constraint firstAttribute="centerX" secondItem="9" secondAttribute="centerX" constant="-77.5" id="56Q-W2-m5m"/>
+                        <constraint firstAttribute="bottom" secondItem="9" secondAttribute="bottom" constant="61" id="N8g-Op-E10"/>
+                        <constraint firstAttribute="centerX" secondItem="149" secondAttribute="centerX" constant="77.5" id="hyD-ID-V58"/>
+                        <constraint firstAttribute="bottom" secondItem="149" secondAttribute="bottom" constant="61" id="zC9-9R-dbC"/>
                     </constraints>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
@@ -89,6 +89,6 @@
         </view>
     </objects>
     <resources>
-        <image name="landing-568h.png" width="320" height="480"/>
+        <image name="landing.png" width="320" height="480"/>
     </resources>
 </document>

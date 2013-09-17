@@ -36,10 +36,10 @@
 	//Orange RGB: 0xf08c13
 	//Gradient Alpha: 0xd9 -> 0xff
 	
-	UIColor *orange1 = [UIColor colorWithRed:(240/255.0) green:(140/255.0) blue:(19/255.0) alpha:1.0];
-	UIColor *orange2 = [UIColor colorWithRed:(240/255.0) green:(140/255.0) blue:(19/255.0) alpha:(217/255.0)];
+	UIColor *orange1 = [UIColor colorWithRed:(235/255.0) green:(155/255.0) blue:(26/255.0) alpha:1.0];
+	UIColor *orange2 = [UIColor colorWithRed:(240/255.0) green:(140/255.0) blue:(19/255.0) alpha:1.0];
 	
-    NSArray *colors = [NSArray arrayWithObjects:(id)orange1.CGColor, orange2.CGColor, nil];
+    NSArray *colors = [NSArray arrayWithObjects:(id)orange2.CGColor, orange1.CGColor, nil];
 	
     CAGradientLayer *headerLayer = [CAGradientLayer layer];
     headerLayer.colors = colors;

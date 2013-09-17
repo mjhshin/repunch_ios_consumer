@@ -14,6 +14,6 @@
 + (void) showDefaultErrorMessage;
 + (void) setupNavigationController:(UINavigationController *)navController;
 + (UIColor *) repunchOrangeColor;
-+ (BOOL) isiOSSeven;
+//+ (BOOL) isiOSSeven;
 
 @end

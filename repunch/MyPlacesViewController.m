@@ -107,6 +107,8 @@
         [punchCodeHelpAlert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
         [punchCodeHelpAlert show];
     }
+	
+	self.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -261,6 +263,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+	self.tabBarController.tabBar.hidden = YES;
+	
 	NSString *storeId = [self.storeIdArray objectAtIndex:indexPath.row];
     StoreViewController *storeVC = [[StoreViewController alloc]init];
     storeVC.storeId = storeId;
@@ -427,6 +431,8 @@
 	UINavigationController *searchNavController = [[UINavigationController alloc] initWithRootViewController:settingsVC];
 	[RepunchUtils setupNavigationController:searchNavController];
     [self presentViewController:searchNavController animated:YES completion:nil];
+	
+	self.tabBarController.tabBar.hidden = YES;
 }
 
 - (IBAction)openSearch:(id)sender
@@ -436,6 +442,8 @@
 	UINavigationController *searchNavController = [[UINavigationController alloc] initWithRootViewController:searchVC];
 	[RepunchUtils setupNavigationController:searchNavController];
     [self presentViewController:searchNavController animated:YES completion:nil];
+	
+	self.tabBarController.tabBar.hidden = YES;
 }
 
 @end

@@ -44,7 +44,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="19">
-                            <rect key="frame" x="15" y="63" width="290" height="105"/>
+                            <rect key="frame" x="15" y="63" width="290" height="125"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <string key="text">Hello friend!  You've been quite the peachy customer (and we like your smile) so you know what?  You get a cup of tea on us.  Stay cool.</string>
                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>

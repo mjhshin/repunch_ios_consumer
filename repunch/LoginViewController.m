@@ -334,6 +334,10 @@
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
+	if(!alertView) {
+		return;
+	}
+	
     if (buttonIndex == 1) {
         NSString *email = [[alertView textFieldAtIndex:0] text];
 		

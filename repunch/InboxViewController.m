@@ -97,9 +97,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+	
+	self.tabBarController.tabBar.hidden = NO;
 }
 
--(void)viewDidDisappear:(BOOL)animated
+- (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewDidDisappear:YES];
 	[UIApplication sharedApplication].applicationIconBadgeNumber = alertBadgeCount;
@@ -157,6 +159,7 @@
             {
                 [self.messagesArray removeAllObjects];
                 paginateReachEnd = NO;
+				paginateCount = 0;
 				[self fetchBadgeCount];
             }
 
@@ -168,7 +171,7 @@
 
 			[self refreshTableView];
 			
-			if(paginate == YES && results.count == 0) {
+			if(paginate == YES && results.count < 20) {
 				paginateReachEnd = YES;
 			}
 			loadInProgress = NO;
@@ -176,7 +179,6 @@
 		else
 		{
             [RepunchUtils showDefaultErrorMessage];
-            //self.messageTableView.hidden = NO;
         }
     }];
 }
@@ -251,7 +253,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+	self.tabBarController.tabBar.hidden = YES;
     IncomingMessageViewController *messageVC = [[IncomingMessageViewController alloc] init];
 	PFObject *messageStatus = [self.messagesArray objectAtIndex:indexPath.row];
     messageVC.messageStatusId = [messageStatus objectId];
@@ -282,7 +285,7 @@
     float scrollLocation = scrollView.contentOffset.y + scrollView.bounds.size.height - scrollView.contentInset.bottom;
     float scrollHeight = scrollView.contentSize.height;
 
-    if(self.messagesArray.count >= 20 && scrollLocation >= scrollHeight + 5 && !loadInProgress && !paginateReachEnd)
+    if(scrollLocation >= scrollHeight + 5 && !loadInProgress && !paginateReachEnd)
 	{
 		[self loadInbox:YES];
     }
@@ -418,6 +421,8 @@
 
 - (IBAction)openSettings:(id)sender
 {
+	self.tabBarController.tabBar.hidden = YES;
+	
     SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
 	UINavigationController *searchNavController = [[UINavigationController alloc] initWithRootViewController:settingsVC];
 	[RepunchUtils setupNavigationController:searchNavController];
@@ -426,6 +431,8 @@
 
 - (IBAction)openSearch:(id)sender
 {
+	self.tabBarController.tabBar.hidden = YES;
+	
     SearchViewController *searchVC = [[SearchViewController alloc] init];
 	UINavigationController *searchNavController = [[UINavigationController alloc] initWithRootViewController:searchVC];
 	[RepunchUtils setupNavigationController:searchNavController];

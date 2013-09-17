@@ -27,8 +27,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-	self.tabBarController.tabBar.hidden = YES;
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(checkPatronStore)
@@ -77,7 +75,6 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:YES];
-	self.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)didReceiveMemoryWarning
