@@ -67,7 +67,7 @@
 	//[self.myPlacesTableView setHidden:TRUE];
 	self.myPlacesTableView.layer.zPosition = -1.0;
 	
-	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 1)];
+	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 1)];
 	footer.backgroundColor = [UIColor clearColor];
 	[self.myPlacesTableView setTableFooterView:footer];
 	

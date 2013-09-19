@@ -410,6 +410,10 @@
 
 - (void)updateBadgeCount
 {
+	if(alertBadgeCount < 0) {
+		alertBadgeCount = 0;
+	}
+	
 	UITabBarItem *tab = [self.tabBarController.tabBar.items objectAtIndex:1];	
 	tab.badgeValue = (alertBadgeCount == 0) ? nil : [NSString stringWithFormat:@"%i", alertBadgeCount];
 	[UIApplication sharedApplication].applicationIconBadgeNumber = alertBadgeCount;

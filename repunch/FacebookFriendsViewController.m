@@ -47,15 +47,6 @@
 	
 	self.delegate = (id)self;
 	
-	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
-	CGFloat xCenter = screenRect.size.width/2;
-	CGFloat yCenter = screenRect.size.height/2;
-	CGFloat xOffset = self.spinnerView.frame.size.width/2;
-	CGFloat yOffset = self.spinnerView.frame.size.height/2;
-	CGRect spinnerFrame = self.spinnerView.frame;
-	spinnerFrame.origin = CGPointMake(xCenter - xOffset, yCenter - yOffset);
-	self.spinnerView.frame = spinnerFrame;
-	
 	[self loadFriends];
 }
 

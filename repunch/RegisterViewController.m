@@ -50,21 +50,12 @@
 	spinner.frame = self.registerButton.bounds;
 	[self.registerButton addSubview:spinner];
 	spinner.hidesWhenStopped = YES;
+	
 	self.facebookSpinner.hidesWhenStopped = YES;
 	
-	//if( [RepunchUtils isiOSSeven] ) {
-		NSDictionary *attributes = [NSDictionary dictionaryWithObject:[UIFont fontWithName:@"Avenir-Heavy" size:17]
-															   forKey:NSFontAttributeName];
-		[self.genderSelector setTitleTextAttributes:attributes forState:UIControlStateNormal];
-	/*
-	}
-	else {
-		NSDictionary *attributes = [NSDictionary dictionaryWithObject:[UIFont fontWithName:@"Avenir-Heavy" size:17]
-															   forKey:UITextAttributeFont];
-		[self.genderSelector setTitleTextAttributes:attributes forState:UIControlStateNormal];
-	}
-	 */
-	
+	NSDictionary *attributes = [NSDictionary dictionaryWithObject:[UIFont fontWithName:@"Avenir-Heavy" size:17]
+														   forKey:NSFontAttributeName];
+	[self.genderSelector setTitleTextAttributes:attributes forState:UIControlStateNormal];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -266,6 +257,8 @@
 
 - (void)dismissKeyboard
 {
+	[self.scrollView setContentOffset:CGPointMake(0, self.scrollView.contentSize.height - self.scrollView.bounds.size.height) animated:YES];
+	
     [_emailInput resignFirstResponder];
     [_passwordInput resignFirstResponder];
 	[_passwordConfirmInput resignFirstResponder];
@@ -395,7 +388,7 @@
 	if([PFUser currentUser]) {
 		[PFUser logOut];
 	}
-	
+
 	[self showDialog:title withResultMessage:message];
 	[spinner stopAnimating];
 	[self.facebookSpinner stopAnimating];

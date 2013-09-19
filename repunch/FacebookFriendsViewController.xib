@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
@@ -17,15 +17,18 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="20">
-                    <rect key="frame" x="105" y="255" width="111" height="58"/>
+                    <rect key="frame" x="107" y="253" width="106" height="62"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="21">
-                            <rect key="frame" x="0.0" y="18" width="20" height="20"/>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="21">
+                            <rect key="frame" x="0.0" y="18" width="20" height="24"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="20" id="ov9-96-qs8"/>
+                            </constraints>
                         </activityIndicatorView>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Loading..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="22">
-                            <rect key="frame" x="29" y="18" width="82" height="20"/>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Loading..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="22">
+                            <rect key="frame" x="29" y="18" width="77" height="24"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -33,14 +36,21 @@
                         </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="22" firstAttribute="leading" secondItem="21" secondAttribute="trailing" constant="9" id="0Qa-2s-Z3Z"/>
+                        <constraint firstAttribute="trailing" secondItem="22" secondAttribute="trailing" id="AZe-0P-sJc"/>
+                        <constraint firstItem="22" firstAttribute="bottom" secondItem="21" secondAttribute="bottom" id="HFM-wr-gJs"/>
+                        <constraint firstItem="22" firstAttribute="top" secondItem="21" secondAttribute="top" id="K6L-KH-drZ"/>
+                        <constraint firstItem="21" firstAttribute="leading" secondItem="20" secondAttribute="leading" id="KeX-Aw-lnb"/>
+                        <constraint firstAttribute="bottom" secondItem="21" secondAttribute="bottom" constant="20" symbolic="YES" id="YgV-OR-A8S"/>
+                        <constraint firstItem="21" firstAttribute="top" secondItem="20" secondAttribute="top" constant="18" id="cqO-nN-9Nk"/>
+                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="20" firstAttribute="top" secondItem="1" secondAttribute="top" constant="255" id="acW-jh-b1d"/>
-                <constraint firstItem="20" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="105" id="nt4-ae-wtB"/>
-                <constraint firstItem="20" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="pGK-4b-Uox"/>
-                <constraint firstItem="20" firstAttribute="centerY" secondItem="1" secondAttribute="centerY" id="ytt-OQ-XKH"/>
+                <constraint firstAttribute="centerX" secondItem="20" secondAttribute="centerX" id="Zin-Q6-iyw"/>
+                <constraint firstAttribute="centerY" secondItem="20" secondAttribute="centerY" id="f9b-RU-azC"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

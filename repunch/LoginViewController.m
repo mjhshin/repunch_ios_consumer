@@ -89,7 +89,7 @@
 		[_passwordInput becomeFirstResponder];
 		
 	} else if(textField == _passwordInput) {
-		[_passwordInput resignFirstResponder];		
+		[self loginWithRepunch:self];
 	}
 	
 	return NO; // We do not want UITextField to insert line-breaks.

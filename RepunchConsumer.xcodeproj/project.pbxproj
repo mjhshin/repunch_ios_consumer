@@ -50,9 +50,6 @@
 		EE5378CE17B2FEA9002D8B18 /* map_button.png in Resources */ = {isa = PBXBuildFile; fileRef = EE5378C817B2FEA9002D8B18 /* map_button.png */; };
 		EE79DF4F17BAA37C00E92DE5 /* MessageAttachment.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE79DF4E17BAA37C00E92DE5 /* MessageAttachment.xib */; };
 		EE79DF5117BAA38E00E92DE5 /* MessageReply.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE79DF5017BAA38E00E92DE5 /* MessageReply.xib */; };
-		EE79DF5517BD590000E92DE5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE79DF5217BD590000E92DE5 /* Default-568h@2x.png */; };
-		EE79DF5617BD590000E92DE5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = EE79DF5317BD590000E92DE5 /* Default.png */; };
-		EE79DF5717BD590000E92DE5 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE79DF5417BD590000E92DE5 /* Default@2x.png */; };
 		EE79DF7C17BD702500E92DE5 /* nav_delete.png in Resources */ = {isa = PBXBuildFile; fileRef = EE79DF7417BD702500E92DE5 /* nav_delete.png */; };
 		EE79DF7D17BD702500E92DE5 /* nav_delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE79DF7517BD702500E92DE5 /* nav_delete@2x.png */; };
 		EE79DF7E17BD702500E92DE5 /* nav_exit.png in Resources */ = {isa = PBXBuildFile; fileRef = EE79DF7617BD702500E92DE5 /* nav_exit.png */; };
@@ -91,8 +88,6 @@
 		EE9D4C8C17A83F4B005E0CC5 /* MyPlacesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BB117A83F4A005E0CC5 /* MyPlacesViewController.xib */; };
 		EE9D4C8F17A83F4B005E0CC5 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BB817A83F4A005E0CC5 /* RegisterViewController.m */; };
 		EE9D4C9017A83F4B005E0CC5 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BB917A83F4A005E0CC5 /* RegisterViewController.xib */; };
-		EE9D4C9417A83F4B005E0CC5 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BC117A83F4A005E0CC5 /* SettingsViewController.m */; };
-		EE9D4C9517A83F4B005E0CC5 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BC217A83F4A005E0CC5 /* SettingsViewController.xib */; };
 		EE9D4C9617A83F4B005E0CC5 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BC417A83F4A005E0CC5 /* LoginViewController.m */; };
 		EE9D4C9717A83F4B005E0CC5 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BC517A83F4A005E0CC5 /* LoginViewController.xib */; };
 		EE9D4C9817A83F4B005E0CC5 /* MapPin.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BC817A83F4A005E0CC5 /* MapPin.m */; };
@@ -137,10 +132,6 @@
 		EE9D4F4117A84ABB005E0CC5 /* reward_locked.png in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4ED517A84ABB005E0CC5 /* reward_locked.png */; };
 		EE9D4F4217A84ABB005E0CC5 /* reward_unlocked.png in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4ED617A84ABB005E0CC5 /* reward_unlocked.png */; };
 		EE9D4F4317A84ABB005E0CC5 /* reward_unlocked_tiny.png in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4ED717A84ABB005E0CC5 /* reward_unlocked_tiny.png */; };
-		EE9D4F4917A84ABB005E0CC5 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4EDD17A84ABB005E0CC5 /* Icon-Small.png */; };
-		EE9D4F4A17A84ABB005E0CC5 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4EDE17A84ABB005E0CC5 /* Icon-Small@2x.png */; };
-		EE9D4F4B17A84ABB005E0CC5 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4EDF17A84ABB005E0CC5 /* Icon.png */; };
-		EE9D4F4C17A84ABB005E0CC5 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4EE017A84ABB005E0CC5 /* Icon@2x.png */; };
 		EE9D4F4D17A84ABB005E0CC5 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4EE117A84ABB005E0CC5 /* iTunesArtwork.png */; };
 		EE9D4F4E17A84ABB005E0CC5 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4EE217A84ABB005E0CC5 /* iTunesArtwork@2x.png */; };
 		EE9D4F5117A96F5B005E0CC5 /* GradientBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4F5017A96F5B005E0CC5 /* GradientBackground.m */; };
@@ -154,6 +145,11 @@
 		EEA181C317CD20D300553336 /* map_button_highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEA181BD17CD20D300553336 /* map_button_highlighted@2x.png */; };
 		EEA181C617CD81CB00553336 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA181C517CD81CA00553336 /* Reachability.m */; };
 		EEA181C817CD836F00553336 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA181C517CD81CA00553336 /* Reachability.m */; };
+		EEB8A44017EA314B0020E2EE /* splash_screen_320x480 copy.png in Resources */ = {isa = PBXBuildFile; fileRef = EEB8A43D17EA314B0020E2EE /* splash_screen_320x480 copy.png */; };
+		EEB8A44117EA314B0020E2EE /* splash_screen_640x960.png in Resources */ = {isa = PBXBuildFile; fileRef = EEB8A43E17EA314B0020E2EE /* splash_screen_640x960.png */; };
+		EEB8A44217EA314B0020E2EE /* splash_screen_640x1136.png in Resources */ = {isa = PBXBuildFile; fileRef = EEB8A43F17EA314B0020E2EE /* splash_screen_640x1136.png */; };
+		EEB8A44D17EA61140020E2EE /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB8A44B17EA61140020E2EE /* SettingsViewController.m */; };
+		EEB8A44E17EA61140020E2EE /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEB8A44C17EA61140020E2EE /* SettingsViewController.xib */; };
 		EEE777B117E7D2020023768B /* feedback_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEE777AF17E7D1B50023768B /* feedback_button@2x.png */; };
 		EEE777B317E7ECEB0023768B /* nav_send@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEE777B217E7ECEB0023768B /* nav_send@2x.png */; };
 /* End PBXBuildFile section */
@@ -215,9 +211,6 @@
 		EE5378C817B2FEA9002D8B18 /* map_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_button.png; sourceTree = "<group>"; };
 		EE79DF4E17BAA37C00E92DE5 /* MessageAttachment.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageAttachment.xib; sourceTree = "<group>"; };
 		EE79DF5017BAA38E00E92DE5 /* MessageReply.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageReply.xib; sourceTree = "<group>"; };
-		EE79DF5217BD590000E92DE5 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		EE79DF5317BD590000E92DE5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		EE79DF5417BD590000E92DE5 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		EE79DF7417BD702500E92DE5 /* nav_delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_delete.png; sourceTree = "<group>"; };
 		EE79DF7517BD702500E92DE5 /* nav_delete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_delete@2x.png"; sourceTree = "<group>"; };
 		EE79DF7617BD702500E92DE5 /* nav_exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_exit.png; sourceTree = "<group>"; };
@@ -270,9 +263,6 @@
 		EE9D4BB717A83F4A005E0CC5 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		EE9D4BB817A83F4A005E0CC5 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		EE9D4BB917A83F4A005E0CC5 /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
-		EE9D4BC017A83F4A005E0CC5 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
-		EE9D4BC117A83F4A005E0CC5 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
-		EE9D4BC217A83F4A005E0CC5 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		EE9D4BC317A83F4A005E0CC5 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		EE9D4BC417A83F4A005E0CC5 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		EE9D4BC517A83F4A005E0CC5 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -326,10 +316,6 @@
 		EE9D4ED517A84ABB005E0CC5 /* reward_locked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reward_locked.png; sourceTree = "<group>"; };
 		EE9D4ED617A84ABB005E0CC5 /* reward_unlocked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reward_unlocked.png; sourceTree = "<group>"; };
 		EE9D4ED717A84ABB005E0CC5 /* reward_unlocked_tiny.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reward_unlocked_tiny.png; sourceTree = "<group>"; };
-		EE9D4EDD17A84ABB005E0CC5 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
-		EE9D4EDE17A84ABB005E0CC5 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
-		EE9D4EDF17A84ABB005E0CC5 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		EE9D4EE017A84ABB005E0CC5 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		EE9D4EE117A84ABB005E0CC5 /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
 		EE9D4EE217A84ABB005E0CC5 /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
 		EE9D4F4F17A96F5B005E0CC5 /* GradientBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientBackground.h; sourceTree = "<group>"; };
@@ -347,6 +333,12 @@
 		EEA181BD17CD20D300553336 /* map_button_highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_button_highlighted@2x.png"; sourceTree = "<group>"; };
 		EEA181C417CD81C800553336 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		EEA181C517CD81CA00553336 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		EEB8A43D17EA314B0020E2EE /* splash_screen_320x480 copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "splash_screen_320x480 copy.png"; sourceTree = "<group>"; };
+		EEB8A43E17EA314B0020E2EE /* splash_screen_640x960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash_screen_640x960.png; sourceTree = "<group>"; };
+		EEB8A43F17EA314B0020E2EE /* splash_screen_640x1136.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash_screen_640x1136.png; sourceTree = "<group>"; };
+		EEB8A44A17EA61140020E2EE /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		EEB8A44B17EA61140020E2EE /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		EEB8A44C17EA61140020E2EE /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		EEE777AF17E7D1B50023768B /* feedback_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "feedback_button@2x.png"; sourceTree = "<group>"; };
 		EEE777B217E7ECEB0023768B /* nav_send@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_send@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -398,13 +390,13 @@
 		7996B35017820A9700CCAFED = {
 			isa = PBXGroup;
 			children = (
+				EE9D4B1017A83F4A005E0CC5 /* External */,
+				7996B35B17820A9700CCAFED /* Frameworks */,
+				EE9D4B6E17A83F4A005E0CC5 /* main.m */,
+				7996B35A17820A9700CCAFED /* Products */,
+				EE9D4B7017A83F4A005E0CC5 /* Repunch */,
 				EE9D4D0E17A84266005E0CC5 /* Repunch-Info.plist */,
 				EE9D4D0F17A84266005E0CC5 /* Repunch-Prefix.pch */,
-				EE9D4B1017A83F4A005E0CC5 /* External */,
-				EE9D4B6E17A83F4A005E0CC5 /* main.m */,
-				EE9D4B7017A83F4A005E0CC5 /* Repunch */,
-				7996B35B17820A9700CCAFED /* Frameworks */,
-				7996B35A17820A9700CCAFED /* Products */,
 				EE9D4E7517A84ABB005E0CC5 /* Resources */,
 			);
 			sourceTree = "<group>";
@@ -510,9 +502,6 @@
 				EE9D4BAC17A83F4A005E0CC5 /* SearchViewController.h */,
 				EE9D4BAD17A83F4A005E0CC5 /* SearchViewController.m */,
 				EE9D4BAE17A83F4A005E0CC5 /* SearchViewController.xib */,
-				EE9D4BC017A83F4A005E0CC5 /* SettingsViewController.h */,
-				EE9D4BC117A83F4A005E0CC5 /* SettingsViewController.m */,
-				EE9D4BC217A83F4A005E0CC5 /* SettingsViewController.xib */,
 				EE9D4E4D17A846B1005E0CC5 /* SIAlertView */,
 				EE9D4BA617A83F4A005E0CC5 /* StoreMapViewController.h */,
 				EE9D4BA717A83F4A005E0CC5 /* StoreMapViewController.m */,
@@ -521,6 +510,9 @@
 				EE9D4BAA17A83F4A005E0CC5 /* StoreViewController.m */,
 				EE9D4BAB17A83F4A005E0CC5 /* StoreViewController.xib */,
 				EE9D4BC617A83F4A005E0CC5 /* ThirdPartyViews */,
+				EEB8A44A17EA61140020E2EE /* SettingsViewController.h */,
+				EEB8A44B17EA61140020E2EE /* SettingsViewController.m */,
+				EEB8A44C17EA61140020E2EE /* SettingsViewController.xib */,
 			);
 			path = Repunch;
 			sourceTree = "<group>";
@@ -589,19 +581,12 @@
 			isa = PBXGroup;
 			children = (
 				EE9D4E7617A84ABB005E0CC5 /* Assets */,
-				EE79DF5217BD590000E92DE5 /* Default-568h@2x.png */,
-				EE79DF5317BD590000E92DE5 /* Default.png */,
-				EE79DF5417BD590000E92DE5 /* Default@2x.png */,
-				EE9D4EDD17A84ABB005E0CC5 /* Icon-Small.png */,
-				EE9D4EDE17A84ABB005E0CC5 /* Icon-Small@2x.png */,
-				EE9D4EDF17A84ABB005E0CC5 /* Icon.png */,
 				EE06E65817E7525000073AAF /* app_icon_29x29.png */,
 				EE06E65917E7525000073AAF /* app_icon_57x57.png */,
 				EE06E65A17E7525000073AAF /* app_icon_58x58.png */,
 				EE06E65B17E7525000073AAF /* app_icon_80x80.png */,
 				EE06E65C17E7525000073AAF /* app_icon_114x114.png */,
 				EE06E65D17E7525000073AAF /* app_icon_120x120.png */,
-				EE9D4EE017A84ABB005E0CC5 /* Icon@2x.png */,
 				EE9D4EE117A84ABB005E0CC5 /* iTunesArtwork.png */,
 				EE9D4EE217A84ABB005E0CC5 /* iTunesArtwork@2x.png */,
 			);
@@ -611,6 +596,9 @@
 		EE9D4E7617A84ABB005E0CC5 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				EEB8A43D17EA314B0020E2EE /* splash_screen_320x480 copy.png */,
+				EEB8A43E17EA314B0020E2EE /* splash_screen_640x960.png */,
+				EEB8A43F17EA314B0020E2EE /* splash_screen_640x1136.png */,
 				EE9D4E7717A84ABB005E0CC5 /* ab_add_my_places.png */,
 				EE5378C417B2FEA8002D8B18 /* call_button.png */,
 				EE92C01C17E7D0F900532CBE /* call_button@2x.png */,
@@ -746,6 +734,7 @@
 				EE9D4C7617A83F4B005E0CC5 /* InboxTableViewCell.xib in Resources */,
 				EE9D4C7817A83F4B005E0CC5 /* RewardTableViewCell.xib in Resources */,
 				EE9D4C7A17A83F4B005E0CC5 /* MyPlacesTableViewCell.xib in Resources */,
+				EEB8A44017EA314B0020E2EE /* splash_screen_320x480 copy.png in Resources */,
 				EE9D4C7C17A83F4B005E0CC5 /* SearchTableViewCell.xib in Resources */,
 				EE06E65F17E7525000073AAF /* app_icon_57x57.png in Resources */,
 				EE9D4C7F17A83F4B005E0CC5 /* InboxViewController.xib in Resources */,
@@ -754,9 +743,9 @@
 				EE9D4C8617A83F4B005E0CC5 /* StoreMapViewController.xib in Resources */,
 				EE9D4C8817A83F4B005E0CC5 /* StoreViewController.xib in Resources */,
 				EE9D4C8A17A83F4B005E0CC5 /* SearchViewController.xib in Resources */,
+				EEB8A44217EA314B0020E2EE /* splash_screen_640x1136.png in Resources */,
 				EE9D4C8C17A83F4B005E0CC5 /* MyPlacesViewController.xib in Resources */,
 				EE9D4C9017A83F4B005E0CC5 /* RegisterViewController.xib in Resources */,
-				EE9D4C9517A83F4B005E0CC5 /* SettingsViewController.xib in Resources */,
 				EE9D4C9717A83F4B005E0CC5 /* LoginViewController.xib in Resources */,
 				EE9D4E7117A846B1005E0CC5 /* SIAlertView.bundle in Resources */,
 				EE9D4EE317A84ABB005E0CC5 /* ab_add_my_places.png in Resources */,
@@ -764,6 +753,7 @@
 				EE9D4F0B17A84ABB005E0CC5 /* ic_tab_inbox.png in Resources */,
 				EE9D4F0C17A84ABB005E0CC5 /* ic_tab_inbox_small.png in Resources */,
 				EE9D4F0D17A84ABB005E0CC5 /* ic_tab_my_places.png in Resources */,
+				EEB8A44117EA314B0020E2EE /* splash_screen_640x960.png in Resources */,
 				EE9D4F0E17A84ABB005E0CC5 /* ic_tab_my_places_small.png in Resources */,
 				EE9D4F0F17A84ABB005E0CC5 /* ic_tab_punch_tiny.png in Resources */,
 				EE9D4F1017A84ABB005E0CC5 /* ico-feedback-block.png in Resources */,
@@ -793,10 +783,6 @@
 				EE06E66017E7525000073AAF /* app_icon_58x58.png in Resources */,
 				EE9D4F4217A84ABB005E0CC5 /* reward_unlocked.png in Resources */,
 				EE9D4F4317A84ABB005E0CC5 /* reward_unlocked_tiny.png in Resources */,
-				EE9D4F4917A84ABB005E0CC5 /* Icon-Small.png in Resources */,
-				EE9D4F4A17A84ABB005E0CC5 /* Icon-Small@2x.png in Resources */,
-				EE9D4F4B17A84ABB005E0CC5 /* Icon.png in Resources */,
-				EE9D4F4C17A84ABB005E0CC5 /* Icon@2x.png in Resources */,
 				EE9D4F4D17A84ABB005E0CC5 /* iTunesArtwork.png in Resources */,
 				EE9D4F4E17A84ABB005E0CC5 /* iTunesArtwork@2x.png in Resources */,
 				EE5378BD17B2E8D6002D8B18 /* StoreHeaderView.xib in Resources */,
@@ -807,13 +793,11 @@
 				EE79DF4F17BAA37C00E92DE5 /* MessageAttachment.xib in Resources */,
 				EE79DF5117BAA38E00E92DE5 /* MessageReply.xib in Resources */,
 				EE92C02117E7D0F900532CBE /* map_button@2x.png in Resources */,
-				EE79DF5517BD590000E92DE5 /* Default-568h@2x.png in Resources */,
-				EE79DF5617BD590000E92DE5 /* Default.png in Resources */,
-				EE79DF5717BD590000E92DE5 /* Default@2x.png in Resources */,
 				EE79DF7C17BD702500E92DE5 /* nav_delete.png in Resources */,
 				EE79DF7D17BD702500E92DE5 /* nav_delete@2x.png in Resources */,
 				EE06E66317E7525000073AAF /* app_icon_120x120.png in Resources */,
 				EE79DF7E17BD702500E92DE5 /* nav_exit.png in Resources */,
+				EEB8A44E17EA61140020E2EE /* SettingsViewController.xib in Resources */,
 				EE79DF7F17BD702500E92DE5 /* nav_exit@2x.png in Resources */,
 				EE79DF8017BD702500E92DE5 /* nav_search.png in Resources */,
 				EE79DF8117BD702500E92DE5 /* nav_search@2x.png in Resources */,
@@ -880,7 +864,6 @@
 				EE9D4C8917A83F4B005E0CC5 /* SearchViewController.m in Sources */,
 				EE9D4C8B17A83F4B005E0CC5 /* MyPlacesViewController.m in Sources */,
 				EE9D4C8F17A83F4B005E0CC5 /* RegisterViewController.m in Sources */,
-				EE9D4C9417A83F4B005E0CC5 /* SettingsViewController.m in Sources */,
 				EE9D4C9617A83F4B005E0CC5 /* LoginViewController.m in Sources */,
 				EE9D4C9817A83F4B005E0CC5 /* MapPin.m in Sources */,
 				EE9D4C9917A83F4B005E0CC5 /* MKMapView+ZoomLevel.m in Sources */,
@@ -890,6 +873,7 @@
 				EE9D4F5117A96F5B005E0CC5 /* GradientBackground.m in Sources */,
 				EE28DAE017AC447E00E4C460 /* DataManager.m in Sources */,
 				EE3F36D417B585B300D28FC9 /* PunchHandler.m in Sources */,
+				EEB8A44D17EA61140020E2EE /* SettingsViewController.m in Sources */,
 				EE3F36D817B586ED00D28FC9 /* RedeemHandler.m in Sources */,
 				EE460EC317BB5C7A00AC3588 /* MessageHandler.m in Sources */,
 				EEA181A317C5894B00553336 /* FacebookUtils.m in Sources */,

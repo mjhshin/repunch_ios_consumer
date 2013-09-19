@@ -294,7 +294,7 @@
 	
 	self.rewardTableView.tableHeaderView = self.headerView;
 	
-	self.tableViewController = [[UITableViewController alloc]initWithStyle:UITableViewStylePlain];
+	self.tableViewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
 	[self addChildViewController:self.tableViewController];
 	
 	self.tableViewController.refreshControl = [[UIRefreshControl alloc] init];

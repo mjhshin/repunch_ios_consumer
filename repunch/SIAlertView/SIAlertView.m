@@ -8,6 +8,7 @@
 
 #import "SIAlertView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "GradientBackground.h"
 
 NSString *const SIAlertViewWillShowNotification = @"SIAlertViewWillShowNotification";
 NSString *const SIAlertViewDidShowNotification = @"SIAlertViewDidShowNotification";

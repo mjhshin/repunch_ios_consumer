@@ -182,15 +182,9 @@
     
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
 	tabBarController.viewControllers = @[myPlacesNavController, inboxNavController];
+	tabBarController.tabBar.tintColor = [RepunchUtils repunchOrangeColor];
+	tabBarController.tabBar.barStyle = UIBarStyleBlack;
 	
-	//if( [RepunchUtils isiOSSeven] ) {
-		tabBarController.tabBar.tintColor = [RepunchUtils repunchOrangeColor];
-		tabBarController.tabBar.barStyle = UIBarStyleDefault;
-	//}
-	//else {
-	//	tabBarController.tabBar.selectedImageTintColor = [RepunchUtils repunchOrangeColor];
-	//}
-    
     UITabBarItem *myPlacesTab = [tabBarController.tabBar.items objectAtIndex:0];
     [myPlacesTab setTitle:@"My Places"];
     [myPlacesTab setImage:[UIImage imageNamed:@"ico-tab-places.png"]];
