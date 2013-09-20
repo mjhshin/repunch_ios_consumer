@@ -335,7 +335,8 @@
         
         dateString = [formatter stringFromDate:dateCreated];
         
-    } else {
+    }
+	else {
         [formatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"MM/dd" options:0 locale:locale]];
         [formatter setLocale:locale];
         dateString = [formatter stringFromDate:dateCreated];

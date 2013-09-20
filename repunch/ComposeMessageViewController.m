@@ -15,6 +15,7 @@
 	PFObject *patronStore;
 	UIActivityIndicatorView *spinner;
 	UIBarButtonItem *sendButton;
+	CGFloat keyboardTop;
 }
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
@@ -38,7 +39,7 @@
 	self.navigationItem.leftBarButtonItem = exitButton;
 	self.navigationItem.rightBarButtonItem = sendButton;
 	
-	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
 	spinner.hidesWhenStopped = YES;
 	
 	sharedData = [DataManager getSharedInstance];
@@ -73,6 +74,8 @@
 		self.bodyPlaceholder.text = @"Thanks for the gift!";
 		[self.subject setEnabled:FALSE];
     }
+
+	keyboardTop = [[UIScreen mainScreen] applicationFrame].size.height - 310; //216 is height of keyboard in iOS7
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -95,8 +98,8 @@
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
-    //Has Focus
-	[self.bodyPlaceholder setHidden:TRUE];
+    [self.bodyPlaceholder setHidden:YES];
+	[self scrollTextViewAboveKeyboard:textView];
     return YES;
 }
 
@@ -104,8 +107,9 @@
 {
     if(textView.text.length == 0)
 	{
-		[self.bodyPlaceholder setHidden:FALSE];
+		[self.bodyPlaceholder setHidden:NO];
 	}
+	self.scrollView.contentOffset = CGPointMake(0, 0);
     return YES;
 }
 
@@ -124,8 +128,20 @@
         [self send];
     }
 	
+	[self scrollTextViewAboveKeyboard:textView];
+	
 	NSUInteger newLength = textView.text.length + string.length - range.length;
     return (newLength > 750) ? NO : YES;
+}
+
+- (void)scrollTextViewAboveKeyboard:(UITextView *)textView
+{
+	CGFloat textViewOrigin = textView.frame.origin.y;
+	CGRect cursorFrame = [textView caretRectForPosition:textView.selectedTextRange.start];
+	CGFloat cursorPosition = cursorFrame.origin.y;
+	if(cursorPosition + textViewOrigin > keyboardTop) {
+		self.scrollView.contentOffset = CGPointMake(0, cursorPosition + textViewOrigin - keyboardTop);
+	}
 }
 
 - (void)send

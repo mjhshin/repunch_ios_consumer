@@ -183,7 +183,7 @@
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
 	tabBarController.viewControllers = @[myPlacesNavController, inboxNavController];
 	tabBarController.tabBar.tintColor = [RepunchUtils repunchOrangeColor];
-	tabBarController.tabBar.barStyle = UIBarStyleBlack;
+	tabBarController.tabBar.barStyle = UIBarStyleBlackOpaque;
 	
     UITabBarItem *myPlacesTab = [tabBarController.tabBar.items objectAtIndex:0];
     [myPlacesTab setTitle:@"My Places"];

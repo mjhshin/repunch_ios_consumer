@@ -36,5 +36,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *subject;
 @property (weak, nonatomic) IBOutlet UITextView *body;
 @property (weak, nonatomic) IBOutlet UILabel *bodyPlaceholder;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end

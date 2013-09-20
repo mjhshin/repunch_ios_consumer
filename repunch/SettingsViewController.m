@@ -13,6 +13,7 @@
 @implementation SettingsViewController
 {
 	DataManager *sharedData;
+	UIActivityIndicatorView *activityIndicator;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -169,35 +170,54 @@
 	
 	if(indexPath.section == 0)
 	{
+		activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+		activityIndicator.hidesWhenStopped = YES;
+		
 		if(indexPath.row == 0) {
 			UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
 			[webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.repunch.com/terms-mobile"]]];
+			webView.delegate = self;
+			
 			UIViewController *termsVC = [[UIViewController alloc] init];
 			[termsVC.view addSubview:webView];
+			[termsVC.view addSubview:activityIndicator];
+			activityIndicator.center = webView.center;
+			
 			termsVC.navigationItem.title = @"Terms and Conditions";
 			[self.navigationController pushViewController:termsVC animated:YES];
 		}
-		else {
+		else
+		{
 			UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
 			[webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.repunch.com/privacy-mobile"]]];
+			webView.delegate = self;
+			
 			UIViewController *privacyVC = [[UIViewController alloc] init];
 			[privacyVC.view addSubview:webView];
+			[privacyVC.view addSubview:activityIndicator];
+			activityIndicator.center = webView.center;
+			
 			privacyVC.navigationItem.title = @"Privacy Policy";
 			[self.navigationController pushViewController:privacyVC animated:YES];
 		}
 	}
 	else
 	{
-		//[self.spinner startAnimating];
-		//[self.logoutButton setEnabled:NO];
+		UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+		spinner.hidesWhenStopped = YES;
+		spinner.frame = CGRectMake(0, 0, 24, 24);
+		UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+		cell.accessoryView = spinner;
+		[spinner startAnimating];
+		tableView.userInteractionEnabled = NO;
 		
 		//set blank "patron_id" and "punch_code" in installation so push notifications not received when logged out.
 		[[PFInstallation currentInstallation] setObject:@"" forKey:@"punch_code"];
 		[[PFInstallation currentInstallation] setObject:@"" forKey:@"patron_id"];
 		[[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
 		 {
-			 //[self.spinner stopAnimating];
-			 //[self.logoutButton setEnabled:YES];
+			 [spinner stopAnimating];
+			 tableView.userInteractionEnabled = YES;
 			 
 			 if(!error)
 			 {
@@ -218,6 +238,21 @@
 		 }];
 
 	}
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    [activityIndicator startAnimating];
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [activityIndicator stopAnimating];
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    [activityIndicator stopAnimating];
 }
 
 - (IBAction)closeView:(id)sender
