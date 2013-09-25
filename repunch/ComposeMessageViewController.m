@@ -66,13 +66,13 @@
 	{
         self.subject.text = [NSString stringWithFormat:@"Gift for %@", self.recepientName];
 		self.bodyPlaceholder.text = @"Add a message with your gift!";
-		[self.subject setEnabled:FALSE];
+		[self.subject setEnabled:NO];
     }
 	else if ([self.messageType isEqualToString:@"gift_reply"])
 	{
         self.subject.text = [NSString stringWithFormat:@"To: %@", self.recepientName];
 		self.bodyPlaceholder.text = @"Thanks for the gift!";
-		[self.subject setEnabled:FALSE];
+		[self.subject setEnabled:NO];
     }
 
 	keyboardTop = [[UIScreen mainScreen] applicationFrame].size.height - 310; //216 is height of keyboard in iOS7

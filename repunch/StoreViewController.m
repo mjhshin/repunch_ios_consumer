@@ -302,6 +302,10 @@
 												action:@selector(refreshPatronStoreObject)
 									  forControlEvents:UIControlEventValueChanged];
 	self.tableViewController.tableView = self.rewardTableView;
+	
+	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 1)];
+	footer.backgroundColor = [UIColor clearColor];
+	self.rewardTableView.tableFooterView = footer;
 }
 
 #pragma mark - Table view data source
@@ -484,7 +488,7 @@
 - (void)addStore
 {
 	[self.addToMyPlacesButton setTitle:@"" forState:UIControlStateNormal];
-	[self.addToMyPlacesButton setEnabled:FALSE];
+	[self.addToMyPlacesButton setEnabled:NO];
 	
 	UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 	spinner.frame = self.addToMyPlacesButton.bounds;
@@ -507,7 +511,7 @@
 		{
 			[sharedData addPatronStore:result forKey:self.storeId];
 			[self checkPatronStore];
-			[self alertParentViewController:TRUE];
+			[self alertParentViewController:YES];
 		}
 		else
 		{
@@ -520,13 +524,13 @@
 
 - (IBAction)deleteStore:(id)sender
 {
-	SIAlertView *warningView = [[SIAlertView alloc] initWithTitle:@"Remove from My Places" andMessage:@"WARNING: You will lose all your punches!"];
+	SIAlertView *warningView = [[SIAlertView alloc] initWithTitle:@"Remove from My Places"
+													   andMessage:@"WARNING: You will lose all your punches!"];
 	[warningView addButtonWithTitle:@"Cancel"
 							   type:SIAlertViewButtonTypeDefault
 							handler:^(SIAlertView *alert) {
 								[alert dismissAnimated:YES];
 							}];
-	
 	
 	[warningView addButtonWithTitle:@"Remove"
 							   type:SIAlertViewButtonTypeDestructive
@@ -540,7 +544,7 @@
 - (void)performDelete
 {
 	[self.addToMyPlacesButton setTitle:@"" forState:UIControlStateNormal];
-	[self.addToMyPlacesButton setEnabled:FALSE];
+	[self.addToMyPlacesButton setEnabled:NO];
 	
 	UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 	spinner.frame = self.addToMyPlacesButton.bounds;
@@ -565,7 +569,7 @@
 			 [sharedData deletePatronStore:self.storeId];
 			 [self checkPatronStore];
 			 [self.rewardTableView reloadData];
-			 [self alertParentViewController:TRUE];
+			 [self alertParentViewController:YES];
 		 }
 		 else
 		 {

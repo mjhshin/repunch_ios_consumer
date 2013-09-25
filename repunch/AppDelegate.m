@@ -16,12 +16,22 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-	//[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    
-    //Set up API keys
-    [Parse setApplicationId:@"m0EdwpRYlJwttZLZ5PUk7y13TWCnvSScdn8tfVoh"
-                  clientKey:@"XZMybowaEMLHszQTEpxq4Yk2ksivkYj9m1c099ZD"];
-    
+	//////////////////////////////////////////////////////////////////////////////////////
+	//
+	//                               PRODUCTION KEY
+	//
+    //[Parse setApplicationId:@"m0EdwpRYlJwttZLZ5PUk7y13TWCnvSScdn8tfVoh"
+    //              clientKey:@"XZMybowaEMLHszQTEpxq4Yk2ksivkYj9m1c099ZD"];
+	//
+	//////////////////////////////////////////////////////////////////////////////////////
+	//
+	//                               DEVELOPMENT KEY
+	//
+	[Parse setApplicationId:@"r9QrVhpx3wguChA9X9oe2GFGZwTUtrYyHOHpNWxb"
+                  clientKey:@"2anJYVl8sakbPVqPz4MEbP2GLWBcs7uRFTvWMaZ0"];
+    //
+	////////////////////////////////////////////////////////////////////////////////////////
+	
     [PFFacebookUtils initializeFacebook];    
     [Crittercism enableWithAppID: @"51df08478b2e331138000003"];
 	
@@ -29,13 +39,6 @@
 	 UIRemoteNotificationTypeBadge |
 	 UIRemoteNotificationTypeAlert |
 	 UIRemoteNotificationTypeSound];
-	
-	//For push when app not loaded in memory
-    NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-    if (remoteNotif)
-	{
-        //TODO? If app always refreshes after didFinishLaunchingWithOptions, no need.
-    }
 	
 	sharedData = [DataManager getSharedInstance];
 	[self checkLoginState];
@@ -119,6 +122,13 @@
 	}
 }
 
+- (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+	//implement completion handler
+	//add "remote-notification" to supported UIBackgroundModes in Info.plist
+}
+
 - (void)checkLoginState
 {
 	PFUser* currentUser = [PFUser currentUser];
@@ -183,7 +193,7 @@
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
 	tabBarController.viewControllers = @[myPlacesNavController, inboxNavController];
 	tabBarController.tabBar.tintColor = [RepunchUtils repunchOrangeColor];
-	tabBarController.tabBar.barStyle = UIBarStyleBlackOpaque;
+	tabBarController.tabBar.barStyle = UIBarStyleDefault;
 	
     UITabBarItem *myPlacesTab = [tabBarController.tabBar.items objectAtIndex:0];
     [myPlacesTab setTitle:@"My Places"];

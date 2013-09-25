@@ -219,18 +219,18 @@
     }
     
     if ([[message valueForKey:@"message_type"] isEqualToString:@"offer"]){
-        [[cell offerPic] setHidden:FALSE];
+        [[cell offerPic] setHidden:NO];
         [[cell offerPic] setImage:[UIImage imageNamed:@"ico_message_coupon"]];
 		
     } else if ([[message valueForKey:@"message_type"] isEqualToString:@"feedback"]){
-        [[cell offerPic] setHidden:FALSE];
+        [[cell offerPic] setHidden:NO];
         [[cell offerPic] setImage:[UIImage imageNamed:@"message_reply"]];
 		
     } else if ([[message valueForKey:@"message_type"] isEqualToString:@"gift"]){
-        [[cell offerPic] setHidden:FALSE];
+        [[cell offerPic] setHidden:NO];
         [[cell offerPic] setImage:[UIImage imageNamed:@"message_gift"]];
     } else {
-		[[cell offerPic] setHidden:TRUE];
+		[[cell offerPic] setHidden:YES];
 	}
     
     if ([[messageStatus objectForKey:@"is_read"] boolValue]) {

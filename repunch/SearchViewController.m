@@ -148,7 +148,6 @@
 	{
 		[self.activityIndicatorView setHidden:NO];
 		[self.activityIndicator startAnimating];
-		//[self.searchTableView setHidden:TRUE];
 	}
 	else
 	{
@@ -163,7 +162,6 @@
 		 {
 			 [self.activityIndicatorView setHidden:YES];
 			 [self.activityIndicator stopAnimating];
-			 //[self.searchTableView setHidden:FALSE];
 			 [self.storeIdArray removeAllObjects];
 		 }
 		 
@@ -242,14 +240,14 @@
 	
 	if(patronStore == nil)
 	{
-		[cell.punchIcon setHidden:TRUE];
-		[cell.numPunches setHidden:TRUE];
+		[cell.punchIcon setHidden:YES];
+		[cell.numPunches setHidden:YES];
 	}
 	else
 	{
 		int punches = [[patronStore objectForKey:@"punch_count"] intValue];
-		[cell.punchIcon setHidden:FALSE];
-		[cell.numPunches setHidden:FALSE];
+		[cell.punchIcon setHidden:NO];
+		[cell.numPunches setHidden:NO];
 		[cell.numPunches setText:[NSString stringWithFormat:@"%d %@", punches, (punches==1) ? @"punch" : @"punches"]];
 	}
 	

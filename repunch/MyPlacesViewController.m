@@ -43,53 +43,8 @@
 	self.storeIdArray = [NSMutableArray array];
     self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
 	
-	self.tableViewController = [[UITableViewController alloc]initWithStyle:UITableViewStylePlain];
-	[self addChildViewController:self.tableViewController];
-	
-	self.tableViewController.refreshControl = [[UIRefreshControl alloc]init];
-	[self.tableViewController.refreshControl addTarget:self
-										   action:@selector(loadMyPlaces)
-								 forControlEvents:UIControlEventValueChanged];
-    
-	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
-	CGFloat screenWidth = screenRect.size.width;
-	CGFloat screenHeight = screenRect.size.height;
-	int tabBarHeight = self.tabBarController.tabBar.frame.size.height;
-	CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
-	
-	self.myPlacesTableView = [[UITableView alloc]
-							  initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - tabBarHeight - navBarHeight)
-									  style:UITableViewStylePlain];
-	
-    [self.myPlacesTableView setDataSource:self];
-    [self.myPlacesTableView setDelegate:self];
-    [self.view addSubview:self.myPlacesTableView];
-	//[self.myPlacesTableView setHidden:TRUE];
-	self.myPlacesTableView.layer.zPosition = -1.0;
-	
-	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 1)];
-	footer.backgroundColor = [UIColor clearColor];
-	[self.myPlacesTableView setTableFooterView:footer];
-	
-	self.tableViewController.tableView = self.myPlacesTableView;
-
-	UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc]
-									 initWithImage:[UIImage imageNamed:@"nav_settings.png"]
-									 style:UIBarButtonItemStylePlain
-									 target:self
-									 action:@selector(openSettings:)];
-	UIBarButtonItem *searchButton = [[UIBarButtonItem alloc]
-								   initWithImage:[UIImage imageNamed:@"nav_search.png"]
-								   style:UIBarButtonItemStylePlain
-								   target:self
-								   action:@selector(openSearch:)];
-	UIButton *punchCodeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, 50)];
-	[punchCodeButton setImage:[UIImage imageNamed:@"repunch-logo.png"] forState:UIControlStateNormal];
-	[punchCodeButton addTarget:self action:@selector(showPunchCode:) forControlEvents:UIControlEventTouchUpInside];
-	self.navigationItem.leftBarButtonItem = settingsButton;
-	self.navigationItem.rightBarButtonItem = searchButton;
-	self.navigationItem.titleView = punchCodeButton;
-	
+	[self setupTableView];
+	[self setupNavigationBar];
 	[self loadMyPlaces];
 }
 
@@ -130,6 +85,59 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)setupNavigationBar
+{
+	UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_settings.png"]
+																	   style:UIBarButtonItemStylePlain
+																	  target:self
+																	  action:@selector(openSettings:)];
+	
+	UIBarButtonItem *searchButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_search.png"]
+																	 style:UIBarButtonItemStylePlain
+																	target:self
+																	action:@selector(openSearch:)];
+	
+	UIButton *punchCodeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, 50)];
+	[punchCodeButton setImage:[UIImage imageNamed:@"repunch-logo.png"] forState:UIControlStateNormal];
+	[punchCodeButton addTarget:self action:@selector(showPunchCode:) forControlEvents:UIControlEventTouchUpInside];
+	
+	self.navigationItem.leftBarButtonItem = settingsButton;
+	self.navigationItem.rightBarButtonItem = searchButton;
+	self.navigationItem.titleView = punchCodeButton;
+}
+
+- (void)setupTableView
+{
+	self.tableViewController = [[UITableViewController alloc]initWithStyle:UITableViewStylePlain];
+	[self addChildViewController:self.tableViewController];
+	
+	self.tableViewController.refreshControl = [[UIRefreshControl alloc]init];
+	[self.tableViewController.refreshControl addTarget:self
+												action:@selector(loadMyPlaces)
+									  forControlEvents:UIControlEventValueChanged];
+    
+	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
+	CGFloat screenWidth = screenRect.size.width;
+	CGFloat screenHeight = screenRect.size.height;
+	int tabBarHeight = self.tabBarController.tabBar.frame.size.height;
+	CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
+	
+	self.myPlacesTableView = [[UITableView alloc]
+							  initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - tabBarHeight - navBarHeight)
+							  style:UITableViewStylePlain];
+	
+    [self.myPlacesTableView setDataSource:self];
+    [self.myPlacesTableView setDelegate:self];
+    [self.view addSubview:self.myPlacesTableView];
+	self.myPlacesTableView.layer.zPosition = -1.0;
+	
+	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 1)];
+	footer.backgroundColor = [UIColor clearColor];
+	[self.myPlacesTableView setTableFooterView:footer];
+	
+	self.tableViewController.tableView = self.myPlacesTableView;
+}
+
 - (void)loadMyPlaces
 {
 	if(self.storeIdArray.count == 0) {
@@ -146,7 +154,7 @@
 
     [patronStoreQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
     {
-		[self.activityIndicatorView setHidden:TRUE];
+		[self.activityIndicatorView setHidden:YES];
 		[self.activityIndicator stopAnimating];
 		[self.tableViewController.refreshControl endRefreshing];
 		
@@ -173,7 +181,6 @@
             NSLog(@"places view: error is %@", error);
 			[RepunchUtils showDefaultErrorMessage];
         }
-        
     }];
 }
 
@@ -224,13 +231,13 @@
     {
         if ([[rewardsArray[0] objectForKey:@"punches"] intValue] <= punches)
         {
-            [[cell rewardLabel] setHidden:FALSE];
-            [[cell rewardIcon] setHidden:FALSE];
+            [[cell rewardLabel] setHidden:NO];
+            [[cell rewardIcon] setHidden:NO];
         }
 		else
 		{
-			[[cell rewardLabel] setHidden:TRUE];
-            [[cell rewardIcon] setHidden:TRUE];
+			[[cell rewardLabel] setHidden:YES];
+            [[cell rewardIcon] setHidden:YES];
 		}
     }
     
