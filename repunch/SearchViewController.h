@@ -19,7 +19,7 @@
 #import "AppDelegate.h"
 #import "DataManager.h"
 
-@interface SearchViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, StoreViewControllerDelegate>
+@interface SearchViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, CLLocationManagerDelegate, StoreViewControllerDelegate>
 
 @property (nonatomic, weak) id <SearchViewControllerDelegate> delegate;
 

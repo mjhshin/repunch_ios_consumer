@@ -44,8 +44,7 @@
 	self.displayOrdering = FBFriendDisplayByFirstName;
 	self.doneButton = nil;
 	self.cancelButton = nil;
-	
-	self.delegate = (id)self;
+	self.delegate = self;
 	
 	[self loadFriends];
 }

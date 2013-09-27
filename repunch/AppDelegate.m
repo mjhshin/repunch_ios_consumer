@@ -6,6 +6,7 @@
 //
 
 #import "AppDelegate.h"
+#import <Crashlytics/Crashlytics.h>
 
 @implementation AppDelegate
 {
@@ -32,13 +33,13 @@
     //
 	////////////////////////////////////////////////////////////////////////////////////////
 	
-    [PFFacebookUtils initializeFacebook];    
-    [Crittercism enableWithAppID: @"51df08478b2e331138000003"];
+    [PFFacebookUtils initializeFacebook];
 	
-	[application registerForRemoteNotificationTypes:
-	 UIRemoteNotificationTypeBadge |
-	 UIRemoteNotificationTypeAlert |
-	 UIRemoteNotificationTypeSound];
+	[Crashlytics startWithAPIKey:@"87229bb388427a182709b79fc61e45ec5de14023"];
+	
+	[application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge |
+													UIRemoteNotificationTypeAlert |
+													UIRemoteNotificationTypeSound];
 	
 	sharedData = [DataManager getSharedInstance];
 	[self checkLoginState];
@@ -66,8 +67,7 @@
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
-	// Store the deviceToken in the current Installation and save it to Parse.
-    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:deviceToken];
     [currentInstallation saveInBackground];
 }
@@ -75,7 +75,7 @@
 - (void)application:(UIApplication *)application
 	didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {	
-	if ([error code] != 3010) { // 3010 is for the iPhone Simulator. Ignore this
+	if (error.code != 3010) { // 3010 is for the iPhone Simulator. Ignore this
         NSLog(@"Application failed to register for push notifications: %@", error);
 	}
 }
@@ -134,10 +134,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 	PFUser* currentUser = [PFUser currentUser];
 	
     if (currentUser)
-	{
-		//NSLog(@"PFUser is non-null");
-		[Crittercism setUsername:currentUser.username];
-		
+	{		
 		//if patron object is null for some reason
         if ( ![sharedData patron] )
 		{
@@ -181,7 +178,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 }
 
 - (void)presentTabBarController
-{
+{	
     MyPlacesViewController *myPlacesVC = [[MyPlacesViewController alloc] init];
     InboxViewController *inboxVC = [[InboxViewController alloc] init];
 	

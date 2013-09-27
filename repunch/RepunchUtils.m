@@ -10,7 +10,7 @@
 
 @implementation RepunchUtils
 
-+ (void) showDefaultErrorMessage
++ (void)showDefaultErrorMessage
 {
 	SIAlertView *errorDialogue = [[SIAlertView alloc] initWithTitle:@"Error"
 														 andMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];

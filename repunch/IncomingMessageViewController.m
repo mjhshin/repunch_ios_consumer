@@ -367,14 +367,19 @@
 	{
 		self.giftButton.enabled = NO;
 		
-		NSString *storeId = [[self.sharedData getStore:[self.message objectForKey:@"store_id"]] objectId];
+		NSString *storeId = [self.message objectForKey:@"store_id"];
 		NSString *patronStoreId = [[self.sharedData getPatronStore:storeId] objectId];
+		
+		if(patronStoreId == nil) {
+			patronStoreId = (id)[NSNull null];
+		}
+		
 		NSString *rewardTitle = [self.messageType isEqualToString:@"offer"] ?
 										[self.message objectForKey:@"offer_title"] : [self.message objectForKey:@"gift_title"];
 		NSString *customerName = [NSString stringWithFormat:@"%@ %@", [self.patron objectForKey:@"first_name"],
 								  [self.patron objectForKey:@"last_name"]];
 	
-		NSDictionary *inputArgs = [NSDictionary dictionaryWithObjectsAndKeys:
+		NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
 								   self.patron.objectId,			@"patron_id",
 								   storeId,							@"store_id",
 								   patronStoreId,					@"patron_store_id",
@@ -384,7 +389,7 @@
 								   nil];
 	
 		[PFCloud callFunctionInBackground: @"request_redeem"
-						   withParameters:inputArgs
+						   withParameters:parameters
 									block:^(NSString *result, NSError *error)
 		 {
 			 self.giftButton.enabled = YES;

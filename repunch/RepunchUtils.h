@@ -11,9 +11,8 @@
 
 @interface RepunchUtils : NSObject
 
-+ (void) showDefaultErrorMessage;
-+ (void) setupNavigationController:(UINavigationController *)navController;
-+ (UIColor *) repunchOrangeColor;
-//+ (BOOL) isiOSSeven;
++ (void)showDefaultErrorMessage;
++ (void)setupNavigationController:(UINavigationController *)navController;
++ (UIColor *)repunchOrangeColor;
 
 @end

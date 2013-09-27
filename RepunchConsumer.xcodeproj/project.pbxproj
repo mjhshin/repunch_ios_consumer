@@ -37,7 +37,7 @@
 		EE06E66317E7525000073AAF /* app_icon_120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = EE06E65D17E7525000073AAF /* app_icon_120x120.png */; };
 		EE06E66517E7AB0100073AAF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE06E66417E7AB0100073AAF /* Images.xcassets */; };
 		EE125A0417F1E40100E2946E /* splash_screen_320x480.png in Resources */ = {isa = PBXBuildFile; fileRef = EE125A0317F1E40100E2946E /* splash_screen_320x480.png */; };
-		EE17EE0917F372DE0053C36C /* WelcomeStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE17EE0817F372DE0053C36C /* WelcomeStoryboard.storyboard */; };
+		EE17EE0C17F4A3C80053C36C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE17EE0B17F4A3C80053C36C /* Crashlytics.framework */; };
 		EE28DAE017AC447E00E4C460 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE28DADF17AC447E00E4C460 /* DataManager.m */; };
 		EE3F36D417B585B300D28FC9 /* PunchHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3F36D317B585B300D28FC9 /* PunchHandler.m */; };
 		EE3F36D817B586ED00D28FC9 /* RedeemHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3F36D717B586ED00D28FC9 /* RedeemHandler.m */; };
@@ -96,9 +96,6 @@
 		EE9D4C9917A83F4B005E0CC5 /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BCA17A83F4A005E0CC5 /* MKMapView+ZoomLevel.m */; };
 		EE9D4C9A17A83F4B005E0CC5 /* NSDate+whenString.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BCC17A83F4A005E0CC5 /* NSDate+whenString.m */; };
 		EE9D4C9B17A83F4B005E0CC5 /* UIViewController+animateView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BCE17A83F4A005E0CC5 /* UIViewController+animateView.m */; };
-		EE9D4D8117A84559005E0CC5 /* dsym_upload.sh in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4D2F17A84559005E0CC5 /* dsym_upload.sh */; };
-		EE9D4D8217A84559005E0CC5 /* libCrittercism_v4_0_2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE9D4D3017A84559005E0CC5 /* libCrittercism_v4_0_2.a */; };
-		EE9D4E0017A845EE005E0CC5 /* libCrittercism_v4_0_2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE9D4D3017A84559005E0CC5 /* libCrittercism_v4_0_2.a */; };
 		EE9D4E7117A846B1005E0CC5 /* SIAlertView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4E4E17A846B1005E0CC5 /* SIAlertView.bundle */; };
 		EE9D4E7217A846B1005E0CC5 /* SIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4E5017A846B1005E0CC5 /* SIAlertView.m */; };
 		EE9D4E7417A847B9005E0CC5 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE9D4E7317A847B9005E0CC5 /* FacebookSDK.framework */; };
@@ -193,7 +190,7 @@
 		EE06E65D17E7525000073AAF /* app_icon_120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_120x120.png; sourceTree = "<group>"; };
 		EE06E66417E7AB0100073AAF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		EE125A0317F1E40100E2946E /* splash_screen_320x480.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash_screen_320x480.png; sourceTree = "<group>"; };
-		EE17EE0817F372DE0053C36C /* WelcomeStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = WelcomeStoryboard.storyboard; sourceTree = "<group>"; };
+		EE17EE0B17F4A3C80053C36C /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		EE28DADE17AC447E00E4C460 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		EE28DADF17AC447E00E4C460 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		EE3F36D217B585B300D28FC9 /* PunchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PunchHandler.h; sourceTree = "<group>"; };
@@ -277,10 +274,6 @@
 		EE9D4BCE17A83F4A005E0CC5 /* UIViewController+animateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+animateView.m"; sourceTree = "<group>"; };
 		EE9D4D0E17A84266005E0CC5 /* Repunch-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Repunch-Info.plist"; sourceTree = "<group>"; };
 		EE9D4D0F17A84266005E0CC5 /* Repunch-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Repunch-Prefix.pch"; sourceTree = "<group>"; };
-		EE9D4D2D17A84559005E0CC5 /* Crittercism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crittercism.h; sourceTree = "<group>"; };
-		EE9D4D2E17A84559005E0CC5 /* CrittercismDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrittercismDelegate.h; sourceTree = "<group>"; };
-		EE9D4D2F17A84559005E0CC5 /* dsym_upload.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = dsym_upload.sh; sourceTree = "<group>"; };
-		EE9D4D3017A84559005E0CC5 /* libCrittercism_v4_0_2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCrittercism_v4_0_2.a; sourceTree = "<group>"; };
 		EE9D4E4E17A846B1005E0CC5 /* SIAlertView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SIAlertView.bundle; sourceTree = "<group>"; };
 		EE9D4E4F17A846B1005E0CC5 /* SIAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIAlertView.h; sourceTree = "<group>"; };
 		EE9D4E5017A846B1005E0CC5 /* SIAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIAlertView.m; sourceTree = "<group>"; };
@@ -346,7 +339,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE9D4E0017A845EE005E0CC5 /* libCrittercism_v4_0_2.a in Frameworks */,
 				798D6DE81785B98A00CF8109 /* libsqlite3.dylib in Frameworks */,
 				7996B3B017820B1C00CCAFED /* Accounts.framework in Frameworks */,
 				7996B3AE17820B1800CCAFED /* Social.framework in Frameworks */,
@@ -356,6 +348,7 @@
 				7996B3A617820B0700CCAFED /* Security.framework in Frameworks */,
 				7996B3A417820B0300CCAFED /* QuartzCore.framework in Frameworks */,
 				7996B3A217820B0000CCAFED /* MobileCoreServices.framework in Frameworks */,
+				EE17EE0C17F4A3C80053C36C /* Crashlytics.framework in Frameworks */,
 				7996B3A017820AFB00CCAFED /* AudioToolbox.framework in Frameworks */,
 				7996B39E17820AF700CCAFED /* CFNetwork.framework in Frameworks */,
 				7996B39C17820AF000CCAFED /* CoreLocation.framework in Frameworks */,
@@ -378,7 +371,6 @@
 				7996B38117820A9700CCAFED /* UIKit.framework in Frameworks */,
 				7996B38217820A9700CCAFED /* Foundation.framework in Frameworks */,
 				7996B38317820A9700CCAFED /* CoreData.framework in Frameworks */,
-				EE9D4D8217A84559005E0CC5 /* libCrittercism_v4_0_2.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,7 +380,6 @@
 		7996B35017820A9700CCAFED = {
 			isa = PBXGroup;
 			children = (
-				EE17EE0817F372DE0053C36C /* WelcomeStoryboard.storyboard */,
 				EE9D4B1017A83F4A005E0CC5 /* External */,
 				7996B35B17820A9700CCAFED /* Frameworks */,
 				EE9D4B6E17A83F4A005E0CC5 /* main.m */,
@@ -451,9 +442,9 @@
 		EE9D4B1017A83F4A005E0CC5 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				EE17EE0B17F4A3C80053C36C /* Crashlytics.framework */,
 				EE48FA5B17DFB1590084B47B /* Parse.framework */,
 				EE9D4E7317A847B9005E0CC5 /* FacebookSDK.framework */,
-				EE9D4D2C17A84559005E0CC5 /* CrittercismSDK */,
 			);
 			path = External;
 			sourceTree = "<group>";
@@ -501,6 +492,9 @@
 				EE9D4BAC17A83F4A005E0CC5 /* SearchViewController.h */,
 				EE9D4BAD17A83F4A005E0CC5 /* SearchViewController.m */,
 				EE9D4BAE17A83F4A005E0CC5 /* SearchViewController.xib */,
+				EEB8A44A17EA61140020E2EE /* SettingsViewController.h */,
+				EEB8A44B17EA61140020E2EE /* SettingsViewController.m */,
+				EEB8A44C17EA61140020E2EE /* SettingsViewController.xib */,
 				EE9D4E4D17A846B1005E0CC5 /* SIAlertView */,
 				EE9D4BA617A83F4A005E0CC5 /* StoreMapViewController.h */,
 				EE9D4BA717A83F4A005E0CC5 /* StoreMapViewController.m */,
@@ -509,9 +503,6 @@
 				EE9D4BAA17A83F4A005E0CC5 /* StoreViewController.m */,
 				EE9D4BAB17A83F4A005E0CC5 /* StoreViewController.xib */,
 				EE9D4BC617A83F4A005E0CC5 /* ThirdPartyViews */,
-				EEB8A44A17EA61140020E2EE /* SettingsViewController.h */,
-				EEB8A44B17EA61140020E2EE /* SettingsViewController.m */,
-				EEB8A44C17EA61140020E2EE /* SettingsViewController.xib */,
 			);
 			path = Repunch;
 			sourceTree = "<group>";
@@ -553,17 +544,6 @@
 				EE9D4BCE17A83F4A005E0CC5 /* UIViewController+animateView.m */,
 			);
 			path = ThirdPartyViews;
-			sourceTree = "<group>";
-		};
-		EE9D4D2C17A84559005E0CC5 /* CrittercismSDK */ = {
-			isa = PBXGroup;
-			children = (
-				EE9D4D2D17A84559005E0CC5 /* Crittercism.h */,
-				EE9D4D2E17A84559005E0CC5 /* CrittercismDelegate.h */,
-				EE9D4D2F17A84559005E0CC5 /* dsym_upload.sh */,
-				EE9D4D3017A84559005E0CC5 /* libCrittercism_v4_0_2.a */,
-			);
-			path = CrittercismSDK;
 			sourceTree = "<group>";
 		};
 		EE9D4E4D17A846B1005E0CC5 /* SIAlertView */ = {
@@ -664,6 +644,7 @@
 				7996B35517820A9700CCAFED /* Sources */,
 				7996B35617820A9700CCAFED /* Frameworks */,
 				7996B35717820A9700CCAFED /* Resources */,
+				EE17EE0A17F4A37B0053C36C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -759,7 +740,6 @@
 				EE9D4F2017A84ABB005E0CC5 /* ico-tab-inbox@2xsmall.png in Resources */,
 				EE92C01F17E7D0F900532CBE /* call_button@2x.png in Resources */,
 				EE9D4F2317A84ABB005E0CC5 /* ico-tab-places.png in Resources */,
-				EE17EE0917F372DE0053C36C /* WelcomeStoryboard.storyboard in Resources */,
 				EE9D4F2417A84ABB005E0CC5 /* ico-tab-places@2x.png in Resources */,
 				EE9D4F2517A84ABB005E0CC5 /* ico-tab-places@2xsmall.png in Resources */,
 				EE9D4F2C17A84ABB005E0CC5 /* ico_message_coupon.png in Resources */,
@@ -817,7 +797,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE9D4D8117A84559005E0CC5 /* dsym_upload.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -836,6 +815,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		EE17EE0A17F4A37B0053C36C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 87229bb388427a182709b79fc61e45ec5de14023";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -970,8 +962,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/External\"",
+					"$(SRCROOT)",
+					"\\\"$(SRCROOT)/External\\\"",
+					/Users/michaelshin/workspace/shin_repunch_ios_consumer/External,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Repunch-Prefix.pch";
@@ -999,8 +992,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/External\"",
+					"$(SRCROOT)",
+					"\\\"$(SRCROOT)/External\\\"",
+					/Users/michaelshin/workspace/shin_repunch_ios_consumer/External,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Repunch-Prefix.pch";

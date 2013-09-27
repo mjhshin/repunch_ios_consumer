@@ -37,53 +37,6 @@
     self.patron = [self.sharedData patron];
 	self.messagesArray = [[NSMutableArray alloc] init];
 	
-	self.tableViewController = [[UITableViewController alloc]initWithStyle:UITableViewStylePlain];
-	[self addChildViewController:self.tableViewController];
-	
-	self.tableViewController.refreshControl = [[UIRefreshControl alloc]init];
-	[self.tableViewController.refreshControl addTarget:self
-												action:@selector(loadInbox:)
-									  forControlEvents:UIControlEventValueChanged];
-	
-	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
-	CGFloat screenWidth = screenRect.size.width;
-	CGFloat screenHeight = screenRect.size.height;
-	int tabBarHeight = self.tabBarController.tabBar.frame.size.height;
-	CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
-	
-	self.messageTableView = [[UITableView alloc]
-						initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - tabBarHeight - navBarHeight)
-								style:UITableViewStylePlain];
-	
-    [self.messageTableView setDataSource:self];
-    [self.messageTableView setDelegate:self];
-	[self.view addSubview:self.messageTableView];
-	self.messageTableView.layer.zPosition = -1.0;
-	
-	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
-	footer.backgroundColor = [UIColor clearColor];
-	[self.messageTableView setTableFooterView:footer];
-	
-	self.tableViewController.tableView = self.messageTableView;
-	
-	//set up navigationbar
-	UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc]
-									   initWithImage:[UIImage imageNamed:@"nav_settings.png"]
-									   style:UIBarButtonItemStylePlain
-									   target:self
-									   action:@selector(openSettings:)];
-	UIBarButtonItem *searchButton = [[UIBarButtonItem alloc]
-									 initWithImage:[UIImage imageNamed:@"nav_search.png"]
-									 style:UIBarButtonItemStylePlain
-									 target:self
-									 action:@selector(openSearch:)];
-	UIButton *punchCodeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, 50)];
-	[punchCodeButton setImage:[UIImage imageNamed:@"repunch-logo.png"] forState:UIControlStateNormal];
-	[punchCodeButton addTarget:self action:@selector(showPunchCode:) forControlEvents:UIControlEventTouchUpInside];
-	self.navigationItem.leftBarButtonItem = settingsButton;
-	self.navigationItem.rightBarButtonItem = searchButton;
-	self.navigationItem.titleView = punchCodeButton;
-	
 	alertBadgeCount = 0;
 	paginateCount = 0;
 	loadInProgress = NO;
@@ -91,6 +44,8 @@
 	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 	spinner.hidesWhenStopped = YES;
 	
+	[self setupNavigationBar];
+	[self setupTableView];
     [self loadInbox:NO];
 }
 
@@ -112,6 +67,61 @@
     [super didReceiveMemoryWarning];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)setupNavigationBar
+{
+	UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc]
+									   initWithImage:[UIImage imageNamed:@"nav_settings.png"]
+									   style:UIBarButtonItemStylePlain
+									   target:self
+									   action:@selector(openSettings:)];
+	
+	UIBarButtonItem *searchButton = [[UIBarButtonItem alloc]
+									 initWithImage:[UIImage imageNamed:@"nav_search.png"]
+									 style:UIBarButtonItemStylePlain
+									 target:self
+									 action:@selector(openSearch:)];
+	
+	UIButton *punchCodeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, 50)];
+	[punchCodeButton setImage:[UIImage imageNamed:@"repunch-logo.png"] forState:UIControlStateNormal];
+	[punchCodeButton addTarget:self action:@selector(showPunchCode:) forControlEvents:UIControlEventTouchUpInside];
+	
+	self.navigationItem.leftBarButtonItem = settingsButton;
+	self.navigationItem.rightBarButtonItem = searchButton;
+	self.navigationItem.titleView = punchCodeButton;
+}
+
+- (void)setupTableView
+{
+	self.tableViewController = [[UITableViewController alloc]initWithStyle:UITableViewStylePlain];
+	[self addChildViewController:self.tableViewController];
+	
+	self.tableViewController.refreshControl = [[UIRefreshControl alloc]init];
+	[self.tableViewController.refreshControl addTarget:self
+												action:@selector(loadInbox:)
+									  forControlEvents:UIControlEventValueChanged];
+	
+	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
+	CGFloat screenWidth = screenRect.size.width;
+	CGFloat screenHeight = screenRect.size.height;
+	int tabBarHeight = self.tabBarController.tabBar.frame.size.height;
+	CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
+	
+	self.messageTableView = [[UITableView alloc]
+							 initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - tabBarHeight - navBarHeight)
+							 style:UITableViewStylePlain];
+	
+    [self.messageTableView setDataSource:self];
+    [self.messageTableView setDelegate:self];
+	[self.view addSubview:self.messageTableView];
+	self.messageTableView.layer.zPosition = -1.0;
+	
+	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
+	footer.backgroundColor = [UIColor clearColor];
+	[self.messageTableView setTableFooterView:footer];
+	
+	self.tableViewController.tableView = self.messageTableView;
 }
 
 -(void)loadInbox:(BOOL)paginate
