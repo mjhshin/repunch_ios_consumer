@@ -11,7 +11,8 @@
 @implementation RegisterViewController
 {
 	DataManager *sharedData;
-	UIActivityIndicatorView *spinner;
+	AuthenticationManager *authenticationManager;
+	UIActivityIndicatorView *registerButtonSpinner;
 }
 
 - (void)viewDidLoad
@@ -46,10 +47,10 @@
 	[self.registerButton.layer setCornerRadius:5];
 	[self.registerButton setClipsToBounds:YES];
 	
-	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-	spinner.frame = self.registerButton.bounds;
-	[self.registerButton addSubview:spinner];
-	spinner.hidesWhenStopped = YES;
+	registerButtonSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+	registerButtonSpinner.frame = self.registerButton.bounds;
+	[self.registerButton addSubview:registerButtonSpinner];
+	registerButtonSpinner.hidesWhenStopped = YES;
 	
 	self.facebookSpinner.hidesWhenStopped = YES;
 	
@@ -147,11 +148,11 @@
 		return;
 	}
 	
-    NSString *email = [_emailInput text];
-    NSString *password = [_passwordInput text];
-	NSString *firstName = [_firstNameInput text];
-	NSString *lastName = [_lastNameInput text];
-	NSString *age = [_ageInput text];
+    NSString *email = [_emailInput.text lowercaseString];
+    NSString *password = _passwordInput.text;
+	NSString *firstName = _firstNameInput.text;
+	NSString *lastName = _lastNameInput.text;
+	NSString *age = _ageInput.text;
     
 	PFUser *newUser = [PFUser user];
 	[newUser setUsername:email];
@@ -161,7 +162,7 @@
     [self.registerButton setTitle:@"" forState:UIControlStateNormal];
 	[self.registerButton setEnabled:NO];
 	[self.facebookButton setEnabled:NO];
-	[spinner startAnimating];
+	[registerButtonSpinner startAnimating];
     
     [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
 	{
@@ -176,7 +177,6 @@
             
             NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
 										[[PFUser currentUser] objectId],	@"user_id",
-										email,								@"username",
 										email,								@"email",
 										gender,								@"gender",	
 										birthday,							@"birthday",
@@ -233,7 +233,7 @@
 	[[PFInstallation currentInstallation] setObject:punchCode forKey:@"punch_code"];
 	[[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
 	{
-		[spinner stopAnimating];
+		[registerButtonSpinner stopAnimating];
 		[self.facebookSpinner stopAnimating];
 		[self.registerButton setTitle:@"Sign In" forState:UIControlStateNormal];
 		[self.registerButton setEnabled:YES];
@@ -323,7 +323,6 @@
 			 //register patron
 			 NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
 										 currentUser.objectId,	@"user_id",
-										 currentUser.username,	@"username",
 										 email,					@"email",
 										 gender,				@"gender",
 										 birthday,				@"birthday",
@@ -390,12 +389,37 @@
 	}
 
 	[self showDialog:title withResultMessage:message];
-	[spinner stopAnimating];
-	[self.facebookSpinner stopAnimating];
+	
+	[registerButtonSpinner stopAnimating];
 	[self.registerButton setTitle:@"Sign In" forState:UIControlStateNormal];
 	[self.registerButton setEnabled:YES];
+	[self.facebookSpinner stopAnimating];
 	[self.facebookButton setEnabled:YES];
 	[self.facebookButtonLabel setHidden:NO];
+}
+
+- (void)onAuthenticationResult:(AuthenticationManager *)object withResult:(BOOL)success withError:(NSError *)error
+{
+	[registerButtonSpinner stopAnimating];
+	[self.registerButton setTitle:@"Sign In" forState:UIControlStateNormal];
+	[self.registerButton setEnabled:YES];
+	[self.facebookSpinner stopAnimating];
+	[self.facebookButton setEnabled:YES];
+	[self.facebookButtonLabel setHidden:NO];
+	
+	if(success)
+	{
+		AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+		[appDelegate presentTabBarController];
+	}
+	else
+	{
+		NSLog(@"Here is the ERROR: %@", error);
+		
+		if([PFUser currentUser]) {
+			[PFUser logOut];
+		}
+	}
 }
 
 - (void)showDialog:(NSString*)resultTitle withResultMessage:(NSString*)resultMessage

@@ -231,7 +231,7 @@
 								self.body.text,			@"body",
 								self.giftRecepientId,	@"recepient_id",
 								self.giftTitle,			@"gift_title",
-								self.giftDescription,	@"gift_description",
+								self.giftDescription,	@"gift_description",  //WARNING can be blank! make sure it's NSNull
 								[NSString stringWithFormat:@"%i", self.giftPunches],		@"gift_punches",
 								nil];
 	

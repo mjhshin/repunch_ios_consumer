@@ -7,18 +7,21 @@
 //
 
 #import "PunchHandler.h"
+#import <Foundation/Foundation.h>
+#import <Parse/Parse.h>
+#import "DataManager.h"
+#import "SIAlertView.h"
 
 @implementation PunchHandler
 
-+ (void)handlePush:(NSDictionary *)pushPayload
++ (void)handlePush:(NSDictionary *)userInfo withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
 	DataManager *sharedData = [DataManager getSharedInstance];
 	
-	NSString *storeId = [pushPayload objectForKey:@"store_id"];
-	NSString *patronStoreId = [pushPayload objectForKey:@"patron_store_id"];
-	//int punches = [[pushPayload objectForKey:@"punches"] intValue];
-	int totalPunches = [[pushPayload objectForKey:@"total_punches"] intValue];
-	NSString *alert = [[pushPayload objectForKey:@"aps"] objectForKey:@"alert"];
+	NSString *storeId = [userInfo objectForKey:@"store_id"];
+	NSString *patronStoreId = [userInfo objectForKey:@"patron_store_id"];
+	int totalPunches = [[userInfo objectForKey:@"total_punches"] intValue];
+	NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
 	
 	PFObject *store = [sharedData getStore:storeId];
 	PFObject *patronStore = [sharedData getPatronStore:storeId];
@@ -36,11 +39,11 @@
 		SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Punch!" andMessage:alert];
 		[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
 		[alertView show];
+		
+		completionHandler(UIBackgroundFetchResultNoData);
 	}
 	else
 	{
-		//delay notification if possible
-		
 		PFQuery *query = [PFQuery queryWithClassName:@"PatronStore"];
 		[query includeKey:@"Store"];
 		[query includeKey:@"FacebookPost"];
@@ -49,8 +52,9 @@
 		{
             if(!result)
             {
-                //handle error
-                NSLog(@"PatronStore query failed.");
+                NSLog(@"PatronStore query failed: %@", error);
+				
+				completionHandler(UIBackgroundFetchResultFailed);
             }
             else
             {
@@ -65,6 +69,8 @@
 				SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Punch!" andMessage:alert];
 				[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
 				[alertView show];
+				
+				completionHandler(UIBackgroundFetchResultNewData);
             }
         }];
 	}

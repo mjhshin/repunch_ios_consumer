@@ -29,7 +29,7 @@
 											   object:nil];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(loadInbox:)
+											 selector:@selector(refreshWhenBackgroundRefreshDisabled)
 												 name:UIApplicationWillEnterForegroundNotification
 											   object:nil];
     
@@ -193,6 +193,13 @@
     }];
 }
 
+- (void)refreshWhenBackgroundRefreshDisabled
+{
+	if([[UIApplication sharedApplication] backgroundRefreshStatus] != UIBackgroundRefreshStatusAvailable) {
+		[self loadInbox:NO];
+	}
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -293,7 +300,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     float scrollLocation = scrollView.contentOffset.y + scrollView.bounds.size.height - scrollView.contentInset.bottom;
-    float scrollHeight = scrollView.contentSize.height;
+    float scrollHeight = MAX(scrollView.contentSize.height, self.view.frame.size.height);
 
     if(scrollLocation >= scrollHeight + 5 && !loadInProgress && !paginateReachEnd)
 	{

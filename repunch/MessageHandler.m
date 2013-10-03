@@ -11,6 +11,7 @@
 @implementation MessageHandler
 
 + (void)handlePush:(NSDictionary *)pushPayload
+withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
 	DataManager *sharedData = [DataManager getSharedInstance];
 	
@@ -29,7 +30,8 @@
     {
         if (!result)
         {
-            NSLog(@"MessageStatus query failed.");
+            NSLog(@"MessageStatus query failed: %@", error);
+			completionHandler(UIBackgroundFetchResultFailed);
         }
         else
         {
@@ -44,11 +46,15 @@
 			SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"New Message" andMessage:alert];
 			[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
 			[alertView show];
+			
+			completionHandler(UIBackgroundFetchResultNewData);
         }
     }];
 }
 
-+ (void)handleGiftPush:(NSDictionary *)pushPayload forReply:(BOOL)isReply
++ (void)handleGiftPush:(NSDictionary *)pushPayload
+			  forReply:(BOOL)isReply
+withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
 	DataManager *sharedData = [DataManager getSharedInstance];
 	
@@ -62,7 +68,8 @@
 	{
 		if (!result)
 		{
-			NSLog(@"MessageStatus query failed.");
+			NSLog(@"MessageStatus query failed: %@", error);
+			completionHandler(UIBackgroundFetchResultFailed);
 		}
 		else
 		{
@@ -86,6 +93,8 @@
 				[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
 				[alertView show];
 			}
+			
+			completionHandler(UIBackgroundFetchResultNewData);
 		}
 		
 	}];

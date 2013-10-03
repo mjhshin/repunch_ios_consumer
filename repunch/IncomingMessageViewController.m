@@ -198,9 +198,9 @@
 	if( [[self.messageStatus objectForKey:@"redeem_available"] isEqualToString:@"yes"] )
 	{
 		[self.giftButton setBackgroundImage:[GradientBackground orangeButtonNormal:self.giftButton]
-										forState:UIControlStateNormal];
+								   forState:UIControlStateNormal];
 		[self.giftButton setBackgroundImage:[GradientBackground orangeButtonHighlighted:self.giftButton]
-										forState:UIControlStateHighlighted];
+								   forState:UIControlStateHighlighted];
 	}
 	else
 	{
@@ -224,9 +224,9 @@
 		{
 			self.giftReplyButton.hidden = NO;
 			[self.giftReplyButton setBackgroundImage:[GradientBackground orangeButtonNormal:self.giftReplyButton]
-												forState:UIControlStateNormal];
+											forState:UIControlStateNormal];
 			[self.giftReplyButton setBackgroundImage:[GradientBackground orangeButtonHighlighted:self.giftReplyButton]
-												forState:UIControlStateHighlighted];
+											forState:UIControlStateHighlighted];
 			[self.giftReplyButton.layer setCornerRadius:5];
 			[self.giftReplyButton setClipsToBounds:YES];
 		}

@@ -53,6 +53,15 @@
 	return [UIColor colorWithRed:(247/255.0) green:(146/255.0) blue:(52/255.0) alpha:1.0];
 }
 
++ (void)clearNotificationCenter
+{
+	//setting badge number to 0 resets notifications
+	NSInteger badgeCount = [UIApplication sharedApplication].applicationIconBadgeNumber;
+	[UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+	[UIApplication sharedApplication].applicationIconBadgeNumber = badgeCount;
+	[[UIApplication sharedApplication] cancelAllLocalNotifications];	// make sure no pending local notifications
+}
+
 /*
 + (BOOL)isiOSSeven //returns YES for iOS 7.0+
 {

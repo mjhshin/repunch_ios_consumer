@@ -14,5 +14,6 @@
 + (void)showDefaultErrorMessage;
 + (void)setupNavigationController:(UINavigationController *)navController;
 + (UIColor *)repunchOrangeColor;
++ (void)clearNotificationCenter;
 
 @end

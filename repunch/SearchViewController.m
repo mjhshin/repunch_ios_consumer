@@ -49,7 +49,7 @@
 	
 	locationManager = [[CLLocationManager alloc] init];
 	
-	[self checkLocationManagerPermissions];
+	//[self checkLocationManagerPermissions];
 	
 	locationManager.delegate = self;
 	locationManager.distanceFilter = kCLDistanceFilterNone; //filter out negligible changes in location (disabled for now)
@@ -96,7 +96,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-	
 	[locationManager startUpdatingLocation];
 }
 
@@ -119,22 +118,6 @@
     [self.imageDownloadsInProgress removeAllObjects];
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void) checkLocationManagerPermissions
-{/*
-	if ( ![CLLocationManager locationServicesEnabled] )
-	{
-		[RepunchUtils showDefaultAlert:@"Location Services Disabled"
-						   withMessage:@"Location Services can be enabled in Settings -> Privacy -> Location"];
-		[self dismissViewControllerAnimated:YES completion:nil];
-	}
-	else if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied)
-	{
-		[RepunchUtils showDefaultAlert:@"Location Services Disabled"
-						   withMessage:@"Location Services for Repunch can be enabled in Settings -> Privacy -> Location"];
-		[self dismissViewControllerAnimated:YES completion:nil];
-	}*/
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
@@ -163,48 +146,17 @@
 	
 	switch([error code])
 	{
-		case kCLErrorNetwork: // general, network-related error
-		{
-			SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Failed to get location"
-														 andMessage:nil];
-			[alert addButtonWithTitle:@"OK"
-								 type:SIAlertViewButtonTypeDefault
-							  handler:^(SIAlertView *alert) {
-								  [alert dismissAnimated:YES];
-								  [self dismissViewControllerAnimated:YES completion:nil];
-							  }];
-			[alert show];
-			break;
-		}
-			
-		case kCLErrorLocationUnknown:
-		{
-			SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Failed to get location"
-														 andMessage:nil];
-			[alert addButtonWithTitle:@"OK"
-								 type:SIAlertViewButtonTypeDefault
-							  handler:^(SIAlertView *alert) {
-								  [alert dismissAnimated:YES];
-								  [self dismissViewControllerAnimated:YES completion:nil];
-							  }];
-			[alert show];
-			break;
-		}
-		
 		case kCLErrorDenied:
 		{
-			if([CLLocationManager locationServicesEnabled])
-			{
-				SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Location Services disabled"
-															 andMessage:@"Location Services for Repunch can be enabled in Settings -> Privacy -> Location"];
-				[alert addButtonWithTitle:@"OK"
-									 type:SIAlertViewButtonTypeDefault
-								  handler:^(SIAlertView *alert) {
-									  [alert dismissAnimated:YES];
-									  [self dismissViewControllerAnimated:YES completion:nil];
-								  }];
-				[alert show];
-			}
+			SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Location Services disabled"
+														 andMessage:@"Location Services for Repunch can be enabled in Settings -> Privacy -> Location"];
+			[alert addButtonWithTitle:@"OK"
+								 type:SIAlertViewButtonTypeDefault
+							  handler:^(SIAlertView *alert) {
+								  [alert dismissAnimated:YES];
+								  [self dismissViewControllerAnimated:YES completion:nil];
+							  }];
+			[alert show];
 			break;
 		}
 		default:

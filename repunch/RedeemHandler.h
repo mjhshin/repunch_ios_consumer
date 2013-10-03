@@ -6,14 +6,12 @@
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "DataManager.h"
-#import "SIAlertView.h"
-#import "FacebookUtils.h"
-
 @interface RedeemHandler : NSObject
 
-+ (void) handlePush:(NSDictionary *)pushPayload;
-+ (void) handleOfferGiftPush:(NSDictionary *)pushPayload;
++ (void) handlePush:(NSDictionary *)userInfo
+withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
+
++ (void) handleOfferGiftPush:(NSDictionary *)userInfo
+  withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 
 @end

@@ -12,7 +12,11 @@
 
 @interface MessageHandler : NSObject
 
-+ (void) handlePush:(NSDictionary *)pushPayload;
-+ (void) handleGiftPush:(NSDictionary *)pushPayload forReply:(BOOL)isReply;
++ (void) handlePush:(NSDictionary *)userInfo
+withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
+
++ (void) handleGiftPush:(NSDictionary *)userInfo
+			   forReply:(BOOL)isReply
+withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 
 @end

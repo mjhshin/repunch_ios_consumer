@@ -96,7 +96,7 @@
 		if( facebookPost != nil && facebookPost != (id)[NSNull null] )
 		{
 			NSString *rewardTitle = [facebookPost objectForKey:@"reward"];
-			[FacebookUtils postToFacebook:self.storeId withRewardTitle:rewardTitle];
+			[FacebookPost presentDialog:self.storeId withRewardTitle:rewardTitle];
 		}
 	}
 	else

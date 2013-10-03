@@ -10,8 +10,9 @@
 #import "AppDelegate.h"
 #import "GradientBackground.h"
 #import <AVFoundation/AVFoundation.h>
+#import "AuthenticationManager.h"
 
-@interface RegisterViewController : UIViewController<UITextFieldDelegate, UIScrollViewDelegate>
+@interface RegisterViewController : UIViewController<UITextFieldDelegate, UIScrollViewDelegate, AuthenticationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UITextField *emailInput;

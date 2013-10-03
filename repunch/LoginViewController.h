@@ -9,8 +9,9 @@
 #import "AppDelegate.h"
 #import "GradientBackground.h"
 #import "DataManager.h"
+#import "AuthenticationManager.h"
 
-@interface LoginViewController : UIViewController <UITextFieldDelegate>
+@interface LoginViewController : UIViewController <UITextFieldDelegate, AuthenticationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *emailInput;
 @property (weak, nonatomic) IBOutlet UITextField *passwordInput;

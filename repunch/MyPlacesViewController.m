@@ -34,7 +34,7 @@
 											   object:nil];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(loadMyPlaces)
+											 selector:@selector(refreshWhenBackgroundRefreshDisabled)
 												 name:UIApplicationWillEnterForegroundNotification
 											   object:nil];
 	
@@ -58,7 +58,8 @@
         [[NSUserDefaults standardUserDefaults] setValue:@"1" forKey:@"showPunchCodeInstructions"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        SIAlertView *punchCodeHelpAlert = [[SIAlertView alloc] initWithTitle:@"A Friendly Tip" andMessage:@"Click on the Repunch logo in order to get your punch code"];
+        SIAlertView *punchCodeHelpAlert = [[SIAlertView alloc] initWithTitle:@"A Friendly Tip"
+																  andMessage:@"Click on the Repunch logo in order to get your punch code"];
         [punchCodeHelpAlert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
         [punchCodeHelpAlert show];
     }
@@ -182,6 +183,13 @@
 			[RepunchUtils showDefaultErrorMessage];
         }
     }];
+}
+
+- (void)refreshWhenBackgroundRefreshDisabled
+{
+	if([[UIApplication sharedApplication] backgroundRefreshStatus] != UIBackgroundRefreshStatusAvailable) {
+		[self loadMyPlaces];
+	}
 }
 
 - (void)sortStoreObjectIdsByPunches
@@ -365,16 +373,12 @@
 
 - (void)refreshTableView
 {
-	//[self.myPlacesTableView setHidden:NO];
-	
 	if(self.storeIdArray.count > 0)
 	{
-		//[self.myPlacesTableView setHidden:NO];
 		[self.emptyMyPlacesLabel setHidden:YES];
 	}
 	else
 	{
-		//[self.myPlacesTableView setHidden:YES];
 		[self.emptyMyPlacesLabel setHidden:NO];
 	}
 	

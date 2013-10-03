@@ -20,7 +20,7 @@
 #import "GradientBackground.h"
 #import "DataManager.h"
 #import <FacebookSDK/FacebookSDK.h>
-#import "FacebookUtils.h"
+#import "FacebookPost.h"
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 

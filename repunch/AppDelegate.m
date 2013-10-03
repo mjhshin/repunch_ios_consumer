@@ -82,51 +82,79 @@
 
 - (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
 {
-	//setting badge number to 0 resets notifications
-	NSInteger badgeCount = [UIApplication sharedApplication].applicationIconBadgeNumber;
-	[UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-	[UIApplication sharedApplication].applicationIconBadgeNumber = badgeCount;
-	[[UIApplication sharedApplication] cancelAllLocalNotifications];	// make sure no pending local notifications
+	[RepunchUtils clearNotificationCenter];
 	
 	NSString *pushType = [userInfo objectForKey:@"type"];
 	
 	if( [pushType isEqualToString:@"punch"] )
 	{
 		NSLog(@"Push received: punch");
-		[PunchHandler handlePush:userInfo];
+		[PunchHandler handlePush:userInfo withFetchCompletionHandler:nil];
 	}
 	else if( [pushType isEqualToString:@"redeem"] )
 	{
 		NSLog(@"Push received: redeem");
-		[RedeemHandler handlePush:userInfo];
+		[RedeemHandler handlePush:userInfo withFetchCompletionHandler:nil];
 	}
 	else if( [pushType isEqualToString:@"redeem_offer_gift"] )
 	{
 		NSLog(@"Push received: redeem offer/gift");
-		[RedeemHandler handleOfferGiftPush:userInfo];
+		[RedeemHandler handleOfferGiftPush:userInfo withFetchCompletionHandler:nil];
 	}
     else if( [pushType isEqualToString:@"message"] )
 	{
 		NSLog(@"Push received: message");
-        [MessageHandler handlePush:userInfo];
+        [MessageHandler handlePush:userInfo withFetchCompletionHandler:nil];
 	}
     else if( [pushType isEqualToString:@"gift"] )
 	{
 		NSLog(@"Push received: gift");
-		[MessageHandler handleGiftPush:userInfo forReply:NO];
+		[MessageHandler handleGiftPush:userInfo forReply:NO withFetchCompletionHandler:nil];
 	}
     else if( [pushType isEqualToString:@"gift_reply"] )
 	{
 		NSLog(@"Push received: gift_reply");
-		[MessageHandler handleGiftPush:userInfo forReply:YES];
+		[MessageHandler handleGiftPush:userInfo forReply:YES withFetchCompletionHandler:nil];
 	}
 }
 
 - (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-	//implement completion handler
-	//add "remote-notification" to supported UIBackgroundModes in Info.plist
+	[RepunchUtils clearNotificationCenter];
+	
+	NSString *pushType = [userInfo objectForKey:@"type"];
+	
+	if( [pushType isEqualToString:@"punch"] )
+	{
+		NSLog(@"Push received: punch");
+		[PunchHandler handlePush:userInfo withFetchCompletionHandler:completionHandler];
+	}
+	else if( [pushType isEqualToString:@"redeem"] )
+	{
+		NSLog(@"Push received: redeem");
+		[RedeemHandler handlePush:userInfo withFetchCompletionHandler:completionHandler];
+	}
+	else if( [pushType isEqualToString:@"redeem_offer_gift"] )
+	{
+		NSLog(@"Push received: redeem offer/gift");
+		[RedeemHandler handleOfferGiftPush:userInfo withFetchCompletionHandler:completionHandler];
+	}
+    else if( [pushType isEqualToString:@"message"] )
+	{
+		NSLog(@"Push received: message");
+        [MessageHandler handlePush:userInfo withFetchCompletionHandler:completionHandler];
+	}
+    else if( [pushType isEqualToString:@"gift"] )
+	{
+		NSLog(@"Push received: gift");
+		[MessageHandler handleGiftPush:userInfo forReply:NO withFetchCompletionHandler:completionHandler];
+	}
+    else if( [pushType isEqualToString:@"gift_reply"] )
+	{
+		NSLog(@"Push received: gift_reply");
+		[MessageHandler handleGiftPush:userInfo forReply:YES withFetchCompletionHandler:completionHandler];
+	}
 }
 
 - (void)checkLoginState
@@ -143,7 +171,10 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 			
 			if (internetStatus != NotReachable)
 			{
+				[self presentIndeterminateStateView];
+				
 				PFObject *patron = [currentUser objectForKey:@"Patron"];
+				NSLog(@"object ID: %@", patron.objectId);
 				[patron fetchIfNeededInBackgroundWithBlock:^(PFObject *result, NSError *error)
 				 {
 					 if (!error) {
@@ -157,6 +188,8 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 						 NSLog(@"Failed to fetch Patron object: %@", error);
 					 }
 				 }];
+				
+				//PFQuery *query;
 			}
 			else
 			{
@@ -175,6 +208,18 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 	{
 		[self presentLandingViews];
     }
+}
+
+- (void)presentIndeterminateStateView
+{
+	UIViewController *blankVC = [[UIViewController alloc] init];
+	UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+	[blankVC.view setBackgroundColor:[UIColor blackColor]];
+	[blankVC.view addSubview:spinner];
+	spinner.center = blankVC.view.center;
+	[spinner startAnimating];
+	self.window.rootViewController = blankVC;
+    [self.window makeKeyAndVisible];
 }
 
 - (void)presentTabBarController

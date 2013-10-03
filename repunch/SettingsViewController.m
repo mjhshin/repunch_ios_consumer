@@ -36,16 +36,6 @@
 	self.navigationItem.leftBarButtonItem = exitButton;
 	
 	sharedData = [DataManager getSharedInstance];
-    
-	/*
-	 PFObject* patron = [sharedData patron];
-	 NSString* str1 = @"Logged in as ";
-	 NSString* firstName = [patron objectForKey:@"first_name"];
-	 NSString* str2 = @" ";
-	 NSString* lastName = [patron objectForKey:@"last_name"];
-	 
-	 //self.currentLogin.text = [NSString stringWithFormat:@"%@%@%@%@", str1, firstName, str2, lastName];
-	 */
 	
 	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
 	CGFloat screenWidth = screenRect.size.width;
@@ -90,6 +80,11 @@
 	return 40;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+	return (section == 1) ? 50 : 0;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	return (indexPath.section == 1) ? 60 : 45;
@@ -116,6 +111,23 @@
     [view addSubview:label];
 	
     return view;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+	UILabel *label = [[UILabel alloc] init];
+	label.textColor = [UIColor grayColor];
+	label.font = [UIFont fontWithName:@"Avenir" size:14];
+	label.backgroundColor = [UIColor clearColor];
+	NSString *appVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
+	label.text = [NSString stringWithFormat:@" Repunch v%@", appVersion];
+	label.textAlignment = NSTextAlignmentCenter;
+	
+	UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+	[view addSubview:label];
+	label.frame = view.bounds;
+	
+	return (section == 1) ? view : nil;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

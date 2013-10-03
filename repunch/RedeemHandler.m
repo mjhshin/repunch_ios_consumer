@@ -7,17 +7,22 @@
 //
 
 #import "RedeemHandler.h"
+#import <Foundation/Foundation.h>
+#import "DataManager.h"
+#import "SIAlertView.h"
+#import "FacebookPost.h"
 
 @implementation RedeemHandler
 
-+ (void) handlePush:(NSDictionary *)pushPayload
++ (void) handlePush:(NSDictionary *)userInfo
+withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
 	DataManager *sharedData = [DataManager getSharedInstance];
 	
-	NSString *storeId = [pushPayload objectForKey:@"store_id"];
-	NSString *rewardTitle = [pushPayload objectForKey:@"reward_title"];
-	int totalPunches = [[pushPayload objectForKey:@"total_punches"] intValue];
-	NSString *alert = [[pushPayload objectForKey:@"aps"] objectForKey:@"alert"];
+	NSString *storeId = [userInfo objectForKey:@"store_id"];
+	NSString *rewardTitle = [userInfo objectForKey:@"reward_title"];
+	int totalPunches = [[userInfo objectForKey:@"total_punches"] intValue];
+	NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
 	
 	PFObject *patron = [sharedData patron];
 	PFObject *store = [sharedData getStore:storeId];
@@ -37,7 +42,7 @@
 		int freePunches = [[store objectForKey:@"punches_facebook"] intValue];
 		if( facebookId != nil && facebookId != (id)[NSNull null] &&  freePunches > 0)
 		{
-			[FacebookUtils postToFacebook:storeId withRewardTitle:rewardTitle];
+			[FacebookPost presentDialog:storeId withRewardTitle:rewardTitle];
 		}
 		else
 		{
@@ -50,14 +55,17 @@
 	{
 		// User must have deleted the store from My Places. In that case, there's no need to notify them of anything.
 	}
+	
+	completionHandler(UIBackgroundFetchResultNoData);
 }
 
-+ (void) handleOfferGiftPush:(NSDictionary *)pushPayload
++ (void) handleOfferGiftPush:(NSDictionary *)userInfo
+  withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
 	DataManager *sharedData = [DataManager getSharedInstance];
 	
-	NSString *msgStatusId = [pushPayload objectForKey:@"message_status_id"];
-	NSString *alert = [[pushPayload objectForKey:@"aps"] objectForKey:@"alert"];
+	NSString *msgStatusId = [userInfo objectForKey:@"message_status_id"];
+	NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
 	
 	PFObject *messageStatus = [sharedData getMessage:msgStatusId];
 	[messageStatus setObject:@"no" forKey:@"redeem_available"];
@@ -65,6 +73,8 @@
 	SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Success!" andMessage:alert];
 	[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
 	[alertView show];
+	
+	completionHandler(UIBackgroundFetchResultNoData);
 }
 
 @end

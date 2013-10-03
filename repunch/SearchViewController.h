@@ -8,7 +8,11 @@
 @class SearchViewController;
 
 @protocol  SearchViewControllerDelegate <NSObject>
-- (void)updateTableViewFromSearch:(SearchViewController *)controller forStoreId:(NSString *)storeId andAddRemove:(BOOL)isAddRemove;
+
+- (void)updateTableViewFromSearch:(SearchViewController *)controller
+					   forStoreId:(NSString *)storeId
+					 andAddRemove:(BOOL)isAddRemove;
+
 @end
 
 #import <UIKit/UIKit.h>

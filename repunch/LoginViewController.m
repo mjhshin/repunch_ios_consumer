@@ -10,8 +10,9 @@
 
 @implementation LoginViewController
 {
-    DataManager* sharedData;
-	UIActivityIndicatorView *spinner;
+    DataManager *sharedData;
+	AuthenticationManager *authenticationManager;
+	UIActivityIndicatorView *loginButtonSpinner;
 }
 
 - (void)viewDidLoad
@@ -19,6 +20,7 @@
     [super viewDidLoad];
 	
 	sharedData = [DataManager getSharedInstance];
+	authenticationManager = [AuthenticationManager getSharedInstance];
     
     //gesture to dismiss keyboard
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
@@ -30,6 +32,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+	
+	authenticationManager.delegate = self;
+	
 	self.navigationController.navigationBarHidden = NO;
 	self.navigationItem.title = @"Sign In";
 	self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
@@ -41,10 +46,10 @@
 	[self.loginButton.layer setCornerRadius:5];
 	[self.loginButton setClipsToBounds:YES];
 	
-	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-	spinner.frame = self.loginButton.bounds;
-	spinner.hidesWhenStopped = YES;
-	[self.loginButton addSubview:spinner];
+	loginButtonSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+	loginButtonSpinner.frame = self.loginButton.bounds;
+	loginButtonSpinner.hidesWhenStopped = YES;
+	[self.loginButton addSubview:loginButtonSpinner];
 	self.facebookSpinner.hidesWhenStopped = YES;
 }
 
@@ -82,13 +87,13 @@
     [UIView commitAnimations];
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField*)textField;
+- (BOOL)textFieldShouldReturn:(UITextField*)textField
 {
 	if(textField == _emailInput) {
 		[_emailInput resignFirstResponder];
 		[_passwordInput becomeFirstResponder];
-		
-	} else if(textField == _passwordInput) {
+	}
+	else if(textField == _passwordInput) {
 		[self loginWithRepunch:self];
 	}
 	
@@ -114,7 +119,7 @@
 	[self.loginButton setTitle:@"" forState:UIControlStateNormal];
 	[self.loginButton setEnabled:NO];
 	[self.facebookButton setEnabled:NO];
-	[spinner startAnimating];
+	[loginButtonSpinner startAnimating];
         
 	[PFUser logInWithUsernameInBackground:email password:password block:^(PFUser *user, NSError *error)
 	{
@@ -184,7 +189,7 @@
 	[[PFInstallation currentInstallation] setObject:punchCode forKey:@"punch_code"];
 	[[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
 	{
-		[spinner stopAnimating];
+		[loginButtonSpinner stopAnimating];
 		[self.facebookSpinner stopAnimating];
 		[self.loginButton setTitle:@"Sign In" forState:UIControlStateNormal];
 		[self.loginButton setEnabled:YES];
@@ -208,81 +213,7 @@
 	[self.facebookSpinner startAnimating];
 	[self.facebookButtonLabel setHidden:YES];
 	
-    NSArray *permissions = @[@"email", @"user_birthday", @"publish_actions"];
-	
-	[PFFacebookUtils logInWithPermissions:permissions block:^(PFUser *user, NSError *error)
-	 {
-		 if (!user)
-		 {
-			 NSLog(@"Uh oh. The user cancelled the Facebook login.");
-			 [self handleError:nil withTitle:@"Login Failed" andMessage:@"Sorry, something went wrong"];
-		 }
-		 else if (user.isNew)
-		 {
-			 NSLog(@"User signed up and logged in through Facebook!");
-			 //get publish permissions
-			 [self performFacebookSignup:user];
-		 }
-		 else
-		 {
-			 NSLog(@"User logged in through Facebook! User Object: %@", user);
-			 NSString *patronId = [[user objectForKey:@"Patron"] objectId];
-			 [self fetchPatronPFObject:patronId];
-		 }
-	 }];
-}
-
-- (void)performFacebookSignup:(PFUser *)currentUser
-{
-	[[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error)
-	 {
-		 if (!error)
-		 {
-			 NSString *facebookId = user.id;
-			 NSString *firstName = user.first_name;
-			 NSString *lastName = user.last_name;
-			 NSString *birthday = user.birthday;
-			 NSString *gender = [user objectForKey:@"gender"];
-			 NSString *email = [user objectForKey:@"email"];
-			 
-			 if(email == nil) {
-				 email = (id)[NSNull null];
-			 }
-			 
-			 //register patron
-			 NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-										 currentUser.objectId,	@"user_id",
-										 currentUser.username,	@"username",
-										 email,					@"email",
-										 gender,				@"gender",
-										 birthday,				@"birthday",
-										 firstName,				@"first_name",
-										 lastName,				@"last_name",
-										 facebookId,			@"facebook_id",
-										 nil];
-			 
-			 [PFCloud callFunctionInBackground:@"register_patron"
-								withParameters:parameters
-										 block:^(PFObject* patron, NSError *error)
-			  {
-				  if (!error)
-				  {
-					  [sharedData setPatron:patron];
-					  [self setupPFInstallation:patron.objectId withPunchCode:[patron objectForKey:@"punch_code"]];
-				  }
-				  else
-				  {
-					  NSString *errorString = [[error userInfo] objectForKey:@"error"];
-					  [self handleError:error withTitle:@"Login Failed" andMessage:errorString];
-				  }
-			  }];
-			 
-		 }
-		 else
-		 {
-			 [self handleError:nil withTitle:@"Login Failed" andMessage:@"Sorry, something went wrong"];
-		 }
-	 }];
+	[authenticationManager facebookLogin];
 }
 
 - (void)dismissKeyboard
@@ -301,12 +232,38 @@
 	
 	[self showDialog:title withResultMessage:message];
 	
-	[spinner stopAnimating];
+	[loginButtonSpinner stopAnimating];
 	[self.facebookSpinner stopAnimating];
 	[self.loginButton setTitle:@"Sign In" forState:UIControlStateNormal];
 	[self.loginButton setEnabled:YES];
 	[self.facebookButtonLabel setHidden:NO];
 	[self.facebookButton setEnabled:YES];
+}
+
+- (void)onAuthenticationResult:(AuthenticationManager *)object withResult:(BOOL)success withError:(NSError *)error
+{
+	[loginButtonSpinner stopAnimating];
+	[self.loginButton setTitle:@"Sign In" forState:UIControlStateNormal];
+	[self.loginButton setEnabled:YES];
+	[self.facebookSpinner stopAnimating];
+	[self.facebookButtonLabel setHidden:NO];
+	[self.facebookButton setEnabled:YES];
+	
+	if(success)
+	{
+		AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+		[appDelegate presentTabBarController];
+	}
+	else
+	{
+		NSLog(@"Here is the ERROR: %@", error);
+		
+		if([PFUser currentUser]) {
+			[PFUser logOut];
+		}
+		
+		//[self showDialog:title withResultMessage:message];
+	}
 }
 
 - (void)showDialog:(NSString*)resultTitle withResultMessage:(NSString*)resultMessage
