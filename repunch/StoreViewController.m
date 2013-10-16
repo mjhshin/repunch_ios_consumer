@@ -411,7 +411,7 @@
 						NSLog(@"function call is: %@", success);
 						SIAlertView *confirmDialogue = [[SIAlertView alloc] initWithTitle:@"Waiting for confirmation" andMessage:@"Please wait for your reward to be validated"];
 						[confirmDialogue addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
-							//nothing
+							//nothing4
 						}];
 						[confirmDialogue show];
 					}

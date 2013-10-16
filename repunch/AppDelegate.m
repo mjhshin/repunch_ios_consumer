@@ -11,6 +11,7 @@
 @implementation AppDelegate
 {
 	DataManager* sharedData;
+	PFQuery *patronQuery;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -162,47 +163,26 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 	PFUser* currentUser = [PFUser currentUser];
 	
     if (currentUser)
-	{		
-		//if patron object is null for some reason
-        if ( ![sharedData patron] )
-		{
-			Reachability *reachability = [Reachability reachabilityForInternetConnection];
-			NetworkStatus internetStatus = [reachability currentReachabilityStatus];
-			
-			if (internetStatus != NotReachable)
-			{
-				[self presentIndeterminateStateView];
+	{
+		[self presentIndeterminateStateView];
 				
-				PFObject *patron = [currentUser objectForKey:@"Patron"];
-				NSLog(@"object ID: %@", patron.objectId);
-				[patron fetchIfNeededInBackgroundWithBlock:^(PFObject *result, NSError *error)
-				 {
-					 if (!error) {
-						 [sharedData setPatron:result];
-						 [self presentTabBarController];
-					 }
-					 else {
-						 [RepunchUtils showDefaultErrorMessage];
-						 [PFUser logOut];
-						 [self checkLoginState];
-						 NSLog(@"Failed to fetch Patron object: %@", error);
-					 }
-				 }];
+		PFObject *patron = [currentUser objectForKey:@"Patron"];
 				
-				//PFQuery *query;
-			}
-			else
-			{
-				[RepunchUtils showDefaultErrorMessage];
-				[PFUser logOut];
-				[self checkLoginState];
-			}
-        }
-		else
-		{
-            [self presentTabBarController];
-		}
-		
+		patronQuery = [PFQuery queryWithClassName:@"Patron"];
+		patronQuery.cachePolicy = kPFCachePolicyCacheElseNetwork;
+		[patronQuery getObjectInBackgroundWithId:patron.objectId block:^(PFObject *patron, NSError *error)
+		 {
+			 if (!error) {
+				 [sharedData setPatron:patron];
+				 [self presentTabBarController];
+			 }
+			 else {
+				 [RepunchUtils showDefaultErrorMessage];
+				 [PFUser logOut];
+				 [self checkLoginState];
+				 NSLog(@"Failed to fetch Patron object: %@", error);
+			 }
+		 }];
     }
 	else
 	{
@@ -269,7 +249,6 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
 	[sharedData clearData];
     [PFUser logOut];
-	//TODO: unload tab bar controller so it isn't see through when you go to register/login
 	[self presentLandingViews];
 }
 

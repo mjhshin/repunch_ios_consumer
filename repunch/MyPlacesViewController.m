@@ -63,13 +63,11 @@
         [punchCodeHelpAlert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
         [punchCodeHelpAlert show];
     }
-	
-	self.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [super viewWillDisappear:animated];
+	[super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -278,12 +276,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-	self.tabBarController.tabBar.hidden = YES;
 	
 	NSString *storeId = [self.storeIdArray objectAtIndex:indexPath.row];
     StoreViewController *storeVC = [[StoreViewController alloc]init];
     storeVC.storeId = storeId;
 	storeVC.delegate = self;
+	storeVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:storeVC animated:YES];
 }
 
@@ -439,22 +437,20 @@
 - (IBAction)openSettings:(id)sender
 {
     SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
+	settingsVC.hidesBottomBarWhenPushed = YES;
 	UINavigationController *searchNavController = [[UINavigationController alloc] initWithRootViewController:settingsVC];
 	[RepunchUtils setupNavigationController:searchNavController];
     [self presentViewController:searchNavController animated:YES completion:nil];
-	
-	self.tabBarController.tabBar.hidden = YES;
 }
 
 - (IBAction)openSearch:(id)sender
 {
     SearchViewController *searchVC = [[SearchViewController alloc] init];
+	searchVC.hidesBottomBarWhenPushed = YES;
 	searchVC.delegate = self;
 	UINavigationController *searchNavController = [[UINavigationController alloc] initWithRootViewController:searchVC];
 	[RepunchUtils setupNavigationController:searchNavController];
     [self presentViewController:searchNavController animated:YES completion:nil];
-	
-	self.tabBarController.tabBar.hidden = YES;
 }
 
 @end

@@ -36,7 +36,6 @@
     [numberToolbar sizeToFit];
     self.ageInput.inputAccessoryView = numberToolbar;
 	
-	self.navigationController.navigationBarHidden = NO;
 	self.navigationItem.title = @"Register";
 	self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
 	
@@ -148,7 +147,11 @@
 		return;
 	}
 	
-    NSString *email = [_emailInput.text lowercaseString];
+	//make lowercase and strip trailing/leading whitespace
+    NSString *lowercaseEmail = [_emailInput.text lowercaseString];
+	NSRange range = [lowercaseEmail rangeOfString:@"^\\s*" options:NSRegularExpressionSearch];
+	NSString *email = [lowercaseEmail stringByReplacingCharactersInRange:range withString:@""];
+	
     NSString *password = _passwordInput.text;
 	NSString *firstName = _firstNameInput.text;
 	NSString *lastName = _lastNameInput.text;

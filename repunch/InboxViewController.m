@@ -51,14 +51,12 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:YES];
-	
-	self.tabBarController.tabBar.hidden = NO;
+    [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
-{
-	[super viewDidDisappear:YES];
+{	
+	[super viewDidDisappear:animated];
 	[UIApplication sharedApplication].applicationIconBadgeNumber = alertBadgeCount;
 }
 
@@ -271,11 +269,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-	self.tabBarController.tabBar.hidden = YES;
     IncomingMessageViewController *messageVC = [[IncomingMessageViewController alloc] init];
 	PFObject *messageStatus = [self.messagesArray objectAtIndex:indexPath.row];
     messageVC.messageStatusId = [messageStatus objectId];
 	messageVC.delegate = self;
+	messageVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:messageVC animated:YES];
 	 
 	if( [[messageStatus objectForKey:@"is_read"] boolValue] == NO )
@@ -443,9 +441,8 @@
 
 - (IBAction)openSettings:(id)sender
 {
-	self.tabBarController.tabBar.hidden = YES;
-	
     SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
+	settingsVC.hidesBottomBarWhenPushed = YES;
 	UINavigationController *searchNavController = [[UINavigationController alloc] initWithRootViewController:settingsVC];
 	[RepunchUtils setupNavigationController:searchNavController];
     [self presentViewController:searchNavController animated:YES completion:nil];
@@ -453,9 +450,9 @@
 
 - (IBAction)openSearch:(id)sender
 {
-	self.tabBarController.tabBar.hidden = YES;
-	
     SearchViewController *searchVC = [[SearchViewController alloc] init];
+	searchVC.hidesBottomBarWhenPushed = YES;
+	//searchVC.delegate = [self.tabBarController.viewControllers objectAtIndex:0]; TODO: NEED TO SET DELEGATE TO MY PLACES!!!!!!!!!!!!!
 	UINavigationController *searchNavController = [[UINavigationController alloc] initWithRootViewController:searchVC];
 	[RepunchUtils setupNavigationController:searchNavController];
     [self presentViewController:searchNavController animated:YES completion:nil];

@@ -35,7 +35,6 @@
 	
 	authenticationManager.delegate = self;
 	
-	self.navigationController.navigationBarHidden = NO;
 	self.navigationItem.title = @"Sign In";
 	self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
 	
