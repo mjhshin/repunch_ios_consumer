@@ -671,7 +671,9 @@
 
 - (void)alertParentViewController:(BOOL)isAddRemove
 {
-	[self.delegate updateTableViewFromStore:self forStoreId:self.storeId andAddRemove:isAddRemove];
+    if ([self.delegate respondsToSelector:@selector(updateTableViewFromStore:forStoreId:andAddRemove:)]) {
+        [self.delegate updateTableViewFromStore:self forStoreId:self.storeId andAddRemove:isAddRemove];
+    }
 }
 
 @end
