@@ -162,7 +162,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
 	PFUser* currentUser = [PFUser currentUser];
 	
-    if (currentUser)
+    if (currentUser && ![currentUser isKindOfClass:[NSNull class]])
 	{
 		[self presentIndeterminateStateView];
 				
@@ -203,7 +203,9 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 }
 
 - (void)presentTabBarController
-{	
+{
+    [Crashlytics setUserEmail:  [PFUser currentUser].email];
+
     MyPlacesViewController *myPlacesVC = [[MyPlacesViewController alloc] init];
     InboxViewController *inboxVC = [[InboxViewController alloc] init];
 	
@@ -212,19 +214,17 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 	[RepunchUtils setupNavigationController:myPlacesNavController];
 	[RepunchUtils setupNavigationController:inboxNavController];
     
+    myPlacesNavController.tabBarItem.title = @"My Places";
+    inboxNavController.tabBarItem.title    = @"Inbox";
+    
+    myPlacesNavController.tabBarItem.image = [UIImage imageNamed:@"ico-tab-places.png"];
+    inboxNavController.tabBarItem.image = [UIImage imageNamed:@"ico-tab-inbox.png"];
+    
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
 	tabBarController.viewControllers = @[myPlacesNavController, inboxNavController];
 	tabBarController.tabBar.tintColor = [RepunchUtils repunchOrangeColor];
 	tabBarController.tabBar.barStyle = UIBarStyleDefault;
 	
-    UITabBarItem *myPlacesTab = [tabBarController.tabBar.items objectAtIndex:0];
-    [myPlacesTab setTitle:@"My Places"];
-    [myPlacesTab setImage:[UIImage imageNamed:@"ico-tab-places.png"]];
-    
-	UITabBarItem *inboxTab = [tabBarController.tabBar.items objectAtIndex:1];
-    [inboxTab setTitle:@"Inbox"];
-    [inboxTab setImage:[UIImage imageNamed:@"ico-tab-inbox.png"]];
-
     NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary: [[UITabBarItem appearance] titleTextAttributesForState:UIControlStateNormal]];
     [attributes setValue:[UIFont fontWithName:@"Avenir-Heavy" size:12] forKey:NSFontAttributeName];
     [[UITabBarItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
