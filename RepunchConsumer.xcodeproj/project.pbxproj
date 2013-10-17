@@ -7,15 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2027286E181031E4004BD1A6 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2027286D181031E4004BD1A6 /* Parse.framework */; };
 		798D6DE81785B98A00CF8109 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 798D6DE71785B98A00CF8109 /* libsqlite3.dylib */; };
 		7996B35D17820A9700CCAFED /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B35C17820A9700CCAFED /* UIKit.framework */; };
 		7996B35F17820A9700CCAFED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B35E17820A9700CCAFED /* Foundation.framework */; };
 		7996B36117820A9700CCAFED /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B36017820A9700CCAFED /* CoreGraphics.framework */; };
 		7996B36317820A9700CCAFED /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B36217820A9700CCAFED /* CoreData.framework */; };
-		7996B38017820A9700CCAFED /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B37F17820A9700CCAFED /* SenTestingKit.framework */; };
-		7996B38117820A9700CCAFED /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B35C17820A9700CCAFED /* UIKit.framework */; };
-		7996B38217820A9700CCAFED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B35E17820A9700CCAFED /* Foundation.framework */; };
-		7996B38317820A9700CCAFED /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B36217820A9700CCAFED /* CoreData.framework */; };
 		7996B39817820AE800CCAFED /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B39717820AE800CCAFED /* CoreText.framework */; };
 		7996B39A17820AEC00CCAFED /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B39917820AEC00CCAFED /* MapKit.framework */; };
 		7996B39C17820AF000CCAFED /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B39B17820AF000CCAFED /* CoreLocation.framework */; };
@@ -50,7 +47,6 @@
 		EE5378CC17B2FEA9002D8B18 /* feedback_button.png in Resources */ = {isa = PBXBuildFile; fileRef = EE5378C617B2FEA9002D8B18 /* feedback_button.png */; };
 		EE5378CE17B2FEA9002D8B18 /* map_button.png in Resources */ = {isa = PBXBuildFile; fileRef = EE5378C817B2FEA9002D8B18 /* map_button.png */; };
 		EE5F947017FA37D6006E6F67 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE5F946E17FA37D6006E6F67 /* FacebookSDK.framework */; };
-		EE5F947117FA37D6006E6F67 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE5F946F17FA37D6006E6F67 /* Parse.framework */; };
 		EE5F947417FB5471006E6F67 /* AuthenticationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5F947317FB5471006E6F67 /* AuthenticationManager.m */; };
 		EE6E6E38180F24E1000CE34B /* WelcomeStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE6E6E37180F24E1000CE34B /* WelcomeStoryboard.storyboard */; };
 		EE79DF4F17BAA37C00E92DE5 /* MessageAttachment.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE79DF4E17BAA37C00E92DE5 /* MessageAttachment.xib */; };
@@ -142,7 +138,6 @@
 		EEA181B717CC499C00553336 /* RepunchUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA181B617CC499B00553336 /* RepunchUtils.m */; };
 		EEA181C217CD20D300553336 /* map_button_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = EEA181BC17CD20D300553336 /* map_button_highlighted.png */; };
 		EEA181C317CD20D300553336 /* map_button_highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEA181BD17CD20D300553336 /* map_button_highlighted@2x.png */; };
-		EEA181C617CD81CB00553336 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA181C517CD81CA00553336 /* Reachability.m */; };
 		EEA181C817CD836F00553336 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA181C517CD81CA00553336 /* Reachability.m */; };
 		EEB8A44117EA314B0020E2EE /* splash_screen_640x960.png in Resources */ = {isa = PBXBuildFile; fileRef = EEB8A43E17EA314B0020E2EE /* splash_screen_640x960.png */; };
 		EEB8A44217EA314B0020E2EE /* splash_screen_640x1136.png in Resources */ = {isa = PBXBuildFile; fileRef = EEB8A43F17EA314B0020E2EE /* splash_screen_640x1136.png */; };
@@ -152,24 +147,14 @@
 		EEE777B317E7ECEB0023768B /* nav_send@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEE777B217E7ECEB0023768B /* nav_send@2x.png */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		7996B38417820A9700CCAFED /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7996B35117820A9700CCAFED /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7996B35817820A9700CCAFED;
-			remoteInfo = Repunch;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
+		2027286D181031E4004BD1A6 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = External/Parse.framework; sourceTree = "<group>"; };
 		798D6DE71785B98A00CF8109 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		7996B35917820A9700CCAFED /* Repunch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Repunch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7996B35C17820A9700CCAFED /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7996B35E17820A9700CCAFED /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7996B36017820A9700CCAFED /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		7996B36217820A9700CCAFED /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		7996B37E17820A9700CCAFED /* RepunchTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RepunchTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7996B37F17820A9700CCAFED /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		7996B39717820AE800CCAFED /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		7996B39917820AEC00CCAFED /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -209,7 +194,6 @@
 		EE5378C617B2FEA9002D8B18 /* feedback_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = feedback_button.png; sourceTree = "<group>"; };
 		EE5378C817B2FEA9002D8B18 /* map_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_button.png; sourceTree = "<group>"; };
 		EE5F946E17FA37D6006E6F67 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
-		EE5F946F17FA37D6006E6F67 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		EE5F947217FB5471006E6F67 /* AuthenticationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticationManager.h; sourceTree = "<group>"; };
 		EE5F947317FB5471006E6F67 /* AuthenticationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationManager.m; sourceTree = "<group>"; };
 		EE6E6E37180F24E1000CE34B /* WelcomeStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = WelcomeStoryboard.storyboard; sourceTree = "<group>"; };
@@ -344,6 +328,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2027286E181031E4004BD1A6 /* Parse.framework in Frameworks */,
 				798D6DE81785B98A00CF8109 /* libsqlite3.dylib in Frameworks */,
 				EE5F947017FA37D6006E6F67 /* FacebookSDK.framework in Frameworks */,
 				7996B3B017820B1C00CCAFED /* Accounts.framework in Frameworks */,
@@ -354,7 +339,6 @@
 				7996B3A617820B0700CCAFED /* Security.framework in Frameworks */,
 				7996B3A417820B0300CCAFED /* QuartzCore.framework in Frameworks */,
 				7996B3A217820B0000CCAFED /* MobileCoreServices.framework in Frameworks */,
-				EE5F947117FA37D6006E6F67 /* Parse.framework in Frameworks */,
 				7996B3A017820AFB00CCAFED /* AudioToolbox.framework in Frameworks */,
 				7996B39E17820AF700CCAFED /* CFNetwork.framework in Frameworks */,
 				7996B39C17820AF000CCAFED /* CoreLocation.framework in Frameworks */,
@@ -365,17 +349,6 @@
 				7996B35F17820A9700CCAFED /* Foundation.framework in Frameworks */,
 				7996B36117820A9700CCAFED /* CoreGraphics.framework in Frameworks */,
 				7996B36317820A9700CCAFED /* CoreData.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7996B37A17820A9700CCAFED /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7996B38017820A9700CCAFED /* SenTestingKit.framework in Frameworks */,
-				7996B38117820A9700CCAFED /* UIKit.framework in Frameworks */,
-				7996B38217820A9700CCAFED /* Foundation.framework in Frameworks */,
-				7996B38317820A9700CCAFED /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,7 +373,6 @@
 			isa = PBXGroup;
 			children = (
 				7996B35917820A9700CCAFED /* Repunch.app */,
-				7996B37E17820A9700CCAFED /* RepunchTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -408,6 +380,7 @@
 		7996B35B17820A9700CCAFED /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2027286D181031E4004BD1A6 /* Parse.framework */,
 				798D6DE71785B98A00CF8109 /* libsqlite3.dylib */,
 				7996B3AF17820B1C00CCAFED /* Accounts.framework */,
 				7996B3AD17820B1800CCAFED /* Social.framework */,
@@ -448,7 +421,6 @@
 			isa = PBXGroup;
 			children = (
 				EE5F946E17FA37D6006E6F67 /* FacebookSDK.framework */,
-				EE5F946F17FA37D6006E6F67 /* Parse.framework */,
 				EE17EE0D17FA34EE0053C36C /* Crashlytics.framework */,
 			);
 			path = External;
@@ -663,25 +635,6 @@
 			productReference = 7996B35917820A9700CCAFED /* Repunch.app */;
 			productType = "com.apple.product-type.application";
 		};
-		7996B37D17820A9700CCAFED /* RepunchTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7996B39417820A9700CCAFED /* Build configuration list for PBXNativeTarget "RepunchTests" */;
-			buildPhases = (
-				7996B37917820A9700CCAFED /* Sources */,
-				7996B37A17820A9700CCAFED /* Frameworks */,
-				7996B37B17820A9700CCAFED /* Resources */,
-				7996B37C17820A9700CCAFED /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				7996B38517820A9700CCAFED /* PBXTargetDependency */,
-			);
-			name = RepunchTests;
-			productName = RepunchTests;
-			productReference = 7996B37E17820A9700CCAFED /* RepunchTests.octest */;
-			productType = "com.apple.product-type.bundle";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -704,7 +657,6 @@
 			projectRoot = "";
 			targets = (
 				7996B35817820A9700CCAFED /* Repunch */,
-				7996B37D17820A9700CCAFED /* RepunchTests */,
 			);
 		};
 /* End PBXProject section */
@@ -802,29 +754,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7996B37B17820A9700CCAFED /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7996B37C17820A9700CCAFED /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
 		EE17EE0A17F4A37B0053C36C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -880,23 +812,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7996B37917820A9700CCAFED /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				EEA181C617CD81CB00553336 /* Reachability.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		7996B38517820A9700CCAFED /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7996B35817820A9700CCAFED /* Repunch */;
-			targetProxy = 7996B38417820A9700CCAFED /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		7996B38F17820A9700CCAFED /* Debug */ = {
@@ -975,6 +891,8 @@
 					"$(SRCROOT)",
 					/Users/michaelshin/workspace/shin_repunch_ios_consumer,
 					/Users/michaelshin/workspace/shin_repunch_ios_consumer/External,
+					/Users/Emil/Desktop,
+					/Users/Emil/Desktop/Repunch/repunch_ios_consumer/External,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Repunch-Prefix.pch";
@@ -1002,6 +920,8 @@
 					"$(SRCROOT)",
 					/Users/michaelshin/workspace/shin_repunch_ios_consumer,
 					/Users/michaelshin/workspace/shin_repunch_ios_consumer/External,
+					/Users/Emil/Desktop,
+					/Users/Emil/Desktop/Repunch/repunch_ios_consumer/External,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Repunch-Prefix.pch";
@@ -1014,50 +934,6 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		7996B39517820A9700CCAFED /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Repunch.app/Repunch";
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-					"\"$(SRCROOT)/External\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Repunch/Repunch-Prefix.pch";
-				INFOPLIST_FILE = "RepunchTests/RepunchTests-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/External/CrittercismSDK\"",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Debug;
-		};
-		7996B39617820A9700CCAFED /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Repunch.app/Repunch";
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-					"\"$(SRCROOT)/External\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Repunch/Repunch-Prefix.pch";
-				INFOPLIST_FILE = "RepunchTests/RepunchTests-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/External/CrittercismSDK\"",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};
@@ -1078,15 +954,6 @@
 			buildConfigurations = (
 				7996B39217820A9700CCAFED /* Debug */,
 				7996B39317820A9700CCAFED /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		7996B39417820A9700CCAFED /* Build configuration list for PBXNativeTarget "RepunchTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7996B39517820A9700CCAFED /* Debug */,
-				7996B39617820A9700CCAFED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

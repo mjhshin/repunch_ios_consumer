@@ -373,7 +373,10 @@
 {
 	NSLog(@"storeVC->searchVC delegate:update TableView");
     [self.searchTableView reloadData];
-	[self.delegate updateTableViewFromSearch:self forStoreId:storeId andAddRemove:isAddRemove];
+    
+    if ([self.delegate respondsToSelector:@selector(updateTableViewFromSearch:forStoreId:andAddRemove:)]) {
+        [self.delegate updateTableViewFromSearch:self forStoreId:storeId andAddRemove:isAddRemove];
+    }
 }
 
 - (void)reloadTableView
