@@ -41,7 +41,7 @@
 	[application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge |
 													UIRemoteNotificationTypeAlert |
 													UIRemoteNotificationTypeSound];
-	
+	[RepunchUtils configureAppearance];
 	sharedData = [DataManager getSharedInstance];
 	[self checkLoginState];
 	
@@ -222,12 +222,6 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
     
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
 	tabBarController.viewControllers = @[myPlacesNavController, inboxNavController];
-	tabBarController.tabBar.tintColor = [RepunchUtils repunchOrangeColor];
-	tabBarController.tabBar.barStyle = UIBarStyleDefault;
-	
-    NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary: [[UITabBarItem appearance] titleTextAttributesForState:UIControlStateNormal]];
-    [attributes setValue:[UIFont fontWithName:@"Avenir-Heavy" size:12] forKey:NSFontAttributeName];
-    [[UITabBarItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
 	
 	self.window.rootViewController = tabBarController;
 	[self.window makeKeyAndVisible];

@@ -26,7 +26,6 @@
 @property (nonatomic, strong) PFObject *patron;
 @property (nonatomic, strong) NSMutableArray *storeIdArray;
 @property (nonatomic, strong) UITableViewController *tableViewController;
-@property (nonatomic, strong) UITableView *myPlacesTableView;
 @property (nonatomic, strong) NSMutableDictionary *imageDownloadsInProgress;
 
 @end

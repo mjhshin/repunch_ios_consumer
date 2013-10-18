@@ -26,6 +26,5 @@
 @property (nonatomic, strong) DataManager *sharedData;
 @property (nonatomic, strong) PFObject *patron;
 @property (nonatomic, strong) NSMutableArray *messagesArray;
-@property (nonatomic, strong) UITableView *messageTableView;
 
 @end

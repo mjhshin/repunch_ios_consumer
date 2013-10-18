@@ -251,10 +251,9 @@
 			 }
 			 else
 			 {
-				 int punches = [[patronStore objectForKey:@"punch_count"] intValue];
+				 NSInteger punches = [[patronStore objectForKey:@"punch_count"] intValue];
 				 NSNumber *newPunches = [NSNumber numberWithInt:punches - self.giftPunches];
 				 [patronStore setObject:newPunches forKey:@"punch_count"];
-				 punches -= self.giftPunches;
 				 
 				 [self showDialog:@"Your gift has been sent!" withMessage:nil];
 				 [[NSNotificationCenter defaultCenter] postNotificationName:@"Punch" object:self];

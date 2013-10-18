@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2027286E181031E4004BD1A6 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2027286D181031E4004BD1A6 /* Parse.framework */; };
+		207AA96A181195C300E73B2E /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2027286D181031E4004BD1A6 /* Parse.framework */; };
 		798D6DE81785B98A00CF8109 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 798D6DE71785B98A00CF8109 /* libsqlite3.dylib */; };
 		7996B35D17820A9700CCAFED /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B35C17820A9700CCAFED /* UIKit.framework */; };
 		7996B35F17820A9700CCAFED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B35E17820A9700CCAFED /* Foundation.framework */; };
@@ -328,7 +328,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2027286E181031E4004BD1A6 /* Parse.framework in Frameworks */,
+				207AA96A181195C300E73B2E /* Parse.framework in Frameworks */,
 				798D6DE81785B98A00CF8109 /* libsqlite3.dylib in Frameworks */,
 				EE5F947017FA37D6006E6F67 /* FacebookSDK.framework in Frameworks */,
 				7996B3B017820B1C00CCAFED /* Accounts.framework in Frameworks */,
@@ -893,6 +893,7 @@
 					/Users/michaelshin/workspace/shin_repunch_ios_consumer/External,
 					/Users/Emil/Desktop,
 					/Users/Emil/Desktop/Repunch/repunch_ios_consumer/External,
+					/Users/emil/Desktop/repunch_ios_consumer/External,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Repunch-Prefix.pch";
@@ -922,6 +923,7 @@
 					/Users/michaelshin/workspace/shin_repunch_ios_consumer/External,
 					/Users/Emil/Desktop,
 					/Users/Emil/Desktop/Repunch/repunch_ios_consumer/External,
+					/Users/emil/Desktop/repunch_ios_consumer/External,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Repunch-Prefix.pch";

@@ -100,26 +100,18 @@
 												action:@selector(loadInbox:)
 									  forControlEvents:UIControlEventValueChanged];
 	
-	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
-	CGFloat screenWidth = screenRect.size.width;
-	CGFloat screenHeight = screenRect.size.height;
-	int tabBarHeight = self.tabBarController.tabBar.frame.size.height;
-	CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
-	
-	self.messageTableView = [[UITableView alloc]
-							 initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - tabBarHeight - navBarHeight)
-							 style:UITableViewStylePlain];
-	
-    [self.messageTableView setDataSource:self];
-    [self.messageTableView setDelegate:self];
-	[self.view addSubview:self.messageTableView];
-	self.messageTableView.layer.zPosition = -1.0;
+    self.tableViewController.view.frame = self.view.bounds;
+
+    [self.tableViewController.tableView setDataSource:self];
+    [self.tableViewController.tableView setDelegate:self];
 	
 	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
 	footer.backgroundColor = [UIColor clearColor];
-	[self.messageTableView setTableFooterView:footer];
+	[self.tableViewController.tableView setTableFooterView:footer];
 	
-	self.tableViewController.tableView = self.messageTableView;
+    [self.view addSubview:self.tableViewController.tableView];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+
 }
 
 -(void)loadInbox:(BOOL)paginate
@@ -284,9 +276,9 @@
 		[messageStatus setObject:[NSNumber numberWithBool:YES] forKey:@"is_read"]; //does this change is_read in shareddata?
 		[messageStatus saveInBackground];
 	
-		[self.messageTableView beginUpdates];
-		[self.messageTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-		[self.messageTableView endUpdates];
+		[self.tableViewController.tableView beginUpdates];
+		[self.tableViewController.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+		[self.tableViewController.tableView endUpdates];
 	}
 }
 
@@ -308,16 +300,16 @@
 
 - (void)setFooter:(BOOL)paginateInProgress
 {
-	UIView *footer = self.messageTableView.tableFooterView;
+	UIView *footer = self.tableViewController.tableView.tableFooterView;
 	CGRect footerFrame = footer.frame;
 	footerFrame.size.height = paginateInProgress ? 50 : 1;
 	footer.frame = footerFrame;
-	self.messageTableView.tableFooterView = footer;
+	self.tableViewController.tableView.tableFooterView = footer;
 	
 	if(paginateInProgress)
 	{
-		spinner.frame = self.messageTableView.tableFooterView.bounds;
-		[self.messageTableView.tableFooterView addSubview:spinner];
+		spinner.frame = self.tableViewController.tableView.tableFooterView.bounds;
+		[self.tableViewController.tableView.tableFooterView addSubview:spinner];
 		[spinner startAnimating];
 	}
 	else
@@ -405,7 +397,7 @@
 		//[self.messageTableView setHidden:YES];
 		[self.emptyInboxLabel setHidden:NO];
 	}
-	[self.messageTableView reloadData];
+	[self.tableViewController.tableView reloadData];
 }
 
 - (void)fetchBadgeCount

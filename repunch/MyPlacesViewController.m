@@ -115,26 +115,19 @@
 												action:@selector(loadMyPlaces)
 									  forControlEvents:UIControlEventValueChanged];
     
-	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
-	CGFloat screenWidth = screenRect.size.width;
-	CGFloat screenHeight = screenRect.size.height;
-	int tabBarHeight = self.tabBarController.tabBar.frame.size.height;
-	CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
-	
-	self.myPlacesTableView = [[UITableView alloc]
-							  initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - tabBarHeight - navBarHeight)
-							  style:UITableViewStylePlain];
-	
-    [self.myPlacesTableView setDataSource:self];
-    [self.myPlacesTableView setDelegate:self];
-    [self.view addSubview:self.myPlacesTableView];
-	self.myPlacesTableView.layer.zPosition = -1.0;
+
+    self.tableViewController.view.frame = self.view.bounds;
+
+    [self.tableViewController.tableView setDataSource:self];
+    [self.tableViewController.tableView setDelegate:self];
 	
 	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 1)];
 	footer.backgroundColor = [UIColor clearColor];
-	[self.myPlacesTableView setTableFooterView:footer];
-	
-	self.tableViewController.tableView = self.myPlacesTableView;
+    
+	[self.tableViewController.tableView setTableFooterView:footer];
+    [self.view addSubview:self.tableViewController.tableView];
+    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
 }
 
 - (void)loadMyPlaces
@@ -246,6 +239,7 @@
             [[cell rewardIcon] setHidden:YES];
 		}
     }
+
     
     // Only load cached images; defer new downloads until scrolling ends
     //if (cell.storeImage == nil)
@@ -305,7 +299,7 @@
 				
 				UIImage *storeImage = [UIImage imageWithData:data];
 				if(storeImage) {
-					MyPlacesTableViewCell *cell = (id)[self.myPlacesTableView cellForRowAtIndexPath:indexPath];
+					MyPlacesTableViewCell *cell = (MyPlacesTableViewCell*)[self.tableViewController.tableView cellForRowAtIndexPath:indexPath];
 					cell.storeImage.image = storeImage;
 					[self.sharedData addStoreImage:storeImage forKey:storeId];
 				}
@@ -381,7 +375,7 @@
 	}
 	
 	[self sortStoreObjectIdsByPunches];
-	[self.myPlacesTableView reloadData];
+	[self.tableViewController.tableView reloadData];
 }
 
 /*

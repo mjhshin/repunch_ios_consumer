@@ -18,22 +18,36 @@
 	[errorDialogue show];
 }
 
++ (void)configureAppearance
+{
+    /* Tab Bar Item */
+    [UITabBar appearance].backgroundColor = [UIColor whiteColor];
+    [UITabBar appearance].tintColor = [self repunchOrangeColor];
+    
+    NSMutableDictionary *attributes = [[[UITabBarItem appearance] titleTextAttributesForState:UIControlStateNormal] mutableCopy];
+    [attributes setValue:[UIFont fontWithName:@"Avenir-Heavy" size:12] forKey:NSFontAttributeName];
+    [[UITabBarItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
+
+    
+    /* Bar Button Iden */
+    [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor],
+                                                           NSFontAttributeName: [UIFont fontWithName:@"Avenir"
+                                                                                                size:15]}
+                                                forState:UIControlStateNormal];
+    
+    [[UINavigationBar appearance] setTitleTextAttributes: @{NSForegroundColorAttributeName: [UIColor whiteColor],
+                                                            NSFontAttributeName: [UIFont fontWithName:@"Avenir-Heavy"
+                                                                                                 size:17]}];
+
+}
+
 + (void)setupNavigationController:(UINavigationController *)navController
 {
 	//if( [self isiOSSeven] ) {
 		navController.navigationBar.tintColor = [UIColor whiteColor];
 		navController.navigationBar.barTintColor = [RepunchUtils repunchOrangeColor];
 		navController.navigationBar.translucent = NO;
-		
-		[[UIBarButtonItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor],
-															   NSFontAttributeName: [UIFont fontWithName:@"Avenir"
-																									size:15]}
-													forState:UIControlStateNormal];
-		
-		[[UINavigationBar appearance] setTitleTextAttributes: @{NSForegroundColorAttributeName: [UIColor whiteColor],
-																NSFontAttributeName: [UIFont fontWithName:@"Avenir-Heavy"
-																									 size:17]}];
-	//}
+			//}
 	//else {
 	//	navController.navigationBar.tintColor = [RepunchUtils repunchOrangeColor];
 		

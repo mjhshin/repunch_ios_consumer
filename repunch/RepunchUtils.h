@@ -15,5 +15,6 @@
 + (void)setupNavigationController:(UINavigationController *)navController;
 + (UIColor *)repunchOrangeColor;
 + (void)clearNotificationCenter;
++ (void)configureAppearance;
 
 @end
