@@ -1,4 +1,4 @@
-//
+  //
 //  FacebookAuthentication.m
 //  RepunchConsumer
 //
@@ -34,7 +34,39 @@ static AuthenticationManager *sharedAuthenticationManager = nil;    // static in
 	return self;
 }
 
-- (void) facebookLogin
+- (void)repunchLogin:(NSString *)email withPassword:(NSString *)password
+{
+	[PFUser logInWithUsernameInBackground:email password:password block:^(PFUser *user, NSError *error)
+	 {
+		 if (user)
+		 {
+			 PFObject *patronObject = [user objectForKey:@"Patron"];
+			 
+			 if(patronObject == (id)[NSNull null] || patronObject == nil) {
+				 NSError *localError = [[NSError alloc] initWithDomain:NSPOSIXErrorDomain
+																  code:kPFErrorObjectNotFound
+															  userInfo:nil];
+				 
+				 NSLog(@"This PFUser has no Patron object");
+				 [self.delegate onAuthenticationResult:self
+											withResult:NO
+											 withError:localError];
+			 }
+			 else {
+				 NSString *patronId = [[user objectForKey:@"Patron"] objectId];
+				 [self fetchPatronObject:patronId];
+			 }
+		 }
+		 else
+		 {
+			 [self.delegate onAuthenticationResult:self
+											withResult:NO
+											 withError:error];
+		 }
+	 }];
+}
+
+- (void)facebookLogin
 {
 	NSArray *permissions = @[@"email", @"user_birthday", @"publish_actions"];
 	
@@ -43,7 +75,6 @@ static AuthenticationManager *sharedAuthenticationManager = nil;    // static in
 		 if (!user)
 		 {
 			 NSLog(@"Uh oh. The user cancelled the Facebook login.");
-			 //[self handleError:nil withTitle:@"Login Failed" andMessage:@"Sorry, something went wrong"];
 			 [self.delegate onAuthenticationResult:self
 										withResult:NO
 										 withError:error];
@@ -79,7 +110,6 @@ static AuthenticationManager *sharedAuthenticationManager = nil;    // static in
 				 email = (id)[NSNull null]; //Possible if facebook user has invalid email - deny registration?
 			 }
 			 
-			 //register patron
 			 NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
 										 currentUser.objectId,	@"user_id",
 										 email,					@"email",
@@ -87,32 +117,33 @@ static AuthenticationManager *sharedAuthenticationManager = nil;    // static in
 										 birthday,				@"birthday",
 										 firstName,				@"first_name",
 										 lastName,				@"last_name",
-										 facebookId,			@"facebook_id",
-										 nil];
+										 facebookId,			@"facebook_id", nil];
 			 
-			 [PFCloud callFunctionInBackground:@"register_patron"
-								withParameters:parameters
-										 block:^(PFObject* patron, NSError *error)
-			  {
-				  if (!error)
-				  {
-					  [sharedData setPatron:patron];
-					  [self setupPFInstallation:patron.objectId withPunchCode:[patron objectForKey:@"punch_code"]];
-				  }
-				  else
-				  {
-					  //NSString *errorString = [[error userInfo] objectForKey:@"error"];
-					  //[self handleError:error withTitle:@"Login Failed" andMessage:errorString];
-					  [self.delegate onAuthenticationResult:self
-												 withResult:NO
-												  withError:error];
-				  }
-			  }];
-			 
+			 [self registerPatron:parameters];
 		 }
 		 else
 		 {
-			 //[self handleError:nil withTitle:@"Login Failed" andMessage:@"Sorry, something went wrong"];
+			 [self.delegate onAuthenticationResult:self
+										withResult:NO
+										 withError:error];
+		 }
+	 }];
+}
+
+- (void)registerPatron:(NSDictionary *)parameters
+{
+	[PFCloud callFunctionInBackground:@"register_patron"
+					   withParameters:parameters
+								block:^(PFObject* patron, NSError *error)
+	 {
+		 if (!error)
+		 {
+			 [sharedData setPatron:patron];
+			 NSString *punchCode = [patron objectForKey:@"punch_code"];
+			 [self setupPFInstallation:patron.objectId withPunchCode:punchCode];
+		 }
+		 else
+		 {
 			 [self.delegate onAuthenticationResult:self
 										withResult:NO
 										 withError:error];
@@ -123,13 +154,14 @@ static AuthenticationManager *sharedAuthenticationManager = nil;    // static in
 - (void)fetchPatronObject:(NSString*)patronId
 {
 	if(patronId == (id)[NSNull null] || patronId == nil) {
-		//[self handleError:nil withTitle:@"Login Failed" andMessage:@"Sorry, something went wrong"];
 		[self.delegate onAuthenticationResult:self
 								   withResult:NO
 									withError:nil];
 	}
 	
 	PFQuery *query = [PFQuery queryWithClassName:@"Patron"];
+	//query.cachePolicy = kPFCachePolicyIgnoreCache;
+	query.cachePolicy = kPFCachePolicyNetworkOnly;
 	
 	[query getObjectInBackgroundWithId:patronId block:^(PFObject *patron, NSError *error)
 	 {
@@ -144,7 +176,6 @@ static AuthenticationManager *sharedAuthenticationManager = nil;    // static in
 			 [self setupPFInstallation:patronId withPunchCode:punchCode];
 			 
 		 } else {
-			 //[self handleError:nil withTitle:@"Login Failed" andMessage:@"Sorry, something went wrong"];
 			 [self.delegate onAuthenticationResult:self
 										withResult:NO
 										 withError:error];

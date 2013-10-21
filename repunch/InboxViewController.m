@@ -444,7 +444,8 @@
 {
     SearchViewController *searchVC = [[SearchViewController alloc] init];
 	searchVC.hidesBottomBarWhenPushed = YES;
-	//searchVC.delegate = [self.tabBarController.viewControllers objectAtIndex:0]; TODO: NEED TO SET DELEGATE TO MY PLACES!!!!!!!!!!!!!
+	UINavigationController *myPlacesNavController = self.tabBarController.viewControllers[0];;
+	searchVC.delegate = myPlacesNavController.viewControllers[0];
 	UINavigationController *searchNavController = [[UINavigationController alloc] initWithRootViewController:searchVC];
 	[RepunchUtils setupNavigationController:searchNavController];
     [self presentViewController:searchNavController animated:YES completion:nil];

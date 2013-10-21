@@ -233,7 +233,6 @@
 			 
 			 if(!error)
 			 {
-				 [self dismissViewControllerAnimated:YES completion:nil];
 				 [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 				 AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 				 [appDelegate logout];

@@ -8,7 +8,6 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 #import "GradientBackground.h"
-#import "DataManager.h"
 #import "AuthenticationManager.h"
 
 @interface LoginViewController : UIViewController <UITextFieldDelegate, AuthenticationManagerDelegate>

@@ -370,13 +370,15 @@
 	NSString *rewardName = [reward objectForKey:@"reward_name"];
 	NSString *patronName = [NSString stringWithFormat:@"%@ %@", [patron objectForKey:@"first_name"], [patron objectForKey:@"last_name"]];
 	
+	
+	NSString *str1 = [NSString stringWithFormat:(rewardPunches == 1 ? @"%i Punch" :  @"%i Punches"), rewardPunches];
+	NSString *message = [[reward objectForKey:@"description"] stringByAppendingFormat:@"\n\n%@", str1];
+
+	SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:[reward objectForKey:@"reward_name"]
+														 andMessage:message];
+	
 	if (punchCount >= rewardPunches)
 	{
-		NSString *str1 = [NSString stringWithFormat:(rewardPunches == 1 ? @"%i Punch" :  @"%i Punches"), rewardPunches];
-		NSString *message = [[reward objectForKey:@"description"] stringByAppendingFormat:@"\n\n%@", str1];
-		
-		SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:[reward objectForKey:@"reward_name"]
-														 andMessage:message];
 		[alertView addButtonWithTitle:@"Redeem"
 								 type:SIAlertViewButtonTypeDefault
 							  handler:^(SIAlertView *alert)
@@ -434,18 +436,15 @@
 		[alertView addButtonWithTitle:@"Cancel"
 								 type:SIAlertViewButtonTypeDefault
 							  handler:nil];
-		[alertView show];
 	}
 	else
 	{
-		SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Sorry, not enough punches"]
-														 andMessage:nil];
-            
 		[alertView addButtonWithTitle:@"OK"
 								 type:SIAlertViewButtonTypeDefault
 							  handler:nil];
-		[alertView show];
 	}
+	
+	[alertView show];
 }
 
 - (IBAction)callButtonAction:(id)sender

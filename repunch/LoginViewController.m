@@ -10,7 +10,6 @@
 
 @implementation LoginViewController
 {
-    DataManager *sharedData;
 	AuthenticationManager *authenticationManager;
 	UIActivityIndicatorView *loginButtonSpinner;
 }
@@ -19,10 +18,8 @@
 {
     [super viewDidLoad];
 	
-	sharedData = [DataManager getSharedInstance];
 	authenticationManager = [AuthenticationManager getSharedInstance];
-    
-    //gesture to dismiss keyboard
+
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self
                                    action:@selector(dismissKeyboard)];
@@ -31,7 +28,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:YES];
+    [super viewWillAppear:animated];
 	
 	authenticationManager.delegate = self;
 	
@@ -50,11 +47,6 @@
 	loginButtonSpinner.hidesWhenStopped = YES;
 	[self.loginButton addSubview:loginButtonSpinner];
 	self.facebookSpinner.hidesWhenStopped = YES;
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -115,102 +107,14 @@
 		return;
 	}
 	
-	[self.loginButton setTitle:@"" forState:UIControlStateNormal];
-	[self.loginButton setEnabled:NO];
-	[self.facebookButton setEnabled:NO];
-	[loginButtonSpinner startAnimating];
-        
-	[PFUser logInWithUsernameInBackground:email password:password block:^(PFUser *user, NSError *error)
-	{
-		if (user)
-		{
-			PFObject *patronObject = [user objectForKey:@"Patron"];
-			
-			if(patronObject == (id)[NSNull null] || patronObject == nil)
-			{
-				NSLog(@"Account exists but has Patron is null");
-				[self handleError:nil withTitle:@"Login Failed" andMessage:@"Please check your username/password"];
-			}
-			else
-			{
-				NSString *patronId = [[user objectForKey:@"Patron"] objectId];
-				[self fetchPatronPFObject:patronId];
-			}
-		}
-		else
-		{
-			int errorCode = [[[error userInfo] objectForKey:@"code"] intValue];
-			if(errorCode == kPFErrorObjectNotFound || errorCode == kPFErrorUserWithEmailNotFound)
-			{
-				[self handleError:nil withTitle:@"Login Failed" andMessage:@"Please check your username/password"];
-			}
-			else
-			{
-				[self handleError:nil
-						withTitle:@"Login Failed"
-					   andMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
-			}
-		}
-	}]; //end get user block
-}
-
-- (void)fetchPatronPFObject:(NSString*)patronId
-{
-	if(patronId == (id)[NSNull null] || patronId == nil) {
-		[self handleError:nil withTitle:@"Login Failed" andMessage:@"Sorry, something went wrong"];
-	}
+	[self disableViews:NO];
 	
-	PFQuery *query = [PFQuery queryWithClassName:@"Patron"];
-	
-	[query getObjectInBackgroundWithId:patronId block:^(PFObject *patron, NSError *error) 
-	{
-		if(!error) {
-			NSLog(@"Fetched Patron object: %@", patron);
-			
-			[sharedData setPatron:patron];
-			
-			//setup PFInstallation
-			NSString *patronId = [patron objectId];
-			NSString *punchCode = [patron objectForKey:@"punch_code"];
-			[self setupPFInstallation:patronId withPunchCode:punchCode];
-			
-		} else {
-			[self handleError:nil withTitle:@"Login Failed" andMessage:@"Sorry, something went wrong"];
-		}
-	}];
-}
-
-- (void)setupPFInstallation:(NSString*)patronId withPunchCode:(NSString*)punchCode
-{
-	AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-	
-	[[PFInstallation currentInstallation] setObject:patronId forKey:@"patron_id"];
-	[[PFInstallation currentInstallation] setObject:punchCode forKey:@"punch_code"];
-	[[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-	{
-		[loginButtonSpinner stopAnimating];
-		[self.facebookSpinner stopAnimating];
-		[self.loginButton setTitle:@"Sign In" forState:UIControlStateNormal];
-		[self.loginButton setEnabled:YES];
-		[self.facebookButton setEnabled:YES];
-		[self.facebookButtonLabel setHidden:NO];
-		
-		if(!error) {
-			//login complete
-			[appDelegate presentTabBarController];
-			
-		} else {
-			[self handleError:nil withTitle:@"Login Failed" andMessage:@"Sorry, something went wrong"];
-		}
-	}];
+	[authenticationManager repunchLogin:email withPassword:password];
 }
 
 - (IBAction)loginWithFacebook:(id)sender
 {
-	[self.loginButton setEnabled:NO];
-	[self.facebookButton setEnabled:NO];
-	[self.facebookSpinner startAnimating];
-	[self.facebookButtonLabel setHidden:YES];
+	[self disableViews:YES];
 	
 	[authenticationManager facebookLogin];
 }
@@ -225,28 +129,18 @@
 {
 	NSLog(@"Here is the ERROR: %@", error);
 	
+	[self enableViews];
+	
 	if([PFUser currentUser]) {
 		[PFUser logOut];
 	}
 	
 	[self showDialog:title withResultMessage:message];
-	
-	[loginButtonSpinner stopAnimating];
-	[self.facebookSpinner stopAnimating];
-	[self.loginButton setTitle:@"Sign In" forState:UIControlStateNormal];
-	[self.loginButton setEnabled:YES];
-	[self.facebookButtonLabel setHidden:NO];
-	[self.facebookButton setEnabled:YES];
 }
 
 - (void)onAuthenticationResult:(AuthenticationManager *)object withResult:(BOOL)success withError:(NSError *)error
 {
-	[loginButtonSpinner stopAnimating];
-	[self.loginButton setTitle:@"Sign In" forState:UIControlStateNormal];
-	[self.loginButton setEnabled:YES];
-	[self.facebookSpinner stopAnimating];
-	[self.facebookButtonLabel setHidden:NO];
-	[self.facebookButton setEnabled:YES];
+	[self enableViews];
 	
 	if(success)
 	{
@@ -255,13 +149,56 @@
 	}
 	else
 	{
-		NSLog(@"Here is the ERROR: %@", error);
+		NSLog(@"onAuthenticationResult ERROR: %@", error);
 		
 		if([PFUser currentUser]) {
 			[PFUser logOut];
 		}
 		
-		//[self showDialog:title withResultMessage:message];
+		[self parseError:error];
+	}
+}
+
+- (void)parseError:(NSError *)error
+{
+	NSDictionary *errorInfo = [error userInfo];
+	NSInteger errorCode = [[errorInfo objectForKey:@"code"] integerValue];
+	NSString *message;
+	
+	if(errorCode == kPFErrorObjectNotFound || error.code == kPFErrorObjectNotFound) {
+		message = @"Invalid email/password";
+	}
+	else {
+		message = @"There was a problem connecting to Repunch. Please check your connection and try again.";
+	}
+	
+	[self showDialog:@"Login Failed" withResultMessage:message];
+}
+
+- (void)enableViews
+{
+	[loginButtonSpinner stopAnimating];
+	[self.loginButton setTitle:@"Sign In" forState:UIControlStateNormal];
+	[self.loginButton setEnabled:YES];
+	
+	[self.facebookSpinner stopAnimating];
+	[self.facebookButtonLabel setHidden:NO];
+	[self.facebookButton setEnabled:YES];
+}
+
+- (void)disableViews:(BOOL)isFacebook
+{
+	if(isFacebook) {
+		[self.loginButton setEnabled:NO];
+		[self.facebookButton setEnabled:NO];
+		[self.facebookSpinner startAnimating];
+		[self.facebookButtonLabel setHidden:YES];
+	}
+	else {
+		[self.loginButton setTitle:@"" forState:UIControlStateNormal];
+		[self.loginButton setEnabled:NO];
+		[self.facebookButton setEnabled:NO];
+		[loginButtonSpinner startAnimating];
 	}
 }
 

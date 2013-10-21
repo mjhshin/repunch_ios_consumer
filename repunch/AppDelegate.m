@@ -167,17 +167,26 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 		[self presentIndeterminateStateView];
 				
 		PFObject *patron = [currentUser objectForKey:@"Patron"];
+		
+		if( patron == nil || patron == (id)[NSNull null] ) {
+			[PFUser logOut];
+			[self checkLoginState];
+		}
 				
 		patronQuery = [PFQuery queryWithClassName:@"Patron"];
-		patronQuery.cachePolicy = kPFCachePolicyCacheElseNetwork;
-		[patronQuery getObjectInBackgroundWithId:patron.objectId block:^(PFObject *patron, NSError *error)
-		 {
+		patronQuery.cachePolicy = kPFCachePolicyCacheOnly;
+		BOOL isInCache = [patronQuery hasCachedResult];
+		
+		NSLog(isInCache ? @"Yes - cached query" : @"No - cached query");
+		
+		[patronQuery getObjectInBackgroundWithId:patron.objectId block:^(PFObject *patron, NSError *error) {
 			 if (!error) {
 				 [sharedData setPatron:patron];
 				 [self presentTabBarController];
+				 
+				 //TODO: check installation's punch_code and patron_id
 			 }
 			 else {
-				 [RepunchUtils showDefaultErrorMessage];
 				 [PFUser logOut];
 				 [self checkLoginState];
 				 NSLog(@"Failed to fetch Patron object: %@", error);

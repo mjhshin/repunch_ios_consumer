@@ -6,18 +6,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DataManager.h"
 #import "AppDelegate.h"
 #import "GradientBackground.h"
 #import <AVFoundation/AVFoundation.h>
 #import "AuthenticationManager.h"
 
-@interface RegisterViewController : UIViewController<UITextFieldDelegate, UIScrollViewDelegate, AuthenticationManagerDelegate>
+@interface RegisterViewController : UIViewController<UITextFieldDelegate, UIScrollViewDelegate, AuthenticationManagerDelegate, UIWebViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UITextField *emailInput;
 @property (weak, nonatomic) IBOutlet UITextField *passwordInput;
-@property (weak, nonatomic) IBOutlet UITextField *passwordConfirmInput;
 @property (weak, nonatomic) IBOutlet UITextField *firstNameInput;
 @property (weak, nonatomic) IBOutlet UITextField *lastNameInput;
 @property (weak, nonatomic) IBOutlet UITextField *ageInput;
@@ -29,5 +27,7 @@
 
 - (IBAction)registerWithFacebook:(id)sender;
 - (IBAction)registerWithRepunch:(id)sender;
+- (IBAction)termsAndConditions:(id)sender;
+- (IBAction)privacyPolicy:(id)sender;
 
 @end

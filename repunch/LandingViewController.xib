@@ -22,16 +22,13 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" image="landing.png" translatesAutoresizingMaskIntoConstraints="NO" id="48">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="landing.png" translatesAutoresizingMaskIntoConstraints="NO" id="48">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9">
                             <rect key="frame" x="175" y="479" width="125" height="50"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="125" id="167"/>
-                            </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
                             <state key="normal" title="Sign In">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -48,8 +45,8 @@
                             <rect key="frame" x="20" y="479" width="125" height="50"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="125" id="154"/>
-                                <constraint firstAttribute="height" constant="50" id="166"/>
+                                <constraint firstAttribute="width" constant="125" id="hK4-XY-jPY"/>
+                                <constraint firstAttribute="height" constant="50" id="ijR-0D-eQr"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
                             <state key="normal" title="Register">
@@ -66,12 +63,15 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="149" firstAttribute="bottom" secondItem="9" secondAttribute="bottom" id="181"/>
-                        <constraint firstItem="149" firstAttribute="top" secondItem="9" secondAttribute="top" id="182"/>
-                        <constraint firstAttribute="centerX" secondItem="9" secondAttribute="centerX" constant="-77.5" id="56Q-W2-m5m"/>
-                        <constraint firstAttribute="bottom" secondItem="9" secondAttribute="bottom" constant="39" id="N8g-Op-E10"/>
-                        <constraint firstAttribute="centerX" secondItem="149" secondAttribute="centerX" constant="77.5" id="hyD-ID-V58"/>
-                        <constraint firstAttribute="bottom" secondItem="149" secondAttribute="bottom" constant="39" id="zC9-9R-dbC"/>
+                        <constraint firstAttribute="bottom" secondItem="48" secondAttribute="bottom" id="1s6-TX-FaY"/>
+                        <constraint firstItem="149" firstAttribute="top" secondItem="9" secondAttribute="top" id="6dH-TU-tb1"/>
+                        <constraint firstAttribute="bottom" secondItem="149" secondAttribute="bottom" constant="39" id="APg-9R-WZ0"/>
+                        <constraint firstItem="149" firstAttribute="leading" secondItem="4" secondAttribute="leading" constant="20" symbolic="YES" id="B9C-WN-7GR"/>
+                        <constraint firstItem="48" firstAttribute="top" secondItem="4" secondAttribute="top" id="BPz-TK-FiI"/>
+                        <constraint firstItem="9" firstAttribute="bottom" secondItem="149" secondAttribute="bottom" id="gcY-AN-zdg"/>
+                        <constraint firstItem="48" firstAttribute="leading" secondItem="4" secondAttribute="leading" id="grv-t8-gQC"/>
+                        <constraint firstAttribute="trailing" secondItem="9" secondAttribute="trailing" constant="20" symbolic="YES" id="vFI-UC-sm9"/>
+                        <constraint firstItem="9" firstAttribute="leading" secondItem="149" secondAttribute="trailing" constant="30" id="x7H-cf-ssK"/>
                     </constraints>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
@@ -79,10 +79,10 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="4" secondAttribute="bottom" id="7nZ-FE-d3O"/>
-                <constraint firstItem="4" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="Rfe-my-KA6"/>
-                <constraint firstAttribute="trailing" secondItem="4" secondAttribute="trailing" id="Sdj-0D-B8d"/>
-                <constraint firstItem="4" firstAttribute="top" secondItem="1" secondAttribute="top" id="TNc-ZL-urb"/>
+                <constraint firstAttribute="bottom" secondItem="4" secondAttribute="bottom" id="6ka-Rm-dl1"/>
+                <constraint firstAttribute="trailing" secondItem="4" secondAttribute="trailing" id="gRE-xd-L0y"/>
+                <constraint firstItem="4" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="or7-sv-4JE"/>
+                <constraint firstItem="4" firstAttribute="top" secondItem="1" secondAttribute="top" id="vEw-FS-ED7"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

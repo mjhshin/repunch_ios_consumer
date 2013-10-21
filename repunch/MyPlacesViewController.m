@@ -216,7 +216,7 @@
         cell = [MyPlacesTableViewCell cell];
     }
 	
-	NSString *storeId = [self.storeIdArray objectAtIndex:indexPath.row];
+	NSString *storeId = self.storeIdArray[indexPath.row];
 	PFObject *patronStore = [self.sharedData getPatronStore:storeId];
 	PFObject *store = [self.sharedData getStore:storeId];
 	
@@ -226,20 +226,20 @@
     
     NSArray *rewardsArray = [store objectForKey:@"rewards"];
     
-    if (rewardsArray.count > 0)
-    {
-        if ([[rewardsArray[0] objectForKey:@"punches"] intValue] <= punches)
-        {
+    if (rewardsArray.count > 0) {
+        if ([[rewardsArray[0] objectForKey:@"punches"] intValue] <= punches){
             [[cell rewardLabel] setHidden:NO];
             [[cell rewardIcon] setHidden:NO];
         }
-		else
-		{
+		else {
 			[[cell rewardLabel] setHidden:YES];
             [[cell rewardIcon] setHidden:YES];
 		}
     }
-
+	else {
+		[[cell rewardLabel] setHidden:YES];
+		[[cell rewardIcon] setHidden:YES];
+	}
     
     // Only load cached images; defer new downloads until scrolling ends
     //if (cell.storeImage == nil)
@@ -271,7 +271,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
-	NSString *storeId = [self.storeIdArray objectAtIndex:indexPath.row];
+	NSString *storeId = self.storeIdArray[indexPath.row];
     StoreViewController *storeVC = [[StoreViewController alloc]init];
     storeVC.storeId = storeId;
 	storeVC.delegate = self;
@@ -391,7 +391,7 @@
         NSArray *visiblePaths = [self.myPlacesTableView indexPathsForVisibleRows];
         for (NSIndexPath *indexPath in visiblePaths)
         {
-            MyPlacesTableViewCell *cell = [self.entries objectAtIndex:indexPath.row];
+            MyPlacesTableViewCell *cell = self.entries[indexPath.row];
             
             if (!cell.storeImage.image) // Avoid the app icon download if the app already has an icon
             {
