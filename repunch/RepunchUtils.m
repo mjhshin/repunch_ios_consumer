@@ -20,46 +20,26 @@
 
 + (void)configureAppearance
 {
-    /* Tab Bar Item */
-    [UITabBar appearance].backgroundColor = [UIColor whiteColor];
+    [UITabBar appearance].barStyle = UIBarStyleDefault;
+	[UITabBar appearance].backgroundColor = [UIColor whiteColor];
     [UITabBar appearance].tintColor = [self repunchOrangeColor];
-    
-    NSMutableDictionary *attributes = [[[UITabBarItem appearance] titleTextAttributesForState:UIControlStateNormal] mutableCopy];
-    [attributes setValue:[UIFont fontWithName:@"Avenir-Heavy" size:12] forKey:NSFontAttributeName];
-    [[UITabBarItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
 
-    
-    /* Bar Button Iden */
-    [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor],
-                                                           NSFontAttributeName: [UIFont fontWithName:@"Avenir"
-                                                                                                size:15]}
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"Avenir-Heavy" size:12]}
                                                 forState:UIControlStateNormal];
+	
+	[[UIBarButtonItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor],
+														   NSFontAttributeName: [UIFont fontWithName:@"Avenir" size:15]}
+												forState:UIControlStateNormal];
     
-    [[UINavigationBar appearance] setTitleTextAttributes: @{NSForegroundColorAttributeName: [UIColor whiteColor],
-                                                            NSFontAttributeName: [UIFont fontWithName:@"Avenir-Heavy"
-                                                                                                 size:17]}];
-
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor],
+														   NSFontAttributeName: [UIFont fontWithName:@"Avenir-Heavy" size:17]}];
 }
 
 + (void)setupNavigationController:(UINavigationController *)navController
 {
-	//if( [self isiOSSeven] ) {
-		navController.navigationBar.tintColor = [UIColor whiteColor];
-		navController.navigationBar.barTintColor = [RepunchUtils repunchOrangeColor];
-		navController.navigationBar.translucent = NO;
-			//}
-	//else {
-	//	navController.navigationBar.tintColor = [RepunchUtils repunchOrangeColor];
-		
-	//	[[UIBarButtonItem appearance] setTitleTextAttributes:@{UITextAttributeTextColor: [UIColor whiteColor],
-	//														   UITextAttributeFont: [UIFont fontWithName:@"Avenir"
-	//																								size:15]}
-	//												forState:UIControlStateNormal];
-		
-	//	[[UINavigationBar appearance] setTitleTextAttributes: @{UITextAttributeTextColor: [UIColor whiteColor],
-	//															UITextAttributeFont: [UIFont fontWithName:@"Avenir-Heavy"
-	//																								 size:17]}];
-	//}
+	navController.navigationBar.tintColor = [UIColor whiteColor];
+	navController.navigationBar.barTintColor = [RepunchUtils repunchOrangeColor];
+	navController.navigationBar.translucent = NO;
 }
 
 + (UIColor *)repunchOrangeColor // RGBA = F79234FF
@@ -76,10 +56,4 @@
 	[[UIApplication sharedApplication] cancelAllLocalNotifications];	// make sure no pending local notifications
 }
 
-/*
-+ (BOOL)isiOSSeven //returns YES for iOS 7.0+
-{
-	return [[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending;
-}
-*/
 @end

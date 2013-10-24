@@ -20,6 +20,11 @@
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(receiveRefreshNotification:)
+												 name:@"AddRemoveMyPlace"
+											   object:nil];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(receiveRefreshNotification:)
 												 name:@"Punch"
 											   object:nil];
 	
@@ -43,8 +48,8 @@
 	self.storeIdArray = [NSMutableArray array];
     self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
 	
-	[self setupTableView];
 	[self setupNavigationBar];
+	[self setupTableView];
 	[self loadMyPlaces];
 }
 
@@ -107,24 +112,25 @@
 
 - (void)setupTableView
 {
-	self.tableViewController = [[UITableViewController alloc]initWithStyle:UITableViewStylePlain];
+	self.tableViewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
 	[self addChildViewController:self.tableViewController];
 	
-	self.tableViewController.refreshControl = [[UIRefreshControl alloc]init];
+	self.tableViewController.refreshControl = [[UIRefreshControl alloc] init];
 	[self.tableViewController.refreshControl addTarget:self
 												action:@selector(loadMyPlaces)
 									  forControlEvents:UIControlEventValueChanged];
     
 
     self.tableViewController.view.frame = self.view.bounds;
+	self.tableViewController.view.layer.zPosition = -1;
 
     [self.tableViewController.tableView setDataSource:self];
     [self.tableViewController.tableView setDelegate:self];
 	
 	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 1)];
 	footer.backgroundColor = [UIColor clearColor];
-    
 	[self.tableViewController.tableView setTableFooterView:footer];
+	
     [self.view addSubview:self.tableViewController.tableView];
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -445,6 +451,7 @@
 	UINavigationController *searchNavController = [[UINavigationController alloc] initWithRootViewController:searchVC];
 	[RepunchUtils setupNavigationController:searchNavController];
     [self presentViewController:searchNavController animated:YES completion:nil];
+	//[self.navigationController pushViewController:searchNavController animated:YES];
 }
 
 @end

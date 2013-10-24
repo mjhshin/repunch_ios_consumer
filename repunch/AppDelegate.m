@@ -213,7 +213,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 
 - (void)presentTabBarController
 {
-    [Crashlytics setUserEmail:  [PFUser currentUser].email];
+    [Crashlytics setUserName:[PFUser currentUser].username];
 
     MyPlacesViewController *myPlacesVC = [[MyPlacesViewController alloc] init];
     InboxViewController *inboxVC = [[InboxViewController alloc] init];

@@ -92,26 +92,27 @@
 
 - (void)setupTableView
 {
-	self.tableViewController = [[UITableViewController alloc]initWithStyle:UITableViewStylePlain];
+	self.tableViewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
 	[self addChildViewController:self.tableViewController];
 	
-	self.tableViewController.refreshControl = [[UIRefreshControl alloc]init];
+	self.tableViewController.refreshControl = [[UIRefreshControl alloc] init];
 	[self.tableViewController.refreshControl addTarget:self
 												action:@selector(loadInbox:)
 									  forControlEvents:UIControlEventValueChanged];
 	
     self.tableViewController.view.frame = self.view.bounds;
+	self.tableViewController.view.layer.zPosition = -1;
 
     [self.tableViewController.tableView setDataSource:self];
     [self.tableViewController.tableView setDelegate:self];
 	
-	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
+	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
 	footer.backgroundColor = [UIColor clearColor];
 	[self.tableViewController.tableView setTableFooterView:footer];
 	
-    [self.view addSubview:self.tableViewController.tableView];
+	 [self.view addSubview:self.tableViewController.tableView];
+	
     self.edgesForExtendedLayout = UIRectEdgeNone;
-
 }
 
 -(void)loadInbox:(BOOL)paginate
@@ -256,7 +257,6 @@
 
     return cell;
 }
-
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
