@@ -7,6 +7,11 @@
 
 #import "MyPlacesViewController.h"
 
+@interface MyPlacesViewController ()
+@property (nonatomic, strong) UITableViewController *tableViewController;
+
+@end
+
 @implementation MyPlacesViewController
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
@@ -150,15 +155,16 @@
 	[patronStoreQuery includeKey:@"FacebookPost"];
 	//[patronStoreQuery setLimit:20];
 
+    __weak typeof(self) weakSelf = self;
     [patronStoreQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
     {
-		[self.activityIndicatorView setHidden:YES];
-		[self.activityIndicator stopAnimating];
-		[self.tableViewController.refreshControl endRefreshing];
+		[weakSelf.activityIndicatorView setHidden:YES];
+		[weakSelf.activityIndicator stopAnimating];
+		[weakSelf.tableViewController.refreshControl endRefreshing];
 		
         if (!error)
         {
-			[self.storeIdArray removeAllObjects];
+			[weakSelf.storeIdArray removeAllObjects];
 			
 			if(results.count > 0)
 			{
@@ -166,13 +172,13 @@
 				{
 					PFObject *store = [patronStore objectForKey:@"Store"];
 					NSString *storeId = [store objectId];
-					[self.sharedData addPatronStore:patronStore forKey:storeId];
-					[self.sharedData addStore:store];
-					[self.storeIdArray addObject:storeId];
+					[weakSelf.sharedData addPatronStore:patronStore forKey:storeId];
+					[weakSelf.sharedData addStore:store];
+					[weakSelf.storeIdArray addObject:storeId];
 				}
 			}
 			
-			[self refreshTableView];
+			[weakSelf refreshTableView];
         }
         else
         {
@@ -453,5 +459,6 @@
     [self presentViewController:searchNavController animated:YES completion:nil];
 	//[self.navigationController pushViewController:searchNavController animated:YES];
 }
+
 
 @end
