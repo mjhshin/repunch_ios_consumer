@@ -92,7 +92,7 @@
 					self.spinnerView.hidden = YES;
 					[self.mySpinner stopAnimating];
 					
-					[RepunchUtils showDefaultErrorMessage];
+					[RepunchUtils showConnectionErrorDialog];
 					[self dismissViewControllerAnimated:NO completion:nil];
 				}
 			}];

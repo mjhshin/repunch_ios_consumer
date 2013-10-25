@@ -162,13 +162,13 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
 	PFUser* currentUser = [PFUser currentUser];
 	
-    if (currentUser && ![currentUser isKindOfClass:[NSNull class]])
+    if (currentUser)
 	{
 		[self presentIndeterminateStateView];
 				
 		PFObject *patron = [currentUser objectForKey:@"Patron"];
 		
-		if( patron == nil || patron == (id)[NSNull null] ) {
+		if( IS_NIL(patron) ) {
 			[PFUser logOut];
 			[self checkLoginState];
 		}

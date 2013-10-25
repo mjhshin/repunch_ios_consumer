@@ -10,12 +10,20 @@
 
 @implementation RepunchUtils
 
-+ (void)showDefaultErrorMessage
++ (void)showDialogWithTitle:(NSString *)title withMessage:(NSString *)message
 {
-	SIAlertView *errorDialogue = [[SIAlertView alloc] initWithTitle:@"Error"
-														 andMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
-	[errorDialogue addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
-	[errorDialogue show];
+	SIAlertView *errorDialog = [[SIAlertView alloc] initWithTitle:title
+													   andMessage:message];
+	[errorDialog addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
+	[errorDialog show];
+}
+
++ (void)showConnectionErrorDialog
+{
+	SIAlertView *errorDialog = [[SIAlertView alloc] initWithTitle:@"Error"
+													   andMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
+	[errorDialog addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
+	[errorDialog show];
 }
 
 + (void)configureAppearance

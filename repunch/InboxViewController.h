@@ -15,6 +15,7 @@
 #import "SIAlertView.h"
 #import "GradientBackground.h"
 #import <Parse/Parse.h>
+#import "RPConstants.h"
 
 @interface InboxViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, IncomingMessageVCDelegate>
 

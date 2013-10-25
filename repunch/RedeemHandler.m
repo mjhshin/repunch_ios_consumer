@@ -11,6 +11,7 @@
 #import "DataManager.h"
 #import "SIAlertView.h"
 #import "FacebookPost.h"
+#import "RPConstants.h"
 
 @implementation RedeemHandler
 
@@ -40,7 +41,7 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 		
 		NSString *facebookId = [patron objectForKey:@"facebook_id"];
 		int freePunches = [[store objectForKey:@"punches_facebook"] intValue];
-		if( facebookId != nil && facebookId != (id)[NSNull null] &&  freePunches > 0)
+		if( !IS_NIL(facebookId) &&  freePunches > 0)
 		{
 			[FacebookPost presentDialog:storeId withRewardTitle:rewardTitle];
 		}

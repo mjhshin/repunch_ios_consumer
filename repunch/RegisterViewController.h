@@ -6,12 +6,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AppDelegate.h"
-#import "GradientBackground.h"
-#import <AVFoundation/AVFoundation.h>
-#import "AuthenticationManager.h"
 
-@interface RegisterViewController : UIViewController<UITextFieldDelegate, UIScrollViewDelegate, AuthenticationManagerDelegate, UIWebViewDelegate>
+@interface RegisterViewController : UIViewController<UITextFieldDelegate, UIScrollViewDelegate, UIWebViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UITextField *emailInput;
@@ -24,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *facebookSpinner;
 @property (weak, nonatomic) IBOutlet UILabel *facebookButtonLabel;
 @property (weak, nonatomic) IBOutlet UIButton *facebookButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *registerButtonSpinner;
 
 - (IBAction)registerWithFacebook:(id)sender;
 - (IBAction)registerWithRepunch:(id)sender;

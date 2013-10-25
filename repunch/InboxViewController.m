@@ -179,7 +179,7 @@
         }
 		else
 		{
-            [RepunchUtils showDefaultErrorMessage];
+            [RepunchUtils showConnectionErrorDialog];
         }
     }];
 }
@@ -215,7 +215,7 @@
     PFObject *message = [messageStatus objectForKey:@"Message"];
     PFObject *reply = [message objectForKey:@"Reply"];
     
-    if (reply != (id)[NSNull null] && reply != nil) {
+    if ( !IS_NIL(reply) ) {
         cell.senderName.text = [reply objectForKey:@"sender_name"];
         cell.subjectLabel.text = [NSString stringWithFormat:@"RE: %@ - %@", [message objectForKey:@"subject"], [reply objectForKey:@"body"]];
         cell.dateSent.text = [self formattedDateString:reply.createdAt];

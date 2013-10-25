@@ -21,6 +21,7 @@
 #import "DataManager.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "FacebookPost.h"
+#import "RPConstants.h"
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 

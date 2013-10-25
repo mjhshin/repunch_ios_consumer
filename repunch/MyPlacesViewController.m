@@ -183,7 +183,7 @@
         else
         {
             NSLog(@"places view: error is %@", error);
-			[RepunchUtils showDefaultErrorMessage];
+			[RepunchUtils showConnectionErrorDialog];
         }
     }];
 }
@@ -259,7 +259,7 @@
         //if (self.myPlacesTableView.dragging == NO && self.myPlacesTableView.decelerating == NO)
 		//{
         PFFile *imageFile = [store objectForKey:@"store_avatar"];
-		if(imageFile != nil && imageFile != (id)[NSNull null])
+		if( !IS_NIL(imageFile) )
         {
             UIImage *storeImage = [self.sharedData getStoreImage:storeId];
 			if(storeImage == nil)

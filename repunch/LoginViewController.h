@@ -6,15 +6,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AppDelegate.h"
-#import "GradientBackground.h"
-#import "AuthenticationManager.h"
 
-@interface LoginViewController : UIViewController <UITextFieldDelegate, AuthenticationManagerDelegate>
+@interface LoginViewController : UIViewController <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *emailInput;
 @property (weak, nonatomic) IBOutlet UITextField *passwordInput;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loginButtonSpinner;
 @property (weak, nonatomic) IBOutlet UIButton *facebookButton;
 @property (weak, nonatomic) IBOutlet UILabel *facebookButtonLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *facebookSpinner;

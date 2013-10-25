@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RegisterViewController">
@@ -17,6 +17,7 @@
                 <outlet property="lastNameInput" destination="75" id="107"/>
                 <outlet property="passwordInput" destination="6" id="125"/>
                 <outlet property="registerButton" destination="126" id="1143"/>
+                <outlet property="registerButtonSpinner" destination="9C2-c3-aAq" id="0um-jb-RlG"/>
                 <outlet property="scrollView" destination="271" id="1316"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
@@ -180,7 +181,7 @@
                             </segments>
                             <color key="tintColor" red="0.92361582880000004" green="0.55974298280000001" blue="0.1052079196" alpha="1" colorSpace="calibratedRGB"/>
                         </segmentedControl>
-                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="1321">
+                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="1321">
                             <rect key="frame" x="167" y="30" width="37" height="37"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </activityIndicatorView>
@@ -231,6 +232,10 @@
                                 <action selector="privacyPolicy:" destination="-1" eventType="touchUpInside" id="dVF-d7-ghv"/>
                             </connections>
                         </button>
+                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="9C2-c3-aAq">
+                            <rect key="frame" x="142" y="461" width="37" height="37"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </activityIndicatorView>
                     </subviews>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     <constraints>
@@ -239,6 +244,7 @@
                         <constraint firstItem="Gex-Jw-taJ" firstAttribute="bottom" secondItem="gVs-pX-f9g" secondAttribute="bottom" id="20f-Dc-vOf"/>
                         <constraint firstItem="9" firstAttribute="centerX" secondItem="7" secondAttribute="centerX" id="2B0-mh-YGO"/>
                         <constraint firstItem="7" firstAttribute="top" secondItem="271" secondAttribute="top" constant="25" id="315-eT-OnH"/>
+                        <constraint firstItem="9C2-c3-aAq" firstAttribute="top" secondItem="1014" secondAttribute="bottom" constant="35" id="60W-fF-tk8"/>
                         <constraint firstItem="1014" firstAttribute="top" secondItem="96" secondAttribute="bottom" constant="24" id="726-tx-6VD"/>
                         <constraint firstItem="6" firstAttribute="trailing" secondItem="8" secondAttribute="trailing" id="7XW-8f-fjs"/>
                         <constraint firstItem="fkC-M5-8ec" firstAttribute="leading" secondItem="96" secondAttribute="leading" id="9ZD-yj-Pof"/>
@@ -282,6 +288,7 @@
                         <constraint firstItem="126" firstAttribute="top" secondItem="1014" secondAttribute="bottom" constant="32" id="p2f-Eb-hpP"/>
                         <constraint firstItem="68" firstAttribute="top" secondItem="6" secondAttribute="bottom" constant="8" symbolic="YES" id="pBz-5A-gur"/>
                         <constraint firstItem="7" firstAttribute="leading" secondItem="271" secondAttribute="leading" constant="77" id="rel-hq-Q8e"/>
+                        <constraint firstItem="9C2-c3-aAq" firstAttribute="centerX" secondItem="1014" secondAttribute="centerX" id="s2j-gE-Q52"/>
                         <constraint firstItem="96" firstAttribute="centerX" secondItem="1014" secondAttribute="centerX" id="s3k-5z-uKu"/>
                         <constraint firstItem="9" firstAttribute="top" secondItem="7" secondAttribute="bottom" constant="22" id="syh-dS-q4K"/>
                         <constraint firstItem="11" firstAttribute="top" secondItem="7" secondAttribute="bottom" constant="32" id="wBd-ah-6wu"/>

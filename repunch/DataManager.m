@@ -32,7 +32,7 @@ static DataManager *sharedDataManager = nil;    // static instance variable
 	return self;
 }
 
-- (void) clearData
+- (void)clearData
 {
 	[self.patronStores removeAllObjects];
 	[self.stores removeAllObjects];

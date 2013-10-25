@@ -223,7 +223,7 @@
 		 else
 		 {
 			 NSLog(@"search view controller serror: %@", error);
-			 [RepunchUtils showDefaultErrorMessage];
+			 [RepunchUtils showConnectionErrorDialog];
 		 }
 	 }];
 }
@@ -257,7 +257,7 @@
 	NSString *city = [store objectForKey:@"city"];
 	NSString *street = [store objectForKey:@"street"];
      
-	if (neighborhood != nil && neighborhood != (id)[NSNull null]) {
+	if ( !IS_NIL(neighborhood) ) {
 		street = [street stringByAppendingFormat:@", %@", neighborhood];
 	}
 	else {
@@ -301,7 +301,7 @@
 	//if (self.myPlacesTableView.dragging == NO && self.myPlacesTableView.decelerating == NO)
 	//{
 	PFFile *imageFile = [store objectForKey:@"store_avatar"];
-	if(imageFile != nil && imageFile != (id)[NSNull null])
+	if( !IS_NIL(imageFile) )
 	{
 		UIImage *storeImage = [self.sharedData getStoreImage:storeId];
 		if(storeImage == nil)

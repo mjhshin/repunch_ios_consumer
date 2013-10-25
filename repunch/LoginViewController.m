@@ -7,51 +7,30 @@
 //
 
 #import "LoginViewController.h"
+#import "AppDelegate.h"
+#import "GradientBackground.h"
+#import "AuthenticationManager.h"
 
 @implementation LoginViewController
-{
-	AuthenticationManager *authenticationManager;
-	UIActivityIndicatorView *loginButtonSpinner;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	
-	authenticationManager = [AuthenticationManager getSharedInstance];
-
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
-                                   initWithTarget:self
-                                   action:@selector(dismissKeyboard)];
-    [self.view addGestureRecognizer:tap];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-	
-	authenticationManager.delegate = self;
-	
 	self.navigationItem.title = @"Sign In";
 	self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
 	
+	UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
+	
 	[self.loginButton setBackgroundImage:[GradientBackground orangeButtonNormal:self.loginButton]
-								   forState:UIControlStateNormal];
+								forState:UIControlStateNormal];
 	[self.loginButton setBackgroundImage:[GradientBackground orangeButtonHighlighted:self.loginButton]
-								   forState:UIControlStateHighlighted];
+								forState:UIControlStateHighlighted];
 	[self.loginButton.layer setCornerRadius:5];
 	[self.loginButton setClipsToBounds:YES];
-	
-	loginButtonSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-	loginButtonSpinner.frame = self.loginButton.bounds;
-	loginButtonSpinner.hidesWhenStopped = YES;
-	[self.loginButton addSubview:loginButtonSpinner];
-	self.facebookSpinner.hidesWhenStopped = YES;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -99,24 +78,52 @@
 	NSString *password = [_passwordInput text];
 	
 	if(email.length == 0) {
-		[self showDialog:@"Please enter your email" withResultMessage:nil];
+		[RepunchUtils showDialogWithTitle:@"Please enter your email" withMessage:nil];
 		return;
 		
 	} else if(password.length == 0) {
-		[self showDialog:@"Please enter your password" withResultMessage:nil];
+		[RepunchUtils showDialogWithTitle:@"Please enter your password" withMessage:nil];
 		return;
 	}
 	
 	[self disableViews:NO];
 	
-	[authenticationManager repunchLogin:email withPassword:password];
+	[AuthenticationManager loginWithEmail:email withPassword:password withCompletionHandler:^(NSInteger errorCode) {
+		[self handleAuthenticationResult:errorCode];
+	}];
 }
 
 - (IBAction)loginWithFacebook:(id)sender
 {
 	[self disableViews:YES];
 	
-	[authenticationManager facebookLogin];
+	[AuthenticationManager loginWithFacebook:^(NSInteger errorCode) {
+		[self handleAuthenticationResult:errorCode];
+	}];
+}
+
+- (void)handleAuthenticationResult:(NSInteger)errorCode
+{
+	[self enableViews];
+	
+	if(errorCode == 0) {
+		AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+		[appDelegate presentTabBarController];
+	}
+	else {
+		if(errorCode == kPFErrorObjectNotFound) {
+			[RepunchUtils showDialogWithTitle:@"Login Failed"
+								  withMessage:@"Invalid email/password"];
+		}
+		else {
+			[RepunchUtils showDialogWithTitle:@"Login Failed"
+								  withMessage:@"Sorry, something went wrong. Please try again."];
+		}
+		
+		if([PFUser currentUser]) {
+			[PFUser logOut];
+		}
+	}
 }
 
 - (void)dismissKeyboard
@@ -125,59 +132,9 @@
     [self.passwordInput resignFirstResponder];
 }
 
-- (void)handleError:(NSError *)error withTitle:(NSString *)title andMessage:(NSString *)message
-{
-	NSLog(@"Here is the ERROR: %@", error);
-	
-	[self enableViews];
-	
-	if([PFUser currentUser]) {
-		[PFUser logOut];
-	}
-	
-	[self showDialog:title withResultMessage:message];
-}
-
-- (void)onAuthenticationResult:(AuthenticationManager *)object withResult:(BOOL)success withError:(NSError *)error
-{
-	[self enableViews];
-	
-	if(success)
-	{
-		AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-		[appDelegate presentTabBarController];
-	}
-	else
-	{
-		NSLog(@"onAuthenticationResult ERROR: %@", error);
-		
-		if([PFUser currentUser]) {
-			[PFUser logOut];
-		}
-		
-		[self parseError:error];
-	}
-}
-
-- (void)parseError:(NSError *)error
-{
-	NSDictionary *errorInfo = [error userInfo];
-	NSInteger errorCode = [[errorInfo objectForKey:@"code"] integerValue];
-	NSString *message;
-	
-	if(errorCode == kPFErrorObjectNotFound || error.code == kPFErrorObjectNotFound) {
-		message = @"Invalid email/password";
-	}
-	else {
-		message = @"There was a problem connecting to Repunch. Please check your connection and try again.";
-	}
-	
-	[self showDialog:@"Login Failed" withResultMessage:message];
-}
-
 - (void)enableViews
 {
-	[loginButtonSpinner stopAnimating];
+	[self.loginButtonSpinner stopAnimating];
 	[self.loginButton setTitle:@"Sign In" forState:UIControlStateNormal];
 	[self.loginButton setEnabled:YES];
 	
@@ -198,20 +155,8 @@
 		[self.loginButton setTitle:@"" forState:UIControlStateNormal];
 		[self.loginButton setEnabled:NO];
 		[self.facebookButton setEnabled:NO];
-		[loginButtonSpinner startAnimating];
+		[self.loginButtonSpinner startAnimating];
 	}
-}
-
-- (void)showDialog:(NSString*)resultTitle withResultMessage:(NSString*)resultMessage
-{
-	NSString *capitalisedSentence =
-		[resultMessage stringByReplacingCharactersInRange:NSMakeRange(0,1)
-											   withString:[[resultMessage  substringToIndex:1] capitalizedString]];
-	
-	SIAlertView *alert = [[SIAlertView alloc] initWithTitle:resultTitle
-                                                 andMessage:capitalisedSentence];
-    [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
-    [alert show];
 }
 
 - (IBAction)forgotPassword:(id)sender

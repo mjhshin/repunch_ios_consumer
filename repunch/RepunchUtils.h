@@ -11,7 +11,8 @@
 
 @interface RepunchUtils : NSObject
 
-+ (void)showDefaultErrorMessage;
++ (void)showDialogWithTitle:(NSString *)title withMessage:(NSString *)message;
++ (void)showConnectionErrorDialog;
 + (void)setupNavigationController:(UINavigationController *)navController;
 + (UIColor *)repunchOrangeColor;
 + (void)clearNotificationCenter;

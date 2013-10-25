@@ -24,7 +24,7 @@
 	self.reply = [self.message objectForKey:@"Reply"];
 	self.messageType = [self.message objectForKey:@"message_type"];
 	
-	containsReply = (self.reply != (id)[NSNull null] && self.reply != nil);
+	containsReply = ( !IS_NIL(self.reply) );
 	
 	if(containsReply) {
 		NSString *title = [NSString stringWithFormat:@"RE: %@", [self.message objectForKey:@"subject"]];
@@ -176,7 +176,7 @@
 			}
 			else
 			{
-				[RepunchUtils showDefaultErrorMessage];
+				[RepunchUtils showConnectionErrorDialog];
 			}
 		}];
 	}
@@ -413,7 +413,7 @@
 			 else
 			 {
 				 NSLog(@"request_redeem error: %@", error);
-				 [RepunchUtils showDefaultErrorMessage];
+				 [RepunchUtils showConnectionErrorDialog];
 			 }
 		 }];
 		
@@ -484,7 +484,7 @@
 - (void)giftReplySent:(ComposeMessageViewController *)controller
 {
 	self.reply = [self.message objectForKey:@"Reply"];
-	containsReply = (self.reply != (id)[NSNull null] && self.reply != nil);
+	containsReply = !IS_NIL(self.reply);
 	[self.giftView removeFromSuperview];
 	[self setupMessage];
 	[self.delegate removeMessage:self forMsgStatus:nil];

@@ -6,20 +6,21 @@
 //
 
 #import "RegisterViewController.h"
-
+#import "AppDelegate.h"
+#import "GradientBackground.h"
+#import "AuthenticationManager.h"
 
 @implementation RegisterViewController
 {
-	AuthenticationManager *authenticationManager;
-	UIActivityIndicatorView *registerButtonSpinner;
 	UIActivityIndicatorView *webViewSpinner;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-	authenticationManager = [AuthenticationManager getSharedInstance];
+	
+	self.navigationItem.title = @"Register";
+	self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
     //tap gesture to dismiss keyboards
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
@@ -27,17 +28,20 @@
                                    action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
 	
-	UIToolbar* numberToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
+	UIToolbar* numberToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
     numberToolbar.barStyle = UIBarStyleBlack;
     numberToolbar.items = [NSArray arrayWithObjects:
-						   [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-						   [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(dismissKeyboard)],
+						   [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+																		 target:nil
+																		 action:nil],
+						   [[UIBarButtonItem alloc] initWithTitle:@"Done"
+															style:UIBarButtonItemStyleDone
+														   target:self
+														   action:@selector(dismissKeyboard)],
 						   nil];
     [numberToolbar sizeToFit];
-    self.ageInput.inputAccessoryView = numberToolbar;
 	
-	self.navigationItem.title = @"Register";
-	self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    self.ageInput.inputAccessoryView = numberToolbar;
 	
 	[self.registerButton setBackgroundImage:[GradientBackground orangeButtonNormal:self.registerButton]
 								forState:UIControlStateNormal];
@@ -46,36 +50,12 @@
 	[self.registerButton.layer setCornerRadius:5];
 	[self.registerButton setClipsToBounds:YES];
 	
-	registerButtonSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-	registerButtonSpinner.frame = self.registerButton.bounds;
-	[self.registerButton addSubview:registerButtonSpinner];
-	registerButtonSpinner.hidesWhenStopped = YES;
-	
-	self.facebookSpinner.hidesWhenStopped = YES;
-	
 	webViewSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 	webViewSpinner.hidesWhenStopped = YES;
 	
 	NSDictionary *attributes = [NSDictionary dictionaryWithObject:[UIFont fontWithName:@"Avenir-Heavy" size:17]
 														   forKey:NSFontAttributeName];
 	[self.genderSelector setTitleTextAttributes:attributes forState:UIControlStateNormal];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-	
-	authenticationManager.delegate = self;
-}
-
--(void)viewWillDisappear:(BOOL)animated
-{
-    //[self dismissKeyboard];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField*)textField;
@@ -104,7 +84,9 @@
 {
     [self disableViews:YES];
 	
-    [authenticationManager facebookLogin];
+    [AuthenticationManager loginWithFacebook:^(NSInteger errorCode) {
+		[self handleAuthenticationResult:errorCode];
+	}];
 }
 
 - (IBAction)registerWithRepunch:(id)sender
@@ -115,8 +97,10 @@
 		return;
 	}
 	
-	//make lowercase and strip trailing/leading whitespace
+	//make lowercase
     NSString *lowercaseEmail = [_emailInput.text lowercaseString];
+
+	//strip trailing/leading whitespace
 	NSRange range = [lowercaseEmail rangeOfString:@"^\\s*" options:NSRegularExpressionSearch];
 	NSString *email = [lowercaseEmail stringByReplacingCharactersInRange:range withString:@""];
 	
@@ -124,40 +108,23 @@
 	NSString *firstName = _firstNameInput.text;
 	NSString *lastName = _lastNameInput.text;
 	NSString *age = _ageInput.text;
+	NSString *gender = (self.genderSelector.selectedSegmentIndex == 0) ? @"female" : @"male";
+	
+	NSDateComponents *components = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:[NSDate date]];
+	int birthYear = [components year] - [age intValue];
+	NSString *birthday = [NSString stringWithFormat:@"01/01/%i", birthYear];
 	
 	[self disableViews:NO];
-    
-	PFUser *newUser = [PFUser user];
-	[newUser setUsername:email];
-    [newUser setPassword:password];
-    [newUser setEmail:email];
-    
-    [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-	{
-        if (!error)
-		{
-			NSDateComponents *components = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:[NSDate date]];
-			int birthYear = [components year] - [age intValue];
-			NSString *birthday = [NSString stringWithFormat:@"01/01/%i", birthYear];
-			
-			NSString *gender = (self.genderSelector.selectedSegmentIndex == 0) ? @"female" : @"male";
-            
-            NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-										newUser.objectId,					@"user_id",
-										email,								@"email",
-										gender,								@"gender",	
-										birthday,							@"birthday",
-										firstName,							@"first_name",
-										lastName,							@"last_name", nil];
-            
-            [authenticationManager registerPatron:parameters];
-        }
-		else
-		{
-			[self enableViews];
-			[self parseError:error];
-        }
-    }];
+	
+	[AuthenticationManager registerWithEmail:email
+								withPassword:password
+							   withFirstName:firstName
+								withLastName:lastName
+								withBirthday:birthday
+								  withGender:gender
+					   withCompletionHandler:^(NSInteger errorCode) {
+						   [self handleAuthenticationResult:errorCode];
+					   }];
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -168,7 +135,8 @@
 
 - (void)dismissKeyboard
 {
-	[self.scrollView setContentOffset:CGPointMake(0, self.scrollView.contentSize.height - self.scrollView.bounds.size.height) animated:YES];
+	[self.scrollView setContentOffset:CGPointMake(0, self.scrollView.contentSize.height - self.scrollView.bounds.size.height)
+							 animated:YES];
 	
     [_emailInput resignFirstResponder];
     [_passwordInput resignFirstResponder];
@@ -179,7 +147,7 @@
 
 - (void)enableViews
 {
-	[registerButtonSpinner stopAnimating];
+	[self.registerButtonSpinner stopAnimating];
 	[self.registerButton setTitle:@"Sign In" forState:UIControlStateNormal];
 	[self.registerButton setEnabled:YES];
 	
@@ -200,7 +168,7 @@
 		[self.registerButton setTitle:@"" forState:UIControlStateNormal];
 		[self.registerButton setEnabled:NO];
 		[self.facebookButton setEnabled:NO];
-		[registerButtonSpinner startAnimating];
+		[self.registerButtonSpinner startAnimating];
 	}
 }
 
@@ -208,84 +176,65 @@
 {
     if(_emailInput.text.length == 0 || _passwordInput.text.length == 0 ||
 		_firstNameInput.text.length == 0 || _lastNameInput.text.length == 0 || _ageInput.text.length == 0) {
-		[self showDialog:@"Please fill in all fields" withResultMessage:nil];
+		[RepunchUtils showDialogWithTitle:@"Please fill in all fields"
+							  withMessage:nil];
         return NO;
     }
 	
 	if(_genderSelector.selectedSegmentIndex == UISegmentedControlNoSegment) {
-		[self showDialog:@"Please specify your gender" withResultMessage:nil];
+		[RepunchUtils showDialogWithTitle:@"Please specify your gender"
+							  withMessage:nil];
 		return NO;
 	}
     
     if( _passwordInput.text.length < 6 ) {
-		[self showDialog:@"Registration Failed" withResultMessage:@"Passwords must be at least 6 characters"];
+		[RepunchUtils showDialogWithTitle:@"Registration Failed"
+							  withMessage:@"Passwords must be at least 6 characters"];
 		return NO;
 	}
 	
 	if( [_ageInput.text intValue] < 13 ) {
-		[self showDialog:@"Registration Failed" withResultMessage:@"Sorry, but you must be at least 13 years old to sign up"];
+		[RepunchUtils showDialogWithTitle:@"Registration Failed"
+							  withMessage:@"Sorry, but you must be at least 13 years old to sign up"];
 		return NO;
 	}
 	
 	if( [_ageInput.text intValue] > 125 ) {
-		[self showDialog:@"Please enter your real age" withResultMessage:nil];
+		[RepunchUtils showDialogWithTitle:@"Please enter your real age"
+							  withMessage:nil];
 		return NO;
 	}
     
     return YES;
 }
 
-- (void)onAuthenticationResult:(AuthenticationManager *)object withResult:(BOOL)success withError:(NSError *)error
+- (void)handleAuthenticationResult:(NSInteger)errorCode
 {
 	[self enableViews];
 	
-	if(success)
-	{
+	if(errorCode == 0) {
 		AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 		[appDelegate presentTabBarController];
 	}
-	else
-	{
-		NSLog(@"onAuthenticationResult ERROR: %@", error);
+	else {
+		if(errorCode == kPFErrorInvalidEmailAddress) {
+			[RepunchUtils showDialogWithTitle:@"Registration Failed"
+								  withMessage:@"Please enter a valid email"];
+		}
+		else if(errorCode == kPFErrorUserEmailTaken ||
+				errorCode == kPFErrorUsernameTaken) {
+			[RepunchUtils showDialogWithTitle:@"Registration Failed"
+								  withMessage:@"Another user is already using this email"];
+		}
+		else {
+			[RepunchUtils showDialogWithTitle:@"Registration Failed"
+								  withMessage:@"Sorry, something went wrong. Please try again."];
+		}
 		
 		if([PFUser currentUser]) {
 			[PFUser logOut];
 		}
-		
-		[self parseError:error];
 	}
-}
-
-- (void)parseError:(NSError *)error
-{
-	NSDictionary *errorInfo = [error userInfo];
-	NSInteger errorCode = [[errorInfo objectForKey:@"code"] integerValue];
-	NSString *message;
-	
-	if(errorCode == kPFErrorInvalidEmailAddress ||
-	   errorCode == kPFErrorUserEmailTaken ||
-	   errorCode == kPFErrorUsernameTaken)
-	{
-		message = [errorInfo objectForKey:@"error"];
-	}
-	else
-	{
-		message = @"There was a problem connecting to Repunch. Please check your connection and try again.";
-	}
-	
-	[self showDialog:@"Registration Failed" withResultMessage:message];
-}
-
-- (void)showDialog:(NSString*)resultTitle withResultMessage:(NSString*)resultMessage
-{
-	NSString *capitalisedSentence =
-		[resultMessage stringByReplacingCharactersInRange:NSMakeRange(0,1)
-											   withString:[[resultMessage  substringToIndex:1] capitalizedString]];
-	
-	SIAlertView *alert = [[SIAlertView alloc] initWithTitle:resultTitle
-                                                 andMessage:capitalisedSentence];
-    [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
-    [alert show];
 }
 
 - (IBAction)termsAndConditions:(id)sender

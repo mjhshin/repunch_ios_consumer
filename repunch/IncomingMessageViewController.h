@@ -11,6 +11,7 @@
 #import "GradientBackground.h"
 #import "DataManager.h"
 #import <Parse/Parse.h>
+#import "RPConstants.h"
 
 @class IncomingMessageViewController;
 

@@ -15,6 +15,7 @@
 #import "DataManager.h"
 #import "SIAlertView.h"
 #import <Parse/Parse.h>
+#import "RPConstants.h"
 
 @interface MyPlacesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, StoreViewControllerDelegate, SearchViewControllerDelegate>
 

@@ -26,6 +26,7 @@
 		7996B3AC17820B1400CCAFED /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B3AB17820B1400CCAFED /* AdSupport.framework */; };
 		7996B3AE17820B1800CCAFED /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B3AD17820B1800CCAFED /* Social.framework */; };
 		7996B3B017820B1C00CCAFED /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B3AF17820B1C00CCAFED /* Accounts.framework */; };
+		EE04ABCE181AEC5D00DDA5D0 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EE04ABCD181AEC5D00DDA5D0 /* Reachability.m */; };
 		EE06E65E17E7525000073AAF /* app_icon_29x29.png in Resources */ = {isa = PBXBuildFile; fileRef = EE06E65817E7525000073AAF /* app_icon_29x29.png */; };
 		EE06E65F17E7525000073AAF /* app_icon_57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = EE06E65917E7525000073AAF /* app_icon_57x57.png */; };
 		EE06E66017E7525000073AAF /* app_icon_58x58.png in Resources */ = {isa = PBXBuildFile; fileRef = EE06E65A17E7525000073AAF /* app_icon_58x58.png */; };
@@ -138,7 +139,6 @@
 		EEA181B717CC499C00553336 /* RepunchUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA181B617CC499B00553336 /* RepunchUtils.m */; };
 		EEA181C217CD20D300553336 /* map_button_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = EEA181BC17CD20D300553336 /* map_button_highlighted.png */; };
 		EEA181C317CD20D300553336 /* map_button_highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEA181BD17CD20D300553336 /* map_button_highlighted@2x.png */; };
-		EEA181C817CD836F00553336 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA181C517CD81CA00553336 /* Reachability.m */; };
 		EEB8A44117EA314B0020E2EE /* splash_screen_640x960.png in Resources */ = {isa = PBXBuildFile; fileRef = EEB8A43E17EA314B0020E2EE /* splash_screen_640x960.png */; };
 		EEB8A44217EA314B0020E2EE /* splash_screen_640x1136.png in Resources */ = {isa = PBXBuildFile; fileRef = EEB8A43F17EA314B0020E2EE /* splash_screen_640x1136.png */; };
 		EEB8A44D17EA61140020E2EE /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB8A44B17EA61140020E2EE /* SettingsViewController.m */; };
@@ -172,6 +172,9 @@
 		7996B3AB17820B1400CCAFED /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		7996B3AD17820B1800CCAFED /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		7996B3AF17820B1C00CCAFED /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		EE04ABCC181AEC5D00DDA5D0 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		EE04ABCD181AEC5D00DDA5D0 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		EE04ABD0181AF8C100DDA5D0 /* RPConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RPConstants.h; sourceTree = "<group>"; };
 		EE06E65817E7525000073AAF /* app_icon_29x29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_29x29.png; sourceTree = "<group>"; };
 		EE06E65917E7525000073AAF /* app_icon_57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_57x57.png; sourceTree = "<group>"; };
 		EE06E65A17E7525000073AAF /* app_icon_58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_58x58.png; sourceTree = "<group>"; };
@@ -315,8 +318,6 @@
 		EEA181B617CC499B00553336 /* RepunchUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepunchUtils.m; sourceTree = "<group>"; };
 		EEA181BC17CD20D300553336 /* map_button_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_button_highlighted.png; sourceTree = "<group>"; };
 		EEA181BD17CD20D300553336 /* map_button_highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_button_highlighted@2x.png"; sourceTree = "<group>"; };
-		EEA181C417CD81C800553336 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		EEA181C517CD81CA00553336 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		EEB8A43E17EA314B0020E2EE /* splash_screen_640x960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash_screen_640x960.png; sourceTree = "<group>"; };
 		EEB8A43F17EA314B0020E2EE /* splash_screen_640x1136.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash_screen_640x1136.png; sourceTree = "<group>"; };
 		EEB8A44A17EA61140020E2EE /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -411,6 +412,42 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		EE04ABCF181AF26800DDA5D0 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				EEFBA1701810A6A400783F05 /* Tutorial */,
+				EE9D4BA617A83F4A005E0CC5 /* StoreMapViewController.h */,
+				EE9D4BA717A83F4A005E0CC5 /* StoreMapViewController.m */,
+				EE9D4BA817A83F4A005E0CC5 /* StoreMapViewController.xib */,
+				EE9D4BA917A83F4A005E0CC5 /* StoreViewController.h */,
+				EE9D4BAA17A83F4A005E0CC5 /* StoreViewController.m */,
+				EE9D4BAB17A83F4A005E0CC5 /* StoreViewController.xib */,
+				EEFBA1711810A6BE00783F05 /* Landing */,
+				EE9D4BAF17A83F4A005E0CC5 /* MyPlacesViewController.h */,
+				EE9D4BB017A83F4A005E0CC5 /* MyPlacesViewController.m */,
+				EE9D4BB117A83F4A005E0CC5 /* MyPlacesViewController.xib */,
+				EE9D4BAC17A83F4A005E0CC5 /* SearchViewController.h */,
+				EE9D4BAD17A83F4A005E0CC5 /* SearchViewController.m */,
+				EE9D4BAE17A83F4A005E0CC5 /* SearchViewController.xib */,
+				EEB8A44A17EA61140020E2EE /* SettingsViewController.h */,
+				EEB8A44B17EA61140020E2EE /* SettingsViewController.m */,
+				EEB8A44C17EA61140020E2EE /* SettingsViewController.xib */,
+				EE9D4B9B17A83F4A005E0CC5 /* InboxViewController.h */,
+				EE9D4B9C17A83F4A005E0CC5 /* InboxViewController.m */,
+				EE9D4B9D17A83F4A005E0CC5 /* InboxViewController.xib */,
+				EE9D4BA117A83F4A005E0CC5 /* IncomingMessageViewController.h */,
+				EE9D4BA217A83F4A005E0CC5 /* IncomingMessageViewController.m */,
+				EE9D4BA317A83F4A005E0CC5 /* IncomingMessageViewController.xib */,
+				EEA181A917C6FD9A00553336 /* FacebookFriendsViewController.h */,
+				EEA181AA17C6FD9A00553336 /* FacebookFriendsViewController.m */,
+				EEA181AB17C6FD9A00553336 /* FacebookFriendsViewController.xib */,
+				EE9D4B7317A83F4A005E0CC5 /* ComposeMessageViewController.h */,
+				EE9D4B7417A83F4A005E0CC5 /* ComposeMessageViewController.m */,
+				EE9D4B7517A83F4A005E0CC5 /* ComposeMessageViewController.xib */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
 		EE3F36D517B5865800D28FC9 /* Push */ = {
 			isa = PBXGroup;
 			children = (
@@ -438,42 +475,15 @@
 			children = (
 				EE9D4B7117A83F4A005E0CC5 /* AppDelegate.h */,
 				EE9D4B7217A83F4A005E0CC5 /* AppDelegate.m */,
-				EE9D4B7317A83F4A005E0CC5 /* ComposeMessageViewController.h */,
-				EE9D4B7417A83F4A005E0CC5 /* ComposeMessageViewController.m */,
-				EE9D4B7517A83F4A005E0CC5 /* ComposeMessageViewController.xib */,
 				EE9D4B8717A83F4A005E0CC5 /* CustomUIViews */,
 				EEFBA1721810A6EB00783F05 /* Facebook */,
-				EEA181A917C6FD9A00553336 /* FacebookFriendsViewController.h */,
-				EEA181AA17C6FD9A00553336 /* FacebookFriendsViewController.m */,
-				EEA181AB17C6FD9A00553336 /* FacebookFriendsViewController.xib */,
 				EE06E66417E7AB0100073AAF /* Images.xcassets */,
-				EE9D4B9B17A83F4A005E0CC5 /* InboxViewController.h */,
-				EE9D4B9C17A83F4A005E0CC5 /* InboxViewController.m */,
-				EE9D4B9D17A83F4A005E0CC5 /* InboxViewController.xib */,
-				EE9D4BA117A83F4A005E0CC5 /* IncomingMessageViewController.h */,
-				EE9D4BA217A83F4A005E0CC5 /* IncomingMessageViewController.m */,
-				EE9D4BA317A83F4A005E0CC5 /* IncomingMessageViewController.xib */,
-				EEFBA1711810A6BE00783F05 /* Landing */,
-				EE9D4BAF17A83F4A005E0CC5 /* MyPlacesViewController.h */,
-				EE9D4BB017A83F4A005E0CC5 /* MyPlacesViewController.m */,
-				EE9D4BB117A83F4A005E0CC5 /* MyPlacesViewController.xib */,
 				EE3F36D517B5865800D28FC9 /* Push */,
-				EE9D4BAC17A83F4A005E0CC5 /* SearchViewController.h */,
-				EE9D4BAD17A83F4A005E0CC5 /* SearchViewController.m */,
-				EE9D4BAE17A83F4A005E0CC5 /* SearchViewController.xib */,
-				EEB8A44A17EA61140020E2EE /* SettingsViewController.h */,
-				EEB8A44B17EA61140020E2EE /* SettingsViewController.m */,
-				EEB8A44C17EA61140020E2EE /* SettingsViewController.xib */,
+				EE04ABD0181AF8C100DDA5D0 /* RPConstants.h */,
 				EE9D4E4D17A846B1005E0CC5 /* SIAlertView */,
-				EE9D4BA617A83F4A005E0CC5 /* StoreMapViewController.h */,
-				EE9D4BA717A83F4A005E0CC5 /* StoreMapViewController.m */,
-				EE9D4BA817A83F4A005E0CC5 /* StoreMapViewController.xib */,
-				EE9D4BA917A83F4A005E0CC5 /* StoreViewController.h */,
-				EE9D4BAA17A83F4A005E0CC5 /* StoreViewController.m */,
-				EE9D4BAB17A83F4A005E0CC5 /* StoreViewController.xib */,
 				EE9D4BC617A83F4A005E0CC5 /* ThirdPartyViews */,
-				EEFBA1701810A6A400783F05 /* Tutorial */,
 				EEFBA1731810A70F00783F05 /* Utilities */,
+				EE04ABCF181AF26800DDA5D0 /* ViewControllers */,
 				EE6E6E37180F24E1000CE34B /* WelcomeStoryboard.storyboard */,
 			);
 			path = Repunch;
@@ -643,14 +653,14 @@
 		EEFBA1731810A70F00783F05 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				EE04ABCC181AEC5D00DDA5D0 /* Reachability.h */,
+				EE04ABCD181AEC5D00DDA5D0 /* Reachability.m */,
 				EE5F947217FB5471006E6F67 /* AuthenticationManager.h */,
 				EE5F947317FB5471006E6F67 /* AuthenticationManager.m */,
 				EE28DADE17AC447E00E4C460 /* DataManager.h */,
 				EE28DADF17AC447E00E4C460 /* DataManager.m */,
 				EE9D4F4F17A96F5B005E0CC5 /* GradientBackground.h */,
 				EE9D4F5017A96F5B005E0CC5 /* GradientBackground.m */,
-				EEA181C417CD81C800553336 /* Reachability.h */,
-				EEA181C517CD81CA00553336 /* Reachability.m */,
 				EEA181B517CC499900553336 /* RepunchUtils.h */,
 				EEA181B617CC499B00553336 /* RepunchUtils.m */,
 			);
@@ -827,7 +837,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EEA181C817CD836F00553336 /* Reachability.m in Sources */,
 				EE9D4C6617A83F4B005E0CC5 /* main.m in Sources */,
 				EE9D4C6717A83F4B005E0CC5 /* AppDelegate.m in Sources */,
 				EE9D4C6817A83F4B005E0CC5 /* ComposeMessageViewController.m in Sources */,
@@ -853,6 +862,7 @@
 				EE28DAE017AC447E00E4C460 /* DataManager.m in Sources */,
 				EE3F36D417B585B300D28FC9 /* PunchHandler.m in Sources */,
 				EEB8A44D17EA61140020E2EE /* SettingsViewController.m in Sources */,
+				EE04ABCE181AEC5D00DDA5D0 /* Reachability.m in Sources */,
 				EE3F36D817B586ED00D28FC9 /* RedeemHandler.m in Sources */,
 				EE460EC317BB5C7A00AC3588 /* MessageHandler.m in Sources */,
 				EEA181A317C5894B00553336 /* FacebookPost.m in Sources */,

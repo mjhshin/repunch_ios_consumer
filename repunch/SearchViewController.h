@@ -22,6 +22,7 @@
 #import <Parse/Parse.h>
 #import "AppDelegate.h"
 #import "DataManager.h"
+#import "RPConstants.h"
 
 @interface SearchViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, CLLocationManagerDelegate, StoreViewControllerDelegate>
 

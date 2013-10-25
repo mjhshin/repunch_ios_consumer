@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController">
@@ -12,6 +12,7 @@
                 <outlet property="facebookButtonLabel" destination="296" id="426"/>
                 <outlet property="facebookSpinner" destination="427" id="430"/>
                 <outlet property="loginButton" destination="52" id="410"/>
+                <outlet property="loginButtonSpinner" destination="wiu-Vr-3S7" id="J05-R5-ViY"/>
                 <outlet property="passwordInput" destination="6" id="50"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
@@ -119,6 +120,10 @@
                         <action selector="loginWithRepunch:" destination="-1" eventType="touchUpInside" id="416"/>
                     </connections>
                 </button>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="wiu-Vr-3S7">
+                    <rect key="frame" x="142" y="296" width="37" height="37"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </activityIndicatorView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="57">
                     <rect key="frame" x="66" y="364" width="188" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -147,7 +152,7 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="427">
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="427">
                     <rect key="frame" x="165" y="56" width="37" height="37"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </activityIndicatorView>
@@ -169,6 +174,7 @@
                 <constraint firstItem="7" firstAttribute="top" secondItem="1" secondAttribute="top" constant="52" id="2vn-75-H3N"/>
                 <constraint firstItem="7" firstAttribute="centerY" secondItem="427" secondAttribute="centerY" id="49T-Np-gWi"/>
                 <constraint firstItem="9" firstAttribute="top" secondItem="1" secondAttribute="top" constant="130" id="4bD-AH-CjA"/>
+                <constraint firstItem="wiu-Vr-3S7" firstAttribute="centerX" secondItem="52" secondAttribute="centerX" id="98j-HF-SQ4"/>
                 <constraint firstItem="296" firstAttribute="leading" secondItem="7" secondAttribute="trailing" constant="-84" id="9nJ-nV-YWE"/>
                 <constraint firstAttribute="centerX" secondItem="57" secondAttribute="centerX" id="9sP-Vl-4Ve"/>
                 <constraint firstItem="11" firstAttribute="top" secondItem="1" secondAttribute="top" constant="140" id="BLL-5k-XLD"/>
@@ -176,6 +182,7 @@
                 <constraint firstAttribute="trailing" secondItem="11" secondAttribute="trailing" id="M7g-sh-tsT"/>
                 <constraint firstItem="10" firstAttribute="top" secondItem="1" secondAttribute="top" constant="140" id="P3U-Kl-9Vi"/>
                 <constraint firstAttribute="centerX" secondItem="6" secondAttribute="centerX" id="VRh-2F-xbr"/>
+                <constraint firstItem="57" firstAttribute="top" secondItem="wiu-Vr-3S7" secondAttribute="bottom" constant="31" id="ZIC-Jf-wla"/>
                 <constraint firstAttribute="centerX" secondItem="8" secondAttribute="centerX" id="aT5-di-Ngy"/>
                 <constraint firstItem="57" firstAttribute="top" secondItem="52" secondAttribute="bottom" constant="27" id="dAQ-Ea-VP0"/>
                 <constraint firstAttribute="centerX" secondItem="52" secondAttribute="centerX" id="jKf-cd-79I"/>

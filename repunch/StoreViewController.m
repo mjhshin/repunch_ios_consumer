@@ -93,7 +93,7 @@
 		punchCount = [[patronStore objectForKey:@"punch_count"] intValue];
 		
 		PFObject *facebookPost = [patronStore objectForKey:@"FacebookPost"];
-		if( facebookPost != nil && facebookPost != (id)[NSNull null] )
+		if( !IS_NIL(facebookPost) )
 		{
 			NSString *rewardTitle = [facebookPost objectForKey:@"reward"];
 			[FacebookPost presentDialog:self.storeId withRewardTitle:rewardTitle];
@@ -122,12 +122,12 @@
 
 	self.navigationItem.title = name;
 	
-	if(crossStreets != (id)[NSNull null]) {
+	if( !IS_NIL(crossStreets) ) {
 		street = [street stringByAppendingString:@"\n"];
 		street = [street stringByAppendingString:crossStreets];		
 	}
 	
-	if(neighborhood != (id)[NSNull null]) {
+	if( !IS_NIL(neighborhood) ) {
 		street = [street stringByAppendingString:@"\n"];
 		street = [street stringByAppendingString:neighborhood];
 	}
@@ -141,7 +141,7 @@
 	[self setStoreHours];
 	
 	PFFile *imageFile = [store objectForKey:@"store_avatar"];
-	if(imageFile != nil && imageFile != (id)[NSNull null])
+	if( !IS_NIL(imageFile) )
 	{
 		UIImage *storeImage = [sharedData getStoreImage:self.storeId];
 		if(storeImage == nil)
@@ -157,7 +157,7 @@
 				 else
 				 {
 					 NSLog(@"image download failed");
-					 [RepunchUtils showDefaultErrorMessage];
+					 [RepunchUtils showConnectionErrorDialog];
 				 }
 			 }];
 		} else {
@@ -421,7 +421,7 @@
 				else
 				{
 					NSLog(@"error occurred: %@", error);
-					[RepunchUtils showDefaultErrorMessage];
+					[RepunchUtils showConnectionErrorDialog];
 				}
 			}];
 		}];
@@ -516,7 +516,7 @@
 		{
 			NSLog(@"add_patronStore error: %@", error);
 			[self.addToMyPlacesButton setTitle:@"Add to My Places" forState:UIControlStateNormal];
-			[RepunchUtils showDefaultErrorMessage];
+			[RepunchUtils showConnectionErrorDialog];
 		}
 	}];
 }
@@ -575,7 +575,7 @@
 			 NSLog(@"delete_patronStore error: %@", error);
 			 NSString *buttonText = [NSString stringWithFormat:@"%i %@", punchCount, (punchCount == 1) ? @"Punch": @"Punches"];
 			 [self.addToMyPlacesButton setTitle:buttonText forState:UIControlStateNormal];
-			 [RepunchUtils showDefaultErrorMessage];
+			 [RepunchUtils showConnectionErrorDialog];
 		 }
 	 }];
 }
@@ -626,7 +626,7 @@
 			 else
 			 {
 				 NSLog(@"error fetching Store: %@", error);
-				 [RepunchUtils showDefaultErrorMessage];
+				 [RepunchUtils showConnectionErrorDialog];
 			 }
 		 }];
 	}
@@ -645,7 +645,7 @@
 			 else
 			 {
 				 NSLog(@"error fetching Store: %@", error);
-				 [RepunchUtils showDefaultErrorMessage];
+				 [RepunchUtils showConnectionErrorDialog];
 			 }
 		 }];
 	}
