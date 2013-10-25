@@ -183,18 +183,15 @@
 			return;
 		}
 		
-        [PFUser requestPasswordResetForEmailInBackground:email block:^(BOOL succeeded, NSError *error)
-		{
+        [PFUser requestPasswordResetForEmailInBackground:email block:^(BOOL succeeded, NSError *error) {
 			NSString *titleString;
 			NSString *messageString;
 			
-			if(!error)
-			{
+			if(!error) {
 				titleString = @"Success!";
 				messageString = @"Instructions to reset your password have been sent to your email";
 			}
-			else
-			{
+			else {
 				titleString = @"Error";
 				int errorCode = [[[error userInfo] objectForKey:@"code"] intValue];
 				if(errorCode == kPFErrorInvalidEmailAddress) {
@@ -210,10 +207,7 @@
 			[messageString stringByReplacingCharactersInRange:NSMakeRange(0,1)
 												   withString:[[messageString  substringToIndex:1] capitalizedString]];
 			
-			SIAlertView *alert = [[SIAlertView alloc] initWithTitle:titleString
-														 andMessage:capitalisedSentence];
-			[alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
-			[alert show];
+			[RepunchUtils showDialogWithTitle:titleString withMessage:capitalisedSentence];
 		}];
     }
 }
