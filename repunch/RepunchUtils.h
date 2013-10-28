@@ -7,13 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SIAlertView.h"
 
 @interface RepunchUtils : NSObject
 
 + (void)showDialogWithTitle:(NSString *)title withMessage:(NSString *)message;
 + (void)showConnectionErrorDialog;
++ (BOOL)isConnectionAvailable;
++ (void)showNavigationBarDropdownView:(UIView *)parentView;
 + (void)setupNavigationController:(UINavigationController *)navController;
++ (void)setDefaultButtonStyle:(UIButton *)button;
 + (UIColor *)repunchOrangeColor;
 + (void)clearNotificationCenter;
 + (void)configureAppearance;

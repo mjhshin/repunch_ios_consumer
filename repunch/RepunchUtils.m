@@ -6,7 +6,10 @@
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
+#import "SIAlertView.h"
 #import "RepunchUtils.h"
+#import "GradientBackground.h"
+#import "Reachability.h"
 
 @implementation RepunchUtils
 
@@ -24,6 +27,52 @@
 													   andMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
 	[errorDialog addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
 	[errorDialog show];
+}
+
++ (BOOL)isConnectionAvailable
+{
+	Reachability *reach = [Reachability reachabilityForInternetConnection];
+	NetworkStatus status = [reach currentReachabilityStatus];
+	return (status != NotReachable);
+}
+
++ (void)showNavigationBarDropdownView:(UIView *)parentView
+{
+	UILabel *dropdownLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+	dropdownLabel.text = @"No Internet Connection";
+	dropdownLabel.font = [UIFont fontWithName:@"Avenir-Medium" size:17.0];
+	dropdownLabel.textAlignment = NSTextAlignmentCenter;
+	dropdownLabel.textColor = [UIColor whiteColor];
+	dropdownLabel.backgroundColor = [UIColor lightGrayColor];
+	[parentView addSubview:dropdownLabel];
+	
+	CGRect rect = dropdownLabel.frame;
+    rect.origin.y = -40;
+	dropdownLabel.frame = rect;
+
+	// Fade out the view right away
+    [UIView animateWithDuration:0.25
+						  delay: 0.0
+						options: UIViewAnimationOptionCurveEaseOut
+					 animations:^{
+						 CGRect rect2 = dropdownLabel.frame;
+						 rect2.origin.y = 0;
+						 dropdownLabel.frame = rect2;
+					 }
+					 completion:^(BOOL finished) {
+						 // Wait one second and then fade in the view
+						 [UIView animateWithDuration:0.25
+											   delay: 1.0
+											 options:UIViewAnimationOptionCurveEaseOut
+										  animations:^{
+											  CGRect rect3 = dropdownLabel.frame;
+											  rect3.origin.y = -40;
+											  dropdownLabel.frame = rect3;
+										  }
+										  completion:^(BOOL finished) {
+											  [dropdownLabel removeFromSuperview];
+										  }];
+					 }];
 }
 
 + (void)configureAppearance
@@ -48,6 +97,14 @@
 	navController.navigationBar.tintColor = [UIColor whiteColor];
 	navController.navigationBar.barTintColor = [RepunchUtils repunchOrangeColor];
 	navController.navigationBar.translucent = NO;
+}
+
++ (void)setDefaultButtonStyle:(UIButton *)button
+{
+	[button setBackgroundImage:[GradientBackground orangeButtonNormal:button] forState:UIControlStateNormal];
+	[button setBackgroundImage:[GradientBackground orangeButtonHighlighted:button] forState:UIControlStateHighlighted];
+	[button.layer setCornerRadius:5];
+	[button setClipsToBounds:YES];
 }
 
 + (UIColor *)repunchOrangeColor // RGBA = F79234FF

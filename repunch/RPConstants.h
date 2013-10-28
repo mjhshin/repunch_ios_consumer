@@ -13,4 +13,8 @@
 
 typedef void(^AuthenticationManagerHandler)(NSInteger errorCode);
 
+typedef void(^MyPlacesFetchHandler)(NSArray *results, NSError *error);
+typedef void(^InboxFetchHandler)(NSArray *results, NSError *error);
+typedef void(^SearchResultHandler)(NSArray *results, NSError *error);
+
 #endif

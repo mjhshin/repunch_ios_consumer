@@ -58,17 +58,6 @@
     [self.view addSubview:placeMapView];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
-
 - (IBAction)closeView:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -100,6 +89,11 @@
                        launchOptions:launchOptions];
     }
 
+}
+
+- (void)mapViewDidFailLoadingMap:(MKMapView *)mapView withError:(NSError *)error
+{
+	[RepunchUtils showNavigationBarDropdownView:self.view];
 }
 
 @end

@@ -215,6 +215,11 @@
 	}
 	else
 	{
+		if( ![RepunchUtils isConnectionAvailable] ) {
+			[RepunchUtils showNavigationBarDropdownView:self.view];
+			return;
+		}
+		
 		UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 		spinner.hidesWhenStopped = YES;
 		spinner.frame = CGRectMake(0, 0, 24, 24);
@@ -226,19 +231,16 @@
 		//set blank "patron_id" and "punch_code" in installation so push notifications not received when logged out.
 		[[PFInstallation currentInstallation] setObject:@"" forKey:@"punch_code"];
 		[[PFInstallation currentInstallation] setObject:@"" forKey:@"patron_id"];
-		[[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-		 {
+		[[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 			 [spinner stopAnimating];
 			 tableView.userInteractionEnabled = YES;
 			 
-			 if(!error)
-			 {
+			 if(!error) {
 				 [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 				 AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 				 [appDelegate logout];
 			 }
-			 else
-			 {
+			 else {
 				 SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Failed to Log Out"
 															  andMessage:@"Sorry, something went wrong"];
 				 [alert addButtonWithTitle:@"OK"
@@ -264,6 +266,7 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     [activityIndicator stopAnimating];
+	[RepunchUtils showNavigationBarDropdownView:webView];
 }
 
 - (IBAction)closeView:(id)sender

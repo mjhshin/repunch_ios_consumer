@@ -486,6 +486,11 @@
 
 - (void)addStore
 {
+	if( ![RepunchUtils isConnectionAvailable] ) {
+		[RepunchUtils showNavigationBarDropdownView:self.view];
+		return;
+	}
+	
 	[self.addToMyPlacesButton setTitle:@"" forState:UIControlStateNormal];
 	[self.addToMyPlacesButton setEnabled:NO];
 	
@@ -542,6 +547,11 @@
 
 - (void)performDelete
 {
+	if( ![RepunchUtils isConnectionAvailable] ) {
+		[RepunchUtils showNavigationBarDropdownView:self.view];
+		return;
+	}
+	
 	[self.addToMyPlacesButton setTitle:@"" forState:UIControlStateNormal];
 	[self.addToMyPlacesButton setEnabled:NO];
 	
@@ -582,6 +592,11 @@
 
 - (void)gift
 {
+	if( ![RepunchUtils isConnectionAvailable] ) {
+		[RepunchUtils showNavigationBarDropdownView:self.view];
+		return;
+	}
+	
 	if( [patron objectForKey:@"facebook_id"] == nil)
 	{
 		SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"It's better together"]
@@ -607,6 +622,12 @@
 
 - (void)refreshPatronStoreObject
 {
+	if( ![RepunchUtils isConnectionAvailable] ) {
+		[self.tableViewController.refreshControl endRefreshing];
+		[RepunchUtils showNavigationBarDropdownView:self.view];
+		return;
+	}
+	
 	if(patronStoreExists)
 	{
 		PFQuery *query = [PFQuery queryWithClassName:@"PatronStore"];

@@ -43,12 +43,7 @@
 	
     self.ageInput.inputAccessoryView = numberToolbar;
 	
-	[self.registerButton setBackgroundImage:[GradientBackground orangeButtonNormal:self.registerButton]
-								forState:UIControlStateNormal];
-	[self.registerButton setBackgroundImage:[GradientBackground orangeButtonHighlighted:self.registerButton]
-								forState:UIControlStateHighlighted];
-	[self.registerButton.layer setCornerRadius:5];
-	[self.registerButton setClipsToBounds:YES];
+	[RepunchUtils setDefaultButtonStyle:self.registerButton];
 	
 	webViewSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 	webViewSpinner.hidesWhenStopped = YES;
@@ -82,6 +77,11 @@
 
 - (IBAction)registerWithFacebook:(id)sender
 {
+	if( ![RepunchUtils isConnectionAvailable] ) {
+		[RepunchUtils showNavigationBarDropdownView:self.view];
+		return;
+	}
+	
     [self disableViews:YES];
 	
     [AuthenticationManager loginWithFacebook:^(NSInteger errorCode) {
@@ -93,7 +93,11 @@
 {
 	[self dismissKeyboard];
 	
-	if( ![self validateForm] ) {
+	if( ![RepunchUtils isConnectionAvailable] ) {
+		[RepunchUtils showNavigationBarDropdownView:self.view];
+		return;
+	}
+	else if( ![self validateForm] ) {
 		return;
 	}
 	
@@ -280,6 +284,7 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     [webViewSpinner stopAnimating];
+	[RepunchUtils showNavigationBarDropdownView:webView];
 }
 
 @end

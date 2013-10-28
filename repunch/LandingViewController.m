@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "RegisterViewController.h"
 #import "GradientBackground.h"
+#import "RepunchUtils.h"
 
 @implementation LandingViewController
 
@@ -22,19 +23,8 @@
 {
     [super viewDidLoad];
 	
-	[self.loginButton setBackgroundImage:[GradientBackground orangeButtonNormal:self.loginButton]
-								   forState:UIControlStateNormal];
-	[self.loginButton setBackgroundImage:[GradientBackground orangeButtonHighlighted:self.loginButton]
-								   forState:UIControlStateHighlighted];
-	[self.loginButton.layer setCornerRadius:5];
-	[self.loginButton setClipsToBounds:YES];
-	
-	[self.registerButton setBackgroundImage:[GradientBackground orangeButtonNormal:self.registerButton]
-						 forState:UIControlStateNormal];
-	[self.registerButton setBackgroundImage:[GradientBackground orangeButtonHighlighted:self.registerButton]
-						 forState:UIControlStateHighlighted];
-	[self.registerButton.layer setCornerRadius:5];
-	[self.registerButton setClipsToBounds:YES];
+	[RepunchUtils setDefaultButtonStyle:self.registerButton];
+	[RepunchUtils setDefaultButtonStyle:self.loginButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated

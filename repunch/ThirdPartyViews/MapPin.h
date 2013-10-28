@@ -10,6 +10,8 @@
 
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 
-- (id)initWithCoordinates:(CLLocationCoordinate2D)location placeName:(NSString *)placeName description:(NSString *)description;
+- (id)initWithCoordinates:(CLLocationCoordinate2D)location
+				placeName:(NSString *)placeName
+			  description:(NSString *)description;
 
 @end

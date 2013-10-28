@@ -25,12 +25,7 @@
                                    action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
 	
-	[self.loginButton setBackgroundImage:[GradientBackground orangeButtonNormal:self.loginButton]
-								forState:UIControlStateNormal];
-	[self.loginButton setBackgroundImage:[GradientBackground orangeButtonHighlighted:self.loginButton]
-								forState:UIControlStateHighlighted];
-	[self.loginButton.layer setCornerRadius:5];
-	[self.loginButton setClipsToBounds:YES];
+	[RepunchUtils setDefaultButtonStyle:self.loginButton];
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -77,11 +72,15 @@
 	NSString *email = [_emailInput text];
 	NSString *password = [_passwordInput text];
 	
-	if(email.length == 0) {
+	if( ![RepunchUtils isConnectionAvailable] ) {
+		[RepunchUtils showNavigationBarDropdownView:self.view];
+		return;
+	}
+	else if(email.length == 0) {
 		[RepunchUtils showDialogWithTitle:@"Please enter your email" withMessage:nil];
 		return;
-		
-	} else if(password.length == 0) {
+	}
+	else if(password.length == 0) {
 		[RepunchUtils showDialogWithTitle:@"Please enter your password" withMessage:nil];
 		return;
 	}
@@ -95,6 +94,11 @@
 
 - (IBAction)loginWithFacebook:(id)sender
 {
+	if( ![RepunchUtils isConnectionAvailable] ) {
+		[RepunchUtils showNavigationBarDropdownView:self.view];
+		return;
+	}
+	
 	[self disableViews:YES];
 	
 	[AuthenticationManager loginWithFacebook:^(NSInteger errorCode) {
@@ -161,6 +165,11 @@
 
 - (IBAction)forgotPassword:(id)sender
 {
+	if( ![RepunchUtils isConnectionAvailable] ) {
+		[RepunchUtils showNavigationBarDropdownView:self.view];
+		return;
+	}
+	
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Forgot Password?"
 													message:@"Enter your email address and we'll help you reset your password."
 												   delegate:self

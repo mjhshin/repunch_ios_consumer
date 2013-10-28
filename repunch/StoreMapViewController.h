@@ -11,8 +11,9 @@
 #import "GradientBackground.h"
 #import "DataManager.h"
 #import <Parse/Parse.h>
+#import "RepunchUtils.h"
 
-@interface StoreMapViewController : UIViewController
+@interface StoreMapViewController : UIViewController <MKMapViewDelegate>
 
 @property (nonatomic, strong) NSString *storeId;
 

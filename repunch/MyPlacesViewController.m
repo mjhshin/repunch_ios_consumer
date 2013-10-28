@@ -143,6 +143,12 @@
 
 - (void)loadMyPlaces
 {
+	if( ![RepunchUtils isConnectionAvailable] ) { // TODO: what to do with downloading images when no connection?
+		[self.tableViewController.refreshControl endRefreshing];
+		[RepunchUtils showNavigationBarDropdownView:self.view];
+		return;
+	}
+	
 	if(self.storeIdArray.count == 0) {
 		self.activityIndicatorView.hidden = NO;
 		[self.activityIndicator startAnimating];
@@ -430,6 +436,7 @@
 
 - (IBAction)showPunchCode:(id)sender
 {
+	/*
 	NSString *punchCode = [self.patron objectForKey:@"punch_code"];
     SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Your Punch Code"
                                                  andMessage:punchCode];
@@ -438,6 +445,9 @@
 	[alert setMessageFont:[UIFont fontWithName:@"Avenir-Heavy" size:32]];
     [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
     [alert show];
+	 */
+	
+	[RepunchUtils showNavigationBarDropdownView:self.view];
 }
 
 - (IBAction)openSettings:(id)sender

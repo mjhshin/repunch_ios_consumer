@@ -146,6 +146,11 @@
 
 - (void)send
 {
+	if( ![RepunchUtils isConnectionAvailable] ) {
+		[RepunchUtils showNavigationBarDropdownView:self.view];
+		return;
+	}
+	
 	if ([self.messageType isEqualToString:@"feedback"])
 	{
 		[self sendMessage];

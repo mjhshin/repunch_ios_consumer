@@ -6,7 +6,8 @@
 @synthesize title;
 @synthesize subtitle;
 
-- (id)initWithCoordinates:(CLLocationCoordinate2D)location placeName:placeName description:description {
+- (id)initWithCoordinates:(CLLocationCoordinate2D)location placeName:placeName description:description
+{
     self = [super init];
     if (self != nil) {
         coordinate = location;
@@ -15,7 +16,5 @@
     }
     return self;
 }
-
-
 
 @end

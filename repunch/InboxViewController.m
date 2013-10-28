@@ -115,8 +115,14 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
 }
 
--(void)loadInbox:(BOOL)paginate
+- (void)loadInbox:(BOOL)paginate
 {
+	if( ![RepunchUtils isConnectionAvailable] ) {
+		[self.tableViewController.refreshControl endRefreshing];
+		[RepunchUtils showNavigationBarDropdownView:self.view];
+		return;
+	}
+	
 	loadInProgress = YES;
 	
     PFRelation *messagesRelation = [self.patron relationforKey:@"ReceivedMessages"];
