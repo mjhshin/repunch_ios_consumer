@@ -27,7 +27,6 @@
 		7996B3AE17820B1800CCAFED /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B3AD17820B1800CCAFED /* Social.framework */; };
 		7996B3B017820B1C00CCAFED /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B3AF17820B1C00CCAFED /* Accounts.framework */; };
 		EE04ABCE181AEC5D00DDA5D0 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EE04ABCD181AEC5D00DDA5D0 /* Reachability.m */; };
-		EE04ABD5181ECDFD00DDA5D0 /* NavigationBarDropdownView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE04ABD4181ECDFD00DDA5D0 /* NavigationBarDropdownView.xib */; };
 		EE04ABD8181EFAC100DDA5D0 /* ParseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE04ABD7181EFAC100DDA5D0 /* ParseManager.m */; };
 		EE06E65E17E7525000073AAF /* app_icon_29x29.png in Resources */ = {isa = PBXBuildFile; fileRef = EE06E65817E7525000073AAF /* app_icon_29x29.png */; };
 		EE06E65F17E7525000073AAF /* app_icon_57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = EE06E65917E7525000073AAF /* app_icon_57x57.png */; };
@@ -176,7 +175,6 @@
 		EE04ABCC181AEC5D00DDA5D0 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		EE04ABCD181AEC5D00DDA5D0 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		EE04ABD0181AF8C100DDA5D0 /* RPConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RPConstants.h; sourceTree = "<group>"; };
-		EE04ABD4181ECDFD00DDA5D0 /* NavigationBarDropdownView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NavigationBarDropdownView.xib; sourceTree = "<group>"; };
 		EE04ABD6181EFAC100DDA5D0 /* ParseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseManager.h; sourceTree = "<group>"; };
 		EE04ABD7181EFAC100DDA5D0 /* ParseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseManager.m; sourceTree = "<group>"; };
 		EE06E65817E7525000073AAF /* app_icon_29x29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_29x29.png; sourceTree = "<group>"; };
@@ -509,7 +507,6 @@
 				EE5378BC17B2E8D6002D8B18 /* StoreHeaderView.xib */,
 				EE79DF4E17BAA37C00E92DE5 /* MessageAttachment.xib */,
 				EE79DF5017BAA38E00E92DE5 /* MessageReply.xib */,
-				EE04ABD4181ECDFD00DDA5D0 /* NavigationBarDropdownView.xib */,
 			);
 			path = CustomUIViews;
 			sourceTree = "<group>";
@@ -730,7 +727,6 @@
 				EEE777B117E7D2020023768B /* feedback_button@2x.png in Resources */,
 				EE9D4C6917A83F4B005E0CC5 /* ComposeMessageViewController.xib in Resources */,
 				EE06E66517E7AB0100073AAF /* Images.xcassets in Resources */,
-				EE04ABD5181ECDFD00DDA5D0 /* NavigationBarDropdownView.xib in Resources */,
 				EE9D4C7617A83F4B005E0CC5 /* InboxTableViewCell.xib in Resources */,
 				EE9D4C7817A83F4B005E0CC5 /* RewardTableViewCell.xib in Resources */,
 				EE9D4C7A17A83F4B005E0CC5 /* MyPlacesTableViewCell.xib in Resources */,

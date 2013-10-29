@@ -23,6 +23,50 @@
 {
     [super viewDidLoad];
 	
+	self.sharedData = [DataManager getSharedInstance];
+	self.patron = [self.sharedData patron];
+	self.storeIdArray = [NSMutableArray array];
+    self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
+	
+	[self registerForNotifications];
+	[self setupNavigationBar];
+	[self setupTableView];
+	[self loadMyPlaces];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    //alert to demonstrate how to get the punch code.  will only appear once.
+    if (![@"1" isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"showPunchCodeInstructions"]])
+    {
+        [[NSUserDefaults standardUserDefaults] setValue:@"1" forKey:@"showPunchCodeInstructions"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        SIAlertView *punchCodeHelpAlert = [[SIAlertView alloc] initWithTitle:@"A Friendly Tip"
+																  andMessage:@"Click on the Repunch logo in order to get your punch code"];
+        [punchCodeHelpAlert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
+        [punchCodeHelpAlert show];
+    }
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+	NSLog(@"My Places didReceiveMemoryWarning");
+    
+    // terminate all pending image downloads
+    NSArray *allDownloads = [self.imageDownloadsInProgress allValues];
+    [allDownloads makeObjectsPerformSelector:@selector(cancelImageDownload)];
+    
+    [self.imageDownloadsInProgress removeAllObjects];
+	
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)registerForNotifications
+{
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(receiveRefreshNotification:)
 												 name:@"AddRemoveMyPlace"
@@ -48,50 +92,23 @@
 												 name:UIApplicationWillEnterForegroundNotification
 											   object:nil];
 	
-	self.sharedData = [DataManager getSharedInstance];
-	self.patron = [self.sharedData patron];
-	self.storeIdArray = [NSMutableArray array];
-    self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
+	__weak typeof(self) weakSelf = self;
+	Reachability* reach = [Reachability reachabilityWithHostname:@"www.google.com"];
 	
-	[self setupNavigationBar];
-	[self setupTableView];
-	[self loadMyPlaces];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    //alert to demonstrate how to get the punch code.  will only appear once.
-    if (![@"1" isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"showPunchCodeInstructions"]])
-    {
-        [[NSUserDefaults standardUserDefaults] setValue:@"1" forKey:@"showPunchCodeInstructions"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
-        SIAlertView *punchCodeHelpAlert = [[SIAlertView alloc] initWithTitle:@"A Friendly Tip"
-																  andMessage:@"Click on the Repunch logo in order to get your punch code"];
-        [punchCodeHelpAlert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
-        [punchCodeHelpAlert show];
-    }
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-	[super viewWillDisappear:animated];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-	NSLog(@"My Places didReceiveMemoryWarning");
-    
-    // terminate all pending image downloads
-    NSArray *allDownloads = [self.imageDownloadsInProgress allValues];
-    [allDownloads makeObjectsPerformSelector:@selector(cancelImageDownload)];
-    
-    [self.imageDownloadsInProgress removeAllObjects];
+	reach.reachableBlock = ^(Reachability*reach) {
+		if(weakSelf.storeIdArray.count == 0) {
+			[weakSelf loadMyPlaces];
+		}
+		else {
+			[weakSelf refreshTableView];
+		}
+	};
 	
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	/*reach.unreachableBlock = ^(Reachability*reach) {
+		[RepunchUtils showNavigationBarDropdownView:weakSelf.view];
+	};*/
+	
+	[reach startNotifier];
 }
 
 - (void)setupNavigationBar
@@ -143,7 +160,7 @@
 
 - (void)loadMyPlaces
 {
-	if( ![RepunchUtils isConnectionAvailable] ) { // TODO: what to do with downloading images when no connection?
+	if( ![RepunchUtils isConnectionAvailable] ) {
 		[self.tableViewController.refreshControl endRefreshing];
 		[RepunchUtils showNavigationBarDropdownView:self.view];
 		return;
@@ -304,15 +321,17 @@
 
 - (void)downloadImage:(PFFile *)imageFile forIndexPath:(NSIndexPath *)indexPath withStoreId:(NSString *)storeId
 {
+	if( ![RepunchUtils isConnectionAvailable] ) {
+		return;
+	}
+	
     PFFile *existingImageFile = [self.imageDownloadsInProgress objectForKey:indexPath];
-    if (existingImageFile == nil)
-    {
+	
+    if (existingImageFile == nil) {
         [self.imageDownloadsInProgress setObject:imageFile forKey:indexPath];
         
-        [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
-        {
-            if (!error)
-            {
+        [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            if (!error) {
 				[self.imageDownloadsInProgress removeObjectForKey:indexPath]; // Remove the PFFile from the in-progress list
 				
 				UIImage *storeImage = [UIImage imageWithData:data];
@@ -322,8 +341,7 @@
 					[self.sharedData addStoreImage:storeImage forKey:storeId];
 				}
             }
-            else
-            {
+            else {
                 NSLog(@"image download failed");
             }
         }];

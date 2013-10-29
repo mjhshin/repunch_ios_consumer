@@ -13,7 +13,7 @@
 	BOOL loadInProgress;
 	int paginateCount;
 	BOOL paginateReachEnd;
-	UIActivityIndicatorView *spinner;
+	UIActivityIndicatorView *paginateSpinner;
 }
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
@@ -23,17 +23,7 @@
 
 - (void)viewDidLoad
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(addMessageFromPush:)
-												 name:@"Message"
-											   object:nil];
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(refreshWhenBackgroundRefreshDisabled)
-												 name:UIApplicationWillEnterForegroundNotification
-											   object:nil];
-    
-    self.sharedData = [DataManager getSharedInstance];
+	self.sharedData = [DataManager getSharedInstance];
     self.patron = [self.sharedData patron];
 	self.messagesArray = [[NSMutableArray alloc] init];
 	
@@ -41,9 +31,10 @@
 	paginateCount = 0;
 	loadInProgress = NO;
 	paginateReachEnd = NO;
-	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-	spinner.hidesWhenStopped = YES;
+	paginateSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+	paginateSpinner.hidesWhenStopped = YES;
 	
+	[self registerForNotifications];
 	[self setupNavigationBar];
 	[self setupTableView];
     [self loadInbox:NO];
@@ -65,6 +56,37 @@
     [super didReceiveMemoryWarning];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)registerForNotifications
+{
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(addMessageFromPush:)
+												 name:@"Message"
+											   object:nil];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(refreshWhenBackgroundRefreshDisabled)
+												 name:UIApplicationWillEnterForegroundNotification
+											   object:nil];
+	
+	__weak typeof(self) weakSelf = self;
+	Reachability* reach = [Reachability reachabilityWithHostname:@"www.google.com"];
+	
+	reach.reachableBlock = ^(Reachability*reach) {
+		if(weakSelf.messagesArray.count == 0) {
+			[weakSelf loadInbox:NO];
+		}
+		else {
+			[weakSelf refreshTableView];
+		}
+	};
+	
+	/*reach.unreachableBlock = ^(Reachability*reach) {
+	 [RepunchUtils showNavigationBarDropdownView:weakSelf.view];
+	 };*/
+	
+	[reach startNotifier];
 }
 
 - (void)setupNavigationBar
@@ -274,13 +296,12 @@
 	messageVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:messageVC animated:YES];
 	 
-	if( [[messageStatus objectForKey:@"is_read"] boolValue] == NO )
-	{
+	if( [[messageStatus objectForKey:@"is_read"] boolValue] == NO ) {
 		--alertBadgeCount;
 		[self updateBadgeCount];
 		
-		[messageStatus setObject:[NSNumber numberWithBool:YES] forKey:@"is_read"]; //does this change is_read in shareddata?
-		[messageStatus saveInBackground];
+		[messageStatus setObject:[NSNumber numberWithBool:YES] forKey:@"is_read"];
+		[messageStatus saveEventually];
 	
 		[self.tableViewController.tableView beginUpdates];
 		[self.tableViewController.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
@@ -314,14 +335,14 @@
 	
 	if(paginateInProgress)
 	{
-		spinner.frame = self.tableViewController.tableView.tableFooterView.bounds;
-		[self.tableViewController.tableView.tableFooterView addSubview:spinner];
-		[spinner startAnimating];
+		paginateSpinner.frame = self.tableViewController.tableView.tableFooterView.bounds;
+		[self.tableViewController.tableView.tableFooterView addSubview:paginateSpinner];
+		[paginateSpinner startAnimating];
 	}
 	else
 	{
-		[spinner removeFromSuperview];
-		[spinner stopAnimating];
+		[paginateSpinner removeFromSuperview];
+		[paginateSpinner stopAnimating];
 	}
 }
 
