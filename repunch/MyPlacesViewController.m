@@ -69,7 +69,7 @@
 {
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(receiveRefreshNotification:)
-												 name:@"AddRemoveMyPlace"
+												 name:@"AddOrRemoveStore"
 											   object:nil];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
@@ -309,7 +309,6 @@
 	NSString *storeId = self.storeIdArray[indexPath.row];
     StoreViewController *storeVC = [[StoreViewController alloc]init];
     storeVC.storeId = storeId;
-	storeVC.delegate = self;
 	storeVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:storeVC animated:YES];
 }
@@ -350,28 +349,17 @@
 
 - (void)cancelImageDownload
 {
-    for(PFFile *imageFile in self.imageDownloadsInProgress)
-    {
+    for(PFFile *imageFile in self.imageDownloadsInProgress) {
         [imageFile cancel];
     }
 }
 
-- (void)updateTableViewFromStore:(StoreViewController *)controller forStoreId:(NSString *)storeId andAddRemove:(BOOL)isAddRemove
+- (void)receiveRefreshNotification:(NSNotification *)notification
 {
-	NSLog(@"storeVC->myPlacesVC delegate:update TableView");
-	[self updateTableView:storeId andAddRemove:isAddRemove];
-}
-
-- (void)updateTableViewFromSearch:(StoreViewController *)controller forStoreId:(NSString *)storeId andAddRemove:(BOOL)isAddRemove
-{
-	NSLog(@"searchVC->myPlacesVC delegate:update TableView");
-	[self updateTableView:storeId andAddRemove:isAddRemove];
-}
-
-- (void)updateTableView:(NSString *)storeId andAddRemove:(BOOL)isAddRemove
-{
-	if(isAddRemove)
-	{
+	NSLog(@"received notificationcenter notification");
+	NSString *storeId = [[notification userInfo] objectForKey:@"store_id"];
+	
+	if(storeId != nil) {
 		NSUInteger index = [self.storeIdArray indexOfObject:storeId];
 		
 		if(index == NSNotFound) {
@@ -383,30 +371,15 @@
 		}
 	}
 	
-    [self refreshTableView];
-}
-
-- (void)receiveRefreshNotification:(NSNotification *)notification
-{
-	NSLog(@"received notificationcenter notification");
-	NSString *storeId = [[notification userInfo] objectForKey:@"store_id"];
-	
-	if(storeId != nil)
-	{
-		[self.storeIdArray addObject:storeId];
-	}
-	
 	[self refreshTableView];
 }
 
 - (void)refreshTableView
 {
-	if(self.storeIdArray.count > 0)
-	{
+	if(self.storeIdArray.count > 0) {
 		[self.emptyMyPlacesLabel setHidden:YES];
 	}
-	else
-	{
+	else {
 		[self.emptyMyPlacesLabel setHidden:NO];
 	}
 	
@@ -454,7 +427,6 @@
 
 - (IBAction)showPunchCode:(id)sender
 {
-	/*
 	NSString *punchCode = [self.patron objectForKey:@"punch_code"];
     SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Your Punch Code"
                                                  andMessage:punchCode];
@@ -463,9 +435,6 @@
 	[alert setMessageFont:[UIFont fontWithName:@"Avenir-Heavy" size:32]];
     [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
     [alert show];
-	 */
-	
-	[RepunchUtils showNavigationBarDropdownView:self.view];
 }
 
 - (IBAction)openSettings:(id)sender
@@ -481,7 +450,6 @@
 {
     SearchViewController *searchVC = [[SearchViewController alloc] init];
 	searchVC.hidesBottomBarWhenPushed = YES;
-	searchVC.delegate = self;
 	UINavigationController *searchNavController = [[UINavigationController alloc] initWithRootViewController:searchVC];
 	[RepunchUtils setupNavigationController:searchNavController];
     [self presentViewController:searchNavController animated:YES completion:nil];

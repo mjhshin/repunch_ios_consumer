@@ -17,7 +17,7 @@
 #import <Parse/Parse.h>
 #import "RPConstants.h"
 
-@interface MyPlacesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, StoreViewControllerDelegate, SearchViewControllerDelegate>
+@interface MyPlacesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *activityIndicatorView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;

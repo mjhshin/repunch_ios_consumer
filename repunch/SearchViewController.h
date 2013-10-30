@@ -5,16 +5,6 @@
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
-@class SearchViewController;
-
-@protocol  SearchViewControllerDelegate <NSObject>
-
-- (void)updateTableViewFromSearch:(SearchViewController *)controller
-					   forStoreId:(NSString *)storeId
-					 andAddRemove:(BOOL)isAddRemove;
-
-@end
-
 #import <UIKit/UIKit.h>
 #import "StoreViewController.h"
 #import "SearchTableViewCell.h"
@@ -24,9 +14,7 @@
 #import "DataManager.h"
 #import "RPConstants.h"
 
-@interface SearchViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, CLLocationManagerDelegate, StoreViewControllerDelegate>
-
-@property (nonatomic, weak) id <SearchViewControllerDelegate> delegate;
+@interface SearchViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, CLLocationManagerDelegate>
 
 @property (nonatomic, strong) DataManager* sharedData;
 @property (nonatomic, strong) PFObject* patron;

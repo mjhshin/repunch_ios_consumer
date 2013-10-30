@@ -5,12 +5,6 @@
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
-@class StoreViewController;
-
-@protocol StoreViewControllerDelegate <NSObject>
-- (void)updateTableViewFromStore:(StoreViewController *)controller forStoreId:(NSString *)storeId andAddRemove:(BOOL)isAddRemove;
-@end
-
 #import "StoreMapViewController.h"
 #import "SIAlertView.h"
 #import "RewardTableViewCell.h"
@@ -26,8 +20,6 @@
 #import <Parse/Parse.h>
 
 @interface StoreViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, FacebookFriendsDelegate>
-
-@property (nonatomic, weak) id <StoreViewControllerDelegate> delegate;
 
 @property (nonatomic, strong) NSString *storeId;
 @property (nonatomic, strong) NSMutableArray *rewardArray;

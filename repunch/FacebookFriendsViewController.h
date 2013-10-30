@@ -15,7 +15,9 @@
 @class FacebookFriendsViewController;
 
 @protocol FacebookFriendsDelegate <NSObject>
-- (void)onFriendSelected:(FacebookFriendsViewController *)controller forFriendId:(NSString *)friendId withName:(NSString *)name;
+- (void)onFriendSelected:(FacebookFriendsViewController *)controller
+			 forFriendId:(NSString *)friendId
+				withName:(NSString *)name;
 @end
 
 @interface FacebookFriendsViewController : FBFriendPickerViewController <FBFriendPickerDelegate>

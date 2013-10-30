@@ -515,7 +515,9 @@
 		{
 			[sharedData addPatronStore:result forKey:self.storeId];
 			[self checkPatronStore];
-			[self alertParentViewController:YES];
+			
+			NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:self.storeId, @"store_id", nil];
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"AddOrRemoveStore" object:self userInfo:args];
 		}
 		else
 		{
@@ -578,7 +580,9 @@
 			 [sharedData deletePatronStore:self.storeId];
 			 [self checkPatronStore];
 			 [self.rewardTableView reloadData];
-			 [self alertParentViewController:YES];
+			 
+			 NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:self.storeId, @"store_id", nil];
+			 [[NSNotificationCenter defaultCenter] postNotificationName:@"AddOrRemoveStore" object:self userInfo:args];
 		 }
 		 else
 		 {
@@ -687,15 +691,6 @@
 	[RepunchUtils setupNavigationController:composeNavController];
 	
 	[self presentViewController:composeNavController animated:YES completion:nil];
-}
-
-- (void)alertParentViewController:(BOOL)isAddRemove
-{
-    if ([self.delegate respondsToSelector:@selector(updateTableViewFromStore:forStoreId:andAddRemove:)]) {
-        //[self.delegate updateTableViewFromStore:self forStoreId:self.storeId andAddRemove:isAddRemove];
-		NSLog(@"Yeah this happens");
-    }
-	[self.delegate updateTableViewFromStore:self forStoreId:self.storeId andAddRemove:isAddRemove];
 }
 
 @end

@@ -414,14 +414,10 @@
 
 - (void)refreshTableView
 {
-	if(self.messagesArray.count > 0)
-	{
-		//[self.messageTableView setHidden:NO];
+	if(self.messagesArray.count > 0) {
 		[self.emptyInboxLabel setHidden:YES];
 	}
-	else
-	{
-		//[self.messageTableView setHidden:YES];
+	else {
 		[self.emptyInboxLabel setHidden:NO];
 	}
 	[self.tableViewController.tableView reloadData];
@@ -471,8 +467,6 @@
 {
     SearchViewController *searchVC = [[SearchViewController alloc] init];
 	searchVC.hidesBottomBarWhenPushed = YES;
-	UINavigationController *myPlacesNavController = self.tabBarController.viewControllers[0];;
-	searchVC.delegate = myPlacesNavController.viewControllers[0];
 	UINavigationController *searchNavController = [[UINavigationController alloc] initWithRootViewController:searchVC];
 	[RepunchUtils setupNavigationController:searchNavController];
     [self presentViewController:searchNavController animated:YES completion:nil];

@@ -28,12 +28,17 @@
     [super viewDidLoad];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(reloadTableView)
+											 selector:@selector(refreshTableView)
+												 name:@"AddOrRemoveStore"
+											   object:nil];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(refreshTableView)
 												 name:@"Punch"
 											   object:nil];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(reloadTableView)
+											 selector:@selector(refreshTableView)
 												 name:@"Redeem"
 											   object:nil];
 	
@@ -324,10 +329,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
-	NSString *storeId = [self.storeIdArray objectAtIndex:indexPath.row];
-	StoreViewController *storeVC = [[StoreViewController alloc]init];
+	NSString *storeId = self.storeIdArray[indexPath.row];
+	StoreViewController *storeVC = [[StoreViewController alloc] init];
 	storeVC.storeId = storeId;
-	storeVC.delegate = self;
 	[self.navigationController pushViewController:storeVC animated:YES];
 }
 
@@ -367,21 +371,6 @@
     {
         [imageFile cancel];
     }
-}
-
-- (void)updateTableViewFromStore:(StoreViewController *)controller forStoreId:(NSString *)storeId andAddRemove:(BOOL)isAddRemove
-{
-	NSLog(@"storeVC->searchVC delegate:update TableView");
-    [self.searchTableView reloadData];
-    
-    if ([self.delegate respondsToSelector:@selector(updateTableViewFromSearch:forStoreId:andAddRemove:)]) {
-        [self.delegate updateTableViewFromSearch:self forStoreId:storeId andAddRemove:isAddRemove];
-    }
-}
-
-- (void)reloadTableView
-{
-	[self.searchTableView reloadData];
 }
 
 - (void)setFooter:(BOOL)loadInProgress
