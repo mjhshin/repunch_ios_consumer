@@ -11,6 +11,7 @@
 #import "DataManager.h"
 #import "SIAlertView.h"
 #import "RepunchUtils.h"
+#import "RPConstants.h"
 
 @implementation FacebookPost
 
@@ -58,8 +59,11 @@
 	[params setObject:@"Redeemed a reward using Repunch!"		forKey:@"name"];
 	[params setObject:caption									forKey:@"caption"];
 	[params setObject:rewardTitle								forKey:@"description"];
-	[params setObject:image.url									forKey:@"picture"];
 	[params setObject:@"https://www.repunch.com/"				forKey:@"link"];
+	
+	if(!IS_NIL(image)) {
+		[params setObject:image.url									forKey:@"picture"];
+	}
 	
 	[FBRequestConnection startWithGraphPath:@"me/feed"
 								 parameters:params
@@ -73,9 +77,7 @@
 		 else
 		 {
 			 NSLog(@"FBRequestConnection POST error: %@", error);
-			 SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Sorry, something went wrong" andMessage:nil];
-			 [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
-			 [alert show];
+			 [RepunchUtils showDialogWithTitle:@"Sorry, something went wrong" withMessage:nil];
 		 }
 	 }];
 }
@@ -104,17 +106,13 @@
 				 [patronStore incrementKey:@"punch_count" byAmount:[NSNumber numberWithInt:punches]];
 				 [[NSNotificationCenter defaultCenter] postNotificationName:@"FacebookPost" object:self];
 				 
-				 SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Successfully posted to Facebook" andMessage:nil];
-				 [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
-				 [alert show];
+				 [RepunchUtils showDialogWithTitle:@"Successfully posted to Facebook" withMessage:nil];
 			 }
 		 }
 		 else
 		 {
 			 NSLog(@"facebook_post error: %@", error);
-			 SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Sorry, something went wrong" andMessage:nil];
-			 [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
-			 [alert show];
+			 [RepunchUtils showDialogWithTitle:@"Sorry, something went wrong" withMessage:nil];
 		 }
 	 }];
 }

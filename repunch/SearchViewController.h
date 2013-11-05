@@ -8,7 +8,6 @@
 #import <UIKit/UIKit.h>
 #import "StoreViewController.h"
 #import "SearchTableViewCell.h"
-#import "GradientBackground.h"
 #import <Parse/Parse.h>
 #import "AppDelegate.h"
 #import "DataManager.h"

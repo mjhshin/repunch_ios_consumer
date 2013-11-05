@@ -12,6 +12,7 @@
 #import "SIAlertView.h"
 #import "FacebookPost.h"
 #import "RPConstants.h"
+#import "RepunchUtils.h"
 
 @implementation RedeemHandler
 
@@ -47,9 +48,7 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 		}
 		else
 		{
-			SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Success!" andMessage:alert];
-			[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
-			[alertView show];
+			[RepunchUtils showDialogWithTitle:@"Success!" withMessage:alert];
 		}
 	}
 	else
@@ -71,9 +70,7 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 	PFObject *messageStatus = [sharedData getMessage:msgStatusId];
 	[messageStatus setObject:@"no" forKey:@"redeem_available"];
 	
-	SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Success!" andMessage:alert];
-	[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
-	[alertView show];
+	[RepunchUtils showDialogWithTitle:@"Success!" withMessage:alert];
 	
 	completionHandler(UIBackgroundFetchResultNoData);
 }

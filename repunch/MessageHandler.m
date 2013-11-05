@@ -26,15 +26,12 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
     [msgStatusQuery includeKey:@"Message.Reply"];
     [msgStatusQuery whereKey:@"Message" matchesQuery:msgQuery];
     
-    [msgStatusQuery getFirstObjectInBackgroundWithBlock:^(PFObject *result, NSError *error)
-    {
-        if (!result)
-        {
+    [msgStatusQuery getFirstObjectInBackgroundWithBlock:^(PFObject *result, NSError *error) {
+        if (!result) {
             NSLog(@"MessageStatus query failed: %@", error);
 			completionHandler(UIBackgroundFetchResultFailed);
         }
-        else
-        {
+        else {
             [sharedData addMessage:result];
             
             NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:[result objectId], @"message_status_id", nil];
@@ -43,9 +40,7 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 																object:self
 															  userInfo:args];
 			
-			SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"New Message" andMessage:alert];
-			[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
-			[alertView show];
+			[RepunchUtils showDialogWithTitle:@"New Message" withMessage:alert];
 			
 			completionHandler(UIBackgroundFetchResultNewData);
         }
@@ -64,15 +59,12 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
     PFQuery *msgStatusQuery = [PFQuery queryWithClassName:@"MessageStatus"];
     [msgStatusQuery includeKey:@"Message.Reply"];
     
-    [msgStatusQuery getObjectInBackgroundWithId:messageStatusId block:^(PFObject *result, NSError *error)
-	{
-		if (!result)
-		{
+    [msgStatusQuery getObjectInBackgroundWithId:messageStatusId block:^(PFObject *result, NSError *error) {
+		if (!result) {
 			NSLog(@"MessageStatus query failed: %@", error);
 			completionHandler(UIBackgroundFetchResultFailed);
 		}
-		else
-		{
+		else {
 			[sharedData addMessage:result];
 			
 			NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:[result objectId], @"message_status_id", nil];
@@ -81,17 +73,11 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 																object:self
 															  userInfo:args];
 			
-			if(isReply)
-			{
-				SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"New Message" andMessage:alert];
-				[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
-				[alertView show];
+			if(isReply) {
+				[RepunchUtils showDialogWithTitle:@"New Message" withMessage:alert];
 			}
-			else
-			{
-				SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"You received a gift!" andMessage:alert];
-				[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
-				[alertView show];
+			else {
+				[RepunchUtils showDialogWithTitle:@"You received a gift!" withMessage:alert];
 			}
 			
 			completionHandler(UIBackgroundFetchResultNewData);

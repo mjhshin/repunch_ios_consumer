@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Repunch/SearchViewController.m"
-            timestampString = "404856873.272137"
+            timestampString = "405304850.74532"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
             landmarkName = "-locationManager:didFailWithError:"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Repunch/StoreViewController.m"
-            timestampString = "404687758.095607"
+            timestampString = "405304850.74532"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "512"
-            endingLineNumber = "512"
+            startingLineNumber = "490"
+            endingLineNumber = "490"
             landmarkName = "-addStore"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Repunch/RepunchUtils.m"
-            timestampString = "404687127.062566"
+            timestampString = "405304850.74532"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
-            landmarkName = "+showNavigationBarDropdownView:"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
+            landmarkName = "+showNavigationBarDropdownView:withMessage:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

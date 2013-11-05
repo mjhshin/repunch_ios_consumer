@@ -13,7 +13,6 @@
 #import "InboxTableViewCell.h"
 #import "DataManager.h"
 #import "SIAlertView.h"
-#import "GradientBackground.h"
 #import <Parse/Parse.h>
 #import "RPConstants.h"
 

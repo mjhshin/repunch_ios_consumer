@@ -141,7 +141,7 @@
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
 		[self.tableViewController.refreshControl endRefreshing];
-		[RepunchUtils showNavigationBarDropdownView:self.view];
+		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
 	
@@ -275,12 +275,14 @@
 															blue:(float)192/256
 														   alpha:(float)65/256];
 		cell.senderName.font = [UIFont fontWithName:@"Avenir" size:17];
+		cell.dateSent.font = [UIFont fontWithName:@"Avenir" size:14];
 		cell.dateSent.textColor = [UIColor darkGrayColor];
     }
     else {
         cell.contentView.backgroundColor = [UIColor whiteColor];
 		cell.senderName.font = [UIFont fontWithName:@"Avenir-Heavy" size:17];
-		cell.dateSent.textColor = [UIColor colorWithRed:(240/255.0) green:(140/255.0) blue:(19/255.0) alpha:1.0];
+		cell.dateSent.font = [UIFont fontWithName:@"Avenir-Heavy" size:14];
+		cell.dateSent.textColor = [RepunchUtils repunchOrangeColor];
     }
 
     return cell;
@@ -451,7 +453,7 @@
 	
 	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
 	currentInstallation.badge = alertBadgeCount;
-	[currentInstallation saveInBackground];
+	[currentInstallation saveEventually];
 }
 
 - (IBAction)openSettings:(id)sender

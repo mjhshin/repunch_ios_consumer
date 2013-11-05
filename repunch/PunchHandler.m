@@ -11,6 +11,7 @@
 #import <Parse/Parse.h>
 #import "DataManager.h"
 #import "SIAlertView.h"
+#import "RepunchUtils.h"
 
 @implementation PunchHandler
 
@@ -35,11 +36,7 @@
 		}
 
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"Punch" object:self];
-		
-		SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Punch!" andMessage:alert];
-		[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
-		[alertView show];
-		
+		[RepunchUtils showDialogWithTitle:@"Punch!" withMessage:alert];
 		completionHandler(UIBackgroundFetchResultNoData);
 	}
 	else
@@ -53,7 +50,6 @@
             if(!result)
             {
                 NSLog(@"PatronStore query failed: %@", error);
-				
 				completionHandler(UIBackgroundFetchResultFailed);
             }
             else
@@ -65,11 +61,7 @@
                 NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:storeId, @"store_id", nil];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"Punch" object:self userInfo:args];
-				
-				SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Punch!" andMessage:alert];
-				[alertView addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
-				[alertView show];
-				
+				[RepunchUtils showDialogWithTitle:@"Punch!" withMessage:alert];
 				completionHandler(UIBackgroundFetchResultNewData);
             }
         }];

@@ -50,31 +50,15 @@
 	
 	[[NSBundle mainBundle] loadNibNamed:@"StoreHeaderView" owner:self options:nil];
 	
-	[self.addToMyPlacesButton setBackgroundImage:[GradientBackground orangeButtonNormal:self.addToMyPlacesButton]
-								   forState:UIControlStateNormal];
-	[self.addToMyPlacesButton setBackgroundImage:[GradientBackground orangeButtonHighlighted:self.addToMyPlacesButton]
-								   forState:UIControlStateHighlighted];
+	[RepunchUtils setDefaultButtonStyle:self.addToMyPlacesButton];
 	
-	deleteButton = [[UIBarButtonItem alloc]
-									 initWithImage:[UIImage imageNamed:@"nav_delete.png"]
-									 style:UIBarButtonItemStylePlain
-									 target:self
-									 action:@selector(deleteStore:)];
-	
-	
+	deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_delete.png"]
+													style:UIBarButtonItemStylePlain
+												   target:self
+												   action:@selector(deleteStore:)];
 	[self setStoreInformation];
 	[self checkPatronStore];
 	[self setRewardTableView];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:YES];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-	[super viewWillDisappear:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -402,20 +386,14 @@
 					if ([success isEqualToString:@"pending"])
 					{
 						NSLog(@"function call is: %@", success);
-						SIAlertView *confirmDialogue = [[SIAlertView alloc] initWithTitle:@"Pending" andMessage:@"You already have a pending reward"];
-						[confirmDialogue addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
-							//nothing
-						}];
-						[confirmDialogue show];
+						[RepunchUtils showDialogWithTitle:@"Pending"
+											  withMessage:@"You already have a pending reward"];
 					}
 					else
 					{
 						NSLog(@"function call is: %@", success);
-						SIAlertView *confirmDialogue = [[SIAlertView alloc] initWithTitle:@"Waiting for confirmation" andMessage:@"Please wait for your reward to be validated"];
-						[confirmDialogue addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
-							//nothing4
-						}];
-						[confirmDialogue show];
+						[RepunchUtils showDialogWithTitle:@"Waiting for confirmation"
+											  withMessage:@"Please wait for your reward to be validated"];
 					}
 				}
 				else
@@ -487,7 +465,7 @@
 - (void)addStore
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
-		[RepunchUtils showNavigationBarDropdownView:self.view];
+		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
 	
@@ -550,7 +528,7 @@
 - (void)performDelete
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
-		[RepunchUtils showNavigationBarDropdownView:self.view];
+		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
 	
@@ -597,20 +575,14 @@
 - (void)gift
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
-		[RepunchUtils showNavigationBarDropdownView:self.view];
+		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
 	
 	if( [patron objectForKey:@"facebook_id"] == nil)
 	{
-		SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"It's better together"]
-														 andMessage:@"Log in with Facebook to send gifts to your friends"];
-	
-		[alertView addButtonWithTitle:@"OK"
-								 type:SIAlertViewButtonTypeDefault
-							  handler:^(SIAlertView *alert) {
-							  }];
-		[alertView show];
+		[RepunchUtils showDialogWithTitle:@"It's better together"
+							  withMessage:@"Log in with Facebook to send gifts to your friends"];
 	}
 	else
 	{
@@ -628,7 +600,7 @@
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
 		[self.tableViewController.refreshControl endRefreshing];
-		[RepunchUtils showNavigationBarDropdownView:self.view];
+		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
 	
@@ -636,6 +608,7 @@
 	{
 		PFQuery *query = [PFQuery queryWithClassName:@"PatronStore"];
 		[query includeKey:@"Store"];
+		[query includeKey:@"FacebookPost"];
 		[query getObjectInBackgroundWithId:patronStore.objectId block:^(PFObject *result, NSError *error)
 		 {
 			 if(!error)

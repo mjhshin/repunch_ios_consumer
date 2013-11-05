@@ -27,10 +27,9 @@
 {
     [super viewDidLoad];
 	
-	UIBarButtonItem *exitButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_exit.png"]
-																   style:UIBarButtonItemStylePlain
-																  target:self
-																  action:@selector(closeButton:)];
+	UIBarButtonItem *exitButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
+																				target:self
+																				action:@selector(closeButton:)];
 	
 	sendButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_send.png"]
 																   style:UIBarButtonItemStylePlain
@@ -147,7 +146,7 @@
 - (void)send
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
-		[RepunchUtils showNavigationBarDropdownView:self.view];
+		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
 	
@@ -170,7 +169,7 @@
 	[self dismissKeyboard];
 	
 	if(self.body.text.length == 0) {
-		[self showDialog:@"Your message is blank" withMessage:nil];
+		[RepunchUtils showDialogWithTitle:@"Your message is blank" withMessage:nil];
 		return;
 	}
 	
@@ -201,13 +200,12 @@
 		
 		if (!error)
 		{
-			[self showDialog:@"Thanks for your feedback!" withMessage:nil];
+			[RepunchUtils showDialogWithTitle:@"Thanks for your feedback!" withMessage:nil];
 			NSLog(@"send_feedback result: %@", result);
 		}
 		else
 		{
-			[self showDialog:@"Send Failed"
-				 withMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
+			[RepunchUtils showDialogWithTitle:@"Send Failed" withMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
 			NSLog(@"send_feedback error: %@", error);
 		}
 	}];
@@ -218,7 +216,7 @@
 	[self dismissKeyboard];
 	
 	if(self.body.text.length == 0) {
-		[self showDialog:@"Your message is blank" withMessage:nil];
+		[RepunchUtils showDialogWithTitle:@"Your message is blank" withMessage:nil];
 		return;
 	}
 	
@@ -252,23 +250,23 @@
 		 {
 			 if([result isEqualToString:@"insufficient"])
 			 {
-				 [self showDialog:@"Sorry, not enough punches" withMessage:nil];
+				 [RepunchUtils showDialogWithTitle:@"Sorry, not enough punches" withMessage:nil];
 			 }
 			 else
 			 {
 				 NSInteger punches = [[patronStore objectForKey:@"punch_count"] intValue];
 				 NSNumber *newPunches = [NSNumber numberWithInt:punches - self.giftPunches];
 				 [patronStore setObject:newPunches forKey:@"punch_count"];
-				 
-				 [self showDialog:@"Your gift has been sent!" withMessage:nil];
+
+				 [RepunchUtils showDialogWithTitle:@"Your gift has been sent!" withMessage:nil];
 				 [[NSNotificationCenter defaultCenter] postNotificationName:@"Punch" object:self];
 			 }
 			 NSLog(@"send_gift result: %@", result);
 		 }
 		 else
 		 {
-			 [self showDialog:@"Send Failed"
-				  withMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
+			 [RepunchUtils showDialogWithTitle:@"Send Failed"
+								   withMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
 			 NSLog(@"send_gift error: %@", error);
 		 }
 	 }];
@@ -279,7 +277,7 @@
 	[self dismissKeyboard];
 	
 	if(self.body.text.length == 0) {
-		[self showDialog:@"Your message is blank" withMessage:nil];
+		[RepunchUtils showDialogWithTitle:@"Your message is blank" withMessage:nil];
 		return;
 	}
 	
@@ -303,8 +301,8 @@
 		 [self dismissViewControllerAnimated:YES completion:nil];
 		 
 		 if (!error)
-		 {			 
-			 [self showDialog:@"Your reply has been sent!" withMessage:nil];
+		 {
+			 [RepunchUtils showDialogWithTitle:@"Your reply has been sent!" withMessage:nil];
 			 PFObject *originalMessage = [[sharedData getMessage:self.giftMessageStatusId] objectForKey:@"Message"];
 			 [originalMessage setObject:reply forKey:@"Reply"];
 			 
@@ -313,8 +311,8 @@
 		 }
 		 else
 		 {
-			 [self showDialog:@"Send Failed"
-				  withMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
+			 [RepunchUtils showDialogWithTitle:@"Send Failed"
+								   withMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
 			 NSLog(@"send_gift error: %@", error);
 		 }
 	 }];
@@ -334,14 +332,6 @@
 - (IBAction)closeButton:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)showDialog:(NSString*)title withMessage:(NSString*)message
-{
-	SIAlertView *alert = [[SIAlertView alloc] initWithTitle:title
-                                                 andMessage:message];
-    [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
-    [alert show];
 }
 
 @end

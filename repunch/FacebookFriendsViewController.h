@@ -7,7 +7,6 @@
 //
 
 #import <FacebookSDK/FacebookSDK.h>
-#import "GradientBackground.h"
 #import <Parse/Parse.h>
 #import "SIAlertView.h"
 #import "ComposeMessageViewController.h"

@@ -8,10 +8,16 @@
 
 #import "SIAlertView.h"
 #import "RepunchUtils.h"
-#import "GradientBackground.h"
 #import "Reachability.h"
 
 @implementation RepunchUtils
+
++ (BOOL)isConnectionAvailable
+{
+	Reachability *reach = [Reachability reachabilityForInternetConnection];
+	NetworkStatus status = [reach currentReachabilityStatus];
+	return (status != NotReachable);
+}
 
 + (void)showDialogWithTitle:(NSString *)title withMessage:(NSString *)message
 {
@@ -29,21 +35,31 @@
 	[errorDialog show];
 }
 
-+ (BOOL)isConnectionAvailable
++ (void)showCustomDropdownView:(UIView *)parentView withMessage:(NSString *)message
 {
-	Reachability *reach = [Reachability reachabilityForInternetConnection];
-	NetworkStatus status = [reach currentReachabilityStatus];
-	return (status != NotReachable);
+	[self showNavigationBarDropdownView:parentView withMessage:message];
 }
 
-+ (void)showNavigationBarDropdownView:(UIView *)parentView
++ (void)showDefaultDropdownView:(UIView *)parentView
+{
+	[self showNavigationBarDropdownView:parentView withMessage:nil];
+}
+
++ (void)showNavigationBarDropdownView:(UIView *)parentView withMessage:(NSString *)message
 {
 	UILabel *dropdownLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
-	dropdownLabel.text = @"No Internet Connection";
+	
+	if(message == nil) {
+		dropdownLabel.text = @"No Internet Connection";
+	}
+	else {
+		dropdownLabel.text = message;
+	}
+	
 	dropdownLabel.font = [UIFont fontWithName:@"Avenir-Medium" size:17.0];
 	dropdownLabel.textAlignment = NSTextAlignmentCenter;
 	dropdownLabel.textColor = [UIColor whiteColor];
-	dropdownLabel.backgroundColor = [UIColor lightGrayColor];
+	dropdownLabel.backgroundColor = [UIColor redColor];
 	[parentView addSubview:dropdownLabel];
 	
 	CGRect rect = dropdownLabel.frame;
@@ -101,8 +117,16 @@
 
 + (void)setDefaultButtonStyle:(UIButton *)button
 {
-	[button setBackgroundImage:[GradientBackground orangeButtonNormal:button] forState:UIControlStateNormal];
-	[button setBackgroundImage:[GradientBackground orangeButtonHighlighted:button] forState:UIControlStateHighlighted];
+	[button setBackgroundImage:[UIImage imageNamed:@"orange_button.png"] forState:UIControlStateNormal];
+	[button setBackgroundImage:[UIImage imageNamed:@"orange_button_highlighted.png"] forState:UIControlStateHighlighted];
+	[button.layer setCornerRadius:5];
+	[button setClipsToBounds:YES];
+}
+
++ (void)setDisabledButtonStyle:(UIButton *)button
+{
+	[button setBackgroundImage:[UIImage imageNamed:@"grey_button.png"] forState:UIControlStateNormal];
+	[button setBackgroundImage:[UIImage imageNamed:@"grey_button.png"] forState:UIControlStateHighlighted];
 	[button.layer setCornerRadius:5];
 	[button setClipsToBounds:YES];
 }

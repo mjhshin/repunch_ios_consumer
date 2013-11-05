@@ -162,7 +162,7 @@
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
 		[self.tableViewController.refreshControl endRefreshing];
-		[RepunchUtils showNavigationBarDropdownView:self.view];
+		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
 	
@@ -256,7 +256,7 @@
 	PFObject *store = [self.sharedData getStore:storeId];
 	
     int punches = [[patronStore objectForKey:@"punch_count"] intValue];
-    cell.numPunches.text = [NSString stringWithFormat:@"%i %@", punches, (punches == 1) ? @"punch": @"punches"];
+    cell.numPunches.text = [NSString stringWithFormat:@"%i %@", punches, (punches == 1) ? @"Punch": @"Punches"];
     cell.storeName.text = [store objectForKey:@"store_name"];
     
     NSArray *rewardsArray = [store objectForKey:@"rewards"];

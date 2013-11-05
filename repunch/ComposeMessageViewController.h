@@ -7,7 +7,6 @@
 
 #import "DataManager.h"
 #import "SIAlertView.h"
-#import "GradientBackground.h"
 #include <Parse/Parse.h>
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>

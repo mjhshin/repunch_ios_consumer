@@ -42,13 +42,11 @@
 												 name:@"Redeem"
 											   object:nil];
 	
-	self.navigationItem.title = @"Search";
-	
-	UIBarButtonItem *exitButton = [[UIBarButtonItem alloc]
-								   initWithImage:[UIImage imageNamed:@"nav_exit.png"]
-								   style:UIBarButtonItemStylePlain
-								   target:self
-								   action:@selector(closeView:)];
+	self.navigationItem.title = @"Nearby Stores";
+
+	UIBarButtonItem *exitButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
+																				target:self
+																				action:@selector(closeView:)];
 	
 	self.navigationItem.leftBarButtonItem = exitButton;
 	
@@ -79,16 +77,12 @@
 	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 	
 	paginateButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 260, 50)];
+	[RepunchUtils setDefaultButtonStyle:paginateButton];
 	paginateButton.titleLabel.font = [UIFont fontWithName:@"Avenir-Heavy" size:17];
 	paginateButton.adjustsImageWhenDisabled = NO;
+	[paginateButton addTarget:self action:@selector(performSearch:) forControlEvents:UIControlEventTouchUpInside];
 	[paginateButton.layer setCornerRadius:10];
 	[paginateButton setClipsToBounds:YES];
-	[paginateButton addTarget:self action:@selector(performSearch:) forControlEvents:UIControlEventTouchUpInside];
-	
-	[paginateButton setBackgroundImage:[GradientBackground orangeButtonNormal:paginateButton]
-									forState:UIControlStateNormal];
-	[paginateButton setBackgroundImage:[GradientBackground orangeButtonHighlighted:paginateButton]
-									forState:UIControlStateHighlighted];
 	
 	[paginateButton setTitle:@"More Results" forState:UIControlStateNormal];
 	
@@ -153,28 +147,13 @@
 	{
 		case kCLErrorDenied:
 		{
-			SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Location Services disabled"
-														 andMessage:@"Location Services for Repunch can be enabled in Settings -> Privacy -> Location"];
-			[alert addButtonWithTitle:@"OK"
-								 type:SIAlertViewButtonTypeDefault
-							  handler:^(SIAlertView *alert) {
-								  [alert dismissAnimated:YES];
-								  [self dismissViewControllerAnimated:YES completion:nil];
-							  }];
-			[alert show];
+			[RepunchUtils showDialogWithTitle:@"Location Services disabled"
+								  withMessage:@"Location Services for Repunch can be enabled in\nSettings -> Privacy -> Location"];
 			break;
 		}
 		default:
 		{
-			SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Failed to get location"
-														 andMessage:nil];
-			[alert addButtonWithTitle:@"OK"
-								 type:SIAlertViewButtonTypeDefault
-							  handler:^(SIAlertView *alert) {
-								  [alert dismissAnimated:YES];
-								  [self dismissViewControllerAnimated:YES completion:nil];
-							  }];
-			[alert show];
+			[RepunchUtils showDialogWithTitle:@"Failed to get location" withMessage:nil];
 			break;
 		}
 	}
@@ -292,7 +271,7 @@
 		int punches = [[patronStore objectForKey:@"punch_count"] intValue];
 		[cell.punchIcon setHidden:NO];
 		[cell.numPunches setHidden:NO];
-		[cell.numPunches setText:[NSString stringWithFormat:@"%d %@", punches, (punches==1) ? @"punch" : @"punches"]];
+		[cell.numPunches setText:[NSString stringWithFormat:@"%d %@", punches, (punches==1) ? @"Punch" : @"Punches"]];
 	}
 	
 	cell.storeAddress.text = street;

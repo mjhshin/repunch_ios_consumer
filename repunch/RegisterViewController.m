@@ -7,7 +7,6 @@
 
 #import "RegisterViewController.h"
 #import "AppDelegate.h"
-#import "GradientBackground.h"
 #import "AuthenticationManager.h"
 
 @implementation RegisterViewController
@@ -78,7 +77,7 @@
 - (IBAction)registerWithFacebook:(id)sender
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
-		[RepunchUtils showNavigationBarDropdownView:self.view];
+		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
 	
@@ -94,7 +93,7 @@
 	[self dismissKeyboard];
 	
 	if( ![RepunchUtils isConnectionAvailable] ) {
-		[RepunchUtils showNavigationBarDropdownView:self.view];
+		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
 	else if( ![self validateForm] ) {
@@ -284,7 +283,7 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     [webViewSpinner stopAnimating];
-	[RepunchUtils showNavigationBarDropdownView:webView];
+	[RepunchUtils showDefaultDropdownView:webView];
 }
 
 @end

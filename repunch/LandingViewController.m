@@ -8,7 +8,6 @@
 #import "LandingViewController.h"
 #import "LoginViewController.h"
 #import "RegisterViewController.h"
-#import "GradientBackground.h"
 #import "RepunchUtils.h"
 
 @implementation LandingViewController

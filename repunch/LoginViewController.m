@@ -8,7 +8,6 @@
 
 #import "LoginViewController.h"
 #import "AppDelegate.h"
-#import "GradientBackground.h"
 #import "AuthenticationManager.h"
 
 @implementation LoginViewController
@@ -73,7 +72,7 @@
 	NSString *password = [_passwordInput text];
 	
 	if( ![RepunchUtils isConnectionAvailable] ) {
-		[RepunchUtils showNavigationBarDropdownView:self.view];
+		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
 	else if(email.length == 0) {
@@ -95,7 +94,7 @@
 - (IBAction)loginWithFacebook:(id)sender
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
-		[RepunchUtils showNavigationBarDropdownView:self.view];
+		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
 	
@@ -166,7 +165,7 @@
 - (IBAction)forgotPassword:(id)sender
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
-		[RepunchUtils showNavigationBarDropdownView:self.view];
+		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
 	

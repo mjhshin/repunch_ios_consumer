@@ -22,10 +22,9 @@
 {
     [super viewDidLoad];
 	
-	UIBarButtonItem *exitButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_exit.png"]
-																   style:UIBarButtonItemStylePlain
-																  target:self
-																  action:@selector(closeView:)];
+	UIBarButtonItem *exitButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
+																				target:self
+																				action:@selector(closeView:)];
 	
 	UIBarButtonItem *directionsButton = [[UIBarButtonItem alloc] initWithTitle:@"Directions"
 																		 style:UIBarButtonItemStylePlain
@@ -93,7 +92,7 @@
 
 - (void)mapViewDidFailLoadingMap:(MKMapView *)mapView withError:(NSError *)error
 {
-	[RepunchUtils showNavigationBarDropdownView:self.view];
+	[RepunchUtils showDefaultDropdownView:self.view];
 }
 
 @end

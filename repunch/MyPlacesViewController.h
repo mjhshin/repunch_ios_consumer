@@ -11,7 +11,6 @@
 #import "SettingsViewController.h"
 #import "MyPlacesTableViewCell.h"
 #import "AppDelegate.h"
-#import "GradientBackground.h"
 #import "DataManager.h"
 #import "SIAlertView.h"
 #import <Parse/Parse.h>

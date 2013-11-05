@@ -7,7 +7,6 @@
 
 #import "SettingsViewController.h"
 #import "AppDelegate.h"
-#import "GradientBackground.h"
 #import "DataManager.h"
 
 @implementation SettingsViewController
@@ -27,12 +26,10 @@
     [super viewDidLoad];
 	
 	self.navigationItem.title = @"Settings";
-	
-	UIBarButtonItem *exitButton = [[UIBarButtonItem alloc]
-								   initWithImage:[UIImage imageNamed:@"nav_exit.png"]
-								   style:UIBarButtonItemStylePlain
-								   target:self
-								   action:@selector(closeView:)];
+
+	UIBarButtonItem *exitButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
+																				target:self
+																				action:@selector(closeView:)];
 	self.navigationItem.leftBarButtonItem = exitButton;
 	
 	sharedData = [DataManager getSharedInstance];
@@ -216,7 +213,7 @@
 	else
 	{
 		if( ![RepunchUtils isConnectionAvailable] ) {
-			[RepunchUtils showNavigationBarDropdownView:self.view];
+			[RepunchUtils showDefaultDropdownView:self.view];
 			return;
 		}
 		
@@ -241,12 +238,7 @@
 				 [appDelegate logout];
 			 }
 			 else {
-				 SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Failed to Log Out"
-															  andMessage:@"Sorry, something went wrong"];
-				 [alert addButtonWithTitle:@"OK"
-									  type:SIAlertViewButtonTypeDefault
-								   handler:nil];
-				 [alert show];
+				 [RepunchUtils showDialogWithTitle:@"Failed to Log Out" withMessage:@"Sorry, something went wrong"];
 			 }
 		 }];
 
@@ -266,21 +258,12 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     [activityIndicator stopAnimating];
-	[RepunchUtils showNavigationBarDropdownView:webView];
+	[RepunchUtils showDefaultDropdownView:webView];
 }
 
 - (IBAction)closeView:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)showDialog:(NSString*)resultTitle withResultMessage:(NSString*)resultMessage
-{
-	[[[UIAlertView alloc] initWithTitle:resultTitle
-								message:resultMessage
-							   delegate:self
-					  cancelButtonTitle:@"OK"
-					  otherButtonTitles: nil] show];
 }
 
 @end

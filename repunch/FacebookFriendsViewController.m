@@ -26,12 +26,10 @@
 	self.friendDictionary = [NSMutableDictionary dictionary];
 	
 	self.navigationItem.title = @"Choose A Friend";
-	
-	UIBarButtonItem *exitButton = [[UIBarButtonItem alloc]
-								   initWithImage:[UIImage imageNamed:@"nav_exit.png"]
-								   style:UIBarButtonItemStylePlain
-								   target:self
-								   action:@selector(closeButtonPressed)];
+
+	UIBarButtonItem *exitButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
+																				target:self
+																				action:@selector(closeButtonPressed:)];
 	self.navigationItem.leftBarButtonItem = exitButton;
 	
 	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
@@ -102,14 +100,8 @@
 			self.spinnerView.hidden = YES;
 			[self.mySpinner stopAnimating];
 			
-			//TODO
-			//NSLog(@"Error 2: %@", error);
-			//NSLog(@"Error 1: %@", error);
-			SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Sorry, something went wrong" andMessage:nil];
-			[alertView addButtonWithTitle:@"OK"
-									 type:SIAlertViewButtonTypeDefault
-								  handler:nil];
-			[alertView show];
+			
+			[RepunchUtils showDialogWithTitle:@"Sorry, something went wrong" withMessage:nil];
 			[self dismissViewControllerAnimated:NO completion:nil];
 		}
 	}];

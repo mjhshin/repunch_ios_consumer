@@ -197,17 +197,11 @@
 	
 	if( [[self.messageStatus objectForKey:@"redeem_available"] isEqualToString:@"yes"] )
 	{
-		[self.giftButton setBackgroundImage:[GradientBackground orangeButtonNormal:self.giftButton]
-								   forState:UIControlStateNormal];
-		[self.giftButton setBackgroundImage:[GradientBackground orangeButtonHighlighted:self.giftButton]
-								   forState:UIControlStateHighlighted];
+		[RepunchUtils setDefaultButtonStyle:self.giftButton];
 	}
 	else
 	{
-		[self.giftButton setBackgroundImage:[GradientBackground greyDisabledButton:self.giftButton]
-								   forState:UIControlStateNormal];
-		[self.giftButton setBackgroundImage:[GradientBackground greyDisabledButton:self.giftButton]
-								   forState:UIControlStateHighlighted];
+		[RepunchUtils setDisabledButtonStyle:self.giftButton];
 	}
 	
 	[self.giftButton.layer setCornerRadius:5];
@@ -223,12 +217,7 @@
 		else if(!containsReply)
 		{
 			self.giftReplyButton.hidden = NO;
-			[self.giftReplyButton setBackgroundImage:[GradientBackground orangeButtonNormal:self.giftReplyButton]
-											forState:UIControlStateNormal];
-			[self.giftReplyButton setBackgroundImage:[GradientBackground orangeButtonHighlighted:self.giftReplyButton]
-											forState:UIControlStateHighlighted];
-			[self.giftReplyButton.layer setCornerRadius:5];
-			[self.giftReplyButton setClipsToBounds:YES];
+			[RepunchUtils setDefaultButtonStyle:self.giftReplyButton];
 		}
 		else
 		{
@@ -327,8 +316,7 @@
         self.giftTimerLabel.text = @"Expired";
         self.timer = nil;
 		
-		[self.giftButton setBackgroundImage:[GradientBackground greyDisabledButton:self.giftButton]
-								   forState:UIControlStateNormal];
+		[RepunchUtils setDisabledButtonStyle:self.giftButton];
 		self.giftButton.enabled = NO;
     }
 }
@@ -396,19 +384,10 @@
 			 
 			 if(!error)
 			 {
-				 SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Waiting for confirmation"
-															  andMessage:@"Please wait for this item to be validated"];
-				 
 				 [self.messageStatus setObject:@"pending" forKey:@"redeem_available"];
-				 [self.giftButton setBackgroundImage:[GradientBackground greyDisabledButton:self.giftButton]
-											forState:UIControlStateNormal];
-				 [self.giftButton setBackgroundImage:[GradientBackground greyDisabledButton:self.giftButton]
-											forState:UIControlStateHighlighted];
-				 
-				 [alert addButtonWithTitle:@"OK"
-									  type:SIAlertViewButtonTypeDefault
-								   handler:^(SIAlertView *alertView) {}];
-				 [alert show];
+				 [RepunchUtils setDisabledButtonStyle:self.giftButton];
+				 [RepunchUtils showDialogWithTitle:@"Waiting for confirmation"
+									   withMessage:@"Please wait for this item to be validated"];
 			 }
 			 else
 			 {
@@ -420,21 +399,13 @@
 	}
 	else if( [[self.messageStatus objectForKey:@"redeem_available"] isEqualToString:@"pending"] )
 	{
-		SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Offer pending"
-													 andMessage:@"You can only request this item once"];
-		[alert addButtonWithTitle:@"OK"
-							 type:SIAlertViewButtonTypeDefault
-						  handler:^(SIAlertView *alertView) {}];
-		[alert show];
+		[RepunchUtils showDialogWithTitle:@"Offer pending"
+							  withMessage:@"You can only request this item once"];
 	}
 	else
 	{
-		SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Offer redeemed"
-													 andMessage:@"You have already redeemed this item"];
-		[alert addButtonWithTitle:@"OK"
-							 type:SIAlertViewButtonTypeDefault
-						  handler:^(SIAlertView *alertView) {}];
-		[alert show];
+		[RepunchUtils showDialogWithTitle:@"Offer redeemed"
+							  withMessage:@"You have already redeemed this item"];
 	}
 }
 
@@ -488,14 +459,6 @@
 	[self.giftView removeFromSuperview];
 	[self setupMessage];
 	[self.delegate removeMessage:self forMsgStatus:nil];
-}
-
-- (void)showDialog:(NSString*)title withMessage:(NSString*)message
-{
-	SIAlertView *alert = [[SIAlertView alloc] initWithTitle:title
-                                                 andMessage:message];
-    [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
-    [alert show];
 }
 
 @end

@@ -10,13 +10,21 @@
 
 @interface RepunchUtils : NSObject
 
++ (BOOL)isConnectionAvailable;
+
 + (void)showDialogWithTitle:(NSString *)title withMessage:(NSString *)message;
 + (void)showConnectionErrorDialog;
-+ (BOOL)isConnectionAvailable;
-+ (void)showNavigationBarDropdownView:(UIView *)parentView;
+
++ (void)showCustomDropdownView:(UIView *)parentView withMessage:(NSString *)message;
++ (void)showDefaultDropdownView:(UIView *)parentView;
+
 + (void)setupNavigationController:(UINavigationController *)navController;
+
 + (void)setDefaultButtonStyle:(UIButton *)button;
++ (void)setDisabledButtonStyle:(UIButton *)button;
+
 + (UIColor *)repunchOrangeColor;
+
 + (void)clearNotificationCenter;
 + (void)configureAppearance;
 
