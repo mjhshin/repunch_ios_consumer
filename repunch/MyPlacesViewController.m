@@ -32,23 +32,12 @@
 	[self setupNavigationBar];
 	[self setupTableView];
 	[self loadMyPlaces];
+	[self showHelpViews];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    //alert to demonstrate how to get the punch code.  will only appear once.
-    if (![@"1" isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"showPunchCodeInstructions"]])
-    {
-        [[NSUserDefaults standardUserDefaults] setValue:@"1" forKey:@"showPunchCodeInstructions"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
-        SIAlertView *punchCodeHelpAlert = [[SIAlertView alloc] initWithTitle:@"A Friendly Tip"
-																  andMessage:@"Click on the Repunch logo in order to get your punch code"];
-        [punchCodeHelpAlert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
-        [punchCodeHelpAlert show];
-    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,6 +52,29 @@
     [self.imageDownloadsInProgress removeAllObjects];
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)showHelpViews
+{
+	if (![@"1" isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"kRPShowInstructions"]]) {
+        [[NSUserDefaults standardUserDefaults] setValue:@"1" forKey:@"kRPShowInstructions"];
+		[[NSUserDefaults standardUserDefaults] setValue:@"1" forKey:@"kRPShowPunchCode"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+		
+		NSString *punchCode = [self.patron objectForKey:@"punch_code"];
+		NSString *message = [NSString stringWithFormat:@"Your Punch Code is %@\n\nYou can always click on the Repunch logo if you forget.", punchCode];
+		
+		[RepunchUtils showDialogWithTitle:@"Welcome!"
+							  withMessage:message];
+		
+		
+    }
+	else if (![@"1" isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"kRPShowPunchCode"]]) {
+		[[NSUserDefaults standardUserDefaults] setValue:@"1" forKey:@"kRPShowPunchCode"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+		
+		[self showPunchCode];
+    }
 }
 
 - (void)registerForNotifications
@@ -104,10 +116,6 @@
 		}
 	};
 	
-	/*reach.unreachableBlock = ^(Reachability*reach) {
-		[RepunchUtils showNavigationBarDropdownView:weakSelf.view];
-	};*/
-	
 	[reach startNotifier];
 }
 
@@ -116,16 +124,16 @@
 	UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_settings.png"]
 																	   style:UIBarButtonItemStylePlain
 																	  target:self
-																	  action:@selector(openSettings:)];
+																	  action:@selector(openSettings)];
 	
 	UIBarButtonItem *searchButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_search.png"]
 																	 style:UIBarButtonItemStylePlain
 																	target:self
-																	action:@selector(openSearch:)];
+																	action:@selector(openSearch)];
 	
 	UIButton *punchCodeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, 50)];
 	[punchCodeButton setImage:[UIImage imageNamed:@"repunch-logo.png"] forState:UIControlStateNormal];
-	[punchCodeButton addTarget:self action:@selector(showPunchCode:) forControlEvents:UIControlEventTouchUpInside];
+	[punchCodeButton addTarget:self action:@selector(showPunchCode) forControlEvents:UIControlEventTouchUpInside];
 	
 	self.navigationItem.leftBarButtonItem = settingsButton;
 	self.navigationItem.rightBarButtonItem = searchButton;
@@ -425,8 +433,9 @@
 
 #pragma mark - Toolbar methods
 
-- (IBAction)showPunchCode:(id)sender
+- (void)showPunchCode
 {
+	/*
 	NSString *punchCode = [self.patron objectForKey:@"punch_code"];
     SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Your Punch Code"
                                                  andMessage:punchCode];
@@ -435,9 +444,13 @@
 	[alert setMessageFont:[UIFont fontWithName:@"Avenir-Heavy" size:32]];
     [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
     [alert show];
+	 */
+	
+	NSString *punchCode = [self.patron objectForKey:@"punch_code"];
+	[RepunchUtils showPunchCode:self.view withPunchCode:punchCode];
 }
 
-- (IBAction)openSettings:(id)sender
+- (void)openSettings
 {
     SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
 	settingsVC.hidesBottomBarWhenPushed = YES;
@@ -446,7 +459,7 @@
     [self presentViewController:searchNavController animated:YES completion:nil];
 }
 
-- (IBAction)openSearch:(id)sender
+- (void)openSearch
 {
     SearchViewController *searchVC = [[SearchViewController alloc] init];
 	searchVC.hidesBottomBarWhenPushed = YES;

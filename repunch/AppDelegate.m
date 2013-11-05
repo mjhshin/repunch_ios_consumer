@@ -83,44 +83,17 @@
 
 - (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
 {
-	[RepunchUtils clearNotificationCenter];
-	
-	NSString *pushType = [userInfo objectForKey:@"type"];
-	
-	if( [pushType isEqualToString:@"punch"] )
-	{
-		NSLog(@"Push received: punch");
-		[PunchHandler handlePush:userInfo withFetchCompletionHandler:nil];
-	}
-	else if( [pushType isEqualToString:@"redeem"] )
-	{
-		NSLog(@"Push received: redeem");
-		[RedeemHandler handlePush:userInfo withFetchCompletionHandler:nil];
-	}
-	else if( [pushType isEqualToString:@"redeem_offer_gift"] )
-	{
-		NSLog(@"Push received: redeem offer/gift");
-		[RedeemHandler handleOfferGiftPush:userInfo withFetchCompletionHandler:nil];
-	}
-    else if( [pushType isEqualToString:@"message"] )
-	{
-		NSLog(@"Push received: message");
-        [MessageHandler handlePush:userInfo withFetchCompletionHandler:nil];
-	}
-    else if( [pushType isEqualToString:@"gift"] )
-	{
-		NSLog(@"Push received: gift");
-		[MessageHandler handleGiftPush:userInfo forReply:NO withFetchCompletionHandler:nil];
-	}
-    else if( [pushType isEqualToString:@"gift_reply"] )
-	{
-		NSLog(@"Push received: gift_reply");
-		[MessageHandler handleGiftPush:userInfo forReply:YES withFetchCompletionHandler:nil];
-	}
+	[self handlePushWithPayload:userInfo fetchCompletionHandler:nil];
 }
 
 - (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+	[self handlePushWithPayload:userInfo fetchCompletionHandler:completionHandler];
+}
+
+- (void)handlePushWithPayload:(NSDictionary *)userInfo
+	   fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
 	[RepunchUtils clearNotificationCenter];
 	
@@ -175,9 +148,8 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 				
 		patronQuery = [PFQuery queryWithClassName:@"Patron"];
 		patronQuery.cachePolicy = kPFCachePolicyCacheOnly;
-		BOOL isInCache = [patronQuery hasCachedResult];
-		
-		NSLog(isInCache ? @"Yes - cached query" : @"No - cached query");
+		//BOOL isInCache = [patronQuery hasCachedResult];
+		//NSLog(isInCache ? @"Yes - cached query" : @"No - cached query"); //Parse bug with hasCachedResult
 		
 		[patronQuery getObjectInBackgroundWithId:patron.objectId block:^(PFObject *patron, NSError *error) {
 			 if (!error) {
@@ -213,9 +185,8 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 
 - (void)presentTabBarController
 {
-    [Crashlytics setUserEmail:[PFUser currentUser].email];
     [Crashlytics setUserName:[PFUser currentUser].username];
-    [Crashlytics setObjectValue:[PFInstallation currentInstallation].objectId forKey:@"Installation_ID"];
+    //[Crashlytics setObjectValue:[PFInstallation currentInstallation].objectId forKey:@"Installation_ID"];
 
     MyPlacesViewController *myPlacesVC = [[MyPlacesViewController alloc] init];
     InboxViewController *inboxVC = [[InboxViewController alloc] init];

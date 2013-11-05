@@ -9,7 +9,6 @@
 
 @implementation SearchViewController
 {
-	CLLocationManager *locationManager;
 	PFGeoPoint *userLocation;
 	BOOL searchResultsLoaded;
 	int paginateCount;
@@ -27,6 +26,70 @@
 {
     [super viewDidLoad];
 	
+	[self registerForNotifications];
+	[self setupNavigationBar];
+	[self setupTableView];
+
+	self.locationManager = [[CLLocationManager alloc] init];
+	self.locationManager.delegate = self;
+	self.locationManager.distanceFilter = kCLDistanceFilterNone; //filter out negligible changes in location (disabled for now)
+	self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+	
+	self.sharedData = [DataManager getSharedInstance];
+	self.patron = [self.sharedData patron];
+	self.storeIdArray = [NSMutableArray array];
+    self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
+	
+	spinner.hidesWhenStopped = YES;
+	paginateCount = 0;
+	paginateReachEnd = NO;
+	searchResultsLoaded = NO;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+	[self.locationManager startUpdatingLocation];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+	
+	[self.locationManager stopUpdatingLocation];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+	NSLog(@"Search didReceiveMemoryWarning");
+    
+    // terminate all pending image downloads
+    NSArray *allDownloads = [self.imageDownloadsInProgress allValues];
+    [allDownloads makeObjectsPerformSelector:@selector(cancelImageDownload)];
+    
+    [self.imageDownloadsInProgress removeAllObjects];
+	
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)setupNavigationBar
+{
+	self.navigationItem.title = @"Nearby Stores";
+	
+	UIBarButtonItem *exitButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
+																				target:self
+																				action:@selector(closeView:)];
+	
+	UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+																				   target:self
+																				   action:@selector(refreshSearch)];
+	self.navigationItem.leftBarButtonItem = exitButton;
+	self.navigationItem.rightBarButtonItem = refreshButton;
+}
+
+- (void)registerForNotifications
+{
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(refreshTableView)
 												 name:@"AddOrRemoveStore"
@@ -42,27 +105,23 @@
 												 name:@"Redeem"
 											   object:nil];
 	
-	self.navigationItem.title = @"Nearby Stores";
-
-	UIBarButtonItem *exitButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
-																				target:self
-																				action:@selector(closeView:)];
+	__weak typeof(self) weakSelf = self;
+	Reachability* reach = [Reachability reachabilityWithHostname:@"www.google.com"];
 	
-	self.navigationItem.leftBarButtonItem = exitButton;
+	reach.reachableBlock = ^(Reachability*reach) {
+		if(weakSelf.storeIdArray.count == 0) {
+			[weakSelf refreshSearch];
+		}
+		else {
+			[weakSelf refreshTableView];
+		}
+	};
 	
-	locationManager = [[CLLocationManager alloc] init];
-	
-	//[self checkLocationManagerPermissions];
-	
-	locationManager.delegate = self;
-	locationManager.distanceFilter = kCLDistanceFilterNone; //filter out negligible changes in location (disabled for now)
-	locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-	
-	self.sharedData = [DataManager getSharedInstance];
-	self.patron = [self.sharedData patron];
-	self.storeIdArray = [NSMutableArray array];
-    self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
-	
+	[reach startNotifier];
+}
+/*
+- (void)setupTableView
+{
 	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
 	CGFloat screenWidth = screenRect.size.width;
 	CGFloat screenHeight = screenRect.size.height;
@@ -85,38 +144,31 @@
 	[paginateButton setClipsToBounds:YES];
 	
 	[paginateButton setTitle:@"More Results" forState:UIControlStateNormal];
+}
+*/
+- (void)setupTableView
+{
+	self.tableViewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
+	[self addChildViewController:self.tableViewController];
 	
-	spinner.hidesWhenStopped = YES;
-	paginateCount = 0;
-	paginateReachEnd = NO;
-	searchResultsLoaded = NO;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-	[locationManager startUpdatingLocation];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
+	//self.tableViewController.refreshControl = [[UIRefreshControl alloc] init];
+	//[self.tableViewController.refreshControl addTarget:self
+	//											action:@selector(loadMyPlaces)
+	//								  forControlEvents:UIControlEventValueChanged];
 	
-	[locationManager stopUpdatingLocation];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-	NSLog(@"Search didReceiveMemoryWarning");
+    self.tableViewController.view.frame = self.view.bounds;
+	self.tableViewController.view.layer.zPosition = -1;
+	
+    [self.tableViewController.tableView setDataSource:self];
+    [self.tableViewController.tableView setDelegate:self];
+	
+	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 1)];
+	footer.backgroundColor = [UIColor clearColor];
+	[self.tableViewController.tableView setTableFooterView:footer];
+	
+    [self.view addSubview:self.tableViewController.tableView];
     
-    // terminate all pending image downloads
-    NSArray *allDownloads = [self.imageDownloadsInProgress allValues];
-    [allDownloads makeObjectsPerformSelector:@selector(cancelImageDownload)];
-    
-    [self.imageDownloadsInProgress removeAllObjects];
-	
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
@@ -148,19 +200,31 @@
 		case kCLErrorDenied:
 		{
 			[RepunchUtils showDialogWithTitle:@"Location Services disabled"
-								  withMessage:@"Location Services for Repunch can be enabled in\nSettings -> Privacy -> Location"];
+								  withMessage:
+			 @"Location Services for Repunch can be enabled in\nSettings -> Privacy -> Location"];
 			break;
 		}
 		default:
 		{
-			[RepunchUtils showDialogWithTitle:@"Failed to get location" withMessage:nil];
+			//[RepunchUtils showDialogWithTitle:@"Failed to get location" withMessage:nil];
+			[RepunchUtils showCustomDropdownView:self.view withMessage:@"Failed to get location"];
 			break;
 		}
 	}
 }
 
+- (void)refreshSearch
+{
+	[self.locationManager startUpdatingLocation];
+}
+
 - (void)performSearch:(BOOL)paginate
 {
+	if( ![RepunchUtils isConnectionAvailable] ) {
+		[RepunchUtils showDefaultDropdownView:self.view];
+		return;
+	}
+	
     PFQuery *storeQuery = [PFQuery queryWithClassName:@"Store"];
     [storeQuery whereKey:@"active" equalTo:[NSNumber numberWithBool:YES]];
 	[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation];
@@ -321,6 +385,11 @@
 
 - (void)downloadImage:(PFFile *)imageFile forIndexPath:(NSIndexPath *)indexPath withStoreId:(NSString *)storeId
 {
+	if( ![RepunchUtils isConnectionAvailable] ) {
+		[RepunchUtils showDefaultDropdownView:self.view];
+		return;
+	}
+	
     PFFile *existingImageFile = [self.imageDownloadsInProgress objectForKey:indexPath];
     if (existingImageFile == nil)
     {
@@ -330,7 +399,8 @@
 		 {
 			 if (!error)
 			 {
-				 SearchTableViewCell *cell = (id)[self.searchTableView cellForRowAtIndexPath:indexPath];
+				 SearchTableViewCell *cell = (SearchTableViewCell *)
+												[self.tableViewController.tableView cellForRowAtIndexPath:indexPath];
 				 UIImage *storeImage = [UIImage imageWithData:data];
 				 cell.storeImage.image = storeImage;
 				 [self.imageDownloadsInProgress removeObjectForKey:indexPath]; // Remove the PFFile from the in-progress list
@@ -358,7 +428,7 @@
 	{
 		UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 70)];
 		footer.backgroundColor = [UIColor clearColor];
-		self.searchTableView.tableFooterView = footer;
+		self.tableViewController.tableView.tableFooterView = footer;
 		
 		CGRect paginateButtonFrame = CGRectMake(footer.frame.size.width/2 - paginateButton.frame.size.width/2,
 												footer.frame.size.height/2 - paginateButton.frame.size.height/2,
@@ -366,13 +436,13 @@
 												paginateButton.frame.size.height);
 		paginateButton.enabled = !loadInProgress;
 		paginateButton.frame = paginateButtonFrame;
-		[self.searchTableView.tableFooterView addSubview:paginateButton];
+		[self.tableViewController.tableView.tableFooterView addSubview:paginateButton];
 	
 		if(loadInProgress)
 		{
 			[paginateButton setHidden:YES];
-			spinner.frame = self.searchTableView.tableFooterView.bounds;
-			[self.searchTableView.tableFooterView addSubview:spinner];
+			spinner.frame = self.tableViewController.tableView.tableFooterView.bounds;
+			[self.tableViewController.tableView.tableFooterView addSubview:spinner];
 			[spinner startAnimating];
 		}
 		else
@@ -386,7 +456,7 @@
 	{
 		UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
 		footer.backgroundColor = [UIColor clearColor];
-		[self.searchTableView setTableFooterView:footer];
+		[self.tableViewController.tableView setTableFooterView:footer];
 	}
 }
 
@@ -398,7 +468,7 @@
 	else {
 		[self.emptyResultsLabel setHidden:NO];
 	}
-	[self.searchTableView reloadData];
+	[self.tableViewController.tableView reloadData];
 }
 
 - (IBAction)closeView:(id)sender

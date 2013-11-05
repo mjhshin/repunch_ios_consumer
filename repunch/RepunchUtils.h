@@ -17,6 +17,7 @@
 
 + (void)showCustomDropdownView:(UIView *)parentView withMessage:(NSString *)message;
 + (void)showDefaultDropdownView:(UIView *)parentView;
++ (void)showPunchCode:(UIView *)parentView withPunchCode:(NSString *)punchCode;
 
 + (void)setupNavigationController:(UINavigationController *)navController;
 

@@ -231,6 +231,10 @@
 		[[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 			 [spinner stopAnimating];
 			 tableView.userInteractionEnabled = YES;
+			
+			//[[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:@"kRPShowInstructions"];
+			[[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:@"kRPShowPunchCode"];
+			[[NSUserDefaults standardUserDefaults] synchronize];
 			 
 			 if(!error) {
 				 [UIApplication sharedApplication].applicationIconBadgeNumber = 0;

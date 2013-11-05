@@ -45,6 +45,46 @@
 	[self showNavigationBarDropdownView:parentView withMessage:nil];
 }
 
++ (void)showPunchCode:(UIView *)parentView withPunchCode:(NSString *)punchCode
+{
+	UILabel *dropdownLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+	NSString *message = [NSString stringWithFormat:@"Your Punch Code is %@", punchCode];
+	dropdownLabel.text = message;
+	dropdownLabel.font = [UIFont fontWithName:@"Avenir-Heavy" size:17.0];
+	dropdownLabel.textAlignment = NSTextAlignmentCenter;
+	dropdownLabel.textColor = [UIColor whiteColor];
+	dropdownLabel.backgroundColor = [RepunchUtils repunchOrangeColor];
+	[parentView addSubview:dropdownLabel];
+	
+	CGRect rect = dropdownLabel.frame;
+    rect.origin.y = -40;
+	dropdownLabel.frame = rect;
+	
+	// Fade out the view right away
+    [UIView animateWithDuration:0.25
+						  delay: 0.0
+						options: UIViewAnimationOptionCurveEaseOut
+					 animations:^{
+						 CGRect rect2 = dropdownLabel.frame;
+						 rect2.origin.y = 0;
+						 dropdownLabel.frame = rect2;
+					 }
+					 completion:^(BOOL finished) {
+						 // Wait one second and then fade in the view
+						 [UIView animateWithDuration:0.25
+											   delay: 2.5
+											 options:UIViewAnimationOptionCurveEaseOut
+										  animations:^{
+											  CGRect rect3 = dropdownLabel.frame;
+											  rect3.origin.y = -40;
+											  dropdownLabel.frame = rect3;
+										  }
+										  completion:^(BOOL finished) {
+											  [dropdownLabel removeFromSuperview];
+										  }];
+					 }];
+}
+
 + (void)showNavigationBarDropdownView:(UIView *)parentView withMessage:(NSString *)message
 {
 	UILabel *dropdownLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];

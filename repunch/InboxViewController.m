@@ -95,17 +95,17 @@
 									   initWithImage:[UIImage imageNamed:@"nav_settings.png"]
 									   style:UIBarButtonItemStylePlain
 									   target:self
-									   action:@selector(openSettings:)];
+									   action:@selector(openSettings)];
 	
 	UIBarButtonItem *searchButton = [[UIBarButtonItem alloc]
 									 initWithImage:[UIImage imageNamed:@"nav_search.png"]
 									 style:UIBarButtonItemStylePlain
 									 target:self
-									 action:@selector(openSearch:)];
+									 action:@selector(openSearch)];
 	
 	UIButton *punchCodeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, 50)];
 	[punchCodeButton setImage:[UIImage imageNamed:@"repunch-logo.png"] forState:UIControlStateNormal];
-	[punchCodeButton addTarget:self action:@selector(showPunchCode:) forControlEvents:UIControlEventTouchUpInside];
+	[punchCodeButton addTarget:self action:@selector(showPunchCode) forControlEvents:UIControlEventTouchUpInside];
 	
 	self.navigationItem.leftBarButtonItem = settingsButton;
 	self.navigationItem.rightBarButtonItem = searchButton;
@@ -456,7 +456,7 @@
 	[currentInstallation saveEventually];
 }
 
-- (IBAction)openSettings:(id)sender
+- (void)openSettings
 {
     SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
 	settingsVC.hidesBottomBarWhenPushed = YES;
@@ -465,7 +465,7 @@
     [self presentViewController:searchNavController animated:YES completion:nil];
 }
 
-- (IBAction)openSearch:(id)sender
+- (void)openSearch
 {
     SearchViewController *searchVC = [[SearchViewController alloc] init];
 	searchVC.hidesBottomBarWhenPushed = YES;
@@ -474,8 +474,9 @@
     [self presentViewController:searchNavController animated:YES completion:nil];
 }
 
-- (IBAction)showPunchCode:(id)sender
+- (void)showPunchCode
 {
+	/*
 	NSString *punchCode = [self.patron objectForKey:@"punch_code"];
     SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Your Punch Code"
                                                  andMessage:punchCode];
@@ -483,6 +484,11 @@
 	[alert setMessageFont:[UIFont fontWithName:@"Avenir-Heavy" size:32]];
     [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
     [alert show];
+	 */
+	NSString *punchCode = [self.patron objectForKey:@"punch_code"];
+	NSString *message = [NSString stringWithFormat:@"Your Punch Code is %@", punchCode];
+	
+	[RepunchUtils showCustomDropdownView:self.view withMessage:message];
 }
 
 @end
