@@ -114,7 +114,7 @@
 	NSLog(@"Error during data fetch.");
 	self.spinnerView.hidden = YES;
 	[self.mySpinner stopAnimating];
-}
+	[RepunchUtils showDefaultDropdownView:self.view];}
 
 // Event: Data loaded
 - (void)friendPickerViewControllerDataDidChange:(FBFriendPickerViewController *)friendPicker

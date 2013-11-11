@@ -184,6 +184,11 @@
 		return;
 	}
 	
+	if( ![RepunchUtils isConnectionAvailable] ) {
+		[RepunchUtils showDefaultDropdownView:self.view];
+		return;
+	}
+	
     if (buttonIndex == 1) {
         NSString *email = [[alertView textFieldAtIndex:0] text];
 		

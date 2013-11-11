@@ -1001,8 +1001,10 @@ static SIAlertView *__si_alert_current_view;
 			break;
 		case SIAlertViewButtonTypeDefault:
 		default:
-			normalImage = [UIImage imageNamed:@"SIAlertView.bundle/button-default"];
-			highlightedImage = [UIImage imageNamed:@"SIAlertView.bundle/button-default-d"];
+			//normalImage = [UIImage imageNamed:@"SIAlertView.bundle/button-default"];
+			//highlightedImage = [UIImage imageNamed:@"SIAlertView.bundle/button-default-d"];
+			normalImage = [UIImage imageNamed:@"SIAlertView.bundle/button-cancel"];
+			highlightedImage = [UIImage imageNamed:@"SIAlertView.bundle/button-cancel-d"];
 			[button setTitleColor:self.buttonColor forState:UIControlStateNormal];
             [button setTitleColor:[self.buttonColor colorWithAlphaComponent:0.8] forState:UIControlStateHighlighted];
 			break;

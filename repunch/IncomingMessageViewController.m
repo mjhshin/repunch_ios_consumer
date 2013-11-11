@@ -321,7 +321,7 @@
     }
 }
 
--(NSString *)stringFromInterval:(NSTimeInterval)timeInterval
+- (NSString *)stringFromInterval:(NSTimeInterval)timeInterval
 {
 	int SECONDS_IN_MINUTE = 60;
     int SECONDS_IN_HOUR = 60*60;
@@ -346,10 +346,14 @@
 
 - (IBAction)giftButtonAction:(id)sender
 {
-	if(self.timer == nil && ![self.messageType isEqualToString:@"gift"]) { //timer is nil when it expires.
+	if( ![RepunchUtils isConnectionAvailable] ) {
+		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
 	
+	if(self.timer == nil && ![self.messageType isEqualToString:@"gift"]) { //timer is nil when it expires.
+		return;
+	}
 	
 	if( [[self.messageStatus objectForKey:@"redeem_available"] isEqualToString:@"yes"] )
 	{
@@ -410,7 +414,12 @@
 }
 
 - (IBAction)giftReplyButtonAction:(id)sender
-{	
+{
+	if( ![RepunchUtils isConnectionAvailable] ) {
+		[RepunchUtils showDefaultDropdownView:self.view];
+		return;
+	}
+	
 	NSString *storeId = [[self.sharedData getStore:[self.message objectForKey:@"store_id"]] objectId];
 	
 	ComposeMessageViewController *composeVC = [[ComposeMessageViewController alloc] init];
@@ -427,7 +436,12 @@
 }
 
 - (IBAction)deleteButtonAction:(id)sender
-{	
+{
+	if( ![RepunchUtils isConnectionAvailable] ) {
+		[RepunchUtils showDefaultDropdownView:self.view];
+		return;
+	}
+	
 	SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Delete this message?" andMessage:nil];
 	[alert addButtonWithTitle:@"Cancel"
 							   type:SIAlertViewButtonTypeDefault

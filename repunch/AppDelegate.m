@@ -30,7 +30,7 @@
 	//                               DEVELOPMENT KEY
 	//
 	[Parse setApplicationId:@"r9QrVhpx3wguChA9X9oe2GFGZwTUtrYyHOHpNWxb"
-                  clientKey:@"2anJYVl8sakbPVqPz4MEbP2GLWBcs7uRFTvWMaZ0"];
+				  clientKey:@"2anJYVl8sakbPVqPz4MEbP2GLWBcs7uRFTvWMaZ0"];
     //
 	////////////////////////////////////////////////////////////////////////////////////////
 	

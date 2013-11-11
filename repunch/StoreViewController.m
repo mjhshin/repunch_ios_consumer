@@ -51,6 +51,7 @@
 	[[NSBundle mainBundle] loadNibNamed:@"StoreHeaderView" owner:self options:nil];
 	
 	[RepunchUtils setDefaultButtonStyle:self.addToMyPlacesButton];
+	[self.addToMyPlacesButton setClipsToBounds:NO];
 	
 	deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_delete.png"]
 													style:UIBarButtonItemStylePlain
@@ -123,6 +124,10 @@
 	[self.storeAddress sizeToFit];
 	
 	[self setStoreHours];
+	
+	
+	self.storeImage.layer.cornerRadius = 10.0;
+	self.storeImage.layer.masksToBounds = YES;
 	
 	PFFile *imageFile = [store objectForKey:@"store_avatar"];
 	if( !IS_NIL(imageFile) )
@@ -245,7 +250,7 @@
 	{
 		NSString *buttonText = [NSString stringWithFormat:@"%i %@", punchCount, (punchCount == 1) ? @"Punch": @"Punches"];
 		[self.addToMyPlacesButton setTitle:buttonText forState:UIControlStateNormal];
-		[self.addToMyPlacesButton setEnabled:YES];
+		[self.addToMyPlacesButton setEnabled:NO];
 		self.navigationItem.rightBarButtonItem = deleteButton;
 		
 		self.feedbackButton.hidden = NO;
@@ -359,14 +364,19 @@
 	NSString *message = [[reward objectForKey:@"description"] stringByAppendingFormat:@"\n\n%@", str1];
 
 	SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:[reward objectForKey:@"reward_name"]
-														 andMessage:message];
+													 andMessage:message];
 	
 	if (punchCount >= rewardPunches)
 	{
 		[alertView addButtonWithTitle:@"Redeem"
 								 type:SIAlertViewButtonTypeDefault
-							  handler:^(SIAlertView *alert)
-		{
+							  handler:^(SIAlertView *alert) {
+								  
+			if( ![RepunchUtils isConnectionAvailable] ) {
+				[RepunchUtils showDefaultDropdownView:self.view];
+				return;
+			}
+								  
 			NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:
 													patron.objectId,			@"patron_id",
 													store.objectId,				@"store_id",
@@ -379,8 +389,7 @@
 
 			[PFCloud callFunctionInBackground:@"request_redeem"
 							   withParameters:functionArguments
-										block:^(NSString *success, NSError *error)
-			{
+										block:^(NSString *success, NSError *error) {
 				if (!error)
 				{
 					if ([success isEqualToString:@"pending"])
@@ -406,8 +415,7 @@
 
 		[alertView addButtonWithTitle:@"Gift"
 								 type:SIAlertViewButtonTypeDefault
-							  handler:^(SIAlertView *alert)
-		 {
+							  handler:^(SIAlertView *alert) {
 			 [self gift];
 		 }];
             
@@ -620,6 +628,8 @@
 				 [self setStoreInformation];
 				 [self checkPatronStore];
 				 [self setRewardTableView];
+				 
+				 [[NSNotificationCenter defaultCenter] postNotificationName:@"AddOrRemoveStore" object:self userInfo:nil];
 			 }
 			 else
 			 {

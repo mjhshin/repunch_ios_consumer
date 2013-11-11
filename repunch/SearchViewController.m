@@ -55,7 +55,6 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-	
 	[self.locationManager stopUpdatingLocation];
 }
 
@@ -119,33 +118,7 @@
 	
 	[reach startNotifier];
 }
-/*
-- (void)setupTableView
-{
-	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
-	CGFloat screenWidth = screenRect.size.width;
-	CGFloat screenHeight = screenRect.size.height;
-	CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
-	self.searchTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - navBarHeight)
-														style:UITableViewStylePlain];
-    [self.searchTableView setDataSource:self];
-    [self.searchTableView setDelegate:self];
-    [self.view addSubview:self.searchTableView];
-	self.searchTableView.layer.zPosition = -1.0;
-	
-	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-	
-	paginateButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 260, 50)];
-	[RepunchUtils setDefaultButtonStyle:paginateButton];
-	paginateButton.titleLabel.font = [UIFont fontWithName:@"Avenir-Heavy" size:17];
-	paginateButton.adjustsImageWhenDisabled = NO;
-	[paginateButton addTarget:self action:@selector(performSearch:) forControlEvents:UIControlEventTouchUpInside];
-	[paginateButton.layer setCornerRadius:10];
-	[paginateButton setClipsToBounds:YES];
-	
-	[paginateButton setTitle:@"More Results" forState:UIControlStateNormal];
-}
-*/
+
 - (void)setupTableView
 {
 	self.tableViewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
@@ -169,10 +142,24 @@
     [self.view addSubview:self.tableViewController.tableView];
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
+	
+	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+	
+	paginateButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 260, 50)];
+	[RepunchUtils setDefaultButtonStyle:paginateButton];
+	paginateButton.titleLabel.font = [UIFont fontWithName:@"Avenir-Heavy" size:17];
+	paginateButton.adjustsImageWhenDisabled = NO;
+	[paginateButton addTarget:self action:@selector(performSearch:) forControlEvents:UIControlEventTouchUpInside];
+	[paginateButton.layer setCornerRadius:10];
+	[paginateButton setClipsToBounds:YES];
+	
+	[paginateButton setTitle:@"More Results" forState:UIControlStateNormal];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
+	self.locationServicesLabel.hidden = YES;
+	
 	CLLocation* location = [locations lastObject];
 	NSDate* eventDate = location.timestamp;
 	NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
@@ -202,6 +189,10 @@
 			[RepunchUtils showDialogWithTitle:@"Location Services disabled"
 								  withMessage:
 			 @"Location Services for Repunch can be enabled in\nSettings -> Privacy -> Location"];
+			
+			if(self.storeIdArray.count == 0) {
+				self.locationServicesLabel.hidden = NO;
+			}
 			break;
 		}
 		default:
@@ -215,6 +206,11 @@
 
 - (void)refreshSearch
 {
+	if( ![RepunchUtils isConnectionAvailable] ) {
+		[RepunchUtils showDefaultDropdownView:self.view];
+		return;
+	}
+	
 	[self.locationManager startUpdatingLocation];
 }
 
@@ -289,9 +285,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	SearchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[SearchTableViewCell reuseIdentifier]];
-	if (cell == nil)
-    {
+	
+	if (cell == nil) {
         cell = [SearchTableViewCell cell];
+		cell.storeImage.layer.cornerRadius = 10.0;
+		cell.storeImage.layer.masksToBounds = YES;
     }
 	
 	NSString *storeId = [self.storeIdArray objectAtIndex:indexPath.row];
@@ -386,7 +384,6 @@
 - (void)downloadImage:(PFFile *)imageFile forIndexPath:(NSIndexPath *)indexPath withStoreId:(NSString *)storeId
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
-		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
 	

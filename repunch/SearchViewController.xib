@@ -10,6 +10,7 @@
                 <outlet property="activityIndicator" destination="44" id="72"/>
                 <outlet property="activityIndicatorView" destination="43" id="71"/>
                 <outlet property="emptyResultsLabel" destination="153" id="154"/>
+                <outlet property="locationServicesLabel" destination="DZL-KB-ev2" id="m4M-0k-a6R"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
@@ -59,13 +60,22 @@
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Please enable Location Services to see search results." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="251" translatesAutoresizingMaskIntoConstraints="NO" id="DZL-KB-ev2">
+                    <rect key="frame" x="35" y="259" width="251" height="50"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="18"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="centerY" secondItem="153" secondAttribute="centerY" id="AzF-Pp-AB3"/>
+                <constraint firstAttribute="centerY" secondItem="DZL-KB-ev2" secondAttribute="centerY" id="BaT-J6-wbK"/>
                 <constraint firstAttribute="centerX" secondItem="153" secondAttribute="centerX" id="Ge3-Gt-NJM"/>
                 <constraint firstAttribute="centerY" secondItem="43" secondAttribute="centerY" id="PJR-hF-pcR"/>
                 <constraint firstAttribute="centerX" secondItem="43" secondAttribute="centerX" id="S9P-in-8LY"/>
+                <constraint firstAttribute="centerX" secondItem="DZL-KB-ev2" secondAttribute="centerX" id="cks-2s-pJg"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

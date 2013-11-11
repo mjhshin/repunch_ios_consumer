@@ -64,7 +64,7 @@
 		NSString *punchCode = [self.patron objectForKey:@"punch_code"];
 		NSString *message = [NSString stringWithFormat:@"Your Punch Code is %@\n\nYou can always click on the Repunch logo if you forget.", punchCode];
 		
-		[RepunchUtils showDialogWithTitle:@"Welcome!"
+		[RepunchUtils showDialogWithTitle:@"Hello!"
 							  withMessage:message];
 		
 		
@@ -254,9 +254,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MyPlacesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[MyPlacesTableViewCell reuseIdentifier]];
-	if (cell == nil)
-    {
+	
+	if (cell == nil) {
         cell = [MyPlacesTableViewCell cell];
+		cell.storeImage.layer.cornerRadius = 10.0;
+		cell.storeImage.layer.masksToBounds = YES;
     }
 	
 	NSString *storeId = self.storeIdArray[indexPath.row];
@@ -435,19 +437,8 @@
 
 - (void)showPunchCode
 {
-	/*
 	NSString *punchCode = [self.patron objectForKey:@"punch_code"];
-    SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Your Punch Code"
-                                                 andMessage:punchCode];
-	
-	[alert setTitleFont:[UIFont fontWithName:@"Avenir" size:20]];
-	[alert setMessageFont:[UIFont fontWithName:@"Avenir-Heavy" size:32]];
-    [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
-    [alert show];
-	 */
-	
-	NSString *punchCode = [self.patron objectForKey:@"punch_code"];
-	[RepunchUtils showPunchCode:self.view withPunchCode:punchCode];
+	[RepunchUtils showPunchCode:punchCode];
 }
 
 - (void)openSettings
@@ -466,7 +457,6 @@
 	UINavigationController *searchNavController = [[UINavigationController alloc] initWithRootViewController:searchVC];
 	[RepunchUtils setupNavigationController:searchNavController];
     [self presentViewController:searchNavController animated:YES completion:nil];
-	//[self.navigationController pushViewController:searchNavController animated:YES];
 }
 
 

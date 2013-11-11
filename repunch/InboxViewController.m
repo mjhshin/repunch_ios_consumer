@@ -81,11 +81,6 @@
 			[weakSelf refreshTableView];
 		}
 	};
-	
-	/*reach.unreachableBlock = ^(Reachability*reach) {
-	 [RepunchUtils showNavigationBarDropdownView:weakSelf.view];
-	 };*/
-	
 	[reach startNotifier];
 }
 
@@ -476,19 +471,8 @@
 
 - (void)showPunchCode
 {
-	/*
 	NSString *punchCode = [self.patron objectForKey:@"punch_code"];
-    SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Your Punch Code"
-                                                 andMessage:punchCode];
-	[alert setTitleFont:[UIFont fontWithName:@"Avenir" size:20]];
-	[alert setMessageFont:[UIFont fontWithName:@"Avenir-Heavy" size:32]];
-    [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
-    [alert show];
-	 */
-	NSString *punchCode = [self.patron objectForKey:@"punch_code"];
-	NSString *message = [NSString stringWithFormat:@"Your Punch Code is %@", punchCode];
-	
-	[RepunchUtils showCustomDropdownView:self.view withMessage:message];
+	[RepunchUtils showPunchCode:punchCode];
 }
 
 @end
