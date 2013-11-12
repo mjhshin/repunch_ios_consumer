@@ -926,11 +926,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-					/Users/michaelshin/workspace/shin_repunch_ios_consumer,
-					/Users/michaelshin/workspace/shin_repunch_ios_consumer/External,
-					/Users/Emil/Desktop,
-					/Users/Emil/Desktop/Repunch/repunch_ios_consumer/External,
-					/Users/emil/Desktop/repunch_ios_consumer/External,
+					..,
+					External,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Repunch-Prefix.pch";
@@ -956,11 +953,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-					/Users/michaelshin/workspace/shin_repunch_ios_consumer,
-					/Users/michaelshin/workspace/shin_repunch_ios_consumer/External,
-					/Users/Emil/Desktop,
-					/Users/Emil/Desktop/Repunch/repunch_ios_consumer/External,
-					/Users/emil/Desktop/repunch_ios_consumer/External,
+					..,
+					External,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Repunch-Prefix.pch";
