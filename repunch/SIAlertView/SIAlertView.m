@@ -18,7 +18,7 @@ NSString *const SIAlertViewDidDismissNotification = @"SIAlertViewDidDismissNotif
 #define DEBUG_LAYOUT 0
 
 #define MESSAGE_MIN_LINE_COUNT 3
-#define MESSAGE_MAX_LINE_COUNT 5
+#define MESSAGE_MAX_LINE_COUNT 7 //originally: 5
 #define GAP 10
 #define CANCEL_BUTTON_PADDING_TOP 0
 #define CONTENT_PADDING_LEFT 10
@@ -926,7 +926,7 @@ static SIAlertView *__si_alert_current_view;
             self.titleLabel.textColor = self.titleColor;
             self.titleLabel.adjustsFontSizeToFitWidth = YES;
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_6_0
-            self.titleLabel.minimumScaleFactor = 0.75;
+            self.titleLabel.minimumScaleFactor = 0.7;
 #else
             self.titleLabel.minimumFontSize = self.titleLabel.font.pointSize * 0.75;
 #endif

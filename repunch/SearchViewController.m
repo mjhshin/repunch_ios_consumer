@@ -169,10 +169,6 @@
 		NSLog(@"latitude %+.6f, longitude %+.6f\n", location.coordinate.latitude, location.coordinate.longitude);
 		userLocation = [PFGeoPoint geoPointWithLocation:location];
 		
-		searchResultsLoaded = YES;
-		paginateCount = 0;
-		paginateReachEnd = NO;
-		
 		[self performSearch:NO];
 	}
 }
@@ -227,45 +223,45 @@
 	[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation withinMiles:50];
 	[storeQuery setLimit:20];
 	
-	if(paginate == NO)
-	{
+	if(paginate == NO) {
 		[self.activityIndicatorView setHidden:NO];
 		[self.activityIndicator startAnimating];
 	}
-	else
-	{
+	else {
 		++paginateCount;
 		[storeQuery setSkip:paginateCount*20];
 	}
 	[self setFooter:YES];
 	
-    [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
-	{
-		 if(paginate == NO)
-		 {
+    [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+		
+		 if(paginate == NO) {
 			 [self.activityIndicatorView setHidden:YES];
 			 [self.activityIndicator stopAnimating];
 			 [self.storeIdArray removeAllObjects];
 		 }
 		 
-		 if (!error)
-		 {
-				for (PFObject *store in results)
-				{
-					NSString *storeId = [store objectId];
-					[self.sharedData addStore:store];
-					[self.storeIdArray addObject:storeId];
-				}
-				 
-				if(paginate != NO && results.count == 0) {
-					paginateReachEnd = YES;
-				}
+		 if (!error) {
+			 if(paginate == NO) {
+				 searchResultsLoaded = YES;
+				 paginateCount = 0;
+				 paginateReachEnd = NO;
+			 }
+			
+			 for (PFObject *store in results) {
+				NSString *storeId = [store objectId];
+				[self.sharedData addStore:store];
+				[self.storeIdArray addObject:storeId];
+			 }
 			 
-				[self refreshTableView];
-				[self setFooter:NO];
+			 if(paginate != NO && results.count == 0) {
+				paginateReachEnd = YES;
+			 }
+			 
+			 [self refreshTableView];
+			 [self setFooter:NO];
 		 }
-		 else
-		 {
+		 else {
 			 NSLog(@"search view controller serror: %@", error);
 			 [RepunchUtils showConnectionErrorDialog];
 		 }

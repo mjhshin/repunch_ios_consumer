@@ -361,7 +361,7 @@
 	
 	
 	NSString *str1 = [NSString stringWithFormat:(rewardPunches == 1 ? @"%i Punch" :  @"%i Punches"), rewardPunches];
-	NSString *message = [[reward objectForKey:@"description"] stringByAppendingFormat:@"\n\n%@", str1];
+	NSString *message = [str1 stringByAppendingFormat:@"\n\n%@", [reward objectForKey:@"description"]];
 
 	SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:[reward objectForKey:@"reward_name"]
 													 andMessage:message];
@@ -396,13 +396,13 @@
 					{
 						NSLog(@"function call is: %@", success);
 						[RepunchUtils showDialogWithTitle:@"Pending"
-											  withMessage:@"You already have a pending reward"];
+											  withMessage:@"You can only request one reward at a time. Please wait for your reward to be approved."];
 					}
 					else
 					{
 						NSLog(@"function call is: %@", success);
 						[RepunchUtils showDialogWithTitle:@"Waiting for confirmation"
-											  withMessage:@"Please wait for your reward to be validated"];
+											  withMessage:@"Please wait for your reward to be approved"];
 					}
 				}
 				else
