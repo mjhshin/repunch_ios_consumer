@@ -31,10 +31,15 @@
 																				target:self
 																				action:@selector(closeButton:)];
 	
-	sendButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_send.png"]
+	sendButton = [[UIBarButtonItem alloc] initWithTitle:@"Send"
+												  style:UIBarButtonItemStyleDone
+												 target:self
+												 action:@selector(sendButtonAction:)];
+				  /*
+				  [UIImage imageNamed:@"nav_send.png"]
 																   style:UIBarButtonItemStylePlain
 																  target:self
-																  action:@selector(sendButtonAction:)];
+																  action:@selector(sendButtonAction:)];*/
 	self.navigationItem.leftBarButtonItem = exitButton;
 	self.navigationItem.rightBarButtonItem = sendButton;
 	

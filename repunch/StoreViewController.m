@@ -53,7 +53,7 @@
 	[RepunchUtils setDefaultButtonStyle:self.addToMyPlacesButton];
 	[self.addToMyPlacesButton setClipsToBounds:NO];
 	
-	deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_delete.png"]
+	deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"delete_icon.png"]
 													style:UIBarButtonItemStylePlain
 												   target:self
 												   action:@selector(deleteStore:)];
@@ -287,6 +287,7 @@
 	[self addChildViewController:self.tableViewController];
 	
 	self.tableViewController.refreshControl = [[UIRefreshControl alloc] init];
+	[self.tableViewController.refreshControl setTintColor:[RepunchUtils repunchOrangeColor]];
 	[self.tableViewController.refreshControl addTarget:self
 												action:@selector(refreshPatronStoreObject)
 									  forControlEvents:UIControlEventValueChanged];

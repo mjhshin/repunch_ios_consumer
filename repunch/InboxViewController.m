@@ -14,6 +14,7 @@
 	int paginateCount;
 	BOOL paginateReachEnd;
 	UIActivityIndicatorView *paginateSpinner;
+	UISegmentedControl *segmentedControl;
 }
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
@@ -26,6 +27,8 @@
 	self.sharedData = [DataManager getSharedInstance];
     self.patron = [self.sharedData patron];
 	self.messagesArray = [[NSMutableArray alloc] init];
+	self.offersArray = [[NSMutableArray alloc] init];
+	self.giftsArray = [[NSMutableArray alloc] init];
 	
 	alertBadgeCount = 0;
 	paginateCount = 0;
@@ -87,24 +90,35 @@
 - (void)setupNavigationBar
 {
 	UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc]
-									   initWithImage:[UIImage imageNamed:@"nav_settings.png"]
+									   initWithImage:[UIImage imageNamed:@"settings_icon.png"]
 									   style:UIBarButtonItemStylePlain
 									   target:self
 									   action:@selector(openSettings)];
 	
 	UIBarButtonItem *searchButton = [[UIBarButtonItem alloc]
-									 initWithImage:[UIImage imageNamed:@"nav_search.png"]
+									 initWithImage:[UIImage imageNamed:@"search_icon.png"]
 									 style:UIBarButtonItemStylePlain
 									 target:self
 									 action:@selector(openSearch)];
 	
-	UIButton *punchCodeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, 50)];
-	[punchCodeButton setImage:[UIImage imageNamed:@"repunch-logo.png"] forState:UIControlStateNormal];
-	[punchCodeButton addTarget:self action:@selector(showPunchCode) forControlEvents:UIControlEventTouchUpInside];
+	//UIButton *punchCodeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, 50)];
+	//[punchCodeButton setImage:[UIImage imageNamed:@"repunch-logo.png"] forState:UIControlStateNormal];
+	//[punchCodeButton addTarget:self action:@selector(showPunchCode) forControlEvents:UIControlEventTouchUpInside];
+	
+	NSArray *itemArray = [NSArray arrayWithObjects: @"All", @"Offers", @"Gifts", nil];
+	segmentedControl = [[UISegmentedControl alloc] initWithItems:itemArray];
+	[segmentedControl addTarget:self
+						 action:@selector(filterMessages)
+			   forControlEvents:UIControlEventValueChanged];
+	NSDictionary *attributes = [NSDictionary dictionaryWithObject:[UIFont fontWithName:@"Avenir" size:16]
+														   forKey:NSFontAttributeName];
+	[segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
+	segmentedControl.selectedSegmentIndex = 0;
 	
 	self.navigationItem.leftBarButtonItem = settingsButton;
 	self.navigationItem.rightBarButtonItem = searchButton;
-	self.navigationItem.titleView = punchCodeButton;
+	//self.navigationItem.titleView = punchCodeButton;
+	self.navigationItem.titleView = segmentedControl;
 }
 
 - (void)setupTableView
@@ -113,6 +127,7 @@
 	[self addChildViewController:self.tableViewController];
 	
 	self.tableViewController.refreshControl = [[UIRefreshControl alloc] init];
+	[self.tableViewController.refreshControl setTintColor:[RepunchUtils repunchOrangeColor]];
 	[self.tableViewController.refreshControl addTarget:self
 												action:@selector(loadInbox:)
 									  forControlEvents:UIControlEventValueChanged];
@@ -182,6 +197,9 @@
             if (paginate != YES)
             {
                 [self.messagesArray removeAllObjects];
+				[self.offersArray removeAllObjects];
+				[self.giftsArray removeAllObjects];
+				
                 paginateReachEnd = NO;
 				paginateCount = 0;
 				[self fetchBadgeCount];
@@ -190,7 +208,7 @@
 			for(PFObject *messageStatus in results)
 			{
 				[self.sharedData addMessage:messageStatus];
-				[self.messagesArray addObject:messageStatus];
+				[self addMessage:messageStatus fromPush:NO];
 			}
 
 			[self refreshTableView];
@@ -205,6 +223,12 @@
             [RepunchUtils showConnectionErrorDialog];
         }
     }];
+}
+
+- (void)filterMessages
+{
+	//[self.tableViewController.tableView setContentOffset:CGPointZero animated:YES];
+	[self refreshTableView];
 }
 
 - (void)refreshWhenBackgroundRefreshDisabled
@@ -223,18 +247,41 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-   return [self.messagesArray count];
+	NSInteger filter = segmentedControl.selectedSegmentIndex;
+	
+	if(filter == 0) { // All Messages
+		return [self.messagesArray count];
+	}
+	else if(filter == 1) { // Offers
+		return [self.offersArray count];
+	}
+	else { // Gifts
+		return [self.giftsArray count];
+	}
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	InboxTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[InboxTableViewCell reuseIdentifier]];
-	if (cell == nil)
-    {
+	if (cell == nil) {
         cell = [InboxTableViewCell cell];
     }
+	
+	PFObject *messageStatus;
+	
+	NSInteger filter = segmentedControl.selectedSegmentIndex;
+	
+	if(filter == 0) { // All Messages
+		messageStatus = [self.messagesArray objectAtIndex:indexPath.row];
+	}
+	else if(filter == 1) { // Offers
+		messageStatus = [self.offersArray objectAtIndex:indexPath.row];
+	}
+	else { // Gifts
+		messageStatus = [self.giftsArray objectAtIndex:indexPath.row];
+	}
     
-    PFObject *messageStatus = [self.messagesArray objectAtIndex:indexPath.row];
+    //PFObject *messageStatus = [self.messagesArray objectAtIndex:indexPath.row];
     PFObject *message = [messageStatus objectForKey:@"Message"];
     PFObject *reply = [message objectForKey:@"Reply"];
     
@@ -249,18 +296,19 @@
         cell.dateSent.text = [self formattedDateString:message.createdAt];
     }
     
-    if ([[message valueForKey:@"message_type"] isEqualToString:@"offer"]){
+    if ([[message objectForKey:@"message_type"] isEqualToString:@"offer"]) {
         [[cell offerPic] setHidden:NO];
         [[cell offerPic] setImage:[UIImage imageNamed:@"ico_message_coupon"]];
-		
-    } else if ([[message valueForKey:@"message_type"] isEqualToString:@"feedback"]){
+    }
+	else if ([[message objectForKey:@"message_type"] isEqualToString:@"feedback"]) {
         [[cell offerPic] setHidden:NO];
         [[cell offerPic] setImage:[UIImage imageNamed:@"message_reply"]];
-		
-    } else if ([[message valueForKey:@"message_type"] isEqualToString:@"gift"]){
+    }
+	else if ([[message objectForKey:@"message_type"] isEqualToString:@"gift"]) {
         [[cell offerPic] setHidden:NO];
         [[cell offerPic] setImage:[UIImage imageNamed:@"message_gift"]];
-    } else {
+    }
+	else {
 		[[cell offerPic] setHidden:YES];
 	}
     
@@ -287,7 +335,20 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     IncomingMessageViewController *messageVC = [[IncomingMessageViewController alloc] init];
-	PFObject *messageStatus = [self.messagesArray objectAtIndex:indexPath.row];
+	PFObject *messageStatus;
+	
+	NSInteger filter = segmentedControl.selectedSegmentIndex;
+	
+	if(filter == 0) { // All Messages
+		messageStatus = [self.messagesArray objectAtIndex:indexPath.row];
+	}
+	else if(filter == 1) { // Offers
+		messageStatus = [self.offersArray objectAtIndex:indexPath.row];
+	}
+	else { // Gifts
+		messageStatus = [self.giftsArray objectAtIndex:indexPath.row];
+	}
+	
     messageVC.messageStatusId = [messageStatus objectId];
 	messageVC.delegate = self;
 	messageVC.hidesBottomBarWhenPushed = YES;
@@ -330,14 +391,12 @@
 	footer.frame = footerFrame;
 	self.tableViewController.tableView.tableFooterView = footer;
 	
-	if(paginateInProgress)
-	{
+	if(paginateInProgress) {
 		paginateSpinner.frame = self.tableViewController.tableView.tableFooterView.bounds;
 		[self.tableViewController.tableView.tableFooterView addSubview:paginateSpinner];
 		[paginateSpinner startAnimating];
 	}
-	else
-	{
+	else {
 		[paginateSpinner removeFromSuperview];
 		[paginateSpinner stopAnimating];
 	}
@@ -365,7 +424,6 @@
         [formatter setTimeZone:thisTimeZone];
         
         dateString = [formatter stringFromDate:dateCreated];
-        
     }
 	else {
         [formatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"MM/dd" options:0 locale:locale]];
@@ -379,20 +437,21 @@
 - (void)addMessageFromPush:(NSNotification *)notification
 {
 	NSString *msgStatusId = [[notification userInfo] objectForKey:@"message_status_id"];
+	PFObject *messageStatus = [self.sharedData getMessage:msgStatusId];
 	
-	for(PFObject* msg in self.messagesArray) //if this is a reply, replace the original message
+	for(PFObject* messageStatus in self.messagesArray) //if this is a reply, replace the original message
 	{
-		if( [msg.objectId isEqualToString:msgStatusId] )
+		if( [messageStatus.objectId isEqualToString:msgStatusId] )
 		{
-			if( ![[msg objectForKey:@"is_read"] boolValue] ) { //avoid incrementing badge count if it was already unread
+			if( ![[messageStatus objectForKey:@"is_read"] boolValue] ) { //avoid incrementing badge count if it was already unread
 				--alertBadgeCount;
 			}
-			[self.messagesArray removeObject:msg];
+			[self removeMessage:messageStatus];
 			break;
 		}
 	}
 	
-	[self.messagesArray insertObject:[self.sharedData getMessage:msgStatusId] atIndex:0];
+	[self addMessage:messageStatus fromPush:YES];
 	[self refreshTableView];
 	
 	++alertBadgeCount;
@@ -404,19 +463,85 @@
 	//no need to update alert badge count because only read messages can be deleted
 	NSLog(@"IncomingMessageVC->InboxVC IncomingMessageVCDelegate");
 	if(msgStatus != nil) {
-		[self.messagesArray removeObject:msgStatus];
+		[self removeMessage:msgStatus];
 	}
     [self refreshTableView];
 }
 
-- (void)refreshTableView
+- (void)addMessage:(PFObject *)messageStatus fromPush:(BOOL)isPush
 {
-	if(self.messagesArray.count > 0) {
-		[self.emptyInboxLabel setHidden:YES];
+	PFObject *message = [messageStatus objectForKey:@"Message"];
+	NSString *messageType = [message objectForKey:@"message_type"];
+	
+	if(isPush) {
+		[self.messagesArray insertObject:messageStatus atIndex:0];
+		
+		if ([messageType isEqualToString:@"offer"]) {
+			[self.offersArray insertObject:messageStatus atIndex:0];
+		}
+		else if ([messageType isEqualToString:@"gift"]) {
+			[self.giftsArray insertObject:messageStatus atIndex:0];
+		}
 	}
 	else {
-		[self.emptyInboxLabel setHidden:NO];
+		[self.messagesArray addObject:messageStatus];
+		
+		if ([messageType isEqualToString:@"offer"]) {
+			[self.offersArray addObject:messageStatus];
+		}
+		else if ([messageType isEqualToString:@"gift"]) {
+			[self.giftsArray addObject:messageStatus];
+		}
 	}
+}
+
+- (void)removeMessage:(PFObject *)messageStatus
+{
+	[self.messagesArray removeObject:messageStatus];
+	
+	PFObject *message = [messageStatus objectForKey:@"Message"];
+	NSString *messageType = [message objectForKey:@"message_type"];
+	
+	if ([messageType isEqualToString:@"offer"]) {
+		[self.offersArray removeObject:messageStatus];
+	}
+	else if ([messageType isEqualToString:@"gift"]) {
+		[self.giftsArray removeObject:messageStatus];
+	}
+}
+
+- (void)refreshTableView
+{
+	NSInteger filter = segmentedControl.selectedSegmentIndex;
+	
+	if(filter == 0) { // All Messages
+		if(self.messagesArray.count > 0) {
+			[self.emptyInboxLabel setHidden:YES];
+		}
+		else {
+			self.emptyInboxLabel.text = @"Inbox is empty.";
+			[self.emptyInboxLabel setHidden:NO];
+		}
+	}
+	else if(filter == 1) { // Offers
+		if(self.offersArray.count > 0) {
+			[self.emptyInboxLabel setHidden:YES];
+		}
+		else {
+			self.emptyInboxLabel.text = @"No offers yet.";
+			[self.emptyInboxLabel setHidden:NO];
+		}
+	}
+	else { // Gifts
+		if(self.giftsArray.count > 0) {
+			[self.emptyInboxLabel setHidden:YES];
+		}
+		else {
+			self.emptyInboxLabel.text = @"No gifts yet.";
+			[self.emptyInboxLabel setHidden:NO];
+		}
+	}
+	
 	[self.tableViewController.tableView reloadData];
 }
 

@@ -121,12 +121,12 @@
 
 - (void)setupNavigationBar
 {
-	UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_settings.png"]
+	UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"settings_icon.png"]
 																	   style:UIBarButtonItemStylePlain
 																	  target:self
 																	  action:@selector(openSettings)];
 	
-	UIBarButtonItem *searchButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_search.png"]
+	UIBarButtonItem *searchButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"search_icon.png"]
 																	 style:UIBarButtonItemStylePlain
 																	target:self
 																	action:@selector(openSearch)];
@@ -146,6 +146,7 @@
 	[self addChildViewController:self.tableViewController];
 	
 	self.tableViewController.refreshControl = [[UIRefreshControl alloc] init];
+	[self.tableViewController.refreshControl setTintColor:[RepunchUtils repunchOrangeColor]];
 	[self.tableViewController.refreshControl addTarget:self
 												action:@selector(loadMyPlaces)
 									  forControlEvents:UIControlEventValueChanged];
@@ -233,9 +234,17 @@
 		PFObject* patronStore1 = [self.sharedData getPatronStore:objectId1];
 		PFObject* patronStore2 = [self.sharedData getPatronStore:objectId2];
 		
-		NSNumber* n1 = [patronStore1 objectForKey:@"punch_count"];
-		NSNumber* n2 = [patronStore2 objectForKey:@"punch_count"];
-		return [n2 compare:n1];
+		NSNumber* punchCount1 = [patronStore1 objectForKey:@"punch_count"];
+		NSNumber* punchCount2 = [patronStore2 objectForKey:@"punch_count"];
+		
+		if( [punchCount2 compare:punchCount1] == NSOrderedSame ) {
+			NSNumber* allTimePunchCount1 = [patronStore1 objectForKey:@"all_time_punches"];
+			NSNumber* allTimePunchCount2 = [patronStore2 objectForKey:@"all_time_punches"];
+			return [allTimePunchCount2 compare:allTimePunchCount1];
+		}
+		else {
+			return [punchCount2 compare:punchCount1];
+		}
 	}];
 }
 

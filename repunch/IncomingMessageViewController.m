@@ -33,11 +33,10 @@
 		self.navigationItem.title = [self.message objectForKey:@"subject"];
 	}
 	
-	UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc]
-					initWithImage:[UIImage imageNamed:@"nav_delete.png"]
-					style:UIBarButtonItemStylePlain
-					target:self
-					action:@selector(deleteButtonAction:)];
+	UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"delete_icon.png"]
+																	 style:UIBarButtonItemStylePlain
+																	target:self
+																	action:@selector(deleteButtonAction:)];
 	self.navigationItem.rightBarButtonItem = deleteButton;
 	
 	[self setupMessage];

@@ -91,7 +91,7 @@
 {
     UILabel *label = [[UILabel alloc] init];
     label.textColor = [UIColor darkTextColor];
-    label.font = [UIFont fontWithName:@"Avenir" size:18];
+    label.font = [UIFont fontWithName:@"Avenir" size:16];
     label.backgroundColor = [UIColor clearColor];
 	
 	if(section == 0) {

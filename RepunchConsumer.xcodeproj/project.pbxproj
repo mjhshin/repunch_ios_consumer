@@ -53,6 +53,14 @@
 		EE5378CA17B2FEA9002D8B18 /* call_button.png in Resources */ = {isa = PBXBuildFile; fileRef = EE5378C417B2FEA8002D8B18 /* call_button.png */; };
 		EE5378CC17B2FEA9002D8B18 /* feedback_button.png in Resources */ = {isa = PBXBuildFile; fileRef = EE5378C617B2FEA9002D8B18 /* feedback_button.png */; };
 		EE5378CE17B2FEA9002D8B18 /* map_button.png in Resources */ = {isa = PBXBuildFile; fileRef = EE5378C817B2FEA9002D8B18 /* map_button.png */; };
+		EE54EF4918342B0C00518C79 /* settings_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EE54EF4718342B0C00518C79 /* settings_icon.png */; };
+		EE54EF4A18342B0C00518C79 /* settings_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE54EF4818342B0C00518C79 /* settings_icon@2x.png */; };
+		EE54EF4D1834330300518C79 /* search_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EE54EF4B1834330300518C79 /* search_icon.png */; };
+		EE54EF4E1834330300518C79 /* search_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE54EF4C1834330300518C79 /* search_icon@2x.png */; };
+		EE54EF51183545D200518C79 /* delete_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EE54EF4F183545D200518C79 /* delete_icon.png */; };
+		EE54EF52183545D200518C79 /* delete_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE54EF50183545D200518C79 /* delete_icon@2x.png */; };
+		EE54EF5518354CC400518C79 /* gift_icon_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = EE54EF5318354CC400518C79 /* gift_icon_dark.png */; };
+		EE54EF5A1835558500518C79 /* gift_icon_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = EE54EF591835558500518C79 /* gift_icon_dark.png */; };
 		EE5F947017FA37D6006E6F67 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE5F946E17FA37D6006E6F67 /* FacebookSDK.framework */; };
 		EE5F947417FB5471006E6F67 /* AuthenticationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5F947317FB5471006E6F67 /* AuthenticationManager.m */; };
 		EE6E6E38180F24E1000CE34B /* WelcomeStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE6E6E37180F24E1000CE34B /* WelcomeStoryboard.storyboard */; };
@@ -204,6 +212,14 @@
 		EE5378C417B2FEA8002D8B18 /* call_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = call_button.png; sourceTree = "<group>"; };
 		EE5378C617B2FEA9002D8B18 /* feedback_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = feedback_button.png; sourceTree = "<group>"; };
 		EE5378C817B2FEA9002D8B18 /* map_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_button.png; sourceTree = "<group>"; };
+		EE54EF4718342B0C00518C79 /* settings_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings_icon.png; sourceTree = "<group>"; };
+		EE54EF4818342B0C00518C79 /* settings_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings_icon@2x.png"; sourceTree = "<group>"; };
+		EE54EF4B1834330300518C79 /* search_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search_icon.png; sourceTree = "<group>"; };
+		EE54EF4C1834330300518C79 /* search_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search_icon@2x.png"; sourceTree = "<group>"; };
+		EE54EF4F183545D200518C79 /* delete_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete_icon.png; sourceTree = "<group>"; };
+		EE54EF50183545D200518C79 /* delete_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "delete_icon@2x.png"; sourceTree = "<group>"; };
+		EE54EF5318354CC400518C79 /* gift_icon_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gift_icon_dark.png; sourceTree = "<group>"; };
+		EE54EF591835558500518C79 /* gift_icon_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gift_icon_dark.png; sourceTree = "<group>"; };
 		EE5F946E17FA37D6006E6F67 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		EE5F947217FB5471006E6F67 /* AuthenticationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticationManager.h; sourceTree = "<group>"; };
 		EE5F947317FB5471006E6F67 /* AuthenticationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationManager.m; sourceTree = "<group>"; };
@@ -542,6 +558,12 @@
 		EE9D4E7617A84ABB005E0CC5 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				EE54EF4F183545D200518C79 /* delete_icon.png */,
+				EE54EF50183545D200518C79 /* delete_icon@2x.png */,
+				EE54EF4B1834330300518C79 /* search_icon.png */,
+				EE54EF4C1834330300518C79 /* search_icon@2x.png */,
+				EE54EF4718342B0C00518C79 /* settings_icon.png */,
+				EE54EF4818342B0C00518C79 /* settings_icon@2x.png */,
 				EE04ABDF182872BB00DDA5D0 /* grey_button.png */,
 				EE04ABE0182872BB00DDA5D0 /* orange_button_highlighted.png */,
 				EE04ABE1182872BB00DDA5D0 /* orange_button.png */,
@@ -557,10 +579,12 @@
 				EE9D4EA017A84ABB005E0CC5 /* ic_tab_inbox_small.png */,
 				EE9D4EA117A84ABB005E0CC5 /* ic_tab_my_places.png */,
 				EE9D4EA217A84ABB005E0CC5 /* ic_tab_my_places_small.png */,
+				EE54EF5318354CC400518C79 /* gift_icon_dark.png */,
 				EE9D4EA317A84ABB005E0CC5 /* ic_tab_punch_tiny.png */,
 				EE9D4EA417A84ABB005E0CC5 /* ico-feedback-block.png */,
 				EE9D4EA717A84ABB005E0CC5 /* ico-info.png */,
 				EE9D4EB217A84ABB005E0CC5 /* ico-tab-inbox.png */,
+				EE54EF591835558500518C79 /* gift_icon_dark.png */,
 				EE9D4EB317A84ABB005E0CC5 /* ico-tab-inbox@2x.png */,
 				EE9D4EB717A84ABB005E0CC5 /* ico-tab-places.png */,
 				EE9D4EB817A84ABB005E0CC5 /* ico-tab-places@2x.png */,
@@ -706,6 +730,7 @@
 				EEE777B117E7D2020023768B /* feedback_button@2x.png in Resources */,
 				EE9D4C6917A83F4B005E0CC5 /* ComposeMessageViewController.xib in Resources */,
 				EE06E66517E7AB0100073AAF /* Images.xcassets in Resources */,
+				EE54EF4E1834330300518C79 /* search_icon@2x.png in Resources */,
 				EE9D4C7617A83F4B005E0CC5 /* InboxTableViewCell.xib in Resources */,
 				EE9D4C7817A83F4B005E0CC5 /* RewardTableViewCell.xib in Resources */,
 				EE9D4C7A17A83F4B005E0CC5 /* MyPlacesTableViewCell.xib in Resources */,
@@ -720,7 +745,9 @@
 				EEB8A44217EA314B0020E2EE /* splash_screen_640x1136.png in Resources */,
 				EE9D4C8C17A83F4B005E0CC5 /* MyPlacesViewController.xib in Resources */,
 				EE9D4C9017A83F4B005E0CC5 /* RegisterViewController.xib in Resources */,
+				EE54EF4D1834330300518C79 /* search_icon.png in Resources */,
 				EE9D4C9717A83F4B005E0CC5 /* LoginViewController.xib in Resources */,
+				EE54EF4A18342B0C00518C79 /* settings_icon@2x.png in Resources */,
 				EE9D4EE317A84ABB005E0CC5 /* ab_add_my_places.png in Resources */,
 				EE9D4EE817A84ABB005E0CC5 /* nav_send.png in Resources */,
 				EE04ABE2182872BB00DDA5D0 /* grey_button.png in Resources */,
@@ -730,6 +757,7 @@
 				EE04ABE3182872BB00DDA5D0 /* orange_button_highlighted.png in Resources */,
 				EEB8A44117EA314B0020E2EE /* splash_screen_640x960.png in Resources */,
 				EE9D4F0E17A84ABB005E0CC5 /* ic_tab_my_places_small.png in Resources */,
+				EE54EF52183545D200518C79 /* delete_icon@2x.png in Resources */,
 				EE9D4F0F17A84ABB005E0CC5 /* ic_tab_punch_tiny.png in Resources */,
 				EE9D4F1017A84ABB005E0CC5 /* ico-feedback-block.png in Resources */,
 				EE9D4F1317A84ABB005E0CC5 /* ico-info.png in Resources */,
@@ -739,9 +767,12 @@
 				EE9D4F2317A84ABB005E0CC5 /* ico-tab-places.png in Resources */,
 				EE6E6E38180F24E1000CE34B /* WelcomeStoryboard.storyboard in Resources */,
 				EE9D4F2417A84ABB005E0CC5 /* ico-tab-places@2x.png in Resources */,
+				EE54EF5A1835558500518C79 /* gift_icon_dark.png in Resources */,
 				EE2AFE7C1819B3420046CF74 /* SIAlertView.bundle in Resources */,
+				EE54EF51183545D200518C79 /* delete_icon.png in Resources */,
 				EE9D4F2C17A84ABB005E0CC5 /* ico_message_coupon.png in Resources */,
 				EE9D4F2D17A84ABB005E0CC5 /* ico_message_gift.png in Resources */,
+				EE54EF5518354CC400518C79 /* gift_icon_dark.png in Resources */,
 				EE9D4F2E17A84ABB005E0CC5 /* ico_message_info.png in Resources */,
 				EE9D4F2F17A84ABB005E0CC5 /* ico_message_reply.png in Resources */,
 				EE9D4F3617A84ABB005E0CC5 /* listview_placeholder.png in Resources */,
@@ -752,6 +783,7 @@
 				EE9D4F3B17A84ABB005E0CC5 /* message_gift.png in Resources */,
 				EE9D4F3C17A84ABB005E0CC5 /* message_reply.png in Resources */,
 				EE9D4F3E17A84ABB005E0CC5 /* repunch-logo.png in Resources */,
+				EE54EF4918342B0C00518C79 /* settings_icon.png in Resources */,
 				EE9D4F3F17A84ABB005E0CC5 /* repunch-logo@2x.png in Resources */,
 				EE9D4F4017A84ABB005E0CC5 /* repunch@2x.png in Resources */,
 				EE9D4F4117A84ABB005E0CC5 /* reward_locked.png in Resources */,
@@ -963,7 +995,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2E552446-2C5A-4EC8-82A3-5C70ABA6862A";
+				PROVISIONING_PROFILE = "AEA956E4-B729-49A2-98F0-F3D035FA720E";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

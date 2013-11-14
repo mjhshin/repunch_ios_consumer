@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1552" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -47,7 +47,7 @@
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="245">
-                        <rect key="frame" x="278" y="51" width="22" height="21"/>
+                        <rect key="frame" x="288" y="51" width="22" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="22" id="254"/>
@@ -61,9 +61,9 @@
                 <constraint firstItem="16" firstAttribute="baseline" secondItem="3" secondAttribute="baseline" id="JqR-r6-ccy"/>
                 <constraint firstItem="3" firstAttribute="leading" secondItem="34" secondAttribute="leading" id="Rr5-mt-rMJ"/>
                 <constraint firstItem="34" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="8" symbolic="YES" id="XlH-8C-diE"/>
-                <constraint firstAttribute="trailing" secondItem="245" secondAttribute="trailing" constant="20" id="bdq-aY-Mkg"/>
+                <constraint firstAttribute="trailing" secondItem="245" secondAttribute="trailing" constant="10" id="bdq-aY-Mkg"/>
                 <constraint firstItem="3" firstAttribute="top" secondItem="2" secondAttribute="top" constant="12" id="gNJ-We-rfZ"/>
-                <constraint firstItem="245" firstAttribute="leading" secondItem="34" secondAttribute="trailing" constant="8" symbolic="YES" id="hfj-fz-5Yv"/>
+                <constraint firstItem="245" firstAttribute="leading" secondItem="34" secondAttribute="trailing" constant="18" id="hfj-fz-5Yv"/>
                 <constraint firstItem="16" firstAttribute="leading" secondItem="3" secondAttribute="trailing" constant="8" symbolic="YES" id="rYg-n3-pRK"/>
                 <constraint firstItem="16" firstAttribute="top" secondItem="3" secondAttribute="top" id="tkh-E3-YJ8"/>
             </constraints>

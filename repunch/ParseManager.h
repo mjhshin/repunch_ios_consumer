@@ -11,5 +11,17 @@
 @interface ParseManager : NSObject
 
 //+ (void)getMyPlacesWithCompletionHandler;
++ (void)queryPatronStore;
++ (void)getPatronStore;
+
++ (void)queryPatron;
++ (void)getPatron;
+
++ (void)queryStore;
++ (void)getStore;
++ (void)getStoreImage;
+
++ (void)queryMessageStatus;
++ (void)getMessageStatus;
 
 @end
