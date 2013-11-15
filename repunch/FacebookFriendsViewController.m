@@ -29,7 +29,7 @@
 
 	UIBarButtonItem *exitButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
 																				target:self
-																				action:@selector(closeButtonPressed:)];
+																				action:@selector(closeButtonPressed)];
 	self.navigationItem.leftBarButtonItem = exitButton;
 	
 	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
