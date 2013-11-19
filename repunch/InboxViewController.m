@@ -101,10 +101,6 @@
 									 target:self
 									 action:@selector(openSearch)];
 	
-	//UIButton *punchCodeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, 50)];
-	//[punchCodeButton setImage:[UIImage imageNamed:@"repunch-logo.png"] forState:UIControlStateNormal];
-	//[punchCodeButton addTarget:self action:@selector(showPunchCode) forControlEvents:UIControlEventTouchUpInside];
-	
 	NSArray *itemArray = [NSArray arrayWithObjects: @"All", @"Offers", @"Gifts", nil];
 	segmentedControl = [[UISegmentedControl alloc] initWithItems:itemArray];
 	[segmentedControl addTarget:self
@@ -117,7 +113,6 @@
 	
 	self.navigationItem.leftBarButtonItem = settingsButton;
 	self.navigationItem.rightBarButtonItem = searchButton;
-	//self.navigationItem.titleView = punchCodeButton;
 	self.navigationItem.titleView = segmentedControl;
 }
 
@@ -268,8 +263,7 @@
 	else { // Gifts
 		messageStatus = self.giftsArray[indexPath.row];
 	}
-    
-    //PFObject *messageStatus = [self.messagesArray objectAtIndex:indexPath.row];
+
     PFObject *message = [messageStatus objectForKey:@"Message"];
     PFObject *reply = [message objectForKey:@"Reply"];
     
@@ -288,14 +282,14 @@
         [[cell offerPic] setHidden:NO];
         [[cell offerPic] setImage:[UIImage imageNamed:@"ico_message_coupon"]];
     }
-	else if ([[message objectForKey:@"message_type"] isEqualToString:@"feedback"]) {
-        [[cell offerPic] setHidden:NO];
-        [[cell offerPic] setImage:[UIImage imageNamed:@"message_reply"]];
-    }
 	else if ([[message objectForKey:@"message_type"] isEqualToString:@"gift"]) {
         [[cell offerPic] setHidden:NO];
         [[cell offerPic] setImage:[UIImage imageNamed:@"message_gift"]];
     }
+	//else if ([[message objectForKey:@"message_type"] isEqualToString:@"feedback"]) {
+    //    [[cell offerPic] setHidden:NO];
+    //    [[cell offerPic] setImage:[UIImage imageNamed:@"message_reply"]];
+    //}
 	else {
 		[[cell offerPic] setHidden:YES];
 	}
