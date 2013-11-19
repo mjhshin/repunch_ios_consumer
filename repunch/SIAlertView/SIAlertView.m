@@ -299,9 +299,9 @@ static SIAlertView *__si_alert_current_view;
     //appearance.messageFont = [UIFont systemFontOfSize:16];
     //appearance.buttonFont = [UIFont systemFontOfSize:[UIFont buttonFontSize]];
 	
-	appearance.titleFont =[UIFont fontWithName:@"Avenir-Heavy" size:20];
-    appearance.messageFont = [UIFont fontWithName:@"Avenir" size:16];
-    appearance.buttonFont = [UIFont fontWithName:@"Avenir-Heavy" size:[UIFont buttonFontSize]];
+	appearance.titleFont = [RepunchUtils repunchFontWithSize:20 isBold:YES];
+    appearance.messageFont = [RepunchUtils repunchFontWithSize:16 isBold:NO];
+    appearance.buttonFont = [RepunchUtils repunchFontWithSize:[UIFont buttonFontSize] isBold:YES];
 	
     appearance.buttonColor = [UIColor colorWithWhite:0.4 alpha:1];
 	//appearance.buttonColor = [RepunchUtils repunchOrangeColor];

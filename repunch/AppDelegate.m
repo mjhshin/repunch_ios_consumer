@@ -158,10 +158,11 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 				 
 					 //TODO: check installation's punch_code and patron_id
 				 }
-			 	else {
+				 else {
+					 
+					 NSLog(@"Failed to fetch Patron object: %@", error);
 					 [PFUser logOut];
 					 [self checkLoginState];
-				 	NSLog(@"Failed to fetch Patron object: %@", error);
 				 }
 		 	}];
 		}

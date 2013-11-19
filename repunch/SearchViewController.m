@@ -147,7 +147,7 @@
 	
 	paginateButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 260, 50)];
 	[RepunchUtils setDefaultButtonStyle:paginateButton];
-	paginateButton.titleLabel.font = [UIFont fontWithName:@"Avenir-Heavy" size:17];
+	paginateButton.titleLabel.font = [RepunchUtils repunchFontWithSize:17 isBold:YES];
 	paginateButton.adjustsImageWhenDisabled = NO;
 	[paginateButton addTarget:self action:@selector(performSearch:) forControlEvents:UIControlEventTouchUpInside];
 	[paginateButton.layer setCornerRadius:10];

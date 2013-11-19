@@ -47,7 +47,7 @@
 	webViewSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 	webViewSpinner.hidesWhenStopped = YES;
 	
-	NSDictionary *attributes = [NSDictionary dictionaryWithObject:[UIFont fontWithName:@"Avenir-Heavy" size:17]
+	NSDictionary *attributes = [NSDictionary dictionaryWithObject:[RepunchUtils repunchFontWithSize:17 isBold:YES]
 														   forKey:NSFontAttributeName];
 	[self.genderSelector setTitleTextAttributes:attributes forState:UIControlStateNormal];
 }

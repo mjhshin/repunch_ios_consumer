@@ -59,7 +59,6 @@
 		EE54EF4E1834330300518C79 /* search_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE54EF4C1834330300518C79 /* search_icon@2x.png */; };
 		EE54EF51183545D200518C79 /* delete_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EE54EF4F183545D200518C79 /* delete_icon.png */; };
 		EE54EF52183545D200518C79 /* delete_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE54EF50183545D200518C79 /* delete_icon@2x.png */; };
-		EE54EF5518354CC400518C79 /* gift_icon_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = EE54EF5318354CC400518C79 /* gift_icon_dark.png */; };
 		EE54EF5A1835558500518C79 /* gift_icon_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = EE54EF591835558500518C79 /* gift_icon_dark.png */; };
 		EE5F947017FA37D6006E6F67 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE5F946E17FA37D6006E6F67 /* FacebookSDK.framework */; };
 		EE5F947417FB5471006E6F67 /* AuthenticationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5F947317FB5471006E6F67 /* AuthenticationManager.m */; };
@@ -697,7 +696,7 @@
 		7996B35117820A9700CCAFED /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = Repunch;
 				TargetAttributes = {
 					7996B35817820A9700CCAFED = {
@@ -772,7 +771,6 @@
 				EE54EF51183545D200518C79 /* delete_icon.png in Resources */,
 				EE9D4F2C17A84ABB005E0CC5 /* ico_message_coupon.png in Resources */,
 				EE9D4F2D17A84ABB005E0CC5 /* ico_message_gift.png in Resources */,
-				EE54EF5518354CC400518C79 /* gift_icon_dark.png in Resources */,
 				EE9D4F2E17A84ABB005E0CC5 /* ico_message_info.png in Resources */,
 				EE9D4F2F17A84ABB005E0CC5 /* ico_message_reply.png in Resources */,
 				EE9D4F3617A84ABB005E0CC5 /* listview_placeholder.png in Resources */,
@@ -911,7 +909,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				"INFOPLIST_FILE[sdk=*]" = /Users/michaelshin/workspace/shin_repunch_ios_consumer/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -939,7 +937,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				"INFOPLIST_FILE[sdk=*]" = /Users/michaelshin/workspace/shin_repunch_ios_consumer/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";

@@ -25,6 +25,7 @@
 + (void)setDisabledButtonStyle:(UIButton *)button;
 
 + (UIColor *)repunchOrangeColor;
++ (UIFont *)repunchFontWithSize:(NSUInteger)fontSize isBold:(BOOL)isBold;
 
 + (void)clearNotificationCenter;
 + (void)configureAppearance;

@@ -91,7 +91,7 @@
 {
     UILabel *label = [[UILabel alloc] init];
     label.textColor = [UIColor darkTextColor];
-    label.font = [UIFont fontWithName:@"Avenir" size:16];
+    label.font = [RepunchUtils repunchFontWithSize:16 isBold:NO];
     label.backgroundColor = [UIColor clearColor];
 	
 	if(section == 0) {
@@ -114,7 +114,7 @@
 {
 	UILabel *label = [[UILabel alloc] init];
 	label.textColor = [UIColor grayColor];
-	label.font = [UIFont fontWithName:@"Avenir" size:14];
+	label.font = [RepunchUtils repunchFontWithSize:14 isBold:NO];
 	label.backgroundColor = [UIColor clearColor];
 	NSString *appVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
 	label.text = [NSString stringWithFormat:@" Repunch v%@", appVersion];
@@ -140,12 +140,12 @@
 			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:Style1CellIdentifier];
 		}
 		
+		cell.textLabel.font = [RepunchUtils repunchFontWithSize:18 isBold:YES];
+		
 		if(indexPath.row == 0) {
-			cell.textLabel.font = [UIFont fontWithName:@"Avenir-Heavy" size:18];
 			cell.textLabel.text = @"Terms and Conditions";
 		}
 		else {
-			cell.textLabel.font = [UIFont fontWithName:@"Avenir-Heavy" size:18];
 			cell.textLabel.text = @"Privacy Policy";
 		}
 	}
@@ -157,7 +157,7 @@
 		if (cell == nil) {
 			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:Style2CellIdentifier];
 		}
-		cell.textLabel.font = [UIFont fontWithName:@"Avenir-Heavy" size:18];
+		cell.textLabel.font = [RepunchUtils repunchFontWithSize:18 isBold:YES];
 		cell.textLabel.text = @"Log Out";
 		
 		PFObject* patron = [sharedData patron];
@@ -166,7 +166,7 @@
 		NSString* str2 = @" ";
 		NSString* lastName = [patron objectForKey:@"last_name"];
 		
-		cell.detailTextLabel.font = [UIFont fontWithName:@"Avenir" size:14];
+		cell.detailTextLabel.font = [RepunchUtils repunchFontWithSize:14 isBold:NO];
 		cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%@%@%@", str1, firstName, str2, lastName];
 	}
 	

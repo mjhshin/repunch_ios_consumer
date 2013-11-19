@@ -150,7 +150,7 @@
 	
 	self.giftTitle.text = [self.message objectForKey:@"gift_title"];
 	self.giftTimerLabel.text = [self.message objectForKey:@"gift_description"];
-	self.giftTimerLabel.font = [UIFont fontWithName:@"Avenir" size:17];
+	self.giftTimerLabel.font = [RepunchUtils repunchFontWithSize:17 isBold:NO];
 	
 	if(store)
 	{

@@ -50,8 +50,8 @@
 	SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Your Punch Code"
                                                  andMessage:punchCode];
 	
-	[alert setTitleFont:[UIFont fontWithName:@"Avenir" size:20]];
-	[alert setMessageFont:[UIFont fontWithName:@"Avenir-Heavy" size:36]];
+	[alert setTitleFont:[RepunchUtils repunchFontWithSize:20 isBold:NO]];
+	[alert setMessageFont:[RepunchUtils repunchFontWithSize:36 isBold:YES]];
     [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
     [alert show];
 }
@@ -67,7 +67,7 @@
 		dropdownLabel.text = message;
 	}
 	
-	dropdownLabel.font = [UIFont fontWithName:@"Avenir-Heavy" size:17.0];
+	dropdownLabel.font = [RepunchUtils repunchFontWithSize:17 isBold:YES];
 	dropdownLabel.textAlignment = NSTextAlignmentCenter;
 	dropdownLabel.textColor = [UIColor whiteColor];
 	dropdownLabel.backgroundColor = [UIColor colorWithRed:(0.9) green:(0.0) blue:(0.0) alpha:1.0]; //[UIColor redColor];
@@ -108,15 +108,15 @@
 	[UITabBar appearance].backgroundColor = [UIColor whiteColor];
     [UITabBar appearance].tintColor = [self repunchOrangeColor];
 
-    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"Avenir-Heavy" size:12]}
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName: [RepunchUtils repunchFontWithSize:12 isBold:YES]}
                                                 forState:UIControlStateNormal];
 	
 	[[UIBarButtonItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor],
-														   NSFontAttributeName: [UIFont fontWithName:@"Avenir" size:15]}
+														   NSFontAttributeName: [RepunchUtils repunchFontWithSize:15 isBold:NO]}
 												forState:UIControlStateNormal];
     
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor],
-														   NSFontAttributeName: [UIFont fontWithName:@"Avenir-Heavy" size:17]}];
+														   NSFontAttributeName: [RepunchUtils repunchFontWithSize:17 isBold:YES]}];
 }
 
 + (void)setupNavigationController:(UINavigationController *)navController
@@ -145,6 +145,16 @@
 + (UIColor *)repunchOrangeColor // RGBA = F79234FF
 {
 	return [UIColor colorWithRed:(247/255.0) green:(146/255.0) blue:(52/255.0) alpha:1.0];
+}
+
++ (UIFont *)repunchFontWithSize:(NSUInteger)fontSize isBold:(BOOL)isBold
+{
+	if(isBold) {
+		return [UIFont fontWithName:@"Avenir-Heavy" size:fontSize];
+	}
+	else {
+		return [UIFont fontWithName:@"Avenir-Medium" size:fontSize];
+	}
 }
 
 + (void)clearNotificationCenter

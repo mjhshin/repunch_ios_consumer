@@ -110,7 +110,7 @@
 	[segmentedControl addTarget:self
 						 action:@selector(filterMessages)
 			   forControlEvents:UIControlEventValueChanged];
-	NSDictionary *attributes = [NSDictionary dictionaryWithObject:[UIFont fontWithName:@"Avenir" size:16]
+	NSDictionary *attributes = [NSDictionary dictionaryWithObject:[RepunchUtils repunchFontWithSize:16 isBold:NO]
 														   forKey:NSFontAttributeName];
 	[segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
 	segmentedControl.selectedSegmentIndex = 0;
@@ -163,39 +163,30 @@
 	[messageQuery orderByDescending:@"createdAt"];
 	messageQuery.limit = 20;
 	
-	if(paginate == YES)
-	{
+	if(paginate == YES) {
 		++paginateCount;
 		messageQuery.skip = 20*paginateCount;
 		
 		[self setFooter:YES];
 	}
-	else
-	{
-		if(self.messagesArray.count == 0) {
-			self.activityIndicatorView.hidden = NO;
-			[self.activityIndicator startAnimating];
-		}
+	else if(self.messagesArray.count == 0) {
+		self.activityIndicatorView.hidden = NO;
+		[self.activityIndicator startAnimating];
 		self.emptyInboxLabel.hidden = YES;
 	}
     
-    [messageQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
-	{
-		if(paginate == YES)
-		{
+    [messageQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+		if(paginate == YES) {
 			[self setFooter:NO];
 		}
-		else
-		{
-			[self.activityIndicatorView setHidden:YES];
+		else {
+			self.activityIndicatorView.hidden = YES;
 			[self.activityIndicator stopAnimating];
 			[self.tableViewController.refreshControl endRefreshing];
 		}
 		
-        if(!error)
-		{
-            if (paginate != YES)
-            {
+        if(!error) {
+            if (paginate != YES) {
                 [self.messagesArray removeAllObjects];
 				[self.offersArray removeAllObjects];
 				[self.giftsArray removeAllObjects];
@@ -205,8 +196,7 @@
 				[self fetchBadgeCount];
             }
 
-			for(PFObject *messageStatus in results)
-			{
+			for(PFObject *messageStatus in results) {
 				[self.sharedData addMessage:messageStatus];
 				[self addMessage:messageStatus fromPush:NO];
 			}
@@ -218,8 +208,7 @@
 			}
 			loadInProgress = NO;
         }
-		else
-		{
+		else {
             [RepunchUtils showConnectionErrorDialog];
         }
     }];
@@ -227,7 +216,6 @@
 
 - (void)filterMessages
 {
-	//[self.tableViewController.tableView setContentOffset:CGPointZero animated:YES];
 	[self refreshTableView];
 }
 
@@ -272,13 +260,13 @@
 	NSInteger filter = segmentedControl.selectedSegmentIndex;
 	
 	if(filter == 0) { // All Messages
-		messageStatus = [self.messagesArray objectAtIndex:indexPath.row];
+		messageStatus = self.messagesArray[indexPath.row];
 	}
 	else if(filter == 1) { // Offers
-		messageStatus = [self.offersArray objectAtIndex:indexPath.row];
+		messageStatus = self.offersArray[indexPath.row];
 	}
 	else { // Gifts
-		messageStatus = [self.giftsArray objectAtIndex:indexPath.row];
+		messageStatus = self.giftsArray[indexPath.row];
 	}
     
     //PFObject *messageStatus = [self.messagesArray objectAtIndex:indexPath.row];
@@ -317,14 +305,14 @@
 														   green:(float)192/256
 															blue:(float)192/256
 														   alpha:(float)65/256];
-		cell.senderName.font = [UIFont fontWithName:@"Avenir" size:17];
-		cell.dateSent.font = [UIFont fontWithName:@"Avenir" size:14];
+		cell.senderName.font = [RepunchUtils repunchFontWithSize:17 isBold:NO];
+		cell.dateSent.font = [RepunchUtils repunchFontWithSize:14 isBold:NO];
 		cell.dateSent.textColor = [UIColor darkGrayColor];
     }
     else {
         cell.contentView.backgroundColor = [UIColor whiteColor];
-		cell.senderName.font = [UIFont fontWithName:@"Avenir-Heavy" size:17];
-		cell.dateSent.font = [UIFont fontWithName:@"Avenir-Heavy" size:14];
+		cell.senderName.font = [RepunchUtils repunchFontWithSize:17 isBold:YES];
+		cell.dateSent.font = [RepunchUtils repunchFontWithSize:14 isBold:YES];
 		cell.dateSent.textColor = [RepunchUtils repunchOrangeColor];
     }
 
@@ -340,13 +328,13 @@
 	NSInteger filter = segmentedControl.selectedSegmentIndex;
 	
 	if(filter == 0) { // All Messages
-		messageStatus = [self.messagesArray objectAtIndex:indexPath.row];
+		messageStatus = self.messagesArray[indexPath.row];
 	}
 	else if(filter == 1) { // Offers
-		messageStatus = [self.offersArray objectAtIndex:indexPath.row];
+		messageStatus = self.offersArray[indexPath.row];
 	}
 	else { // Gifts
-		messageStatus = [self.giftsArray objectAtIndex:indexPath.row];
+		messageStatus = self.giftsArray[indexPath.row];
 	}
 	
     messageVC.messageStatusId = [messageStatus objectId];
@@ -374,8 +362,8 @@
   
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    float scrollLocation = scrollView.contentOffset.y + scrollView.bounds.size.height - scrollView.contentInset.bottom;
-    float scrollHeight = MAX(scrollView.contentSize.height, self.view.frame.size.height);
+    float scrollLocation = MIN(scrollView.contentSize.height, scrollView.bounds.size.height) + scrollView.contentOffset.y - scrollView.contentInset.bottom;
+    float scrollHeight = MAX(scrollView.contentSize.height, scrollView.bounds.size.height);
 
     if(scrollLocation >= scrollHeight + 5 && !loadInProgress && !paginateReachEnd)
 	{
