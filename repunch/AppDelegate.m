@@ -145,25 +145,26 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 			[PFUser logOut];
 			[self checkLoginState];
 		}
-				
-		patronQuery = [PFQuery queryWithClassName:@"Patron"];
-		patronQuery.cachePolicy = kPFCachePolicyCacheOnly;
-		//BOOL isInCache = [patronQuery hasCachedResult];
-		//NSLog(isInCache ? @"Yes - cached query" : @"No - cached query"); //Parse bug with hasCachedResult
+		else {
+			patronQuery = [PFQuery queryWithClassName:@"Patron"];
+			patronQuery.cachePolicy = kPFCachePolicyCacheOnly;
+			//BOOL isInCache = [patronQuery hasCachedResult];
+			//NSLog(isInCache ? @"Yes - cached query" : @"No - cached query"); //Parse bug with hasCachedResult
 		
-		[patronQuery getObjectInBackgroundWithId:patron.objectId block:^(PFObject *patron, NSError *error) {
-			 if (!error) {
-				 [sharedData setPatron:patron];
-				 [self presentTabBarController];
+			[patronQuery getObjectInBackgroundWithId:patron.objectId block:^(PFObject *patron, NSError *error) {
+				 if (!error) {
+					 [sharedData setPatron:patron];
+					 [self presentTabBarController];
 				 
-				 //TODO: check installation's punch_code and patron_id
-			 }
-			 else {
-				 [PFUser logOut];
-				 [self checkLoginState];
-				 NSLog(@"Failed to fetch Patron object: %@", error);
-			 }
-		 }];
+					 //TODO: check installation's punch_code and patron_id
+				 }
+			 	else {
+					 [PFUser logOut];
+					 [self checkLoginState];
+				 	NSLog(@"Failed to fetch Patron object: %@", error);
+				 }
+		 	}];
+		}
     }
 	else
 	{
