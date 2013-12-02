@@ -6,7 +6,6 @@
 //
 
 #import "AppDelegate.h"
-#import <Crashlytics/Crashlytics.h>
 
 @implementation AppDelegate
 {
@@ -18,25 +17,21 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-	//////////////////////////////////////////////////////////////////////////////////////
-	//
-	//                               PRODUCTION KEY
-	//
-    //[Parse setApplicationId:@"m0EdwpRYlJwttZLZ5PUk7y13TWCnvSScdn8tfVoh"
-    //              clientKey:@"XZMybowaEMLHszQTEpxq4Yk2ksivkYj9m1c099ZD"];
-	//
-	//////////////////////////////////////////////////////////////////////////////////////
-	//
-	//                               DEVELOPMENT KEY
-	//
-	[Parse setApplicationId:@"r9QrVhpx3wguChA9X9oe2GFGZwTUtrYyHOHpNWxb"
-				  clientKey:@"2anJYVl8sakbPVqPz4MEbP2GLWBcs7uRFTvWMaZ0"];
-    //
-	////////////////////////////////////////////////////////////////////////////////////////
+	BOOL isProduction = YES; // DON'T FORGET TO SET!!!!
+	
+	if(isProduction) {	// PRODUCTION KEY
+		[Parse setApplicationId:@"m0EdwpRYlJwttZLZ5PUk7y13TWCnvSScdn8tfVoh"
+					  clientKey:@"XZMybowaEMLHszQTEpxq4Yk2ksivkYj9m1c099ZD"];
+	}
+	else {				// DEVELOPMENT KEY
+		[Parse setApplicationId:@"r9QrVhpx3wguChA9X9oe2GFGZwTUtrYyHOHpNWxb"
+					  clientKey:@"2anJYVl8sakbPVqPz4MEbP2GLWBcs7uRFTvWMaZ0"];
+	}
 	
     [PFFacebookUtils initializeFacebook];
 	
 	[Crashlytics startWithAPIKey:@"87229bb388427a182709b79fc61e45ec5de14023"];
+	[Crashlytics setBoolValue:isProduction forKey:@"is_production"];
 	
 	[application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge |
 													UIRemoteNotificationTypeAlert |
@@ -76,7 +71,8 @@
 - (void)application:(UIApplication *)application
 	didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {	
-	if (error.code != 3010) { // 3010 is for the iPhone Simulator. Ignore this
+	if (error.code != 3010) { // 3010 indicates simulator, which cannot register for push
+		CLS_LOG(@"AppDelegate didFailToRegisterForRemoteNotificationsWithError: %@", error);
         NSLog(@"Application failed to register for push notifications: %@", error);
 	}
 }
@@ -135,8 +131,8 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
 	PFUser* currentUser = [PFUser currentUser];
 	
-    if (currentUser)
-	{
+    if (currentUser) {
+		
 		[self presentIndeterminateStateView];
 				
 		PFObject *patron = [currentUser objectForKey:@"Patron"];
@@ -152,6 +148,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 			//NSLog(isInCache ? @"Yes - cached query" : @"No - cached query"); //Parse bug with hasCachedResult
 		
 			[patronQuery getObjectInBackgroundWithId:patron.objectId block:^(PFObject *patron, NSError *error) {
+				
 				 if (!error) {
 					 [sharedData setPatron:patron];
 					 [self presentTabBarController];
@@ -159,16 +156,15 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 					 //TODO: check installation's punch_code and patron_id
 				 }
 				 else {
-					 
-					 NSLog(@"Failed to fetch Patron object: %@", error);
+					 CLS_LOG(@"AppDelegate checkLoginState - PFUser is cached but Patron is NOT cached: %@", error);
+					 NSLog(@"AppDelegate checkLoginState - PFUser is cached but Patron is NOT cached: %@", error);
 					 [PFUser logOut];
 					 [self checkLoginState];
 				 }
 		 	}];
 		}
     }
-	else
-	{
+	else {
 		[self presentLandingViews];
     }
 }
@@ -188,7 +184,6 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 - (void)presentTabBarController
 {
     [Crashlytics setUserName:[PFUser currentUser].username];
-    //[Crashlytics setObjectValue:[PFInstallation currentInstallation].objectId forKey:@"Installation_ID"];
 
     MyPlacesViewController *myPlacesVC = [[MyPlacesViewController alloc] init];
     InboxViewController *inboxVC = [[InboxViewController alloc] init];
@@ -199,7 +194,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 	[RepunchUtils setupNavigationController:inboxNavController];
     
     myPlacesNavController.tabBarItem.title = @"My Places";
-    inboxNavController.tabBarItem.title    = @"Inbox";
+    inboxNavController.tabBarItem.title = @"Inbox";
     
     myPlacesNavController.tabBarItem.image = [UIImage imageNamed:@"ico-tab-places.png"];
     inboxNavController.tabBarItem.image = [UIImage imageNamed:@"ico-tab-inbox.png"];

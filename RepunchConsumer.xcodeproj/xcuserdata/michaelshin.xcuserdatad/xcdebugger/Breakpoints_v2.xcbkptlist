@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Repunch/AppDelegate.m"
-            timestampString = "405971071.991828"
+            timestampString = "407711977.192775"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "136"
-            endingLineNumber = "136"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
             landmarkName = "-checkLoginState"
             landmarkType = "5">
          </BreakpointContent>

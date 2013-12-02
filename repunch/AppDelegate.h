@@ -17,6 +17,7 @@
 #import "RedeemHandler.h"
 #import "MessageHandler.h"
 #import "Reachability.h"
+#import <Crashlytics/Crashlytics.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

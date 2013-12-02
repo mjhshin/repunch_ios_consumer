@@ -11,6 +11,8 @@
 
 #define IS_NIL(x) ([x isKindOfClass:[NSNull class]] || x == nil)
 
+#define LOG(x) (NSLog(x); CLS_LOG(x);)
+
 typedef void(^AuthenticationManagerHandler)(NSInteger errorCode);
 
 typedef void(^MyPlacesFetchHandler)(NSArray *results, NSError *error);
