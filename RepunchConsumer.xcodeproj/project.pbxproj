@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		202F1DFA18523DC500495BDF /* NSDate+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 202F1DF318523DC500495BDF /* NSDate+Additions.m */; };
+		202F1DFB18523DC500495BDF /* RPStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 202F1DF518523DC500495BDF /* RPStore.m */; };
+		202F1DFC18523DC500495BDF /* RPStoreHours.m in Sources */ = {isa = PBXBuildFile; fileRef = 202F1DF718523DC500495BDF /* RPStoreHours.m */; };
 		207AA96A181195C300E73B2E /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2027286D181031E4004BD1A6 /* Parse.framework */; };
 		798D6DE81785B98A00CF8109 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 798D6DE71785B98A00CF8109 /* libsqlite3.dylib */; };
 		7996B35D17820A9700CCAFED /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B35C17820A9700CCAFED /* UIKit.framework */; };
@@ -156,6 +159,12 @@
 
 /* Begin PBXFileReference section */
 		2027286D181031E4004BD1A6 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = External/Parse.framework; sourceTree = "<group>"; };
+		202F1DF218523DC500495BDF /* NSDate+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Additions.h"; sourceTree = "<group>"; };
+		202F1DF318523DC500495BDF /* NSDate+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Additions.m"; sourceTree = "<group>"; };
+		202F1DF418523DC500495BDF /* RPStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPStore.h; sourceTree = "<group>"; };
+		202F1DF518523DC500495BDF /* RPStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPStore.m; sourceTree = "<group>"; };
+		202F1DF618523DC500495BDF /* RPStoreHours.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPStoreHours.h; sourceTree = "<group>"; };
+		202F1DF718523DC500495BDF /* RPStoreHours.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPStoreHours.m; sourceTree = "<group>"; };
 		798D6DE71785B98A00CF8109 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		7996B35917820A9700CCAFED /* Repunch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Repunch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7996B35C17820A9700CCAFED /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -370,6 +379,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		202F1DF118523A7E00495BDF /* RPClasses */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = RPClasses;
+			sourceTree = "<group>";
+		};
+		202F1DFE18523DCC00495BDF /* RP Classes */ = {
+			isa = PBXGroup;
+			children = (
+				EE04ABD0181AF8C100DDA5D0 /* RPConstants.h */,
+				202F1DF218523DC500495BDF /* NSDate+Additions.h */,
+				202F1DF318523DC500495BDF /* NSDate+Additions.m */,
+				202F1DF418523DC500495BDF /* RPStore.h */,
+				202F1DF518523DC500495BDF /* RPStore.m */,
+				202F1DF618523DC500495BDF /* RPStoreHours.h */,
+				202F1DF718523DC500495BDF /* RPStoreHours.m */,
+			);
+			name = "RP Classes";
+			sourceTree = "<group>";
+		};
 		7996B35017820A9700CCAFED = {
 			isa = PBXGroup;
 			children = (
@@ -481,11 +511,12 @@
 			children = (
 				EE9D4B7117A83F4A005E0CC5 /* AppDelegate.h */,
 				EE9D4B7217A83F4A005E0CC5 /* AppDelegate.m */,
+				202F1DFE18523DCC00495BDF /* RP Classes */,
+				202F1DF118523A7E00495BDF /* RPClasses */,
 				EE9D4B8717A83F4A005E0CC5 /* CustomUIViews */,
 				EEFBA1721810A6EB00783F05 /* Facebook */,
 				EE06E66417E7AB0100073AAF /* Images.xcassets */,
 				EE3F36D517B5865800D28FC9 /* Push */,
-				EE04ABD0181AF8C100DDA5D0 /* RPConstants.h */,
 				EE9D4E4D17A846B1005E0CC5 /* SIAlertView */,
 				EE9D4BC617A83F4A005E0CC5 /* ThirdPartyViews */,
 				EEFBA1731810A70F00783F05 /* Utilities */,
@@ -850,6 +881,7 @@
 				EE9D4C6817A83F4B005E0CC5 /* ComposeMessageViewController.m in Sources */,
 				EE9D4C7517A83F4B005E0CC5 /* InboxTableViewCell.m in Sources */,
 				EE9D4C7717A83F4B005E0CC5 /* RewardTableViewCell.m in Sources */,
+				202F1DFC18523DC500495BDF /* RPStoreHours.m in Sources */,
 				EE9D4C7917A83F4B005E0CC5 /* MyPlacesTableViewCell.m in Sources */,
 				EE9D4C7B17A83F4B005E0CC5 /* SearchTableViewCell.m in Sources */,
 				EE04ABD8181EFAC100DDA5D0 /* ParseManager.m in Sources */,
@@ -867,6 +899,7 @@
 				EE9D4C9917A83F4B005E0CC5 /* MKMapView+ZoomLevel.m in Sources */,
 				EE9D4C9A17A83F4B005E0CC5 /* NSDate+whenString.m in Sources */,
 				EE28DAE017AC447E00E4C460 /* DataManager.m in Sources */,
+				202F1DFA18523DC500495BDF /* NSDate+Additions.m in Sources */,
 				EE3F36D417B585B300D28FC9 /* PunchHandler.m in Sources */,
 				EEB8A44D17EA61140020E2EE /* SettingsViewController.m in Sources */,
 				EE04ABCE181AEC5D00DDA5D0 /* Reachability.m in Sources */,
@@ -876,6 +909,7 @@
 				EEA181AC17C6FD9B00553336 /* FacebookFriendsViewController.m in Sources */,
 				EE2AFE7D1819B3420046CF74 /* SIAlertView.m in Sources */,
 				EEA181B717CC499C00553336 /* RepunchUtils.m in Sources */,
+				202F1DFB18523DC500495BDF /* RPStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

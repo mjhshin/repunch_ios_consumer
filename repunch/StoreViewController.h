@@ -21,7 +21,6 @@
 @interface StoreViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, FacebookFriendsDelegate>
 
 @property (nonatomic, strong) NSString *storeId;
-@property (nonatomic, strong) NSMutableArray *rewardArray;
 @property (nonatomic, strong) UITableView *rewardTableView;
 @property (nonatomic, strong) UITableViewController *tableViewController;
 

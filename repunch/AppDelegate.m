@@ -6,6 +6,7 @@
 //
 
 #import "AppDelegate.h"
+#import "RPStore.h"
 
 @implementation AppDelegate
 {
@@ -17,7 +18,7 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-	BOOL isProduction = YES; // DON'T FORGET TO SET!!!!
+	BOOL isProduction = NO; // DON'T FORGET TO SET!!!!
 	
 	if(isProduction) {	// PRODUCTION KEY
 		[Parse setApplicationId:@"m0EdwpRYlJwttZLZ5PUk7y13TWCnvSScdn8tfVoh"
@@ -28,6 +29,8 @@
 					  clientKey:@"2anJYVl8sakbPVqPz4MEbP2GLWBcs7uRFTvWMaZ0"];
 	}
 	
+    [RPStore registerSubclass];
+
     [PFFacebookUtils initializeFacebook];
 	
 	[Crashlytics startWithAPIKey:@"87229bb388427a182709b79fc61e45ec5de14023"];

@@ -6,17 +6,22 @@
 //
 
 #import "StoreViewController.h"
+#import "RPStore.h"
 
 @implementation StoreViewController
 {
 	DataManager *sharedData;
-	PFObject *store;
+	RPStore *store;
 	PFObject *patron;
 	PFObject *patronStore;
 	BOOL patronStoreExists;
     int punchCount;
 	id selectedReward;
 	UIBarButtonItem *deleteButton;
+    NSMutableArray *timers;
+    CGRect headerFrame;
+
+
 }
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
@@ -44,9 +49,8 @@
 											   object:nil];
     
 	sharedData = [DataManager getSharedInstance];
-	store = [sharedData getStore:self.storeId];
+	store = (RPStore*)[sharedData getStore:self.storeId];
 	patron = [sharedData patron];
-	self.rewardArray = [NSMutableArray array];
 	
 	[[NSBundle mainBundle] loadNibNamed:@"StoreHeaderView" owner:self options:nil];
 	
@@ -57,9 +61,13 @@
 													style:UIBarButtonItemStylePlain
 												   target:self
 												   action:@selector(deleteStore:)];
+    headerFrame = self.headerView.frame;
+
 	[self setStoreInformation];
 	[self checkPatronStore];
 	[self setRewardTableView];
+    [self fixHeaderSize];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -94,132 +102,119 @@
 }
 
 - (void)setStoreInformation
-{	
-	NSString *name = [store objectForKey:@"store_name"];
-	NSString *street = [store objectForKey:@"street"];
-	NSString *crossStreets = [store objectForKey:@"cross_streets"];
-	NSString *neighborhood = [store objectForKey:@"neighborhood"];
-	NSString *city = [store objectForKey:@"city"];
-	NSString *state = [store objectForKey:@"state"];
-	NSString *zip = [store objectForKey:@"zip"];
-	//NSString *category = [store objectForKey:@"categories"];
-	self.rewardArray = [store objectForKey:@"rewards"];
-
-	self.navigationItem.title = name;
+{
+	self.navigationItem.title = store.store_name;
 	
-	if( !IS_NIL(crossStreets) ) {
-		street = [street stringByAppendingString:@"\n"];
-		street = [street stringByAppendingString:crossStreets];		
-	}
-	
-	if( !IS_NIL(neighborhood) ) {
-		street = [street stringByAppendingString:@"\n"];
-		street = [street stringByAppendingString:neighborhood];
-	}
-	
-	street = [street stringByAppendingString:@"\n"];
-	street = [street stringByAppendingString:[NSString stringWithFormat:@"%@%@%@%@%@", city, @", ", state, @" ", zip]];
-	
-	self.storeAddress.text = street;
+	self.storeAddress.text = store.address;
 	[self.storeAddress sizeToFit];
 	
-	[self setStoreHours];
-	
-	
-	self.storeImage.layer.cornerRadius = 10.0;
-	self.storeImage.layer.masksToBounds = YES;
-	
-	PFFile *imageFile = [store objectForKey:@"store_avatar"];
-	if( !IS_NIL(imageFile) )
-	{
-		UIImage *storeImage = [sharedData getStoreImage:self.storeId];
-		if(storeImage == nil)
-		{
-			self.storeImage.image = [UIImage imageNamed:@"listview_placeholder.png"];
-			[imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
-			 {
-				 if (!error) {
-					 UIImage *storeImage = [UIImage imageWithData:data];
-					 self.storeImage.image = storeImage;
-					 [sharedData addStoreImage:storeImage forKey:self.storeId];
-				 }
-				 else
-				 {
-					 NSLog(@"image download failed");
-					 [RepunchUtils showConnectionErrorDialog];
-				 }
-			 }];
-		} else {
-			self.storeImage.image = storeImage;
-		}
-	} else {
-		self.storeImage.image = [UIImage imageNamed:@"listview_placeholder.png"];
-	}
+    [self setStoreHours];
+
+    __weak typeof(self) weakSelf = self;
+    
+    [store updateStoreAvatarWithCompletionHander:^(RPStore *store, UIImage *avatar, RPErrorCode errorCode) {
+        
+        if (avatar) {
+            weakSelf.storeImage.image = avatar; // if there is some error it will give same image back
+        }
+        else {
+            weakSelf.storeImage.image = [UIImage imageNamed:@"listview_placeholder"];
+        }
+        
+        weakSelf.storeImage.layer.masksToBounds = YES;
+        weakSelf.storeImage.layer.cornerRadius = 10;
+        [weakSelf.storeImage setNeedsDisplay];
+    }];
+    
 }
 
+#pragma mark - Store Hours & header size fixer
 - (void)setStoreHours
 {
-	NSDateFormatter *format = [[NSDateFormatter alloc] init];
-	[format setDateFormat:@"h:mm a"];
+    RPStoreHours *hours = store.hoursManager;
+    
+    if (hours.isOpenAlways) {
+        self.storeHoursToday.hidden = NO;
+        self.storeHours.hidden = NO;
+        self.storeHoursOpen.hidden = NO;
+        
+        self.storeHoursOpen.text = NSLocalizedString(@"Open", nil);
+        self.storeHoursOpen.textColor = [UIColor colorWithRed:0.0 green:(204/255.0) blue:0.0 alpha:1.0];
+        self.storeHours.text = @"Open 24/7";
+    }
+    else if(hours){
+        
+        self.storeHoursToday.hidden = NO;
+        self.storeHours.hidden = NO;
+        self.storeHoursOpen.hidden = NO;
+        self.storeHours.text = @"";
+        
+        NSArray *repunchDates = [hours hoursForToday];
+        
+        NSDateFormatter *outFormat = [[NSDateFormatter alloc] init];
+        outFormat.dateFormat = @"h:mm a";
+        
+        NSMutableString *fullString = [[NSMutableString alloc] init];
+        
+        for (NSDictionary *hours in repunchDates) {
+            
+            NSDate *open = hours[kOpenTime];
+            NSDate *close = hours[kCloseTime];
+            
+            NSString *openString = [outFormat stringFromDate:open];
+            NSString *closeString = [outFormat stringFromDate:close];
+            
+            [fullString appendString:[NSString stringWithFormat:@"%@ - %@\n", openString, closeString ]];
+        }
+        
+        self.storeHours.text = [fullString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        
+        // Set Indicator
+        if(hours.isOpenNow) {
+            self.storeHoursOpen.text = NSLocalizedString(@"Open", nil);
+            self.storeHoursOpen.textColor = [UIColor colorWithRed:0.0 green:(204/255.0) blue:0.0 alpha:1.0];
+        }
+        else {
+            self.storeHoursOpen.text = NSLocalizedString(@"Closed", nil);
+            self.storeHoursOpen.textColor = [UIColor colorWithRed:(224/255.0) green:0.0 blue:0.0 alpha:1.0];
+        }
+    }
+    else {
+        // If no hours are set
+        self.storeHours.text = @"";
+        self.storeHoursToday.hidden = YES;
+        self.storeHours.hidden = YES;
+        self.storeHoursOpen.hidden = YES;
+    }
+    
+    [self fixHeaderSize];
+}
 
-	NSArray *hoursArray = [store objectForKey:@"hours"];
-	
-	NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-	NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit
-										   fromDate:[NSDate date]];
-	int weekday = [comps weekday];
-
-	NSDate *now = [gregorian dateFromComponents:comps];
-	
-	NSDictionary *today;
-	
-	for(NSDictionary *hours in hoursArray)
-	{
-		if ([[hours objectForKey:@"day"] integerValue] == weekday) {
-			today = hours;
-			break;
-		}
-	}
-	
-	if(today == nil) {
-		self.storeHoursOpen.hidden = YES;
-		self.storeHoursToday.hidden = YES;
-		self.storeHours.hidden = YES;
-		return;
-	}
-	
-	NSDateFormatter *inFormat = [[NSDateFormatter alloc] init];
-	inFormat.dateFormat = @"HHmm";
-	NSDateFormatter *outFormat = [[NSDateFormatter alloc] init];
-	outFormat.dateFormat = @"h:mm a";
-	outFormat.timeZone = [NSTimeZone systemTimeZone];
-	//[inFormat setLocale:[NSLocale currentLocale]];
-	NSDate *openTime = [inFormat dateFromString:[today objectForKey:@"open_time"]];
-	NSDate *closeTime = [inFormat dateFromString:[today objectForKey:@"close_time"]];
-	
-	NSDateComponents *compsOpen = [gregorian components:NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit
-										   fromDate:openTime];
-	NSDateComponents *compsClose = [gregorian components:NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit
-											   fromDate:closeTime];
-	openTime = [gregorian dateFromComponents:compsOpen];
-	closeTime = [gregorian dateFromComponents:compsClose];
-	
-	NSString *openTimeFormatted = [outFormat stringFromDate:openTime];
-	NSString *closeTimeFormatted = [outFormat stringFromDate:closeTime];
-	
-	if([now compare:openTime] != NSOrderedAscending && [now compare:closeTime] == NSOrderedAscending)
-	{
-		self.storeHoursOpen.text = @"Open";
-		self.storeHoursOpen.textColor = [UIColor colorWithRed:0.0 green:(204/255.0) blue:0.0 alpha:1.0];
-	}
-	else
-	{
-		self.storeHoursOpen.text = @"Closed";
-		self.storeHoursOpen.textColor = [UIColor colorWithRed:(224/255.0) green:0.0 blue:0.0 alpha:1.0];
-	}
-	
-	self.storeHours.text = [NSString stringWithFormat:@"%@ - %@", openTimeFormatted, closeTimeFormatted];
-	[self.storeHours sizeToFit];
+- (void)fixHeaderSize
+{
+    [self.storeHours sizeToFit];
+    
+    if (self.storeHours.frame.size.height > 20 && !self.storeHours.hidden) {
+        // Resize Header if more than one line
+        UIView *header = self.tableViewController.tableView.tableHeaderView;
+        CGRect frame = headerFrame;
+        
+        frame.size.height += abs(25 - self.storeHours.frame.size.height);
+        header.frame = frame;
+        
+       self.tableViewController.tableView.tableHeaderView = header;
+    }
+    else {
+        CGRect frame = headerFrame;
+        
+        if (self.storeHours.hidden) {
+            frame.size.height -= 20;
+        }
+        UIView *header = self.tableViewController.tableView.tableHeaderView;
+        header.frame = frame;
+        self.tableViewController.tableView.tableHeaderView = header;
+    }
+    
 }
 
 - (void)setStoreButtons
@@ -307,7 +302,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.rewardArray.count;
+    return store.rewards.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -318,7 +313,7 @@
         cell = [RewardTableViewCell cell];
     }
 	
-	id reward = [self.rewardArray objectAtIndex:indexPath.row];
+	id reward = store.rewards[indexPath.row];
     
     cell.rewardTitle.text = [reward objectForKey:@"reward_name"];
     cell.rewardDescription.text = [reward objectForKey:@"description"];
@@ -350,7 +345,7 @@
 	}
 
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
-	id reward = [self.rewardArray objectAtIndex:indexPath.row];
+	id reward = store.rewards[indexPath.row];
 	selectedReward = reward;
 
 	int rewardPunches = [[reward objectForKey:@"punches"] intValue];
@@ -567,9 +562,10 @@
 			 [sharedData deletePatronStore:self.storeId];
 			 [self checkPatronStore];
 			 [self.rewardTableView reloadData];
-			 
+         
 			 NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:self.storeId, @"store_id", nil];
 			 [[NSNotificationCenter defaultCenter] postNotificationName:@"AddOrRemoveStore" object:self userInfo:args];
+        
 		 }
 		 else
 		 {
@@ -579,6 +575,7 @@
 			 [RepunchUtils showConnectionErrorDialog];
 		 }
 	 }];
+
 }
 
 - (void)gift
@@ -646,7 +643,7 @@
 		{
 			 if(!error)
 			 {
-				 store = result;
+				 store = (RPStore*)result;
 				 [sharedData addStore:store];
 				 [self setStoreInformation];
 				 [self setRewardTableView];

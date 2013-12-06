@@ -13,10 +13,29 @@
 
 #define LOG(x) (NSLog(x); CLS_LOG(x);)
 
+#define BLOCK_SAFE_RUN(block, ...) block ? block(__VA_ARGS__) : nil
+
 typedef void(^AuthenticationManagerHandler)(NSInteger errorCode);
 
 typedef void(^MyPlacesFetchHandler)(NSArray *results, NSError *error);
 typedef void(^InboxFetchHandler)(NSArray *results, NSError *error);
 typedef void(^SearchResultHandler)(NSArray *results, NSError *error);
+
+
+typedef enum {
+    
+    // General
+    kRPErrorNone,
+    kRPErrorDidFailUnknown,
+    kRPErrorNetworkConnection,
+    
+    kRPErrorStoreAvatarIsNotAvailibleOnServer,
+    
+} RPErrorCode;
+
+
+@class RPStore;
+typedef void(^StoreUpdateHandler)(RPStore *store, RPErrorCode errorCode);
+typedef void(^StoreUpdateAvatarHandler)(RPStore *store, UIImage *avatar, RPErrorCode errorCode);
 
 #endif
