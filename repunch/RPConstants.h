@@ -21,9 +21,7 @@ typedef void(^MyPlacesFetchHandler)(NSArray *results, NSError *error);
 typedef void(^InboxFetchHandler)(NSArray *results, NSError *error);
 typedef void(^SearchResultHandler)(NSArray *results, NSError *error);
 
-
 typedef enum {
-    
     // General
     kRPErrorNone,
     kRPErrorDidFailUnknown,
@@ -35,7 +33,8 @@ typedef enum {
 
 
 @class RPStore;
+
 typedef void(^StoreUpdateHandler)(RPStore *store, RPErrorCode errorCode);
-typedef void(^StoreUpdateAvatarHandler)(RPStore *store, UIImage *avatar, RPErrorCode errorCode);
+typedef void(^StoreAvatarUpdateHandler)(RPStore *store, UIImage *avatar, RPErrorCode errorCode);
 
 #endif

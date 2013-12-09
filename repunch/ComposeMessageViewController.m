@@ -10,7 +10,7 @@
 @implementation ComposeMessageViewController
 {
 	DataManager *sharedData;
-	PFObject *store;
+	RPStore *store;
 	PFObject *patron;
 	PFObject *patronStore;
 	UIActivityIndicatorView *spinner;
@@ -35,13 +35,10 @@
 												  style:UIBarButtonItemStyleDone
 												 target:self
 												 action:@selector(sendButtonAction:)];
-				  /*
-				  [UIImage imageNamed:@"nav_send.png"]
-																   style:UIBarButtonItemStylePlain
-																  target:self
-																  action:@selector(sendButtonAction:)];*/
+
 	self.navigationItem.leftBarButtonItem = exitButton;
 	self.navigationItem.rightBarButtonItem = sendButton;
+	self.navigationItem.title = store.store_name;
 	
 	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
 	spinner.hidesWhenStopped = YES;
@@ -50,8 +47,6 @@
 	store = [sharedData getStore:self.storeId];
 	patronStore = [sharedData getPatronStore:self.storeId];
 	patron = [sharedData patron];
-	
-	self.navigationItem.title = [store objectForKey:@"store_name"];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self
@@ -63,7 +58,7 @@
     
     if ([self.messageType isEqualToString:@"feedback"])
 	{
-        self.subject.placeholder = [NSString stringWithFormat:@"Feedback for %@", [store objectForKey:@"store_name"]];
+        self.subject.placeholder = [NSString stringWithFormat:@"Feedback for %@", store.store_name];
 		self.bodyPlaceholder.text = @"How can we improve?";
     }
 	else if ([self.messageType isEqualToString:@"gift"])
@@ -117,14 +112,12 @@
     return YES;
 }
 
-//limits subject to 50 characters
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {	
     NSUInteger newLength = textField.text.length + string.length - range.length;
-    return (newLength > 50) ? NO : YES;
+    return (newLength > 50) ? NO : YES; //limits subject to 50 characters
 }
 
-//limits body to 750 characters
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)string
 {
     if ([string isEqualToString:@"\n"]) //set behavior for done button
@@ -135,7 +128,7 @@
 	[self scrollTextViewAboveKeyboard:textView];
 	
 	NSUInteger newLength = textView.text.length + string.length - range.length;
-    return (newLength > 750) ? NO : YES;
+    return (newLength > 750) ? NO : YES; //limits body to 750 characters
 }
 
 - (void)scrollTextViewAboveKeyboard:(UITextView *)textView

@@ -24,7 +24,7 @@
 	int totalPunches = [[userInfo objectForKey:@"total_punches"] intValue];
 	NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
 	
-	PFObject *store = [sharedData getStore:storeId];
+	RPStore *store = [sharedData getStore:storeId];
 	PFObject *patronStore = [sharedData getPatronStore:storeId];
 
 	if(store != nil && patronStore != nil)

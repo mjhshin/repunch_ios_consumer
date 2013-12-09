@@ -27,7 +27,7 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 	NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
 	
 	PFObject *patron = [sharedData patron];
-	PFObject *store = [sharedData getStore:storeId];
+	RPStore *store = [sharedData getStore:storeId];
 	PFObject *patronStore = [sharedData getPatronStore:storeId];
 	
 	if(store != nil && patronStore != nil)
@@ -41,8 +41,8 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"Redeem" object:self];
 		
 		NSString *facebookId = [patron objectForKey:@"facebook_id"];
-		int freePunches = [[store objectForKey:@"punches_facebook"] intValue];
-		if( !IS_NIL(facebookId) &&  freePunches > 0)
+
+		if( !IS_NIL(facebookId) &&  store.punches_facebook > 0)
 		{
 			[FacebookPost presentDialog:storeId withRewardTitle:rewardTitle];
 		}

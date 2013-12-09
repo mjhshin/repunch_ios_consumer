@@ -11,6 +11,7 @@
 #import "DataManager.h"
 #import <Parse/Parse.h>
 #import "RepunchUtils.h"
+#import "RPStore.h"
 
 @interface StoreMapViewController : UIViewController <MKMapViewDelegate>
 

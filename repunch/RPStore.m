@@ -9,58 +9,46 @@
 #import "RPStore.h"
 #import <Parse/PFObject+Subclass.h>
 
-#import "NSDate+Additions.h"
-#import "RPStoreHours.h"
-
-NSString * const kStoreDidUpdateTotalPendingCount = @"kStoreDidUpdatePendingCount";
-
-@interface RPStore (){
-    
-}
-
-@property (strong, atomic) RPStoreHours *m_storeHoursManager;
-@property (strong, readonly, atomic) PFRelation *RedeemRewards;
-@property (strong, readonly, atomic) PFFile *store_avatar;
-@property (strong, readonly, atomic) NSString *street;
-@property (strong, readonly, atomic) NSString *cross_streets;
-@property (strong, readonly, atomic) NSString *neighborhood;
-@property (strong, readonly, atomic) NSString *state;
-@property (strong, readonly, atomic) NSString *city;
-@property (strong, readonly, atomic) NSString *zip;
-
+@interface RPStore()
 
 @end
 
 @implementation RPStore
 
 #pragma mark - properties synthesize
+
 @synthesize avatar;
 @synthesize hoursManager;
 @synthesize m_storeHoursManager;
 
-@dynamic RedeemRewards;
 @dynamic active;
-@dynamic store_avatar;
-
 @dynamic rewards;
 @dynamic hours;
+@dynamic categories;
 @dynamic store_name;
-
 @dynamic street;
 @dynamic cross_streets;
 @dynamic neighborhood;
 @dynamic state;
 @dynamic city;
 @dynamic zip;
+@dynamic phone_number;
+@dynamic store_avatar;
+@dynamic punches_facebook;
+@dynamic coordinates;
 
-#pragma mark - Fetching
+#pragma mark - Parse
 
-#pragma mark - update store
++ (NSString *)parseClassName
+{
+    return @"Store";
+}
+
+#pragma mark - Update Store
 
 - (void)updateStoreInfoWithCompletionHandler:(StoreUpdateHandler)handler
 {
     __weak typeof (self) weakSelf = self;
-    
     
     [self refreshInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         if (!error) {
@@ -74,7 +62,7 @@ NSString * const kStoreDidUpdateTotalPendingCount = @"kStoreDidUpdatePendingCoun
     }];
 }
 
-- (void)updateStoreAvatarWithCompletionHander:(StoreUpdateAvatarHandler)handler
+- (void)updateStoreAvatarWithCompletionHander:(StoreAvatarUpdateHandler)handler
 {
     if (!self.isDataAvailable) { // store has data not available
         BLOCK_SAFE_RUN(handler, self, nil, kRPErrorDidFailUnknown);
@@ -98,19 +86,19 @@ NSString * const kStoreDidUpdateTotalPendingCount = @"kStoreDidUpdatePendingCoun
     }];
 }
 
-
-- (NSString *)address
+- (NSString *)formattedAddress
 {
     NSString *street = self.street;
     
-    if(!IS_NIL( self.cross_streets))
+    if( !IS_NIL(self.cross_streets) ) {
         street = [[street stringByAppendingString:@"\n"] stringByAppendingString:self.cross_streets];
+	}
     
-    if(!IS_NIL( self.neighborhood))
+    if( !IS_NIL(self.neighborhood) ) {
         street = [[street stringByAppendingString:@"\n"] stringByAppendingString:self.neighborhood];
+	}
     
-    street = [street stringByAppendingString:@"\n"];
-    street = [street stringByAppendingString:[NSString stringWithFormat:@"%@, %@ %@", self.city, self.state, self.zip]];
+    street = [street stringByAppendingString:[NSString stringWithFormat:@"\n%@, %@ %@", self.city, self.state, self.zip]];
     
     return street;
 }
@@ -121,19 +109,6 @@ NSString * const kStoreDidUpdateTotalPendingCount = @"kStoreDidUpdatePendingCoun
         m_storeHoursManager = [[RPStoreHours alloc] initWithStoreHoursArray:self.hours];
     }
     return m_storeHoursManager;
-}
-
-#pragma mark - Parse
-+ (NSString *)parseClassName
-{
-    return @"Store";
-}
-
-+ (PFQuery *)query
-{
-    PFQuery * query = [PFQuery queryWithClassName:[self parseClassName]];
-    [query includeKey:@"Settings"];
-    return query;
 }
 
 @end

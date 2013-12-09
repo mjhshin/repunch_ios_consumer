@@ -146,7 +146,7 @@
 	[[NSBundle mainBundle] loadNibNamed:@"MessageAttachment" owner:self options:nil];
 	
 	NSString *storeId = [self.message objectForKey:@"store_id"];
-	PFObject *store = [self.sharedData getStore:storeId];	
+	RPStore *store = [self.sharedData getStore:storeId];
 	
 	self.giftTitle.text = [self.message objectForKey:@"gift_title"];
 	self.giftTimerLabel.text = [self.message objectForKey:@"gift_description"];
@@ -154,7 +154,7 @@
 	
 	if(store)
 	{
-		self.giftHeader.text = [store objectForKey:@"store_name"];
+		self.giftHeader.text = store.store_name;
 	}
 	else
 	{
@@ -164,14 +164,15 @@
 		giftSpinner.hidesWhenStopped = YES;
 		[giftSpinner startAnimating];
 		
-		PFQuery *query = [PFQuery queryWithClassName:@"Store"];
+		PFQuery *query = [RPStore query];
 		[query getObjectInBackgroundWithId:storeId block:^(PFObject *result, NSError *error)
 		{
 			if(result)
 			{
+				RPStore *resultStore = (RPStore *)result;
 				[giftSpinner stopAnimating];
-				[self.sharedData addStore:result];
-				self.giftHeader.text = [result objectForKey:@"store_name"];
+				[self.sharedData addStore:resultStore];
+				self.giftHeader.text = resultStore.store_name;
 			}
 			else
 			{

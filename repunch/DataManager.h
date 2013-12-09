@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
+#import "RPStore.h"
 
 @interface DataManager : NSObject
 
@@ -30,8 +31,8 @@
 - (void)updatePatronStore:(NSString *)storeId withPunches:(int)punches;
 
 // Store methods
-- (void)addStore:(PFObject *)store;
-- (PFObject *)getStore:(NSString *)objectId;
+- (void)addStore:(RPStore *)store;
+- (RPStore *)getStore:(NSString *)objectId;
 
 // Store image cache methods
 - (void)addStoreImage:(UIImage *)image forKey:(NSString *)storeId;

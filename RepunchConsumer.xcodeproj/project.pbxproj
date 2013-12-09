@@ -379,25 +379,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		202F1DF118523A7E00495BDF /* RPClasses */ = {
+		202F1DFE18523DCC00495BDF /* RPClasses */ = {
 			isa = PBXGroup;
 			children = (
-			);
-			name = RPClasses;
-			sourceTree = "<group>";
-		};
-		202F1DFE18523DCC00495BDF /* RP Classes */ = {
-			isa = PBXGroup;
-			children = (
-				EE04ABD0181AF8C100DDA5D0 /* RPConstants.h */,
-				202F1DF218523DC500495BDF /* NSDate+Additions.h */,
-				202F1DF318523DC500495BDF /* NSDate+Additions.m */,
 				202F1DF418523DC500495BDF /* RPStore.h */,
 				202F1DF518523DC500495BDF /* RPStore.m */,
 				202F1DF618523DC500495BDF /* RPStoreHours.h */,
 				202F1DF718523DC500495BDF /* RPStoreHours.m */,
 			);
-			name = "RP Classes";
+			name = RPClasses;
 			sourceTree = "<group>";
 		};
 		7996B35017820A9700CCAFED = {
@@ -511,8 +501,7 @@
 			children = (
 				EE9D4B7117A83F4A005E0CC5 /* AppDelegate.h */,
 				EE9D4B7217A83F4A005E0CC5 /* AppDelegate.m */,
-				202F1DFE18523DCC00495BDF /* RP Classes */,
-				202F1DF118523A7E00495BDF /* RPClasses */,
+				202F1DFE18523DCC00495BDF /* RPClasses */,
 				EE9D4B8717A83F4A005E0CC5 /* CustomUIViews */,
 				EEFBA1721810A6EB00783F05 /* Facebook */,
 				EE06E66417E7AB0100073AAF /* Images.xcassets */,
@@ -690,12 +679,15 @@
 				EE5F947317FB5471006E6F67 /* AuthenticationManager.m */,
 				EE28DADE17AC447E00E4C460 /* DataManager.h */,
 				EE28DADF17AC447E00E4C460 /* DataManager.m */,
+				202F1DF218523DC500495BDF /* NSDate+Additions.h */,
+				202F1DF318523DC500495BDF /* NSDate+Additions.m */,
 				EE04ABD6181EFAC100DDA5D0 /* ParseManager.h */,
 				EE04ABD7181EFAC100DDA5D0 /* ParseManager.m */,
 				EE04ABCC181AEC5D00DDA5D0 /* Reachability.h */,
 				EE04ABCD181AEC5D00DDA5D0 /* Reachability.m */,
 				EEA181B517CC499900553336 /* RepunchUtils.h */,
 				EEA181B617CC499B00553336 /* RepunchUtils.m */,
+				EE04ABD0181AF8C100DDA5D0 /* RPConstants.h */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";

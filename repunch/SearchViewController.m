@@ -217,7 +217,7 @@
 		return;
 	}
 	
-    PFQuery *storeQuery = [PFQuery queryWithClassName:@"Store"];
+    PFQuery *storeQuery = [RPStore query];
     [storeQuery whereKey:@"active" equalTo:[NSNumber numberWithBool:YES]];
 	[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation];
 	[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation withinMiles:50];
@@ -248,10 +248,9 @@
 				 paginateReachEnd = NO;
 			 }
 			
-			 for (PFObject *store in results) {
-				NSString *storeId = [store objectId];
+			 for (RPStore *store in results) {
 				[self.sharedData addStore:store];
-				[self.storeIdArray addObject:storeId];
+				[self.storeIdArray addObject:store.objectId];
 			 }
 			 
 			 if(paginate != NO && results.count == 0) {
@@ -282,50 +281,51 @@
 {
 	SearchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[SearchTableViewCell reuseIdentifier]];
 	
+	// Curve image border
 	if (cell == nil) {
         cell = [SearchTableViewCell cell];
 		cell.storeImage.layer.cornerRadius = 10.0;
 		cell.storeImage.layer.masksToBounds = YES;
     }
 	
-	NSString *storeId = [self.storeIdArray objectAtIndex:indexPath.row];
-	PFObject *store = [self.sharedData getStore:storeId];
-     
-	PFGeoPoint *storeLocation = [store objectForKey:@"coordinates"];
+	NSString *storeId = self.storeIdArray[indexPath.row];
+	RPStore *store = [self.sharedData getStore:storeId];
+
+	// Set distance to store
+	PFGeoPoint *storeLocation = store.coordinates;
 	double distanceToStore = [userLocation distanceInMilesTo:storeLocation];
 	cell.distance.text = [NSString stringWithFormat:@"%.2f mi", distanceToStore];
-     
-	NSString *neighborhood = [store objectForKey:@"neighborhood"];
-	NSString *city = [store objectForKey:@"city"];
-	NSString *street = [store objectForKey:@"street"];
-     
-	if ( !IS_NIL(neighborhood) ) {
-		street = [street stringByAppendingFormat:@", %@", neighborhood];
+	
+	// Set address
+	NSString *street = store.street;
+	
+	if ( !IS_NIL(store.neighborhood) ) {
+		street = [street stringByAppendingFormat:@", %@", store.neighborhood];
 	}
 	else {
-		street = [street stringByAppendingFormat:@", %@", city];
+		street = [street stringByAppendingFormat:@", %@", store.city];
 	}
-     
-	NSArray *categories = [[store mutableSetValueForKey:@"categories"] allObjects];
+	
+	// Set Categories
 	NSString *formattedCategories = @"";
-	for (int i = 0; i < categories.count; i++)
+	
+	for (int i = 0; i < store.categories.count; i++)
 	{
-		formattedCategories = [formattedCategories stringByAppendingString:[categories[i] objectForKey:@"name"]];
+		formattedCategories = [formattedCategories stringByAppendingString:[store.categories[i] objectForKey:@"name"]];
 		
-		if (i!= [categories count]-1) {
+		if (i != [store.categories count] - 1) {
 			formattedCategories = [formattedCategories stringByAppendingFormat:@", "];
 		}
 	}
 	
+	// Set punches and reward info
 	PFObject *patronStore = [self.sharedData getPatronStore:storeId];
 	
-	if(patronStore == nil)
-	{
+	if(patronStore == nil) {
 		[cell.punchIcon setHidden:YES];
 		[cell.numPunches setHidden:YES];
 	}
-	else
-	{
+	else {
 		int punches = [[patronStore objectForKey:@"punch_count"] intValue];
 		[cell.punchIcon setHidden:NO];
 		[cell.numPunches setHidden:NO];
@@ -334,7 +334,7 @@
 	
 	cell.storeAddress.text = street;
 	cell.storeCategories.text = formattedCategories;
-	cell.storeName.text = [store objectForKey:@"store_name"];
+	cell.storeName.text = store.store_name;
 	cell.storeImage.image = [UIImage imageNamed:@"listview_placeholder.png"];
 	
 	// Only load cached images; defer new downloads until scrolling ends
@@ -342,14 +342,13 @@
     //{
 	//if (self.myPlacesTableView.dragging == NO && self.myPlacesTableView.decelerating == NO)
 	//{
-	PFFile *imageFile = [store objectForKey:@"store_avatar"];
-	if( !IS_NIL(imageFile) )
+	if( !IS_NIL(store.store_avatar) )
 	{
 		UIImage *storeImage = [self.sharedData getStoreImage:storeId];
 		if(storeImage == nil)
 		{
 			cell.storeImage.image = [UIImage imageNamed:@"listview_placeholder.png"];
-			[self downloadImage:imageFile forIndexPath:indexPath withStoreId:storeId];
+			[self downloadImage:store.store_avatar forIndexPath:indexPath withStoreId:storeId];
 		} else {
 			cell.storeImage.image = storeImage;
 		}

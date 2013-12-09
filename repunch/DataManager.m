@@ -66,12 +66,12 @@ static DataManager *sharedDataManager = nil;    // static instance variable
 }
 
 // Store methods
-- (void)addStore:(PFObject *)store
+- (void)addStore:(RPStore *)store
 {
-	[self.stores setObject:store forKey:[store objectId]];
+	[self.stores setObject:store forKey:store.objectId];
 }
 
-- (PFObject *)getStore:(NSString *)objectId
+- (RPStore *)getStore:(NSString *)objectId
 {
 	return [self.stores objectForKey:objectId];
 }

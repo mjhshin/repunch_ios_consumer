@@ -18,9 +18,9 @@
 + (void) presentDialog:(NSString *)storeId withRewardTitle:(NSString *)rewardTitle
 {
 	DataManager *sharedData = [DataManager getSharedInstance];
-	PFObject *store = [sharedData getStore:storeId];
+	RPStore *store = [sharedData getStore:storeId];
 	PFObject *patronStore = [sharedData getPatronStore:storeId];
-	int freePunches = [[store objectForKey:@"punches_facebook"] intValue];
+	int freePunches = store.punches_facebook;
 	
 	NSString *title = [NSString stringWithFormat:@"Redeemed '%@'", rewardTitle];
 	NSString *message = [NSString stringWithFormat:
@@ -47,13 +47,13 @@
 	[alert show];
 }
  
-+ (void) executePost:(PFObject *)store
++ (void) executePost:(RPStore *)store
 	 withRewardTitle:(NSString *)rewardTitle
 	  andPatronStore:(PFObject *)patronStore
 		  andPunches:(int)punches
 {
-	PFFile *image = [store objectForKey:@"store_avatar"];
-	NSString *caption = [NSString stringWithFormat:@"At %@", [store objectForKey:@"store_name"]];
+	PFFile *image = store.store_avatar;
+	NSString *caption = [NSString stringWithFormat:@"At %@", store.store_name];
 
 	NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
 	[params setObject:@"Redeemed a reward using Repunch!"		forKey:@"name"];
@@ -62,14 +62,13 @@
 	[params setObject:@"https://www.repunch.com/"				forKey:@"link"];
 	
 	if(!IS_NIL(image)) {
-		[params setObject:image.url									forKey:@"picture"];
+		[params setObject:image.url								forKey:@"picture"];
 	}
 	
 	[FBRequestConnection startWithGraphPath:@"me/feed"
 								 parameters:params
 								 HTTPMethod:@"POST"
-						  completionHandler:^(FBRequestConnection *connection, id result, NSError *error)
-	 {
+						  completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
 		 if(!error)
 		 {
 			 [self callCloudCode:YES withPatronStore:patronStore andPunches:punches];

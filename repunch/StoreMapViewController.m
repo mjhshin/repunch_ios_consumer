@@ -9,8 +9,7 @@
 
 @implementation StoreMapViewController
 {
-	PFObject *store;
-	PFGeoPoint *coordinates;
+	RPStore *store;
 }
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
@@ -24,12 +23,12 @@
 	
 	UIBarButtonItem *exitButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
 																				target:self
-																				action:@selector(closeView:)];
+																				action:@selector(closeView)];
 	
 	UIBarButtonItem *directionsButton = [[UIBarButtonItem alloc] initWithTitle:@"Directions"
 																		 style:UIBarButtonItemStylePlain
 																		target:self
-																		action:@selector(getDirections:)];
+																		action:@selector(getDirections)];
 	self.navigationItem.leftBarButtonItem = exitButton;
 	self.navigationItem.rightBarButtonItem = directionsButton;
 	
@@ -42,39 +41,33 @@
 	
 	DataManager *sharedData = [DataManager getSharedInstance];
 	store = [sharedData getStore:self.storeId];
-	coordinates = [store objectForKey:@"coordinates"];
     
-	[placeMapView setCenterCoordinate:CLLocationCoordinate2DMake(coordinates.latitude, coordinates.longitude) zoomLevel:14 animated:NO];
-    
-    NSString *address = [NSString stringWithFormat:@"%@\n%@, %@ %@", [store objectForKey:@"street"], [store objectForKey:@"city"], [store objectForKey:@"state"], [store objectForKey:@"zip"]];
+	[placeMapView setCenterCoordinate:CLLocationCoordinate2DMake(store.coordinates.latitude, store.coordinates.longitude) zoomLevel:14 animated:NO];
 
-    MapPin *placePin = [[MapPin alloc] initWithCoordinates:CLLocationCoordinate2DMake(coordinates.latitude, coordinates.longitude)
-												 placeName:[store objectForKey:@"store_name"]
-											   description:address];
+    MapPin *placePin = [[MapPin alloc] initWithCoordinates:CLLocationCoordinate2DMake(store.coordinates.latitude, store.coordinates.longitude)
+												 placeName:store.store_name
+											   description:store.formattedAddress];
     
     [placeMapView addAnnotation:placePin];
     
     [self.view addSubview:placeMapView];
 }
 
-- (IBAction)closeView:(id)sender
+- (void)closeView
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)getDirections:(id)sender
+- (void)getDirections
 {
     Class mapItemClass = [MKMapItem class];
     if (mapItemClass && [mapItemClass respondsToSelector:@selector(openMapsWithItems:launchOptions:)])
     {        
-        // Create an MKMapItem to pass to the Maps app
-        CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(coordinates.latitude, coordinates.longitude);
-        
-		MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:coordinate
+        MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(store.coordinates.latitude, store.coordinates.longitude)
                                                        addressDictionary:nil];
 		
         MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
-        mapItem.name = [store objectForKey:@"store_name"];
+        mapItem.name = store.store_name;
         
         // Set the directions mode to "Driving"
         NSDictionary *launchOptions = @{MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving};

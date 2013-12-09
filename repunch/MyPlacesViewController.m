@@ -202,11 +202,10 @@
 			{
 				for (PFObject *patronStore in results)
 				{
-					PFObject *store = [patronStore objectForKey:@"Store"];
-					NSString *storeId = [store objectId];
-					[weakSelf.sharedData addPatronStore:patronStore forKey:storeId];
+					RPStore *store = [patronStore objectForKey:@"Store"];
+					[weakSelf.sharedData addPatronStore:patronStore forKey:store.objectId];
 					[weakSelf.sharedData addStore:store];
-					[weakSelf.storeIdArray addObject:storeId];
+					[weakSelf.storeIdArray addObject:store.objectId];
 				}
 			}
 			
@@ -272,16 +271,14 @@
 	
 	NSString *storeId = self.storeIdArray[indexPath.row];
 	PFObject *patronStore = [self.sharedData getPatronStore:storeId];
-	PFObject *store = [self.sharedData getStore:storeId];
+	RPStore *store = [self.sharedData getStore:storeId];
 	
     int punches = [[patronStore objectForKey:@"punch_count"] intValue];
     cell.numPunches.text = [NSString stringWithFormat:@"%i %@", punches, (punches == 1) ? @"Punch": @"Punches"];
-    cell.storeName.text = [store objectForKey:@"store_name"];
+    cell.storeName.text = store.store_name;
     
-    NSArray *rewardsArray = [store objectForKey:@"rewards"];
-    
-    if (rewardsArray.count > 0) {
-        if ([[rewardsArray[0] objectForKey:@"punches"] intValue] <= punches){
+    if (store.rewards.count > 0) {
+        if ([[store.rewards[0] objectForKey:@"punches"] intValue] <= punches) {
             [[cell rewardLabel] setHidden:NO];
             [[cell rewardIcon] setHidden:NO];
         }
@@ -300,14 +297,13 @@
     //{
         //if (self.myPlacesTableView.dragging == NO && self.myPlacesTableView.decelerating == NO)
 		//{
-        PFFile *imageFile = [store objectForKey:@"store_avatar"];
-		if( !IS_NIL(imageFile) )
+		if( !IS_NIL(store.store_avatar) )
         {
             UIImage *storeImage = [self.sharedData getStoreImage:storeId];
 			if(storeImage == nil)
 			{
 				cell.storeImage.image = [UIImage imageNamed:@"listview_placeholder.png"];
-				[self downloadImage:imageFile forIndexPath:indexPath withStoreId:storeId];
+				[self downloadImage:store.store_avatar forIndexPath:indexPath withStoreId:storeId];
 			} else {
 				cell.storeImage.image = storeImage;
 			}

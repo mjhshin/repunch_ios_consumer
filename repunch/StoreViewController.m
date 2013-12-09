@@ -60,7 +60,7 @@
 	deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"delete_icon.png"]
 													style:UIBarButtonItemStylePlain
 												   target:self
-												   action:@selector(deleteStore:)];
+												   action:@selector(deleteStore)];
     headerFrame = self.headerView.frame;
 
 	[self setStoreInformation];
@@ -105,7 +105,7 @@
 {
 	self.navigationItem.title = store.store_name;
 	
-	self.storeAddress.text = store.address;
+	self.storeAddress.text = store.formattedAddress;
 	[self.storeAddress sizeToFit];
 	
     [self setStoreHours];
@@ -431,13 +431,10 @@
 
 - (IBAction)callButtonAction:(id)sender
 {
-	//[self.callButtonView setBackgroundColor:[UIColor clearColor]];
-	
-    NSString *number = [store objectForKey:@"phone_number"];
-    NSString *phoneNumber = [number stringByReplacingOccurrencesOfString:@"[^0-9]"
+    NSString *phoneNumber = [store.phone_number stringByReplacingOccurrencesOfString:@"[^0-9]"
 															  withString:@""
 																 options:NSRegularExpressionSearch
-																   range:NSMakeRange(0, [number length])];
+																   range:NSMakeRange(0, store.phone_number.length)];
 	
     NSString *phoneNumberUrl = [@"tel://" stringByAppendingString:phoneNumber];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumberUrl]];
@@ -483,8 +480,8 @@
 	[spinner startAnimating];
 	
 	NSDictionary *inputArgs = [NSDictionary dictionaryWithObjectsAndKeys:
-									[patron objectId],		@"patron_id",
-									[store objectId],		@"store_id",
+									patron.objectId,		@"patron_id",
+									store.objectId,			@"store_id",
 									nil];
 	
 	[PFCloud callFunctionInBackground: @"add_patronstore"
@@ -510,7 +507,7 @@
 	}];
 }
 
-- (IBAction)deleteStore:(id)sender
+- (void)deleteStore
 {
 	SIAlertView *warningView = [[SIAlertView alloc] initWithTitle:@"Remove from My Places"
 													   andMessage:@"WARNING: You will lose all your punches!"];
@@ -546,9 +543,9 @@
 	[spinner startAnimating];
 	
 	NSDictionary *inputArgs = [NSDictionary dictionaryWithObjectsAndKeys:
-							   [patronStore objectId],	@"patron_store_id",
-							   [patron objectId],		@"patron_id",
-							   [store objectId],		@"store_id",
+							   patronStore.objectId,	@"patron_store_id",
+							   patron.objectId,			@"patron_id",
+							   store.objectId,			@"store_id",
 							   nil];
 	
 	[PFCloud callFunctionInBackground: @"delete_patronstore"
@@ -565,7 +562,6 @@
          
 			 NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:self.storeId, @"store_id", nil];
 			 [[NSNotificationCenter defaultCenter] postNotificationName:@"AddOrRemoveStore" object:self userInfo:args];
-        
 		 }
 		 else
 		 {
@@ -575,7 +571,6 @@
 			 [RepunchUtils showConnectionErrorDialog];
 		 }
 	 }];
-
 }
 
 - (void)gift
@@ -638,12 +633,12 @@
 	}
 	else
 	{
-		PFQuery *query = [PFQuery queryWithClassName:@"Store"];
+		PFQuery *query = [RPStore query];
 		[query getObjectInBackgroundWithId:self.storeId block:^(PFObject *result, NSError *error)
 		{
 			 if(!error)
 			 {
-				 store = (RPStore*)result;
+				 store = (RPStore *)result;
 				 [sharedData addStore:store];
 				 [self setStoreInformation];
 				 [self setRewardTableView];
