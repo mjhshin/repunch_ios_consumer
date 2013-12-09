@@ -149,7 +149,7 @@
 	[RepunchUtils setDefaultButtonStyle:paginateButton];
 	paginateButton.titleLabel.font = [RepunchUtils repunchFontWithSize:17 isBold:YES];
 	paginateButton.adjustsImageWhenDisabled = NO;
-	[paginateButton addTarget:self action:@selector(performSearch:) forControlEvents:UIControlEventTouchUpInside];
+	[paginateButton addTarget:self action:@selector(paginate) forControlEvents:UIControlEventTouchUpInside];
 	[paginateButton.layer setCornerRadius:10];
 	[paginateButton setClipsToBounds:YES];
 	
@@ -223,13 +223,13 @@
 	[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation withinMiles:50];
 	[storeQuery setLimit:20];
 	
-	if(paginate == NO) {
-		[self.activityIndicatorView setHidden:NO];
-		[self.activityIndicator startAnimating];
-	}
-	else {
+	if(paginate == YES) {
 		++paginateCount;
 		[storeQuery setSkip:paginateCount*20];
+	}
+	else if(self.storeIdArray.count == 0) {
+		[self.activityIndicatorView setHidden:NO];
+		[self.activityIndicator startAnimating];
 	}
 	[self setFooter:YES];
 	
@@ -412,6 +412,11 @@
     {
         [imageFile cancel];
     }
+}
+
+- (void)paginate
+{
+	[self performSearch:YES];
 }
 
 - (void)setFooter:(BOOL)loadInProgress

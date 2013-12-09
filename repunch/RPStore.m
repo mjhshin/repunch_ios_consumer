@@ -64,24 +64,20 @@
 
 - (void)updateStoreAvatarWithCompletionHander:(StoreAvatarUpdateHandler)handler
 {
-    if (!self.isDataAvailable) { // store has data not available
-        BLOCK_SAFE_RUN(handler, self, nil, kRPErrorDidFailUnknown);
-        return;
-    }
-    else if (IS_NIL( self.store_avatar)){ // avatar is not availible on server
-        BLOCK_SAFE_RUN(handler, self, nil, kRPErrorStoreAvatarIsNotAvailibleOnServer);
-        return;
-    }
+	if( IS_NIL(self.store_avatar) ) {
+		BLOCK_SAFE_RUN(handler, nil, nil);
+		return;
+	}
     __weak typeof(self) weakSelf = self;
     
     [self.store_avatar getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!error) {
             avatar = [UIImage imageWithData:data];
-            BLOCK_SAFE_RUN(handler, weakSelf, weakSelf.avatar, kRPErrorNone);
+			[[DataManager getSharedInstance] addStoreImage:avatar forKey:weakSelf.objectId];
+            BLOCK_SAFE_RUN(handler, weakSelf.avatar, error);
         }
         else {
-            RPErrorCode errorCode = ([error code] == kPFErrorConnectionFailed) ? kRPErrorNetworkConnection : kRPErrorDidFailUnknown;
-            BLOCK_SAFE_RUN(handler, weakSelf, weakSelf.avatar, errorCode);
+            BLOCK_SAFE_RUN(handler, nil, error);
         }
     }];
 }

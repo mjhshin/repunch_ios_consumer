@@ -11,6 +11,7 @@
 #import "RPStoreHours.h"
 #import "NSDate+Additions.h"
 #import "RPStoreHours.h"
+#import "DataManager.h"
 
 @interface RPStore : PFObject <PFSubclassing>
 

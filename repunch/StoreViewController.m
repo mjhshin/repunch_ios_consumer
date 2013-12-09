@@ -49,7 +49,7 @@
 											   object:nil];
     
 	sharedData = [DataManager getSharedInstance];
-	store = (RPStore*)[sharedData getStore:self.storeId];
+	store = [sharedData getStore:self.storeId];
 	patron = [sharedData patron];
 	
 	[[NSBundle mainBundle] loadNibNamed:@"StoreHeaderView" owner:self options:nil];
@@ -67,7 +67,6 @@
 	[self checkPatronStore];
 	[self setRewardTableView];
     [self fixHeaderSize];
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -92,8 +91,7 @@
 			[FacebookPost presentDialog:self.storeId withRewardTitle:rewardTitle];
 		}
 	}
-	else
-	{
+	else {
 		punchCount = 0;
 	}
 	
@@ -110,22 +108,26 @@
 	
     [self setStoreHours];
 
-    __weak typeof(self) weakSelf = self;
-    
-    [store updateStoreAvatarWithCompletionHander:^(RPStore *store, UIImage *avatar, RPErrorCode errorCode) {
-        
-        if (avatar) {
-            weakSelf.storeImage.image = avatar; // if there is some error it will give same image back
-        }
-        else {
-            weakSelf.storeImage.image = [UIImage imageNamed:@"listview_placeholder"];
-        }
-        
-        weakSelf.storeImage.layer.masksToBounds = YES;
-        weakSelf.storeImage.layer.cornerRadius = 10;
-        [weakSelf.storeImage setNeedsDisplay];
-    }];
-    
+	self.storeImage.layer.cornerRadius = 10;
+	self.storeImage.layer.masksToBounds = YES;
+	
+	UIImage *storeImage = [sharedData getStoreImage:self.storeId];
+	
+	if(storeImage != nil) {
+		self.storeImage.image = storeImage;
+	}
+	else {
+		__weak typeof(self) weakSelf = self;
+		[store updateStoreAvatarWithCompletionHander:^(UIImage *avatar, NSError *error) {
+			
+			if (avatar) {
+				weakSelf.storeImage.image = avatar;
+			}
+			else {
+				weakSelf.storeImage.image = [UIImage imageNamed:@"listview_placeholder"];
+			}
+		}];
+	}
 }
 
 #pragma mark - Store Hours & header size fixer
@@ -229,6 +231,7 @@
 		[self.addToMyPlacesButton addTarget:self
 									 action:@selector(addStore)
 						   forControlEvents:UIControlEventTouchUpInside];
+		
 		self.navigationItem.rightBarButtonItem = nil;
 		
 		self.feedbackButton.hidden = YES;
@@ -626,7 +629,7 @@
 			 }
 			 else
 			 {
-				 NSLog(@"error fetching Store: %@", error);
+				 NSLog(@"error fetching PatronStore: %@", error);
 				 [RepunchUtils showConnectionErrorDialog];
 			 }
 		 }];

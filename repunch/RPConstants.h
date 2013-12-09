@@ -35,6 +35,6 @@ typedef enum {
 @class RPStore;
 
 typedef void(^StoreUpdateHandler)(RPStore *store, RPErrorCode errorCode);
-typedef void(^StoreAvatarUpdateHandler)(RPStore *store, UIImage *avatar, RPErrorCode errorCode);
+typedef void(^StoreAvatarUpdateHandler)(UIImage *avatar, NSError *error);
 
 #endif
