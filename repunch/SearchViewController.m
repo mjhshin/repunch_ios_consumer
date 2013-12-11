@@ -220,7 +220,7 @@
     PFQuery *storeQuery = [RPStore query];
     [storeQuery whereKey:@"active" equalTo:[NSNumber numberWithBool:YES]];
 	[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation];
-	[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation withinMiles:50];
+	[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation withinMiles:1];
 	[storeQuery setLimit:20];
 	
 	if(paginate == YES) {

@@ -32,8 +32,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *storeHoursToday;
 @property (weak, nonatomic) IBOutlet UILabel *storeHoursOpen;
 @property (weak, nonatomic) IBOutlet UILabel *storeHours;
-@property (weak, nonatomic) IBOutlet UIButton *addToMyPlacesButton;
 
+@property (weak, nonatomic) IBOutlet UIView *infoButtonView;
 @property (weak, nonatomic) IBOutlet UIButton *callButton;
 @property (weak, nonatomic) IBOutlet UIButton *mapButton;
 @property (weak, nonatomic) IBOutlet UIButton *feedbackButton;

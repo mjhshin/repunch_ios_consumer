@@ -19,9 +19,7 @@
 	id selectedReward;
 	UIBarButtonItem *deleteButton;
     NSMutableArray *timers;
-    CGRect headerFrame;
-
-
+	UIButton *addToMyPlacesButton;
 }
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
@@ -54,19 +52,14 @@
 	
 	[[NSBundle mainBundle] loadNibNamed:@"StoreHeaderView" owner:self options:nil];
 	
-	[RepunchUtils setDefaultButtonStyle:self.addToMyPlacesButton];
-	[self.addToMyPlacesButton setClipsToBounds:NO];
-	
 	deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"delete_icon.png"]
 													style:UIBarButtonItemStylePlain
 												   target:self
 												   action:@selector(deleteStore)];
-    headerFrame = self.headerView.frame;
-
+	
 	[self setStoreInformation];
 	[self checkPatronStore];
 	[self setRewardTableView];
-    [self fixHeaderSize];
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,29 +67,6 @@
     [super didReceiveMemoryWarning];
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)checkPatronStore
-{
-    patronStore = [sharedData getPatronStore:self.storeId];
-    patronStoreExists = (patronStore != nil);
-	
-	if(patronStoreExists) {
-		punchCount = [[patronStore objectForKey:@"punch_count"] intValue];
-		
-		PFObject *facebookPost = [patronStore objectForKey:@"FacebookPost"];
-		if( !IS_NIL(facebookPost) )
-		{
-			NSString *rewardTitle = [facebookPost objectForKey:@"reward"];
-			[FacebookPost presentDialog:self.storeId withRewardTitle:rewardTitle];
-		}
-	}
-	else {
-		punchCount = 0;
-	}
-	
-	[self setStoreButtons];
-    [self.rewardTableView reloadData];
 }
 
 - (void)setStoreInformation
@@ -130,6 +100,29 @@
 	}
 }
 
+- (void)checkPatronStore
+{
+    patronStore = [sharedData getPatronStore:self.storeId];
+    patronStoreExists = (patronStore != nil);
+	
+	if(patronStoreExists) {
+		punchCount = [[patronStore objectForKey:@"punch_count"] intValue];
+		
+		PFObject *facebookPost = [patronStore objectForKey:@"FacebookPost"];
+		if( !IS_NIL(facebookPost) )
+		{
+			NSString *rewardTitle = [facebookPost objectForKey:@"reward"];
+			[FacebookPost presentDialog:self.storeId withRewardTitle:rewardTitle];
+		}
+	}
+	else {
+		punchCount = 0;
+	}
+	
+	[self setStoreButtons];
+    [self.rewardTableView reloadData];
+}
+
 #pragma mark - Store Hours & header size fixer
 - (void)setStoreHours
 {
@@ -144,7 +137,7 @@
         self.storeHoursOpen.textColor = [UIColor colorWithRed:0.0 green:(204/255.0) blue:0.0 alpha:1.0];
         self.storeHours.text = @"Open 24/7";
     }
-    else if(hours){
+    else if(hours) {
         
         self.storeHoursToday.hidden = NO;
         self.storeHours.hidden = NO;
@@ -189,34 +182,22 @@
         self.storeHoursOpen.hidden = YES;
     }
     
-    [self fixHeaderSize];
+    [self fixHeaderFrame];
 }
 
-- (void)fixHeaderSize
+- (void)fixHeaderFrame
 {
     [self.storeHours sizeToFit];
-    
-    if (self.storeHours.frame.size.height > 20 && !self.storeHours.hidden) {
-        // Resize Header if more than one line
-        UIView *header = self.tableViewController.tableView.tableHeaderView;
-        CGRect frame = headerFrame;
-        
-        frame.size.height += abs(25 - self.storeHours.frame.size.height);
-        header.frame = frame;
-        
-       self.tableViewController.tableView.tableHeaderView = header;
-    }
-    else {
-        CGRect frame = headerFrame;
-        
-        if (self.storeHours.hidden) {
-            frame.size.height -= 20;
-        }
-        UIView *header = self.tableViewController.tableView.tableHeaderView;
-        header.frame = frame;
-        self.tableViewController.tableView.tableHeaderView = header;
-    }
-    
+	
+	CGRect buttonsFrame = self.infoButtonView.frame;
+	CGFloat offset = buttonsFrame.origin.y;
+	buttonsFrame.origin.y = self.storeHours.frame.origin.y + self.storeHours.frame.size.height + 15;
+	offset = buttonsFrame.origin.y - offset;
+    self.infoButtonView.frame = buttonsFrame;
+	
+    CGRect headerFrame = self.headerView.frame;
+	headerFrame.size.height += offset;
+	self.headerView.frame = headerFrame;
 }
 
 - (void)setStoreButtons
@@ -224,14 +205,7 @@
 	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
 	CGFloat screenWidth = screenRect.size.width;
 	
-	if(!patronStoreExists)
-	{
-		[self.addToMyPlacesButton setTitle:@"Add to My Places" forState:UIControlStateNormal];
-		[self.addToMyPlacesButton setEnabled:YES];
-		[self.addToMyPlacesButton addTarget:self
-									 action:@selector(addStore)
-						   forControlEvents:UIControlEventTouchUpInside];
-		
+	if(!patronStoreExists) {
 		self.navigationItem.rightBarButtonItem = nil;
 		
 		self.feedbackButton.hidden = YES;
@@ -244,11 +218,7 @@
 		mapButtonCenter.x = screenWidth*3/4;
 		self.mapButton.center = mapButtonCenter;
 	}
-	else
-	{
-		NSString *buttonText = [NSString stringWithFormat:@"%i %@", punchCount, (punchCount == 1) ? @"Punch": @"Punches"];
-		[self.addToMyPlacesButton setTitle:buttonText forState:UIControlStateNormal];
-		[self.addToMyPlacesButton setEnabled:NO];
+	else {
 		self.navigationItem.rightBarButtonItem = deleteButton;
 		
 		self.feedbackButton.hidden = NO;
@@ -296,17 +266,53 @@
 	self.rewardTableView.tableFooterView = footer;
 }
 
-#pragma mark - Table view data source
+#pragma mark - Table view delegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 93;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 55;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return store.rewards.count;
 }
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    addToMyPlacesButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 55)];
+	addToMyPlacesButton.titleLabel.font = [RepunchUtils repunchFontWithSize:22 isBold:YES];
+	[addToMyPlacesButton setAdjustsImageWhenDisabled:NO];
+	[addToMyPlacesButton setBackgroundImage:[UIImage imageNamed:@"orange_button.png"] forState:UIControlStateNormal];
+	[addToMyPlacesButton setBackgroundImage:[UIImage imageNamed:@"orange_button_highlighted.png"] forState:UIControlStateHighlighted];
+	
+	if(!patronStoreExists) {
+		[addToMyPlacesButton setTitle:@"Add to My Places" forState:UIControlStateNormal];
+		[addToMyPlacesButton setEnabled:YES];
+		[addToMyPlacesButton addTarget:self
+									 action:@selector(addStore)
+						   forControlEvents:UIControlEventTouchUpInside];
+	}
+	else {
+		NSString *buttonText = [NSString stringWithFormat:@"%i %@", punchCount, (punchCount == 1) ? @"Punch": @"Punches"];
+		[addToMyPlacesButton setTitle:buttonText forState:UIControlStateNormal];
+		[addToMyPlacesButton setEnabled:NO];
+	}
+	
+    return addToMyPlacesButton;
+}
+
+#pragma mark - Table view data source delegate
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -332,13 +338,6 @@
     [cell setUserInteractionEnabled:patronStoreExists];
 	
     return cell;
-}
-
-#pragma mark - Table view delegate
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 93;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -473,12 +472,12 @@
 		return;
 	}
 	
-	[self.addToMyPlacesButton setTitle:@"" forState:UIControlStateNormal];
-	[self.addToMyPlacesButton setEnabled:NO];
+	[addToMyPlacesButton setTitle:@"" forState:UIControlStateNormal];
+	[addToMyPlacesButton setEnabled:NO];
 	
 	UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-	spinner.frame = self.addToMyPlacesButton.bounds;
-	[self.addToMyPlacesButton addSubview:spinner];
+	spinner.frame = addToMyPlacesButton.bounds;
+	[addToMyPlacesButton addSubview:spinner];
 	spinner.hidesWhenStopped = YES;
 	[spinner startAnimating];
 	
@@ -504,7 +503,7 @@
 		else
 		{
 			NSLog(@"add_patronStore error: %@", error);
-			[self.addToMyPlacesButton setTitle:@"Add to My Places" forState:UIControlStateNormal];
+			[addToMyPlacesButton setTitle:@"Add to My Places" forState:UIControlStateNormal];
 			[RepunchUtils showConnectionErrorDialog];
 		}
 	}];
@@ -536,12 +535,12 @@
 		return;
 	}
 	
-	[self.addToMyPlacesButton setTitle:@"" forState:UIControlStateNormal];
-	[self.addToMyPlacesButton setEnabled:NO];
+	[addToMyPlacesButton setTitle:@"" forState:UIControlStateNormal];
+	[addToMyPlacesButton setEnabled:NO];
 	
 	UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-	spinner.frame = self.addToMyPlacesButton.bounds;
-	[self.addToMyPlacesButton addSubview:spinner];
+	spinner.frame = addToMyPlacesButton.bounds;
+	[addToMyPlacesButton addSubview:spinner];
 	spinner.hidesWhenStopped = YES;
 	[spinner startAnimating];
 	
@@ -570,7 +569,7 @@
 		 {
 			 NSLog(@"delete_patronStore error: %@", error);
 			 NSString *buttonText = [NSString stringWithFormat:@"%i %@", punchCount, (punchCount == 1) ? @"Punch": @"Punches"];
-			 [self.addToMyPlacesButton setTitle:buttonText forState:UIControlStateNormal];
+			 [addToMyPlacesButton setTitle:buttonText forState:UIControlStateNormal];
 			 [RepunchUtils showConnectionErrorDialog];
 		 }
 	 }];

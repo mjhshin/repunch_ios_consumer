@@ -103,6 +103,10 @@ withCompletionHandler:(AuthenticationManagerHandler)handler;
 				 email = (id)[NSNull null]; //possible for email to be null when email becomes invalid
 			 }
 			 
+			 if(gender == nil) {
+				 gender = (id)[NSNull null]; //facebook docs says gender is part of public profile but sometimes fails
+			 }
+			 
 			 NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
 										 currentUser.objectId,	@"user_id",
 										 email,					@"email",
