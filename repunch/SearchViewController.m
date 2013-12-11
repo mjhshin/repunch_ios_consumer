@@ -220,7 +220,7 @@
     PFQuery *storeQuery = [RPStore query];
     [storeQuery whereKey:@"active" equalTo:[NSNumber numberWithBool:YES]];
 	[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation];
-	[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation withinMiles:1];
+	[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation withinMiles:50];
 	[storeQuery setLimit:20];
 	
 	if(paginate == YES) {
@@ -335,7 +335,7 @@
 	cell.storeAddress.text = street;
 	cell.storeCategories.text = formattedCategories;
 	cell.storeName.text = store.store_name;
-	cell.storeImage.image = [UIImage imageNamed:@"listview_placeholder.png"];
+	cell.storeImage.image = [UIImage imageNamed:@"store_placeholder.png"];
 	
 	// Only load cached images; defer new downloads until scrolling ends
     //if (cell.storeImage == nil)
@@ -347,14 +347,14 @@
 		UIImage *storeImage = [self.sharedData getStoreImage:storeId];
 		if(storeImage == nil)
 		{
-			cell.storeImage.image = [UIImage imageNamed:@"listview_placeholder.png"];
+			cell.storeImage.image = [UIImage imageNamed:@"store_placeholder.png"];
 			[self downloadImage:store.store_avatar forIndexPath:indexPath withStoreId:storeId];
 		} else {
 			cell.storeImage.image = storeImage;
 		}
 	} else {
 		// if a download is deferred or in progress, return a placeholder image
-		cell.storeImage.image = [UIImage imageNamed:@"listview_placeholder.png"];
+		cell.storeImage.image = [UIImage imageNamed:@"store_placeholder.png"];
 	}
 	//}
     //}

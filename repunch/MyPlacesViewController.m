@@ -302,14 +302,14 @@
             UIImage *storeImage = [self.sharedData getStoreImage:storeId];
 			if(storeImage == nil)
 			{
-				cell.storeImage.image = [UIImage imageNamed:@"listview_placeholder.png"];
+				cell.storeImage.image = [UIImage imageNamed:@"store_placeholder.png"];
 				[self downloadImage:store.store_avatar forIndexPath:indexPath withStoreId:storeId];
 			} else {
 				cell.storeImage.image = storeImage;
 			}
         } else {
 			// if a download is deferred or in progress, return a placeholder image
-			cell.storeImage.image = [UIImage imageNamed:@"listview_placeholder.png"];
+			cell.storeImage.image = [UIImage imageNamed:@"store_placeholder.png"];
 		}
 		//}
     //}

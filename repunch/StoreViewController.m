@@ -94,7 +94,7 @@
 				weakSelf.storeImage.image = avatar;
 			}
 			else {
-				weakSelf.storeImage.image = [UIImage imageNamed:@"listview_placeholder"];
+				weakSelf.storeImage.image = [UIImage imageNamed:@"store_placeholder.png"];
 			}
 		}];
 	}
