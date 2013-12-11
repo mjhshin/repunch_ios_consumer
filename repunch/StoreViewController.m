@@ -188,6 +188,9 @@
 - (void)fixHeaderFrame
 {
     [self.storeHours sizeToFit];
+	CGRect hoursFrame = self.storeHours.frame;
+	hoursFrame.size.width += 174;
+	self.storeHours.frame = hoursFrame;
 	
 	CGRect buttonsFrame = self.infoButtonView.frame;
 	CGFloat offset = buttonsFrame.origin.y;
