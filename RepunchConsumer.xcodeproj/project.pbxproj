@@ -154,6 +154,7 @@
 		EEB8A44D17EA61140020E2EE /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB8A44B17EA61140020E2EE /* SettingsViewController.m */; };
 		EEB8A44E17EA61140020E2EE /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEB8A44C17EA61140020E2EE /* SettingsViewController.xib */; };
 		EEE19EDF1858FD010084C63B /* store_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = EEE19EDE1858FD010084C63B /* store_placeholder.png */; };
+		EEE19EE2185A541A0084C63B /* RPStoreLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE19EE1185A541A0084C63B /* RPStoreLocation.m */; };
 		EEE777B117E7D2020023768B /* feedback_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEE777AF17E7D1B50023768B /* feedback_button@2x.png */; };
 		EEE777B317E7ECEB0023768B /* nav_send@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEE777B217E7ECEB0023768B /* nav_send@2x.png */; };
 /* End PBXBuildFile section */
@@ -345,6 +346,8 @@
 		EEB8A44B17EA61140020E2EE /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		EEB8A44C17EA61140020E2EE /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		EEE19EDE1858FD010084C63B /* store_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = store_placeholder.png; sourceTree = "<group>"; };
+		EEE19EE0185A541A0084C63B /* RPStoreLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPStoreLocation.h; path = repunch/RPStoreLocation.h; sourceTree = SOURCE_ROOT; };
+		EEE19EE1185A541A0084C63B /* RPStoreLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RPStoreLocation.m; path = repunch/RPStoreLocation.m; sourceTree = SOURCE_ROOT; };
 		EEE777AF17E7D1B50023768B /* feedback_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "feedback_button@2x.png"; sourceTree = "<group>"; };
 		EEE777B217E7ECEB0023768B /* nav_send@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_send@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -388,6 +391,8 @@
 				202F1DF518523DC500495BDF /* RPStore.m */,
 				202F1DF618523DC500495BDF /* RPStoreHours.h */,
 				202F1DF718523DC500495BDF /* RPStoreHours.m */,
+				EEE19EE0185A541A0084C63B /* RPStoreLocation.h */,
+				EEE19EE1185A541A0084C63B /* RPStoreLocation.m */,
 			);
 			name = RPClasses;
 			sourceTree = "<group>";
@@ -877,6 +882,7 @@
 				EE9D4C6817A83F4B005E0CC5 /* ComposeMessageViewController.m in Sources */,
 				EE9D4C7517A83F4B005E0CC5 /* InboxTableViewCell.m in Sources */,
 				EE9D4C7717A83F4B005E0CC5 /* RewardTableViewCell.m in Sources */,
+				EEE19EE2185A541A0084C63B /* RPStoreLocation.m in Sources */,
 				202F1DFC18523DC500495BDF /* RPStoreHours.m in Sources */,
 				EE9D4C7917A83F4B005E0CC5 /* MyPlacesTableViewCell.m in Sources */,
 				EE9D4C7B17A83F4B005E0CC5 /* SearchTableViewCell.m in Sources */,

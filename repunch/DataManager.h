@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
 #import "RPStore.h"
+#import "RPStoreLocation.h"
 
 @interface DataManager : NSObject
 
@@ -16,6 +17,7 @@
 // TODO: change some of these to NSCache for out-of-memory scenarios
 @property (strong, atomic) NSMutableDictionary *patronStores;
 @property (strong, atomic) NSMutableDictionary *stores;
+@property (strong, atomic) NSMutableDictionary *storeLocations;
 @property (strong, atomic) NSMutableDictionary *messageStatuses;
 //@property (strong, atomic) NSMutableDictionary *messages;
 @property (strong, atomic) NSCache *storeImageCache;
@@ -33,6 +35,10 @@
 // Store methods
 - (void)addStore:(RPStore *)store;
 - (RPStore *)getStore:(NSString *)objectId;
+
+// Store methods
+- (void)addStoreLocation:(RPStoreLocation *)storeLocation;
+- (RPStoreLocation *)getStoreLocation:(NSString *)objectId;
 
 // Store image cache methods
 - (void)addStoreImage:(UIImage *)image forKey:(NSString *)storeId;

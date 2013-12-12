@@ -12,12 +12,13 @@
 #import "AppDelegate.h"
 #import "DataManager.h"
 #import "RPConstants.h"
+#include "RPStoreLocation.h"
 
 @interface SearchViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, CLLocationManagerDelegate>
 
 @property (nonatomic, strong) DataManager* sharedData;
 @property (nonatomic, strong) PFObject* patron;
-@property (nonatomic, strong) NSMutableArray *storeIdArray;
+@property (nonatomic, strong) NSMutableArray *storeLocationIdArray;
 @property (nonatomic, strong) UITableViewController *tableViewController;
 @property (nonatomic, strong) NSMutableDictionary *imageDownloadsInProgress;
 @property (nonatomic, strong) CLLocationManager *locationManager;

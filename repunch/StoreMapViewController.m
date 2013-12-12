@@ -41,7 +41,7 @@
 	
 	DataManager *sharedData = [DataManager getSharedInstance];
 	store = [sharedData getStore:self.storeId];
-    
+    /*
 	[placeMapView setCenterCoordinate:CLLocationCoordinate2DMake(store.coordinates.latitude, store.coordinates.longitude) zoomLevel:14 animated:NO];
 
     MapPin *placePin = [[MapPin alloc] initWithCoordinates:CLLocationCoordinate2DMake(store.coordinates.latitude, store.coordinates.longitude)
@@ -49,7 +49,7 @@
 											   description:store.formattedAddress];
     
     [placeMapView addAnnotation:placePin];
-    
+    */
     [self.view addSubview:placeMapView];
 }
 
@@ -59,7 +59,7 @@
 }
 
 - (void)getDirections
-{
+{/*
     Class mapItemClass = [MKMapItem class];
     if (mapItemClass && [mapItemClass respondsToSelector:@selector(openMapsWithItems:launchOptions:)])
     {        
@@ -80,7 +80,7 @@
         [MKMapItem openMapsWithItems:@[currentLocationMapItem, mapItem]
                        launchOptions:launchOptions];
     }
-
+*/
 }
 
 - (void)mapViewDidFailLoadingMap:(MKMapView *)mapView withError:(NSError *)error

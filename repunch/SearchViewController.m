@@ -37,7 +37,7 @@
 	
 	self.sharedData = [DataManager getSharedInstance];
 	self.patron = [self.sharedData patron];
-	self.storeIdArray = [NSMutableArray array];
+	self.storeLocationIdArray = [NSMutableArray array];
     self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
 	
 	spinner.hidesWhenStopped = YES;
@@ -78,7 +78,7 @@
 	
 	UIBarButtonItem *exitButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
 																				target:self
-																				action:@selector(closeView:)];
+																				action:@selector(closeView)];
 	
 	UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
 																				   target:self
@@ -108,7 +108,7 @@
 	Reachability* reach = [Reachability reachabilityWithHostname:@"www.google.com"];
 	
 	reach.reachableBlock = ^(Reachability*reach) {
-		if(weakSelf.storeIdArray.count == 0) {
+		if(weakSelf.storeLocationIdArray.count == 0) {
 			[weakSelf refreshSearch];
 		}
 		else {
@@ -186,7 +186,7 @@
 								  withMessage:
 			 @"Location Services for Repunch can be enabled in\nSettings -> Privacy -> Location"];
 			
-			if(self.storeIdArray.count == 0) {
+			if(self.storeLocationIdArray.count == 0) {
 				self.locationServicesLabel.hidden = NO;
 			}
 			break;
@@ -217,8 +217,9 @@
 		return;
 	}
 	
-    PFQuery *storeQuery = [RPStore query];
-    [storeQuery whereKey:@"active" equalTo:[NSNumber numberWithBool:YES]];
+    PFQuery *storeQuery = [RPStoreLocation query];
+	[storeQuery includeKey:@"Store"];
+    //[storeQuery whereKey:@"Store.active" equalTo:[NSNumber numberWithBool:YES]];
 	[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation];
 	[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation withinMiles:50];
 	[storeQuery setLimit:20];
@@ -227,7 +228,7 @@
 		++paginateCount;
 		[storeQuery setSkip:paginateCount*20];
 	}
-	else if(self.storeIdArray.count == 0) {
+	else if(self.storeLocationIdArray.count == 0) {
 		[self.activityIndicatorView setHidden:NO];
 		[self.activityIndicator startAnimating];
 	}
@@ -238,7 +239,7 @@
 		 if(paginate == NO) {
 			 [self.activityIndicatorView setHidden:YES];
 			 [self.activityIndicator stopAnimating];
-			 [self.storeIdArray removeAllObjects];
+			 [self.storeLocationIdArray removeAllObjects];
 		 }
 		 
 		 if (!error) {
@@ -248,9 +249,10 @@
 				 paginateReachEnd = NO;
 			 }
 			
-			 for (RPStore *store in results) {
-				[self.sharedData addStore:store];
-				[self.storeIdArray addObject:store.objectId];
+			 for (RPStoreLocation *storeLocation in results) {
+				 [self.sharedData addStoreLocation:storeLocation];
+				 [self.sharedData addStore:storeLocation.Store];
+				 [self.storeLocationIdArray addObject:storeLocation.objectId];
 			 }
 			 
 			 if(paginate != NO && results.count == 0) {
@@ -274,7 +276,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return [self.storeIdArray count];
+	return [self.storeLocationIdArray count];
 }
  
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -288,38 +290,37 @@
 		cell.storeImage.layer.masksToBounds = YES;
     }
 	
-	NSString *storeId = self.storeIdArray[indexPath.row];
-	RPStore *store = [self.sharedData getStore:storeId];
+	NSString *storeLocationId = self.storeLocationIdArray[indexPath.row];
+	RPStoreLocation *storeLocation = [self.sharedData getStoreLocation:storeLocationId];
 
 	// Set distance to store
-	PFGeoPoint *storeLocation = store.coordinates;
-	double distanceToStore = [userLocation distanceInMilesTo:storeLocation];
+	double distanceToStore = [userLocation distanceInMilesTo:storeLocation.coordinates];
 	cell.distance.text = [NSString stringWithFormat:@"%.2f mi", distanceToStore];
 	
 	// Set address
-	NSString *street = store.street;
+	NSString *street = storeLocation.street;
 	
-	if ( !IS_NIL(store.neighborhood) ) {
-		street = [street stringByAppendingFormat:@", %@", store.neighborhood];
+	if ( !IS_NIL(storeLocation.neighborhood) ) {
+		street = [street stringByAppendingFormat:@", %@", storeLocation.neighborhood];
 	}
 	else {
-		street = [street stringByAppendingFormat:@", %@", store.city];
+		street = [street stringByAppendingFormat:@", %@", storeLocation.city];
 	}
 	
 	// Set Categories
 	NSString *formattedCategories = @"";
 	
-	for (int i = 0; i < store.categories.count; i++)
+	for (int i = 0; i < storeLocation.Store.categories.count; i++)
 	{
-		formattedCategories = [formattedCategories stringByAppendingString:[store.categories[i] objectForKey:@"name"]];
+		formattedCategories = [formattedCategories stringByAppendingString:[storeLocation.Store.categories[i] objectForKey:@"name"]];
 		
-		if (i != [store.categories count] - 1) {
+		if (i != [storeLocation.Store.categories count] - 1) {
 			formattedCategories = [formattedCategories stringByAppendingFormat:@", "];
 		}
 	}
 	
 	// Set punches and reward info
-	PFObject *patronStore = [self.sharedData getPatronStore:storeId];
+	PFObject *patronStore = [self.sharedData getPatronStore:storeLocation.Store.objectId];
 	
 	if(patronStore == nil) {
 		[cell.punchIcon setHidden:YES];
@@ -334,7 +335,7 @@
 	
 	cell.storeAddress.text = street;
 	cell.storeCategories.text = formattedCategories;
-	cell.storeName.text = store.store_name;
+	cell.storeName.text = storeLocation.Store.store_name;
 	cell.storeImage.image = [UIImage imageNamed:@"store_placeholder.png"];
 	
 	// Only load cached images; defer new downloads until scrolling ends
@@ -342,13 +343,13 @@
     //{
 	//if (self.myPlacesTableView.dragging == NO && self.myPlacesTableView.decelerating == NO)
 	//{
-	if( !IS_NIL(store.store_avatar) )
+	if( !IS_NIL(storeLocation.store_avatar) )
 	{
-		UIImage *storeImage = [self.sharedData getStoreImage:storeId];
+		UIImage *storeImage = [self.sharedData getStoreImage:storeLocationId];
 		if(storeImage == nil)
 		{
 			cell.storeImage.image = [UIImage imageNamed:@"store_placeholder.png"];
-			[self downloadImage:store.store_avatar forIndexPath:indexPath withStoreId:storeId];
+			[self downloadImage:storeLocation.store_avatar forIndexPath:indexPath withStoreId:storeLocationId];
 		} else {
 			cell.storeImage.image = storeImage;
 		}
@@ -365,9 +366,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
-	NSString *storeId = self.storeIdArray[indexPath.row];
+	NSString *storeLocationId = self.storeLocationIdArray[indexPath.row];
+	NSString *storeId = [self.sharedData getStoreLocation:storeLocationId].Store.objectId;
+	
 	StoreViewController *storeVC = [[StoreViewController alloc] init];
 	storeVC.storeId = storeId;
+	storeVC.storeLocationId = storeLocationId;
 	[self.navigationController pushViewController:storeVC animated:YES];
 }
 
@@ -421,7 +425,7 @@
 
 - (void)setFooter:(BOOL)loadInProgress
 {	
-	if(self.storeIdArray.count >= 20 && !paginateReachEnd)
+	if(self.storeLocationIdArray.count >= 20 && !paginateReachEnd)
 	{
 		UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 70)];
 		footer.backgroundColor = [UIColor clearColor];
@@ -459,7 +463,7 @@
 
 - (void)refreshTableView
 {
-	if(self.storeIdArray.count > 0) {
+	if(self.storeLocationIdArray.count > 0) {
 		[self.emptyResultsLabel setHidden:YES];
 	}
 	else {
@@ -468,7 +472,7 @@
 	[self.tableViewController.tableView reloadData];
 }
 
-- (IBAction)closeView:(id)sender
+- (void)closeView
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }

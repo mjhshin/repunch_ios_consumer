@@ -80,7 +80,7 @@
 					for(PFObject *patron in results)
 					{
 						[self.friendDictionary setObject:patron.objectId forKey:[patron objectForKey:@"facebook_id"]];
-						NSLog(@"patronid: %@, fbookId: %@", patron.objectId, [patron objectForKey:@"facebook_id"]);
+						//NSLog(@"patronid: %@, fbookId: %@", patron.objectId, [patron objectForKey:@"facebook_id"]);
 					}
 					[self loadData];
 					self.spinner.hidden = YES;

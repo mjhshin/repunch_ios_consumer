@@ -26,6 +26,7 @@ static DataManager *sharedDataManager = nil;    // static instance variable
 	{
         self.patronStores = [[NSMutableDictionary alloc] init];
         self.stores = [[NSMutableDictionary alloc] init];
+		self.storeLocations = [[NSMutableDictionary alloc] init];
         self.storeImageCache = [[NSCache alloc] init];
         self.messageStatuses = [[NSMutableDictionary alloc] init];
 	}
@@ -36,6 +37,7 @@ static DataManager *sharedDataManager = nil;    // static instance variable
 {
 	[self.patronStores removeAllObjects];
 	[self.stores removeAllObjects];
+	[self.storeLocations removeAllObjects];
 	[self.messageStatuses removeAllObjects];
 }
 
@@ -74,6 +76,17 @@ static DataManager *sharedDataManager = nil;    // static instance variable
 - (RPStore *)getStore:(NSString *)objectId
 {
 	return [self.stores objectForKey:objectId];
+}
+
+// StoreLocation methods
+- (void)addStoreLocation:(RPStoreLocation *)storeLocation
+{
+	[self.storeLocations setObject:storeLocation forKey:storeLocation.objectId];
+}
+
+- (RPStoreLocation *)getStoreLocation:(NSString *)objectId
+{
+	return [self.storeLocations objectForKey:objectId];
 }
 
 // Store image cache methods

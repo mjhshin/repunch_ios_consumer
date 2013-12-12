@@ -8,6 +8,7 @@
 
 #import "RPStore.h"
 #import <Parse/PFObject+Subclass.h>
+#import "DataManager.h"
 
 @interface RPStore()
 
@@ -15,51 +16,22 @@
 
 @implementation RPStore
 
-#pragma mark - properties synthesize
-
+#pragma mark - Synthesize properties
 @synthesize avatar;
-@synthesize hoursManager;
-@synthesize m_storeHoursManager;
 
 @dynamic active;
+@dynamic store_avatar;
 @dynamic rewards;
-@dynamic hours;
 @dynamic categories;
 @dynamic store_name;
-@dynamic street;
-@dynamic cross_streets;
-@dynamic neighborhood;
-@dynamic state;
-@dynamic city;
-@dynamic zip;
-@dynamic phone_number;
-@dynamic store_avatar;
 @dynamic punches_facebook;
-@dynamic coordinates;
+@dynamic StoreLocations;
 
 #pragma mark - Parse
 
 + (NSString *)parseClassName
 {
     return @"Store";
-}
-
-#pragma mark - Update Store
-
-- (void)updateStoreInfoWithCompletionHandler:(StoreUpdateHandler)handler
-{
-    __weak typeof (self) weakSelf = self;
-    
-    [self refreshInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        if (!error) {
-            weakSelf.m_storeHoursManager = nil;
-            BLOCK_SAFE_RUN(handler, weakSelf, kRPErrorNone);
-        }
-        else {
-            RPErrorCode errorCode = ([error code] == kPFErrorConnectionFailed) ? kRPErrorNetworkConnection : kRPErrorDidFailUnknown;
-            BLOCK_SAFE_RUN(handler, weakSelf, errorCode);
-        }
-    }];
 }
 
 - (void)updateStoreAvatarWithCompletionHander:(StoreAvatarUpdateHandler)handler
@@ -80,31 +52,6 @@
             BLOCK_SAFE_RUN(handler, nil, error);
         }
     }];
-}
-
-- (NSString *)formattedAddress
-{
-    NSString *street = self.street;
-    
-    if( !IS_NIL(self.cross_streets) ) {
-        street = [[street stringByAppendingString:@"\n"] stringByAppendingString:self.cross_streets];
-	}
-    
-    if( !IS_NIL(self.neighborhood) ) {
-        street = [[street stringByAppendingString:@"\n"] stringByAppendingString:self.neighborhood];
-	}
-    
-    street = [street stringByAppendingString:[NSString stringWithFormat:@"\n%@, %@ %@", self.city, self.state, self.zip]];
-    
-    return street;
-}
-
-- (RPStoreHours *)hoursManager
-{
-    if (!m_storeHoursManager) {
-        m_storeHoursManager = [[RPStoreHours alloc] initWithStoreHoursArray:self.hours];
-    }
-    return m_storeHoursManager;
 }
 
 @end

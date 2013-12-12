@@ -12,6 +12,7 @@
 {
 	DataManager *sharedData;
 	RPStore *store;
+	RPStoreLocation *storeLocation;
 	PFObject *patron;
 	PFObject *patronStore;
 	BOOL patronStoreExists;
@@ -73,7 +74,7 @@
 {
 	self.navigationItem.title = store.store_name;
 	
-	self.storeAddress.text = store.formattedAddress;
+	self.storeAddress.text = @"Multiple Locations";//store.formattedAddress;
 	[self.storeAddress sizeToFit];
 	
     [self setStoreHours];
@@ -126,7 +127,8 @@
 #pragma mark - Store Hours & header size fixer
 - (void)setStoreHours
 {
-    RPStoreHours *hours = store.hoursManager;
+    //RPStoreHours *hours = store.hoursManager;
+	/*
     
     if (hours.isOpenAlways) {
         self.storeHoursToday.hidden = NO;
@@ -174,13 +176,13 @@
             self.storeHoursOpen.textColor = [UIColor colorWithRed:(224/255.0) green:0.0 blue:0.0 alpha:1.0];
         }
     }
-    else {
+    else {*/
         // If no hours are set
         self.storeHours.text = @"";
         self.storeHoursToday.hidden = YES;
         self.storeHours.hidden = YES;
         self.storeHoursOpen.hidden = YES;
-    }
+    //}
     
     [self fixHeaderFrame];
 }
@@ -436,10 +438,12 @@
 
 - (IBAction)callButtonAction:(id)sender
 {
-    NSString *phoneNumber = [store.phone_number stringByReplacingOccurrencesOfString:@"[^0-9]"
+    /*NSString *phoneNumber = [store.phone_number stringByReplacingOccurrencesOfString:@"[^0-9]"
 															  withString:@""
 																 options:NSRegularExpressionSearch
-																   range:NSMakeRange(0, store.phone_number.length)];
+																   range:NSMakeRange(0, store.phone_number.length)];*/
+	
+	NSString * phoneNumber = @"(123) 456-7890";
 	
     NSString *phoneNumberUrl = [@"tel://" stringByAppendingString:phoneNumber];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumberUrl]];
