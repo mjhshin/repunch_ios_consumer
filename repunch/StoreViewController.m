@@ -6,6 +6,7 @@
 //
 
 #import "StoreViewController.h"
+#import "StoreDetailViewController.h"
 #import "RPStore.h"
 
 @implementation StoreViewController
@@ -48,8 +49,16 @@
 											   object:nil];
     
 	sharedData = [DataManager getSharedInstance];
-	store = [sharedData getStore:self.storeId];
 	patron = [sharedData patron];
+	store = [sharedData getStore:self.storeId];
+	
+	if(self.storeLocationId != nil) {
+		storeLocation = [sharedData getStoreLocation:self.storeLocationId];
+	}
+	else if(store.store_locations.count == 1) {
+		storeLocation = store.store_locations[0];
+		self.storeLocationId = storeLocation.objectId;
+	}
 	
 	[[NSBundle mainBundle] loadNibNamed:@"StoreHeaderView" owner:self options:nil];
 	
@@ -73,31 +82,53 @@
 - (void)setStoreInformation
 {
 	self.navigationItem.title = store.store_name;
+	UIImage *storeImage;
 	
-	self.storeAddress.text = @"Multiple Locations";//store.formattedAddress;
+	if(self.storeLocationId != nil) {
+		storeImage = [sharedData getStoreImage:self.storeLocationId];
+		self.storeAddress.text = storeLocation.formattedAddress;
+		[self setStoreHours];
+	} else {
+		storeImage = [sharedData getStoreImage:self.storeId];
+		self.storeAddress.text = @"Multiple Locations";
+	}
+	
 	[self.storeAddress sizeToFit];
-	
-    [self setStoreHours];
 
 	self.storeImage.layer.cornerRadius = 10;
 	self.storeImage.layer.masksToBounds = YES;
-	
-	UIImage *storeImage = [sharedData getStoreImage:self.storeId];
-	
+
 	if(storeImage != nil) {
 		self.storeImage.image = storeImage;
 	}
 	else {
+		self.storeImage.image = [UIImage imageNamed:@"store_placeholder.png"];
+		
 		__weak typeof(self) weakSelf = self;
-		[store updateStoreAvatarWithCompletionHander:^(UIImage *avatar, NSError *error) {
+		
+		if(self.storeLocationId != nil) {
+			[store updateStoreAvatarWithCompletionHander:^(UIImage *avatar, NSError *error) {
 			
-			if (avatar) {
-				weakSelf.storeImage.image = avatar;
-			}
-			else {
-				weakSelf.storeImage.image = [UIImage imageNamed:@"store_placeholder.png"];
-			}
-		}];
+				if (avatar) {
+					weakSelf.storeImage.image = avatar;
+				}
+				else {
+					weakSelf.storeImage.image = [UIImage imageNamed:@"store_placeholder.png"];
+				}
+			}];
+		}
+		else {
+			[storeLocation updateStoreAvatarWithCompletionHander:^(UIImage *avatar, NSError *error) {
+				
+				if (avatar) {
+					weakSelf.storeImage.image = avatar;
+				}
+				else {
+					weakSelf.storeImage.image = [UIImage imageNamed:@"store_placeholder.png"];
+				}
+			}];
+		}
+		
 	}
 }
 
@@ -127,8 +158,7 @@
 #pragma mark - Store Hours & header size fixer
 - (void)setStoreHours
 {
-    //RPStoreHours *hours = store.hoursManager;
-	/*
+    RPStoreHours *hours = storeLocation.hoursManager;
     
     if (hours.isOpenAlways) {
         self.storeHoursToday.hidden = NO;
@@ -176,13 +206,13 @@
             self.storeHoursOpen.textColor = [UIColor colorWithRed:(224/255.0) green:0.0 blue:0.0 alpha:1.0];
         }
     }
-    else {*/
+    else {
         // If no hours are set
         self.storeHours.text = @"";
         self.storeHoursToday.hidden = YES;
         self.storeHours.hidden = YES;
         self.storeHoursOpen.hidden = YES;
-    //}
+    }
     
     [self fixHeaderFrame];
 }
@@ -196,7 +226,8 @@
 	
 	CGRect buttonsFrame = self.infoButtonView.frame;
 	CGFloat offset = buttonsFrame.origin.y;
-	buttonsFrame.origin.y = self.storeHours.frame.origin.y + self.storeHours.frame.size.height + 15;
+	CGRect storeImageFrame = self.storeImage.frame;
+	buttonsFrame.origin.y = MAX(storeImageFrame.origin.y + storeImageFrame.size.height, hoursFrame.origin.y + hoursFrame.size.height) + 15;
 	offset = buttonsFrame.origin.y - offset;
     self.infoButtonView.frame = buttonsFrame;
 	
@@ -269,6 +300,13 @@
 	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 1)];
 	footer.backgroundColor = [UIColor clearColor];
 	self.rewardTableView.tableFooterView = footer;
+	
+	// Make header selectable
+	UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureHandler:)];
+	[gestureRecognizer setDelegate:self];
+	gestureRecognizer.numberOfTouchesRequired = 1;
+	gestureRecognizer.numberOfTapsRequired = 1;
+	[self.rewardTableView.tableHeaderView addGestureRecognizer:gestureRecognizer];
 }
 
 #pragma mark - Table view delegate

@@ -183,7 +183,7 @@
 	
     PFRelation *patronStoreRelation = [self.patron relationforKey:@"PatronStores"];
     PFQuery *patronStoreQuery = [patronStoreRelation query];
-    [patronStoreQuery includeKey:@"Store"];
+    [patronStoreQuery includeKey:@"Store.store_locations"];
 	[patronStoreQuery includeKey:@"FacebookPost"];
 	//[patronStoreQuery setLimit:20];
 
@@ -203,6 +203,7 @@
 				for (PFObject *patronStore in results)
 				{
 					RPStore *store = [patronStore objectForKey:@"Store"];
+					NSLog(@"store: %@", patronStore);
 					[weakSelf.sharedData addPatronStore:patronStore forKey:store.objectId];
 					[weakSelf.sharedData addStore:store];
 					[weakSelf.storeIdArray addObject:store.objectId];

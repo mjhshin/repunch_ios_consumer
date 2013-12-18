@@ -25,7 +25,7 @@
 @dynamic categories;
 @dynamic store_name;
 @dynamic punches_facebook;
-@dynamic StoreLocations;
+@dynamic store_locations;
 
 #pragma mark - Parse
 

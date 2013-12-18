@@ -22,8 +22,7 @@
 @property (assign, readonly, atomic) BOOL punches_facebook;
 @property (strong, readonly, atomic) NSArray *categories;
 @property (strong, readonly, atomic) NSArray *rewards;
-
-@property (strong, readonly, atomic) PFRelation *StoreLocations;
+@property (strong, readonly, atomic) NSArray *store_locations;
 
 // Not Inherited
 @property (strong, readonly, atomic) UIImage *avatar;

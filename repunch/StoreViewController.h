@@ -18,7 +18,8 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
-@interface StoreViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, FacebookFriendsDelegate>
+@interface StoreViewController : UIViewController<UITableViewDataSource, UITableViewDelegate,
+													UIGestureRecognizerDelegate, FacebookFriendsDelegate>
 
 @property (nonatomic, strong) NSString *storeId;
 @property (nonatomic, strong) NSString *storeLocationId;
