@@ -67,12 +67,10 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="distance" destination="c7a-wv-DkU" id="gDu-Tr-d6H"/>
-                <outlet property="locationDistance" destination="c7a-wv-DkU" id="Owh-Jl-yJd"/>
+                <outlet property="locationDistance" destination="c7a-wv-DkU" id="tYM-A1-xvP"/>
                 <outlet property="locationHours" destination="c9K-eC-7QT" id="4By-S1-c9P"/>
                 <outlet property="locationSubtitle" destination="tSz-v9-V1T" id="PvN-JC-PZh"/>
                 <outlet property="locationTitle" destination="Tsy-cY-oUi" id="Qur-tn-9oT"/>
-                <outlet property="storeName" destination="Tsy-cY-oUi" id="uuU-2l-lK1"/>
             </connections>
         </tableViewCell>
     </objects>

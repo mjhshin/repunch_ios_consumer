@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "RPStore.h"
 
-@interface StoreDetailViewController : UITableViewController
+@interface StoreDetailViewController : UITableViewController <CLLocationManagerDelegate>
 
 @property (nonatomic, strong) RPStore *store;
 

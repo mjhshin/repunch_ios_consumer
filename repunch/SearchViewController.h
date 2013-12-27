@@ -21,7 +21,6 @@
 @property (nonatomic, strong) NSMutableArray *storeLocationIdArray;
 @property (nonatomic, strong) UITableViewController *tableViewController;
 @property (nonatomic, strong) NSMutableDictionary *imageDownloadsInProgress;
-@property (nonatomic, strong) CLLocationManager *locationManager;
 
 @property (weak, nonatomic) IBOutlet UIView *activityIndicatorView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;

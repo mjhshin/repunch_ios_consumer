@@ -9,6 +9,7 @@
 
 @implementation SearchViewController
 {
+	CLLocationManager *locationManager;
 	PFGeoPoint *userLocation;
 	BOOL searchResultsLoaded;
 	int paginateCount;
@@ -30,10 +31,10 @@
 	[self setupNavigationBar];
 	[self setupTableView];
 
-	self.locationManager = [[CLLocationManager alloc] init];
-	self.locationManager.delegate = self;
-	self.locationManager.distanceFilter = kCLDistanceFilterNone; //filter out negligible changes in location (disabled for now)
-	self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+	locationManager = [[CLLocationManager alloc] init];
+	locationManager.delegate = self;
+	locationManager.distanceFilter = kCLDistanceFilterNone; //filter out negligible changes in location (disabled for now)
+	locationManager.desiredAccuracy = kCLLocationAccuracyBest;
 	
 	self.sharedData = [DataManager getSharedInstance];
 	self.patron = [self.sharedData patron];
@@ -49,13 +50,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-	[self.locationManager startUpdatingLocation];
+	[locationManager startUpdatingLocation];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-	[self.locationManager stopUpdatingLocation];
+	[locationManager stopUpdatingLocation];
 }
 
 - (void)didReceiveMemoryWarning
@@ -207,7 +208,7 @@
 		return;
 	}
 	
-	[self.locationManager startUpdatingLocation];
+	[locationManager startUpdatingLocation];
 }
 
 - (void)performSearch:(BOOL)paginate

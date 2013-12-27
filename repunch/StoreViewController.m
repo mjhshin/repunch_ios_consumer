@@ -91,6 +91,9 @@
 	} else {
 		storeImage = [sharedData getStoreImage:self.storeId];
 		self.storeAddress.text = @"Multiple Locations";
+		self.storeHours.hidden = YES;
+		self.storeHoursOpen.hidden = YES;
+		self.storeHoursToday.hidden = YES;
 	}
 	
 	[self.storeAddress sizeToFit];
@@ -302,11 +305,20 @@
 	self.rewardTableView.tableFooterView = footer;
 	
 	// Make header selectable
-	UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureHandler:)];
+	UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureHandler)];
 	[gestureRecognizer setDelegate:self];
 	gestureRecognizer.numberOfTouchesRequired = 1;
 	gestureRecognizer.numberOfTapsRequired = 1;
 	[self.rewardTableView.tableHeaderView addGestureRecognizer:gestureRecognizer];
+}
+
+- (void)gestureHandler
+{
+	self.tableViewController.tableView.backgroundColor = [UIColor lightGrayColor];
+	StoreDetailViewController *storeDetailVC = [[StoreDetailViewController alloc] init];
+	storeDetailVC.store = store;
+	[self.navigationController pushViewController:storeDetailVC animated:YES];
+	self.tableViewController.tableView.backgroundColor = [UIColor clearColor];
 }
 
 #pragma mark - Table view delegate

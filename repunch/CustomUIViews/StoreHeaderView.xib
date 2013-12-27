@@ -13,6 +13,7 @@
                 <outlet property="infoButtonView" destination="VcM-Zh-CJC" id="T5r-O4-3n8"/>
                 <outlet property="mapButton" destination="G7H-61-uZN" id="Meh-y2-1NX"/>
                 <outlet property="storeAddress" destination="tFu-Gl-aqI" id="jNW-lr-U1k"/>
+                <outlet property="storeDetailArrow" destination="mlx-JI-wRQ" id="V3J-RF-YI2"/>
                 <outlet property="storeHours" destination="Mxc-iM-9Jg" id="SnM-eE-BuD"/>
                 <outlet property="storeHoursOpen" destination="T5Z-N7-wKN" id="NCT-L9-fCm"/>
                 <outlet property="storeHoursToday" destination="YDo-XK-ba2" id="Oe6-jI-fdy"/>
@@ -122,6 +123,10 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                 </view>
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nav_forward.png" id="mlx-JI-wRQ">
+                    <rect key="frame" x="292" y="58" width="28" height="28"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
         </view>
@@ -130,5 +135,6 @@
         <image name="call_button.png" width="24" height="24"/>
         <image name="feedback_button.png" width="24" height="24"/>
         <image name="map_button.png" width="24" height="24"/>
+        <image name="nav_forward.png" width="24" height="24"/>
     </resources>
 </document>

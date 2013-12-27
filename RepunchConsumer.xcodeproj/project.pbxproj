@@ -149,6 +149,8 @@
 		EEA181B717CC499C00553336 /* RepunchUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA181B617CC499B00553336 /* RepunchUtils.m */; };
 		EEA181C217CD20D300553336 /* map_button_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = EEA181BC17CD20D300553336 /* map_button_highlighted.png */; };
 		EEA181C317CD20D300553336 /* map_button_highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEA181BD17CD20D300553336 /* map_button_highlighted@2x.png */; };
+		EEB75A8D186E187700AA4F89 /* nav_forward.png in Resources */ = {isa = PBXBuildFile; fileRef = EEB75A8B186E187700AA4F89 /* nav_forward.png */; };
+		EEB75A8E186E187700AA4F89 /* nav_forward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEB75A8C186E187700AA4F89 /* nav_forward@2x.png */; };
 		EEB8A44117EA314B0020E2EE /* splash_screen_640x960.png in Resources */ = {isa = PBXBuildFile; fileRef = EEB8A43E17EA314B0020E2EE /* splash_screen_640x960.png */; };
 		EEB8A44217EA314B0020E2EE /* splash_screen_640x1136.png in Resources */ = {isa = PBXBuildFile; fileRef = EEB8A43F17EA314B0020E2EE /* splash_screen_640x1136.png */; };
 		EEB8A44D17EA61140020E2EE /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB8A44B17EA61140020E2EE /* SettingsViewController.m */; };
@@ -346,6 +348,8 @@
 		EEA181B617CC499B00553336 /* RepunchUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepunchUtils.m; sourceTree = "<group>"; };
 		EEA181BC17CD20D300553336 /* map_button_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_button_highlighted.png; sourceTree = "<group>"; };
 		EEA181BD17CD20D300553336 /* map_button_highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_button_highlighted@2x.png"; sourceTree = "<group>"; };
+		EEB75A8B186E187700AA4F89 /* nav_forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_forward.png; sourceTree = "<group>"; };
+		EEB75A8C186E187700AA4F89 /* nav_forward@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_forward@2x.png"; sourceTree = "<group>"; };
 		EEB8A43E17EA314B0020E2EE /* splash_screen_640x960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash_screen_640x960.png; sourceTree = "<group>"; };
 		EEB8A43F17EA314B0020E2EE /* splash_screen_640x1136.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash_screen_640x1136.png; sourceTree = "<group>"; };
 		EEB8A44A17EA61140020E2EE /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -661,6 +665,8 @@
 				EE79DF7517BD702500E92DE5 /* nav_delete@2x.png */,
 				EE79DF7617BD702500E92DE5 /* nav_exit.png */,
 				EE79DF7717BD702500E92DE5 /* nav_exit@2x.png */,
+				EEB75A8B186E187700AA4F89 /* nav_forward.png */,
+				EEB75A8C186E187700AA4F89 /* nav_forward@2x.png */,
 				EEA181AE17C95D1D00553336 /* nav_reply.png */,
 				EEA181AF17C95D1D00553336 /* nav_reply@2x.png */,
 				EE79DF7817BD702500E92DE5 /* nav_search.png */,
@@ -814,6 +820,7 @@
 				EE9D4F0D17A84ABB005E0CC5 /* ic_tab_my_places.png in Resources */,
 				EE04ABE3182872BB00DDA5D0 /* orange_button_highlighted.png in Resources */,
 				EEB8A44117EA314B0020E2EE /* splash_screen_640x960.png in Resources */,
+				EEB75A8D186E187700AA4F89 /* nav_forward.png in Resources */,
 				EE9D4F0E17A84ABB005E0CC5 /* ic_tab_my_places_small.png in Resources */,
 				EE54EF52183545D200518C79 /* delete_icon@2x.png in Resources */,
 				EE9D4F0F17A84ABB005E0CC5 /* ic_tab_punch_tiny.png in Resources */,
@@ -851,6 +858,7 @@
 				EE5378CA17B2FEA9002D8B18 /* call_button.png in Resources */,
 				EE5378CC17B2FEA9002D8B18 /* feedback_button.png in Resources */,
 				EE06E66217E7525000073AAF /* app_icon_114x114.png in Resources */,
+				EEB75A8E186E187700AA4F89 /* nav_forward@2x.png in Resources */,
 				EE5378CE17B2FEA9002D8B18 /* map_button.png in Resources */,
 				EE04ABE4182872BB00DDA5D0 /* orange_button.png in Resources */,
 				EE79DF4F17BAA37C00E92DE5 /* MessageAttachment.xib in Resources */,
