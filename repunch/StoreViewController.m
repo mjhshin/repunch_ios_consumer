@@ -305,7 +305,8 @@
 	self.rewardTableView.tableFooterView = footer;
 	
 	// Make header selectable
-	UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureHandler)];
+	UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+																						action:@selector(gestureHandler)];
 	[gestureRecognizer setDelegate:self];
 	gestureRecognizer.numberOfTouchesRequired = 1;
 	gestureRecognizer.numberOfTapsRequired = 1;
@@ -314,11 +315,11 @@
 
 - (void)gestureHandler
 {
-	self.tableViewController.tableView.backgroundColor = [UIColor lightGrayColor];
+	self.tableViewController.tableView.tableHeaderView.backgroundColor = [UIColor lightGrayColor];
 	StoreDetailViewController *storeDetailVC = [[StoreDetailViewController alloc] init];
 	storeDetailVC.store = store;
 	[self.navigationController pushViewController:storeDetailVC animated:YES];
-	self.tableViewController.tableView.backgroundColor = [UIColor clearColor];
+	self.headerView.backgroundColor = [UIColor clearColor];
 }
 
 #pragma mark - Table view delegate

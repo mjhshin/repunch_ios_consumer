@@ -7,7 +7,7 @@
 //
 
 #import "StoreDetailViewController.h"
-#import "StoreLocationViewController.h"
+#import "LocationViewController.h"
 #import "StoreDetailTableViewCell.h"
 #import "RPStoreLocation.h"
 #import "RepunchUtils.h"
@@ -70,7 +70,7 @@
 	NSDate* eventDate = location.timestamp;
 	NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
 	
-    if(abs(howRecent) > 60) //if result is older than 1 minute
+    if(userLocation == nil || abs(howRecent) > 60) //if result is older than 1 minute
 	{
 		NSLog(@"latitude %+.6f, longitude %+.6f\n",
 			  location.coordinate.latitude, location.coordinate.longitude);
@@ -122,7 +122,7 @@
 	RPStoreLocation *storeLocation = self.store.store_locations[indexPath.row];
     
 	cell.locationTitle.text = storeLocation.street;
-	cell.locationSubtitle.text = storeLocation.city;
+	cell.locationSubtitle.text = [NSString stringWithFormat:@"%@, %@", storeLocation.city, storeLocation.state];
 	//cell.locationHours;
 	
 	if(userLocation != nil) {
@@ -141,7 +141,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    StoreLocationViewController *storeLocationVC = [[StoreLocationViewController alloc] init];
+    LocationViewController *storeLocationVC = [[LocationViewController alloc] init];
     
     // Push the view controller.
     [self.navigationController pushViewController:storeLocationVC animated:YES];
