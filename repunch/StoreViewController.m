@@ -668,6 +668,7 @@
 	{
 		PFQuery *query = [PFQuery queryWithClassName:@"PatronStore"];
 		[query includeKey:@"Store"];
+        [query includeKey:@"Store.store_locations"];
 		[query includeKey:@"FacebookPost"];
 		[query getObjectInBackgroundWithId:patronStore.objectId block:^(PFObject *result, NSError *error)
 		 {
