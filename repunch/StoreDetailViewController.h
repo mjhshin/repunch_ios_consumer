@@ -12,5 +12,6 @@
 @interface StoreDetailViewController : UITableViewController <CLLocationManagerDelegate>
 
 @property (nonatomic, strong) RPStore *store;
+@property (nonatomic, strong) NSMutableArray *locationsArray;
 
 @end

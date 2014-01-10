@@ -13,6 +13,7 @@
 + (StoreDetailTableViewCell *)cell;
 + (NSString *)reuseIdentifier;
 
+@property (weak, nonatomic) IBOutlet UIImageView *locationImage;
 @property (weak, nonatomic) IBOutlet UILabel *locationTitle;
 @property (weak, nonatomic) IBOutlet UILabel *locationSubtitle;
 @property (weak, nonatomic) IBOutlet UILabel *locationHours;

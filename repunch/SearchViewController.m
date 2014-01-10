@@ -296,7 +296,12 @@
 
 	// Set distance to store
 	double distanceToStore = [userLocation distanceInMilesTo:storeLocation.coordinates];
-	cell.distance.text = [NSString stringWithFormat:@"%.2f mi", distanceToStore];
+	if(distanceToStore < 0.1) {
+		cell.distance.text = [NSString stringWithFormat:@"%.0f ft", distanceToStore*5280];
+	}
+	else {
+		cell.distance.text = [NSString stringWithFormat:@"%.1f mi", distanceToStore];
+	}
 	
 	// Set address
 	NSString *street = storeLocation.street;
@@ -378,7 +383,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 110;
+    return 106;
 }
 
 - (void)downloadImage:(PFFile *)imageFile forIndexPath:(NSIndexPath *)indexPath withStoreId:(NSString *)storeId

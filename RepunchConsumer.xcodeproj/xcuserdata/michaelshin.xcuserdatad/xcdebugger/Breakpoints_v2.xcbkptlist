@@ -200,7 +200,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "repunch/StoreDetailViewController.m"
-            timestampString = "409866267.793308"
+            timestampString = "410997970.389649"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "116"
@@ -216,7 +216,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "repunch/StoreDetailViewController.m"
-            timestampString = "409866269.187866"
+            timestampString = "410997970.389649"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "115"
@@ -232,11 +232,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "repunch/StoreDetailViewController.m"
-            timestampString = "409866273.052927"
+            timestampString = "410997970.389649"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "129"
-            endingLineNumber = "129"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -286,6 +286,38 @@
             startingLineNumber = "170"
             endingLineNumber = "170"
             landmarkName = "-locationManager:didUpdateLocations:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "repunch/StoreDetailViewController.m"
+            timestampString = "410997970.389649"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
+            landmarkName = "-sortLocationsByDistance"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "repunch/StoreDetailViewController.m"
+            timestampString = "410997970.389649"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

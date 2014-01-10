@@ -33,7 +33,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="100 Punches" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6">
-                        <rect key="frame" x="134" y="43" width="176" height="18"/>
+                        <rect key="frame" x="132" y="43" width="178" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="gQC-FA-Ojz"/>
@@ -51,7 +51,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Reward Available" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="36">
-                        <rect key="frame" x="134" y="67" width="176" height="18"/>
+                        <rect key="frame" x="132" y="67" width="178" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="sPq-ws-EDV"/>
@@ -71,9 +71,9 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="6" firstAttribute="trailing" secondItem="36" secondAttribute="trailing" id="0i4-SV-JUe"/>
-                    <constraint firstItem="6" firstAttribute="leading" secondItem="7" secondAttribute="trailing" constant="8" id="2v4-Vy-bFO"/>
+                    <constraint firstItem="6" firstAttribute="leading" secondItem="7" secondAttribute="trailing" constant="6" id="2v4-Vy-bFO"/>
                     <constraint firstItem="7" firstAttribute="leading" secondItem="5" secondAttribute="trailing" constant="16" id="7ok-wd-JiZ"/>
-                    <constraint firstItem="36" firstAttribute="leading" secondItem="37" secondAttribute="trailing" constant="8" id="FHI-vf-NHE"/>
+                    <constraint firstItem="36" firstAttribute="leading" secondItem="37" secondAttribute="trailing" constant="6" id="FHI-vf-NHE"/>
                     <constraint firstItem="3" firstAttribute="leading" secondItem="5" secondAttribute="trailing" constant="12" id="G3P-Rq-dPh"/>
                     <constraint firstItem="6" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" id="Iax-s7-jcZ"/>
                     <constraint firstItem="6" firstAttribute="centerY" secondItem="7" secondAttribute="centerY" id="LdS-N8-1zY"/>

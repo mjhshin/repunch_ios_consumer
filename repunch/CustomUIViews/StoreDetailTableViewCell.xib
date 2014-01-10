@@ -82,6 +82,7 @@
             <connections>
                 <outlet property="locationDistance" destination="c7a-wv-DkU" id="tYM-A1-xvP"/>
                 <outlet property="locationHours" destination="c9K-eC-7QT" id="4By-S1-c9P"/>
+                <outlet property="locationImage" destination="B2K-bH-Te3" id="0Wo-c7-oU0"/>
                 <outlet property="locationSubtitle" destination="tSz-v9-V1T" id="PvN-JC-PZh"/>
                 <outlet property="locationTitle" destination="Tsy-cY-oUi" id="Qur-tn-9oT"/>
             </connections>

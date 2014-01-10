@@ -108,7 +108,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return self.store.store_locations.count;
+	return self.locationsArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -117,16 +117,18 @@
 	
 	if (cell == nil) {
         cell = [StoreDetailTableViewCell cell];
+		cell.locationImage.layer.cornerRadius = 8.0;
+		cell.locationImage.layer.masksToBounds = YES;
     }
 	
-	RPStoreLocation *storeLocation = self.store.store_locations[indexPath.row];
+	RPStoreLocation *storeLocation = self.locationsArray[indexPath.row];
     
 	cell.locationTitle.text = storeLocation.street;
 	cell.locationSubtitle.text = [NSString stringWithFormat:@"%@, %@", storeLocation.city, storeLocation.state];
 	//cell.locationHours;
 	
 	if(userLocation != nil) {
-		double distanceToStore = [userLocation distanceInMilesTo:storeLocation.coordinates];
+		float distanceToStore = [userLocation distanceInMilesTo:storeLocation.coordinates];
 		cell.locationDistance.text = [NSString stringWithFormat:@"%.2f mi", distanceToStore];
 		cell.locationDistance.hidden = NO;
 	}
@@ -149,30 +151,32 @@
 
 - (void)reloadTableView
 {
+	self.locationsArray = [NSMutableArray arrayWithArray:self.store.store_locations];//[self.store.store_locations mutableCopy];
+	[self sortLocationsByDistance];
 	[self.tableView reloadData];
-	
-	
 }
 
-- (void)sortStoreObjectIdsByPunches
-{/*
-	[self.storeIdArray sortUsingComparator:^NSComparisonResult(NSString *objectId1, NSString *objectId2)
+- (void)sortLocationsByDistance
+{
+	if(userLocation == nil) {
+		return;
+	}
+	
+	[self.locationsArray sortUsingComparator:^NSComparisonResult(RPStoreLocation *location1, RPStoreLocation *location2)
 	 {
-		 PFObject* patronStore1 = [self.sharedData getPatronStore:objectId1];
-		 PFObject* patronStore2 = [self.sharedData getPatronStore:objectId2];
+		 double distance1 = [userLocation distanceInMilesTo:location1.coordinates];
+		 double distance2 = [userLocation distanceInMilesTo:location2.coordinates];
 		 
-		 NSNumber* punchCount1 = [patronStore1 objectForKey:@"punch_count"];
-		 NSNumber* punchCount2 = [patronStore2 objectForKey:@"punch_count"];
-		 
-		 if( [punchCount2 compare:punchCount1] == NSOrderedSame ) {
-			 NSNumber* allTimePunchCount1 = [patronStore1 objectForKey:@"all_time_punches"];
-			 NSNumber* allTimePunchCount2 = [patronStore2 objectForKey:@"all_time_punches"];
-			 return [allTimePunchCount2 compare:allTimePunchCount1];
+		 if(distance1 == distance2) {
+			 return NSOrderedSame;
+		 }
+		 else if(distance1 > distance2) {
+			 return NSOrderedDescending;
 		 }
 		 else {
-			 return [punchCount2 compare:punchCount1];
+			 return NSOrderedAscending;
 		 }
-	 }];*/
+	 }];
 }
 
 @end

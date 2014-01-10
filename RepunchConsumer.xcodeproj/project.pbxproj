@@ -40,7 +40,6 @@
 		EE06E66117E7525000073AAF /* app_icon_80x80.png in Resources */ = {isa = PBXBuildFile; fileRef = EE06E65B17E7525000073AAF /* app_icon_80x80.png */; };
 		EE06E66217E7525000073AAF /* app_icon_114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = EE06E65C17E7525000073AAF /* app_icon_114x114.png */; };
 		EE06E66317E7525000073AAF /* app_icon_120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = EE06E65D17E7525000073AAF /* app_icon_120x120.png */; };
-		EE06E66517E7AB0100073AAF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE06E66417E7AB0100073AAF /* Images.xcassets */; };
 		EE125A0417F1E40100E2946E /* splash_screen_320x480.png in Resources */ = {isa = PBXBuildFile; fileRef = EE125A0317F1E40100E2946E /* splash_screen_320x480.png */; };
 		EE17EE0E17FA34EE0053C36C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE17EE0D17FA34EE0053C36C /* Crashlytics.framework */; };
 		EE28DAE017AC447E00E4C460 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE28DADF17AC447E00E4C460 /* DataManager.m */; };
@@ -156,6 +155,7 @@
 		EEB75A9518761E7B00AA4F89 /* StoreDetailStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEB75A9418761E7B00AA4F89 /* StoreDetailStoryboard.storyboard */; };
 		EEB75A98187B635600AA4F89 /* hours_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EEB75A96187B635600AA4F89 /* hours_icon.png */; };
 		EEB75A99187B635600AA4F89 /* hours_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEB75A97187B635600AA4F89 /* hours_icon@2x.png */; };
+		EEB75A9B187F5CAA00AA4F89 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEB75A9A187F5CAA00AA4F89 /* Images.xcassets */; };
 		EEB8A44117EA314B0020E2EE /* splash_screen_640x960.png in Resources */ = {isa = PBXBuildFile; fileRef = EEB8A43E17EA314B0020E2EE /* splash_screen_640x960.png */; };
 		EEB8A44217EA314B0020E2EE /* splash_screen_640x1136.png in Resources */ = {isa = PBXBuildFile; fileRef = EEB8A43F17EA314B0020E2EE /* splash_screen_640x1136.png */; };
 		EEB8A44D17EA61140020E2EE /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB8A44B17EA61140020E2EE /* SettingsViewController.m */; };
@@ -212,7 +212,6 @@
 		EE06E65B17E7525000073AAF /* app_icon_80x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_80x80.png; sourceTree = "<group>"; };
 		EE06E65C17E7525000073AAF /* app_icon_114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_114x114.png; sourceTree = "<group>"; };
 		EE06E65D17E7525000073AAF /* app_icon_120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_120x120.png; sourceTree = "<group>"; };
-		EE06E66417E7AB0100073AAF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		EE125A0317F1E40100E2946E /* splash_screen_320x480.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash_screen_320x480.png; sourceTree = "<group>"; };
 		EE17EE0D17FA34EE0053C36C /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
 		EE28DADE17AC447E00E4C460 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
@@ -359,6 +358,7 @@
 		EEB75A9418761E7B00AA4F89 /* StoreDetailStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = StoreDetailStoryboard.storyboard; path = repunch/StoreDetailStoryboard.storyboard; sourceTree = SOURCE_ROOT; };
 		EEB75A96187B635600AA4F89 /* hours_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hours_icon.png; sourceTree = "<group>"; };
 		EEB75A97187B635600AA4F89 /* hours_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hours_icon@2x.png"; sourceTree = "<group>"; };
+		EEB75A9A187F5CAA00AA4F89 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = repunch/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		EEB8A43E17EA314B0020E2EE /* splash_screen_640x960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash_screen_640x960.png; sourceTree = "<group>"; };
 		EEB8A43F17EA314B0020E2EE /* splash_screen_640x1136.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash_screen_640x1136.png; sourceTree = "<group>"; };
 		EEB8A44A17EA61140020E2EE /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -542,7 +542,6 @@
 				202F1DFE18523DCC00495BDF /* RPClasses */,
 				EE9D4B8717A83F4A005E0CC5 /* CustomUIViews */,
 				EEFBA1721810A6EB00783F05 /* Facebook */,
-				EE06E66417E7AB0100073AAF /* Images.xcassets */,
 				EE3F36D517B5865800D28FC9 /* Push */,
 				EE9D4E4D17A846B1005E0CC5 /* SIAlertView */,
 				EE9D4BC617A83F4A005E0CC5 /* ThirdPartyViews */,
@@ -605,6 +604,7 @@
 		EE9D4E7517A84ABB005E0CC5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				EEB75A9A187F5CAA00AA4F89 /* Images.xcassets */,
 				EE9D4E7617A84ABB005E0CC5 /* Assets */,
 				EE06E65817E7525000073AAF /* app_icon_29x29.png */,
 				EE06E65917E7525000073AAF /* app_icon_57x57.png */,
@@ -798,7 +798,6 @@
 			files = (
 				EEE777B117E7D2020023768B /* feedback_button@2x.png in Resources */,
 				EE9D4C6917A83F4B005E0CC5 /* ComposeMessageViewController.xib in Resources */,
-				EE06E66517E7AB0100073AAF /* Images.xcassets in Resources */,
 				EE54EF4E1834330300518C79 /* search_icon@2x.png in Resources */,
 				EE9D4C7617A83F4B005E0CC5 /* InboxTableViewCell.xib in Resources */,
 				EE9D4C7817A83F4B005E0CC5 /* RewardTableViewCell.xib in Resources */,
@@ -842,6 +841,7 @@
 				EE9D4F2317A84ABB005E0CC5 /* ico-tab-places.png in Resources */,
 				EE6E6E38180F24E1000CE34B /* WelcomeStoryboard.storyboard in Resources */,
 				EE9D4F2417A84ABB005E0CC5 /* ico-tab-places@2x.png in Resources */,
+				EEB75A9B187F5CAA00AA4F89 /* Images.xcassets in Resources */,
 				EE54EF5A1835558500518C79 /* gift_icon_dark.png in Resources */,
 				EE2AFE7C1819B3420046CF74 /* SIAlertView.bundle in Resources */,
 				EE54EF51183545D200518C79 /* delete_icon.png in Resources */,
