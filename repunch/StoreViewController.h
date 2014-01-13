@@ -29,14 +29,13 @@
 @property (strong, nonatomic) IBOutlet UIView *headerView;
 
 // store header
+@property (weak, nonatomic) IBOutlet UILabel *storeName;
 @property (weak, nonatomic) IBOutlet UIImageView *storeImage;
 @property (weak, nonatomic) IBOutlet UILabel *storeAddress;
 @property (weak, nonatomic) IBOutlet UILabel *storeHoursToday;
 @property (weak, nonatomic) IBOutlet UILabel *storeHoursOpen;
 @property (weak, nonatomic) IBOutlet UILabel *storeHours;
-@property (weak, nonatomic) IBOutlet UIImageView *storeDetailArrow;
 
-@property (weak, nonatomic) IBOutlet UIView *infoButtonView;
 @property (weak, nonatomic) IBOutlet UIButton *callButton;
 @property (weak, nonatomic) IBOutlet UIButton *mapButton;
 @property (weak, nonatomic) IBOutlet UIButton *feedbackButton;

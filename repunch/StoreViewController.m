@@ -70,6 +70,9 @@
 	[self setStoreInformation];
 	[self checkPatronStore];
 	[self setRewardTableView];
+    
+    //NSLog(@"storeAddress height: %f", self.storeAddress.frame.size.height);
+    //NSLog(@"storeHours height: %f", self.storeHours.frame.size.height);
 }
 
 - (void)didReceiveMemoryWarning
@@ -82,13 +85,18 @@
 - (void)setStoreInformation
 {
 	self.navigationItem.title = store.store_name;
+    self.storeName.text = store.store_name;
 	UIImage *storeImage;
+    
+    [self.storeAddress setPreferredMaxLayoutWidth:260];
+    [self.storeHours setPreferredMaxLayoutWidth:200];
 	
 	if(self.storeLocationId != nil) {
 		storeImage = [sharedData getStoreImage:self.storeLocationId];
 		self.storeAddress.text = storeLocation.formattedAddress;
 		[self setStoreHours];
-	} else {
+	}
+    else {
 		storeImage = [sharedData getStoreImage:self.storeId];
 		self.storeAddress.text = @"Multiple Locations";
 		self.storeHours.hidden = YES;
@@ -96,10 +104,12 @@
 		self.storeHoursToday.hidden = YES;
 	}
 	
-	[self.storeAddress sizeToFit];
+	//[self.storeAddress sizeToFit];
+    [self.storeAddress layoutIfNeeded];
+    [self.storeHours layoutIfNeeded];
 
-	self.storeImage.layer.cornerRadius = 10;
-	self.storeImage.layer.masksToBounds = YES;
+	//self.storeImage.layer.cornerRadius = 10;
+	//self.storeImage.layer.masksToBounds = YES;
 
 	if(storeImage != nil) {
 		self.storeImage.image = storeImage;
@@ -217,9 +227,10 @@
         self.storeHoursOpen.hidden = YES;
     }
     
-    [self fixHeaderFrame];
+    //[self fixHeaderFrame];
 }
 
+/*
 - (void)fixHeaderFrame
 {
     [self.storeHours sizeToFit];
@@ -238,6 +249,7 @@
 	headerFrame.size.height += offset;
 	self.headerView.frame = headerFrame;
 }
+ */
 
 - (void)setStoreButtons
 {
