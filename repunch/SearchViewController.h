@@ -14,7 +14,7 @@
 #import "RPConstants.h"
 #include "RPStoreLocation.h"
 
-@interface SearchViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, CLLocationManagerDelegate>
+@interface SearchViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
 @property (nonatomic, strong) DataManager* sharedData;
 @property (nonatomic, strong) PFObject* patron;

@@ -35,11 +35,6 @@
 	[self showHelpViews];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -165,6 +160,7 @@
     [self.view addSubview:self.tableViewController.tableView];
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
+	//self.extendedLayoutIncludesOpaqueBars = YES;
 }
 
 - (void)loadMyPlaces
@@ -325,7 +321,7 @@
 	NSString *storeId = self.storeIdArray[indexPath.row];
     StoreViewController *storeVC = [[StoreViewController alloc]init];
     storeVC.storeId = storeId;
-	storeVC.hidesBottomBarWhenPushed = YES;
+	//storeVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:storeVC animated:YES];
 }
 

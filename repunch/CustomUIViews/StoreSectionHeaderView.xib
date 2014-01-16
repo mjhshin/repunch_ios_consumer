@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StoreViewController">
+            <connections>
+                <outlet property="punchCountLabel" destination="AHY-1m-EvC" id="Fax-ap-l7v"/>
+                <outlet property="punchStaticLabel" destination="RzW-lx-Xnt" id="zhS-jc-gsF"/>
+                <outlet property="sectionHeaderView" destination="1" id="mCA-lt-1Bj"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="70" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" placeholderIntrinsicWidth="150" placeholderIntrinsicHeight="70" translatesAutoresizingMaskIntoConstraints="NO" id="oEt-mm-lsY" userLabel="Subview">
+                    <rect key="frame" x="85" y="0.0" width="150" height="69"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="14" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AHY-1m-EvC">
+                            <rect key="frame" x="0.0" y="9" width="77" height="50"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="Zgj-qx-E9l"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="50"/>
+                            <color key="textColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                            <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Punches" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RzW-lx-Xnt">
+                            <rect key="frame" x="82" y="34" width="68" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="vz0-7M-Xyp"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="18"/>
+                            <color key="textColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="RzW-lx-Xnt" firstAttribute="leading" secondItem="AHY-1m-EvC" secondAttribute="trailing" constant="5" id="0an-Tg-Hh6"/>
+                        <constraint firstItem="AHY-1m-EvC" firstAttribute="leading" secondItem="oEt-mm-lsY" secondAttribute="leading" id="Qut-yU-1gI"/>
+                        <constraint firstItem="RzW-lx-Xnt" firstAttribute="top" secondItem="AHY-1m-EvC" secondAttribute="bottom" constant="-25" id="XN3-LF-OzT"/>
+                        <constraint firstAttribute="centerY" secondItem="AHY-1m-EvC" secondAttribute="centerY" id="huW-18-4rV"/>
+                        <constraint firstAttribute="trailing" secondItem="RzW-lx-Xnt" secondAttribute="trailing" id="pzI-eo-N5C"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2QO-c8-ix3" userLabel="BottomMargin">
+                    <rect key="frame" x="0.0" y="68" width="320" height="2"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="0.5" id="SZk-C6-8KF"/>
+                        <constraint firstAttribute="width" constant="320" id="f0Z-9O-MxM"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="oEt-mm-lsY" firstAttribute="top" secondItem="1" secondAttribute="top" id="QYc-c5-Q9l"/>
+                <constraint firstAttribute="bottom" secondItem="2QO-c8-ix3" secondAttribute="bottom" id="UZC-wQ-tew"/>
+                <constraint firstAttribute="centerX" secondItem="oEt-mm-lsY" secondAttribute="centerX" id="XwK-Yx-ONX"/>
+                <constraint firstAttribute="centerX" secondItem="2QO-c8-ix3" secondAttribute="centerX" id="boa-mh-rMl"/>
+                <constraint firstItem="2QO-c8-ix3" firstAttribute="top" secondItem="oEt-mm-lsY" secondAttribute="bottom" id="j04-rO-4ao"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+</document>

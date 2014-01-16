@@ -17,11 +17,15 @@
 	PFObject *patron;
 	PFObject *patronStore;
 	BOOL patronStoreExists;
+	BOOL navigationBarIsOpaque;
     int punchCount;
 	id selectedReward;
 	UIBarButtonItem *deleteButton;
+	UIBarButtonItem *addButton;
     NSMutableArray *timers;
 	UIButton *addToMyPlacesButton;
+	UIPanGestureRecognizer *panGestureRecognizer;
+	CGFloat gestureOffset;
 }
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
@@ -32,6 +36,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
+	//self.edgesForExtendedLayout = UIRectEdgeBottom;
+	//self.extendedLayoutIncludesOpaqueBars = YES;
+	self.automaticallyAdjustsScrollViewInsets = NO;
+	
+	gestureOffset = self.storeImageViewHeightConstraint.constant;
+	
+	navigationBarIsOpaque = NO;
+	[self setTranslucentNavigationBar];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(checkPatronStore)
@@ -61,18 +74,21 @@
 	}
 	
 	[[NSBundle mainBundle] loadNibNamed:@"StoreHeaderView" owner:self options:nil];
+	[[NSBundle mainBundle] loadNibNamed:@"StoreSectionHeaderView" owner:self options:nil];
 	
 	deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"delete_icon.png"]
-													style:UIBarButtonItemStylePlain
+													style:UIBarButtonItemStyleBordered
 												   target:self
 												   action:@selector(deleteStore)];
+	
+	addButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"add_icon.png"]
+													style:UIBarButtonItemStylePlain
+												   target:self
+												   action:@selector(addStore)];
 	
 	[self setStoreInformation];
 	[self checkPatronStore];
 	[self setRewardTableView];
-    
-    //NSLog(@"storeAddress height: %f", self.storeAddress.frame.size.height);
-    //NSLog(@"storeHours height: %f", self.storeHours.frame.size.height);
 }
 
 - (void)didReceiveMemoryWarning
@@ -84,8 +100,11 @@
 
 - (void)setStoreInformation
 {
-	self.navigationItem.title = store.store_name;
-    self.storeName.text = store.store_name;
+	self.storeName.text = store.store_name;
+	CAGradientLayer *bgLayer = [RepunchUtils blackGradient];
+	bgLayer.frame = self.storeNameBackground.bounds;
+	[self.storeNameBackground.layer insertSublayer:bgLayer atIndex:0];
+	
 	UIImage *storeImage;
     
     [self.storeAddress setPreferredMaxLayoutWidth:260];
@@ -165,7 +184,7 @@
 	}
 	
 	[self setStoreButtons];
-    [self.rewardTableView reloadData];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Store Hours & header size fixer
@@ -226,84 +245,42 @@
         self.storeHours.hidden = YES;
         self.storeHoursOpen.hidden = YES;
     }
-    
-    //[self fixHeaderFrame];
 }
-
-/*
-- (void)fixHeaderFrame
-{
-    [self.storeHours sizeToFit];
-	CGRect hoursFrame = self.storeHours.frame;
-	hoursFrame.size.width += 174;
-	self.storeHours.frame = hoursFrame;
-	
-	CGRect buttonsFrame = self.infoButtonView.frame;
-	CGFloat offset = buttonsFrame.origin.y;
-	CGRect storeImageFrame = self.storeImage.frame;
-	buttonsFrame.origin.y = MAX(storeImageFrame.origin.y + storeImageFrame.size.height, hoursFrame.origin.y + hoursFrame.size.height) + 15;
-	offset = buttonsFrame.origin.y - offset;
-    self.infoButtonView.frame = buttonsFrame;
-	
-    CGRect headerFrame = self.headerView.frame;
-	headerFrame.size.height += offset;
-	self.headerView.frame = headerFrame;
-}
- */
 
 - (void)setStoreButtons
 {
-	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
-	CGFloat screenWidth = screenRect.size.width;
-	
 	if(!patronStoreExists) {
-		self.navigationItem.rightBarButtonItem = nil;
+		self.navigationItem.rightBarButtonItem = addButton;
 		
-		self.feedbackButton.hidden = YES;
-		
-		CGPoint callButtonCenter = self.callButton.center;
-		callButtonCenter.x = screenWidth/4;
-		self.callButton.center = callButtonCenter;
-		
-		CGPoint mapButtonCenter = self.mapButton.center;
-		mapButtonCenter.x = screenWidth*3/4;
-		self.mapButton.center = mapButtonCenter;
+		self.feedbackButton.enabled = NO;
 	}
 	else {
 		self.navigationItem.rightBarButtonItem = deleteButton;
 		
-		self.feedbackButton.hidden = NO;
-		
-		CGPoint callButtonCenter = self.callButton.center;
-		callButtonCenter.x = screenWidth/6;
-		self.callButton.center = callButtonCenter;
-		
-		CGPoint mapButtonCenter = self.mapButton.center;
-		mapButtonCenter.x = screenWidth/2;
-		self.mapButton.center = mapButtonCenter;
-		
-		CGPoint feedbackButtonCenter = self.feedbackButton.center;
-		feedbackButtonCenter.x = screenWidth*5/6;
-		self.feedbackButton.center = feedbackButtonCenter;
+		if(patronStore[@"all_time_punches"] > 0) {
+			self.feedbackButton.enabled = YES;
+		}
 	}
 }
 
 - (void)setRewardTableView
 {
+	/*
 	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
 	CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
 	self.rewardTableView = [[UITableView alloc]
-							  initWithFrame:CGRectMake(0, 0, screenRect.size.width, screenRect.size.height - navBarHeight)
+							  initWithFrame:CGRectMake(0, 0, screenRect.size.width, screenRect.size.height - 30) //- navBarHeight)
 							  style:UITableViewStylePlain];
+	*/
+    [self.tableView setDataSource:self];
+    [self.tableView setDelegate:self];
+	self.tableView.scrollEnabled = NO;
+    //[self.view addSubview:self.rewardTableView];
 	
-    [self.rewardTableView setDataSource:self];
-    [self.rewardTableView setDelegate:self];
-    [self.view addSubview:self.rewardTableView];
-	
-	self.rewardTableView.tableHeaderView = self.headerView;
-	
-	self.tableViewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
-	[self addChildViewController:self.tableViewController];
+	self.tableView.tableHeaderView = self.headerView;
+	/*
+	//self.tableViewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
+	//[self addChildViewController:self.tableViewController];
 	
 	self.tableViewController.refreshControl = [[UIRefreshControl alloc] init];
 	[self.tableViewController.refreshControl setTintColor:[RepunchUtils repunchOrangeColor]];
@@ -311,29 +288,135 @@
 												action:@selector(refreshPatronStoreObject)
 									  forControlEvents:UIControlEventValueChanged];
 	self.tableViewController.tableView = self.rewardTableView;
-	
+	*/
 	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 1)];
 	footer.backgroundColor = [UIColor clearColor];
-	self.rewardTableView.tableFooterView = footer;
+	self.tableView.tableFooterView = footer;
 	
 	// Make header selectable
-	UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-																						action:@selector(gestureHandler)];
-	[gestureRecognizer setDelegate:self];
-	gestureRecognizer.numberOfTouchesRequired = 1;
-	gestureRecognizer.numberOfTapsRequired = 1;
-	[self.rewardTableView.tableHeaderView addGestureRecognizer:gestureRecognizer];
+	UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+																						   action:@selector(handleTapGesture:)];
+	[tapGestureRecognizer setDelegate:self];
+	tapGestureRecognizer.numberOfTouchesRequired = 1;
+	tapGestureRecognizer.numberOfTapsRequired = 1;
+	[self.tableView.tableHeaderView addGestureRecognizer:tapGestureRecognizer];
+	
+	// Make tableview draggable until imageview is out of sight
+	panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self
+																						   action:@selector(handlePanGesture:)];
+	[panGestureRecognizer setDelegate:self];
+	panGestureRecognizer.maximumNumberOfTouches = 1;
+	panGestureRecognizer.minimumNumberOfTouches = 1;
+	[self.tableView addGestureRecognizer:panGestureRecognizer];
+	
 }
 
-- (void)gestureHandler
+- (void)handleTapGesture:(UITapGestureRecognizer *)sender
 {
-	self.tableViewController.tableView.tableHeaderView.backgroundColor = [UIColor lightGrayColor];
-	StoreDetailViewController *storeDetailVC = [[StoreDetailViewController alloc] init];
-	storeDetailVC.store = store;
-	[self.navigationController pushViewController:storeDetailVC animated:YES];
-	self.headerView.backgroundColor = [UIColor clearColor];
+    if (sender.state == UIGestureRecognizerStateEnded)
+	{
+        self.tableView.tableHeaderView.backgroundColor = [UIColor lightGrayColor];
+		StoreDetailViewController *storeDetailVC = [[StoreDetailViewController alloc] init];
+		storeDetailVC.store = store;
+		[self.navigationController pushViewController:storeDetailVC animated:YES];
+		self.headerView.backgroundColor = [UIColor clearColor];
+    }
 }
 
+- (void)handlePanGesture:(UIPanGestureRecognizer *)sender
+{
+	if (sender.state == UIGestureRecognizerStateBegan || sender.state == UIGestureRecognizerStateChanged)
+	{
+		CGPoint translation = [sender translationInView:sender.view.superview];
+		
+		gestureOffset += translation.y;
+		
+		NSLog(@"translation Y: %f", translation.y);
+		NSLog(@"gestureOffset Y: %f", gestureOffset);
+		
+		if(gestureOffset  > 240.f) {
+			//do nothing
+		}
+		else if(gestureOffset > 64.0f) { //i.e. imageView moves under the nav bar
+			if(navigationBarIsOpaque) {
+				[self setTranslucentNavigationBar];
+			}
+			
+			[sender.view setCenter:CGPointMake(sender.view.center.x, sender.view.center.y + translation.y)];
+			[sender setTranslation:CGPointZero inView:sender.view.superview];
+			
+			self.storeImageViewHeightConstraint.constant = self.tableView.frame.origin.y - self.storeImage.frame.origin.y;
+		}
+		else {
+			if(!navigationBarIsOpaque) {
+				[self setOpaqueNavigationBar];
+			}
+			
+			[self.tableView setContentOffset:CGPointMake(0, 64.0f - gestureOffset)];
+			[sender setTranslation:CGPointZero inView:self.tableView];
+		}
+    }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+	shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+	//YES to allow both gestureRecognizer and otherGestureRecognizer to recognize their gestures simultaneously
+    return YES;
+}
+
+- (void)setOpaqueNavigationBar
+{
+	CATransition *animation = [CATransition animation];
+	[animation setDuration:0.4f];
+	[animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+	[animation setType:kCATransitionFade];
+	
+	[self.navigationController.navigationBar.layer addAnimation:animation forKey:nil];
+	
+	[UIView beginAnimations:nil context:NULL];
+	[UIView setAnimationDuration:0.4f];
+	
+	self.navigationItem.title = store.store_name;
+	[RepunchUtils setupNavigationController:self.navigationController];
+	navigationBarIsOpaque = YES;
+	
+	[UIView commitAnimations];
+}
+
+- (void)setTranslucentNavigationBar
+{
+	CATransition *animation = [CATransition animation];
+	[animation setDuration:0.25f];
+	[animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+	[animation setType:kCATransitionFade];
+	
+	[self.navigationController.navigationBar.layer addAnimation:animation forKey:nil];
+	
+	[UIView beginAnimations:nil context:NULL];
+	[UIView setAnimationDuration:0.25f];
+	
+	self.navigationItem.title = @"";
+	[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"black_alpha_gradient.png"] forBarMetrics:UIBarMetricsDefault];
+	self.navigationController.navigationBar.shadowImage = [UIImage new];
+	navigationBarIsOpaque = NO;
+	
+	[UIView commitAnimations];
+}
+
+#pragma mark - Scroll view delegate
+/*
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+	if(scrollView.contentOffset.y <= 0)
+	{
+		[self setTranslucentNavigationBar];
+		
+		//self.tableView.scrollEnabled = NO;
+		panGestureRecognizer.enabled = YES;
+	}
+}
+*/
 #pragma mark - Table view delegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -348,7 +431,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 55;
+    return 70;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -358,26 +441,14 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    addToMyPlacesButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 55)];
-	addToMyPlacesButton.titleLabel.font = [RepunchUtils repunchFontWithSize:22 isBold:YES];
-	[addToMyPlacesButton setAdjustsImageWhenDisabled:NO];
-	[addToMyPlacesButton setBackgroundImage:[UIImage imageNamed:@"orange_button.png"] forState:UIControlStateNormal];
-	[addToMyPlacesButton setBackgroundImage:[UIImage imageNamed:@"orange_button_highlighted.png"] forState:UIControlStateHighlighted];
-	
-	if(!patronStoreExists) {
-		[addToMyPlacesButton setTitle:@"Add to My Places" forState:UIControlStateNormal];
-		[addToMyPlacesButton setEnabled:YES];
-		[addToMyPlacesButton addTarget:self
-									 action:@selector(addStore)
-						   forControlEvents:UIControlEventTouchUpInside];
-	}
-	else {
-		NSString *buttonText = [NSString stringWithFormat:@"%i %@", punchCount, (punchCount == 1) ? @"Punch": @"Punches"];
-		[addToMyPlacesButton setTitle:buttonText forState:UIControlStateNormal];
-		[addToMyPlacesButton setEnabled:NO];
+    if(!patronStoreExists) {
+		return nil;
 	}
 	
-    return addToMyPlacesButton;
+	self.punchCountLabel.text = [NSString stringWithFormat:@"%i", punchCount];
+	self.punchStaticLabel.text = (punchCount == 1) ? @"Punch": @"Punches";
+	
+    return self.sectionHeaderView;
 }
 
 #pragma mark - Table view data source delegate
@@ -630,7 +701,7 @@
 		 {
 			 [sharedData deletePatronStore:self.storeId];
 			 [self checkPatronStore];
-			 [self.rewardTableView reloadData];
+			 [self.tableView reloadData];
          
 			 NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:self.storeId, @"store_id", nil];
 			 [[NSNotificationCenter defaultCenter] postNotificationName:@"AddOrRemoveStore" object:self userInfo:args];
@@ -672,7 +743,7 @@
 - (void)refreshPatronStoreObject
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
-		[self.tableViewController.refreshControl endRefreshing];
+		//[self.tableViewController.refreshControl endRefreshing];
 		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}

@@ -27,6 +27,8 @@
 + (UIColor *)repunchOrangeColor;
 + (UIFont *)repunchFontWithSize:(NSUInteger)fontSize isBold:(BOOL)isBold;
 
++ (CAGradientLayer *)blackGradient;
+
 + (void)clearNotificationCenter;
 + (void)configureAppearance;
 

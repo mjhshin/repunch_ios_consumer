@@ -117,13 +117,32 @@
     
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor],
 														   NSFontAttributeName: [RepunchUtils repunchFontWithSize:17 isBold:YES]}];
+	
+	//[[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"nav_back.png"]];
+	//[[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"nav_back.png"]];
 }
 
 + (void)setupNavigationController:(UINavigationController *)navController
 {
 	navController.navigationBar.tintColor = [UIColor whiteColor];
-	navController.navigationBar.barTintColor = [RepunchUtils repunchOrangeColor];
-	navController.navigationBar.translucent = NO;
+	[navController.navigationBar setBackgroundImage:[UIImage imageNamed:@"orange_gradient.png"] forBarMetrics:UIBarMetricsDefault];
+	//navController.navigationBar.barTintColor = [RepunchUtils repunchOrangeColor];
+	navController.navigationBar.translucent = YES;
+}
+
++ (CAGradientLayer *)blackGradient
+{
+	
+    UIColor *darkBlack = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.6];
+    UIColor *lightBlack = [UIColor colorWithRed:0.0  green:0.0 blue:0.0 alpha:0.0];
+	
+    NSArray *colors = [NSArray arrayWithObjects:(id)lightBlack.CGColor, darkBlack.CGColor, nil];
+	
+    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+    gradientLayer.colors = colors;
+	gradientLayer.locations = @[@0.00f, @0.4f, @1.00f];
+	
+    return gradientLayer;
 }
 
 + (void)setDefaultButtonStyle:(UIButton *)button

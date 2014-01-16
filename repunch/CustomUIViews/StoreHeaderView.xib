@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
@@ -14,25 +14,15 @@
                 <outlet property="storeHours" destination="Mxc-iM-9Jg" id="SnM-eE-BuD"/>
                 <outlet property="storeHoursOpen" destination="T5Z-N7-wKN" id="NCT-L9-fCm"/>
                 <outlet property="storeHoursToday" destination="YDo-XK-ba2" id="Oe6-jI-fdy"/>
-                <outlet property="storeImage" destination="Vqm-aX-vVi" id="YpZ-4X-Wfo"/>
-                <outlet property="storeName" destination="Yuk-CZ-MIV" id="VdW-ij-UNN"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view autoresizesSubviews="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="250" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="371" id="BWH-Aq-4MY">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="417"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="183"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vqm-aX-vVi" userLabel="StoreImageView">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="320" id="dAr-Xy-gtx"/>
-                        <constraint firstAttribute="height" constant="200" id="eOZ-9a-BMG"/>
-                    </constraints>
-                </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YLG-Ku-RJG" userLabel="CallButton">
-                    <rect key="frame" x="5" y="362" width="100" height="50"/>
+                    <rect key="frame" x="5" y="127" width="100" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="dw7-H0-YKw"/>
@@ -53,7 +43,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HXh-ax-KcD" userLabel="MapButton">
-                    <rect key="frame" x="110" y="362" width="100" height="50"/>
+                    <rect key="frame" x="110" y="127" width="100" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="VBx-a8-VE5"/>
@@ -74,7 +64,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Xk-Jk-zrq" userLabel="FeedbackButton">
-                    <rect key="frame" x="215" y="362" width="100" height="50"/>
+                    <rect key="frame" x="215" y="127" width="100" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="TSw-rh-nTa"/>
@@ -94,12 +84,12 @@
                         <action selector="feedbackButtonAction:" destination="-1" eventType="touchUpInside" id="a8A-eh-h3b"/>
                     </connections>
                 </button>
-                <view autoresizesSubviews="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="250" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="161" translatesAutoresizingMaskIntoConstraints="NO" id="Kai-AD-O7z" userLabel="StoreInfoView">
-                    <rect key="frame" x="0.0" y="200" width="320" height="156"/>
+                <view autoresizesSubviews="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="250" misplaced="YES" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="161" translatesAutoresizingMaskIntoConstraints="NO" id="Kai-AD-O7z" userLabel="StoreInfoView">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="121"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nav_forward.png" translatesAutoresizingMaskIntoConstraints="NO" id="mlx-JI-wRQ" userLabel="ArrowImageView">
-                            <rect key="frame" x="291" y="66" width="24" height="24"/>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="nav_forward.png" translatesAutoresizingMaskIntoConstraints="NO" id="mlx-JI-wRQ" userLabel="ArrowImageView">
+                            <rect key="frame" x="291" y="49" width="24" height="24"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="24" id="PeI-sq-3Zd"/>
@@ -127,8 +117,8 @@
                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="250" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="18" text="9:00 AM - 12:00 PM" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="200" translatesAutoresizingMaskIntoConstraints="NO" id="Mxc-iM-9Jg" userLabel="HoursLabel">
-                            <rect key="frame" x="20" y="81" width="200" height="70"/>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="250" misplaced="YES" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="18" text="9:00 AM - 12:00 PM" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="200" translatesAutoresizingMaskIntoConstraints="NO" id="Mxc-iM-9Jg" userLabel="HoursLabel">
+                            <rect key="frame" x="20" y="81" width="200" height="35"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <accessibility key="accessibilityConfiguration" label="Hours Today"/>
                             <constraints>
@@ -178,46 +168,41 @@
                         <constraint firstItem="Mxc-iM-9Jg" firstAttribute="top" secondItem="YDo-XK-ba2" secondAttribute="bottom" constant="5" id="znj-Je-Utr"/>
                     </constraints>
                 </view>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Old Soul at The Weatherstone" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="15" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="Yuk-CZ-MIV" userLabel="StoreNameLabel">
-                    <rect key="frame" x="20" y="150" width="280" height="50"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="UzP-2r-Mvq"/>
-                        <constraint firstAttribute="width" constant="280" id="rWK-Nf-mZx"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                    <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Btj-aq-TwF" userLabel="DividerView">
-                    <rect key="frame" x="0.0" y="356" width="320" height="1"/>
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Btj-aq-TwF" userLabel="DividerView">
+                    <rect key="frame" x="0.0" y="121" width="320" height="1"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="320" id="DrL-Ph-dvR"/>
-                        <constraint firstAttribute="height" constant="1" id="ohX-Wu-YoD"/>
+                        <constraint firstAttribute="height" constant="0.5" id="ohX-Wu-YoD"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y1D-rK-WZr" userLabel="DividerView2">
+                    <rect key="frame" x="0.0" y="182" width="320" height="1"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="320" id="A6w-sk-4cT"/>
+                        <constraint firstAttribute="height" constant="0.5" id="pXM-gS-LJp"/>
                     </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="2Xk-Jk-zrq" firstAttribute="leading" secondItem="HXh-ax-KcD" secondAttribute="trailing" constant="5" id="3TV-Z2-eK0"/>
-                <constraint firstAttribute="centerX" secondItem="Vqm-aX-vVi" secondAttribute="centerX" id="8TQ-NJ-gY1"/>
-                <constraint firstAttribute="bottom" secondItem="HXh-ax-KcD" secondAttribute="bottom" constant="5" id="CQe-05-xJp"/>
+                <constraint firstAttribute="bottom" secondItem="y1D-rK-WZr" secondAttribute="bottom" id="DQm-3N-YZT"/>
                 <constraint firstItem="HXh-ax-KcD" firstAttribute="leading" secondItem="YLG-Ku-RJG" secondAttribute="trailing" constant="5" id="HaA-HP-N84"/>
-                <constraint firstItem="Yuk-CZ-MIV" firstAttribute="top" secondItem="Vqm-aX-vVi" secondAttribute="bottom" constant="-50" id="Lv8-7L-aP9"/>
                 <constraint firstItem="HXh-ax-KcD" firstAttribute="top" secondItem="Btj-aq-TwF" secondAttribute="bottom" constant="5" id="MNl-oa-WUZ"/>
+                <constraint firstItem="y1D-rK-WZr" firstAttribute="top" secondItem="HXh-ax-KcD" secondAttribute="bottom" constant="5" id="OUc-wf-F7E"/>
+                <constraint firstItem="y1D-rK-WZr" firstAttribute="top" secondItem="YLG-Ku-RJG" secondAttribute="bottom" constant="5" id="QLs-Zh-TDU"/>
+                <constraint firstItem="Kai-AD-O7z" firstAttribute="top" secondItem="BWH-Aq-4MY" secondAttribute="top" id="TlY-Nf-nBA"/>
                 <constraint firstItem="Btj-aq-TwF" firstAttribute="top" secondItem="Kai-AD-O7z" secondAttribute="bottom" id="XwY-GP-zSr"/>
-                <constraint firstAttribute="centerX" secondItem="Yuk-CZ-MIV" secondAttribute="centerX" id="eeJ-K8-MQk"/>
+                <constraint firstItem="y1D-rK-WZr" firstAttribute="top" secondItem="2Xk-Jk-zrq" secondAttribute="bottom" constant="5" id="bIT-ek-IuV"/>
                 <constraint firstAttribute="centerX" secondItem="Kai-AD-O7z" secondAttribute="centerX" id="gVb-xm-ckn"/>
                 <constraint firstAttribute="centerX" secondItem="Btj-aq-TwF" secondAttribute="centerX" id="hMS-Sf-QN9"/>
-                <constraint firstItem="Kai-AD-O7z" firstAttribute="top" secondItem="Vqm-aX-vVi" secondAttribute="bottom" id="jCs-yH-oa6"/>
-                <constraint firstAttribute="bottom" secondItem="YLG-Ku-RJG" secondAttribute="bottom" constant="5" id="jVs-w4-Oig"/>
+                <constraint firstAttribute="centerX" secondItem="y1D-rK-WZr" secondAttribute="centerX" id="kGc-Uc-nZ3"/>
                 <constraint firstAttribute="centerX" secondItem="HXh-ax-KcD" secondAttribute="centerX" id="lMl-yD-F88"/>
                 <constraint firstAttribute="centerX" secondItem="2Xk-Jk-zrq" secondAttribute="centerX" priority="500" id="nUO-gf-9GQ"/>
-                <constraint firstItem="Vqm-aX-vVi" firstAttribute="top" secondItem="BWH-Aq-4MY" secondAttribute="top" id="oap-DM-PzI"/>
-                <constraint firstAttribute="bottom" secondItem="2Xk-Jk-zrq" secondAttribute="bottom" constant="5" id="vSJ-Xy-Cbw"/>
             </constraints>
         </view>
     </objects>
