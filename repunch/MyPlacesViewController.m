@@ -35,6 +35,12 @@
 	[self showHelpViews];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+	[RepunchUtils setupNavigationController:self.navigationController];
+	[super viewWillAppear:animated];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -321,7 +327,7 @@
 	NSString *storeId = self.storeIdArray[indexPath.row];
     StoreViewController *storeVC = [[StoreViewController alloc]init];
     storeVC.storeId = storeId;
-	//storeVC.hidesBottomBarWhenPushed = YES;
+	storeVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:storeVC animated:YES];
 }
 

@@ -24,8 +24,8 @@
 	UIBarButtonItem *addButton;
     NSMutableArray *timers;
 	UIButton *addToMyPlacesButton;
-	UIPanGestureRecognizer *panGestureRecognizer;
-	CGFloat gestureOffset;
+	CGFloat transitionScrollOffset;
+	CGFloat lastContentOffset;
 }
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
@@ -37,14 +37,9 @@
 {
     [super viewDidLoad];
 	
-	//self.edgesForExtendedLayout = UIRectEdgeBottom;
-	//self.extendedLayoutIncludesOpaqueBars = YES;
+	transitionScrollOffset = self.storeImage.frame.size.height - self.storeName.frame.size.height - 84.0f; //32 is half nav bar height
 	self.automaticallyAdjustsScrollViewInsets = NO;
-	
-	gestureOffset = self.storeImageViewHeightConstraint.constant;
-	
 	navigationBarIsOpaque = NO;
-	[self setTranslucentNavigationBar];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(checkPatronStore)
@@ -91,11 +86,37 @@
 	[self setRewardTableView];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+	if(self.tableView.contentOffset.y < transitionScrollOffset + 5.0f) { // 5 is buffer used in scrollViewDidScroll
+		[self setTranslucentNavigationBar];
+	}
+	[super viewWillAppear:animated];
+}
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)viewDidLayoutSubviews
+{
+	NSLog(@"height %f - %f", self.storeAddress.frame.size.height, self.storeHours.frame.size.height);
+	NSLog(@"origin %f - %f", self.storeAddress.frame.origin.y, self.storeHours.frame.origin.y);
+	
+	CGFloat storeInfoHeight = self.storeHours.frame.origin.y + self.storeHours.frame.size.height + 5.0f;
+	NSLayoutConstraint *heightConstraint = [NSLayoutConstraint constraintWithItem:self.storeInfoView
+																		attribute:NSLayoutAttributeHeight
+																		relatedBy:NSLayoutRelationEqual
+																		   toItem:nil
+																		attribute:NSLayoutAttributeHeight
+																	   multiplier:1.0
+																		 constant:storeInfoHeight];
+	
+	[self.storeInfoView addConstraint:heightConstraint];
 }
 
 - (void)setStoreInformation
@@ -120,15 +141,7 @@
 		self.storeAddress.text = @"Multiple Locations";
 		self.storeHours.hidden = YES;
 		self.storeHoursOpen.hidden = YES;
-		self.storeHoursToday.hidden = YES;
 	}
-	
-	//[self.storeAddress sizeToFit];
-    [self.storeAddress layoutIfNeeded];
-    [self.storeHours layoutIfNeeded];
-
-	//self.storeImage.layer.cornerRadius = 10;
-	//self.storeImage.layer.masksToBounds = YES;
 
 	if(storeImage != nil) {
 		self.storeImage.image = storeImage;
@@ -193,7 +206,6 @@
     RPStoreHours *hours = storeLocation.hoursManager;
     
     if (hours.isOpenAlways) {
-        self.storeHoursToday.hidden = NO;
         self.storeHours.hidden = NO;
         self.storeHoursOpen.hidden = NO;
         
@@ -202,8 +214,6 @@
         self.storeHours.text = @"Open 24/7";
     }
     else if(hours) {
-        
-        self.storeHoursToday.hidden = NO;
         self.storeHours.hidden = NO;
         self.storeHoursOpen.hidden = NO;
         self.storeHours.text = @"";
@@ -241,7 +251,6 @@
     else {
         // If no hours are set
         self.storeHours.text = @"";
-        self.storeHoursToday.hidden = YES;
         self.storeHours.hidden = YES;
         self.storeHoursOpen.hidden = YES;
     }
@@ -265,30 +274,10 @@
 
 - (void)setRewardTableView
 {
-	/*
-	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
-	CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
-	self.rewardTableView = [[UITableView alloc]
-							  initWithFrame:CGRectMake(0, 0, screenRect.size.width, screenRect.size.height - 30) //- navBarHeight)
-							  style:UITableViewStylePlain];
-	*/
-    [self.tableView setDataSource:self];
-    [self.tableView setDelegate:self];
-	self.tableView.scrollEnabled = NO;
-    //[self.view addSubview:self.rewardTableView];
-	
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
 	self.tableView.tableHeaderView = self.headerView;
-	/*
-	//self.tableViewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
-	//[self addChildViewController:self.tableViewController];
-	
-	self.tableViewController.refreshControl = [[UIRefreshControl alloc] init];
-	[self.tableViewController.refreshControl setTintColor:[RepunchUtils repunchOrangeColor]];
-	[self.tableViewController.refreshControl addTarget:self
-												action:@selector(refreshPatronStoreObject)
-									  forControlEvents:UIControlEventValueChanged];
-	self.tableViewController.tableView = self.rewardTableView;
-	*/
+
 	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 1)];
 	footer.backgroundColor = [UIColor clearColor];
 	self.tableView.tableFooterView = footer;
@@ -300,15 +289,6 @@
 	tapGestureRecognizer.numberOfTouchesRequired = 1;
 	tapGestureRecognizer.numberOfTapsRequired = 1;
 	[self.tableView.tableHeaderView addGestureRecognizer:tapGestureRecognizer];
-	
-	// Make tableview draggable until imageview is out of sight
-	panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self
-																						   action:@selector(handlePanGesture:)];
-	[panGestureRecognizer setDelegate:self];
-	panGestureRecognizer.maximumNumberOfTouches = 1;
-	panGestureRecognizer.minimumNumberOfTouches = 1;
-	[self.tableView addGestureRecognizer:panGestureRecognizer];
-	
 }
 
 - (void)handleTapGesture:(UITapGestureRecognizer *)sender
@@ -321,48 +301,6 @@
 		[self.navigationController pushViewController:storeDetailVC animated:YES];
 		self.headerView.backgroundColor = [UIColor clearColor];
     }
-}
-
-- (void)handlePanGesture:(UIPanGestureRecognizer *)sender
-{
-	if (sender.state == UIGestureRecognizerStateBegan || sender.state == UIGestureRecognizerStateChanged)
-	{
-		CGPoint translation = [sender translationInView:sender.view.superview];
-		
-		gestureOffset += translation.y;
-		
-		NSLog(@"translation Y: %f", translation.y);
-		NSLog(@"gestureOffset Y: %f", gestureOffset);
-		
-		if(gestureOffset  > 240.f) {
-			//do nothing
-		}
-		else if(gestureOffset > 64.0f) { //i.e. imageView moves under the nav bar
-			if(navigationBarIsOpaque) {
-				[self setTranslucentNavigationBar];
-			}
-			
-			[sender.view setCenter:CGPointMake(sender.view.center.x, sender.view.center.y + translation.y)];
-			[sender setTranslation:CGPointZero inView:sender.view.superview];
-			
-			self.storeImageViewHeightConstraint.constant = self.tableView.frame.origin.y - self.storeImage.frame.origin.y;
-		}
-		else {
-			if(!navigationBarIsOpaque) {
-				[self setOpaqueNavigationBar];
-			}
-			
-			[self.tableView setContentOffset:CGPointMake(0, 64.0f - gestureOffset)];
-			[sender setTranslation:CGPointZero inView:self.tableView];
-		}
-    }
-}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
-	shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-{
-	//YES to allow both gestureRecognizer and otherGestureRecognizer to recognize their gestures simultaneously
-    return YES;
 }
 
 - (void)setOpaqueNavigationBar
@@ -380,6 +318,7 @@
 	self.navigationItem.title = store.store_name;
 	[RepunchUtils setupNavigationController:self.navigationController];
 	navigationBarIsOpaque = YES;
+	self.tableView.contentInset = UIEdgeInsetsMake(64.0f, 0.0f, 0.0f, 0.0f);
 	
 	[UIView commitAnimations];
 }
@@ -400,23 +339,35 @@
 	[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"black_alpha_gradient.png"] forBarMetrics:UIBarMetricsDefault];
 	self.navigationController.navigationBar.shadowImage = [UIImage new];
 	navigationBarIsOpaque = NO;
+	self.tableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
 	
 	[UIView commitAnimations];
 }
 
 #pragma mark - Scroll view delegate
-/*
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-	if(scrollView.contentOffset.y <= 0)
+	CGFloat buffer = 5.0f;
+	
+	if(scrollView.contentOffset.y > transitionScrollOffset)
 	{
-		[self setTranslucentNavigationBar];
+		if(!navigationBarIsOpaque) {
+			[self setOpaqueNavigationBar];
+		}
+	}
+	else if(scrollView.contentOffset.y < transitionScrollOffset + buffer)
+	{
+		if(navigationBarIsOpaque) {
+			[self setTranslucentNavigationBar];
+		}
 		
-		//self.tableView.scrollEnabled = NO;
-		panGestureRecognizer.enabled = YES;
+		if(scrollView.contentOffset.y <= 0) { //expand image
+			self.storeImageHeightConstraint.constant = 240.0f - scrollView.contentOffset.y; //240 is height of image
+		}
 	}
 }
-*/
+
 #pragma mark - Table view delegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -431,7 +382,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 70;
+    return patronStoreExists ? 70 : 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

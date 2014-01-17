@@ -7,9 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StoreViewController">
             <connections>
                 <outlet property="storeImage" destination="HUW-So-tE3" id="14k-9h-gFP"/>
-                <outlet property="storeImageViewHeightConstraint" destination="HBU-Hx-Gqh" id="K0A-zE-0V2"/>
-                <outlet property="storeName" destination="vmx-s1-qYE" id="BkX-Ab-qYB"/>
-                <outlet property="storeNameBackground" destination="nXQ-VT-30K" id="5o0-Nj-lf4"/>
+                <outlet property="storeImageHeightConstraint" destination="HBU-Hx-Gqh" id="Kxc-HU-1Qt"/>
                 <outlet property="tableView" destination="v7c-TM-dOO" id="M8i-27-7u5"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
@@ -24,50 +22,24 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="240" id="HBU-Hx-Gqh"/>
-                        <constraint firstAttribute="width" constant="320" id="qEq-Jv-lwz"/>
                     </constraints>
                 </imageView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nXQ-VT-30K" userLabel="StoreNameLabelBackground">
-                    <rect key="frame" x="0.0" y="180" width="320" height="60"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                </view>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Old Soul at The Weatherstone" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="15" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="vmx-s1-qYE" userLabel="StoreNameLabel">
-                    <rect key="frame" x="20" y="180" width="280" height="60"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="280" id="M8H-ay-ykU"/>
-                        <constraint firstAttribute="height" constant="60" id="veZ-JA-N8f"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                    <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                </label>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="v7c-TM-dOO">
-                    <rect key="frame" x="0.0" y="240" width="320" height="328"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </tableView>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="centerX" secondItem="vmx-s1-qYE" secondAttribute="centerX" id="1NT-y5-R5n"/>
-                <constraint firstItem="nXQ-VT-30K" firstAttribute="height" secondItem="vmx-s1-qYE" secondAttribute="height" id="2eQ-GX-g1J"/>
-                <constraint firstItem="nXQ-VT-30K" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="3KC-oI-A9w"/>
-                <constraint firstItem="vmx-s1-qYE" firstAttribute="top" secondItem="HUW-So-tE3" secondAttribute="bottom" constant="-60" id="3lf-lY-ome"/>
                 <constraint firstAttribute="centerX" secondItem="HUW-So-tE3" secondAttribute="centerX" id="5sw-eR-G1B"/>
-                <constraint firstItem="vmx-s1-qYE" firstAttribute="centerX" secondItem="nXQ-VT-30K" secondAttribute="centerX" id="CHA-b6-PGO"/>
+                <constraint firstItem="v7c-TM-dOO" firstAttribute="top" secondItem="1" secondAttribute="top" id="BWg-ZA-KQC"/>
                 <constraint firstAttribute="trailing" secondItem="v7c-TM-dOO" secondAttribute="trailing" id="I3V-0m-ZUw"/>
                 <constraint firstItem="v7c-TM-dOO" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="OZk-C1-tPT"/>
                 <constraint firstAttribute="bottom" secondItem="v7c-TM-dOO" secondAttribute="bottom" id="PIq-0x-HOd"/>
-                <constraint firstAttribute="trailing" secondItem="nXQ-VT-30K" secondAttribute="trailing" id="WgS-19-2tX"/>
-                <constraint firstItem="v7c-TM-dOO" firstAttribute="top" secondItem="HUW-So-tE3" secondAttribute="bottom" id="dbe-VP-lY1"/>
                 <constraint firstItem="HUW-So-tE3" firstAttribute="top" secondItem="1" secondAttribute="top" id="gy9-W3-nkX"/>
-                <constraint firstItem="vmx-s1-qYE" firstAttribute="centerY" secondItem="nXQ-VT-30K" secondAttribute="centerY" id="tCN-8S-ZcE"/>
+                <constraint firstAttribute="trailing" secondItem="HUW-So-tE3" secondAttribute="trailing" id="uoB-1G-tAr"/>
+                <constraint firstItem="HUW-So-tE3" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="vCb-qw-SEJ"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
