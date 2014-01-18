@@ -37,6 +37,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *storeHoursOpen;
 @property (weak, nonatomic) IBOutlet UILabel *storeHours;
 @property (weak, nonatomic) IBOutlet UIView *storeInfoView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *storeInfoViewHeightConstraint;
 
 @property (weak, nonatomic) IBOutlet UIButton *callButton;
 @property (weak, nonatomic) IBOutlet UIButton *mapButton;

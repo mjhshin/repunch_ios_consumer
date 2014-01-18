@@ -98,25 +98,13 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLayoutSubviews
 {
-	NSLog(@"height %f - %f", self.storeAddress.frame.size.height, self.storeHours.frame.size.height);
-	NSLog(@"origin %f - %f", self.storeAddress.frame.origin.y, self.storeHours.frame.origin.y);
-	
-	CGFloat storeInfoHeight = self.storeHours.frame.origin.y + self.storeHours.frame.size.height + 5.0f;
-	NSLayoutConstraint *heightConstraint = [NSLayoutConstraint constraintWithItem:self.storeInfoView
-																		attribute:NSLayoutAttributeHeight
-																		relatedBy:NSLayoutRelationEqual
-																		   toItem:nil
-																		attribute:NSLayoutAttributeHeight
-																	   multiplier:1.0
-																		 constant:storeInfoHeight];
-	
-	[self.storeInfoView addConstraint:heightConstraint];
+	[super viewDidLayoutSubviews];
+	//[self adjustHeaderBasedOnContent];
 }
 
 - (void)setStoreInformation
@@ -128,8 +116,8 @@
 	
 	UIImage *storeImage;
     
-    [self.storeAddress setPreferredMaxLayoutWidth:260];
-    [self.storeHours setPreferredMaxLayoutWidth:200];
+    //[self.storeAddress setPreferredMaxLayoutWidth:260];
+    //[self.storeHours setPreferredMaxLayoutWidth:200];
 	
 	if(self.storeLocationId != nil) {
 		storeImage = [sharedData getStoreImage:self.storeLocationId];
@@ -175,6 +163,25 @@
 		}
 		
 	}
+}
+
+- (void)adjustHeaderBasedOnContent
+{
+	// adjust storeInfoView's height constraint
+	CGRect storeHoursFrame = self.storeHoursOpen.frame; //TODOL: switch back to storeHours
+	self.storeInfoViewHeightConstraint.constant = storeHoursFrame.origin.y + storeHoursFrame.size.height;
+	
+	//[self.storeInfoView setNeedsLayout];
+	//[self.storeInfoView layoutIfNeeded];
+	
+	// adjust height of headerView
+	CGRect headerFrame = self.headerView.frame;
+	headerFrame.size.height = 240.f + 94.5f + self.storeInfoViewHeightConstraint.constant;
+	self.headerView.frame = headerFrame;
+	NSLog(@"xxxx %f", self.storeInfoViewHeightConstraint.constant);
+	
+	[self.headerView setNeedsLayout];
+	[self.headerView layoutIfNeeded];
 }
 
 - (void)checkPatronStore
@@ -233,7 +240,7 @@
             NSString *openString = [outFormat stringFromDate:open];
             NSString *closeString = [outFormat stringFromDate:close];
             
-            [fullString appendString:[NSString stringWithFormat:@"%@ - %@\n", openString, closeString ]];
+            [fullString appendString:[NSString stringWithFormat:@"Open %@ - %@\n", openString, closeString ]];
         }
         
         self.storeHours.text = [fullString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -274,6 +281,8 @@
 
 - (void)setRewardTableView
 {
+	[self adjustHeaderBasedOnContent];
+	
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
 	self.tableView.tableHeaderView = self.headerView;
