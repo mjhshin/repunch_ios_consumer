@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *rewardTitle;
 @property (weak, nonatomic) IBOutlet UILabel *rewardDescription;
 @property (weak, nonatomic) IBOutlet UILabel *rewardPunches;
+@property (weak, nonatomic) IBOutlet UILabel *rewardPunchesStatic;
 @property (weak, nonatomic) IBOutlet UIImageView *rewardStatusIcon;
 
 @end

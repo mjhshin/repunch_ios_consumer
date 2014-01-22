@@ -8,7 +8,7 @@
 #import "MyPlacesViewController.h"
 
 @interface MyPlacesViewController ()
-@property (nonatomic, strong) UITableViewController *tableViewController;
+//@property (nonatomic, strong) UITableViewController *tableViewController;
 
 @end
 
@@ -35,12 +35,6 @@
 	[self showHelpViews];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-	[RepunchUtils setupNavigationController:self.navigationController];
-	[super viewWillAppear:animated];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -57,7 +51,8 @@
 
 - (void)showHelpViews
 {
-	if (![@"1" isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"kRPShowInstructions"]]) {
+	if (![@"1" isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"kRPShowInstructions"]])
+	{
         [[NSUserDefaults standardUserDefaults] setValue:@"1" forKey:@"kRPShowInstructions"];
 		[[NSUserDefaults standardUserDefaults] setValue:@"1" forKey:@"kRPShowPunchCode"];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -67,10 +62,9 @@
 		
 		[RepunchUtils showDialogWithTitle:@"Hello!"
 							  withMessage:message];
-		
-		
     }
-	else if (![@"1" isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"kRPShowPunchCode"]]) {
+	else if (![@"1" isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"kRPShowPunchCode"]])
+	{
 		[[NSUserDefaults standardUserDefaults] setValue:@"1" forKey:@"kRPShowPunchCode"];
         [[NSUserDefaults standardUserDefaults] synchronize];
 		
@@ -108,7 +102,8 @@
 	__weak typeof(self) weakSelf = self;
 	Reachability* reach = [Reachability reachabilityWithHostname:@"www.google.com"];
 	
-	reach.reachableBlock = ^(Reachability*reach) {
+	reach.reachableBlock = ^(Reachability*reach)
+	{
 		if(weakSelf.storeIdArray.count == 0) {
 			[weakSelf loadMyPlaces];
 		}
@@ -143,6 +138,7 @@
 
 - (void)setupTableView
 {
+	/*
 	self.tableViewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
 	[self addChildViewController:self.tableViewController];
 	
@@ -158,21 +154,22 @@
 
     [self.tableViewController.tableView setDataSource:self];
     [self.tableViewController.tableView setDelegate:self];
+	*/
+	
+	self.tableView.dataSource = self;
+	self.tableView.delegate = self;
 	
 	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 1)];
 	footer.backgroundColor = [UIColor clearColor];
-	[self.tableViewController.tableView setTableFooterView:footer];
-	
-    [self.view addSubview:self.tableViewController.tableView];
+	self.tableView.tableFooterView = footer;
     
-    self.edgesForExtendedLayout = UIRectEdgeNone;
-	//self.extendedLayoutIncludesOpaqueBars = YES;
+    //self.edgesForExtendedLayout = UIRectEdgeNone;
 }
 
 - (void)loadMyPlaces
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
-		[self.tableViewController.refreshControl endRefreshing];
+		//[self.tableViewController.refreshControl endRefreshing];
 		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
@@ -194,7 +191,7 @@
     {
 		[weakSelf.activityIndicatorView setHidden:YES];
 		[weakSelf.activityIndicator stopAnimating];
-		[weakSelf.tableViewController.refreshControl endRefreshing];
+		//[weakSelf.tableViewController.refreshControl endRefreshing];
 		
         if (!error)
         {
@@ -353,7 +350,7 @@
 				
 				UIImage *storeImage = [UIImage imageWithData:data];
 				if(storeImage) {
-					MyPlacesTableViewCell *cell = (MyPlacesTableViewCell*)[self.tableViewController.tableView cellForRowAtIndexPath:indexPath];
+					MyPlacesTableViewCell *cell = (MyPlacesTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
 					cell.storeImage.image = storeImage;
 					[self.sharedData addStoreImage:storeImage forKey:storeId];
 				}
@@ -402,7 +399,7 @@
 	}
 	
 	[self sortStoreObjectIdsByPunches];
-	[self.tableViewController.tableView reloadData];
+	[self.tableView reloadData];
 }
 
 /*

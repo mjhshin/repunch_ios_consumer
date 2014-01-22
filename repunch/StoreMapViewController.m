@@ -7,9 +7,8 @@
 
 #import "StoreMapViewController.h"
 
-@implementation StoreMapViewController
-{
-	RPStore *store;
+@implementation StoreMapViewController {
+	CLLocationCoordinate2D coordinates;
 }
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
@@ -21,53 +20,37 @@
 {
     [super viewDidLoad];
 	
-	UIBarButtonItem *exitButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
-																				target:self
-																				action:@selector(closeView)];
-	
 	UIBarButtonItem *directionsButton = [[UIBarButtonItem alloc] initWithTitle:@"Directions"
 																		 style:UIBarButtonItemStylePlain
 																		target:self
 																		action:@selector(getDirections)];
-	self.navigationItem.leftBarButtonItem = exitButton;
 	self.navigationItem.rightBarButtonItem = directionsButton;
+	self.navigationItem.title = @"";
 	
-	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
-	CGFloat screenWidth = screenRect.size.width;
-	CGFloat screenHeight = screenRect.size.height;
-	CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
-    
-    MKMapView *placeMapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - navBarHeight)];
-	
-	DataManager *sharedData = [DataManager getSharedInstance];
-	store = [sharedData getStore:self.storeId];
-    /*
-	[placeMapView setCenterCoordinate:CLLocationCoordinate2DMake(store.coordinates.latitude, store.coordinates.longitude) zoomLevel:14 animated:NO];
+	coordinates = CLLocationCoordinate2DMake(self.storeLocation.coordinates.latitude,
+											 self.storeLocation.coordinates.longitude);
 
-    MapPin *placePin = [[MapPin alloc] initWithCoordinates:CLLocationCoordinate2DMake(store.coordinates.latitude, store.coordinates.longitude)
-												 placeName:store.store_name
-											   description:store.formattedAddress];
-    
-    [placeMapView addAnnotation:placePin];
-    */
-    [self.view addSubview:placeMapView];
-}
+	[self.mapView setCenterCoordinate:coordinates
+							zoomLevel:14
+							 animated:NO];
 
-- (void)closeView
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
+    MapPin *placePin = [[MapPin alloc] initWithCoordinates:coordinates
+												 placeName:self.storeLocation.Store.store_name
+											   description:self.storeLocation.formattedAddress];
+    
+    [self.mapView addAnnotation:placePin];
 }
 
 - (void)getDirections
-{/*
+{
     Class mapItemClass = [MKMapItem class];
     if (mapItemClass && [mapItemClass respondsToSelector:@selector(openMapsWithItems:launchOptions:)])
     {        
-        MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(store.coordinates.latitude, store.coordinates.longitude)
+        MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:coordinates
                                                        addressDictionary:nil];
 		
         MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
-        mapItem.name = store.store_name;
+        mapItem.name = self.storeLocation.Store.store_name;
         
         // Set the directions mode to "Driving"
         NSDictionary *launchOptions = @{MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving};
@@ -80,7 +63,6 @@
         [MKMapItem openMapsWithItems:@[currentLocationMapItem, mapItem]
                        launchOptions:launchOptions];
     }
-*/
 }
 
 - (void)mapViewDidFailLoadingMap:(MKMapView *)mapView withError:(NSError *)error

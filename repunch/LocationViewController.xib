@@ -6,55 +6,142 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LocationViewController">
             <connections>
+                <outlet property="callButton" destination="Xn2-K4-YtD" id="JIh-uF-ZKG"/>
+                <outlet property="mapButton" destination="zSd-iD-XRm" id="N8f-bK-0tK"/>
+                <outlet property="mapView" destination="g53-I1-Vet" id="ULP-Dn-uNJ"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="1">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="689"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="633"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aM2-vq-0Lv">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="689"/>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aM2-vq-0Lv">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="633"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
-                        <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="g53-I1-Vet">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                        <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="g53-I1-Vet">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="300" id="IqC-2i-6UC"/>
                             </constraints>
                         </mapView>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zSd-iD-XRm">
-                            <rect key="frame" x="80" y="328" width="220" height="60"/>
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zSd-iD-XRm">
+                            <rect key="frame" x="0.0" y="300" width="320" height="80"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="80" id="duz-CS-fFb"/>
+                            </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="15"/>
-                            <state key="normal" title="67 Front St">
+                            <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="67 Front St" image="map_button.png">
                                 <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="mapButtonAction:" destination="-1" eventType="touchUpInside" id="owc-rE-Ash"/>
+                            </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xn2-K4-YtD">
-                            <rect key="frame" x="5" y="396" width="320" height="60"/>
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xn2-K4-YtD">
+                            <rect key="frame" x="0.0" y="381" width="320" height="80"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="80" id="lA1-GY-mTX"/>
+                            </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="15"/>
-                            <state key="normal" title="(123) 456-7890">
+                            <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="(123) 456-7890" image="call_button.png">
                                 <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="callButtonAction:" destination="-1" eventType="touchUpInside" id="a1a-Hj-n4k"/>
+                            </connections>
                         </button>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cR6-Qv-YEK">
-                            <rect key="frame" x="5" y="464" width="320" height="58"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pth-hB-BTi" userLabel="DividerView1">
+                            <rect key="frame" x="0.0" y="380" width="320" height="1"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="xrN-kp-ZK7"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pJH-ai-0VG" userLabel="DividerView2">
+                            <rect key="frame" x="0.0" y="461" width="320" height="1"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="YCq-BN-eHT"/>
+                            </constraints>
+                        </view>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="call_button.png" translatesAutoresizingMaskIntoConstraints="NO" id="57E-wy-leP">
+                            <rect key="frame" x="15" y="475" width="54" height="54"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="54" id="VIV-yf-g5b"/>
+                                <constraint firstAttribute="width" constant="54" id="qW2-7Z-qRc"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="144" translatesAutoresizingMaskIntoConstraints="NO" id="zDH-tG-KWX">
+                            <rect key="frame" x="142" y="475" width="144" height="145"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <string key="text">12:30 AM - 12:30 PM
+9:00 AM - 5:30 PM
+9:00 AM - 5:30 PM
+9:00 AM - 4:30 PM
+9:00 AM - 5:30 PM
+9:00 AM - 5:30 PM
+9:00 AM - 4:30 PM</string>
+                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
+                            <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="32" translatesAutoresizingMaskIntoConstraints="NO" id="ipI-wb-lES">
+                            <rect key="frame" x="84" y="475" width="32" height="145"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <string key="text">Mon
+Tue
+Wed
+Thu
+Fri
+Sat
+Sun</string>
+                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                            <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </label>
                     </subviews>
                     <constraints>
+                        <constraint firstAttribute="trailing" secondItem="zSd-iD-XRm" secondAttribute="trailing" id="1MT-Ei-BI1"/>
+                        <constraint firstItem="Pth-hB-BTi" firstAttribute="top" secondItem="zSd-iD-XRm" secondAttribute="bottom" id="2Y5-EQ-K5n"/>
+                        <constraint firstAttribute="bottom" secondItem="ipI-wb-lES" secondAttribute="bottom" constant="13" id="44R-WY-Nbj"/>
+                        <constraint firstItem="57E-wy-leP" firstAttribute="leading" secondItem="aM2-vq-0Lv" secondAttribute="leading" constant="15" id="5hl-Qa-yH2"/>
+                        <constraint firstItem="Xn2-K4-YtD" firstAttribute="top" secondItem="Pth-hB-BTi" secondAttribute="bottom" id="ILd-YG-otb"/>
+                        <constraint firstItem="Pth-hB-BTi" firstAttribute="leading" secondItem="aM2-vq-0Lv" secondAttribute="leading" id="JCa-Zl-YWx"/>
+                        <constraint firstItem="pJH-ai-0VG" firstAttribute="leading" secondItem="aM2-vq-0Lv" secondAttribute="leading" id="Lpe-9J-9go"/>
                         <constraint firstAttribute="trailing" secondItem="g53-I1-Vet" secondAttribute="trailing" id="PYu-tL-yhE"/>
+                        <constraint firstItem="zDH-tG-KWX" firstAttribute="top" secondItem="57E-wy-leP" secondAttribute="top" id="SAn-bB-9fw"/>
+                        <constraint firstItem="Xn2-K4-YtD" firstAttribute="top" secondItem="Pth-hB-BTi" secondAttribute="bottom" id="SvA-z8-8Rr"/>
                         <constraint firstItem="g53-I1-Vet" firstAttribute="leading" secondItem="aM2-vq-0Lv" secondAttribute="leading" id="Wj9-WW-xHe"/>
                         <constraint firstItem="g53-I1-Vet" firstAttribute="top" secondItem="aM2-vq-0Lv" secondAttribute="top" id="Z8p-Xn-oS0"/>
+                        <constraint firstItem="Xn2-K4-YtD" firstAttribute="leading" secondItem="aM2-vq-0Lv" secondAttribute="leading" id="abI-y4-nGd"/>
+                        <constraint firstAttribute="trailing" secondItem="pJH-ai-0VG" secondAttribute="trailing" id="exv-Dq-scR"/>
+                        <constraint firstItem="ipI-wb-lES" firstAttribute="top" secondItem="57E-wy-leP" secondAttribute="top" id="hIK-6d-elk"/>
+                        <constraint firstItem="zDH-tG-KWX" firstAttribute="leading" secondItem="ipI-wb-lES" secondAttribute="trailing" constant="26" id="hjI-Dm-vIb"/>
+                        <constraint firstItem="zSd-iD-XRm" firstAttribute="leading" secondItem="aM2-vq-0Lv" secondAttribute="leading" id="i3h-il-Cgg"/>
+                        <constraint firstItem="ipI-wb-lES" firstAttribute="leading" secondItem="57E-wy-leP" secondAttribute="trailing" constant="15" id="oxO-pi-pKg"/>
+                        <constraint firstAttribute="trailing" secondItem="Xn2-K4-YtD" secondAttribute="trailing" id="rdP-IZ-ehR"/>
                         <constraint firstItem="g53-I1-Vet" firstAttribute="centerX" secondItem="aM2-vq-0Lv" secondAttribute="centerX" id="rm4-9c-q4D"/>
+                        <constraint firstItem="57E-wy-leP" firstAttribute="top" secondItem="pJH-ai-0VG" secondAttribute="bottom" constant="13" id="txX-oW-Snf"/>
+                        <constraint firstItem="pJH-ai-0VG" firstAttribute="top" secondItem="Xn2-K4-YtD" secondAttribute="bottom" id="ufx-NP-uO9"/>
+                        <constraint firstAttribute="trailing" secondItem="Pth-hB-BTi" secondAttribute="trailing" id="vCu-uI-G6C"/>
+                        <constraint firstItem="zSd-iD-XRm" firstAttribute="top" secondItem="g53-I1-Vet" secondAttribute="bottom" id="vl9-Lr-4nd"/>
                     </constraints>
                 </scrollView>
             </subviews>
@@ -69,4 +156,8 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
+    <resources>
+        <image name="call_button.png" width="54" height="54"/>
+        <image name="map_button.png" width="54" height="54"/>
+    </resources>
 </document>

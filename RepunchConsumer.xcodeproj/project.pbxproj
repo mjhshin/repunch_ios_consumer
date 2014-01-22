@@ -66,7 +66,6 @@
 		EE54EF5A1835558500518C79 /* gift_icon_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = EE54EF591835558500518C79 /* gift_icon_dark.png */; };
 		EE5F947417FB5471006E6F67 /* AuthenticationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5F947317FB5471006E6F67 /* AuthenticationManager.m */; };
 		EE6A5ACB1857C68400D6B6AF /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE6A5ACA1857C68400D6B6AF /* FacebookSDK.framework */; };
-		EE6E6E38180F24E1000CE34B /* WelcomeStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE6E6E37180F24E1000CE34B /* WelcomeStoryboard.storyboard */; };
 		EE79DF4F17BAA37C00E92DE5 /* MessageAttachment.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE79DF4E17BAA37C00E92DE5 /* MessageAttachment.xib */; };
 		EE79DF5117BAA38E00E92DE5 /* MessageReply.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE79DF5017BAA38E00E92DE5 /* MessageReply.xib */; };
 		EE79DF7C17BD702500E92DE5 /* nav_delete.png in Resources */ = {isa = PBXBuildFile; fileRef = EE79DF7417BD702500E92DE5 /* nav_delete.png */; };
@@ -154,7 +153,6 @@
 		EEB75A8E186E187700AA4F89 /* nav_forward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEB75A8C186E187700AA4F89 /* nav_forward@2x.png */; };
 		EEB75A9218722D0800AA4F89 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB75A9018722D0800AA4F89 /* LocationViewController.m */; };
 		EEB75A9318722D0800AA4F89 /* LocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEB75A9118722D0800AA4F89 /* LocationViewController.xib */; };
-		EEB75A9518761E7B00AA4F89 /* StoreDetailStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEB75A9418761E7B00AA4F89 /* StoreDetailStoryboard.storyboard */; };
 		EEB75A98187B635600AA4F89 /* hours_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EEB75A96187B635600AA4F89 /* hours_icon.png */; };
 		EEB75A99187B635600AA4F89 /* hours_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEB75A97187B635600AA4F89 /* hours_icon@2x.png */; };
 		EEB75A9B187F5CAA00AA4F89 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEB75A9A187F5CAA00AA4F89 /* Images.xcassets */; };
@@ -252,7 +250,6 @@
 		EE5F947217FB5471006E6F67 /* AuthenticationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticationManager.h; sourceTree = "<group>"; };
 		EE5F947317FB5471006E6F67 /* AuthenticationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationManager.m; sourceTree = "<group>"; };
 		EE6A5ACA1857C68400D6B6AF /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
-		EE6E6E37180F24E1000CE34B /* WelcomeStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = WelcomeStoryboard.storyboard; sourceTree = "<group>"; };
 		EE79DF4E17BAA37C00E92DE5 /* MessageAttachment.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageAttachment.xib; sourceTree = "<group>"; };
 		EE79DF5017BAA38E00E92DE5 /* MessageReply.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageReply.xib; sourceTree = "<group>"; };
 		EE79DF7417BD702500E92DE5 /* nav_delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_delete.png; sourceTree = "<group>"; };
@@ -364,7 +361,6 @@
 		EEB75A8F18722D0800AA4F89 /* LocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationViewController.h; path = repunch/LocationViewController.h; sourceTree = SOURCE_ROOT; };
 		EEB75A9018722D0800AA4F89 /* LocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationViewController.m; path = repunch/LocationViewController.m; sourceTree = SOURCE_ROOT; };
 		EEB75A9118722D0800AA4F89 /* LocationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LocationViewController.xib; path = repunch/LocationViewController.xib; sourceTree = SOURCE_ROOT; };
-		EEB75A9418761E7B00AA4F89 /* StoreDetailStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = StoreDetailStoryboard.storyboard; path = repunch/StoreDetailStoryboard.storyboard; sourceTree = SOURCE_ROOT; };
 		EEB75A96187B635600AA4F89 /* hours_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hours_icon.png; sourceTree = "<group>"; };
 		EEB75A97187B635600AA4F89 /* hours_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hours_icon@2x.png"; sourceTree = "<group>"; };
 		EEB75A9A187F5CAA00AA4F89 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = repunch/Images.xcassets; sourceTree = SOURCE_ROOT; };
@@ -561,8 +557,6 @@
 				EE9D4BC617A83F4A005E0CC5 /* ThirdPartyViews */,
 				EEFBA1731810A70F00783F05 /* Utilities */,
 				EE04ABCF181AF26800DDA5D0 /* ViewControllers */,
-				EE6E6E37180F24E1000CE34B /* WelcomeStoryboard.storyboard */,
-				EEB75A9418761E7B00AA4F89 /* StoreDetailStoryboard.storyboard */,
 			);
 			path = Repunch;
 			sourceTree = "<group>";
@@ -829,7 +823,6 @@
 				EE9D4C7F17A83F4B005E0CC5 /* InboxViewController.xib in Resources */,
 				EE9D4C8117A83F4B005E0CC5 /* LandingViewController.xib in Resources */,
 				EE9D4C8317A83F4B005E0CC5 /* IncomingMessageViewController.xib in Resources */,
-				EEB75A9518761E7B00AA4F89 /* StoreDetailStoryboard.storyboard in Resources */,
 				EE9D4C8617A83F4B005E0CC5 /* StoreMapViewController.xib in Resources */,
 				EEE19EDF1858FD010084C63B /* store_placeholder.png in Resources */,
 				EE9D4C8817A83F4B005E0CC5 /* StoreViewController.xib in Resources */,
@@ -861,7 +854,6 @@
 				EE9D4F1F17A84ABB005E0CC5 /* ico-tab-inbox@2x.png in Resources */,
 				EE92C01F17E7D0F900532CBE /* call_button@2x.png in Resources */,
 				EE9D4F2317A84ABB005E0CC5 /* ico-tab-places.png in Resources */,
-				EE6E6E38180F24E1000CE34B /* WelcomeStoryboard.storyboard in Resources */,
 				EE9D4F2417A84ABB005E0CC5 /* ico-tab-places@2x.png in Resources */,
 				EEB75A9B187F5CAA00AA4F89 /* Images.xcassets in Resources */,
 				EE54EF5A1835558500518C79 /* gift_icon_dark.png in Resources */,

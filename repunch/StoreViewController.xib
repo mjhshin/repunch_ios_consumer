@@ -30,7 +30,7 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </tableView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="HUW-So-tE3" secondAttribute="centerX" id="5sw-eR-G1B"/>
                 <constraint firstItem="v7c-TM-dOO" firstAttribute="top" secondItem="1" secondAttribute="top" id="BWg-ZA-KQC"/>

@@ -295,10 +295,7 @@
 	}
     
     if ([[messageStatus objectForKey:@"is_read"] boolValue]) {
-        cell.contentView.backgroundColor = [UIColor colorWithRed:(float)192/256 //ARGB = 0x40C0C0C0
-														   green:(float)192/256
-															blue:(float)192/256
-														   alpha:(float)65/256];
+        cell.contentView.backgroundColor = [UIColor groupTableViewBackgroundColor];
 		cell.senderName.font = [RepunchUtils repunchFontWithSize:17 isBold:NO];
 		cell.dateSent.font = [RepunchUtils repunchFontWithSize:14 isBold:NO];
 		cell.dateSent.textColor = [UIColor darkGrayColor];

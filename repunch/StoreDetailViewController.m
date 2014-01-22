@@ -47,7 +47,6 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-	[RepunchUtils setupNavigationController:self.navigationController];
 	[super viewWillAppear:animated];
 	[locationManager startUpdatingLocation];
 }

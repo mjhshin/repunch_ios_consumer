@@ -33,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *storeName;
 @property (weak, nonatomic) IBOutlet UIImageView *storeImage;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *storeImageHeightConstraint;
+@property (weak, nonatomic) IBOutlet UILabel *storeCategory;
 @property (weak, nonatomic) IBOutlet UILabel *storeAddress;
 @property (weak, nonatomic) IBOutlet UILabel *storeHoursOpen;
 @property (weak, nonatomic) IBOutlet UILabel *storeHours;

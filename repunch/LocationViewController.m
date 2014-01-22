@@ -14,25 +14,25 @@
 
 @implementation LocationViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+    return [super initWithNibName:nibName bundle:bundle];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+	self.navigationItem.title = @"Store Name";
 }
 
-- (void)didReceiveMemoryWarning
+- (IBAction)mapButtonAction:(id)sender
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+	
 }
 
+- (IBAction)callButtonAction:(id)sender
+{
+	
+}
 @end

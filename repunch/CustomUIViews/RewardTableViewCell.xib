@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
@@ -14,42 +14,103 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="92"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Reward name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4">
-                        <rect key="frame" x="50" y="13" width="238" height="23"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="Reward name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4" userLabel="titleLabel">
+                        <rect key="frame" x="72" y="10" width="230" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="18"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="230" id="46z-vL-yuZ"/>
+                            <constraint firstAttribute="height" constant="24" id="vd6-6t-0Np"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="10">
-                        <rect key="frame" x="20" y="38" width="280" height="26"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="10" userLabel="descriptionLabel">
+                        <rect key="frame" x="72" y="44" width="230" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="230" id="DAl-Cd-4sf"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="Avenir-MediumOblique" family="Avenir" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Number of punches" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="21">
-                        <rect key="frame" x="20" y="63" width="153" height="24"/>
+                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mvp-B4-kru" userLabel="dividerView">
+                        <rect key="frame" x="60" y="16" width="2" height="60"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="reward_locked.png" id="45">
-                        <rect key="frame" x="15" y="6" width="27" height="30"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="60" id="lhe-zQ-Rw1"/>
+                            <constraint firstAttribute="width" constant="0.5" id="z8q-hn-1ua"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NDA-YO-fDP" userLabel="punchView">
+                        <rect key="frame" x="0.0" y="16" width="60" height="60"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </imageView>
+                        <subviews>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" ambiguous="YES" image="reward_locked.png" translatesAutoresizingMaskIntoConstraints="NO" id="45" userLabel="lockedIconImageView">
+                                <rect key="frame" x="12" y="13" width="35" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="35" id="18D-a8-51x"/>
+                                    <constraint firstAttribute="height" constant="35" id="R0m-y5-ane"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Punches" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="61i-ev-3Da" userLabel="punchStaticLabel">
+                                <rect key="frame" x="5" y="35" width="50" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="at4-kD-h1M"/>
+                                    <constraint firstAttribute="height" constant="20" id="hnl-6m-Ijl"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="12"/>
+                                <color key="textColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="21" userLabel="punchLabel">
+                                <rect key="frame" x="0.0" y="5" width="60" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="0z3-AZ-0bv"/>
+                                    <constraint firstAttribute="height" constant="30" id="B4Z-bg-Kuf"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="24"/>
+                                <color key="textColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="21" secondAttribute="centerX" id="6Am-qN-M0a"/>
+                            <constraint firstAttribute="centerX" secondItem="61i-ev-3Da" secondAttribute="centerX" id="Cw9-rs-d30"/>
+                            <constraint firstItem="61i-ev-3Da" firstAttribute="top" secondItem="21" secondAttribute="bottom" id="E5c-Dw-iyt"/>
+                            <constraint firstAttribute="width" constant="60" id="Zdb-3x-jsT"/>
+                            <constraint firstAttribute="height" constant="60" id="ado-1t-Ltj"/>
+                            <constraint firstItem="21" firstAttribute="top" secondItem="NDA-YO-fDP" secondAttribute="top" constant="5" id="xKf-sK-s5a"/>
+                        </constraints>
+                    </view>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="Mvp-B4-kru" firstAttribute="leading" secondItem="NDA-YO-fDP" secondAttribute="trailing" id="455-ms-4K1"/>
+                    <constraint firstItem="4" firstAttribute="top" secondItem="euY-z4-nTH" secondAttribute="top" constant="10" id="C48-pZ-zhW"/>
+                    <constraint firstItem="4" firstAttribute="leading" secondItem="10" secondAttribute="leading" id="akM-b6-0dk"/>
+                    <constraint firstItem="4" firstAttribute="leading" secondItem="Mvp-B4-kru" secondAttribute="trailing" constant="10" id="bCp-n4-NUL"/>
+                    <constraint firstItem="10" firstAttribute="top" secondItem="4" secondAttribute="bottom" constant="10" id="fi9-am-mlv"/>
+                    <constraint firstAttribute="centerY" secondItem="NDA-YO-fDP" secondAttribute="centerY" id="j9k-Sg-qHu"/>
+                    <constraint firstAttribute="centerY" secondItem="Mvp-B4-kru" secondAttribute="centerY" id="oNF-c3-DNb"/>
+                    <constraint firstItem="NDA-YO-fDP" firstAttribute="leading" secondItem="euY-z4-nTH" secondAttribute="leading" id="zTm-fd-ZHO"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="rewardDescription" destination="10" id="31"/>
                 <outlet property="rewardPunches" destination="21" id="87"/>
+                <outlet property="rewardPunchesStatic" destination="61i-ev-3Da" id="yIA-T2-3pQ"/>
                 <outlet property="rewardStatusIcon" destination="45" id="88"/>
                 <outlet property="rewardTitle" destination="4" id="86"/>
             </connections>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="reward_locked.png" width="77" height="77"/>
+        <image name="reward_locked.png" width="35" height="35"/>
     </resources>
 </document>

@@ -94,17 +94,18 @@
 	[super viewWillAppear:animated];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+	if(!navigationBarIsOpaque) {
+		[self setOpaqueNavigationBar];
+	}
+	[super viewWillDisappear:animated];
+}
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)viewDidLayoutSubviews
-{
-	[super viewDidLayoutSubviews];
-	//[self adjustHeaderBasedOnContent];
 }
 
 - (void)setStoreInformation
@@ -116,8 +117,8 @@
 	
 	UIImage *storeImage;
     
-    //[self.storeAddress setPreferredMaxLayoutWidth:260];
-    //[self.storeHours setPreferredMaxLayoutWidth:200];
+    [self.storeAddress setPreferredMaxLayoutWidth:260];
+    [self.storeHours setPreferredMaxLayoutWidth:230];
 	
 	if(self.storeLocationId != nil) {
 		storeImage = [sharedData getStoreImage:self.storeLocationId];
@@ -167,21 +168,17 @@
 
 - (void)adjustHeaderBasedOnContent
 {
-	// adjust storeInfoView's height constraint
-	CGRect storeHoursFrame = self.storeHoursOpen.frame; //TODOL: switch back to storeHours
-	self.storeInfoViewHeightConstraint.constant = storeHoursFrame.origin.y + storeHoursFrame.size.height;
+	[self.storeInfoView setNeedsLayout];
+	[self.storeInfoView layoutIfNeeded];
 	
-	//[self.storeInfoView setNeedsLayout];
-	//[self.storeInfoView layoutIfNeeded];
+	// adjust storeInfoView's height constraint
+	CGRect storeHoursFrame = self.storeHours.frame;
+	self.storeInfoViewHeightConstraint.constant = storeHoursFrame.origin.y + storeHoursFrame.size.height;
 	
 	// adjust height of headerView
 	CGRect headerFrame = self.headerView.frame;
 	headerFrame.size.height = 240.f + 94.5f + self.storeInfoViewHeightConstraint.constant;
 	self.headerView.frame = headerFrame;
-	NSLog(@"xxxx %f", self.storeInfoViewHeightConstraint.constant);
-	
-	[self.headerView setNeedsLayout];
-	[self.headerView layoutIfNeeded];
 }
 
 - (void)checkPatronStore
@@ -230,7 +227,7 @@
         NSDateFormatter *outFormat = [[NSDateFormatter alloc] init];
         outFormat.dateFormat = @"h:mm a";
         
-        NSMutableString *fullString = [[NSMutableString alloc] init];
+        NSMutableString *fullString = [[NSMutableString alloc] initWithString:@"Hours Today:"];
         
         for (NSDictionary *hours in repunchDates) {
             
@@ -240,8 +237,9 @@
             NSString *openString = [outFormat stringFromDate:open];
             NSString *closeString = [outFormat stringFromDate:close];
             
-            [fullString appendString:[NSString stringWithFormat:@"Open %@ - %@\n", openString, closeString ]];
+            [fullString appendString:[NSString stringWithFormat:@" %@ - %@,", openString, closeString]];
         }
+		[fullString deleteCharactersInRange:NSMakeRange(fullString.length-1, 1)]; //remove final comma
         
         self.storeHours.text = [fullString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         
@@ -297,7 +295,7 @@
 	[tapGestureRecognizer setDelegate:self];
 	tapGestureRecognizer.numberOfTouchesRequired = 1;
 	tapGestureRecognizer.numberOfTapsRequired = 1;
-	[self.tableView.tableHeaderView addGestureRecognizer:tapGestureRecognizer];
+	[self.storeInfoView addGestureRecognizer:tapGestureRecognizer];
 }
 
 - (void)handleTapGesture:(UITapGestureRecognizer *)sender
@@ -426,12 +424,22 @@
     cell.rewardTitle.text = [reward objectForKey:@"reward_name"];
     cell.rewardDescription.text = [reward objectForKey:@"description"];
     int rewardPunches = [[reward objectForKey:@"punches"] intValue];
-    cell.rewardPunches.text = [NSString stringWithFormat:(rewardPunches == 1 ? @"%i Punch" :  @"%i Punches"), rewardPunches];
+    cell.rewardPunches.text = [NSString stringWithFormat:@"%i", rewardPunches];
+	cell.rewardPunchesStatic.text = (rewardPunches == 1) ? @"Punch" : @"Punches";
     
-	if (punchCount < rewardPunches) {
-        cell.rewardStatusIcon.image = [UIImage imageNamed:@"reward_locked"];
-    } else {
-		cell.rewardStatusIcon.image = [UIImage imageNamed:@"reward_unlocked"];
+	if(punchCount >= rewardPunches) {
+		cell.rewardStatusIcon.hidden = YES;
+		cell.rewardPunches.textColor = [RepunchUtils repunchOrangeColor];
+		cell.rewardPunchesStatic.textColor = [RepunchUtils repunchOrangeColor];
+		cell.rewardTitle.font = [RepunchUtils repunchFontWithSize:17 isBold:YES];
+		cell.backgroundColor = [UIColor whiteColor];
+	}
+	else {
+		cell.rewardStatusIcon.hidden = YES;
+		cell.rewardPunches.textColor = [UIColor grayColor];
+		cell.rewardPunchesStatic.textColor = [UIColor grayColor];
+		cell.rewardTitle.font = [RepunchUtils repunchFontWithSize:17 isBold:NO];
+		cell.backgroundColor = [UIColor groupTableViewBackgroundColor];
 	}
     
     [cell setUserInteractionEnabled:patronStoreExists];
@@ -546,12 +554,8 @@
 - (IBAction)mapButtonAction:(id)sender
 {
 	StoreMapViewController *storeMapVC = [[StoreMapViewController alloc] init];
-	storeMapVC.storeId = self.storeId;
-	
-	UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:storeMapVC];
-	[RepunchUtils setupNavigationController:navController];
-	
-    [self presentViewController:navController animated:YES completion:nil];
+	storeMapVC.storeLocation = storeLocation;
+    [self.navigationController pushViewController:storeMapVC animated:YES];
 }
 
 - (IBAction)feedbackButtonAction:(id)sender

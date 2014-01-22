@@ -8,13 +8,13 @@
 #import <UIKit/UIKit.h>
 #import "MKMapView+ZoomLevel.h"
 #import "MapPin.h"
-#import "DataManager.h"
 #import <Parse/Parse.h>
 #import "RepunchUtils.h"
-#import "RPStore.h"
+#import "RPStoreLocation.h"
 
 @interface StoreMapViewController : UIViewController <MKMapViewDelegate>
 
-@property (nonatomic, strong) NSString *storeId;
+@property (strong, nonatomic) RPStoreLocation *storeLocation;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @end
