@@ -7,6 +7,7 @@
 
 #import "StoreViewController.h"
 #import "StoreDetailViewController.h"
+#import "LocationViewController.h"
 #import "RPStore.h"
 
 @implementation StoreViewController
@@ -97,7 +98,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
 	if(!navigationBarIsOpaque) {
-		[self setOpaqueNavigationBar];
+		[RepunchUtils setupNavigationController:self.navigationController];
 	}
 	[super viewWillDisappear:animated];
 }
@@ -300,14 +301,28 @@
 
 - (void)handleTapGesture:(UITapGestureRecognizer *)sender
 {
-    if (sender.state == UIGestureRecognizerStateEnded)
+	if(sender.state == UIGestureRecognizerStateBegan)
 	{
-        self.tableView.tableHeaderView.backgroundColor = [UIColor lightGrayColor];
-		StoreDetailViewController *storeDetailVC = [[StoreDetailViewController alloc] init];
-		storeDetailVC.store = store;
-		[self.navigationController pushViewController:storeDetailVC animated:YES];
+		self.storeInfoView.backgroundColor = [UIColor lightGrayColor];
+	}
+    else if (sender.state == UIGestureRecognizerStateEnded)
+	{
+		if(self.storeLocationId == nil) {
+			StoreDetailViewController *storeDetailVC = [[StoreDetailViewController alloc] init];
+			storeDetailVC.store = store;
+			[self.navigationController pushViewController:storeDetailVC animated:YES];
+		}
+		else {
+			LocationViewController *locationVC = [[LocationViewController alloc] init];
+			locationVC.storeLocation = storeLocation;
+			[self.navigationController pushViewController:locationVC animated:YES];
+		}
 		self.headerView.backgroundColor = [UIColor clearColor];
     }
+	else if(sender.state == UIGestureRecognizerStateCancelled)
+	{
+		self.storeInfoView.backgroundColor = [UIColor clearColor];
+	}
 }
 
 - (void)setOpaqueNavigationBar

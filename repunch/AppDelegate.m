@@ -30,6 +30,8 @@
 					  clientKey:@"2anJYVl8sakbPVqPz4MEbP2GLWBcs7uRFTvWMaZ0"];
 	}
 	
+	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+	
     [RPStore registerSubclass];
 	[RPStoreLocation registerSubclass];
 

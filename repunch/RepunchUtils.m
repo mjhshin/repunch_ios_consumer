@@ -127,6 +127,7 @@
 	navController.navigationBar.tintColor = [UIColor whiteColor];
 	[navController.navigationBar setBackgroundImage:[UIImage imageNamed:@"orange_gradient.png"] forBarMetrics:UIBarMetricsDefault];
 	//navController.navigationBar.barTintColor = [RepunchUtils repunchOrangeColor];
+	navController.navigationBar.barStyle = UIBarStyleBlack;
 	navController.navigationBar.translucent = YES;
 }
 
