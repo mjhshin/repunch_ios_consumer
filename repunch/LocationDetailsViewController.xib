@@ -4,11 +4,12 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LocationViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LocationDetailsViewController">
             <connections>
-                <outlet property="bigMapDirectionsButton" destination="Mng-jn-pkq" id="WBm-t4-vjs"/>
-                <outlet property="bigMapExitButton" destination="QOW-CR-vrV" id="i1F-Ov-XJC"/>
                 <outlet property="callButton" destination="Xn2-K4-YtD" id="JIh-uF-ZKG"/>
+                <outlet property="expandedMapDirectionsButton" destination="Mng-jn-pkq" id="pjU-oM-cMG"/>
+                <outlet property="expandedMapExitButton" destination="QOW-CR-vrV" id="dCU-6g-1e5"/>
+                <outlet property="expandedMapStatusBar" destination="i4X-fA-F7L" id="Lbt-Ub-ug6"/>
                 <outlet property="mapButton" destination="zSd-iD-XRm" id="N8f-bK-0tK"/>
                 <outlet property="mapView" destination="g53-I1-Vet" id="ULP-Dn-uNJ"/>
                 <outlet property="mapViewHeightConstraint" destination="IqC-2i-6UC" id="eZ4-HL-6F5"/>
@@ -33,41 +34,43 @@
                             </constraints>
                         </mapView>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zSd-iD-XRm" userLabel="DirectionsButton">
-                            <rect key="frame" x="0.0" y="301" width="320" height="80"/>
+                            <rect key="frame" x="0.0" y="301" width="320" height="75"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="80" id="duz-CS-fFb"/>
+                                <constraint firstAttribute="height" constant="75" id="duz-CS-fFb"/>
                             </constraints>
-                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                             <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" title="67 Front St" image="map_button.png">
+                            <state key="normal" title="67 Front St" image="location_map_icon.png">
                                 <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </state>
+                            <state key="highlighted" backgroundImage="orange_highlighted.png"/>
                             <connections>
                                 <action selector="mapButtonAction:" destination="-1" eventType="touchUpInside" id="owc-rE-Ash"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xn2-K4-YtD" userLabel="CallButton">
-                            <rect key="frame" x="0.0" y="382" width="320" height="80"/>
+                        <button opaque="NO" contentMode="scaleAspectFit" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xn2-K4-YtD" userLabel="CallButton">
+                            <rect key="frame" x="0.0" y="377" width="320" height="75"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="80" id="lA1-GY-mTX"/>
+                                <constraint firstAttribute="height" constant="75" id="lA1-GY-mTX"/>
                             </constraints>
-                            <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                             <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" title="(123) 456-7890" image="call_button.png">
+                            <state key="normal" title="(123) 456-7890" image="location_call_icon.png">
                                 <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </state>
+                            <state key="highlighted" backgroundImage="orange_highlighted.png"/>
                             <connections>
                                 <action selector="callButtonAction:" destination="-1" eventType="touchUpInside" id="a1a-Hj-n4k"/>
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CSW-f1-4gp" userLabel="DividerView1">
-                            <rect key="frame" x="0.0" y="300" width="320" height="2"/>
+                            <rect key="frame" x="0.0" y="300" width="320" height="1"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
@@ -75,7 +78,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pth-hB-BTi" userLabel="DividerView2">
-                            <rect key="frame" x="0.0" y="381" width="320" height="2"/>
+                            <rect key="frame" x="0.0" y="376" width="320" height="1"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
@@ -83,24 +86,27 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pJH-ai-0VG" userLabel="DividerView3">
-                            <rect key="frame" x="0.0" y="462" width="320" height="2"/>
+                            <rect key="frame" x="0.0" y="452" width="320" height="1"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="0.5" id="YCq-BN-eHT"/>
                             </constraints>
                         </view>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="call_button.png" translatesAutoresizingMaskIntoConstraints="NO" id="57E-wy-leP" userLabel="HoursImageView">
-                            <rect key="frame" x="15" y="476" width="54" height="54"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="location_hours_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="57E-wy-leP" userLabel="HoursImageView">
+                            <rect key="frame" x="15" y="468" width="36" height="36"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="54" id="VIV-yf-g5b"/>
-                                <constraint firstAttribute="width" constant="54" id="qW2-7Z-qRc"/>
+                                <constraint firstAttribute="height" constant="36" id="VIV-yf-g5b"/>
+                                <constraint firstAttribute="width" constant="36" id="qW2-7Z-qRc"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="144" translatesAutoresizingMaskIntoConstraints="NO" id="zDH-tG-KWX" userLabel="HoursLabel">
-                            <rect key="frame" x="142" y="518" width="144" height="145"/>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="150" translatesAutoresizingMaskIntoConstraints="NO" id="zDH-tG-KWX" userLabel="HoursLabel">
+                            <rect key="frame" x="127" y="493" width="150" height="135"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="150" id="hN8-Vj-1RQ"/>
+                            </constraints>
                             <string key="text">12:30 AM - 12:30 PM
 9:00 AM - 5:30 PM
 9:00 AM - 5:30 PM
@@ -108,14 +114,17 @@
 9:00 AM - 5:30 PM
 9:00 AM - 5:30 PM
 9:00 AM - 4:30 PM</string>
-                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                             <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </label>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="32" translatesAutoresizingMaskIntoConstraints="NO" id="ipI-wb-lES" userLabel="HoursDaysLabel">
-                            <rect key="frame" x="84" y="518" width="32" height="145"/>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="35" translatesAutoresizingMaskIntoConstraints="NO" id="ipI-wb-lES" userLabel="HoursDaysLabel">
+                            <rect key="frame" x="66" y="493" width="35" height="135"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="35" id="ofE-79-MeI"/>
+                            </constraints>
                             <string key="text">Mon
 Tue
 Wed
@@ -123,19 +132,19 @@ Thu
 Fri
 Sat
 Sun</string>
-                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                             <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </label>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hours" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hLy-oW-oZC" userLabel="HoursStaticLabel">
-                            <rect key="frame" x="84" y="493" width="48" height="20"/>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Hours" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hLy-oW-oZC" userLabel="HoursStaticLabel">
+                            <rect key="frame" x="66" y="468" width="48" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="48" id="GUu-Uu-yVS"/>
                                 <constraint firstAttribute="height" constant="20" id="aMo-yo-h1C"/>
                             </constraints>
-                            <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -144,8 +153,9 @@ Sun</string>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="zSd-iD-XRm" secondAttribute="trailing" id="1MT-Ei-BI1"/>
                         <constraint firstItem="Pth-hB-BTi" firstAttribute="top" secondItem="zSd-iD-XRm" secondAttribute="bottom" id="2Y5-EQ-K5n"/>
-                        <constraint firstAttribute="bottom" secondItem="ipI-wb-lES" secondAttribute="bottom" constant="13" id="44R-WY-Nbj"/>
+                        <constraint firstAttribute="bottom" secondItem="ipI-wb-lES" secondAttribute="bottom" constant="15" id="44R-WY-Nbj"/>
                         <constraint firstItem="57E-wy-leP" firstAttribute="leading" secondItem="aM2-vq-0Lv" secondAttribute="leading" constant="15" id="5hl-Qa-yH2"/>
+                        <constraint firstAttribute="trailing" secondItem="zDH-tG-KWX" secondAttribute="trailing" constant="43" id="ArE-Is-n7a"/>
                         <constraint firstItem="ipI-wb-lES" firstAttribute="top" secondItem="hLy-oW-oZC" secondAttribute="bottom" constant="5" id="DoK-FL-Dke"/>
                         <constraint firstItem="zSd-iD-XRm" firstAttribute="top" secondItem="CSW-f1-4gp" secondAttribute="bottom" id="GNe-Q3-3cg"/>
                         <constraint firstItem="Xn2-K4-YtD" firstAttribute="top" secondItem="Pth-hB-BTi" secondAttribute="bottom" id="ILd-YG-otb"/>
@@ -157,36 +167,37 @@ Sun</string>
                         <constraint firstItem="g53-I1-Vet" firstAttribute="top" secondItem="aM2-vq-0Lv" secondAttribute="top" id="Z8p-Xn-oS0"/>
                         <constraint firstItem="CSW-f1-4gp" firstAttribute="leading" secondItem="aM2-vq-0Lv" secondAttribute="leading" id="ZZ1-dn-ZRC"/>
                         <constraint firstItem="Xn2-K4-YtD" firstAttribute="leading" secondItem="aM2-vq-0Lv" secondAttribute="leading" id="abI-y4-nGd"/>
+                        <constraint firstItem="57E-wy-leP" firstAttribute="top" secondItem="hLy-oW-oZC" secondAttribute="top" id="adT-3F-1aV"/>
                         <constraint firstAttribute="trailing" secondItem="CSW-f1-4gp" secondAttribute="trailing" id="dHR-u6-xJY"/>
                         <constraint firstItem="ipI-wb-lES" firstAttribute="leading" secondItem="hLy-oW-oZC" secondAttribute="leading" id="eRU-Sr-3zS"/>
                         <constraint firstItem="hLy-oW-oZC" firstAttribute="leading" secondItem="57E-wy-leP" secondAttribute="trailing" constant="15" id="ekD-SZ-stU"/>
                         <constraint firstAttribute="trailing" secondItem="pJH-ai-0VG" secondAttribute="trailing" id="exv-Dq-scR"/>
-                        <constraint firstItem="57E-wy-leP" firstAttribute="centerY" secondItem="hLy-oW-oZC" secondAttribute="centerY" id="fUZ-AF-UlA"/>
                         <constraint firstItem="CSW-f1-4gp" firstAttribute="top" secondItem="g53-I1-Vet" secondAttribute="bottom" id="hcI-0t-7xm"/>
                         <constraint firstItem="zDH-tG-KWX" firstAttribute="leading" secondItem="ipI-wb-lES" secondAttribute="trailing" constant="26" id="hjI-Dm-vIb"/>
                         <constraint firstItem="zSd-iD-XRm" firstAttribute="leading" secondItem="aM2-vq-0Lv" secondAttribute="leading" id="i3h-il-Cgg"/>
+                        <constraint firstAttribute="bottom" secondItem="zDH-tG-KWX" secondAttribute="bottom" constant="15" id="nd4-Io-BsG"/>
                         <constraint firstItem="zDH-tG-KWX" firstAttribute="top" secondItem="ipI-wb-lES" secondAttribute="top" id="nh3-9c-ll4"/>
                         <constraint firstAttribute="trailing" secondItem="Xn2-K4-YtD" secondAttribute="trailing" id="rdP-IZ-ehR"/>
                         <constraint firstItem="g53-I1-Vet" firstAttribute="centerX" secondItem="aM2-vq-0Lv" secondAttribute="centerX" id="rm4-9c-q4D"/>
-                        <constraint firstItem="57E-wy-leP" firstAttribute="top" secondItem="pJH-ai-0VG" secondAttribute="bottom" constant="13" id="txX-oW-Snf"/>
+                        <constraint firstItem="57E-wy-leP" firstAttribute="top" secondItem="pJH-ai-0VG" secondAttribute="bottom" constant="15" id="txX-oW-Snf"/>
                         <constraint firstItem="pJH-ai-0VG" firstAttribute="top" secondItem="Xn2-K4-YtD" secondAttribute="bottom" id="ufx-NP-uO9"/>
                         <constraint firstAttribute="trailing" secondItem="Pth-hB-BTi" secondAttribute="trailing" id="vCu-uI-G6C"/>
                     </constraints>
                 </scrollView>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QOW-CR-vrV" userLabel="MapExitButton">
-                    <rect key="frame" x="8" y="20" width="44" height="44"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QOW-CR-vrV" userLabel="MapExitButton">
+                    <rect key="frame" x="10" y="32" width="32" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="44" id="1hm-Ks-Ord"/>
-                        <constraint firstAttribute="height" constant="44" id="71q-mJ-j99"/>
+                        <constraint firstAttribute="width" constant="32" id="1hm-Ks-Ord"/>
+                        <constraint firstAttribute="height" constant="32" id="71q-mJ-j99"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <state key="normal" image="nav_exit.png"/>
+                    <state key="normal" image="circular_exit_button.png"/>
                     <connections>
                         <action selector="bigMapExitButtonAction:" destination="-1" eventType="touchUpInside" id="ReX-CD-m4O"/>
                     </connections>
                 </button>
-                <button hidden="YES" opaque="NO" alpha="0.79999999999999982" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mng-jn-pkq" userLabel="MapDirectionsButton">
+                <button hidden="YES" opaque="NO" alpha="0.74999999999999978" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mng-jn-pkq" userLabel="MapDirectionsButton">
                     <rect key="frame" x="0.0" y="633" width="320" height="48"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -205,10 +216,21 @@ Sun</string>
                         <action selector="bigMapDirectionsButtonAction:" destination="-1" eventType="touchUpInside" id="Ts0-gx-2Ln"/>
                     </connections>
                 </button>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i4X-fA-F7L" userLabel="MapStatusBar">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="r31-3B-xFf"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="QOW-CR-vrV" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="8" id="6rA-oh-g7E"/>
+                <constraint firstItem="i4X-fA-F7L" firstAttribute="top" secondItem="1" secondAttribute="top" id="03K-dj-D0B"/>
+                <constraint firstAttribute="trailing" secondItem="i4X-fA-F7L" secondAttribute="trailing" id="3o4-Ii-Uys"/>
+                <constraint firstItem="QOW-CR-vrV" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="10" id="6rA-oh-g7E"/>
+                <constraint firstItem="i4X-fA-F7L" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="FCE-oW-xfe"/>
                 <constraint firstAttribute="bottom" secondItem="aM2-vq-0Lv" secondAttribute="bottom" id="VvU-Hy-6dx"/>
                 <constraint firstAttribute="trailing" secondItem="aM2-vq-0Lv" secondAttribute="trailing" id="Xiu-A5-2iR"/>
                 <constraint firstItem="Mng-jn-pkq" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="d0O-kZ-Fna"/>
@@ -216,15 +238,17 @@ Sun</string>
                 <constraint firstItem="aM2-vq-0Lv" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="hTl-5v-cB3"/>
                 <constraint firstAttribute="bottom" secondItem="Mng-jn-pkq" secondAttribute="bottom" id="kzQ-gD-Y2L"/>
                 <constraint firstItem="aM2-vq-0Lv" firstAttribute="top" secondItem="1" secondAttribute="top" id="nCE-CQ-mga"/>
-                <constraint firstItem="QOW-CR-vrV" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" id="skK-IH-Nqb"/>
+                <constraint firstItem="QOW-CR-vrV" firstAttribute="top" secondItem="1" secondAttribute="top" constant="32" id="skK-IH-Nqb"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
     <resources>
-        <image name="call_button.png" width="54" height="54"/>
-        <image name="map_button.png" width="54" height="54"/>
-        <image name="nav_exit.png" width="32" height="32"/>
+        <image name="circular_exit_button.png" width="32" height="32"/>
+        <image name="location_call_icon.png" width="36" height="36"/>
+        <image name="location_hours_icon.png" width="36" height="36"/>
+        <image name="location_map_icon.png" width="36" height="36"/>
+        <image name="orange_highlighted.png" width="256" height="32"/>
     </resources>
 </document>

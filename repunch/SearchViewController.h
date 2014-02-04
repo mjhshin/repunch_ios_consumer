@@ -19,8 +19,9 @@
 @property (nonatomic, strong) DataManager* sharedData;
 @property (nonatomic, strong) PFObject* patron;
 @property (nonatomic, strong) NSMutableArray *storeLocationIdArray;
-@property (nonatomic, strong) UITableViewController *tableViewController;
 @property (nonatomic, strong) NSMutableDictionary *imageDownloadsInProgress;
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (weak, nonatomic) IBOutlet UIView *activityIndicatorView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;

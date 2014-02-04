@@ -6,8 +6,8 @@
 //
 
 #import "StoreViewController.h"
-#import "StoreDetailViewController.h"
-#import "LocationViewController.h"
+#import "LocationsViewController.h"
+#import "LocationDetailsViewController.h"
 #import "RPStore.h"
 
 @implementation StoreViewController
@@ -37,7 +37,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
+
 	transitionScrollOffset = self.storeImage.frame.size.height - self.storeName.frame.size.height - 84.0f; //32 is half nav bar height
 	self.automaticallyAdjustsScrollViewInsets = NO;
 	navigationBarIsOpaque = NO;
@@ -89,10 +89,11 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+	[super viewWillAppear:animated];
+	
 	if(self.tableView.contentOffset.y < transitionScrollOffset + 5.0f) { // 5 is buffer used in scrollViewDidScroll
 		[self setTranslucentNavigationBar];
 	}
-	[super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -169,6 +170,7 @@
 
 - (void)adjustHeaderBasedOnContent
 {
+	// layout after setting labels' text
 	[self.storeInfoView setNeedsLayout];
 	[self.storeInfoView layoutIfNeeded];
 	
@@ -176,10 +178,27 @@
 	CGRect storeHoursFrame = self.storeHours.frame;
 	self.storeInfoViewHeightConstraint.constant = storeHoursFrame.origin.y + storeHoursFrame.size.height;
 	
-	// adjust height of headerView
+	if( !self.storeHours.hidden ) { // TODO: fix
+		self.storeInfoViewHeightConstraint.constant += 10.0f;
+	}
+		
+	// adjust height of headerView frame
 	CGRect headerFrame = self.headerView.frame;
-	headerFrame.size.height = 240.f + 94.5f + self.storeInfoViewHeightConstraint.constant;
+	headerFrame.size.height = 350.0f + self.storeInfoViewHeightConstraint.constant;
 	self.headerView.frame = headerFrame;
+	
+	// layout after adjusting height constraint
+	[self.storeInfoView setNeedsLayout];
+	[self.storeInfoView layoutIfNeeded];
+	
+	// round corners
+	[self.storeInfoView.layer setCornerRadius:6.0f];
+	
+	// add shadow
+	[self.storeInfoView.layer setShadowColor:[UIColor darkGrayColor].CGColor];
+	[self.storeInfoView.layer setShadowOpacity:0.7];
+	[self.storeInfoView.layer setShadowRadius:1.0];
+	[self.storeInfoView.layer setShadowOffset:CGSizeMake(0.5f, 0.5f)];
 }
 
 - (void)checkPatronStore
@@ -188,12 +207,12 @@
     patronStoreExists = (patronStore != nil);
 	
 	if(patronStoreExists) {
-		punchCount = [[patronStore objectForKey:@"punch_count"] intValue];
+		punchCount = [patronStore[@"punch_count"] intValue];
 		
-		PFObject *facebookPost = [patronStore objectForKey:@"FacebookPost"];
+		PFObject *facebookPost = patronStore[@"FacebookPost"];
 		if( !IS_NIL(facebookPost) )
 		{
-			NSString *rewardTitle = [facebookPost objectForKey:@"reward"];
+			NSString *rewardTitle = facebookPost[@"reward"];
 			[FacebookPost presentDialog:self.storeId withRewardTitle:rewardTitle];
 		}
 	}
@@ -289,40 +308,6 @@
 	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 1)];
 	footer.backgroundColor = [UIColor clearColor];
 	self.tableView.tableFooterView = footer;
-	
-	// Make header selectable
-	UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-																						   action:@selector(handleTapGesture:)];
-	[tapGestureRecognizer setDelegate:self];
-	tapGestureRecognizer.numberOfTouchesRequired = 1;
-	tapGestureRecognizer.numberOfTapsRequired = 1;
-	[self.storeInfoView addGestureRecognizer:tapGestureRecognizer];
-}
-
-- (void)handleTapGesture:(UITapGestureRecognizer *)sender
-{
-	if(sender.state == UIGestureRecognizerStateBegan)
-	{
-		self.storeInfoView.backgroundColor = [UIColor lightGrayColor];
-	}
-    else if (sender.state == UIGestureRecognizerStateEnded)
-	{
-		if(self.storeLocationId == nil) {
-			StoreDetailViewController *storeDetailVC = [[StoreDetailViewController alloc] init];
-			storeDetailVC.store = store;
-			[self.navigationController pushViewController:storeDetailVC animated:YES];
-		}
-		else {
-			LocationViewController *locationVC = [[LocationViewController alloc] init];
-			locationVC.storeLocation = storeLocation;
-			[self.navigationController pushViewController:locationVC animated:YES];
-		}
-		self.headerView.backgroundColor = [UIColor clearColor];
-    }
-	else if(sender.state == UIGestureRecognizerStateCancelled)
-	{
-		self.storeInfoView.backgroundColor = [UIColor clearColor];
-	}
 }
 
 - (void)setOpaqueNavigationBar
@@ -399,12 +384,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 93;
+    return 170;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return patronStoreExists ? 70 : 0;
+    return 70;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -414,12 +399,24 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    if(!patronStoreExists) {
-		return nil;
-	}
+	// round corners
+	[self.sectionHeaderContentView.layer setCornerRadius:6.0f];
 	
-	self.punchCountLabel.text = [NSString stringWithFormat:@"%i", punchCount];
-	self.punchStaticLabel.text = (punchCount == 1) ? @"Punch": @"Punches";
+	// add shadow
+	[self.sectionHeaderContentView.layer setShadowColor:[UIColor darkGrayColor].CGColor];
+	[self.sectionHeaderContentView.layer setShadowOpacity:0.7];
+	[self.sectionHeaderContentView.layer setShadowRadius:1.0];
+	[self.sectionHeaderContentView.layer setShadowOffset:CGSizeMake(0.5f, 0.5f)];
+	
+    if(patronStoreExists) {
+		self.saveButton.hidden = YES;
+		
+		self.punchCountLabel.text = [NSString stringWithFormat:@"%i", punchCount];
+		self.punchStaticLabel.text = (punchCount == 1) ? @"Punch": @"Punches";
+	}
+	else {
+		self.saveButton.hidden = NO;
+	}
 	
     return self.sectionHeaderView;
 }
@@ -430,60 +427,58 @@
 {
     RewardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[RewardTableViewCell reuseIdentifier]];
 	if (cell == nil)
-    {
+	{
         cell = [RewardTableViewCell cell];
+		
+		// round corners
+		[cell.whiteContentView.layer setCornerRadius:6.0f];
+		
+		// add shadow
+		[cell.whiteContentView.layer setShadowColor:[UIColor darkGrayColor].CGColor];
+		[cell.whiteContentView.layer setShadowOpacity:0.7];
+		[cell.whiteContentView.layer setShadowRadius:1.0];
+		[cell.whiteContentView.layer setShadowOffset:CGSizeMake(0.5f, 0.5f)];
+		
+		UIView *selectedView = [[UIView alloc] initWithFrame:cell.whiteContentView.frame];
+		selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
+		cell.selectedBackgroundView = selectedView;
     }
 	
 	id reward = store.rewards[indexPath.row];
     
-    cell.rewardTitle.text = [reward objectForKey:@"reward_name"];
-    cell.rewardDescription.text = [reward objectForKey:@"description"];
-    int rewardPunches = [[reward objectForKey:@"punches"] intValue];
+    cell.rewardTitle.text = reward[@"reward_name"];
+    cell.rewardDescription.text = reward[@"description"];
+    int rewardPunches = [reward[@"punches"] intValue];
     cell.rewardPunches.text = [NSString stringWithFormat:@"%i", rewardPunches];
 	cell.rewardPunchesStatic.text = (rewardPunches == 1) ? @"Punch" : @"Punches";
+	cell.rewardStatusIcon.image = (punchCount >= rewardPunches) ?
+		[UIImage imageNamed:@"unlocked_icon"] : [UIImage imageNamed:@"locked_icon"];
     
-	if(punchCount >= rewardPunches) {
-		cell.rewardStatusIcon.hidden = YES;
-		cell.rewardPunches.textColor = [RepunchUtils repunchOrangeColor];
-		cell.rewardPunchesStatic.textColor = [RepunchUtils repunchOrangeColor];
-		cell.rewardTitle.font = [RepunchUtils repunchFontWithSize:17 isBold:YES];
-		cell.backgroundColor = [UIColor whiteColor];
-	}
-	else {
-		cell.rewardStatusIcon.hidden = YES;
-		cell.rewardPunches.textColor = [UIColor grayColor];
-		cell.rewardPunchesStatic.textColor = [UIColor grayColor];
-		cell.rewardTitle.font = [RepunchUtils repunchFontWithSize:17 isBold:NO];
-		cell.backgroundColor = [UIColor groupTableViewBackgroundColor];
-	}
-    
-    [cell setUserInteractionEnabled:patronStoreExists];
+    //[cell setUserInteractionEnabled:patronStoreExists];
+	cell.userInteractionEnabled = (punchCount >= rewardPunches);
 	
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if(!patronStoreExists) {
-		return;
-	}
-
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	
 	id reward = store.rewards[indexPath.row];
 	selectedReward = reward;
 
-	int rewardPunches = [[reward objectForKey:@"punches"] intValue];
-	int rewardId = [[reward objectForKey:@"reward_id"] intValue];
+	int rewardPunches = [reward[@"punches"] intValue];
+	int rewardId = [reward[@"reward_id"] intValue];
 	NSString *rewardPunchesString = [NSString stringWithFormat:@"%d", rewardPunches];
 	NSString *rewardIdString = [NSString stringWithFormat:@"%d", rewardId];
-	NSString *rewardName = [reward objectForKey:@"reward_name"];
-	NSString *patronName = [NSString stringWithFormat:@"%@ %@", [patron objectForKey:@"first_name"], [patron objectForKey:@"last_name"]];
+	NSString *rewardName = reward[@"reward_name"];
+	NSString *patronName = [NSString stringWithFormat:@"%@ %@", patron[@"first_name"], patron[@"last_name"]];
 	
 	
 	NSString *str1 = [NSString stringWithFormat:(rewardPunches == 1 ? @"%i Punch" :  @"%i Punches"), rewardPunches];
-	NSString *message = [str1 stringByAppendingFormat:@"\n\n%@", [reward objectForKey:@"description"]];
+	NSString *message = [str1 stringByAppendingFormat:@"\n\n%@", reward[@"description"]];
 
-	SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:[reward objectForKey:@"reward_name"]
+	SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:reward[@"reward_name"]
 													 andMessage:message];
 	
 	if (punchCount >= rewardPunches)
@@ -583,6 +578,20 @@
 	[RepunchUtils setupNavigationController:navController];
 	
 	[self presentViewController:navController animated:YES completion:nil];
+}
+
+- (IBAction)storeInfoButtonAction:(id)sender
+{
+	if(self.storeLocationId == nil) {
+		LocationsViewController *locationsVC = [[LocationsViewController alloc] init];
+		locationsVC.store = store;
+		[self.navigationController pushViewController:locationsVC animated:YES];
+	}
+	else {
+		LocationDetailsViewController *locationDetailsVC = [[LocationDetailsViewController alloc] init];
+		locationDetailsVC.storeLocation = storeLocation;
+		[self.navigationController pushViewController:locationDetailsVC animated:YES];
+	}
 }
 
 - (void)addStore
@@ -702,7 +711,7 @@
 		return;
 	}
 	
-	if( [patron objectForKey:@"facebook_id"] == nil)
+	if( patron[@"facebook_id"] == nil)
 	{
 		[RepunchUtils showDialogWithTitle:@"It's better together"
 							  withMessage:@"Log in with Facebook to send gifts to your friends"];
@@ -738,7 +747,7 @@
 			 if(!error)
 			 {
 				 patronStore = result;
-				 store = [result objectForKey:@"Store"];
+				 store = result[@"Store"];
 				 [sharedData addPatronStore:patronStore forKey:self.storeId];
 				 [sharedData addStore:store];
 				 [self setStoreInformation];
@@ -781,9 +790,9 @@
 	composeVC.messageType = @"gift";
 	composeVC.storeId = self.storeId;
 	composeVC.giftRecepientId = friendId;
-	composeVC.giftTitle = [selectedReward objectForKey:@"reward_name"];
-	composeVC.giftDescription = [selectedReward objectForKey:@"description"];
-	composeVC.giftPunches = [[selectedReward objectForKey:@"punches"] intValue];
+	composeVC.giftTitle = selectedReward[@"reward_name"];
+	composeVC.giftDescription = selectedReward[@"description"];
+	composeVC.giftPunches = [selectedReward[@"punches"] intValue];
 	composeVC.recepientName = name;
 	
 	UINavigationController *composeNavController = [[UINavigationController alloc] initWithRootViewController:composeVC];
@@ -792,4 +801,6 @@
 	[self presentViewController:composeNavController animated:YES completion:nil];
 }
 
+- (IBAction)saveButtonAction:(id)sender {
+}
 @end

@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,58 +14,58 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="93"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Sender" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3">
-                        <rect key="frame" x="12" y="12" width="223" height="21"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Sender" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3" userLabel="SenderLabel">
+                        <rect key="frame" x="15" y="10" width="223" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="223" id="455"/>
-                        </constraints>
                         <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Date" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="16">
-                        <rect key="frame" x="243" y="12" width="67" height="20"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="00:00 PM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="16" userLabel="DateLabel">
+                        <rect key="frame" x="246" y="12" width="64" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="67" id="452"/>
+                            <constraint firstAttribute="width" constant="64" id="452"/>
                             <constraint firstAttribute="height" constant="20" id="483"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                         <color key="textColor" red="0.88801375680000005" green="0.4631055026" blue="0.044528202590000003" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Subject Line" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="258" translatesAutoresizingMaskIntoConstraints="NO" id="34">
-                        <rect key="frame" x="12" y="41" width="258" height="41"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" text="Subject Line" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="258" translatesAutoresizingMaskIntoConstraints="NO" id="34" userLabel="PreviewLabel">
+                        <rect key="frame" x="15" y="42" width="258" height="43"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="41" id="461"/>
                             <constraint firstAttribute="width" constant="258" id="470"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
-                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="245">
-                        <rect key="frame" x="288" y="51" width="22" height="21"/>
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="245" userLabel="IconImageView">
+                        <rect key="frame" x="288" y="53" width="22" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="22" id="254"/>
-                            <constraint firstAttribute="height" constant="21" id="302"/>
+                            <constraint firstAttribute="height" constant="22" id="302"/>
                         </constraints>
                     </imageView>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="16" firstAttribute="leading" secondItem="3" secondAttribute="trailing" constant="8" id="2lX-86-psO"/>
+                    <constraint firstItem="16" firstAttribute="centerY" secondItem="3" secondAttribute="centerY" id="Soc-3d-alp"/>
+                    <constraint firstAttribute="trailing" secondItem="16" secondAttribute="trailing" constant="10" id="axy-Rl-8u9"/>
+                    <constraint firstAttribute="bottom" secondItem="34" secondAttribute="bottom" constant="8" id="rVR-bL-Ffp"/>
+                </constraints>
             </tableViewCellContentView>
             <constraints>
                 <constraint firstItem="245" firstAttribute="centerY" secondItem="34" secondAttribute="centerY" id="Ijf-NI-uvn"/>
-                <constraint firstItem="16" firstAttribute="baseline" secondItem="3" secondAttribute="baseline" id="JqR-r6-ccy"/>
                 <constraint firstItem="3" firstAttribute="leading" secondItem="34" secondAttribute="leading" id="Rr5-mt-rMJ"/>
-                <constraint firstItem="34" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="8" symbolic="YES" id="XlH-8C-diE"/>
+                <constraint firstItem="34" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="8" id="XlH-8C-diE"/>
                 <constraint firstAttribute="trailing" secondItem="245" secondAttribute="trailing" constant="10" id="bdq-aY-Mkg"/>
-                <constraint firstItem="3" firstAttribute="top" secondItem="2" secondAttribute="top" constant="12" id="gNJ-We-rfZ"/>
-                <constraint firstItem="245" firstAttribute="leading" secondItem="34" secondAttribute="trailing" constant="18" id="hfj-fz-5Yv"/>
+                <constraint firstItem="3" firstAttribute="top" secondItem="2" secondAttribute="top" constant="10" id="gNJ-We-rfZ"/>
+                <constraint firstItem="245" firstAttribute="leading" secondItem="34" secondAttribute="trailing" constant="15" id="hfj-fz-5Yv"/>
                 <constraint firstItem="16" firstAttribute="leading" secondItem="3" secondAttribute="trailing" constant="8" symbolic="YES" id="rYg-n3-pRK"/>
-                <constraint firstItem="16" firstAttribute="top" secondItem="3" secondAttribute="top" id="tkh-E3-YJ8"/>
             </constraints>
             <connections>
                 <outlet property="dateSent" destination="16" id="31"/>

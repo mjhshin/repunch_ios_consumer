@@ -6,17 +6,17 @@
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
-#import "StoreDetailViewController.h"
-#import "LocationViewController.h"
+#import "LocationsViewController.h"
+#import "LocationDetailsViewController.h"
 #import "StoreDetailTableViewCell.h"
 #import "RPStoreLocation.h"
 #import "RepunchUtils.h"
 
-@interface StoreDetailViewController()
+@interface LocationsViewController()
 
 @end
 
-@implementation StoreDetailViewController
+@implementation LocationsViewController
 {
 	CLLocationManager *locationManager;
 	PFGeoPoint *userLocation;
@@ -117,6 +117,11 @@
 	
 	if (cell == nil) {
         cell = [StoreDetailTableViewCell cell];
+		
+		UIView *selectedView = [[UIView alloc] initWithFrame:cell.frame];
+		selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
+		cell.selectedBackgroundView = selectedView;
+		
 		cell.locationImage.layer.cornerRadius = 8.0;
 		cell.locationImage.layer.masksToBounds = YES;
     }
@@ -143,10 +148,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    LocationViewController *storeLocationVC = [[LocationViewController alloc] init];
-    
-    // Push the view controller.
-    [self.navigationController pushViewController:storeLocationVC animated:YES];
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	
+    LocationDetailsViewController *locationDetailsVC = [[LocationDetailsViewController alloc] init];
+    locationDetailsVC.storeLocation = self.locationsArray[indexPath.row];
+    [self.navigationController pushViewController:locationDetailsVC animated:YES];
 }
 
 - (void)reloadTableView

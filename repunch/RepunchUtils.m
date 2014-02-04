@@ -148,8 +148,8 @@
 
 + (void)setDefaultButtonStyle:(UIButton *)button
 {
-	[button setBackgroundImage:[UIImage imageNamed:@"orange_button.png"] forState:UIControlStateNormal];
-	[button setBackgroundImage:[UIImage imageNamed:@"orange_button_highlighted.png"] forState:UIControlStateHighlighted];
+	[button setBackgroundImage:[UIImage imageNamed:@"orange_gradient_button.png"] forState:UIControlStateNormal];
+	[button setBackgroundImage:[UIImage imageNamed:@"orange_gradient_button_highlighted.png"] forState:UIControlStateHighlighted];
 	[button.layer setCornerRadius:5];
 	[button setClipsToBounds:YES];
 }
@@ -165,6 +165,16 @@
 + (UIColor *)repunchOrangeColor // RGBA = F79234FF
 {
 	return [UIColor colorWithRed:(247/255.0) green:(146/255.0) blue:(52/255.0) alpha:1.0];
+}
+
++ (UIColor *)lightRepunchOrangeColor
+{
+	return [UIColor colorWithRed:(246/255.0) green:(146/255.0) blue:(29/255.0) alpha:1.0];
+}
+
++ (UIColor *)repunchOrangeHighlightedColor
+{
+	return [UIColor colorWithRed:(240/255.0) green:(140/255.0) blue:(19/255.0) alpha:0.5];
 }
 
 + (UIFont *)repunchFontWithSize:(NSUInteger)fontSize isBold:(BOOL)isBold

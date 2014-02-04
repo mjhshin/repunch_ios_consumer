@@ -265,6 +265,11 @@
 	
 	if (cell == nil) {
         cell = [MyPlacesTableViewCell cell];
+		
+		UIView *selectedView = [[UIView alloc] initWithFrame:cell.frame];
+		selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
+		cell.selectedBackgroundView = selectedView;
+		
 		cell.storeImage.layer.cornerRadius = 10.0;
 		cell.storeImage.layer.masksToBounds = YES;
     }
@@ -449,7 +454,6 @@
 - (void)openSettings
 {
     SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
-	settingsVC.hidesBottomBarWhenPushed = YES;
 	UINavigationController *searchNavController = [[UINavigationController alloc] initWithRootViewController:settingsVC];
 	[RepunchUtils setupNavigationController:searchNavController];
     [self presentViewController:searchNavController animated:YES completion:nil];

@@ -11,6 +11,7 @@
                 <outlet property="activityIndicatorView" destination="43" id="71"/>
                 <outlet property="emptyResultsLabel" destination="153" id="154"/>
                 <outlet property="locationServicesLabel" destination="DZL-KB-ev2" id="m4M-0k-a6R"/>
+                <outlet property="tableView" destination="eCX-xX-WJU" id="ZzE-yb-Ryn"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
@@ -19,6 +20,11 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="eCX-xX-WJU">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="43">
                     <rect key="frame" x="105" y="267" width="111" height="34"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -70,12 +76,16 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="eCX-xX-WJU" secondAttribute="trailing" id="0b6-bb-heA"/>
+                <constraint firstItem="eCX-xX-WJU" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="6BL-qU-Joh"/>
                 <constraint firstAttribute="centerY" secondItem="153" secondAttribute="centerY" id="AzF-Pp-AB3"/>
                 <constraint firstAttribute="centerY" secondItem="DZL-KB-ev2" secondAttribute="centerY" id="BaT-J6-wbK"/>
                 <constraint firstAttribute="centerX" secondItem="153" secondAttribute="centerX" id="Ge3-Gt-NJM"/>
+                <constraint firstAttribute="bottom" secondItem="eCX-xX-WJU" secondAttribute="bottom" id="P3o-nF-14B"/>
                 <constraint firstAttribute="centerY" secondItem="43" secondAttribute="centerY" id="PJR-hF-pcR"/>
                 <constraint firstAttribute="centerX" secondItem="43" secondAttribute="centerX" id="S9P-in-8LY"/>
                 <constraint firstAttribute="centerX" secondItem="DZL-KB-ev2" secondAttribute="centerX" id="cks-2s-pJg"/>
+                <constraint firstItem="eCX-xX-WJU" firstAttribute="top" secondItem="1" secondAttribute="top" id="hT1-4Z-QoV"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

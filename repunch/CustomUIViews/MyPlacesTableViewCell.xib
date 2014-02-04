@@ -13,18 +13,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="104"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Store Name" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="200" translatesAutoresizingMaskIntoConstraints="NO" id="3">
-                        <rect key="frame" x="110" y="7" width="200" height="24"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalCompressionResistancePriority="751" text="Old Soul at The Weatherstone" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="202" translatesAutoresizingMaskIntoConstraints="NO" id="3" userLabel="StoreNameLabel">
+                        <rect key="frame" x="110" y="7" width="202" height="44"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="24" id="8YD-le-yD4"/>
-                            <constraint firstAttribute="width" constant="200" id="mdh-sc-c3w"/>
-                        </constraints>
                         <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
-                    <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5">
+                    <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5" userLabel="ThumbnailImageView">
                         <rect key="frame" x="8" y="7" width="90" height="90"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
@@ -32,36 +28,30 @@
                             <constraint firstAttribute="height" constant="90" id="WVL-l4-ppF"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="100 Punches" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6">
-                        <rect key="frame" x="132" y="43" width="178" height="18"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="999 Punches" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6" userLabel="PunchesLabel">
+                        <rect key="frame" x="132" y="52" width="180" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="18" id="gQC-FA-Ojz"/>
-                        </constraints>
                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ic_tab_punch_tiny.png" translatesAutoresizingMaskIntoConstraints="NO" id="7">
-                        <rect key="frame" x="114" y="46" width="12" height="12"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="star.png" translatesAutoresizingMaskIntoConstraints="NO" id="7" userLabel="PunchImageView">
+                        <rect key="frame" x="114" y="56" width="12" height="12"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="12" id="VBS-mf-eUE"/>
                             <constraint firstAttribute="width" constant="12" id="WtG-SA-kgJ"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Reward Available" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="36">
-                        <rect key="frame" x="132" y="67" width="178" height="18"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Reward Available" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="36" userLabel="RewardAvailableLabel">
+                        <rect key="frame" x="132" y="76" width="180" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="18" id="sPq-ws-EDV"/>
-                        </constraints>
                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="reward_unlocked_tiny.png" translatesAutoresizingMaskIntoConstraints="NO" id="37">
-                        <rect key="frame" x="114" y="70" width="12" height="12"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="checkmark_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="37" userLabel="RewardImageView">
+                        <rect key="frame" x="114" y="80" width="12" height="12"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="12" id="6sS-Ge-d9U"/>
@@ -71,6 +61,7 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="6" firstAttribute="trailing" secondItem="36" secondAttribute="trailing" id="0i4-SV-JUe"/>
+                    <constraint firstItem="37" firstAttribute="top" secondItem="7" secondAttribute="bottom" constant="12" id="16B-6L-nkf"/>
                     <constraint firstItem="6" firstAttribute="leading" secondItem="7" secondAttribute="trailing" constant="6" id="2v4-Vy-bFO"/>
                     <constraint firstItem="7" firstAttribute="leading" secondItem="5" secondAttribute="trailing" constant="16" id="7ok-wd-JiZ"/>
                     <constraint firstItem="36" firstAttribute="leading" secondItem="37" secondAttribute="trailing" constant="6" id="FHI-vf-NHE"/>
@@ -78,12 +69,13 @@
                     <constraint firstItem="6" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" id="Iax-s7-jcZ"/>
                     <constraint firstItem="6" firstAttribute="centerY" secondItem="7" secondAttribute="centerY" id="LdS-N8-1zY"/>
                     <constraint firstItem="5" firstAttribute="leading" secondItem="yoB-KE-hbE" secondAttribute="leading" constant="8" id="PBy-wW-Aev"/>
-                    <constraint firstItem="37" firstAttribute="top" secondItem="7" secondAttribute="bottom" constant="12" id="PXu-dF-SSr"/>
                     <constraint firstAttribute="centerY" secondItem="5" secondAttribute="centerY" id="WeH-Rc-Hyw"/>
+                    <constraint firstAttribute="trailing" secondItem="3" secondAttribute="trailing" constant="8" id="ZkC-Kk-pvi"/>
                     <constraint firstItem="36" firstAttribute="centerY" secondItem="37" secondAttribute="centerY" id="a4r-kZ-sPp"/>
+                    <constraint firstItem="7" firstAttribute="top" secondItem="3" secondAttribute="bottom" priority="750" constant="16" id="gkg-NF-hzo"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="37" secondAttribute="bottom" constant="12" id="h4D-Ge-x8p"/>
                     <constraint firstItem="5" firstAttribute="top" secondItem="3" secondAttribute="top" id="iIr-iT-dy2"/>
                     <constraint firstItem="7" firstAttribute="leading" secondItem="37" secondAttribute="leading" id="jwT-eX-zss"/>
-                    <constraint firstItem="7" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="15" id="y9r-tO-OKP"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -96,7 +88,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="ic_tab_punch_tiny.png" width="22" height="22"/>
-        <image name="reward_unlocked_tiny.png" width="22" height="22"/>
+        <image name="checkmark_icon.png" width="32" height="24"/>
+        <image name="star.png" width="32" height="32"/>
     </resources>
 </document>

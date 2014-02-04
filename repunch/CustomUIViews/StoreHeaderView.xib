@@ -21,14 +21,214 @@
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view autoresizesSubviews="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="250" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="371" id="BWH-Aq-4MY">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+        <view autoresizesSubviews="NO" contentMode="scaleAspectFit" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="250" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="371" id="BWH-Aq-4MY">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="410"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0kk-th-FUQ" userLabel="BackgroundForButtons">
-                    <rect key="frame" x="0.0" y="320" width="320" height="94"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0kk-th-FUQ" userLabel="GreyView">
+                    <rect key="frame" x="0.0" y="240" width="320" height="170"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <view autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Kai-AD-O7z" userLabel="StoreInfoView">
+                            <rect key="frame" x="10" y="10" width="300" height="65"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forward_button.png" translatesAutoresizingMaskIntoConstraints="NO" id="mlx-JI-wRQ" userLabel="ArrowImageView">
+                                    <rect key="frame" x="270" y="23" width="20" height="20"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="20" id="PeI-sq-3Zd"/>
+                                        <constraint firstAttribute="height" constant="20" id="rUp-wc-nov"/>
+                                    </constraints>
+                                </imageView>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coffee &amp; Tea" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dej-XQ-HNn" userLabel="CategoryLabel">
+                                    <rect key="frame" x="10" y="10" width="260" height="20"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="260" id="9n4-b4-MSc"/>
+                                        <constraint firstAttribute="height" constant="20" id="LFB-Dh-9C3"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Avenir-MediumOblique" family="Avenir" pointSize="14"/>
+                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" placeholderIntrinsicWidth="260" placeholderIntrinsicHeight="18" text="Multiple Locations" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="260" translatesAutoresizingMaskIntoConstraints="NO" id="tFu-Gl-aqI" userLabel="AddressLabel">
+                                    <rect key="frame" x="10" y="35" width="260" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <accessibility key="accessibilityConfiguration" label="Address"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="260" id="ZO4-lD-6Io"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="0.0" text="Open 9:00 AM - 12:30 PM" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="230" translatesAutoresizingMaskIntoConstraints="NO" id="Mxc-iM-9Jg" userLabel="HoursLabel">
+                                    <rect key="frame" x="10" y="58" width="230" height="0.0"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <accessibility key="accessibilityConfiguration" label="Hours Today"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="230" id="kk4-HG-HQj"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="70" placeholderIntrinsicHeight="0.0" text="Closed" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T5Z-N7-wKN" userLabel="OpenClosedLabel">
+                                    <rect key="frame" x="240" y="58" width="50" height="0.0"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <accessibility key="accessibilityConfiguration" label="Open Indicator"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="50" id="Cjm-qn-fFO"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
+                                    <color key="textColor" red="0.77439413265306123" green="0.039525273643126566" blue="0.092621862208825081" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bB7-zZ-dKf" userLabel="StoreInfoButton">
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="65"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <state key="normal">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="highlighted" backgroundImage="orange_highlighted.png"/>
+                                    <connections>
+                                        <action selector="storeInfoButtonAction:" destination="-1" eventType="touchUpInside" id="KNd-4K-hyg"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="Dej-XQ-HNn" firstAttribute="leading" secondItem="Kai-AD-O7z" secondAttribute="leading" constant="10" id="9t0-Xg-M6B"/>
+                                <constraint firstAttribute="bottom" secondItem="bB7-zZ-dKf" secondAttribute="bottom" id="Fwt-gy-fut"/>
+                                <constraint firstItem="bB7-zZ-dKf" firstAttribute="leading" secondItem="Kai-AD-O7z" secondAttribute="leading" id="L5k-iW-oMI"/>
+                                <constraint firstItem="Mxc-iM-9Jg" firstAttribute="top" secondItem="tFu-Gl-aqI" secondAttribute="bottom" constant="5" id="SDe-XS-zF6"/>
+                                <constraint firstItem="tFu-Gl-aqI" firstAttribute="top" secondItem="Dej-XQ-HNn" secondAttribute="bottom" constant="5" id="V45-oQ-7Gf"/>
+                                <constraint firstAttribute="trailing" secondItem="bB7-zZ-dKf" secondAttribute="trailing" id="XXo-zR-fjJ"/>
+                                <constraint firstItem="Dej-XQ-HNn" firstAttribute="top" secondItem="Kai-AD-O7z" secondAttribute="top" constant="10" id="a3X-yv-00g"/>
+                                <constraint firstAttribute="centerY" secondItem="mlx-JI-wRQ" secondAttribute="centerY" id="af5-ri-VOi"/>
+                                <constraint firstAttribute="height" constant="65" id="dad-uW-JNf"/>
+                                <constraint firstItem="tFu-Gl-aqI" firstAttribute="leading" secondItem="Dej-XQ-HNn" secondAttribute="leading" id="el1-Xv-y0r"/>
+                                <constraint firstItem="Dej-XQ-HNn" firstAttribute="leading" secondItem="Mxc-iM-9Jg" secondAttribute="leading" id="iRE-hG-ChW"/>
+                                <constraint firstAttribute="trailing" secondItem="mlx-JI-wRQ" secondAttribute="trailing" constant="10" id="wVk-NC-WgZ"/>
+                                <constraint firstItem="Mxc-iM-9Jg" firstAttribute="top" secondItem="T5Z-N7-wKN" secondAttribute="top" id="x0D-yl-Qz1"/>
+                                <constraint firstItem="mlx-JI-wRQ" firstAttribute="trailing" secondItem="T5Z-N7-wKN" secondAttribute="trailing" id="yMQ-Bd-v4j"/>
+                                <constraint firstItem="bB7-zZ-dKf" firstAttribute="top" secondItem="Kai-AD-O7z" secondAttribute="top" id="zcl-3T-NWm"/>
+                            </constraints>
+                        </view>
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YLG-Ku-RJG" userLabel="CallButton">
+                            <rect key="frame" x="0.0" y="83" width="100" height="64"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="64" id="dw7-H0-YKw"/>
+                                <constraint firstAttribute="width" constant="100" id="lPb-ys-fSe"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="10"/>
+                            <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="50" maxY="0.0"/>
+                            <state key="normal" image="call_button.png">
+                                <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted">
+                                <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="callButtonAction:" destination="-1" eventType="touchUpInside" id="R2j-j5-H9h"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Call" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v8f-fB-H2i" userLabel="CallButtonLabel">
+                            <rect key="frame" x="25" y="147" width="50" height="16"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="Lq1-EY-EF6"/>
+                                <constraint firstAttribute="height" constant="16" id="ZAx-FY-SZL"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="11"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HXh-ax-KcD" userLabel="MapButton">
+                            <rect key="frame" x="110" y="83" width="100" height="64"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="100" id="VBx-a8-VE5"/>
+                                <constraint firstAttribute="height" constant="64" id="u3B-0I-8Ak"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="10"/>
+                            <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="25" maxY="0.0"/>
+                            <state key="normal" image="map_button.png">
+                                <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted">
+                                <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="mapButtonAction:" destination="-1" eventType="touchUpInside" id="C5B-cP-obq"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MVM-0k-72i" userLabel="MapButtonLabel">
+                            <rect key="frame" x="135" y="147" width="50" height="16"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="jEl-tl-NrQ"/>
+                                <constraint firstAttribute="height" constant="16" id="z8o-b8-Rya"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="11"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Xk-Jk-zrq" userLabel="FeedbackButton">
+                            <rect key="frame" x="220" y="83" width="100" height="64"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="100" id="TSw-rh-nTa"/>
+                                <constraint firstAttribute="height" constant="64" id="qbU-5A-ZqD"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="10"/>
+                            <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
+                            <state key="normal" image="feedback_button.png">
+                                <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted">
+                                <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="feedbackButtonAction:" destination="-1" eventType="touchUpInside" id="a8A-eh-h3b"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feedback" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SRy-nU-hdq" userLabel="FeedbackButtonLabel">
+                            <rect key="frame" x="245" y="147" width="50" height="16"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="oP6-pD-37W"/>
+                                <constraint firstAttribute="height" constant="16" id="tDo-A1-RmS"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="11"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="Kai-AD-O7z" firstAttribute="leading" secondItem="0kk-th-FUQ" secondAttribute="leading" constant="10" id="1Ly-LS-Hie"/>
+                        <constraint firstItem="YLG-Ku-RJG" firstAttribute="centerY" secondItem="2Xk-Jk-zrq" secondAttribute="centerY" id="2JD-Oa-VH8"/>
+                        <constraint firstItem="MVM-0k-72i" firstAttribute="centerX" secondItem="HXh-ax-KcD" secondAttribute="centerX" id="6DG-16-IrW"/>
+                        <constraint firstItem="YLG-Ku-RJG" firstAttribute="centerY" secondItem="HXh-ax-KcD" secondAttribute="centerY" id="85h-C8-U1k"/>
+                        <constraint firstItem="2Xk-Jk-zrq" firstAttribute="centerX" secondItem="SRy-nU-hdq" secondAttribute="centerX" id="Hws-3x-Llt"/>
+                        <constraint firstAttribute="centerX" secondItem="HXh-ax-KcD" secondAttribute="centerX" id="XX4-Ld-meA"/>
+                        <constraint firstItem="2Xk-Jk-zrq" firstAttribute="top" secondItem="Kai-AD-O7z" secondAttribute="bottom" constant="8" id="Xqc-xa-twG"/>
+                        <constraint firstItem="v8f-fB-H2i" firstAttribute="top" secondItem="YLG-Ku-RJG" secondAttribute="bottom" id="bdp-oR-3bQ"/>
+                        <constraint firstAttribute="trailing" secondItem="2Xk-Jk-zrq" secondAttribute="trailing" id="cug-2z-EDp"/>
+                        <constraint firstItem="YLG-Ku-RJG" firstAttribute="centerX" secondItem="v8f-fB-H2i" secondAttribute="centerX" id="dqa-mt-zWC"/>
+                        <constraint firstItem="MVM-0k-72i" firstAttribute="top" secondItem="HXh-ax-KcD" secondAttribute="bottom" id="kaE-NE-EQh"/>
+                        <constraint firstAttribute="trailing" secondItem="Kai-AD-O7z" secondAttribute="trailing" constant="10" id="kdJ-Tx-L9j"/>
+                        <constraint firstItem="YLG-Ku-RJG" firstAttribute="leading" secondItem="0kk-th-FUQ" secondAttribute="leading" id="l0C-Fh-Uy5"/>
+                        <constraint firstItem="Kai-AD-O7z" firstAttribute="top" secondItem="0kk-th-FUQ" secondAttribute="top" constant="10" id="luq-dM-nM4"/>
+                        <constraint firstItem="SRy-nU-hdq" firstAttribute="top" secondItem="2Xk-Jk-zrq" secondAttribute="bottom" id="vAN-Z2-k3t"/>
+                    </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3R3-Ho-TaV" userLabel="StoreNameLabelBackground">
                     <rect key="frame" x="0.0" y="180" width="320" height="60"/>
@@ -36,147 +236,6 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
-                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Xk-Jk-zrq" userLabel="FeedbackButton">
-                    <rect key="frame" x="215" y="325" width="100" height="68"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="100" id="TSw-rh-nTa"/>
-                        <constraint firstAttribute="height" constant="68" id="qbU-5A-ZqD"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="10"/>
-                    <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
-                    <state key="normal" image="feedback_button.png">
-                        <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <state key="highlighted">
-                        <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="feedbackButtonAction:" destination="-1" eventType="touchUpInside" id="a8A-eh-h3b"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HXh-ax-KcD" userLabel="MapButton">
-                    <rect key="frame" x="110" y="325" width="100" height="68"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="100" id="VBx-a8-VE5"/>
-                        <constraint firstAttribute="height" constant="68" id="u3B-0I-8Ak"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="10"/>
-                    <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="25" maxY="0.0"/>
-                    <state key="normal" image="map_button.png">
-                        <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <state key="highlighted">
-                        <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="mapButtonAction:" destination="-1" eventType="touchUpInside" id="C5B-cP-obq"/>
-                    </connections>
-                </button>
-                <view autoresizesSubviews="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Kai-AD-O7z" userLabel="StoreInfoView">
-                    <rect key="frame" x="0.0" y="240" width="320" height="80"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nav_forward.png" translatesAutoresizingMaskIntoConstraints="NO" id="mlx-JI-wRQ" userLabel="ArrowImageView">
-                            <rect key="frame" x="291" y="28" width="24" height="24"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="24" id="PeI-sq-3Zd"/>
-                                <constraint firstAttribute="height" constant="24" id="rUp-wc-nov"/>
-                            </constraints>
-                        </imageView>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coffee &amp; Tea" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dej-XQ-HNn" userLabel="CategoryLabel">
-                            <rect key="frame" x="20" y="10" width="260" height="20"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="260" id="9n4-b4-MSc"/>
-                                <constraint firstAttribute="height" constant="20" id="LFB-Dh-9C3"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" placeholderIntrinsicWidth="260" placeholderIntrinsicHeight="18" text="Multiple Locations" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="260" translatesAutoresizingMaskIntoConstraints="NO" id="tFu-Gl-aqI" userLabel="AddressLabel">
-                            <rect key="frame" x="20" y="35" width="260" height="18"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <accessibility key="accessibilityConfiguration" label="Address"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="260" id="ZO4-lD-6Io"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="0.0" text="Open 9:00 AM - 12:30 PM" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="230" translatesAutoresizingMaskIntoConstraints="NO" id="Mxc-iM-9Jg" userLabel="HoursLabel">
-                            <rect key="frame" x="20" y="58" width="230" height="0.0"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <accessibility key="accessibilityConfiguration" label="Hours Today"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="230" id="kk4-HG-HQj"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="70" placeholderIntrinsicHeight="0.0" text="Closed" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T5Z-N7-wKN" userLabel="OpenClosedLabel">
-                            <rect key="frame" x="265" y="58" width="50" height="0.0"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <accessibility key="accessibilityConfiguration" label="Open Indicator"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="50" id="Cjm-qn-fFO"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
-                            <color key="textColor" red="0.77439413265306123" green="0.039525273643126566" blue="0.092621862208825081" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                    <constraints>
-                        <constraint firstItem="Dej-XQ-HNn" firstAttribute="leading" secondItem="Kai-AD-O7z" secondAttribute="leading" constant="20" id="9t0-Xg-M6B"/>
-                        <constraint firstItem="Mxc-iM-9Jg" firstAttribute="top" secondItem="tFu-Gl-aqI" secondAttribute="bottom" constant="5" id="SDe-XS-zF6"/>
-                        <constraint firstItem="tFu-Gl-aqI" firstAttribute="top" secondItem="Dej-XQ-HNn" secondAttribute="bottom" constant="5" id="V45-oQ-7Gf"/>
-                        <constraint firstAttribute="width" constant="320" id="Yw9-9j-ufG"/>
-                        <constraint firstItem="Dej-XQ-HNn" firstAttribute="top" secondItem="Kai-AD-O7z" secondAttribute="top" constant="10" id="a3X-yv-00g"/>
-                        <constraint firstAttribute="centerY" secondItem="mlx-JI-wRQ" secondAttribute="centerY" id="af5-ri-VOi"/>
-                        <constraint firstAttribute="height" constant="80" id="dad-uW-JNf"/>
-                        <constraint firstItem="tFu-Gl-aqI" firstAttribute="leading" secondItem="Dej-XQ-HNn" secondAttribute="leading" id="el1-Xv-y0r"/>
-                        <constraint firstItem="Dej-XQ-HNn" firstAttribute="leading" secondItem="Mxc-iM-9Jg" secondAttribute="leading" id="iRE-hG-ChW"/>
-                        <constraint firstAttribute="trailing" secondItem="mlx-JI-wRQ" secondAttribute="trailing" constant="5" id="wVk-NC-WgZ"/>
-                        <constraint firstItem="Mxc-iM-9Jg" firstAttribute="top" secondItem="T5Z-N7-wKN" secondAttribute="top" id="x0D-yl-Qz1"/>
-                        <constraint firstItem="mlx-JI-wRQ" firstAttribute="trailing" secondItem="T5Z-N7-wKN" secondAttribute="trailing" id="yMQ-Bd-v4j"/>
-                    </constraints>
-                </view>
-                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y1D-rK-WZr" userLabel="DividerView">
-                    <rect key="frame" x="0.0" y="414" width="320" height="1"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="320" id="A6w-sk-4cT"/>
-                        <constraint firstAttribute="height" constant="0.5" id="pXM-gS-LJp"/>
-                    </constraints>
-                </view>
-                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YLG-Ku-RJG" userLabel="CallButton">
-                    <rect key="frame" x="5" y="325" width="100" height="68"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="68" id="dw7-H0-YKw"/>
-                        <constraint firstAttribute="width" constant="100" id="lPb-ys-fSe"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="10"/>
-                    <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="50" maxY="0.0"/>
-                    <state key="normal" image="call_button.png">
-                        <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <state key="highlighted">
-                        <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="callButtonAction:" destination="-1" eventType="touchUpInside" id="R2j-j5-H9h"/>
-                    </connections>
-                </button>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Old Soul at The Weatherstone" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="15" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="iTA-Mj-LUI" userLabel="StoreNameLabel">
                     <rect key="frame" x="20" y="180" width="280" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -189,7 +248,7 @@
                     <nil key="highlightedColor"/>
                     <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="apM-yj-YCk" userLabel="Transparency">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="apM-yj-YCk" userLabel="TransparencyView">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -197,82 +256,30 @@
                         <constraint firstAttribute="height" constant="240" id="GMc-xt-xhy"/>
                     </constraints>
                 </view>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MVM-0k-72i" userLabel="MapButtonLabel">
-                    <rect key="frame" x="135" y="393" width="50" height="16"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="50" id="jEl-tl-NrQ"/>
-                        <constraint firstAttribute="height" constant="16" id="z8o-b8-Rya"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="11"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feedback" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SRy-nU-hdq" userLabel="FeedbackButtonLabel">
-                    <rect key="frame" x="240" y="393" width="50" height="16"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="50" id="oP6-pD-37W"/>
-                        <constraint firstAttribute="height" constant="16" id="tDo-A1-RmS"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="11"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Call" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v8f-fB-H2i" userLabel="CallButtonLabel">
-                    <rect key="frame" x="30" y="393" width="50" height="16"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="50" id="Lq1-EY-EF6"/>
-                        <constraint firstAttribute="height" constant="16" id="ZAx-FY-SZL"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="11"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="0kk-th-FUQ" firstAttribute="top" secondItem="Kai-AD-O7z" secondAttribute="bottom" id="03P-Rb-4P3"/>
                 <constraint firstAttribute="trailing" secondItem="apM-yj-YCk" secondAttribute="trailing" id="1WE-9U-mzx"/>
                 <constraint firstAttribute="trailing" secondItem="0kk-th-FUQ" secondAttribute="trailing" id="1fs-SR-aOI"/>
-                <constraint firstAttribute="centerX" secondItem="0kk-th-FUQ" secondAttribute="centerX" id="Afb-ae-f4o"/>
-                <constraint firstAttribute="bottom" secondItem="y1D-rK-WZr" secondAttribute="bottom" id="DQm-3N-YZT"/>
-                <constraint firstItem="2Xk-Jk-zrq" firstAttribute="centerY" secondItem="HXh-ax-KcD" secondAttribute="centerY" id="Ddc-hF-AQG"/>
-                <constraint firstItem="2Xk-Jk-zrq" firstAttribute="leading" secondItem="HXh-ax-KcD" secondAttribute="trailing" constant="5" id="GBu-eV-oEG"/>
-                <constraint firstItem="y1D-rK-WZr" firstAttribute="top" secondItem="0kk-th-FUQ" secondAttribute="bottom" id="MdT-0K-gge"/>
-                <constraint firstItem="SRy-nU-hdq" firstAttribute="top" secondItem="2Xk-Jk-zrq" secondAttribute="bottom" id="NKL-ul-TgE"/>
-                <constraint firstItem="y1D-rK-WZr" firstAttribute="top" secondItem="MVM-0k-72i" secondAttribute="bottom" constant="5" id="QQM-ff-ldh"/>
-                <constraint firstItem="Kai-AD-O7z" firstAttribute="top" secondItem="3R3-Ho-TaV" secondAttribute="bottom" id="T8D-72-rsQ"/>
-                <constraint firstItem="HXh-ax-KcD" firstAttribute="leading" secondItem="YLG-Ku-RJG" secondAttribute="trailing" constant="5" id="Yfd-9u-bKF"/>
-                <constraint firstItem="v8f-fB-H2i" firstAttribute="centerX" secondItem="YLG-Ku-RJG" secondAttribute="centerX" id="Yqe-QX-0Gr"/>
-                <constraint firstItem="MVM-0k-72i" firstAttribute="centerX" secondItem="HXh-ax-KcD" secondAttribute="centerX" id="cbY-Vn-t88"/>
+                <constraint firstAttribute="bottom" secondItem="0kk-th-FUQ" secondAttribute="bottom" id="7d7-JX-Njx"/>
                 <constraint firstItem="apM-yj-YCk" firstAttribute="leading" secondItem="BWH-Aq-4MY" secondAttribute="leading" id="dr3-V6-2lj"/>
                 <constraint firstItem="iTA-Mj-LUI" firstAttribute="centerX" secondItem="3R3-Ho-TaV" secondAttribute="centerX" id="fe1-JA-KHz"/>
-                <constraint firstAttribute="centerX" secondItem="Kai-AD-O7z" secondAttribute="centerX" id="gVb-xm-ckn"/>
-                <constraint firstItem="2Xk-Jk-zrq" firstAttribute="centerX" secondItem="SRy-nU-hdq" secondAttribute="centerX" id="hU5-Rf-Qmr"/>
                 <constraint firstItem="3R3-Ho-TaV" firstAttribute="leading" secondItem="BWH-Aq-4MY" secondAttribute="leading" id="heh-hu-gJN"/>
                 <constraint firstItem="3R3-Ho-TaV" firstAttribute="height" secondItem="iTA-Mj-LUI" secondAttribute="height" id="htq-0S-Pg1"/>
                 <constraint firstItem="apM-yj-YCk" firstAttribute="top" secondItem="BWH-Aq-4MY" secondAttribute="top" id="iKg-0j-YBD"/>
-                <constraint firstAttribute="centerX" secondItem="y1D-rK-WZr" secondAttribute="centerX" id="kGc-Uc-nZ3"/>
-                <constraint firstItem="MVM-0k-72i" firstAttribute="top" secondItem="HXh-ax-KcD" secondAttribute="bottom" id="lZO-kE-zZJ"/>
+                <constraint firstItem="0kk-th-FUQ" firstAttribute="top" secondItem="apM-yj-YCk" secondAttribute="bottom" id="jyP-Y6-aeW"/>
                 <constraint firstItem="0kk-th-FUQ" firstAttribute="leading" secondItem="BWH-Aq-4MY" secondAttribute="leading" id="nGP-lN-qzR"/>
-                <constraint firstItem="v8f-fB-H2i" firstAttribute="top" secondItem="YLG-Ku-RJG" secondAttribute="bottom" id="nJa-we-zDJ"/>
-                <constraint firstAttribute="centerX" secondItem="2Xk-Jk-zrq" secondAttribute="centerX" priority="500" id="nUO-gf-9GQ"/>
                 <constraint firstItem="3R3-Ho-TaV" firstAttribute="top" secondItem="apM-yj-YCk" secondAttribute="bottom" constant="-60" id="qNo-sg-IR0"/>
                 <constraint firstAttribute="trailing" secondItem="3R3-Ho-TaV" secondAttribute="trailing" id="rA4-kK-Olz"/>
                 <constraint firstItem="iTA-Mj-LUI" firstAttribute="centerY" secondItem="3R3-Ho-TaV" secondAttribute="centerY" id="unM-Z0-hg0"/>
-                <constraint firstItem="Kai-AD-O7z" firstAttribute="top" secondItem="apM-yj-YCk" secondAttribute="bottom" id="wkP-8N-4pZ"/>
-                <constraint firstItem="HXh-ax-KcD" firstAttribute="top" secondItem="Kai-AD-O7z" secondAttribute="bottom" constant="5" id="wte-0g-8k2"/>
-                <constraint firstAttribute="centerX" secondItem="HXh-ax-KcD" secondAttribute="centerX" id="zJp-dL-Ltj"/>
-                <constraint firstItem="YLG-Ku-RJG" firstAttribute="centerY" secondItem="HXh-ax-KcD" secondAttribute="centerY" id="zfT-xy-lnr"/>
             </constraints>
         </view>
     </objects>
     <resources>
         <image name="call_button.png" width="54" height="54"/>
         <image name="feedback_button.png" width="54" height="54"/>
+        <image name="forward_button.png" width="24" height="24"/>
         <image name="map_button.png" width="54" height="54"/>
-        <image name="nav_forward.png" width="24" height="24"/>
+        <image name="orange_highlighted.png" width="256" height="32"/>
     </resources>
 </document>

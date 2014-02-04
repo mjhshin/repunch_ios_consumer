@@ -6,15 +6,16 @@
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
-#import "LocationViewController.h"
+#import "LocationDetailsViewController.h"
 
-@interface LocationViewController ()
+@interface LocationDetailsViewController ()
 
 @end
 
-@implementation LocationViewController {
+@implementation LocationDetailsViewController {
 	UITapGestureRecognizer *tapGestureRecognizer;
 	CLLocationCoordinate2D coordinates;
+	NSString *storeName;
 }
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
@@ -25,8 +26,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-	self.navigationItem.title = @"Store Name";
 	
 	// Make header selectable
 	tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -52,7 +51,13 @@
 
 - (void)setInformation
 {
+	RPStore *store = [[DataManager getSharedInstance] getStore:self.storeLocation.Store.objectId];
+	storeName = store.store_name;
+	self.navigationItem.title = storeName;
 	
+	self.mapButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+	[self.mapButton setTitle:self.storeLocation.formattedAddress forState:UIControlStateNormal];
+	[self.callButton setTitle:self.storeLocation.phone_number forState:UIControlStateNormal];
 }
 
 - (void)addMapAnnotation
@@ -61,43 +66,46 @@
 											 self.storeLocation.coordinates.longitude);
 	
 	[self.mapView setCenterCoordinate:coordinates
-							zoomLevel:14
+							zoomLevel:15
 							 animated:NO];
 	
 	
     MapPin *placePin = [[MapPin alloc] initWithCoordinates:coordinates
-												 placeName:@"BLA"//self.storeLocation.Store.store_name
-											   description:self.storeLocation.formattedAddress];
+												 placeName:storeName
+											   description:self.storeLocation.street];
+	//placePin.can
     
     [self.mapView addAnnotation:placePin];
 }
 
-- (void)expandMapView
+- (void)expandMapView //TODO: slide animation for these changes
 {
-	self.mapViewHeightConstraint.constant = [UIScreen mainScreen].bounds.size.height;
-	[self.navigationController setNavigationBarHidden:YES animated:YES];
+	self.scrollView.contentOffset = CGPointZero;
+	
+	self.mapViewHeightConstraint.constant = [UIScreen mainScreen].bounds.size.height + 44.0f;
+	[self.navigationController setNavigationBarHidden:YES];
+	
 	tapGestureRecognizer.enabled = NO;
 	self.mapView.zoomEnabled = YES;
 	self.mapView.scrollEnabled = YES;
 	
-	self.bigMapExitButton.hidden = NO;
-	self.bigMapDirectionsButton.hidden = NO;
-	
-	self.scrollView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
+	self.expandedMapExitButton.hidden = NO;
+	self.expandedMapDirectionsButton.hidden = NO;
+	self.expandedMapStatusBar.hidden = NO;
 }
 
 - (void)shrinkMapView
 {
 	self.mapViewHeightConstraint.constant = 300.0f;
-	[self.navigationController setNavigationBarHidden:NO animated:YES];
+	[self.navigationController setNavigationBarHidden:NO];
+	
 	tapGestureRecognizer.enabled = YES;
 	self.mapView.zoomEnabled = NO;
 	self.mapView.scrollEnabled = NO;
 	
-	self.bigMapExitButton.hidden = YES;
-	self.bigMapDirectionsButton.hidden = YES;
-	
-	self.scrollView.contentInset = UIEdgeInsetsMake(64.0f, 0.0f, 0.0f, 0.0f);
+	self.expandedMapExitButton.hidden = YES;
+	self.expandedMapDirectionsButton.hidden = YES;
+	self.expandedMapStatusBar.hidden = YES;
 }
 
 - (void)getDirections
@@ -141,7 +149,14 @@
 
 - (IBAction)callButtonAction:(id)sender
 {
+	NSString *phoneNumber
+		= [self.storeLocation.phone_number stringByReplacingOccurrencesOfString:@"[^0-9]"
+																	 withString:@""
+																		options:NSRegularExpressionSearch
+																		  range:NSMakeRange(0, self.storeLocation.phone_number.length)];
 	
+    NSString *phoneNumberUrl = [@"tel://" stringByAppendingString:phoneNumber];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumberUrl]];
 }
 
 @end

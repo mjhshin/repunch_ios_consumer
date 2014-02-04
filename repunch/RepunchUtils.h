@@ -25,6 +25,8 @@
 + (void)setDisabledButtonStyle:(UIButton *)button;
 
 + (UIColor *)repunchOrangeColor;
++ (UIColor *)lightRepunchOrangeColor;
++ (UIColor *)repunchOrangeHighlightedColor;
 + (UIFont *)repunchFontWithSize:(NSUInteger)fontSize isBold:(BOOL)isBold;
 
 + (CAGradientLayer *)blackGradient;

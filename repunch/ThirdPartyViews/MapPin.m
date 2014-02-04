@@ -9,6 +9,7 @@
 - (id)initWithCoordinates:(CLLocationCoordinate2D)location placeName:placeName description:description
 {
     self = [super init];
+	
     if (self != nil) {
         coordinate = location;
         title = placeName;

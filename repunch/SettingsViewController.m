@@ -33,29 +33,9 @@
 	self.navigationItem.leftBarButtonItem = exitButton;
 	
 	sharedData = [DataManager getSharedInstance];
-	
-	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
-	CGFloat screenWidth = screenRect.size.width;
-	CGFloat screenHeight = screenRect.size.height;
-	CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
-	
-	UITableView *settingsTableView = [[UITableView alloc]
-									  initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - navBarHeight)
-									  style:UITableViewStyleGrouped];
-	settingsTableView.delegate = self;
-	settingsTableView.dataSource = self;
-	[self.view addSubview:settingsTableView];
-}
 
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:YES];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+	self.tableView.delegate = self;
+	self.tableView.dataSource = self;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -138,9 +118,13 @@
 		cell = [tableView dequeueReusableCellWithIdentifier:Style1CellIdentifier];
 		if (cell == nil) {
 			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:Style1CellIdentifier];
+			
+			UIView *selectedView = [[UIView alloc] initWithFrame:cell.frame];
+			selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
+			cell.selectedBackgroundView = selectedView;
 		}
 		
-		cell.textLabel.font = [RepunchUtils repunchFontWithSize:18 isBold:YES];
+		cell.textLabel.font = [RepunchUtils repunchFontWithSize:16 isBold:YES];
 		
 		if(indexPath.row == 0) {
 			cell.textLabel.text = @"Terms and Conditions";
@@ -156,8 +140,12 @@
 		cell = [tableView dequeueReusableCellWithIdentifier:Style2CellIdentifier];
 		if (cell == nil) {
 			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:Style2CellIdentifier];
+			
+			UIView *selectedView = [[UIView alloc] initWithFrame:cell.frame];
+			selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
+			cell.selectedBackgroundView = selectedView;
 		}
-		cell.textLabel.font = [RepunchUtils repunchFontWithSize:18 isBold:YES];
+		cell.textLabel.font = [RepunchUtils repunchFontWithSize:16 isBold:YES];
 		cell.textLabel.text = @"Log Out";
 		
 		PFObject* patron = [sharedData patron];
@@ -166,7 +154,7 @@
 		NSString* str2 = @" ";
 		NSString* lastName = [patron objectForKey:@"last_name"];
 		
-		cell.detailTextLabel.font = [RepunchUtils repunchFontWithSize:14 isBold:NO];
+		cell.detailTextLabel.font = [RepunchUtils repunchFontWithSize:13 isBold:NO];
 		cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%@%@%@", str1, firstName, str2, lastName];
 	}
 	

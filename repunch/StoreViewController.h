@@ -47,11 +47,16 @@
 - (IBAction)callButtonAction:(id)sender;
 - (IBAction)mapButtonAction:(id)sender;
 - (IBAction)feedbackButtonAction:(id)sender;
+- (IBAction)storeInfoButtonAction:(id)sender;
 
 // tableview section header
 @property (strong, nonatomic) IBOutlet UIView *sectionHeaderView;
-
+@property (weak, nonatomic) IBOutlet UIView *sectionHeaderContentView;
 @property (weak, nonatomic) IBOutlet UILabel *punchCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *punchStaticLabel;
+@property (weak, nonatomic) IBOutlet UIButton *saveButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *saveButtonSpinner;
+
+- (IBAction)saveButtonAction:(id)sender;
 
 @end

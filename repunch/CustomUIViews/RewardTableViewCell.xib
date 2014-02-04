@@ -7,110 +7,124 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="RewardCell" rowHeight="93" id="2" customClass="RewardTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="93"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="RewardCell" rowHeight="170" id="2" customClass="RewardTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="170"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2" id="euY-z4-nTH">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="92"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="169"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="Reward name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4" userLabel="titleLabel">
-                        <rect key="frame" x="72" y="10" width="230" height="24"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="230" id="46z-vL-yuZ"/>
-                            <constraint firstAttribute="height" constant="24" id="vd6-6t-0Np"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="10" userLabel="descriptionLabel">
-                        <rect key="frame" x="72" y="44" width="230" height="20"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="230" id="DAl-Cd-4sf"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Avenir-MediumOblique" family="Avenir" pointSize="14"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </label>
-                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mvp-B4-kru" userLabel="dividerView">
-                        <rect key="frame" x="60" y="16" width="2" height="60"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="60" id="lhe-zQ-Rw1"/>
-                            <constraint firstAttribute="width" constant="0.5" id="z8q-hn-1ua"/>
-                        </constraints>
-                    </view>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NDA-YO-fDP" userLabel="punchView">
-                        <rect key="frame" x="0.0" y="16" width="60" height="60"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yxh-fe-TVS" userLabel="Subview">
+                        <rect key="frame" x="10" y="10" width="300" height="154"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" ambiguous="YES" image="reward_locked.png" translatesAutoresizingMaskIntoConstraints="NO" id="45" userLabel="lockedIconImageView">
-                                <rect key="frame" x="12" y="13" width="35" height="35"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NDA-YO-fDP" userLabel="PunchView">
+                                <rect key="frame" x="102" y="5" width="96" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="999" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="21" userLabel="PunchLabel">
+                                        <rect key="frame" x="0.0" y="0.0" width="43" height="33"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="24"/>
+                                        <color key="textColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Punches" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="61i-ev-3Da" userLabel="PunchStaticLabel">
+                                        <rect key="frame" x="46" y="12" width="50" height="18"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="13"/>
+                                        <color key="textColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="61i-ev-3Da" secondAttribute="trailing" id="D9d-LQ-cxH"/>
+                                    <constraint firstAttribute="height" constant="33" id="RwZ-sz-HC9"/>
+                                    <constraint firstItem="61i-ev-3Da" firstAttribute="top" secondItem="21" secondAttribute="bottom" constant="-21" id="Sav-pa-GAt"/>
+                                    <constraint firstItem="61i-ev-3Da" firstAttribute="leading" secondItem="21" secondAttribute="trailing" constant="3" id="V5J-xC-Dnb"/>
+                                    <constraint firstAttribute="bottom" secondItem="21" secondAttribute="bottom" id="tBt-V0-r7p"/>
+                                    <constraint firstItem="21" firstAttribute="leading" secondItem="NDA-YO-fDP" secondAttribute="leading" id="tOC-EM-Xcr"/>
+                                    <constraint firstItem="21" firstAttribute="top" secondItem="NDA-YO-fDP" secondAttribute="top" id="xKf-sK-s5a"/>
+                                </constraints>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="locked_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="arS-af-3KV" userLabel="RewardStatusImageView">
+                                <rect key="frame" x="266" y="10" width="24" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="35" id="18D-a8-51x"/>
-                                    <constraint firstAttribute="height" constant="35" id="R0m-y5-ane"/>
+                                    <constraint firstAttribute="height" constant="24" id="7dL-II-V8c"/>
+                                    <constraint firstAttribute="width" constant="24" id="vHC-T9-vei"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Punches" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="61i-ev-3Da" userLabel="punchStaticLabel">
-                                <rect key="frame" x="5" y="35" width="50" height="20"/>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DzT-un-sdH" userLabel="DividerView">
+                                <rect key="frame" x="0.0" y="38" width="300" height="1"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="at4-kD-h1M"/>
-                                    <constraint firstAttribute="height" constant="20" id="hnl-6m-Ijl"/>
+                                    <constraint firstAttribute="height" constant="0.5" id="zZc-aB-cZ9"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="12"/>
-                                <color key="textColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" verticalCompressionResistancePriority="790" text="Reward " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="4" userLabel="TitleLabel">
+                                <rect key="frame" x="10" y="59" width="280" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="15"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="21" userLabel="punchLabel">
-                                <rect key="frame" x="0.0" y="5" width="60" height="30"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" verticalCompressionResistancePriority="800" text="He's crap." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="10" userLabel="DescriptionLabel">
+                                <rect key="frame" x="10" y="85" width="280" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="60" id="0z3-AZ-0bv"/>
-                                    <constraint firstAttribute="height" constant="30" id="B4Z-bg-Kuf"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="24"/>
-                                <color key="textColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="21" secondAttribute="centerX" id="6Am-qN-M0a"/>
-                            <constraint firstAttribute="centerX" secondItem="61i-ev-3Da" secondAttribute="centerX" id="Cw9-rs-d30"/>
-                            <constraint firstItem="61i-ev-3Da" firstAttribute="top" secondItem="21" secondAttribute="bottom" id="E5c-Dw-iyt"/>
-                            <constraint firstAttribute="width" constant="60" id="Zdb-3x-jsT"/>
-                            <constraint firstAttribute="height" constant="60" id="ado-1t-Ltj"/>
-                            <constraint firstItem="21" firstAttribute="top" secondItem="NDA-YO-fDP" secondAttribute="top" constant="5" id="xKf-sK-s5a"/>
+                            <constraint firstItem="4" firstAttribute="top" secondItem="DzT-un-sdH" secondAttribute="bottom" priority="760" constant="20" id="3Y1-4D-35f"/>
+                            <constraint firstItem="10" firstAttribute="top" secondItem="4" secondAttribute="bottom" constant="5" id="7lt-ff-wf2"/>
+                            <constraint firstItem="DzT-un-sdH" firstAttribute="leading" secondItem="yxh-fe-TVS" secondAttribute="leading" id="8vo-w9-bzC"/>
+                            <constraint firstItem="4" firstAttribute="top" relation="greaterThanOrEqual" secondItem="DzT-un-sdH" secondAttribute="bottom" constant="8" id="CYO-db-U3L"/>
+                            <constraint firstItem="DzT-un-sdH" firstAttribute="leading" secondItem="yxh-fe-TVS" secondAttribute="leading" id="FNL-ky-UpU"/>
+                            <constraint firstAttribute="trailing" secondItem="10" secondAttribute="trailing" constant="10" id="Jlq-iU-2Jh"/>
+                            <constraint firstAttribute="trailing" secondItem="DzT-un-sdH" secondAttribute="trailing" id="OVa-4D-WcY"/>
+                            <constraint firstItem="10" firstAttribute="leading" secondItem="yxh-fe-TVS" secondAttribute="leading" constant="10" id="RHv-3D-MxB"/>
+                            <constraint firstAttribute="trailing" secondItem="4" secondAttribute="trailing" constant="10" id="Yyl-2V-uIo"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="10" secondAttribute="bottom" constant="5" id="dh2-xY-mpo"/>
+                            <constraint firstItem="arS-af-3KV" firstAttribute="centerY" secondItem="NDA-YO-fDP" secondAttribute="centerY" id="hKb-YN-vHZ"/>
+                            <constraint firstItem="4" firstAttribute="leading" secondItem="yxh-fe-TVS" secondAttribute="leading" constant="10" id="pjw-5K-06S"/>
+                            <constraint firstItem="NDA-YO-fDP" firstAttribute="top" secondItem="yxh-fe-TVS" secondAttribute="top" constant="5" id="wIt-Nl-otx"/>
+                            <constraint firstItem="DzT-un-sdH" firstAttribute="top" secondItem="NDA-YO-fDP" secondAttribute="bottom" id="xNt-bP-mZa"/>
+                            <constraint firstAttribute="trailing" secondItem="arS-af-3KV" secondAttribute="trailing" constant="10" id="zoY-1u-9wl"/>
+                            <constraint firstAttribute="centerX" secondItem="NDA-YO-fDP" secondAttribute="centerX" id="zzN-hk-ldz"/>
                         </constraints>
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Mvp-B4-kru" firstAttribute="leading" secondItem="NDA-YO-fDP" secondAttribute="trailing" id="455-ms-4K1"/>
-                    <constraint firstItem="4" firstAttribute="top" secondItem="euY-z4-nTH" secondAttribute="top" constant="10" id="C48-pZ-zhW"/>
-                    <constraint firstItem="4" firstAttribute="leading" secondItem="10" secondAttribute="leading" id="akM-b6-0dk"/>
-                    <constraint firstItem="4" firstAttribute="leading" secondItem="Mvp-B4-kru" secondAttribute="trailing" constant="10" id="bCp-n4-NUL"/>
-                    <constraint firstItem="10" firstAttribute="top" secondItem="4" secondAttribute="bottom" constant="10" id="fi9-am-mlv"/>
-                    <constraint firstAttribute="centerY" secondItem="NDA-YO-fDP" secondAttribute="centerY" id="j9k-Sg-qHu"/>
-                    <constraint firstAttribute="centerY" secondItem="Mvp-B4-kru" secondAttribute="centerY" id="oNF-c3-DNb"/>
-                    <constraint firstItem="NDA-YO-fDP" firstAttribute="leading" secondItem="euY-z4-nTH" secondAttribute="leading" id="zTm-fd-ZHO"/>
+                    <constraint firstAttribute="trailing" secondItem="yxh-fe-TVS" secondAttribute="trailing" constant="10" id="J50-EO-mow"/>
+                    <constraint firstAttribute="bottom" secondItem="yxh-fe-TVS" secondAttribute="bottom" constant="5" id="jx8-9w-pdd"/>
+                    <constraint firstItem="yxh-fe-TVS" firstAttribute="top" secondItem="euY-z4-nTH" secondAttribute="top" constant="10" id="pzX-70-OKk"/>
+                    <constraint firstItem="yxh-fe-TVS" firstAttribute="leading" secondItem="euY-z4-nTH" secondAttribute="leading" constant="10" id="zWX-Fj-WKE"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
             <connections>
                 <outlet property="rewardDescription" destination="10" id="31"/>
                 <outlet property="rewardPunches" destination="21" id="87"/>
                 <outlet property="rewardPunchesStatic" destination="61i-ev-3Da" id="yIA-T2-3pQ"/>
-                <outlet property="rewardStatusIcon" destination="45" id="88"/>
+                <outlet property="rewardStatusIcon" destination="arS-af-3KV" id="SNP-RM-igF"/>
                 <outlet property="rewardTitle" destination="4" id="86"/>
+                <outlet property="whiteContentView" destination="yxh-fe-TVS" id="R3L-NO-uxJ"/>
             </connections>
         </tableViewCell>
+        <view contentMode="scaleToFill" id="xZQ-9X-yqf">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+        </view>
     </objects>
     <resources>
-        <image name="reward_locked.png" width="35" height="35"/>
+        <image name="locked_icon.png" width="24" height="24"/>
     </resources>
 </document>

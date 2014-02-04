@@ -123,6 +123,7 @@
 
 - (void)setupTableView
 {
+	/*
 	self.tableViewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
 	[self addChildViewController:self.tableViewController];
 	
@@ -136,14 +137,14 @@
 	
     [self.tableViewController.tableView setDataSource:self];
     [self.tableViewController.tableView setDelegate:self];
+	*/
+	
+	self.tableView.delegate = self;
+	self.tableView.dataSource = self;
 	
 	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 1)];
 	footer.backgroundColor = [UIColor clearColor];
-	[self.tableViewController.tableView setTableFooterView:footer];
-	
-    [self.view addSubview:self.tableViewController.tableView];
-    
-    self.edgesForExtendedLayout = UIRectEdgeNone;
+	[self.tableView setTableFooterView:footer];
 	
 	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 	
@@ -288,6 +289,11 @@
 	// Curve image border
 	if (cell == nil) {
         cell = [SearchTableViewCell cell];
+		
+		UIView *selectedView = [[UIView alloc] initWithFrame:cell.frame];
+		selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
+		cell.selectedBackgroundView = selectedView;
+		
 		cell.storeImage.layer.cornerRadius = 10.0;
 		cell.storeImage.layer.masksToBounds = YES;
     }
@@ -373,6 +379,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	
 	NSString *storeLocationId = self.storeLocationIdArray[indexPath.row];
 	NSString *storeId = [self.sharedData getStoreLocation:storeLocationId].Store.objectId;
 	
@@ -403,7 +410,7 @@
 			 if (!error)
 			 {
 				 SearchTableViewCell *cell = (SearchTableViewCell *)
-												[self.tableViewController.tableView cellForRowAtIndexPath:indexPath];
+												[self.tableView cellForRowAtIndexPath:indexPath];
 				 UIImage *storeImage = [UIImage imageWithData:data];
 				 cell.storeImage.image = storeImage;
 				 [self.imageDownloadsInProgress removeObjectForKey:indexPath]; // Remove the PFFile from the in-progress list
@@ -436,7 +443,7 @@
 	{
 		UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 70)];
 		footer.backgroundColor = [UIColor clearColor];
-		self.tableViewController.tableView.tableFooterView = footer;
+		self.tableView.tableFooterView = footer;
 		
 		CGRect paginateButtonFrame = CGRectMake(footer.frame.size.width/2 - paginateButton.frame.size.width/2,
 												footer.frame.size.height/2 - paginateButton.frame.size.height/2,
@@ -444,13 +451,13 @@
 												paginateButton.frame.size.height);
 		paginateButton.enabled = !loadInProgress;
 		paginateButton.frame = paginateButtonFrame;
-		[self.tableViewController.tableView.tableFooterView addSubview:paginateButton];
+		[self.tableView.tableFooterView addSubview:paginateButton];
 	
 		if(loadInProgress)
 		{
 			[paginateButton setHidden:YES];
-			spinner.frame = self.tableViewController.tableView.tableFooterView.bounds;
-			[self.tableViewController.tableView.tableFooterView addSubview:spinner];
+			spinner.frame = self.tableView.tableFooterView.bounds;
+			[self.tableView.tableFooterView addSubview:spinner];
 			[spinner startAnimating];
 		}
 		else
@@ -464,7 +471,7 @@
 	{
 		UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
 		footer.backgroundColor = [UIColor clearColor];
-		[self.tableViewController.tableView setTableFooterView:footer];
+		self.tableView.tableFooterView = footer;
 	}
 }
 
@@ -476,7 +483,7 @@
 	else {
 		[self.emptyResultsLabel setHidden:NO];
 	}
-	[self.tableViewController.tableView reloadData];
+	[self.tableView reloadData];
 }
 
 - (void)closeView

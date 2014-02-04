@@ -6,11 +6,13 @@
 //
 
 #import "IncomingMessageViewController.h"
+#import "OfferBorderView.h"
+#import "GiftBorderView.h"
 
 @implementation IncomingMessageViewController
 {
 	BOOL containsReply;
-	UIActivityIndicatorView *giftSpinner;
+	UIActivityIndicatorView *attachmentSpinner;
 }
 
 - (void)viewDidLoad
@@ -20,23 +22,16 @@
 	self.sharedData = [DataManager getSharedInstance];
 	self.patron = self.sharedData.patron;
 	self.messageStatus = [self.sharedData getMessage:self.messageStatusId];
-	self.message = [self.messageStatus objectForKey:@"Message"];
-	self.reply = [self.message objectForKey:@"Reply"];
-	self.messageType = [self.message objectForKey:@"message_type"];
+	self.message = self.messageStatus[@"Message"];
+	self.reply = self.message[@"Reply"];
+	self.messageType = self.message[@"message_type"];
 	
 	containsReply = ( !IS_NIL(self.reply) );
 	
-	if(containsReply) {
-		NSString *title = [NSString stringWithFormat:@"RE: %@", [self.message objectForKey:@"subject"]];
-		self.navigationItem.title = title;
-	} else {
-		self.navigationItem.title = [self.message objectForKey:@"subject"];
-	}
-	
-	UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"delete_icon.png"]
+	UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"delete_icon"]
 																	 style:UIBarButtonItemStylePlain
 																	target:self
-																	action:@selector(deleteButtonAction:)];
+																	action:@selector(deleteButtonAction)];
 	self.navigationItem.rightBarButtonItem = deleteButton;
 	
 	[self setupMessage];
@@ -67,112 +62,96 @@
 	}
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
 - (void)setupMessage
 {
-    CGRect scrollViewFrame = self.scrollView.frame;
-    scrollViewFrame.size.height = [[UIScreen mainScreen] applicationFrame].size.height
-										- self.navigationController.navigationBar.frame.size.height;
-    self.scrollView.frame = scrollViewFrame;
-    
-    self.dateLabel.text = [self formattedDateString:self.message.createdAt];
-	self.senderLabel.text = [self.message objectForKey:@"sender_name"];
-	self.bodyTextView.text = [self.message objectForKey:@"body"];
-    CGRect frame = self.bodyTextView.frame;
-    frame.size.height = self.bodyTextView.contentSize.height;
-    self.bodyTextView.frame = frame;
-	
-	[self.bodyTextView sizeToFit];
-	
-	CGFloat contentHeight = frame.origin.y + frame.size.height;
-	
-	if ([self.messageType isEqualToString:@"offer"])
-	{
-		[self setupOffer];
-		contentHeight = self.giftView.frame.origin.y + self.giftView.frame.size.height;
-    }
-    else if ([self.messageType isEqualToString:@"gift"])
-	{
-        [self setupGift];
-		contentHeight = self.giftView.frame.origin.y + self.giftView.frame.size.height;
-    }
-	
-	if(containsReply)
-	{
-		[self setupReply];
-		contentHeight = self.replyView.frame.origin.y + self.replyView.frame.size.height;
+	if(containsReply) {
+		NSString *title = [NSString stringWithFormat:@"RE: %@", self.message[@"subject"]];
+		self.subjectLabel.text = title;
+	}
+	else {
+		self.subjectLabel.text = self.message[@"subject"];
 	}
 	
-	self.scrollView.contentSize = CGSizeMake(320, contentHeight + 40);
-}
-
-- (void)setupReply
-{
-    [[NSBundle mainBundle] loadNibNamed:@"MessageReply" owner:self options:nil];
-    
-    self.replyDateLabel.text = [self formattedDateString:self.reply.createdAt];
-	self.replySenderLabel.text = [self.reply objectForKey:@"sender_name"];
-	self.replyBodyTextView.text = [self.reply objectForKey:@"body"];
-	[self.replyBodyTextView sizeToFit];
+    self.sendTimeLabel.text = [self formattedDateString:self.message.createdAt];
+	self.senderLabel.text = self.message[@"sender_name"];
+	self.bodyTextView.text = self.message[@"body"];
+	self.bodyHeightConstraint.constant = self.bodyTextView.contentSize.height;
 	
-    CGRect msgFrame = [self.messageType isEqualToString:@"gift"] ? self.giftView.frame : self.bodyTextView.frame;
-    CGRect replyViewFrame = self.replyView.frame;
-    
-    replyViewFrame.origin.y = msgFrame.origin.y + msgFrame.size.height + 20;
-	replyViewFrame.size.height = self.replyBodyTextView.frame.origin.y + self.replyBodyTextView.frame.size.height;
-	self.replyView.frame = replyViewFrame;
-	self.replyView.hidden = NO;
-    
-    [self.scrollView addSubview:self.replyView];
+	[self.bodyTextView setNeedsLayout];
+	[self.bodyTextView layoutIfNeeded];
+	
+	if ([self.messageType isEqualToString:@"offer"]) {
+		self.navigationItem.title = @"Offer";
+		[self setupOffer];
+    }
+    else if ([self.messageType isEqualToString:@"gift"]) {
+		self.navigationItem.title = @"Gift";
+        [self setupGift];
+    }
+	else {
+		self.navigationItem.title = @"Message";
+		self.attachmentView.hidden = YES;
+	}
+	
+	if(containsReply) {
+		[self setupReply];
+	}
+	else {
+		self.replyView.hidden = YES;
+	}
+
+	[self.scrollView setNeedsLayout];
+	[self.scrollView layoutIfNeeded];
 }
 
 - (void)setupOffer
 {
-	[[NSBundle mainBundle] loadNibNamed:@"MessageAttachment" owner:self options:nil];
+	self.attachmentTitleVerticalConstraint.constant = 26.0f;
 	
-	self.giftHeader.text = @"Offer";
-	self.giftTitle.text = [self.message objectForKey:@"offer_title"];
+	self.attachmentTitleLabel.text = @"Offer";
+	self.attachmentItemLabel.text = self.message[@"offer_title"];
 	
-	[self positionAttachmentViews:NO];
-	[self.scrollView addSubview:self.giftView];
+	self.replyButton.hidden = YES;
+	
+	[self.attachmentView setNeedsLayout];
+	[self.attachmentView layoutIfNeeded];
+	
+	OfferBorderView *background = [[OfferBorderView alloc] init];
+	background.frame = self.attachmentView.bounds;
+	[self.attachmentView addSubview:background];
 }
 
 - (void)setupGift
 {
-	[[NSBundle mainBundle] loadNibNamed:@"MessageAttachment" owner:self options:nil];
+	self.attachmentTitleVerticalConstraint.constant = 80.0f;
 	
-	NSString *storeId = [self.message objectForKey:@"store_id"];
+	NSString *storeId = self.message[@"store_id"];
 	RPStore *store = [self.sharedData getStore:storeId];
 	
-	self.giftTitle.text = [self.message objectForKey:@"gift_title"];
-	self.giftTimerLabel.text = [self.message objectForKey:@"gift_description"];
-	self.giftTimerLabel.font = [RepunchUtils repunchFontWithSize:17 isBold:NO];
+	self.attachmentItemLabel.text = self.message[@"gift_title"];
+	self.attachmentDescriptionLabel.text = self.message[@"gift_description"];
+	self.attachmentDescriptionLabel.font = [RepunchUtils repunchFontWithSize:17 isBold:NO];
 	
 	if(store)
 	{
-		self.giftHeader.text = store.store_name;
+		self.attachmentTitleLabel.text = store.store_name;
 	}
 	else
 	{
-		giftSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-		giftSpinner.frame = self.giftHeader.bounds;
-		[self.giftHeader addSubview:giftSpinner];
-		giftSpinner.hidesWhenStopped = YES;
-		[giftSpinner startAnimating];
+		attachmentSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+		attachmentSpinner.frame = self.attachmentTitleLabel.bounds;
+		[self.attachmentTitleLabel addSubview:attachmentSpinner];
+		attachmentSpinner.hidesWhenStopped = YES;
+		[attachmentSpinner startAnimating];
 		
 		PFQuery *query = [RPStore query];
-		[query getObjectInBackgroundWithId:storeId block:^(PFObject *result, NSError *error)
-		{
+		[query getObjectInBackgroundWithId:storeId block:^(PFObject *result, NSError *error) {
 			if(result)
 			{
 				RPStore *resultStore = (RPStore *)result;
-				[giftSpinner stopAnimating];
+				[attachmentSpinner stopAnimating];
 				[self.sharedData addStore:resultStore];
-				self.giftHeader.text = resultStore.store_name;
+				self.attachmentTitleLabel.text = resultStore.store_name;
 			}
 			else
 			{
@@ -181,98 +160,25 @@
 		}];
 	}
 	
-	[self positionAttachmentViews:YES];
-	[self.scrollView addSubview:self.giftView];
+	self.replyButton.hidden = containsReply;
+	
+	[self.attachmentView setNeedsLayout];
+	[self.attachmentView layoutIfNeeded];
+	
+	GiftBorderView *background = [[GiftBorderView alloc] init];
+	background.frame = self.attachmentView.bounds;
+	[self.attachmentView addSubview:background];
 }
 
-- (void)positionAttachmentViews:(BOOL)isGift
+- (void)setupReply
 {
-	CGRect msgFrame = self.bodyTextView.frame;
-    CGRect giftViewFrame = self.giftView.frame;
-    giftViewFrame.origin.y = msgFrame.origin.y + msgFrame.size.height + 30;
-    self.giftView.frame = giftViewFrame;
+	self.replySenderLabel.text = self.reply[@"sender_name"];
+    self.replyTimeLabel.text = [self formattedDateString:self.reply.createdAt];
+	self.replyBodyTextView.text = self.reply[@"body"];
+	self.replyBodyHeightConstraint.constant = self.replyBodyTextView.contentSize.height;
 	
-	[self.giftView.layer setCornerRadius:14];
-	[self.giftView setClipsToBounds:YES];
-	
-	if( [[self.messageStatus objectForKey:@"redeem_available"] isEqualToString:@"yes"] )
-	{
-		[RepunchUtils setDefaultButtonStyle:self.giftButton];
-	}
-	else
-	{
-		[RepunchUtils setDisabledButtonStyle:self.giftButton];
-	}
-	
-	[self.giftButton.layer setCornerRadius:5];
-	[self.giftButton setClipsToBounds:YES];
-	
-	if(isGift)
-	{
-		if( [[self.message objectForKey:@"patron_id"] isEqualToString:self.patron.objectId] )
-		{
-			self.giftButton.hidden = YES;
-			self.giftReplyButton.hidden = YES;
-		}
-		else if(!containsReply)
-		{
-			self.giftReplyButton.hidden = NO;
-			[RepunchUtils setDefaultButtonStyle:self.giftReplyButton];
-		}
-		else
-		{
-			self.giftReplyButton.hidden = YES;
-			CGRect frame = self.giftButton.frame;
-			frame.origin.x = (self.giftView.frame.size.width - frame.size.width)/2;
-			self.giftButton.frame = frame;
-		}
-	}
-	else
-	{
-		self.giftReplyButton.hidden = YES;
-		CGRect frame = self.giftButton.frame;
-		frame.origin.x = (self.giftView.frame.size.width - frame.size.width)/2;
-		self.giftButton.frame = frame;
-		
-	}
-	
-	CGRect giftFrame = self.giftView.frame;
-	CGRect titleFrame = self.giftTitle.frame;
-	CGRect timerFrame = self.giftTimerLabel.frame;
-	CGRect buttonFrame = self.giftButton.frame;
-	CGRect replyButtonFrame = self.giftReplyButton.frame;
-	
-	[self.giftTitle sizeToFit];
-	[self.giftTimerLabel sizeToFit];
-
-	titleFrame.origin.y = self.giftHeader.frame.origin.y + self.giftHeader.frame.size.height + 25;
-	titleFrame.size.height = self.giftTitle.frame.size.height;
-	self.giftTitle.frame = titleFrame;
-	
-	timerFrame.origin.y = self.giftTitle.frame.origin.y + self.giftTitle.frame.size.height + 25;
-	timerFrame.size.height = self.giftTimerLabel.frame.size.height;
-	self.giftTimerLabel.frame = timerFrame;
-	
-	buttonFrame.origin.y = self.giftTimerLabel.frame.origin.y + self.giftTimerLabel.frame.size.height + 25;
-	self.giftButton.frame = buttonFrame;
-	
-	replyButtonFrame.origin.y = buttonFrame.origin.y;
-	self.giftReplyButton.frame = replyButtonFrame;
-	
-	if(isGift)
-	{
-		if( [[self.message objectForKey:@"patron_id"] isEqualToString:self.patron.objectId] ) {
-			giftFrame.size.height = self.giftTimerLabel.frame.origin.y + self.giftTimerLabel.frame.size.height + 25;
-		} else {
-			giftFrame.size.height = self.giftButton.frame.origin.y + self.giftButton.frame.size.height + 25;
-		}
-	}
-	else
-	{
-		giftFrame.size.height = self.giftButton.frame.origin.y + self.giftButton.frame.size.height + 25;
-	}
-	
-	self.giftView.frame = giftFrame;
+	[self.replyBodyTextView setNeedsLayout];
+	[self.replyBodyTextView layoutIfNeeded];
 }
 
 #pragma mark - Helper Methods
@@ -305,19 +211,19 @@
 
 - (void)updateTimer
 {
-    NSDate *offer = [self.message objectForKey:@"date_offer_expiration"];
+    NSDate *offer = self.message[@"date_offer_expiration"];
     NSDate *currentDate = [NSDate date];
     
     NSTimeInterval timeLeft = [offer timeIntervalSinceDate:currentDate];
-    self.giftTimerLabel.text = [NSString stringWithFormat:@"Time Left: %@", [self stringFromInterval:timeLeft]];
+    self.attachmentDescriptionLabel.text = [NSString stringWithFormat:@"Time Left: %@", [self stringFromInterval:timeLeft]];
     
     if (timeLeft <= 0)
 	{
-        self.giftTimerLabel.text = @"Expired";
+        self.attachmentDescriptionLabel.text = @"Expired";
         self.timer = nil;
 		
-		[RepunchUtils setDisabledButtonStyle:self.giftButton];
-		self.giftButton.enabled = NO;
+		//[RepunchUtils setDisabledButtonStyle:self.redeemButton];
+		self.attachmentDescriptionLabel.enabled = NO;
     }
 }
 
@@ -327,7 +233,8 @@
     int SECONDS_IN_HOUR = 60*60;
     int SECONDS_IN_DAY = 24*60*60;
     
-    // convert the time to an integer, as we don't need double precision, and we do need to use the modulous operator
+    // convert the time to an integer, as we don't need double precision,
+	// and we do need to use the modulous operator
     int ti = round(timeInterval);
 	
 	int days = ti/SECONDS_IN_DAY;
@@ -344,7 +251,7 @@
 	}
 }
 
-- (IBAction)giftButtonAction:(id)sender
+- (IBAction)redeemButtonAction:(id)sender
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
 		[RepunchUtils showDefaultDropdownView:self.view];
@@ -355,11 +262,11 @@
 		return;
 	}
 	
-	if( [[self.messageStatus objectForKey:@"redeem_available"] isEqualToString:@"yes"] )
+	if( [self.messageStatus[@"redeem_available"] isEqualToString:@"yes"] )
 	{
-		self.giftButton.enabled = NO;
+		self.redeemButton.enabled = NO;
 		
-		NSString *storeId = [self.message objectForKey:@"store_id"];
+		NSString *storeId = self.message[@"store_id"];
 		NSString *patronStoreId = [[self.sharedData getPatronStore:storeId] objectId];
 		
 		if(patronStoreId == nil) {
@@ -367,29 +274,29 @@
 		}
 		
 		NSString *rewardTitle = [self.messageType isEqualToString:@"offer"] ?
-										[self.message objectForKey:@"offer_title"] : [self.message objectForKey:@"gift_title"];
-		NSString *customerName = [NSString stringWithFormat:@"%@ %@", [self.patron objectForKey:@"first_name"],
-								  [self.patron objectForKey:@"last_name"]];
-	
+		self.message[@"offer_title"] : self.message[@"gift_title"];
+		NSString *customerName = [NSString stringWithFormat:@"%@ %@", self.patron[@"first_name"],
+								  self.patron[@"last_name"]];
+		
 		NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-								   self.patron.objectId,			@"patron_id",
-								   storeId,							@"store_id",
-								   patronStoreId,					@"patron_store_id",
-								   rewardTitle,						@"title",
-								   customerName,					@"name",
-								   self.messageStatus.objectId,		@"message_status_id",
-								   nil];
-	
+									self.patron.objectId,			@"patron_id",
+									storeId,							@"store_id",
+									patronStoreId,					@"patron_store_id",
+									rewardTitle,						@"title",
+									customerName,					@"name",
+									self.messageStatus.objectId,		@"message_status_id",
+									nil];
+		
 		[PFCloud callFunctionInBackground: @"request_redeem"
 						   withParameters:parameters
 									block:^(NSString *result, NSError *error)
 		 {
-			 self.giftButton.enabled = YES;
+			 self.redeemButton.enabled = YES;
 			 
 			 if(!error)
 			 {
 				 [self.messageStatus setObject:@"pending" forKey:@"redeem_available"];
-				 [RepunchUtils setDisabledButtonStyle:self.giftButton];
+				 [RepunchUtils setDisabledButtonStyle:self.redeemButton];
 				 [RepunchUtils showDialogWithTitle:@"Waiting for confirmation"
 									   withMessage:@"Please wait for this item to be validated"];
 			 }
@@ -401,7 +308,7 @@
 		 }];
 		
 	}
-	else if( [[self.messageStatus objectForKey:@"redeem_available"] isEqualToString:@"pending"] )
+	else if( [self.messageStatus[@"redeem_available"] isEqualToString:@"pending"] )
 	{
 		[RepunchUtils showDialogWithTitle:@"Offer pending"
 							  withMessage:@"You can only request this item once"];
@@ -413,20 +320,20 @@
 	}
 }
 
-- (IBAction)giftReplyButtonAction:(id)sender
+- (IBAction)replyButtonAction:(id)sender
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
 		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
 	
-	NSString *storeId = [[self.sharedData getStore:[self.message objectForKey:@"store_id"]] objectId];
+	NSString *storeId = [[self.sharedData getStore:self.message[@"store_id"]] objectId];
 	
 	ComposeMessageViewController *composeVC = [[ComposeMessageViewController alloc] init];
 	composeVC.delegate = self;
 	composeVC.messageType = @"gift_reply";
 	composeVC.storeId = storeId;
-	composeVC.recepientName = [self.message objectForKey:@"sender_name"];
+	composeVC.recepientName = self.message[@"sender_name"];
 	composeVC.giftReplyMessageId = self.message.objectId;
 	composeVC.giftMessageStatusId = self.messageStatusId;
 	
@@ -435,7 +342,7 @@
 	[self presentViewController:navController animated:YES completion:nil];
 }
 
-- (IBAction)deleteButtonAction:(id)sender
+- (void)deleteButtonAction
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
 		[RepunchUtils showDefaultDropdownView:self.view];
@@ -461,16 +368,10 @@
 	[alert show];
 }
 
-- (IBAction)closeButtonAction:(id)sender
-{
-	[self dismissViewControllerAnimated:YES completion:nil];
-}
-
 - (void)giftReplySent:(ComposeMessageViewController *)controller
 {
-	self.reply = [self.message objectForKey:@"Reply"];
+	self.reply = self.message[@"Reply"];
 	containsReply = !IS_NIL(self.reply);
-	[self.giftView removeFromSuperview];
 	[self setupMessage];
 	[self.delegate removeMessage:self forMsgStatus:nil];
 }

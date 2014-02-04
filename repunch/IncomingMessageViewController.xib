@@ -1,63 +1,274 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1552" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IncomingMessageViewController">
             <connections>
+                <outlet property="attachmentDescriptionLabel" destination="5uC-QC-AFe" id="FPq-CO-UIp"/>
+                <outlet property="attachmentItemLabel" destination="RnU-QH-rpD" id="8q4-k3-Hac"/>
+                <outlet property="attachmentTitleLabel" destination="b0Q-oL-J0O" id="Owz-8V-FeI"/>
+                <outlet property="attachmentTitleVerticalConstraint" destination="M8p-rT-ycm" id="tdx-WD-2oV"/>
+                <outlet property="attachmentView" destination="HS9-IO-FHT" id="btJ-rI-pHf"/>
+                <outlet property="bodyHeightConstraint" destination="LmI-17-9B9" id="Ngo-kk-eTq"/>
                 <outlet property="bodyTextView" destination="1212" id="1728"/>
-                <outlet property="dateLabel" destination="1210" id="1730"/>
+                <outlet property="redeemButton" destination="pHy-gq-2wN" id="zL4-uS-qpP"/>
+                <outlet property="replyBodyHeightConstraint" destination="svK-9M-zxR" id="XpS-iy-jJD"/>
+                <outlet property="replyBodyTextView" destination="gAn-EV-d59" id="L2n-jy-c0P"/>
+                <outlet property="replyButton" destination="3Ey-NE-KNj" id="g16-G1-EMP"/>
+                <outlet property="replySenderLabel" destination="Deb-Ot-1pP" id="azF-0P-DLQ"/>
+                <outlet property="replyTimeLabel" destination="LTM-3n-vzZ" id="4PM-66-fOe"/>
+                <outlet property="replyView" destination="oH6-0i-0f4" id="Dec-L1-tx2"/>
                 <outlet property="scrollView" destination="1732" id="1733"/>
+                <outlet property="sendTimeLabel" destination="1210" id="Wye-e1-sAj"/>
                 <outlet property="senderLabel" destination="1211" id="1729"/>
+                <outlet property="subjectLabel" destination="7af-oD-aD4" id="mXk-c3-3AX"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="1">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="750"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="1732">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1732" userLabel="ScrollView">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="750"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <subviews>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="12:15 pm" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1210">
-                            <rect key="frame" x="232" y="25" width="68" height="30"/>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Feedback for Brooklyn Roasting Company" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="7af-oD-aD4" userLabel="SubjectLabel">
+                            <rect key="frame" x="20" y="20" width="280" height="48"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
+                            <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                            <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" text="TeaNY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="1211" userLabel="SenderLabel">
+                            <rect key="frame" x="20" y="83" width="208" height="22"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="12:15 pm" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1210" userLabel="SendTimeLabel">
+                            <rect key="frame" x="236" y="84" width="64" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="TeaNY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" id="1211">
-                            <rect key="frame" x="20" y="25" width="204" height="30"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bUB-4m-Afd" userLabel="DividerView">
+                            <rect key="frame" x="20" y="113" width="280" height="1"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" id="1212">
-                            <rect key="frame" x="15" y="80" width="290" height="109"/>
+                            <color key="backgroundColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="280" id="08p-sY-mkl"/>
+                                <constraint firstAttribute="height" constant="1" id="NfW-Mb-RXQ"/>
+                            </constraints>
+                        </view>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1212" userLabel="BodyTextView">
+                            <rect key="frame" x="15" y="124" width="290" height="109"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="109" id="LmI-17-9B9"/>
+                                <constraint firstAttribute="width" constant="290" id="wMR-8t-7eM"/>
+                            </constraints>
                             <string key="text">Hello friend!  You've been quite the peachy customer (and we like your smile) so you know what?  You get a cup of tea on us.  Stay cool.</string>
                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1213">
-                            <rect key="frame" x="20" y="70" width="280" height="2"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HS9-IO-FHT" userLabel="AttachmentView">
+                            <rect key="frame" x="20" y="263" width="280" height="293"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" red="0.92361582880000004" green="0.55974298280000001" blue="0.1052079196" alpha="1" colorSpace="calibratedRGB"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <nil key="highlightedColor"/>
-                        </label>
+                            <subviews>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Chocolate Shop" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="b0Q-oL-J0O" userLabel="TitleLabel">
+                                    <rect key="frame" x="75" y="26" width="130" height="25"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="18"/>
+                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="It8-hf-rPp" userLabel="DividerView">
+                                    <rect key="frame" x="40" y="61" width="200" height="1"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="200" id="QTs-EX-VOT"/>
+                                        <constraint firstAttribute="height" constant="1" id="pFZ-05-JQO"/>
+                                    </constraints>
+                                </view>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="A free coffee that is so awesome omg yea" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="17" preferredMaxLayoutWidth="240" translatesAutoresizingMaskIntoConstraints="NO" id="RnU-QH-rpD" userLabel="ItemLabel">
+                                    <rect key="frame" x="20" y="82" width="240" height="52"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="240" id="CmS-CD-nyK"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Avenir-HeavyOblique" family="Avenir" pointSize="19"/>
+                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Time Left: 02:46:01" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" preferredMaxLayoutWidth="240" translatesAutoresizingMaskIntoConstraints="NO" id="5uC-QC-AFe" userLabel="DescriptionLabel">
+                                    <rect key="frame" x="20" y="144" width="240" height="24"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="240" id="NZK-iw-NpG"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
+                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pHy-gq-2wN" userLabel="RedeemButton">
+                                    <rect key="frame" x="76" y="198" width="128" height="60"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="60" id="h5E-Yj-kEG"/>
+                                        <constraint firstAttribute="width" constant="128" id="zHo-YV-70U"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
+                                    <state key="normal" title="Redeem" backgroundImage="orange_gradient_button.png">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="highlighted" backgroundImage="orange_gradient_button_highlighted.png">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="redeemButtonAction:" destination="-1" eventType="touchUpInside" id="9kb-zx-gBB"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="centerX" secondItem="RnU-QH-rpD" secondAttribute="centerX" id="2fb-qv-dgx"/>
+                                <constraint firstAttribute="width" constant="280" id="IWE-Rn-BDo"/>
+                                <constraint firstAttribute="centerX" secondItem="5uC-QC-AFe" secondAttribute="centerX" id="JvD-xw-0Ud"/>
+                                <constraint firstItem="b0Q-oL-J0O" firstAttribute="top" secondItem="HS9-IO-FHT" secondAttribute="top" constant="26" id="M8p-rT-ycm"/>
+                                <constraint firstItem="RnU-QH-rpD" firstAttribute="top" secondItem="It8-hf-rPp" secondAttribute="bottom" constant="20" id="P8m-BV-siS"/>
+                                <constraint firstAttribute="centerX" secondItem="pHy-gq-2wN" secondAttribute="centerX" id="ocL-Gt-661"/>
+                                <constraint firstAttribute="centerX" secondItem="5uC-QC-AFe" secondAttribute="centerX" id="pYS-WU-vfO"/>
+                                <constraint firstItem="It8-hf-rPp" firstAttribute="top" secondItem="b0Q-oL-J0O" secondAttribute="bottom" constant="10" id="rmK-eg-vnz"/>
+                                <constraint firstItem="5uC-QC-AFe" firstAttribute="top" secondItem="RnU-QH-rpD" secondAttribute="bottom" constant="10" id="tKv-RR-KBR"/>
+                                <constraint firstAttribute="bottom" secondItem="pHy-gq-2wN" secondAttribute="bottom" constant="35" id="weC-ja-FPk"/>
+                                <constraint firstAttribute="centerX" secondItem="It8-hf-rPp" secondAttribute="centerX" id="wnK-SU-DlV"/>
+                                <constraint firstAttribute="centerX" secondItem="b0Q-oL-J0O" secondAttribute="centerX" id="xdY-O6-pQY"/>
+                                <constraint firstItem="pHy-gq-2wN" firstAttribute="top" secondItem="5uC-QC-AFe" secondAttribute="bottom" constant="30" id="ycU-KN-0RW"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oH6-0i-0f4" userLabel="ReplyView">
+                            <rect key="frame" x="0.0" y="586" width="320" height="153"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i9J-7e-jcq" userLabel="ReplyDividerView">
+                                    <rect key="frame" x="20" y="30" width="280" height="1"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" red="0.92361582880000004" green="0.55974298280000001" blue="0.1052079196" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="280" id="0Uw-3H-2u9"/>
+                                        <constraint firstAttribute="height" constant="1" id="OEF-9I-dlS"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" text="TeaNY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="Deb-Ot-1pP" userLabel="ReplySenderLabel">
+                                    <rect key="frame" x="20" y="0.0" width="216" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="5:15 pm" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LTM-3n-vzZ" userLabel="ReplySendTimeLabel">
+                                    <rect key="frame" x="244" y="1" width="56" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
+                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Message body of the reply goes here." translatesAutoresizingMaskIntoConstraints="NO" id="gAn-EV-d59" userLabel="ReplyBodyTextView">
+                                    <rect key="frame" x="15" y="40" width="290" height="63"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="290" id="0zA-vy-GRt"/>
+                                        <constraint firstAttribute="height" constant="63" id="svK-9M-zxR"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                </textView>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="LTM-3n-vzZ" firstAttribute="centerY" secondItem="Deb-Ot-1pP" secondAttribute="centerY" id="08W-HT-W4T"/>
+                                <constraint firstItem="gAn-EV-d59" firstAttribute="top" secondItem="i9J-7e-jcq" secondAttribute="bottom" constant="9" id="E5z-l8-kYs"/>
+                                <constraint firstAttribute="trailing" secondItem="LTM-3n-vzZ" secondAttribute="trailing" constant="20" id="FrR-ia-CsL"/>
+                                <constraint firstAttribute="centerX" secondItem="gAn-EV-d59" secondAttribute="centerX" id="IqR-4b-YOc"/>
+                                <constraint firstItem="i9J-7e-jcq" firstAttribute="top" secondItem="Deb-Ot-1pP" secondAttribute="bottom" constant="8" id="YOh-UE-de2"/>
+                                <constraint firstAttribute="centerX" secondItem="i9J-7e-jcq" secondAttribute="centerX" id="anG-Jg-l8W"/>
+                                <constraint firstItem="Deb-Ot-1pP" firstAttribute="top" secondItem="oH6-0i-0f4" secondAttribute="top" id="eCv-sW-yjR"/>
+                                <constraint firstItem="LTM-3n-vzZ" firstAttribute="leading" secondItem="Deb-Ot-1pP" secondAttribute="trailing" constant="8" id="iXg-EX-co8"/>
+                                <constraint firstItem="Deb-Ot-1pP" firstAttribute="leading" secondItem="oH6-0i-0f4" secondAttribute="leading" constant="20" id="kEz-6R-nY6"/>
+                                <constraint firstAttribute="bottom" secondItem="gAn-EV-d59" secondAttribute="bottom" constant="50" id="mFw-x0-NOq"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="oH6-0i-0f4" firstAttribute="leading" secondItem="1732" secondAttribute="leading" id="0qL-PS-7Xn"/>
+                        <constraint firstItem="HS9-IO-FHT" firstAttribute="top" secondItem="1212" secondAttribute="bottom" constant="30" id="4Bg-9B-C0v"/>
+                        <constraint firstAttribute="centerX" secondItem="7af-oD-aD4" secondAttribute="centerX" id="4On-y1-rjf"/>
+                        <constraint firstItem="bUB-4m-Afd" firstAttribute="top" secondItem="1211" secondAttribute="bottom" constant="8" id="7Qq-dq-r5I"/>
+                        <constraint firstItem="7af-oD-aD4" firstAttribute="top" secondItem="1732" secondAttribute="top" constant="20" id="9fI-Un-ueL"/>
+                        <constraint firstAttribute="trailing" secondItem="1210" secondAttribute="trailing" constant="20" id="AIq-9Q-cIt"/>
+                        <constraint firstAttribute="centerX" secondItem="HS9-IO-FHT" secondAttribute="centerX" id="Bl9-IX-3wz"/>
+                        <constraint firstAttribute="trailing" secondItem="7af-oD-aD4" secondAttribute="trailing" constant="20" id="F73-3p-KUV"/>
+                        <constraint firstItem="1212" firstAttribute="top" secondItem="bUB-4m-Afd" secondAttribute="bottom" constant="10" id="Fkx-Io-3WM"/>
+                        <constraint firstItem="1210" firstAttribute="leading" secondItem="1211" secondAttribute="trailing" constant="8" id="IHk-c3-Hve"/>
+                        <constraint firstItem="oH6-0i-0f4" firstAttribute="top" secondItem="HS9-IO-FHT" secondAttribute="bottom" constant="30" id="KYa-Ho-gdq"/>
+                        <constraint firstAttribute="centerX" secondItem="1212" secondAttribute="centerX" id="Pbo-cG-rdP"/>
+                        <constraint firstItem="1211" firstAttribute="top" secondItem="7af-oD-aD4" secondAttribute="bottom" constant="15" id="fpm-2Q-mCy"/>
+                        <constraint firstItem="7af-oD-aD4" firstAttribute="leading" secondItem="1732" secondAttribute="leading" constant="20" id="gbR-YF-PNi"/>
+                        <constraint firstAttribute="trailing" secondItem="oH6-0i-0f4" secondAttribute="trailing" id="jcw-Rq-UYV"/>
+                        <constraint firstItem="1211" firstAttribute="leading" secondItem="1732" secondAttribute="leading" constant="20" id="kmw-9u-ZKg"/>
+                        <constraint firstAttribute="centerX" secondItem="bUB-4m-Afd" secondAttribute="centerX" id="pmG-4V-3oZ"/>
+                        <constraint firstItem="1211" firstAttribute="centerY" secondItem="1210" secondAttribute="centerY" id="qyB-cP-IFo"/>
+                        <constraint firstAttribute="bottom" secondItem="oH6-0i-0f4" secondAttribute="bottom" id="vYg-t4-zhI"/>
+                    </constraints>
                 </scrollView>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Ey-NE-KNj" userLabel="ThanksButton">
+                    <rect key="frame" x="0.0" y="690" width="320" height="60"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="tby-kM-0uF"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
+                    <state key="normal" title="Say Thanks!">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="highlighted">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="replyButtonAction:" destination="-1" eventType="touchUpInside" id="XDR-OX-3mh"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="3Ey-NE-KNj" secondAttribute="bottom" id="Dsa-50-g40"/>
+                <constraint firstAttribute="trailing" secondItem="3Ey-NE-KNj" secondAttribute="trailing" id="VmM-Jp-upr"/>
+                <constraint firstAttribute="trailing" secondItem="1732" secondAttribute="trailing" id="avT-1m-jGw"/>
+                <constraint firstItem="3Ey-NE-KNj" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="coJ-9w-vVB"/>
+                <constraint firstAttribute="bottom" secondItem="1732" secondAttribute="bottom" id="ipP-Iv-hyq"/>
+                <constraint firstItem="1732" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="mup-5d-hQz"/>
+                <constraint firstItem="1732" firstAttribute="top" secondItem="1" secondAttribute="top" id="oae-hH-xgp"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <inset key="insetFor6xAndEarlier" minX="-1458" minY="-914" maxX="1458" maxY="914"/>
         </view>
     </objects>
+    <resources>
+        <image name="orange_gradient_button.png" width="32" height="32"/>
+        <image name="orange_gradient_button_highlighted.png" width="32" height="32"/>
+    </resources>
 </document>

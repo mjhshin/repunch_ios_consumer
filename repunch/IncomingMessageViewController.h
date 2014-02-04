@@ -33,29 +33,33 @@
 @property (strong, nonatomic) PFObject *reply;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UILabel *subjectLabel;
 
 // Original Message
-//@property (strong, nonatomic) IBOutlet UIView *messageView;
 @property (weak, nonatomic) IBOutlet UILabel *senderLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sendTimeLabel;
 @property (weak, nonatomic) IBOutlet UITextView *bodyTextView;
 
 // Attachment (gift/offer)
-@property (strong, nonatomic) IBOutlet UIView *giftView;
-@property (weak, nonatomic) IBOutlet UILabel *giftHeader;
-@property (weak, nonatomic) IBOutlet UILabel *giftTitle;
-@property (weak, nonatomic) IBOutlet UIButton *giftButton;
-@property (weak, nonatomic) IBOutlet UILabel *giftTimerLabel;
-@property (weak, nonatomic) IBOutlet UIButton *giftReplyButton;
+@property (strong, nonatomic) IBOutlet UIView *attachmentView;
+@property (weak, nonatomic) IBOutlet UILabel *attachmentTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *attachmentItemLabel;
+@property (weak, nonatomic) IBOutlet UILabel *attachmentDescriptionLabel;
+@property (weak, nonatomic) IBOutlet UIButton *redeemButton;
+@property (weak, nonatomic) IBOutlet UIButton *replyButton;
 
-- (IBAction)giftButtonAction:(id)sender;
-- (IBAction)giftReplyButtonAction:(id)sender;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *attachmentTitleVerticalConstraint;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bodyHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *replyBodyHeightConstraint;
+
+- (IBAction)redeemButtonAction:(id)sender;
+- (IBAction)replyButtonAction:(id)sender;
 
 // Reply
-@property (strong, nonatomic) IBOutlet UIView *replyView;
+@property (weak, nonatomic) IBOutlet UIView *replyView;
 @property (weak, nonatomic) IBOutlet UILabel *replySenderLabel;
-@property (weak, nonatomic) IBOutlet UILabel *replyDateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *replyTimeLabel;
 @property (weak, nonatomic) IBOutlet UITextView *replyBodyTextView;
-
 
 @end

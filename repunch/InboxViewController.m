@@ -118,6 +118,7 @@
 
 - (void)setupTableView
 {
+	/*
 	self.tableViewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
 	[self addChildViewController:self.tableViewController];
 	
@@ -129,23 +130,20 @@
 	
     self.tableViewController.view.frame = self.view.bounds;
 	self.tableViewController.view.layer.zPosition = -1;
-
-    [self.tableViewController.tableView setDataSource:self];
-    [self.tableViewController.tableView setDelegate:self];
+	 */
+	
+	self.tableView.delegate = self;
+    self.tableView.dataSource = self;
 	
 	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
 	footer.backgroundColor = [UIColor clearColor];
-	[self.tableViewController.tableView setTableFooterView:footer];
-	
-	 [self.view addSubview:self.tableViewController.tableView];
-	
-    self.edgesForExtendedLayout = UIRectEdgeNone;
+	self.tableView.tableFooterView = footer;
 }
 
 - (void)loadInbox:(BOOL)paginate
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
-		[self.tableViewController.refreshControl endRefreshing];
+		//[self.tableViewController.refreshControl endRefreshing];
 		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
@@ -177,7 +175,7 @@
 		else {
 			self.activityIndicatorView.hidden = YES;
 			[self.activityIndicator stopAnimating];
-			[self.tableViewController.refreshControl endRefreshing];
+			//[self.tableViewController.refreshControl endRefreshing];
 		}
 		
         if(!error) {
@@ -248,6 +246,10 @@
 	InboxTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[InboxTableViewCell reuseIdentifier]];
 	if (cell == nil) {
         cell = [InboxTableViewCell cell];
+		
+		UIView *selectedView = [[UIView alloc] initWithFrame:cell.frame];
+		selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
+		cell.selectedBackgroundView = selectedView;
     }
 	
 	PFObject *messageStatus;
@@ -340,9 +342,9 @@
 		[messageStatus setObject:[NSNumber numberWithBool:YES] forKey:@"is_read"];
 		[messageStatus saveEventually];
 	
-		[self.tableViewController.tableView beginUpdates];
-		[self.tableViewController.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-		[self.tableViewController.tableView endUpdates];
+		[self.tableView beginUpdates];
+		[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+		[self.tableView endUpdates];
 	}
 }
 
@@ -364,15 +366,15 @@
 
 - (void)setFooter:(BOOL)paginateInProgress
 {
-	UIView *footer = self.tableViewController.tableView.tableFooterView;
+	UIView *footer = self.tableView.tableFooterView;
 	CGRect footerFrame = footer.frame;
 	footerFrame.size.height = paginateInProgress ? 50 : 1;
 	footer.frame = footerFrame;
-	self.tableViewController.tableView.tableFooterView = footer;
+	self.tableView.tableFooterView = footer;
 	
 	if(paginateInProgress) {
-		paginateSpinner.frame = self.tableViewController.tableView.tableFooterView.bounds;
-		[self.tableViewController.tableView.tableFooterView addSubview:paginateSpinner];
+		paginateSpinner.frame = self.tableView.tableFooterView.bounds;
+		[self.tableView.tableFooterView addSubview:paginateSpinner];
 		[paginateSpinner startAnimating];
 	}
 	else {
@@ -521,7 +523,7 @@
 		}
 	}
 	
-	[self.tableViewController.tableView reloadData];
+	[self.tableView reloadData];
 }
 
 - (void)fetchBadgeCount
