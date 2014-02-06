@@ -7,6 +7,7 @@
 //
 
 #import "StoreDetailTableViewCell.h"
+#import "RepunchUtils.h"
 
 @implementation StoreDetailTableViewCell
 
@@ -22,7 +23,19 @@
 
 + (StoreDetailTableViewCell *)cell
 {
-    return [[[NSBundle mainBundle] loadNibNamed:[self reuseIdentifier] owner:self options:nil] objectAtIndex:0];
+	StoreDetailTableViewCell *customCell = [[[NSBundle mainBundle] loadNibNamed:[self reuseIdentifier]
+																	 owner:self
+																   options:nil]
+									   objectAtIndex:0];
+	
+	UIView *selectedView = [[UIView alloc] initWithFrame:customCell.frame];
+	selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
+	customCell.selectedBackgroundView = selectedView;
+	
+	customCell.locationImage.layer.cornerRadius = 10.0;
+	customCell.locationImage.layer.masksToBounds = YES;
+	
+	return customCell;
 }
 
 @end

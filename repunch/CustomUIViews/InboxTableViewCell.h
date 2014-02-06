@@ -12,6 +12,9 @@
 + (InboxTableViewCell *)cell;
 + (NSString *)reuseIdentifier;
 
+- (void)setMessageRead;
+- (void)setMessageUnread;
+
 @property (weak, nonatomic) IBOutlet UILabel *senderName;
 @property (weak, nonatomic) IBOutlet UILabel *subjectLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateSent;

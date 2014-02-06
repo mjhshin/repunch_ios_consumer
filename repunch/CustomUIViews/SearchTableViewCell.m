@@ -6,6 +6,7 @@
 //
 
 #import "SearchTableViewCell.h"
+#import "RepunchUtils.h"
 
 @implementation SearchTableViewCell
 
@@ -21,7 +22,19 @@
 
 + (SearchTableViewCell *)cell
 {
-    return [[[NSBundle mainBundle] loadNibNamed:[self reuseIdentifier] owner:self options:nil] objectAtIndex:0];
+	SearchTableViewCell *customCell = [[[NSBundle mainBundle] loadNibNamed:[self reuseIdentifier]
+																	   owner:self
+																	 options:nil]
+										 objectAtIndex:0];
+	
+	UIView *selectedView = [[UIView alloc] initWithFrame:customCell.frame];
+	selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
+	customCell.selectedBackgroundView = selectedView;
+	
+	customCell.storeImage.layer.cornerRadius = 10.0;
+	customCell.storeImage.layer.masksToBounds = YES;
+	
+	return customCell;
 }
 
 @end

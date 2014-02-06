@@ -286,16 +286,8 @@
 {
 	SearchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[SearchTableViewCell reuseIdentifier]];
 	
-	// Curve image border
 	if (cell == nil) {
         cell = [SearchTableViewCell cell];
-		
-		UIView *selectedView = [[UIView alloc] initWithFrame:cell.frame];
-		selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
-		cell.selectedBackgroundView = selectedView;
-		
-		cell.storeImage.layer.cornerRadius = 10.0;
-		cell.storeImage.layer.masksToBounds = YES;
     }
 	
 	NSString *storeLocationId = self.storeLocationIdArray[indexPath.row];
@@ -340,7 +332,7 @@
 		[cell.numPunches setHidden:YES];
 	}
 	else {
-		int punches = [[patronStore objectForKey:@"punch_count"] intValue];
+		int punches = [patronStore[@"punch_count"] intValue];
 		[cell.punchIcon setHidden:NO];
 		[cell.numPunches setHidden:NO];
 		[cell.numPunches setText:[NSString stringWithFormat:@"%d %@", punches, (punches==1) ? @"Punch" : @"Punches"]];

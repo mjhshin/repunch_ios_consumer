@@ -6,6 +6,7 @@
 //
 
 #import "MyPlacesTableViewCell.h"
+#import "RepunchUtils.h"
 
 @implementation MyPlacesTableViewCell
 
@@ -21,7 +22,21 @@
 
 + (MyPlacesTableViewCell *)cell
 {
-    return [[[NSBundle mainBundle] loadNibNamed:[self reuseIdentifier] owner:self options:nil] objectAtIndex:0];
+	MyPlacesTableViewCell *customCell = [[[NSBundle mainBundle] loadNibNamed:[self reuseIdentifier]
+																	owner:self
+																  options:nil]
+									  objectAtIndex:0];
+	
+	
+	
+	UIView *selectedView = [[UIView alloc] initWithFrame:customCell.frame];
+	selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
+	customCell.selectedBackgroundView = selectedView;
+	
+	customCell.storeImage.layer.cornerRadius = 10.0;
+	customCell.storeImage.layer.masksToBounds = YES;
+	
+	return customCell;
 }
 
 @end

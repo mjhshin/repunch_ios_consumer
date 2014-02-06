@@ -117,13 +117,6 @@
 	
 	if (cell == nil) {
         cell = [StoreDetailTableViewCell cell];
-		
-		UIView *selectedView = [[UIView alloc] initWithFrame:cell.frame];
-		selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
-		cell.selectedBackgroundView = selectedView;
-		
-		cell.locationImage.layer.cornerRadius = 8.0;
-		cell.locationImage.layer.masksToBounds = YES;
     }
 	
 	RPStoreLocation *storeLocation = self.locationsArray[indexPath.row];

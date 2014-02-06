@@ -18,5 +18,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *rewardPunchesStatic;
 @property (weak, nonatomic) IBOutlet UIImageView *rewardStatusIcon;
 @property (weak, nonatomic) IBOutlet UIView *whiteContentView;
+@property (weak, nonatomic) IBOutlet UIView *dividerView;
 
 @end

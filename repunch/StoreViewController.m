@@ -113,9 +113,13 @@
 - (void)setStoreInformation
 {
 	self.storeName.text = store.store_name;
+	
 	CAGradientLayer *bgLayer = [RepunchUtils blackGradient];
 	bgLayer.frame = self.storeNameBackground.bounds;
 	[self.storeNameBackground.layer insertSublayer:bgLayer atIndex:0];
+	
+	//self.storeName.backgroundColor = [UIColor colorWithPatternImage:[UIImage
+	//imageNamed:@"black_alpha_gradient_reverse"]];
 	
 	UIImage *storeImage;
     
@@ -190,9 +194,6 @@
 	// layout after adjusting height constraint
 	[self.storeInfoView setNeedsLayout];
 	[self.storeInfoView layoutIfNeeded];
-	
-	// round corners
-	[self.storeInfoView.layer setCornerRadius:6.0f];
 	
 	// add shadow
 	[self.storeInfoView.layer setShadowColor:[UIColor darkGrayColor].CGColor];
@@ -389,7 +390,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 70;
+    return 105;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -399,26 +400,31 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-	// round corners
-	[self.sectionHeaderContentView.layer setCornerRadius:6.0f];
-	
 	// add shadow
 	[self.sectionHeaderContentView.layer setShadowColor:[UIColor darkGrayColor].CGColor];
 	[self.sectionHeaderContentView.layer setShadowOpacity:0.7];
 	[self.sectionHeaderContentView.layer setShadowRadius:1.0];
 	[self.sectionHeaderContentView.layer setShadowOffset:CGSizeMake(0.5f, 0.5f)];
 	
-    if(patronStoreExists) {
+	[self.rewardsLabel.layer setShadowColor:[UIColor darkGrayColor].CGColor];
+	[self.rewardsLabel.layer setShadowOpacity:0.7];
+	[self.rewardsLabel.layer setShadowRadius:1.0];
+	[self.rewardsLabel.layer setShadowOffset:CGSizeMake(0.5f, 0.5f)];
+	
+	self.rewardsLabel.shadowColor = [UIColor darkGrayColor];
+	self.rewardsLabel.shadowOffset = CGSizeMake(0.5f, 0.5f);
+
+	if(patronStoreExists) {
 		self.saveButton.hidden = YES;
-		
+	
 		self.punchCountLabel.text = [NSString stringWithFormat:@"%i", punchCount];
 		self.punchStaticLabel.text = (punchCount == 1) ? @"Punch": @"Punches";
 	}
 	else {
 		self.saveButton.hidden = NO;
 	}
-	
-    return self.sectionHeaderView;
+
+	return self.sectionHeaderView;
 }
 
 #pragma mark - Table view data source delegate
@@ -426,36 +432,27 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     RewardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[RewardTableViewCell reuseIdentifier]];
-	if (cell == nil)
-	{
+	if (cell == nil) {
         cell = [RewardTableViewCell cell];
-		
-		// round corners
-		[cell.whiteContentView.layer setCornerRadius:6.0f];
-		
-		// add shadow
-		[cell.whiteContentView.layer setShadowColor:[UIColor darkGrayColor].CGColor];
-		[cell.whiteContentView.layer setShadowOpacity:0.7];
-		[cell.whiteContentView.layer setShadowRadius:1.0];
-		[cell.whiteContentView.layer setShadowOffset:CGSizeMake(0.5f, 0.5f)];
-		
-		UIView *selectedView = [[UIView alloc] initWithFrame:cell.whiteContentView.frame];
-		selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
-		cell.selectedBackgroundView = selectedView;
     }
 	
 	id reward = store.rewards[indexPath.row];
     
     cell.rewardTitle.text = reward[@"reward_name"];
     cell.rewardDescription.text = reward[@"description"];
+	
     int rewardPunches = [reward[@"punches"] intValue];
     cell.rewardPunches.text = [NSString stringWithFormat:@"%i", rewardPunches];
 	cell.rewardPunchesStatic.text = (rewardPunches == 1) ? @"Punch" : @"Punches";
+	
+	cell.rewardStatusIcon.hidden = !patronStoreExists;
 	cell.rewardStatusIcon.image = (punchCount >= rewardPunches) ?
 		[UIImage imageNamed:@"unlocked_icon"] : [UIImage imageNamed:@"locked_icon"];
     
     //[cell setUserInteractionEnabled:patronStoreExists];
 	cell.userInteractionEnabled = (punchCount >= rewardPunches);
+	
+	cell.whiteContentView.backgroundColor = (punchCount >= rewardPunches) ? [UIColor whiteColor] : [UIColor groupTableViewBackgroundColor];
 	
     return cell;
 }

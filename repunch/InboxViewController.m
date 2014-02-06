@@ -244,12 +244,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	InboxTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[InboxTableViewCell reuseIdentifier]];
+	
 	if (cell == nil) {
         cell = [InboxTableViewCell cell];
-		
-		UIView *selectedView = [[UIView alloc] initWithFrame:cell.frame];
-		selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
-		cell.selectedBackgroundView = selectedView;
     }
 	
 	PFObject *messageStatus;
@@ -266,47 +263,37 @@
 		messageStatus = self.giftsArray[indexPath.row];
 	}
 
-    PFObject *message = [messageStatus objectForKey:@"Message"];
-    PFObject *reply = [message objectForKey:@"Reply"];
+    PFObject *message = messageStatus[@"Message"];
+    PFObject *reply = message[@"Reply"];
     
     if ( !IS_NIL(reply) ) {
-        cell.senderName.text = [reply objectForKey:@"sender_name"];
-        cell.subjectLabel.text = [NSString stringWithFormat:@"RE: %@ - %@", [message objectForKey:@"subject"], [reply objectForKey:@"body"]];
+        cell.senderName.text = reply[@"sender_name"];
+        cell.subjectLabel.text = [NSString stringWithFormat:@"RE: %@ - %@", message[@"subject"], reply[@"body"]];
         cell.dateSent.text = [self formattedDateString:reply.createdAt];
     }
 	else {
-		cell.senderName.text = [message objectForKey:@"sender_name"];
-        cell.subjectLabel.text = [NSString stringWithFormat:@"%@ - %@", [message objectForKey:@"subject"], [message objectForKey:@"body"]];
+		cell.senderName.text = message[@"sender_name"];
+        cell.subjectLabel.text = [NSString stringWithFormat:@"%@ - %@", message[@"subject"], message[@"body"]];
         cell.dateSent.text = [self formattedDateString:message.createdAt];
     }
     
-    if ([[message objectForKey:@"message_type"] isEqualToString:@"offer"]) {
-        [[cell offerPic] setHidden:NO];
-        [[cell offerPic] setImage:[UIImage imageNamed:@"ico_message_coupon"]];
+    if ([message[@"message_type"] isEqualToString:@"offer"]) {
+        [cell.offerPic setHidden:NO];
+        [cell.offerPic setImage:[UIImage imageNamed:@"ico_message_coupon"]];
     }
-	else if ([[message objectForKey:@"message_type"] isEqualToString:@"gift"]) {
-        [[cell offerPic] setHidden:NO];
-        [[cell offerPic] setImage:[UIImage imageNamed:@"message_gift"]];
+	else if ([message[@"message_type"] isEqualToString:@"gift"]) {
+        [cell.offerPic setHidden:NO];
+        [cell.offerPic setImage:[UIImage imageNamed:@"message_gift"]];
     }
-	//else if ([[message objectForKey:@"message_type"] isEqualToString:@"feedback"]) {
-    //    [[cell offerPic] setHidden:NO];
-    //    [[cell offerPic] setImage:[UIImage imageNamed:@"message_reply"]];
-    //}
 	else {
-		[[cell offerPic] setHidden:YES];
+		[cell.offerPic setHidden:YES];
 	}
     
-    if ([[messageStatus objectForKey:@"is_read"] boolValue]) {
-        cell.contentView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-		cell.senderName.font = [RepunchUtils repunchFontWithSize:17 isBold:NO];
-		cell.dateSent.font = [RepunchUtils repunchFontWithSize:14 isBold:NO];
-		cell.dateSent.textColor = [UIColor darkGrayColor];
+    if ([messageStatus[@"is_read"] boolValue]) {
+		[cell setMessageRead];
     }
     else {
-        cell.contentView.backgroundColor = [UIColor whiteColor];
-		cell.senderName.font = [RepunchUtils repunchFontWithSize:17 isBold:YES];
-		cell.dateSent.font = [RepunchUtils repunchFontWithSize:14 isBold:YES];
-		cell.dateSent.textColor = [RepunchUtils repunchOrangeColor];
+		[cell setMessageUnread];
     }
 
     return cell;

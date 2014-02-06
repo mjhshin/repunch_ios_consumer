@@ -54,6 +54,7 @@
 @property (weak, nonatomic) IBOutlet UIView *sectionHeaderContentView;
 @property (weak, nonatomic) IBOutlet UILabel *punchCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *punchStaticLabel;
+@property (weak, nonatomic) IBOutlet UILabel *rewardsLabel;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *saveButtonSpinner;
 

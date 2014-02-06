@@ -141,7 +141,7 @@
 	
     CAGradientLayer *gradientLayer = [CAGradientLayer layer];
     gradientLayer.colors = colors;
-	gradientLayer.locations = @[@0.00f, @0.4f, @1.00f];
+	gradientLayer.locations = @[@0.00f, @0.55f, @1.00f];
 	
     return gradientLayer;
 }

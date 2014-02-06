@@ -265,25 +265,18 @@
 	
 	if (cell == nil) {
         cell = [MyPlacesTableViewCell cell];
-		
-		UIView *selectedView = [[UIView alloc] initWithFrame:cell.frame];
-		selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
-		cell.selectedBackgroundView = selectedView;
-		
-		cell.storeImage.layer.cornerRadius = 10.0;
-		cell.storeImage.layer.masksToBounds = YES;
     }
 	
 	NSString *storeId = self.storeIdArray[indexPath.row];
 	PFObject *patronStore = [self.sharedData getPatronStore:storeId];
 	RPStore *store = [self.sharedData getStore:storeId];
 	
-    int punches = [[patronStore objectForKey:@"punch_count"] intValue];
+    int punches = [patronStore[@"punch_count"] intValue];
     cell.numPunches.text = [NSString stringWithFormat:@"%i %@", punches, (punches == 1) ? @"Punch": @"Punches"];
     cell.storeName.text = store.store_name;
     
     if (store.rewards.count > 0) {
-        if ([[store.rewards[0] objectForKey:@"punches"] intValue] <= punches) {
+        if ([store.rewards[0][@"punches"] intValue] <= punches) {
             [[cell rewardLabel] setHidden:NO];
             [[cell rewardIcon] setHidden:NO];
         }

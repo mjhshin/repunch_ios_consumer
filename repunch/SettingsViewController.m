@@ -122,6 +122,8 @@
 			UIView *selectedView = [[UIView alloc] initWithFrame:cell.frame];
 			selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
 			cell.selectedBackgroundView = selectedView;
+			
+			cell.textLabel.highlightedTextColor = [UIColor whiteColor];
 		}
 		
 		cell.textLabel.font = [RepunchUtils repunchFontWithSize:16 isBold:YES];
@@ -144,6 +146,9 @@
 			UIView *selectedView = [[UIView alloc] initWithFrame:cell.frame];
 			selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
 			cell.selectedBackgroundView = selectedView;
+			
+			cell.textLabel.highlightedTextColor = [UIColor whiteColor];
+			cell.detailTextLabel.highlightedTextColor = [UIColor whiteColor];
 		}
 		cell.textLabel.font = [RepunchUtils repunchFontWithSize:16 isBold:YES];
 		cell.textLabel.text = @"Log Out";

@@ -8,27 +8,26 @@
             <connections>
                 <outlet property="punchCountLabel" destination="Ffb-fq-jxE" id="fyg-Sw-Q4c"/>
                 <outlet property="punchStaticLabel" destination="oJR-dT-sRj" id="3JV-4s-Q89"/>
-                <outlet property="saveButton" destination="LIO-Zo-Aeg" id="KpD-SC-DPg"/>
-                <outlet property="saveButtonSpinner" destination="EFj-74-Sws" id="ANb-Si-zYQ"/>
+                <outlet property="rewardsLabel" destination="ofj-aC-BtN" id="FPh-dN-Bpv"/>
                 <outlet property="sectionHeaderContentView" destination="712-8y-5ZX" id="28t-wt-kCN"/>
                 <outlet property="sectionHeaderView" destination="t1f-qY-Lda" id="fgE-hv-M7Q"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="t1f-qY-Lda">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="105"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="70" translatesAutoresizingMaskIntoConstraints="NO" id="712-8y-5ZX" userLabel="ContentView">
-                    <rect key="frame" x="10" y="4" width="300" height="66"/>
+                    <rect key="frame" x="8" y="0.0" width="304" height="65"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" placeholderIntrinsicWidth="150" placeholderIntrinsicHeight="70" translatesAutoresizingMaskIntoConstraints="NO" id="NA7-zi-Aiu" userLabel="Subview">
-                            <rect key="frame" x="75" y="0.0" width="150" height="66"/>
+                            <rect key="frame" x="77" y="-3" width="150" height="70"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="14" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ffb-fq-jxE" userLabel="PunchCountLabel">
-                                    <rect key="frame" x="0.0" y="8" width="77" height="50"/>
+                                    <rect key="frame" x="0.0" y="10" width="78" height="50"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="50" id="Czw-Vr-NhQ"/>
@@ -39,7 +38,7 @@
                                     <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </label>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Punches" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oJR-dT-sRj" userLabel="PunchStaticLabel">
-                                    <rect key="frame" x="82" y="33" width="68" height="20"/>
+                                    <rect key="frame" x="82" y="35" width="68" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="5HK-ro-alB"/>
@@ -49,62 +48,46 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstItem="oJR-dT-sRj" firstAttribute="leading" secondItem="Ffb-fq-jxE" secondAttribute="trailing" constant="5" id="Eif-SK-ldk"/>
+                                <constraint firstItem="oJR-dT-sRj" firstAttribute="leading" secondItem="Ffb-fq-jxE" secondAttribute="trailing" constant="4" id="Eif-SK-ldk"/>
                                 <constraint firstItem="Ffb-fq-jxE" firstAttribute="leading" secondItem="NA7-zi-Aiu" secondAttribute="leading" id="JKm-ro-ru4"/>
                                 <constraint firstAttribute="trailing" secondItem="oJR-dT-sRj" secondAttribute="trailing" id="Mgt-5b-EkS"/>
                                 <constraint firstItem="oJR-dT-sRj" firstAttribute="top" secondItem="Ffb-fq-jxE" secondAttribute="bottom" constant="-25" id="Tmw-kw-QXI"/>
                                 <constraint firstAttribute="centerY" secondItem="Ffb-fq-jxE" secondAttribute="centerY" id="zcm-Bx-8Ho"/>
                             </constraints>
                         </view>
-                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="EFj-74-Sws" userLabel="SaveButtonSpinner">
-                            <rect key="frame" x="132" y="14" width="37" height="37"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="color" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
-                        </activityIndicatorView>
-                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LIO-Zo-Aeg" userLabel="SaveButton">
-                            <rect key="frame" x="0.0" y="0.0" width="300" height="66"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="20"/>
-                            <state key="normal" title="Save to My Places">
-                                <color key="titleColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <state key="highlighted" backgroundImage="orange_highlighted.png"/>
-                            <connections>
-                                <action selector="saveButtonAction:" destination="-1" eventType="touchUpInside" id="Bab-Xm-qM9"/>
-                            </connections>
-                        </button>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="LIO-Zo-Aeg" firstAttribute="top" secondItem="712-8y-5ZX" secondAttribute="top" id="3om-lw-1Km"/>
-                        <constraint firstAttribute="bottom" secondItem="NA7-zi-Aiu" secondAttribute="bottom" id="45A-6S-Se6"/>
-                        <constraint firstAttribute="centerX" secondItem="EFj-74-Sws" secondAttribute="centerX" id="897-fj-3AD"/>
-                        <constraint firstAttribute="trailing" secondItem="LIO-Zo-Aeg" secondAttribute="trailing" id="AaE-eF-PAq"/>
-                        <constraint firstAttribute="centerY" secondItem="EFj-74-Sws" secondAttribute="centerY" id="KUx-nM-Ct2"/>
-                        <constraint firstAttribute="bottom" secondItem="LIO-Zo-Aeg" secondAttribute="bottom" id="Ng9-16-5By"/>
-                        <constraint firstItem="LIO-Zo-Aeg" firstAttribute="leading" secondItem="712-8y-5ZX" secondAttribute="leading" id="ZEv-rH-LDI"/>
-                        <constraint firstItem="NA7-zi-Aiu" firstAttribute="top" secondItem="712-8y-5ZX" secondAttribute="top" id="Zzl-Bl-tF2"/>
+                        <constraint firstAttribute="height" constant="65" id="8dH-1i-v5e"/>
+                        <constraint firstAttribute="centerY" secondItem="NA7-zi-Aiu" secondAttribute="centerY" id="DOc-qZ-y5q"/>
                         <constraint firstAttribute="centerX" secondItem="NA7-zi-Aiu" secondAttribute="centerX" id="ja0-jo-MLd"/>
                     </constraints>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                 </view>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rewards" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ofj-aC-BtN" userLabel="HeaderLabel">
+                    <rect key="frame" x="8" y="77" width="304" height="28"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="28" id="hJi-5j-Pwk"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
             <constraints>
-                <constraint firstItem="712-8y-5ZX" firstAttribute="leading" secondItem="t1f-qY-Lda" secondAttribute="leading" constant="10" id="KeJ-lY-RHE"/>
-                <constraint firstAttribute="trailing" secondItem="712-8y-5ZX" secondAttribute="trailing" constant="10" id="WFm-jh-Qnr"/>
-                <constraint firstItem="712-8y-5ZX" firstAttribute="top" secondItem="t1f-qY-Lda" secondAttribute="top" constant="4" id="hhs-sb-Rel"/>
-                <constraint firstAttribute="bottom" secondItem="712-8y-5ZX" secondAttribute="bottom" id="mF1-LT-Xk5"/>
+                <constraint firstItem="ofj-aC-BtN" firstAttribute="leading" secondItem="712-8y-5ZX" secondAttribute="leading" id="CHG-Df-Bdr"/>
+                <constraint firstItem="712-8y-5ZX" firstAttribute="leading" secondItem="t1f-qY-Lda" secondAttribute="leading" constant="8" id="KeJ-lY-RHE"/>
+                <constraint firstAttribute="trailing" secondItem="712-8y-5ZX" secondAttribute="trailing" constant="8" id="WFm-jh-Qnr"/>
+                <constraint firstAttribute="bottom" secondItem="ofj-aC-BtN" secondAttribute="bottom" id="eeo-oY-3oZ"/>
+                <constraint firstItem="712-8y-5ZX" firstAttribute="top" secondItem="t1f-qY-Lda" secondAttribute="top" id="hhs-sb-Rel"/>
+                <constraint firstItem="ofj-aC-BtN" firstAttribute="trailing" secondItem="712-8y-5ZX" secondAttribute="trailing" id="n8V-ad-Avr"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
-    <resources>
-        <image name="orange_highlighted.png" width="256" height="32"/>
-    </resources>
 </document>

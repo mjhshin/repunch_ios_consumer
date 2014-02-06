@@ -15,11 +15,11 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yxh-fe-TVS" userLabel="Subview">
-                        <rect key="frame" x="10" y="10" width="300" height="154"/>
+                        <rect key="frame" x="8" y="2" width="304" height="162"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NDA-YO-fDP" userLabel="PunchView">
-                                <rect key="frame" x="102" y="5" width="96" height="33"/>
+                                <rect key="frame" x="104" y="0.0" width="96" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="999" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="21" userLabel="PunchLabel">
@@ -43,36 +43,35 @@
                                     <constraint firstAttribute="height" constant="33" id="RwZ-sz-HC9"/>
                                     <constraint firstItem="61i-ev-3Da" firstAttribute="top" secondItem="21" secondAttribute="bottom" constant="-21" id="Sav-pa-GAt"/>
                                     <constraint firstItem="61i-ev-3Da" firstAttribute="leading" secondItem="21" secondAttribute="trailing" constant="3" id="V5J-xC-Dnb"/>
-                                    <constraint firstAttribute="bottom" secondItem="21" secondAttribute="bottom" id="tBt-V0-r7p"/>
+                                    <constraint firstAttribute="centerY" secondItem="21" secondAttribute="centerY" id="sbS-uk-odG"/>
                                     <constraint firstItem="21" firstAttribute="leading" secondItem="NDA-YO-fDP" secondAttribute="leading" id="tOC-EM-Xcr"/>
-                                    <constraint firstItem="21" firstAttribute="top" secondItem="NDA-YO-fDP" secondAttribute="top" id="xKf-sK-s5a"/>
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="locked_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="arS-af-3KV" userLabel="RewardStatusImageView">
-                                <rect key="frame" x="266" y="10" width="24" height="24"/>
+                                <rect key="frame" x="270" y="5" width="24" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="24" id="7dL-II-V8c"/>
+                                    <constraint firstAttribute="height" constant="24" id="dzY-i7-C0a"/>
                                     <constraint firstAttribute="width" constant="24" id="vHC-T9-vei"/>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DzT-un-sdH" userLabel="DividerView">
-                                <rect key="frame" x="0.0" y="38" width="300" height="1"/>
+                                <rect key="frame" x="0.0" y="33" width="304" height="1"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="zZc-aB-cZ9"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" verticalCompressionResistancePriority="790" text="Reward " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="4" userLabel="TitleLabel">
-                                <rect key="frame" x="10" y="59" width="280" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" verticalCompressionResistancePriority="790" text="Reward " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="284" translatesAutoresizingMaskIntoConstraints="NO" id="4" userLabel="TitleLabel">
+                                <rect key="frame" x="10" y="54" width="284" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="15"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" verticalCompressionResistancePriority="800" text="He's crap." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="10" userLabel="DescriptionLabel">
-                                <rect key="frame" x="10" y="85" width="280" height="20"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" verticalCompressionResistancePriority="800" text="He's crap." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="284" translatesAutoresizingMaskIntoConstraints="NO" id="10" userLabel="DescriptionLabel">
+                                <rect key="frame" x="10" y="80" width="284" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -91,24 +90,25 @@
                             <constraint firstItem="10" firstAttribute="leading" secondItem="yxh-fe-TVS" secondAttribute="leading" constant="10" id="RHv-3D-MxB"/>
                             <constraint firstAttribute="trailing" secondItem="4" secondAttribute="trailing" constant="10" id="Yyl-2V-uIo"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="10" secondAttribute="bottom" constant="5" id="dh2-xY-mpo"/>
-                            <constraint firstItem="arS-af-3KV" firstAttribute="centerY" secondItem="NDA-YO-fDP" secondAttribute="centerY" id="hKb-YN-vHZ"/>
+                            <constraint firstItem="arS-af-3KV" firstAttribute="centerY" secondItem="NDA-YO-fDP" secondAttribute="centerY" id="e5y-hI-mCJ"/>
                             <constraint firstItem="4" firstAttribute="leading" secondItem="yxh-fe-TVS" secondAttribute="leading" constant="10" id="pjw-5K-06S"/>
-                            <constraint firstItem="NDA-YO-fDP" firstAttribute="top" secondItem="yxh-fe-TVS" secondAttribute="top" constant="5" id="wIt-Nl-otx"/>
+                            <constraint firstItem="NDA-YO-fDP" firstAttribute="top" secondItem="yxh-fe-TVS" secondAttribute="top" id="wIt-Nl-otx"/>
                             <constraint firstItem="DzT-un-sdH" firstAttribute="top" secondItem="NDA-YO-fDP" secondAttribute="bottom" id="xNt-bP-mZa"/>
                             <constraint firstAttribute="trailing" secondItem="arS-af-3KV" secondAttribute="trailing" constant="10" id="zoY-1u-9wl"/>
                             <constraint firstAttribute="centerX" secondItem="NDA-YO-fDP" secondAttribute="centerX" id="zzN-hk-ldz"/>
                         </constraints>
                     </view>
                 </subviews>
+                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="yxh-fe-TVS" secondAttribute="trailing" constant="10" id="J50-EO-mow"/>
+                    <constraint firstAttribute="trailing" secondItem="yxh-fe-TVS" secondAttribute="trailing" constant="8" id="J50-EO-mow"/>
                     <constraint firstAttribute="bottom" secondItem="yxh-fe-TVS" secondAttribute="bottom" constant="5" id="jx8-9w-pdd"/>
-                    <constraint firstItem="yxh-fe-TVS" firstAttribute="top" secondItem="euY-z4-nTH" secondAttribute="top" constant="10" id="pzX-70-OKk"/>
-                    <constraint firstItem="yxh-fe-TVS" firstAttribute="leading" secondItem="euY-z4-nTH" secondAttribute="leading" constant="10" id="zWX-Fj-WKE"/>
+                    <constraint firstItem="yxh-fe-TVS" firstAttribute="top" secondItem="euY-z4-nTH" secondAttribute="top" constant="2" id="pzX-70-OKk"/>
+                    <constraint firstItem="yxh-fe-TVS" firstAttribute="leading" secondItem="euY-z4-nTH" secondAttribute="leading" constant="8" id="zWX-Fj-WKE"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
             <connections>
+                <outlet property="dividerView" destination="DzT-un-sdH" id="v2F-Hx-U5B"/>
                 <outlet property="rewardDescription" destination="10" id="31"/>
                 <outlet property="rewardPunches" destination="21" id="87"/>
                 <outlet property="rewardPunchesStatic" destination="61i-ev-3Da" id="yIA-T2-3pQ"/>
@@ -117,12 +117,6 @@
                 <outlet property="whiteContentView" destination="yxh-fe-TVS" id="R3L-NO-uxJ"/>
             </connections>
         </tableViewCell>
-        <view contentMode="scaleToFill" id="xZQ-9X-yqf">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-        </view>
     </objects>
     <resources>
         <image name="locked_icon.png" width="24" height="24"/>
