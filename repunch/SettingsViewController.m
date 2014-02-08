@@ -153,14 +153,10 @@
 		cell.textLabel.font = [RepunchUtils repunchFontWithSize:16 isBold:YES];
 		cell.textLabel.text = @"Log Out";
 		
-		PFObject* patron = [sharedData patron];
-		NSString* str1 = @"Logged in as ";
-		NSString* firstName = [patron objectForKey:@"first_name"];
-		NSString* str2 = @" ";
-		NSString* lastName = [patron objectForKey:@"last_name"];
+		RPPatron* patron = [sharedData patron];
 		
 		cell.detailTextLabel.font = [RepunchUtils repunchFontWithSize:13 isBold:NO];
-		cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%@%@%@", str1, firstName, str2, lastName];
+		cell.detailTextLabel.text = [NSString stringWithFormat:@"Logged in as %@", patron.full_name];
 	}
 	
 	return cell;

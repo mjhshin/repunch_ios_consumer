@@ -17,83 +17,64 @@
 
 + (void) presentDialog:(NSString *)storeId withRewardTitle:(NSString *)rewardTitle
 {
+	//TODO: handle case when facebook permission changes
+	
 	DataManager *sharedData = [DataManager getSharedInstance];
 	RPStore *store = [sharedData getStore:storeId];
-	PFObject *patronStore = [sharedData getPatronStore:storeId];
-	int freePunches = store.punches_facebook;
+	RPPatronStore *patronStore = [sharedData getPatronStore:storeId];
 	
 	NSString *title = [NSString stringWithFormat:@"Redeemed '%@'", rewardTitle];
 	NSString *message = [NSString stringWithFormat:
-						 @"Share this on Facebook to receive %i extra punches?", freePunches];
+						 @"Share this on Facebook to receive %@ extra punches?", store.punches_facebook];
 	
 	SIAlertView *alert = [[SIAlertView alloc] initWithTitle:title andMessage:message];
 	
 	[alert addButtonWithTitle:@"No"
 						 type:SIAlertViewButtonTypeDefault
-					  handler:^(SIAlertView *alert)
-	{
-		[self callCloudCode:NO withPatronStore:patronStore andPunches:freePunches];
+					  handler:^(SIAlertView *alert) {
+						  
+		[self callCloudCode:NO
+			withPatronStore:patronStore
+				withPunches:store.punches_facebook
+			withRewardTitle:rewardTitle];
+						  
 		[alert dismissAnimated:YES];
 	}];
 	
 	
 	[alert addButtonWithTitle:@"Yes"
 						 type:SIAlertViewButtonTypeDefault
-					  handler:^(SIAlertView *alert)
-	{
-		[self executePost:store withRewardTitle:rewardTitle andPatronStore:patronStore andPunches:freePunches];
+					  handler:^(SIAlertView *alert) {
+						  
+		[self callCloudCode:YES
+			withPatronStore:patronStore
+				withPunches:store.punches_facebook
+			withRewardTitle:rewardTitle];
+						  
 		[alert dismissAnimated:YES];
 	}];
+	
 	[alert show];
 }
- 
-+ (void) executePost:(RPStore *)store
-	 withRewardTitle:(NSString *)rewardTitle
-	  andPatronStore:(PFObject *)patronStore
-		  andPunches:(int)punches
-{
-	PFFile *image = store.store_avatar;
-	NSString *caption = [NSString stringWithFormat:@"At %@", store.store_name];
 
-	NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
-	[params setObject:@"Redeemed a reward using Repunch!"		forKey:@"name"];
-	[params setObject:caption									forKey:@"caption"];
-	[params setObject:rewardTitle								forKey:@"description"];
-	[params setObject:@"https://www.repunch.com/"				forKey:@"link"];
-	
-	if(!IS_NIL(image)) {
-		[params setObject:image.url								forKey:@"picture"];
-	}
-	
-	[FBRequestConnection startWithGraphPath:@"me/feed"
-								 parameters:params
-								 HTTPMethod:@"POST"
-						  completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-		 if(!error)
-		 {
-			 [self callCloudCode:YES withPatronStore:patronStore andPunches:punches];
-		 }
-		 else
-		 {
-			 NSLog(@"FBRequestConnection POST error: %@", error);
-			 [RepunchUtils showDialogWithTitle:@"Sorry, something went wrong" withMessage:nil];
-		 }
-	 }];
-}
-
-+ (void) callCloudCode:(BOOL)accept withPatronStore:(PFObject *)patronStore andPunches:(int)punches
++ (void) callCloudCode:(BOOL)accept
+	   withPatronStore:(PFObject *)patronStore
+		   withPunches:(NSNumber *)punches
+	   withRewardTitle:(NSString *)rewardTitle
 {
-	NSString *acceptString = accept ? @"true" : @"false"; //well, this is dumb.
+	NSString *acceptString = (accept) ? @"true" : @"false";  //NSDictionary only stores objects not primitives
 	
 	NSDictionary *inputArgs = [NSDictionary dictionaryWithObjectsAndKeys:
-							   patronStore.objectId,	@"patron_store_id",
-							   acceptString,			@"accept",
+							   patronStore.objectId,		@"patron_store_id",
+							   rewardTitle,					@"reward_title",
+							   acceptString,				@"accept",
+							   punches,						@"free_punches",
 							   nil];
 	
-	[PFCloud callFunctionInBackground: @"facebook_post"
+	[PFCloud callFunctionInBackground: @"post_to_facebook"
 					   withParameters:inputArgs
 								block:^(NSString *result, NSError *error)
-	 {
+	{
 		 [RepunchUtils clearNotificationCenter];
 		 
 		 if(!error)
@@ -102,12 +83,16 @@
 			 
 			 if(accept)
 			 {
-				 [patronStore incrementKey:@"punch_count" byAmount:[NSNumber numberWithInt:punches]];
+				 [patronStore incrementKey:@"punch_count" byAmount:punches];
 				 [[NSNotificationCenter defaultCenter] postNotificationName:@"FacebookPost" object:self];
 				 
 				 [RepunchUtils showDialogWithTitle:@"Successfully posted to Facebook" withMessage:nil];
 			 }
 		 }
+		else if([[error userInfo][@"error"] isEqualToString:@"NULL_FACEBOOK_POST"])
+		{
+			NSLog(@"null fbook post");
+		}
 		 else
 		 {
 			 NSLog(@"facebook_post error: %@", error);

@@ -325,14 +325,14 @@
 	}
 	
 	// Set punches and reward info
-	PFObject *patronStore = [self.sharedData getPatronStore:storeLocation.Store.objectId];
+	RPPatronStore *patronStore = [self.sharedData getPatronStore:storeLocation.Store.objectId];
 	
 	if(patronStore == nil) {
 		[cell.punchIcon setHidden:YES];
 		[cell.numPunches setHidden:YES];
 	}
 	else {
-		int punches = [patronStore[@"punch_count"] intValue];
+		int punches = [patronStore.punch_count intValue];
 		[cell.punchIcon setHidden:NO];
 		[cell.numPunches setHidden:NO];
 		[cell.numPunches setText:[NSString stringWithFormat:@"%d %@", punches, (punches==1) ? @"Punch" : @"Punches"]];

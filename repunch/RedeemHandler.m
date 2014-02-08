@@ -26,23 +26,20 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 	int totalPunches = [[userInfo objectForKey:@"total_punches"] intValue];
 	NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
 	
-	PFObject *patron = [sharedData patron];
 	RPStore *store = [sharedData getStore:storeId];
-	PFObject *patronStore = [sharedData getPatronStore:storeId];
+	RPPatronStore *patronStore = [sharedData getPatronStore:storeId];
 	
 	if(store != nil && patronStore != nil)
 	{
-		int currentPunches = [[patronStore objectForKey:@"punch_count"] intValue];
+		int currentPunches = [patronStore.punch_count intValue];
 		
 		if(totalPunches < currentPunches) {
 			[sharedData updatePatronStore:storeId withPunches:totalPunches];
 		}
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"Redeem" object:self];
-		
-		NSString *facebookId = [patron objectForKey:@"facebook_id"];
 
-		if( !IS_NIL(facebookId) &&  store.punches_facebook > 0)
+		if( [PFFacebookUtils isLinkedWithUser:[PFUser currentUser]] &&  store.punches_facebook > 0)
 		{
 			[FacebookPost presentDialog:storeId withRewardTitle:rewardTitle];
 		}

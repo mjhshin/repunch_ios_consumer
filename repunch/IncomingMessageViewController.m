@@ -275,16 +275,14 @@
 		
 		NSString *rewardTitle = [self.messageType isEqualToString:@"offer"] ?
 		self.message[@"offer_title"] : self.message[@"gift_title"];
-		NSString *customerName = [NSString stringWithFormat:@"%@ %@", self.patron[@"first_name"],
-								  self.patron[@"last_name"]];
 		
 		NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
 									self.patron.objectId,			@"patron_id",
-									storeId,							@"store_id",
+									storeId,						@"store_id",
 									patronStoreId,					@"patron_store_id",
-									rewardTitle,						@"title",
-									customerName,					@"name",
-									self.messageStatus.objectId,		@"message_status_id",
+									rewardTitle,					@"title",
+									self.patron.full_name,			@"name",
+									self.messageStatus.objectId,	@"message_status_id",
 									nil];
 		
 		[PFCloud callFunctionInBackground: @"request_redeem"

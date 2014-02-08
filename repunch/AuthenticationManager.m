@@ -131,7 +131,7 @@ withCompletionHandler:(AuthenticationManagerHandler)handler;
 								block:^(PFObject* patron, NSError *error) {
 		 if (!error) {
 			 DataManager *sharedData = [DataManager getSharedInstance];
-			 [sharedData setPatron:patron];
+			 [sharedData setPatron:(RPPatron *)patron];
 			 
 			 NSString *punchCode = [patron objectForKey:@"punch_code"];
 			 
@@ -155,7 +155,7 @@ withCompletionHandler:(AuthenticationManagerHandler)handler;
 	[query getObjectInBackgroundWithId:patronId block:^(PFObject *patron, NSError *error) {
 		 if(!error) {
 			 DataManager *sharedData = [DataManager getSharedInstance];
-			 [sharedData setPatron:patron];
+			 [sharedData setPatron:(RPPatron *)patron];
 			 
 			 //setup PFInstallation
 			 NSString *patronId = [patron objectId];

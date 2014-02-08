@@ -199,7 +199,7 @@
 			
 			if(results.count > 0)
 			{
-				for (PFObject *patronStore in results)
+				for (RPPatronStore *patronStore in results)
 				{
 					RPStore *store = [patronStore objectForKey:@"Store"];
 					NSLog(@"store: %@", patronStore);
@@ -230,19 +230,16 @@
 {
 	[self.storeIdArray sortUsingComparator:^NSComparisonResult(NSString *objectId1, NSString *objectId2)
     {
-		PFObject* patronStore1 = [self.sharedData getPatronStore:objectId1];
-		PFObject* patronStore2 = [self.sharedData getPatronStore:objectId2];
+		RPPatronStore* patronStore1 = [self.sharedData getPatronStore:objectId1];
+		RPPatronStore* patronStore2 = [self.sharedData getPatronStore:objectId2];
 		
-		NSNumber* punchCount1 = [patronStore1 objectForKey:@"punch_count"];
-		NSNumber* punchCount2 = [patronStore2 objectForKey:@"punch_count"];
-		
-		if( [punchCount2 compare:punchCount1] == NSOrderedSame ) {
-			NSNumber* allTimePunchCount1 = [patronStore1 objectForKey:@"all_time_punches"];
-			NSNumber* allTimePunchCount2 = [patronStore2 objectForKey:@"all_time_punches"];
-			return [allTimePunchCount2 compare:allTimePunchCount1];
+		if( [patronStore2.punch_count compare:patronStore1.punch_count] == NSOrderedSame )
+		{
+			return [patronStore2.all_time_punches compare:patronStore1.all_time_punches];
 		}
-		else {
-			return [punchCount2 compare:punchCount1];
+		else
+		{
+			return [patronStore2.punch_count compare:patronStore1.punch_count];
 		}
 	}];
 }
@@ -268,10 +265,10 @@
     }
 	
 	NSString *storeId = self.storeIdArray[indexPath.row];
-	PFObject *patronStore = [self.sharedData getPatronStore:storeId];
+	RPPatronStore *patronStore = [self.sharedData getPatronStore:storeId];
 	RPStore *store = [self.sharedData getStore:storeId];
 	
-    int punches = [patronStore[@"punch_count"] intValue];
+    int punches = [patronStore.punch_count intValue];
     cell.numPunches.text = [NSString stringWithFormat:@"%i %@", punches, (punches == 1) ? @"Punch": @"Punches"];
     cell.storeName.text = store.store_name;
     

@@ -11,8 +11,8 @@
 {
 	DataManager *sharedData;
 	RPStore *store;
-	PFObject *patron;
-	PFObject *patronStore;
+	RPPatron *patron;
+	RPPatronStore *patronStore;
 	UIActivityIndicatorView *spinner;
 	UIBarButtonItem *sendButton;
 	CGFloat keyboardTop;
@@ -177,15 +177,13 @@
 	
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
 	[spinner startAnimating];
-    
-	NSString *senderName = [NSString stringWithFormat:@"%@ %@", [patron objectForKey:@"first_name"], [patron objectForKey:@"last_name"]];
 		
 	NSDictionary *inputsArgs = [NSDictionary dictionaryWithObjectsAndKeys:
 								patron.objectId,		@"patron_id",
 								store.objectId,			@"store_id",
 								self.body.text,			@"body",
 								self.subject.text,		@"subject",
-								senderName,				@"sender_name",
+								patron.full_name,		@"sender_name",
 								nil];
     
 	[PFCloud callFunctionInBackground:@"send_feedback"
@@ -220,19 +218,17 @@
 	
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
 	[spinner startAnimating];
-    
-	NSString *senderName = [NSString stringWithFormat:@"%@ %@", [patron objectForKey:@"first_name"], [patron objectForKey:@"last_name"]];
 	
 	NSDictionary *inputsArgs = [NSDictionary dictionaryWithObjectsAndKeys:
 								patron.objectId,		@"patron_id",
 								store.objectId,			@"store_id",
 								patronStore.objectId,	@"patron_store_id",
-								senderName,				@"sender_name",
+								patron.full_name,		@"sender_name",
 								self.subject.text,		@"subject",
 								self.body.text,			@"body",
 								self.giftRecepientId,	@"recepient_id",
 								self.giftTitle,			@"gift_title",
-								self.giftDescription,	@"gift_description",  //WARNING can be blank! make sure it's NSNull
+								self.giftDescription,	@"gift_description",  //WARNING can be blank! make it NSNull
 								[NSString stringWithFormat:@"%i", self.giftPunches],		@"gift_punches",
 								nil];
 	
@@ -252,8 +248,7 @@
 			 }
 			 else
 			 {
-				 NSInteger punches = [[patronStore objectForKey:@"punch_count"] intValue];
-				 NSNumber *newPunches = [NSNumber numberWithInt:punches - self.giftPunches];
+				 NSNumber *newPunches = [NSNumber numberWithInt:[patronStore.punch_count intValue] - self.giftPunches];
 				 [patronStore setObject:newPunches forKey:@"punch_count"];
 
 				 [RepunchUtils showDialogWithTitle:@"Your gift has been sent!" withMessage:nil];
@@ -281,12 +276,10 @@
 	
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
 	[spinner startAnimating];
-    
-	NSString *senderName = [NSString stringWithFormat:@"%@ %@", [patron objectForKey:@"first_name"], [patron objectForKey:@"last_name"]];
 	
 	NSDictionary *inputsArgs = [NSDictionary dictionaryWithObjectsAndKeys:
 								self.giftReplyMessageId,		@"message_id",
-								senderName,						@"sender_name",
+								patron.full_name,						@"sender_name",
 								self.body.text,					@"body",
 								nil];
 	

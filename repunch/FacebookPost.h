@@ -12,11 +12,9 @@
 
 + (void) presentDialog:(NSString *)storeId withRewardTitle:(NSString *)rewardTitle;
 
-+ (void) executePost:(PFObject *)store
-	 withRewardTitle:(NSString *)rewardTitle
-	  andPatronStore:(PFObject *)patronStore
-		  andPunches:(int)punches;
-
-+ (void) callCloudCode:(BOOL)accept withPatronStore:(PFObject *)patronStore andPunches:(int)punches;
++ (void) callCloudCode:(BOOL)accept
+	   withPatronStore:(PFObject *)patronStore
+		   withPunches:(NSNumber *)punches
+	   withRewardTitle:(NSString *)rewardTitle;
 
 @end

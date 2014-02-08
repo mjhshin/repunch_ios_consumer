@@ -25,11 +25,11 @@
 	NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
 	
 	RPStore *store = [sharedData getStore:storeId];
-	PFObject *patronStore = [sharedData getPatronStore:storeId];
+	RPPatronStore *patronStore = [sharedData getPatronStore:storeId];
 
 	if(store != nil && patronStore != nil)
 	{
-		int currentPunches = [[patronStore objectForKey:@"punch_count"] intValue];
+		int currentPunches = [patronStore.punch_count intValue];
 		
 		if(totalPunches > currentPunches) {
 			[sharedData updatePatronStore:storeId withPunches:totalPunches];
@@ -55,7 +55,7 @@
             else
             {
                 NSLog(@"Received punch where PatronStore/Store not in sharedData: %@", result);
-                [sharedData addPatronStore:result forKey:storeId];
+                [sharedData addPatronStore:(RPPatronStore *)result forKey:storeId];
                 [sharedData addStore:[result objectForKey:@"Store"]];
                 
                 NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:storeId, @"store_id", nil];

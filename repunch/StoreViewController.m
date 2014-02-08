@@ -15,8 +15,8 @@
 	DataManager *sharedData;
 	RPStore *store;
 	RPStoreLocation *storeLocation;
-	PFObject *patron;
-	PFObject *patronStore;
+	RPPatron *patron;
+	RPPatronStore *patronStore;
 	BOOL patronStoreExists;
 	BOOL navigationBarIsOpaque;
     int punchCount;
@@ -208,7 +208,7 @@
     patronStoreExists = (patronStore != nil);
 	
 	if(patronStoreExists) {
-		punchCount = [patronStore[@"punch_count"] intValue];
+		punchCount = [patronStore.punch_count intValue];
 		
 		PFObject *facebookPost = patronStore[@"FacebookPost"];
 		if( !IS_NIL(facebookPost) )
@@ -469,8 +469,6 @@
 	NSString *rewardPunchesString = [NSString stringWithFormat:@"%d", rewardPunches];
 	NSString *rewardIdString = [NSString stringWithFormat:@"%d", rewardId];
 	NSString *rewardName = reward[@"reward_name"];
-	NSString *patronName = [NSString stringWithFormat:@"%@ %@", patron[@"first_name"], patron[@"last_name"]];
-	
 	
 	NSString *str1 = [NSString stringWithFormat:(rewardPunches == 1 ? @"%i Punch" :  @"%i Punches"), rewardPunches];
 	NSString *message = [str1 stringByAppendingFormat:@"\n\n%@", reward[@"description"]];
@@ -496,7 +494,7 @@
 													rewardName,					@"title",
 													rewardIdString,				@"reward_id",
 													rewardPunchesString,		@"num_punches",
-													patronName,					@"name",
+													patron.full_name,			@"name",
 													nil];
 
 			[PFCloud callFunctionInBackground:@"request_redeem"
@@ -620,7 +618,7 @@
 		
 		if(!error)
 		{
-			[sharedData addPatronStore:result forKey:self.storeId];
+			[sharedData addPatronStore:(RPPatronStore *)result forKey:self.storeId];
 			[self checkPatronStore];
 			
 			NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:self.storeId, @"store_id", nil];
@@ -743,7 +741,7 @@
 		 {
 			 if(!error)
 			 {
-				 patronStore = result;
+				 patronStore = (RPPatronStore *)result;
 				 store = result[@"Store"];
 				 [sharedData addPatronStore:patronStore forKey:self.storeId];
 				 [sharedData addStore:store];

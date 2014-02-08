@@ -47,12 +47,12 @@ static DataManager *sharedDataManager = nil;    // static instance variable
 	return self.patronStores;
 }
 
-- (PFObject *)getPatronStore:(NSString *)storeId
+- (RPPatronStore *)getPatronStore:(NSString *)storeId
 {
 	return [self.patronStores objectForKey:storeId];
 }
 
-- (void)addPatronStore:(PFObject *)patronStore forKey:(NSString *)storeId
+- (void)addPatronStore:(RPPatronStore *)patronStore forKey:(NSString *)storeId
 {
     [self.patronStores setObject:patronStore forKey:storeId];
 }

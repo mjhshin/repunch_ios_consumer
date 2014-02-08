@@ -198,6 +198,9 @@
 		EEE4D26118A06B3200A5EC25 /* checkmark_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEE4D25F18A06B3200A5EC25 /* checkmark_icon@2x.png */; };
 		EEE4D26418A06CCE00A5EC25 /* checkmark_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EEE4D26318A06CCE00A5EC25 /* checkmark_icon.png */; };
 		EEE4D26618A1AC3D00A5EC25 /* black_alpha_gradient_reverse.png in Resources */ = {isa = PBXBuildFile; fileRef = EEE4D26518A1AC3D00A5EC25 /* black_alpha_gradient_reverse.png */; };
+		EEE4D26C18A30C9C00A5EC25 /* RPNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE4D26B18A30C9C00A5EC25 /* RPNavigationController.m */; };
+		EEE4D26F18A5AA7F00A5EC25 /* RPPatron.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE4D26E18A5AA7F00A5EC25 /* RPPatron.m */; };
+		EEE4D27218A5AE5F00A5EC25 /* RPPatronStore.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE4D27118A5AE5F00A5EC25 /* RPPatronStore.m */; };
 		EEE777B117E7D2020023768B /* feedback_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEE777AF17E7D1B50023768B /* feedback_button@2x.png */; };
 		EEE777B317E7ECEB0023768B /* nav_send@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEE777B217E7ECEB0023768B /* nav_send@2x.png */; };
 /* End PBXBuildFile section */
@@ -439,6 +442,12 @@
 		EEE4D25F18A06B3200A5EC25 /* checkmark_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkmark_icon@2x.png"; sourceTree = "<group>"; };
 		EEE4D26318A06CCE00A5EC25 /* checkmark_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkmark_icon.png; sourceTree = "<group>"; };
 		EEE4D26518A1AC3D00A5EC25 /* black_alpha_gradient_reverse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = black_alpha_gradient_reverse.png; sourceTree = "<group>"; };
+		EEE4D26A18A30C9C00A5EC25 /* RPNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPNavigationController.h; path = repunch/CustomUIViews/RPNavigationController.h; sourceTree = SOURCE_ROOT; };
+		EEE4D26B18A30C9C00A5EC25 /* RPNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RPNavigationController.m; path = repunch/CustomUIViews/RPNavigationController.m; sourceTree = SOURCE_ROOT; };
+		EEE4D26D18A5AA7F00A5EC25 /* RPPatron.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPPatron.h; path = repunch/RPPatron.h; sourceTree = SOURCE_ROOT; };
+		EEE4D26E18A5AA7F00A5EC25 /* RPPatron.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RPPatron.m; path = repunch/RPPatron.m; sourceTree = SOURCE_ROOT; };
+		EEE4D27018A5AE5F00A5EC25 /* RPPatronStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPPatronStore.h; path = repunch/RPPatronStore.h; sourceTree = SOURCE_ROOT; };
+		EEE4D27118A5AE5F00A5EC25 /* RPPatronStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RPPatronStore.m; path = repunch/RPPatronStore.m; sourceTree = SOURCE_ROOT; };
 		EEE777AF17E7D1B50023768B /* feedback_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "feedback_button@2x.png"; sourceTree = "<group>"; };
 		EEE777B217E7ECEB0023768B /* nav_send@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_send@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -478,6 +487,10 @@
 		202F1DFE18523DCC00495BDF /* RPClasses */ = {
 			isa = PBXGroup;
 			children = (
+				EEE4D26D18A5AA7F00A5EC25 /* RPPatron.h */,
+				EEE4D26E18A5AA7F00A5EC25 /* RPPatron.m */,
+				EEE4D27018A5AE5F00A5EC25 /* RPPatronStore.h */,
+				EEE4D27118A5AE5F00A5EC25 /* RPPatronStore.m */,
 				202F1DF418523DC500495BDF /* RPStore.h */,
 				202F1DF518523DC500495BDF /* RPStore.m */,
 				202F1DF618523DC500495BDF /* RPStoreHours.h */,
@@ -604,7 +617,7 @@
 				EE9D4B7117A83F4A005E0CC5 /* AppDelegate.h */,
 				EE9D4B7217A83F4A005E0CC5 /* AppDelegate.m */,
 				202F1DFE18523DCC00495BDF /* RPClasses */,
-				EE9D4B8717A83F4A005E0CC5 /* CustomUIViews */,
+				EE9D4B8717A83F4A005E0CC5 /* CustomUI */,
 				EEFBA1721810A6EB00783F05 /* Facebook */,
 				EE3F36D517B5865800D28FC9 /* Push */,
 				EE9D4E4D17A846B1005E0CC5 /* SIAlertView */,
@@ -615,7 +628,7 @@
 			path = Repunch;
 			sourceTree = "<group>";
 		};
-		EE9D4B8717A83F4A005E0CC5 /* CustomUIViews */ = {
+		EE9D4B8717A83F4A005E0CC5 /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
 				EE9D4B8D17A83F4A005E0CC5 /* InboxTableViewCell.h */,
@@ -635,7 +648,10 @@
 				EEE19F3F186223220084C63B /* StoreDetailTableViewCell.h */,
 				EEE19F40186223220084C63B /* StoreDetailTableViewCell.m */,
 				EEE19F42186226F60084C63B /* StoreDetailTableViewCell.xib */,
+				EEE4D26A18A30C9C00A5EC25 /* RPNavigationController.h */,
+				EEE4D26B18A30C9C00A5EC25 /* RPNavigationController.m */,
 			);
+			name = CustomUI;
 			path = CustomUIViews;
 			sourceTree = "<group>";
 		};
@@ -1084,8 +1100,10 @@
 				EE9D4C8917A83F4B005E0CC5 /* SearchViewController.m in Sources */,
 				EE9D4C8B17A83F4B005E0CC5 /* MyPlacesViewController.m in Sources */,
 				EE9D4C8F17A83F4B005E0CC5 /* RegisterViewController.m in Sources */,
+				EEE4D26C18A30C9C00A5EC25 /* RPNavigationController.m in Sources */,
 				EE9D4C9617A83F4B005E0CC5 /* LoginViewController.m in Sources */,
 				EE9D4C9817A83F4B005E0CC5 /* MapPin.m in Sources */,
+				EEE4D26F18A5AA7F00A5EC25 /* RPPatron.m in Sources */,
 				EE9D4C9917A83F4B005E0CC5 /* MKMapView+ZoomLevel.m in Sources */,
 				EE9D4C9A17A83F4B005E0CC5 /* NSDate+whenString.m in Sources */,
 				EE28DAE017AC447E00E4C460 /* DataManager.m in Sources */,
@@ -1098,6 +1116,7 @@
 				EE460EC317BB5C7A00AC3588 /* MessageHandler.m in Sources */,
 				EEA181A317C5894B00553336 /* FacebookPost.m in Sources */,
 				EEA181AC17C6FD9B00553336 /* FacebookFriendsViewController.m in Sources */,
+				EEE4D27218A5AE5F00A5EC25 /* RPPatronStore.m in Sources */,
 				EE2AFE7D1819B3420046CF74 /* SIAlertView.m in Sources */,
 				EEA181B717CC499C00553336 /* RepunchUtils.m in Sources */,
 				202F1DFB18523DC500495BDF /* RPStore.m in Sources */,

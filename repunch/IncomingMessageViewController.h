@@ -23,7 +23,7 @@
 @property (nonatomic, weak) id <IncomingMessageVCDelegate> delegate;
 
 @property (strong, nonatomic) DataManager *sharedData;
-@property (strong, nonatomic) PFObject *patron;
+@property (strong, nonatomic) RPPatron *patron;
 @property (strong, nonatomic) NSTimer *timer;
 
 @property (strong, nonatomic) NSString *messageType;

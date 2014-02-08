@@ -19,7 +19,7 @@
 @property (strong, readonly, atomic) NSString *store_name;
 @property (strong, readonly, atomic) PFFile *store_avatar;
 @property (assign, readonly, atomic) BOOL active;
-@property (assign, readonly, atomic) BOOL punches_facebook;
+@property (strong, readonly, atomic) NSNumber *punches_facebook;
 @property (strong, readonly, atomic) NSArray *categories;
 @property (strong, readonly, atomic) NSArray *rewards;
 @property (strong, readonly, atomic) NSArray *store_locations;

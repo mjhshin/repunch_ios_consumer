@@ -7,6 +7,8 @@
 
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
+#import "RPPatron.h"
+#import "RPPatronStore.h"
 #import "RPStore.h"
 #import "RPStoreLocation.h"
 
@@ -14,21 +16,21 @@
 
 + (DataManager *) getSharedInstance;
 
+@property (strong, atomic) RPPatron *patron;
+
 // TODO: change some of these to NSCache for out-of-memory scenarios
 @property (strong, atomic) NSMutableDictionary *patronStores;
 @property (strong, atomic) NSMutableDictionary *stores;
 @property (strong, atomic) NSMutableDictionary *storeLocations;
 @property (strong, atomic) NSMutableDictionary *messageStatuses;
-//@property (strong, atomic) NSMutableDictionary *messages;
 @property (strong, atomic) NSCache *storeImageCache;
-@property (strong, atomic) PFObject *patron;
 
 - (void) clearData;
 
 // PatronStore methods
 - (NSDictionary*) getAllPatronStores;
-- (PFObject *)getPatronStore:(NSString *)storeId;
-- (void)addPatronStore:(PFObject *)patronStore forKey:(NSString *)storeId;
+- (RPPatronStore *)getPatronStore:(NSString *)storeId;
+- (void)addPatronStore:(RPPatronStore *)patronStore forKey:(NSString *)storeId;
 - (void)deletePatronStore:(NSString *)storeId;
 - (void)updatePatronStore:(NSString *)storeId withPunches:(int)punches;
 

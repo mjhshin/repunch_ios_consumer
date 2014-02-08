@@ -6,8 +6,6 @@
 //
 
 #import "AppDelegate.h"
-#import "RPStore.h"
-#import "RPStoreLocation.h"
 
 @implementation AppDelegate
 {
@@ -32,6 +30,8 @@
 	
 	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 	
+	[RPPatron registerSubclass];
+	[RPPatronStore registerSubclass];
     [RPStore registerSubclass];
 	[RPStoreLocation registerSubclass];
 
@@ -142,7 +142,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 		
 		[self presentIndeterminateStateView];
 				
-		PFObject *patron = [currentUser objectForKey:@"Patron"];
+		RPPatron *patron = [currentUser objectForKey:@"Patron"];
 		
 		if( IS_NIL(patron) ) {
 			[PFUser logOut];
@@ -157,7 +157,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 			[patronQuery getObjectInBackgroundWithId:patron.objectId block:^(PFObject *patron, NSError *error) {
 				
 				 if (!error) {
-					 [sharedData setPatron:patron];
+					 [sharedData setPatron:(RPPatron *)patron];
 					 [self presentTabBarController];
 				 
 					 //TODO: check installation's punch_code and patron_id
