@@ -64,7 +64,7 @@
 		EE48FA5417D90A490084B47B /* landing.png in Resources */ = {isa = PBXBuildFile; fileRef = EE48FA5117D90A490084B47B /* landing.png */; };
 		EE48FA5517D90A490084B47B /* landing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE48FA5217D90A490084B47B /* landing@2x.png */; };
 		EE48FA5717D90A600084B47B /* landing-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE48FA5617D90A600084B47B /* landing-568h@2x.png */; };
-		EE5378BD17B2E8D6002D8B18 /* StoreHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE5378BC17B2E8D6002D8B18 /* StoreHeaderView.xib */; };
+		EE5378BD17B2E8D6002D8B18 /* RewardTableViewHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE5378BC17B2E8D6002D8B18 /* RewardTableViewHeaderView.xib */; };
 		EE5378CA17B2FEA9002D8B18 /* call_button.png in Resources */ = {isa = PBXBuildFile; fileRef = EE5378C417B2FEA8002D8B18 /* call_button.png */; };
 		EE5378CC17B2FEA9002D8B18 /* feedback_button.png in Resources */ = {isa = PBXBuildFile; fileRef = EE5378C617B2FEA9002D8B18 /* feedback_button.png */; };
 		EE5378CE17B2FEA9002D8B18 /* map_button.png in Resources */ = {isa = PBXBuildFile; fileRef = EE5378C817B2FEA9002D8B18 /* map_button.png */; };
@@ -87,6 +87,14 @@
 		EE79DF8317BD702500E92DE5 /* nav_settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE79DF7B17BD702500E92DE5 /* nav_settings@2x.png */; };
 		EE92C01F17E7D0F900532CBE /* call_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE92C01C17E7D0F900532CBE /* call_button@2x.png */; };
 		EE92C02117E7D0F900532CBE /* map_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE92C01E17E7D0F900532CBE /* map_button@2x.png */; };
+		EE93162718A95EA900ECEABF /* RewardTableViewSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE93162618A95EA900ECEABF /* RewardTableViewSectionHeaderView.xib */; };
+		EE93162D18AA9A7100ECEABF /* RPTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE93162C18AA9A7100ECEABF /* RPTableView.m */; };
+		EE93163018AAA24300ECEABF /* RPButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EE93162F18AAA24300ECEABF /* RPButton.m */; };
+		EE93163318AAC51000ECEABF /* RPMessageStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = EE93163218AAC51000ECEABF /* RPMessageStatus.m */; };
+		EE93163618AAC51F00ECEABF /* RPMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = EE93163518AAC51F00ECEABF /* RPMessage.m */; };
+		EE93163918AACA5F00ECEABF /* RPFacebookPost.m in Sources */ = {isa = PBXBuildFile; fileRef = EE93163818AACA5F00ECEABF /* RPFacebookPost.m */; };
+		EE93163C18AC090600ECEABF /* RPInstallation.m in Sources */ = {isa = PBXBuildFile; fileRef = EE93163B18AC090600ECEABF /* RPInstallation.m */; };
+		EE93163F18AC091800ECEABF /* RPUser.m in Sources */ = {isa = PBXBuildFile; fileRef = EE93163E18AC091800ECEABF /* RPUser.m */; };
 		EE9D4C6617A83F4B005E0CC5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B6E17A83F4A005E0CC5 /* main.m */; };
 		EE9D4C6717A83F4B005E0CC5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B7217A83F4A005E0CC5 /* AppDelegate.m */; };
 		EE9D4C6817A83F4B005E0CC5 /* ComposeMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B7417A83F4A005E0CC5 /* ComposeMessageViewController.m */; };
@@ -276,7 +284,7 @@
 		EE48FA5117D90A490084B47B /* landing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = landing.png; sourceTree = "<group>"; };
 		EE48FA5217D90A490084B47B /* landing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "landing@2x.png"; sourceTree = "<group>"; };
 		EE48FA5617D90A600084B47B /* landing-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "landing-568h@2x.png"; sourceTree = "<group>"; };
-		EE5378BC17B2E8D6002D8B18 /* StoreHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreHeaderView.xib; sourceTree = "<group>"; };
+		EE5378BC17B2E8D6002D8B18 /* RewardTableViewHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RewardTableViewHeaderView.xib; sourceTree = "<group>"; };
 		EE5378C417B2FEA8002D8B18 /* call_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = call_button.png; sourceTree = "<group>"; };
 		EE5378C617B2FEA9002D8B18 /* feedback_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = feedback_button.png; sourceTree = "<group>"; };
 		EE5378C817B2FEA9002D8B18 /* map_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_button.png; sourceTree = "<group>"; };
@@ -301,6 +309,21 @@
 		EE79DF7B17BD702500E92DE5 /* nav_settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_settings@2x.png"; sourceTree = "<group>"; };
 		EE92C01C17E7D0F900532CBE /* call_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "call_button@2x.png"; sourceTree = "<group>"; };
 		EE92C01E17E7D0F900532CBE /* map_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_button@2x.png"; sourceTree = "<group>"; };
+		EE93162618A95EA900ECEABF /* RewardTableViewSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RewardTableViewSectionHeaderView.xib; path = repunch/CustomUIViews/RewardTableViewSectionHeaderView.xib; sourceTree = SOURCE_ROOT; };
+		EE93162B18AA9A7100ECEABF /* RPTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPTableView.h; path = repunch/CustomUIViews/RPTableView.h; sourceTree = SOURCE_ROOT; };
+		EE93162C18AA9A7100ECEABF /* RPTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RPTableView.m; path = repunch/CustomUIViews/RPTableView.m; sourceTree = SOURCE_ROOT; };
+		EE93162E18AAA24300ECEABF /* RPButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPButton.h; path = repunch/CustomUIViews/RPButton.h; sourceTree = SOURCE_ROOT; };
+		EE93162F18AAA24300ECEABF /* RPButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RPButton.m; path = repunch/CustomUIViews/RPButton.m; sourceTree = SOURCE_ROOT; };
+		EE93163118AAC51000ECEABF /* RPMessageStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPMessageStatus.h; path = repunch/RPMessageStatus.h; sourceTree = SOURCE_ROOT; };
+		EE93163218AAC51000ECEABF /* RPMessageStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RPMessageStatus.m; path = repunch/RPMessageStatus.m; sourceTree = SOURCE_ROOT; };
+		EE93163418AAC51F00ECEABF /* RPMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPMessage.h; path = repunch/RPMessage.h; sourceTree = SOURCE_ROOT; };
+		EE93163518AAC51F00ECEABF /* RPMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RPMessage.m; path = repunch/RPMessage.m; sourceTree = SOURCE_ROOT; };
+		EE93163718AACA5F00ECEABF /* RPFacebookPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPFacebookPost.h; path = repunch/RPFacebookPost.h; sourceTree = SOURCE_ROOT; };
+		EE93163818AACA5F00ECEABF /* RPFacebookPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RPFacebookPost.m; path = repunch/RPFacebookPost.m; sourceTree = SOURCE_ROOT; };
+		EE93163A18AC090600ECEABF /* RPInstallation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPInstallation.h; path = repunch/RPInstallation.h; sourceTree = SOURCE_ROOT; };
+		EE93163B18AC090600ECEABF /* RPInstallation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RPInstallation.m; path = repunch/RPInstallation.m; sourceTree = SOURCE_ROOT; };
+		EE93163D18AC091800ECEABF /* RPUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPUser.h; path = repunch/RPUser.h; sourceTree = SOURCE_ROOT; };
+		EE93163E18AC091800ECEABF /* RPUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RPUser.m; path = repunch/RPUser.m; sourceTree = SOURCE_ROOT; };
 		EE9D4B6E17A83F4A005E0CC5 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EE9D4B7117A83F4A005E0CC5 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EE9D4B7217A83F4A005E0CC5 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -487,6 +510,14 @@
 		202F1DFE18523DCC00495BDF /* RPClasses */ = {
 			isa = PBXGroup;
 			children = (
+				EE93163718AACA5F00ECEABF /* RPFacebookPost.h */,
+				EE93163818AACA5F00ECEABF /* RPFacebookPost.m */,
+				EE93163A18AC090600ECEABF /* RPInstallation.h */,
+				EE93163B18AC090600ECEABF /* RPInstallation.m */,
+				EE93163418AAC51F00ECEABF /* RPMessage.h */,
+				EE93163518AAC51F00ECEABF /* RPMessage.m */,
+				EE93163118AAC51000ECEABF /* RPMessageStatus.h */,
+				EE93163218AAC51000ECEABF /* RPMessageStatus.m */,
 				EEE4D26D18A5AA7F00A5EC25 /* RPPatron.h */,
 				EEE4D26E18A5AA7F00A5EC25 /* RPPatron.m */,
 				EEE4D27018A5AE5F00A5EC25 /* RPPatronStore.h */,
@@ -497,6 +528,8 @@
 				202F1DF718523DC500495BDF /* RPStoreHours.m */,
 				EEE19EE0185A541A0084C63B /* RPStoreLocation.h */,
 				EEE19EE1185A541A0084C63B /* RPStoreLocation.m */,
+				EE93163D18AC091800ECEABF /* RPUser.h */,
+				EE93163E18AC091800ECEABF /* RPUser.m */,
 			);
 			name = RPClasses;
 			sourceTree = "<group>";
@@ -643,13 +676,18 @@
 				EE9D4B9617A83F4A005E0CC5 /* SearchTableViewCell.h */,
 				EE9D4B9717A83F4A005E0CC5 /* SearchTableViewCell.m */,
 				EE9D4B9817A83F4A005E0CC5 /* SearchTableViewCell.xib */,
-				EE5378BC17B2E8D6002D8B18 /* StoreHeaderView.xib */,
 				EEB75A9C188457EE00AA4F89 /* StoreSectionHeaderView.xib */,
+				EE5378BC17B2E8D6002D8B18 /* RewardTableViewHeaderView.xib */,
+				EE93162618A95EA900ECEABF /* RewardTableViewSectionHeaderView.xib */,
 				EEE19F3F186223220084C63B /* StoreDetailTableViewCell.h */,
 				EEE19F40186223220084C63B /* StoreDetailTableViewCell.m */,
 				EEE19F42186226F60084C63B /* StoreDetailTableViewCell.xib */,
 				EEE4D26A18A30C9C00A5EC25 /* RPNavigationController.h */,
 				EEE4D26B18A30C9C00A5EC25 /* RPNavigationController.m */,
+				EE93162B18AA9A7100ECEABF /* RPTableView.h */,
+				EE93162C18AA9A7100ECEABF /* RPTableView.m */,
+				EE93162E18AAA24300ECEABF /* RPButton.h */,
+				EE93162F18AAA24300ECEABF /* RPButton.m */,
 			);
 			name = CustomUI;
 			path = CustomUIViews;
@@ -1003,7 +1041,7 @@
 				EE9D4F4217A84ABB005E0CC5 /* reward_unlocked.png in Resources */,
 				EE398B4518908A31005BEDFE /* location_map_icon.png in Resources */,
 				EE9D4F4317A84ABB005E0CC5 /* reward_unlocked_tiny.png in Resources */,
-				EE5378BD17B2E8D6002D8B18 /* StoreHeaderView.xib in Resources */,
+				EE5378BD17B2E8D6002D8B18 /* RewardTableViewHeaderView.xib in Resources */,
 				EEB75AA118846E4C00AA4F89 /* add_icon@2x.png in Resources */,
 				EE5378CA17B2FEA9002D8B18 /* call_button.png in Resources */,
 				EEE4D2231897350200A5EC25 /* message_gift_outline@2x.png in Resources */,
@@ -1050,6 +1088,7 @@
 				EEE4D2251898234400A5EC25 /* PunchCodeGuideView.xib in Resources */,
 				EE48FA5517D90A490084B47B /* landing@2x.png in Resources */,
 				EE48FA5717D90A600084B47B /* landing-568h@2x.png in Resources */,
+				EE93162718A95EA900ECEABF /* RewardTableViewSectionHeaderView.xib in Resources */,
 				EEE4D25618A0338200A5EC25 /* locked_icon.png in Resources */,
 				EE06E65E17E7525000073AAF /* app_icon_29x29.png in Resources */,
 			);
@@ -1081,6 +1120,7 @@
 				EE9D4C6617A83F4B005E0CC5 /* main.m in Sources */,
 				EE9D4C6717A83F4B005E0CC5 /* AppDelegate.m in Sources */,
 				EE9D4C6817A83F4B005E0CC5 /* ComposeMessageViewController.m in Sources */,
+				EE93163C18AC090600ECEABF /* RPInstallation.m in Sources */,
 				EE9D4C7517A83F4B005E0CC5 /* InboxTableViewCell.m in Sources */,
 				EE9D4C7717A83F4B005E0CC5 /* RewardTableViewCell.m in Sources */,
 				EEE19EE2185A541A0084C63B /* RPStoreLocation.m in Sources */,
@@ -1088,13 +1128,18 @@
 				EEE19F41186223220084C63B /* StoreDetailTableViewCell.m in Sources */,
 				202F1DFC18523DC500495BDF /* RPStoreHours.m in Sources */,
 				EE9D4C7917A83F4B005E0CC5 /* MyPlacesTableViewCell.m in Sources */,
+				EE93163618AAC51F00ECEABF /* RPMessage.m in Sources */,
 				EE9D4C7B17A83F4B005E0CC5 /* SearchTableViewCell.m in Sources */,
 				EEE4D22A189834C800A5EC25 /* OfferBorderView.m in Sources */,
+				EE93163F18AC091800ECEABF /* RPUser.m in Sources */,
+				EE93163918AACA5F00ECEABF /* RPFacebookPost.m in Sources */,
 				EE04ABD8181EFAC100DDA5D0 /* ParseManager.m in Sources */,
+				EE93163318AAC51000ECEABF /* RPMessageStatus.m in Sources */,
 				EE9D4C7E17A83F4B005E0CC5 /* InboxViewController.m in Sources */,
 				EE9D4C8017A83F4B005E0CC5 /* LandingViewController.m in Sources */,
 				EE9D4C8217A83F4B005E0CC5 /* IncomingMessageViewController.m in Sources */,
 				EE9D4C8517A83F4B005E0CC5 /* StoreMapViewController.m in Sources */,
+				EE93162D18AA9A7100ECEABF /* RPTableView.m in Sources */,
 				EE9D4C8717A83F4B005E0CC5 /* StoreViewController.m in Sources */,
 				EE5F947417FB5471006E6F67 /* AuthenticationManager.m in Sources */,
 				EE9D4C8917A83F4B005E0CC5 /* SearchViewController.m in Sources */,
@@ -1116,6 +1161,7 @@
 				EE460EC317BB5C7A00AC3588 /* MessageHandler.m in Sources */,
 				EEA181A317C5894B00553336 /* FacebookPost.m in Sources */,
 				EEA181AC17C6FD9B00553336 /* FacebookFriendsViewController.m in Sources */,
+				EE93163018AAA24300ECEABF /* RPButton.m in Sources */,
 				EEE4D27218A5AE5F00A5EC25 /* RPPatronStore.m in Sources */,
 				EE2AFE7D1819B3420046CF74 /* SIAlertView.m in Sources */,
 				EEA181B717CC499C00553336 /* RepunchUtils.m in Sources */,

@@ -28,7 +28,7 @@
 @property (nonatomic, strong) NSString *giftRecepientId;
 @property (nonatomic, strong) NSString *giftTitle;
 @property (nonatomic, strong) NSString *giftDescription;
-@property int giftPunches;
+@property NSInteger giftPunches;
 @property (nonatomic, strong) NSString *giftReplyMessageId;
 @property (nonatomic, strong) NSString *giftMessageStatusId;
 

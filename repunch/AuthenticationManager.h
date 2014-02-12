@@ -25,7 +25,7 @@
 		 withPassword:(NSString *)password
 withCompletionHandler:(AuthenticationManagerHandler)handler;
 
-+ (void) registerWithFacebook:(PFUser *)currentUser
++ (void) registerWithFacebook:(RPUser *)currentUser
   withCompletionHandler:(AuthenticationManagerHandler)handler;
 
 + (void) loginWithFacebook:(AuthenticationManagerHandler)handler;
@@ -36,7 +36,7 @@ withCompletionHandler:(AuthenticationManagerHandler)handler;
 + (void) registerPatron:(NSDictionary *)parameters
   withCompletionHandler:(AuthenticationManagerHandler)handler;
 
-+ (void) setupPFInstallation:(NSString*)patronId
++ (void) setupInstallation:(NSString*)patronId
 			   withPunchCode:(NSString*)punchCode
 	   withCompletionHandler:(AuthenticationManagerHandler)handler;
 

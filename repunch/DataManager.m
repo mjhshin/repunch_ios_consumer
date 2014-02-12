@@ -28,6 +28,7 @@ static DataManager *sharedDataManager = nil;    // static instance variable
         self.stores = [[NSMutableDictionary alloc] init];
 		self.storeLocations = [[NSMutableDictionary alloc] init];
         self.storeImageCache = [[NSCache alloc] init];
+		self.storeLocationImageCache = [[NSCache alloc] init];
         self.messageStatuses = [[NSMutableDictionary alloc] init];
 	}
 	return self;
@@ -62,9 +63,10 @@ static DataManager *sharedDataManager = nil;    // static instance variable
 	[self.patronStores removeObjectForKey:storeId];
 }
 
-- (void)updatePatronStore:(NSString *)storeId withPunches:(int)punches
+- (void)updatePatronStore:(NSString *)storeId withPunches:(NSInteger)punches
 {
-	[[self.patronStores objectForKey:storeId] setObject:[NSNumber numberWithInt:punches] forKey:@"punch_count"];
+	[[self.patronStores objectForKey:storeId] setObject:[NSNumber numberWithInteger:punches]
+												 forKey:@"punch_count"];
 }
 
 // Store methods
@@ -102,24 +104,37 @@ static DataManager *sharedDataManager = nil;    // static instance variable
     return [self.storeImageCache objectForKey:storeId];
 }
 
-// MessageStatus/Message methods
-- (void)addMessage:(PFObject *)messageStatus
+// StoreLocation image cache methods
+- (void)addStoreLocationImage:(UIImage *)image forKey:(NSString *)storeId
 {
-    [self.messageStatuses setObject:messageStatus forKey:[messageStatus objectId]];
+	if(image != nil) {
+		[self.storeLocationImageCache setObject:image forKey:storeId];
+	}
 }
 
-- (PFObject *)getMessage:(NSString *)objectId
+- (UIImage *)getStoreLocationImage:(NSString *)storeId
+{
+    return [self.storeLocationImageCache objectForKey:storeId];
+}
+
+// MessageStatus/Message methods
+- (void)addMessage:(RPMessageStatus *)messageStatus
+{
+    [self.messageStatuses setObject:messageStatus forKey:messageStatus.objectId];
+}
+
+- (RPMessageStatus *)getMessage:(NSString *)objectId
 {
     return [self.messageStatuses objectForKey:objectId];
 }
 
 - (void)removeMessage:(NSString *)objectId
 {
-	PFObject *msgStatus = [self.messageStatuses objectForKey:objectId];
+	RPMessageStatus *messageStatus = [self.messageStatuses objectForKey:objectId];
 	[self.messageStatuses removeObjectForKey:objectId];
 	
     PFRelation *relation = [self.patron relationforKey:@"ReceivedMessages"];
-	[relation removeObject:msgStatus];
+	[relation removeObject:messageStatus];
 	[self.patron saveInBackground];
 }
 

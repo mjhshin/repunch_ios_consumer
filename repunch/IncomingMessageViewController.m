@@ -22,9 +22,9 @@
 	self.sharedData = [DataManager getSharedInstance];
 	self.patron = self.sharedData.patron;
 	self.messageStatus = [self.sharedData getMessage:self.messageStatusId];
-	self.message = self.messageStatus[@"Message"];
-	self.reply = self.message[@"Reply"];
-	self.messageType = self.message[@"message_type"];
+	self.message = self.messageStatus.Message;
+	self.reply = self.message.Reply;
+	self.messageType = self.message.message_type;
 	
 	containsReply = ( !IS_NIL(self.reply) );
 	
@@ -65,16 +65,16 @@
 - (void)setupMessage
 {
 	if(containsReply) {
-		NSString *title = [NSString stringWithFormat:@"RE: %@", self.message[@"subject"]];
+		NSString *title = [NSString stringWithFormat:@"RE: %@", self.message.subject];
 		self.subjectLabel.text = title;
 	}
 	else {
-		self.subjectLabel.text = self.message[@"subject"];
+		self.subjectLabel.text = self.message.subject;
 	}
 	
     self.sendTimeLabel.text = [self formattedDateString:self.message.createdAt];
-	self.senderLabel.text = self.message[@"sender_name"];
-	self.bodyTextView.text = self.message[@"body"];
+	self.senderLabel.text = self.message.sender_name;
+	self.bodyTextView.text = self.message.body;
 	self.bodyHeightConstraint.constant = self.bodyTextView.contentSize.height;
 	
 	[self.bodyTextView setNeedsLayout];
@@ -109,7 +109,7 @@
 	self.attachmentTitleVerticalConstraint.constant = 26.0f;
 	
 	self.attachmentTitleLabel.text = @"Offer";
-	self.attachmentItemLabel.text = self.message[@"offer_title"];
+	self.attachmentItemLabel.text = self.message.offer_title;
 	
 	self.replyButton.hidden = YES;
 	
@@ -125,11 +125,11 @@
 {
 	self.attachmentTitleVerticalConstraint.constant = 80.0f;
 	
-	NSString *storeId = self.message[@"store_id"];
+	NSString *storeId = self.message.store_id;
 	RPStore *store = [self.sharedData getStore:storeId];
 	
-	self.attachmentItemLabel.text = self.message[@"gift_title"];
-	self.attachmentDescriptionLabel.text = self.message[@"gift_description"];
+	self.attachmentItemLabel.text = self.message.gift_title;
+	self.attachmentDescriptionLabel.text = self.message.gift_description;
 	self.attachmentDescriptionLabel.font = [RepunchUtils repunchFontWithSize:17 isBold:NO];
 	
 	if(store)
@@ -172,9 +172,9 @@
 
 - (void)setupReply
 {
-	self.replySenderLabel.text = self.reply[@"sender_name"];
+	self.replySenderLabel.text = self.reply.sender_name;
     self.replyTimeLabel.text = [self formattedDateString:self.reply.createdAt];
-	self.replyBodyTextView.text = self.reply[@"body"];
+	self.replyBodyTextView.text = self.reply.body;
 	self.replyBodyHeightConstraint.constant = self.replyBodyTextView.contentSize.height;
 	
 	[self.replyBodyTextView setNeedsLayout];
@@ -211,7 +211,7 @@
 
 - (void)updateTimer
 {
-    NSDate *offer = self.message[@"date_offer_expiration"];
+    NSDate *offer = self.message.date_offer_expiration;
     NSDate *currentDate = [NSDate date];
     
     NSTimeInterval timeLeft = [offer timeIntervalSinceDate:currentDate];
@@ -262,11 +262,11 @@
 		return;
 	}
 	
-	if( [self.messageStatus[@"redeem_available"] isEqualToString:@"yes"] )
+	if( [self.messageStatus.redeem_available isEqualToString:@"yes"] )
 	{
 		self.redeemButton.enabled = NO;
 		
-		NSString *storeId = self.message[@"store_id"];
+		NSString *storeId = self.message.store_id;
 		NSString *patronStoreId = [[self.sharedData getPatronStore:storeId] objectId];
 		
 		if(patronStoreId == nil) {
@@ -274,7 +274,7 @@
 		}
 		
 		NSString *rewardTitle = [self.messageType isEqualToString:@"offer"] ?
-		self.message[@"offer_title"] : self.message[@"gift_title"];
+		self.message.offer_title : self.message.gift_title;
 		
 		NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
 									self.patron.objectId,			@"patron_id",
@@ -306,7 +306,7 @@
 		 }];
 		
 	}
-	else if( [self.messageStatus[@"redeem_available"] isEqualToString:@"pending"] )
+	else if( [self.messageStatus.redeem_available isEqualToString:@"pending"] )
 	{
 		[RepunchUtils showDialogWithTitle:@"Offer pending"
 							  withMessage:@"You can only request this item once"];
@@ -325,13 +325,13 @@
 		return;
 	}
 	
-	NSString *storeId = [[self.sharedData getStore:self.message[@"store_id"]] objectId];
+	NSString *storeId = [self.sharedData getStore:self.message.store_id].objectId;
 	
 	ComposeMessageViewController *composeVC = [[ComposeMessageViewController alloc] init];
 	composeVC.delegate = self;
 	composeVC.messageType = @"gift_reply";
 	composeVC.storeId = storeId;
-	composeVC.recepientName = self.message[@"sender_name"];
+	composeVC.recepientName = self.message.sender_name;
 	composeVC.giftReplyMessageId = self.message.objectId;
 	composeVC.giftMessageStatusId = self.messageStatusId;
 	
@@ -368,7 +368,7 @@
 
 - (void)giftReplySent:(ComposeMessageViewController *)controller
 {
-	self.reply = self.message[@"Reply"];
+	self.reply = self.message.Reply;
 	containsReply = !IS_NIL(self.reply);
 	[self setupMessage];
 	[self.delegate removeMessage:self forMsgStatus:nil];

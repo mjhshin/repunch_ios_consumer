@@ -15,7 +15,7 @@
 @class IncomingMessageViewController;
 
 @protocol IncomingMessageVCDelegate <NSObject>
-- (void)removeMessage:(IncomingMessageViewController *)controller forMsgStatus:(PFObject *)msgStatus;
+- (void)removeMessage:(IncomingMessageViewController *)controller forMsgStatus:(RPMessageStatus *)msgStatus;
 @end
 
 @interface IncomingMessageViewController : UIViewController<ComposeMessageDelegate>
@@ -28,9 +28,9 @@
 
 @property (strong, nonatomic) NSString *messageType;
 @property (strong, nonatomic) NSString *messageStatusId;
-@property (strong, nonatomic) PFObject *messageStatus;
-@property (strong, nonatomic) PFObject *message;
-@property (strong, nonatomic) PFObject *reply;
+@property (strong, nonatomic) RPMessageStatus *messageStatus;
+@property (strong, nonatomic) RPMessage *message;
+@property (strong, nonatomic) RPMessage *reply;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UILabel *subjectLabel;

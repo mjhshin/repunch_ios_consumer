@@ -19,19 +19,17 @@
 {
 	DataManager *sharedData = [DataManager getSharedInstance];
 	
-	NSString *storeId = [userInfo objectForKey:@"store_id"];
-	NSString *patronStoreId = [userInfo objectForKey:@"patron_store_id"];
-	int totalPunches = [[userInfo objectForKey:@"total_punches"] intValue];
-	NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
+	NSString *storeId = userInfo[@"store_id"];
+	NSString *patronStoreId = userInfo[@"patron_store_id"];
+	NSInteger totalPunches = [userInfo[@"total_punches"] integerValue];
+	NSString *alert = userInfo[@"aps"][@"alert"];
 	
 	RPStore *store = [sharedData getStore:storeId];
 	RPPatronStore *patronStore = [sharedData getPatronStore:storeId];
 
 	if(store != nil && patronStore != nil)
 	{
-		int currentPunches = [patronStore.punch_count intValue];
-		
-		if(totalPunches > currentPunches) {
+		if(totalPunches > patronStore.punch_count) {
 			[sharedData updatePatronStore:storeId withPunches:totalPunches];
 		}
 
@@ -41,7 +39,7 @@
 	}
 	else
 	{
-		PFQuery *query = [PFQuery queryWithClassName:@"PatronStore"];
+		PFQuery *query = [PFQuery queryWithClassName:[RPPatronStore parseClassName]];
 		[query includeKey:@"Store"];
 		[query includeKey:@"FacebookPost"];
 		
@@ -54,9 +52,10 @@
             }
             else
             {
-                NSLog(@"Received punch where PatronStore/Store not in sharedData: %@", result);
-                [sharedData addPatronStore:(RPPatronStore *)result forKey:storeId];
-                [sharedData addStore:[result objectForKey:@"Store"]];
+				RPPatronStore *patronStore = (RPPatronStore *)result;
+                //NSLog(@"Received punch where PatronStore/Store not in sharedData: %@", result);
+                [sharedData addPatronStore:patronStore forKey:storeId];
+                [sharedData addStore:patronStore.Store];
                 
                 NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:storeId, @"store_id", nil];
                 

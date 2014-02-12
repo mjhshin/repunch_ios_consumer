@@ -7,11 +7,6 @@
 //
 
 #import "FacebookPost.h"
-#import <Foundation/Foundation.h>
-#import "DataManager.h"
-#import "SIAlertView.h"
-#import "RepunchUtils.h"
-#import "RPConstants.h"
 
 @implementation FacebookPost
 
@@ -25,7 +20,7 @@
 	
 	NSString *title = [NSString stringWithFormat:@"Redeemed '%@'", rewardTitle];
 	NSString *message = [NSString stringWithFormat:
-						 @"Share this on Facebook to receive %@ extra punches?", store.punches_facebook];
+						 @"Share this on Facebook to receive %i extra punches?", store.punches_facebook];
 	
 	SIAlertView *alert = [[SIAlertView alloc] initWithTitle:title andMessage:message];
 	
@@ -58,47 +53,47 @@
 }
 
 + (void) callCloudCode:(BOOL)accept
-	   withPatronStore:(PFObject *)patronStore
-		   withPunches:(NSNumber *)punches
+	   withPatronStore:(RPPatronStore *)patronStore
+		   withPunches:(NSInteger)punches
 	   withRewardTitle:(NSString *)rewardTitle
 {
 	NSString *acceptString = (accept) ? @"true" : @"false";  //NSDictionary only stores objects not primitives
 	
 	NSDictionary *inputArgs = [NSDictionary dictionaryWithObjectsAndKeys:
-							   patronStore.objectId,		@"patron_store_id",
-							   rewardTitle,					@"reward_title",
-							   acceptString,				@"accept",
-							   punches,						@"free_punches",
+							   patronStore.objectId,					@"patron_store_id",
+							   rewardTitle,								@"reward_title",
+							   acceptString,							@"accept",
+							   [NSNumber numberWithInteger:punches],	@"free_punches",
 							   nil];
 	
 	[PFCloud callFunctionInBackground: @"post_to_facebook"
 					   withParameters:inputArgs
 								block:^(NSString *result, NSError *error)
 	{
-		 [RepunchUtils clearNotificationCenter];
-		 
-		 if(!error)
-		 {
-			 [patronStore setObject:[NSNull null] forKey:@"FacebookPost"];
-			 
-			 if(accept)
-			 {
-				 [patronStore incrementKey:@"punch_count" byAmount:punches];
-				 [[NSNotificationCenter defaultCenter] postNotificationName:@"FacebookPost" object:self];
-				 
-				 [RepunchUtils showDialogWithTitle:@"Successfully posted to Facebook" withMessage:nil];
-			 }
-		 }
+		[RepunchUtils clearNotificationCenter];
+		
+		if(!error)
+		{
+			[patronStore setObject:[NSNull null] forKey:@"FacebookPost"];
+			
+			if(accept)
+			{
+				[patronStore incrementKey:@"punch_count" byAmount:[NSNumber numberWithInteger:punches]];
+				[[NSNotificationCenter defaultCenter] postNotificationName:@"FacebookPost" object:self];
+				
+				[RepunchUtils showDialogWithTitle:@"Successfully posted to Facebook" withMessage:nil];
+			}
+		}
 		else if([[error userInfo][@"error"] isEqualToString:@"NULL_FACEBOOK_POST"])
 		{
-			NSLog(@"null fbook post");
+			[RepunchUtils showDialogWithTitle:@"You've already shared this redeem on Facebook" withMessage:nil];
 		}
-		 else
-		 {
-			 NSLog(@"facebook_post error: %@", error);
-			 [RepunchUtils showDialogWithTitle:@"Sorry, something went wrong" withMessage:nil];
-		 }
-	 }];
+		else
+		{
+			NSLog(@"facebook_post error: %@", error);
+			[RepunchUtils showDialogWithTitle:@"Sorry, something went wrong" withMessage:nil];
+		}
+	}];
 }
 
 @end

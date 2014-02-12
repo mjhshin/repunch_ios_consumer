@@ -62,7 +62,7 @@
 	{
 		if(!error)
 		{
-			NSArray* friends = [result objectForKey:@"data"];
+			NSArray* friends = result[@"data"];
 			NSMutableArray *friendIds = [NSMutableArray arrayWithCapacity:friends.count];
 
 			for (NSDictionary<FBGraphUser>* friend in friends)
@@ -71,16 +71,15 @@
 				[friendIds addObject:friend.id];
 			}
 			
-			PFQuery *patronQuery = [PFQuery queryWithClassName:@"Patron"];
+			PFQuery *patronQuery = [PFQuery queryWithClassName:[RPPatron parseClassName]];
 			[patronQuery whereKey:@"facebook_id" containedIn:friendIds];
 			[patronQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
 			{
 				if(!error)
 				{
-					for(PFObject *patron in results)
+					for(RPPatron *patron in results)
 					{
-						[self.friendDictionary setObject:patron.objectId forKey:[patron objectForKey:@"facebook_id"]];
-						//NSLog(@"patronid: %@, fbookId: %@", patron.objectId, [patron objectForKey:@"facebook_id"]);
+						[self.friendDictionary setObject:patron.objectId forKey:patron.facebook_id];
 					}
 					[self loadData];
 					self.spinner.hidden = YES;
@@ -128,15 +127,15 @@
 - (BOOL)friendPickerViewController:(FBFriendPickerViewController *)friendPicker
                  shouldIncludeUser:(id <FBGraphUser>)user
 {
-    return [self.friendDictionary objectForKey:user.id] ? YES : NO;
+    return self.friendDictionary[user.id] ? YES : NO;
 }
 
 // Event: Selection changed
 - (void)friendPickerViewControllerSelectionDidChange:(FBFriendPickerViewController *)friendPicker
 {
 	
-	NSDictionary<FBGraphUser> *selection = [friendPicker.selection objectAtIndex:0];
-	NSString *recepientId = [self.friendDictionary objectForKey:selection.id];
+	NSDictionary<FBGraphUser> *selection = friendPicker.selection[0];
+	NSString *recepientId = self.friendDictionary[selection.id];
 
 	[self dismissViewControllerAnimated:NO
                              completion:^{

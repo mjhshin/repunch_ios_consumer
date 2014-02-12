@@ -28,9 +28,11 @@
 	self.storeIdArray = [NSMutableArray array];
     self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
 	
+	self.tableView.dataSource = self;
+	self.tableView.delegate = self;
+	
 	[self registerForNotifications];
 	[self setupNavigationBar];
-	[self setupTableView];
 	[self loadMyPlaces];
 	[self showHelpViews];
 }
@@ -57,8 +59,9 @@
 		[[NSUserDefaults standardUserDefaults] setValue:@"1" forKey:@"kRPShowPunchCode"];
         [[NSUserDefaults standardUserDefaults] synchronize];
 		
-		NSString *punchCode = [self.patron objectForKey:@"punch_code"];
-		NSString *message = [NSString stringWithFormat:@"Your Punch Code is %@\n\nYou can always click on the Repunch logo if you forget.", punchCode];
+		NSString *message = [NSString stringWithFormat:
+							 @"Your Punch Code is %@\n\nYou can always click on the Repunch logo if you forget.",
+							 self.patron.punch_code];
 		
 		[RepunchUtils showDialogWithTitle:@"Hello!"
 							  withMessage:message];
@@ -136,36 +139,6 @@
 	self.navigationItem.titleView = punchCodeButton;
 }
 
-- (void)setupTableView
-{
-	/*
-	self.tableViewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
-	[self addChildViewController:self.tableViewController];
-	
-	self.tableViewController.refreshControl = [[UIRefreshControl alloc] init];
-	[self.tableViewController.refreshControl setTintColor:[RepunchUtils repunchOrangeColor]];
-	[self.tableViewController.refreshControl addTarget:self
-												action:@selector(loadMyPlaces)
-									  forControlEvents:UIControlEventValueChanged];
-    
-
-    self.tableViewController.view.frame = self.view.bounds;
-	self.tableViewController.view.layer.zPosition = -1;
-
-    [self.tableViewController.tableView setDataSource:self];
-    [self.tableViewController.tableView setDelegate:self];
-	*/
-	
-	self.tableView.dataSource = self;
-	self.tableView.delegate = self;
-	
-	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 1)];
-	footer.backgroundColor = [UIColor clearColor];
-	self.tableView.tableFooterView = footer;
-    
-    //self.edgesForExtendedLayout = UIRectEdgeNone;
-}
-
 - (void)loadMyPlaces
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
@@ -201,11 +174,9 @@
 			{
 				for (RPPatronStore *patronStore in results)
 				{
-					RPStore *store = [patronStore objectForKey:@"Store"];
-					NSLog(@"store: %@", patronStore);
-					[weakSelf.sharedData addPatronStore:patronStore forKey:store.objectId];
-					[weakSelf.sharedData addStore:store];
-					[weakSelf.storeIdArray addObject:store.objectId];
+					[weakSelf.sharedData addPatronStore:patronStore forKey:patronStore.Store.objectId];
+					[weakSelf.sharedData addStore:patronStore.Store];
+					[weakSelf.storeIdArray addObject:patronStore.Store.objectId];
 				}
 			}
 			
@@ -233,13 +204,19 @@
 		RPPatronStore* patronStore1 = [self.sharedData getPatronStore:objectId1];
 		RPPatronStore* patronStore2 = [self.sharedData getPatronStore:objectId2];
 		
-		if( [patronStore2.punch_count compare:patronStore1.punch_count] == NSOrderedSame )
+		NSNumber *punchCount1 = [NSNumber numberWithInteger:patronStore1.punch_count];
+		NSNumber *punchCount2 = [NSNumber numberWithInteger:patronStore2.punch_count];
+		
+		if( [punchCount2 compare:punchCount1] == NSOrderedSame )
 		{
-			return [patronStore2.all_time_punches compare:patronStore1.all_time_punches];
+			NSNumber *allTimeCount1 = [NSNumber numberWithInteger:patronStore1.all_time_punches];
+			NSNumber *allTimeCount2 = [NSNumber numberWithInteger:patronStore2.all_time_punches];
+			
+			return [allTimeCount2 compare:allTimeCount1];
 		}
 		else
 		{
-			return [patronStore2.punch_count compare:patronStore1.punch_count];
+			return [punchCount2 compare:punchCount1];
 		}
 	}];
 }
@@ -268,18 +245,18 @@
 	RPPatronStore *patronStore = [self.sharedData getPatronStore:storeId];
 	RPStore *store = [self.sharedData getStore:storeId];
 	
-    int punches = [patronStore.punch_count intValue];
-    cell.numPunches.text = [NSString stringWithFormat:@"%i %@", punches, (punches == 1) ? @"Punch": @"Punches"];
-    cell.storeName.text = store.store_name;
+	cell.storeName.text = store.store_name;
+	cell.numPunches.text = [NSString stringWithFormat:(patronStore.punch_count == 1) ?
+										@"%i Punch": @"%i Punches", patronStore.punch_count];
     
     if (store.rewards.count > 0) {
-        if ([store.rewards[0][@"punches"] intValue] <= punches) {
-            [[cell rewardLabel] setHidden:NO];
-            [[cell rewardIcon] setHidden:NO];
+        if ([store.rewards[0][@"punches"] intValue] <= patronStore.punch_count) {
+            [cell.rewardLabel setHidden:NO];
+            [cell.rewardIcon setHidden:NO];
         }
 		else {
-			[[cell rewardLabel] setHidden:YES];
-            [[cell rewardIcon] setHidden:YES];
+			[cell.rewardLabel setHidden:YES];
+            [cell.rewardIcon setHidden:YES];
 		}
     }
 	else {
@@ -292,13 +269,13 @@
     //{
         //if (self.myPlacesTableView.dragging == NO && self.myPlacesTableView.decelerating == NO)
 		//{
-		if( !IS_NIL(store.store_avatar) )
+		if( !IS_NIL(store.thumbnail_image) )
         {
             UIImage *storeImage = [self.sharedData getStoreImage:storeId];
 			if(storeImage == nil)
 			{
 				cell.storeImage.image = [UIImage imageNamed:@"store_placeholder.png"];
-				[self downloadImage:store.store_avatar forIndexPath:indexPath withStoreId:storeId];
+				[self downloadImage:store.thumbnail_image forIndexPath:indexPath withStoreId:storeId];
 			} else {
 				cell.storeImage.image = storeImage;
 			}
@@ -334,7 +311,7 @@
 		return;
 	}
 	
-    PFFile *existingImageFile = [self.imageDownloadsInProgress objectForKey:indexPath];
+    PFFile *existingImageFile = self.imageDownloadsInProgress[indexPath];
 	
     if (existingImageFile == nil) {
         [self.imageDownloadsInProgress setObject:imageFile forKey:indexPath];
@@ -367,7 +344,7 @@
 - (void)receiveRefreshNotification:(NSNotification *)notification
 {
 	NSLog(@"received notificationcenter notification");
-	NSString *storeId = [[notification userInfo] objectForKey:@"store_id"];
+	NSString *storeId = notification.userInfo[@"store_id"];
 	
 	if(storeId != nil) {
 		NSUInteger index = [self.storeIdArray indexOfObject:storeId];
@@ -437,8 +414,7 @@
 
 - (void)showPunchCode
 {
-	NSString *punchCode = [self.patron objectForKey:@"punch_code"];
-	[RepunchUtils showPunchCode:punchCode];
+	[RepunchUtils showPunchCode:self.patron.punch_code];
 }
 
 - (void)openSettings

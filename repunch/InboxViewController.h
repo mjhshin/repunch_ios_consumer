@@ -6,6 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RPTableView.h"
 #import "AppDelegate.h"
 #import "SearchViewController.h"
 #import "SettingsViewController.h"
@@ -18,14 +19,14 @@
 
 @interface InboxViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, IncomingMessageVCDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet RPTableView *tableView;
 
 @property (weak, nonatomic) IBOutlet UIView *activityIndicatorView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *emptyInboxLabel;
 
 @property (nonatomic, strong) DataManager *sharedData;
-@property (nonatomic, strong) PFObject *patron;
+@property (nonatomic, strong) RPPatron *patron;
 @property (nonatomic, strong) NSMutableArray *messagesArray;
 @property (nonatomic, strong) NSMutableArray *offersArray;
 @property (nonatomic, strong) NSMutableArray *giftsArray;

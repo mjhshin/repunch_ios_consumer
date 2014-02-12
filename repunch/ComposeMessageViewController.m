@@ -229,7 +229,7 @@
 								self.giftRecepientId,	@"recepient_id",
 								self.giftTitle,			@"gift_title",
 								self.giftDescription,	@"gift_description",  //WARNING can be blank! make it NSNull
-								[NSString stringWithFormat:@"%i", self.giftPunches],		@"gift_punches",
+								[NSNumber numberWithInteger:self.giftPunches],	@"gift_punches",
 								nil];
 	
 	[PFCloud callFunctionInBackground:@"send_gift"
@@ -248,8 +248,8 @@
 			 }
 			 else
 			 {
-				 NSNumber *newPunches = [NSNumber numberWithInt:[patronStore.punch_count intValue] - self.giftPunches];
-				 [patronStore setObject:newPunches forKey:@"punch_count"];
+				 NSInteger newPunchCount = patronStore.punch_count - self.giftPunches;
+				 [sharedData updatePatronStore:patronStore.objectId withPunches:newPunchCount];
 
 				 [RepunchUtils showDialogWithTitle:@"Your gift has been sent!" withMessage:nil];
 				 [[NSNotificationCenter defaultCenter] postNotificationName:@"Punch" object:self];
@@ -279,13 +279,13 @@
 	
 	NSDictionary *inputsArgs = [NSDictionary dictionaryWithObjectsAndKeys:
 								self.giftReplyMessageId,		@"message_id",
-								patron.full_name,						@"sender_name",
+								patron.full_name,				@"sender_name",
 								self.body.text,					@"body",
 								nil];
 	
 	[PFCloud callFunctionInBackground:@"reply_to_gift"
 					   withParameters:inputsArgs
-								block:^(PFObject *reply, NSError *error)
+								block:^(RPMessage *reply, NSError *error)
 	 {
 		 [spinner stopAnimating];
 		 self.navigationItem.rightBarButtonItem = sendButton;
@@ -294,8 +294,9 @@
 		 if (!error)
 		 {
 			 [RepunchUtils showDialogWithTitle:@"Your reply has been sent!" withMessage:nil];
-			 PFObject *originalMessage = [[sharedData getMessage:self.giftMessageStatusId] objectForKey:@"Message"];
-			 [originalMessage setObject:reply forKey:@"Reply"];
+			 RPMessageStatus *messageStatus = [sharedData getMessage:self.giftMessageStatusId];
+			 RPMessage *message = messageStatus.Message;
+			 message.Reply = reply;
 			 
 			 [self.delegate giftReplySent:self];
 			 NSLog(@"send_gift result: %@", reply);

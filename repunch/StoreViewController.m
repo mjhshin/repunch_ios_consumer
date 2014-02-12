@@ -19,7 +19,7 @@
 	RPPatronStore *patronStore;
 	BOOL patronStoreExists;
 	BOOL navigationBarIsOpaque;
-    int punchCount;
+    NSInteger punchCount;
 	id selectedReward;
 	UIBarButtonItem *deleteButton;
 	UIBarButtonItem *addButton;
@@ -69,7 +69,7 @@
 		self.storeLocationId = storeLocation.objectId;
 	}
 	
-	[[NSBundle mainBundle] loadNibNamed:@"StoreHeaderView" owner:self options:nil];
+	[[NSBundle mainBundle] loadNibNamed:@"RewardTableViewHeaderView" owner:self options:nil];
 	[[NSBundle mainBundle] loadNibNamed:@"StoreSectionHeaderView" owner:self options:nil];
 	
 	deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"delete_icon.png"]
@@ -127,7 +127,7 @@
     [self.storeHours setPreferredMaxLayoutWidth:230];
 	
 	if(self.storeLocationId != nil) {
-		storeImage = [sharedData getStoreImage:self.storeLocationId];
+		storeImage = [sharedData getStoreLocationImage:self.storeLocationId];
 		self.storeAddress.text = storeLocation.formattedAddress;
 		[self setStoreHours];
 	}
@@ -146,28 +146,14 @@
 		
 		__weak typeof(self) weakSelf = self;
 		
-		if(self.storeLocationId != nil) {
-			[store updateStoreAvatarWithCompletionHander:^(UIImage *avatar, NSError *error) {
-			
-				if (avatar) {
-					weakSelf.storeImage.image = avatar;
-				}
-				else {
-					weakSelf.storeImage.image = [UIImage imageNamed:@"store_placeholder.png"];
-				}
-			}];
-		}
-		else {
-			[storeLocation updateStoreAvatarWithCompletionHander:^(UIImage *avatar, NSError *error) {
-				
-				if (avatar) {
-					weakSelf.storeImage.image = avatar;
-				}
-				else {
-					weakSelf.storeImage.image = [UIImage imageNamed:@"store_placeholder.png"];
-				}
-			}];
-		}
+		[store updateStoreImageWithCompletionHander:^(UIImage *avatar, NSError *error) {
+			if (avatar) {
+				weakSelf.storeImage.image = avatar;
+			}
+			else {
+				weakSelf.storeImage.image = [UIImage imageNamed:@"store_placeholder.png"];
+			}
+		}];
 		
 	}
 }
@@ -192,14 +178,14 @@
 	self.headerView.frame = headerFrame;
 	
 	// layout after adjusting height constraint
-	[self.storeInfoView setNeedsLayout];
-	[self.storeInfoView layoutIfNeeded];
+	//[self.storeInfoView setNeedsLayout];
+	//[self.storeInfoView layoutIfNeeded];
 	
 	// add shadow
-	[self.storeInfoView.layer setShadowColor:[UIColor darkGrayColor].CGColor];
-	[self.storeInfoView.layer setShadowOpacity:0.7];
-	[self.storeInfoView.layer setShadowRadius:1.0];
-	[self.storeInfoView.layer setShadowOffset:CGSizeMake(0.5f, 0.5f)];
+	//[self.storeInfoView.layer setShadowColor:[UIColor darkGrayColor].CGColor];
+	//[self.storeInfoView.layer setShadowOpacity:0.7];
+	//[self.storeInfoView.layer setShadowRadius:1.0];
+	//[self.storeInfoView.layer setShadowOffset:CGSizeMake(0.5f, 0.5f)];
 }
 
 - (void)checkPatronStore
@@ -208,13 +194,12 @@
     patronStoreExists = (patronStore != nil);
 	
 	if(patronStoreExists) {
-		punchCount = [patronStore.punch_count intValue];
+		punchCount = patronStore.punch_count;
 		
-		PFObject *facebookPost = patronStore[@"FacebookPost"];
+		RPFacebookPost *facebookPost = patronStore.FacebookPost;
 		if( !IS_NIL(facebookPost) )
 		{
-			NSString *rewardTitle = facebookPost[@"reward"];
-			[FacebookPost presentDialog:self.storeId withRewardTitle:rewardTitle];
+			[FacebookPost presentDialog:self.storeId withRewardTitle:facebookPost.reward];
 		}
 	}
 	else {
@@ -292,7 +277,7 @@
 	else {
 		self.navigationItem.rightBarButtonItem = deleteButton;
 		
-		if(patronStore[@"all_time_punches"] > 0) {
+		if(patronStore.all_time_punches > 0) {
 			self.feedbackButton.enabled = YES;
 		}
 	}
@@ -385,12 +370,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 170;
+    return 150;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 105;
+    return 140;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -400,20 +385,6 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-	// add shadow
-	[self.sectionHeaderContentView.layer setShadowColor:[UIColor darkGrayColor].CGColor];
-	[self.sectionHeaderContentView.layer setShadowOpacity:0.7];
-	[self.sectionHeaderContentView.layer setShadowRadius:1.0];
-	[self.sectionHeaderContentView.layer setShadowOffset:CGSizeMake(0.5f, 0.5f)];
-	
-	[self.rewardsLabel.layer setShadowColor:[UIColor darkGrayColor].CGColor];
-	[self.rewardsLabel.layer setShadowOpacity:0.7];
-	[self.rewardsLabel.layer setShadowRadius:1.0];
-	[self.rewardsLabel.layer setShadowOffset:CGSizeMake(0.5f, 0.5f)];
-	
-	self.rewardsLabel.shadowColor = [UIColor darkGrayColor];
-	self.rewardsLabel.shadowOffset = CGSizeMake(0.5f, 0.5f);
-
 	if(patronStoreExists) {
 		self.saveButton.hidden = YES;
 	
@@ -441,18 +412,19 @@
     cell.rewardTitle.text = reward[@"reward_name"];
     cell.rewardDescription.text = reward[@"description"];
 	
-    int rewardPunches = [reward[@"punches"] intValue];
+    NSInteger rewardPunches = [reward[@"punches"] integerValue];
     cell.rewardPunches.text = [NSString stringWithFormat:@"%i", rewardPunches];
 	cell.rewardPunchesStatic.text = (rewardPunches == 1) ? @"Punch" : @"Punches";
 	
-	cell.rewardStatusIcon.hidden = !patronStoreExists;
-	cell.rewardStatusIcon.image = (punchCount >= rewardPunches) ?
-		[UIImage imageNamed:@"unlocked_icon"] : [UIImage imageNamed:@"locked_icon"];
-    
-    //[cell setUserInteractionEnabled:patronStoreExists];
-	cell.userInteractionEnabled = (punchCount >= rewardPunches);
-	
-	cell.whiteContentView.backgroundColor = (punchCount >= rewardPunches) ? [UIColor whiteColor] : [UIColor groupTableViewBackgroundColor];
+	if(!patronStoreExists) {
+		[cell setPatronStoreNotAdded];
+	}
+	else if(punchCount >= rewardPunches){
+		[cell setRewardUnlocked];
+	}
+	else {
+		[cell setRewardLocked];
+	}
 	
     return cell;
 }
@@ -464,10 +436,10 @@
 	id reward = store.rewards[indexPath.row];
 	selectedReward = reward;
 
-	int rewardPunches = [reward[@"punches"] intValue];
-	int rewardId = [reward[@"reward_id"] intValue];
-	NSString *rewardPunchesString = [NSString stringWithFormat:@"%d", rewardPunches];
-	NSString *rewardIdString = [NSString stringWithFormat:@"%d", rewardId];
+	NSInteger rewardPunches = [reward[@"punches"] integerValue];
+	NSInteger rewardId = [reward[@"reward_id"] integerValue];
+	NSString *rewardPunchesString = [NSString stringWithFormat:@"%i", rewardPunches];
+	NSString *rewardIdString = [NSString stringWithFormat:@"%i", rewardId];
 	NSString *rewardName = reward[@"reward_name"];
 	
 	NSString *str1 = [NSString stringWithFormat:(rewardPunches == 1 ? @"%i Punch" :  @"%i Punches"), rewardPunches];
@@ -706,7 +678,7 @@
 		return;
 	}
 	
-	if( patron[@"facebook_id"] == nil)
+	if( patron.facebook_id == nil)
 	{
 		[RepunchUtils showDialogWithTitle:@"It's better together"
 							  withMessage:@"Log in with Facebook to send gifts to your friends"];
@@ -733,7 +705,7 @@
 	
 	if(patronStoreExists)
 	{
-		PFQuery *query = [PFQuery queryWithClassName:@"PatronStore"];
+		PFQuery *query = [PFQuery queryWithClassName:[RPPatronStore parseClassName]];
 		[query includeKey:@"Store"];
         [query includeKey:@"Store.store_locations"];
 		[query includeKey:@"FacebookPost"];
@@ -742,9 +714,10 @@
 			 if(!error)
 			 {
 				 patronStore = (RPPatronStore *)result;
-				 store = result[@"Store"];
+				 store = patronStore.Store;
 				 [sharedData addPatronStore:patronStore forKey:self.storeId];
 				 [sharedData addStore:store];
+				 
 				 [self setStoreInformation];
 				 [self checkPatronStore];
 				 [self setRewardTableView];

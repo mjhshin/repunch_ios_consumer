@@ -7,12 +7,19 @@
 //
 
 #import <Parse/Parse.h>
+#import "RPPatron.h"
+#import "RPStore.h"
+#import "RPFacebookPost.h"
 
 @interface RPPatronStore : PFObject <PFSubclassing>
 
 @property (assign, readonly, atomic) BOOL pending_reward;
-@property (strong, readonly, atomic) NSNumber *all_time_punches;
-@property (strong, readonly, atomic) NSNumber *punch_count;
+@property (assign, readonly, atomic) NSInteger all_time_punches;
+@property (assign, readonly, atomic) NSInteger punch_count;
+
+@property (strong, readonly, atomic) RPPatron *Patron;
+@property (strong, readonly, atomic) RPStore *Store;
+@property (strong, readonly, atomic) RPFacebookPost *FacebookPost;
 
 + (NSString *)parseClassName;
 

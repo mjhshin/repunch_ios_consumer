@@ -20,4 +20,8 @@
 @property (weak, nonatomic) IBOutlet UIView *whiteContentView;
 @property (weak, nonatomic) IBOutlet UIView *dividerView;
 
+- (void)setPatronStoreNotAdded;
+- (void)setRewardUnlocked;
+- (void)setRewardLocked;
+
 @end

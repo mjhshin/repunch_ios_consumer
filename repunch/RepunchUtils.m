@@ -118,6 +118,8 @@
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor],
 														   NSFontAttributeName: [RepunchUtils repunchFontWithSize:17 isBold:YES]}];
 	
+	[[UIActivityIndicatorView appearance] setTintColor:[self repunchOrangeColor]];
+	
 	//[[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"nav_back.png"]];
 	//[[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"nav_back.png"]];
 }
@@ -134,14 +136,14 @@
 + (CAGradientLayer *)blackGradient
 {
 	
-    UIColor *darkBlack = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.6];
+    UIColor *darkBlack = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
     UIColor *lightBlack = [UIColor colorWithRed:0.0  green:0.0 blue:0.0 alpha:0.0];
 	
     NSArray *colors = [NSArray arrayWithObjects:(id)lightBlack.CGColor, darkBlack.CGColor, nil];
 	
     CAGradientLayer *gradientLayer = [CAGradientLayer layer];
     gradientLayer.colors = colors;
-	gradientLayer.locations = @[@0.00f, @0.55f, @1.00f];
+	//gradientLayer.locations = @[@0.00f, @0.55f, @1.00f];
 	
     return gradientLayer;
 }

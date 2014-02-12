@@ -234,8 +234,8 @@
 								  withMessage:@"Sorry, something went wrong. Please try again."];
 		}
 		
-		if([PFUser currentUser]) {
-			[PFUser logOut];
+		if([RPUser currentUser]) {
+			[RPUser logOut];
 		}
 	}
 }

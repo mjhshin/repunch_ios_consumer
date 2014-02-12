@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 #import "StoreViewController.h"
+#import "RPTableView.h"
 #import "SearchViewController.h"
 #import "SettingsViewController.h"
 #import "MyPlacesTableViewCell.h"
@@ -19,14 +20,14 @@
 
 @interface MyPlacesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet RPTableView *tableView;
 
 @property (weak, nonatomic) IBOutlet UIView *activityIndicatorView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *emptyMyPlacesLabel;
 
 @property (nonatomic, strong) DataManager *sharedData;
-@property (nonatomic, strong) PFObject *patron;
+@property (nonatomic, strong) RPPatron *patron;
 @property (nonatomic, strong) NSMutableArray *storeIdArray;
 @property (nonatomic, strong) NSMutableDictionary *imageDownloadsInProgress;
 

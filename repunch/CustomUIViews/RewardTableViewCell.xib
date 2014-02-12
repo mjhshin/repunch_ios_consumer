@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
@@ -7,19 +7,19 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="RewardCell" rowHeight="170" id="2" customClass="RewardTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="170"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="RewardCell" rowHeight="150" id="2" customClass="RewardTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2" id="euY-z4-nTH">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="169"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="149"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yxh-fe-TVS" userLabel="Subview">
-                        <rect key="frame" x="8" y="2" width="304" height="162"/>
+                        <rect key="frame" x="20" y="0.0" width="280" height="149"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NDA-YO-fDP" userLabel="PunchView">
-                                <rect key="frame" x="104" y="0.0" width="96" height="33"/>
+                                <rect key="frame" x="0.0" y="0.0" width="96" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="999" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="21" userLabel="PunchLabel">
@@ -48,7 +48,7 @@
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="locked_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="arS-af-3KV" userLabel="RewardStatusImageView">
-                                <rect key="frame" x="270" y="5" width="24" height="24"/>
+                                <rect key="frame" x="256" y="5" width="24" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="24" id="dzY-i7-C0a"/>
@@ -56,57 +56,56 @@
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DzT-un-sdH" userLabel="DividerView">
-                                <rect key="frame" x="0.0" y="33" width="304" height="1"/>
+                                <rect key="frame" x="0.0" y="33" width="280" height="1"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="zZc-aB-cZ9"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" verticalCompressionResistancePriority="790" text="Reward " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="284" translatesAutoresizingMaskIntoConstraints="NO" id="4" userLabel="TitleLabel">
-                                <rect key="frame" x="10" y="54" width="284" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" verticalCompressionResistancePriority="800" text="Reward Title with Max Title Lengthhhhhhh" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="13" preferredMaxLayoutWidth="270" translatesAutoresizingMaskIntoConstraints="NO" id="4" userLabel="TitleLabel">
+                                <rect key="frame" x="0.0" y="42" width="270" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="15"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" verticalCompressionResistancePriority="800" text="He's crap." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="284" translatesAutoresizingMaskIntoConstraints="NO" id="10" userLabel="DescriptionLabel">
-                                <rect key="frame" x="10" y="80" width="284" height="20"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" verticalCompressionResistancePriority="790" text="He's crap. These might as well be free. Reward description with max length. Reward description with max length of max length." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="270" translatesAutoresizingMaskIntoConstraints="NO" id="10" userLabel="DescriptionLabel">
+                                <rect key="frame" x="0.0" y="88" width="270" height="53"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="4" firstAttribute="top" secondItem="DzT-un-sdH" secondAttribute="bottom" priority="760" constant="20" id="3Y1-4D-35f"/>
+                            <constraint firstItem="4" firstAttribute="top" secondItem="DzT-un-sdH" secondAttribute="bottom" priority="760" constant="15" id="3Y1-4D-35f"/>
                             <constraint firstItem="10" firstAttribute="top" secondItem="4" secondAttribute="bottom" constant="5" id="7lt-ff-wf2"/>
-                            <constraint firstItem="DzT-un-sdH" firstAttribute="leading" secondItem="yxh-fe-TVS" secondAttribute="leading" id="8vo-w9-bzC"/>
                             <constraint firstItem="4" firstAttribute="top" relation="greaterThanOrEqual" secondItem="DzT-un-sdH" secondAttribute="bottom" constant="8" id="CYO-db-U3L"/>
                             <constraint firstItem="DzT-un-sdH" firstAttribute="leading" secondItem="yxh-fe-TVS" secondAttribute="leading" id="FNL-ky-UpU"/>
                             <constraint firstAttribute="trailing" secondItem="10" secondAttribute="trailing" constant="10" id="Jlq-iU-2Jh"/>
                             <constraint firstAttribute="trailing" secondItem="DzT-un-sdH" secondAttribute="trailing" id="OVa-4D-WcY"/>
-                            <constraint firstItem="10" firstAttribute="leading" secondItem="yxh-fe-TVS" secondAttribute="leading" constant="10" id="RHv-3D-MxB"/>
+                            <constraint firstItem="10" firstAttribute="leading" secondItem="yxh-fe-TVS" secondAttribute="leading" id="RHv-3D-MxB"/>
+                            <constraint firstItem="NDA-YO-fDP" firstAttribute="leading" secondItem="yxh-fe-TVS" secondAttribute="leading" id="Rs3-1a-QLb"/>
                             <constraint firstAttribute="trailing" secondItem="4" secondAttribute="trailing" constant="10" id="Yyl-2V-uIo"/>
-                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="10" secondAttribute="bottom" constant="5" id="dh2-xY-mpo"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="10" secondAttribute="bottom" constant="8" id="dh2-xY-mpo"/>
                             <constraint firstItem="arS-af-3KV" firstAttribute="centerY" secondItem="NDA-YO-fDP" secondAttribute="centerY" id="e5y-hI-mCJ"/>
-                            <constraint firstItem="4" firstAttribute="leading" secondItem="yxh-fe-TVS" secondAttribute="leading" constant="10" id="pjw-5K-06S"/>
+                            <constraint firstItem="4" firstAttribute="leading" secondItem="yxh-fe-TVS" secondAttribute="leading" id="pjw-5K-06S"/>
                             <constraint firstItem="NDA-YO-fDP" firstAttribute="top" secondItem="yxh-fe-TVS" secondAttribute="top" id="wIt-Nl-otx"/>
                             <constraint firstItem="DzT-un-sdH" firstAttribute="top" secondItem="NDA-YO-fDP" secondAttribute="bottom" id="xNt-bP-mZa"/>
-                            <constraint firstAttribute="trailing" secondItem="arS-af-3KV" secondAttribute="trailing" constant="10" id="zoY-1u-9wl"/>
-                            <constraint firstAttribute="centerX" secondItem="NDA-YO-fDP" secondAttribute="centerX" id="zzN-hk-ldz"/>
+                            <constraint firstAttribute="trailing" secondItem="arS-af-3KV" secondAttribute="trailing" id="zoY-1u-9wl"/>
                         </constraints>
                     </view>
                 </subviews>
-                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="yxh-fe-TVS" secondAttribute="trailing" constant="8" id="J50-EO-mow"/>
-                    <constraint firstAttribute="bottom" secondItem="yxh-fe-TVS" secondAttribute="bottom" constant="5" id="jx8-9w-pdd"/>
-                    <constraint firstItem="yxh-fe-TVS" firstAttribute="top" secondItem="euY-z4-nTH" secondAttribute="top" constant="2" id="pzX-70-OKk"/>
-                    <constraint firstItem="yxh-fe-TVS" firstAttribute="leading" secondItem="euY-z4-nTH" secondAttribute="leading" constant="8" id="zWX-Fj-WKE"/>
+                    <constraint firstAttribute="trailing" secondItem="yxh-fe-TVS" secondAttribute="trailing" constant="20" id="J50-EO-mow"/>
+                    <constraint firstAttribute="bottom" secondItem="yxh-fe-TVS" secondAttribute="bottom" id="jx8-9w-pdd"/>
+                    <constraint firstItem="yxh-fe-TVS" firstAttribute="top" secondItem="euY-z4-nTH" secondAttribute="top" id="pzX-70-OKk"/>
+                    <constraint firstItem="yxh-fe-TVS" firstAttribute="leading" secondItem="euY-z4-nTH" secondAttribute="leading" constant="20" id="zWX-Fj-WKE"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="dividerView" destination="DzT-un-sdH" id="v2F-Hx-U5B"/>
                 <outlet property="rewardDescription" destination="10" id="31"/>

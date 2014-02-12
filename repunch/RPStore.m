@@ -20,7 +20,7 @@
 @synthesize avatar;
 
 @dynamic active;
-@dynamic store_avatar;
+@dynamic thumbnail_image;
 @dynamic rewards;
 @dynamic categories;
 @dynamic store_name;
@@ -34,15 +34,15 @@
     return @"Store";
 }
 
-- (void)updateStoreAvatarWithCompletionHander:(StoreAvatarUpdateHandler)handler
+- (void)updateStoreImageWithCompletionHander:(StoreImageUpdateHandler)handler
 {
-	if( IS_NIL(self.store_avatar) ) {
+	if( IS_NIL(self.thumbnail_image) ) {
 		BLOCK_SAFE_RUN(handler, nil, nil);
 		return;
 	}
     __weak typeof(self) weakSelf = self;
     
-    [self.store_avatar getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+    [self.thumbnail_image getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!error) {
             avatar = [UIImage imageWithData:data];
 			[[DataManager getSharedInstance] addStoreImage:avatar forKey:weakSelf.objectId];

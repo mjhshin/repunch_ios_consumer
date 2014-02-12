@@ -17,9 +17,9 @@
 
 // Info
 @property (strong, readonly, atomic) NSString *store_name;
-@property (strong, readonly, atomic) PFFile *store_avatar;
+@property (strong, readonly, atomic) PFFile *thumbnail_image;
 @property (assign, readonly, atomic) BOOL active;
-@property (strong, readonly, atomic) NSNumber *punches_facebook;
+@property (assign, readonly, atomic) NSInteger punches_facebook;
 @property (strong, readonly, atomic) NSArray *categories;
 @property (strong, readonly, atomic) NSArray *rewards;
 @property (strong, readonly, atomic) NSArray *store_locations;
@@ -36,6 +36,7 @@
 
 + (NSString *)parseClassName;
 
-- (void)updateStoreAvatarWithCompletionHander:(StoreAvatarUpdateHandler)handler;
+//- (void)updateStoreWithCompletionHandler:(StoreUpdateHandler)handler;
+- (void)updateStoreImageWithCompletionHander:(StoreImageUpdateHandler)handler;
 
 @end

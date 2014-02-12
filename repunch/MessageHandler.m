@@ -15,10 +15,10 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
 	DataManager *sharedData = [DataManager getSharedInstance];
 	
-    NSString *messageId = [pushPayload objectForKey:@"message_id"];
-	NSString *alert = [[pushPayload objectForKey:@"aps"] objectForKey:@"alert"];
+    NSString *messageId = pushPayload[@"message_id"];
+	NSString *alert = pushPayload[@"aps"][@"alert"];
     
-    PFQuery *msgQuery = [PFQuery queryWithClassName:@"Message"];
+    PFQuery *msgQuery = [PFQuery queryWithClassName:[RPMessage parseClassName]];
     [msgQuery whereKey:@"objectId" equalTo:messageId];
     
     PFRelation *relation = [[sharedData patron] relationforKey:@"ReceivedMessages"];
@@ -32,9 +32,9 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 			completionHandler(UIBackgroundFetchResultFailed);
         }
         else {
-            [sharedData addMessage:result];
+            [sharedData addMessage:(RPMessageStatus *)result];
             
-            NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:[result objectId], @"message_status_id", nil];
+            NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:result.objectId, @"message_status_id", nil];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"Message"
 																object:self
@@ -53,10 +53,10 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
 	DataManager *sharedData = [DataManager getSharedInstance];
 	
-    NSString *messageStatusId = [pushPayload objectForKey:@"message_status_id"];
-	NSString *alert = [[pushPayload objectForKey:@"aps"] objectForKey:@"alert"];
+    NSString *messageStatusId = pushPayload[@"message_status_id"];
+	NSString *alert = pushPayload[@"aps"][@"alert"];
     
-    PFQuery *msgStatusQuery = [PFQuery queryWithClassName:@"MessageStatus"];
+    PFQuery *msgStatusQuery = [PFQuery queryWithClassName:[RPMessageStatus parseClassName]];
     [msgStatusQuery includeKey:@"Message.Reply"];
     
     [msgStatusQuery getObjectInBackgroundWithId:messageStatusId block:^(PFObject *result, NSError *error) {
@@ -65,9 +65,9 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 			completionHandler(UIBackgroundFetchResultFailed);
 		}
 		else {
-			[sharedData addMessage:result];
+			[sharedData addMessage:(RPMessageStatus *)result];
 			
-			NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:[result objectId], @"message_status_id", nil];
+			NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:result.objectId, @"message_status_id", nil];
 			
 			[[NSNotificationCenter defaultCenter] postNotificationName:@"Message"
 																object:self

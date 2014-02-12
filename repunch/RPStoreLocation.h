@@ -16,7 +16,7 @@
 @interface RPStoreLocation : PFObject <PFSubclassing>
 
 // Info
-@property (strong, readonly, atomic) PFFile *store_avatar;
+@property (strong, readonly, atomic) PFFile *cover_image;
 @property (strong, readonly, atomic) PFGeoPoint *coordinates;
 @property (strong, readonly, atomic) NSArray *hours;
 
@@ -38,7 +38,6 @@
 
 + (NSString *)parseClassName;
 
-//- (void)updateStoreInfoWithCompletionHandler:(StoreUpdateHandler)handler;
-- (void)updateStoreAvatarWithCompletionHander:(StoreAvatarUpdateHandler)handler;
+//- (void)updateStoreLocationWithCompletionHandler:(StoreLocationUpdateHandler)handler;
 
 @end

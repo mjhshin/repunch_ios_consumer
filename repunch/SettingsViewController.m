@@ -214,10 +214,11 @@
 		[spinner startAnimating];
 		tableView.userInteractionEnabled = NO;
 		
-		//set blank "patron_id" and "punch_code" in installation so push notifications not received when logged out.
-		[[PFInstallation currentInstallation] setObject:@"" forKey:@"punch_code"];
-		[[PFInstallation currentInstallation] setObject:@"" forKey:@"patron_id"];
-		[[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+		//set blank "patron_id" and "punch_code" in installation so push notifications not received when logged out
+		RPInstallation *installation = [RPInstallation currentInstallation];
+		installation.punch_code = @"";
+		installation.patron_id = @"";
+		[installation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 			 [spinner stopAnimating];
 			 tableView.userInteractionEnabled = YES;
 			

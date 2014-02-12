@@ -26,23 +26,44 @@
 																	 owner:self
 																   options:nil]
 									   objectAtIndex:0];
-	// add shadow
-	[customCell.whiteContentView.layer setShadowColor:[UIColor darkGrayColor].CGColor];
-	[customCell.whiteContentView.layer setShadowOpacity:0.7];
-	[customCell.whiteContentView.layer setShadowRadius:1.0];
-	[customCell.whiteContentView.layer setShadowOffset:CGSizeMake(0.5f, 0.5f)];
 	
 	UIView *selectedView = [[UIView alloc] initWithFrame:customCell.contentView.frame];
-	selectedView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+	selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
 	
-	UIView *selectedContentView = [[UIView alloc] initWithFrame:customCell.whiteContentView.frame];
-	selectedContentView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
+	UIView *invertedDivider = [[UIView alloc] initWithFrame:customCell.dividerView.frame];
+	CGRect frame = invertedDivider.frame;
+	frame.origin.x = 20;
+	invertedDivider.frame = frame;
+	invertedDivider.backgroundColor = [UIColor whiteColor];
 	
-	[selectedView addSubview:selectedContentView];
+	[selectedView addSubview:invertedDivider];
 	
 	customCell.selectedBackgroundView = selectedView;
 	
     return customCell;
+}
+
+- (void)setPatronStoreNotAdded
+{
+	self.userInteractionEnabled = NO;
+	self.rewardStatusIcon.hidden = YES;
+	self.contentView.backgroundColor = [UIColor whiteColor];
+}
+
+- (void)setRewardUnlocked
+{
+	self.userInteractionEnabled = YES;
+	self.rewardStatusIcon.hidden = NO;
+	self.rewardStatusIcon.image = [UIImage imageNamed:@"unlocked_icon"];
+	self.contentView.backgroundColor = [UIColor whiteColor];
+}
+
+- (void)setRewardLocked
+{
+	self.userInteractionEnabled = NO;
+	self.rewardStatusIcon.hidden = NO;
+	self.rewardStatusIcon.image = [UIImage imageNamed:@"locked_icon"];
+	self.contentView.backgroundColor = [UIColor groupTableViewBackgroundColor];
 }
 
 @end

@@ -21,25 +21,23 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
 	DataManager *sharedData = [DataManager getSharedInstance];
 	
-	NSString *storeId = [userInfo objectForKey:@"store_id"];
-	NSString *rewardTitle = [userInfo objectForKey:@"reward_title"];
-	int totalPunches = [[userInfo objectForKey:@"total_punches"] intValue];
-	NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
+	NSString *storeId = userInfo[@"store_id"];
+	NSString *rewardTitle = userInfo[@"reward_title"];
+	NSInteger totalPunches = [userInfo[@"total_punches"] integerValue];
+	NSString *alert = userInfo[@"aps"][@"alert"];
 	
 	RPStore *store = [sharedData getStore:storeId];
 	RPPatronStore *patronStore = [sharedData getPatronStore:storeId];
 	
 	if(store != nil && patronStore != nil)
 	{
-		int currentPunches = [patronStore.punch_count intValue];
-		
-		if(totalPunches < currentPunches) {
+		if(totalPunches < patronStore.punch_count) {
 			[sharedData updatePatronStore:storeId withPunches:totalPunches];
 		}
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"Redeem" object:self];
 
-		if( [PFFacebookUtils isLinkedWithUser:[PFUser currentUser]] &&  store.punches_facebook > 0)
+		if( [PFFacebookUtils isLinkedWithUser:[RPUser currentUser]] &&  store.punches_facebook > 0)
 		{
 			[FacebookPost presentDialog:storeId withRewardTitle:rewardTitle];
 		}
@@ -61,10 +59,10 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
 	DataManager *sharedData = [DataManager getSharedInstance];
 	
-	NSString *msgStatusId = [userInfo objectForKey:@"message_status_id"];
-	NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
+	NSString *msgStatusId = userInfo[@"message_status_id"];
+	NSString *alert = userInfo[@"aps"][@"alert"];
 	
-	PFObject *messageStatus = [sharedData getMessage:msgStatusId];
+	RPMessageStatus *messageStatus = [sharedData getMessage:msgStatusId];
 	[messageStatus setObject:@"no" forKey:@"redeem_available"];
 	
 	[RepunchUtils showDialogWithTitle:@"Success!" withMessage:alert];

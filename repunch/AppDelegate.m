@@ -30,10 +30,16 @@
 	
 	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 	
+	// Register Parse subclasses
+	[RPInstallation registerSubclass];
+	[RPUser registerSubclass];
 	[RPPatron registerSubclass];
 	[RPPatronStore registerSubclass];
     [RPStore registerSubclass];
 	[RPStoreLocation registerSubclass];
+	[RPMessage registerSubclass];
+	[RPMessageStatus registerSubclass];
+	[RPFacebookPost registerSubclass];
 
     [PFFacebookUtils initializeFacebook];
 	
@@ -70,9 +76,9 @@
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
-	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-    [currentInstallation setDeviceTokenFromData:deviceToken];
-    [currentInstallation saveInBackground];
+	RPInstallation *installation = [RPInstallation currentInstallation];
+    [installation setDeviceTokenFromData:deviceToken];
+    [installation saveInBackground];
 }
 
 - (void)application:(UIApplication *)application
@@ -100,7 +106,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
 	[RepunchUtils clearNotificationCenter];
 	
-	NSString *pushType = [userInfo objectForKey:@"type"];
+	NSString *pushType = userInfo[@"type"];
 	
 	if( [pushType isEqualToString:@"punch"] )
 	{
@@ -136,20 +142,20 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 
 - (void)checkLoginState
 {
-	PFUser* currentUser = [PFUser currentUser];
+	RPUser* currentUser = [RPUser currentUser];
 	
     if (currentUser) {
 		
 		[self presentIndeterminateStateView];
 				
-		RPPatron *patron = [currentUser objectForKey:@"Patron"];
+		RPPatron *patron = currentUser.Patron;
 		
 		if( IS_NIL(patron) ) {
-			[PFUser logOut];
+			[RPUser logOut];
 			[self checkLoginState];
 		}
 		else {
-			patronQuery = [PFQuery queryWithClassName:@"Patron"];
+			patronQuery = [PFQuery queryWithClassName:[RPPatron parseClassName]];
 			patronQuery.cachePolicy = kPFCachePolicyCacheOnly;
 			//BOOL isInCache = [patronQuery hasCachedResult];
 			//NSLog(isInCache ? @"Yes - cached query" : @"No - cached query"); //Parse bug with hasCachedResult
@@ -165,7 +171,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 				 else {
 					 CLS_LOG(@"AppDelegate checkLoginState - PFUser is cached but Patron is NOT cached: %@", error);
 					 NSLog(@"AppDelegate checkLoginState - PFUser is cached but Patron is NOT cached: %@", error);
-					 [PFUser logOut];
+					 [RPUser logOut];
 					 [self checkLoginState];
 				 }
 		 	}];
@@ -190,7 +196,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 
 - (void)presentTabBarController
 {
-    [Crashlytics setUserName:[PFUser currentUser].username];
+    [Crashlytics setUserName:[RPUser currentUser].username];
 
     MyPlacesViewController *myPlacesVC = [[MyPlacesViewController alloc] init];
     InboxViewController *inboxVC = [[InboxViewController alloc] init];
@@ -228,7 +234,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 - (void)logout
 {
 	[sharedData clearData];
-    [PFUser logOut];
+    [RPUser logOut];
 	[self presentLandingViews];
 }
 

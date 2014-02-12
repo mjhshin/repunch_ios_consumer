@@ -123,8 +123,8 @@
 								  withMessage:@"Sorry, something went wrong. Please try again."];
 		}
 		
-		if([PFUser currentUser]) {
-			[PFUser logOut];
+		if([RPUser currentUser]) {
+			[RPUser logOut];
 		}
 	}
 }
@@ -196,7 +196,7 @@
 			return;
 		}
 		
-        [PFUser requestPasswordResetForEmailInBackground:email block:^(BOOL succeeded, NSError *error) {
+        [RPUser requestPasswordResetForEmailInBackground:email block:^(BOOL succeeded, NSError *error) {
 			NSString *titleString;
 			NSString *messageString;
 			
@@ -206,11 +206,11 @@
 			}
 			else {
 				titleString = @"Error";
-				int errorCode = [[[error userInfo] objectForKey:@"code"] intValue];
+				int errorCode = [error.userInfo[@"code"] intValue];
 				if(errorCode == kPFErrorInvalidEmailAddress) {
-					messageString = [[error userInfo] objectForKey:@"error"];
+					messageString = error.userInfo[@"error"];
 				} else if(errorCode == kPFErrorUserWithEmailNotFound) {
-					messageString = [[error userInfo] objectForKey:@"error"];
+					messageString = error.userInfo[@"error"];
 				} else {
 					messageString = @"There was a problem connecting to Repunch. Please check your connection and try again.";
 				}

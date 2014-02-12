@@ -46,18 +46,17 @@
 		withPassword:(NSString *)password
 withCompletionHandler:(AuthenticationManagerHandler)handler;
 {
-	[PFUser logInWithUsernameInBackground:email password:password block:^(PFUser *user, NSError *error) {
+	[RPUser logInWithUsernameInBackground:email password:password block:^(PFUser *user, NSError *error) {
 		 if (user)
 		 {
-			 PFObject *patron = [user objectForKey:@"Patron"];
+			 RPPatron *patron = user[@"Patron" ];
 			 
 			 if( IS_NIL(patron) ) {
 				 NSLog(@"This PFUser has no Patron object");
 				 handler(kPFErrorObjectNotFound);
 			 }
 			 else {
-				 NSString *patronId = [[user objectForKey:@"Patron"] objectId];
-				 [AuthenticationManager fetchPatronObject:patronId withCompletionHandler:handler];
+				 [AuthenticationManager fetchPatronObject:patron.objectId withCompletionHandler:handler];
 			 }
 		 }
 		 else {
@@ -77,27 +76,27 @@ withCompletionHandler:(AuthenticationManagerHandler)handler;
 		 }
 		 else if (user.isNew) {
 			 NSLog(@"Facebook login: registered new user");
-			 [AuthenticationManager registerWithFacebook:user withCompletionHandler:handler];
+			 [AuthenticationManager registerWithFacebook:(RPUser *)user withCompletionHandler:handler];
 		 }
 		 else {
 			 NSLog(@"Facebook login: signed in user");
-			 NSString *patronId = [[user objectForKey:@"Patron"] objectId];
-			 [AuthenticationManager fetchPatronObject:patronId withCompletionHandler:handler];
+			 RPUser *repunchUser = (RPUser *)user;
+			 [AuthenticationManager fetchPatronObject:repunchUser.Patron.objectId withCompletionHandler:handler];
 		 }
 	 }];
 }
 
-+ (void)registerWithFacebook:(PFUser *)currentUser withCompletionHandler:(AuthenticationManagerHandler)handler
++ (void)registerWithFacebook:(RPUser *)currentUser withCompletionHandler:(AuthenticationManagerHandler)handler
 {
-	[[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
+	[[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *graphUser, NSError *error) {
 		 if (!error) {
 			 
-			 NSString *facebookId = user.id;
-			 NSString *firstName = user.first_name;
-			 NSString *lastName = user.last_name;
-			 NSString *birthday = user.birthday;
-			 NSString *gender = [user objectForKey:@"gender"];
-			 NSString *email = [user objectForKey:@"email"];
+			 NSString *facebookId = graphUser.id;
+			 NSString *firstName = graphUser.first_name;
+			 NSString *lastName = graphUser.last_name;
+			 NSString *birthday = graphUser.birthday;
+			 NSString *gender = graphUser[@"gender"];
+			 NSString *email = graphUser[@"email"];
 			 
 			 if(email == nil) {
 				 email = (id)[NSNull null]; //possible for email to be null when email becomes invalid
@@ -128,14 +127,12 @@ withCompletionHandler:(AuthenticationManagerHandler)handler;
 {
 	[PFCloud callFunctionInBackground:@"register_patron"
 					   withParameters:parameters
-								block:^(PFObject* patron, NSError *error) {
+								block:^(RPPatron* patron, NSError *error) {
 		 if (!error) {
 			 DataManager *sharedData = [DataManager getSharedInstance];
-			 [sharedData setPatron:(RPPatron *)patron];
+			 [sharedData setPatron:patron];
 			 
-			 NSString *punchCode = [patron objectForKey:@"punch_code"];
-			 
-			 [AuthenticationManager setupPFInstallation:patron.objectId withPunchCode:punchCode withCompletionHandler:handler];
+			 [AuthenticationManager setupInstallation:patron.objectId withPunchCode:patron.punch_code withCompletionHandler:handler];
 		 }
 		 else {
 			 handler(0);
@@ -149,18 +146,17 @@ withCompletionHandler:(AuthenticationManagerHandler)handler;
 		handler(0);
 	}
 	
-	PFQuery *query = [PFQuery queryWithClassName:@"Patron"];
+	PFQuery *query = [PFQuery queryWithClassName:[RPPatron parseClassName]];
 	query.cachePolicy = kPFCachePolicyNetworkOnly;
 	
-	[query getObjectInBackgroundWithId:patronId block:^(PFObject *patron, NSError *error) {
+	[query getObjectInBackgroundWithId:patronId block:^(PFObject *result, NSError *error) {
 		 if(!error) {
+			 RPPatron *patron = (RPPatron *)result;
 			 DataManager *sharedData = [DataManager getSharedInstance];
-			 [sharedData setPatron:(RPPatron *)patron];
+			 [sharedData setPatron:patron];
 			 
-			 //setup PFInstallation
-			 NSString *patronId = [patron objectId];
-			 NSString *punchCode = [patron objectForKey:@"punch_code"];
-			 [AuthenticationManager setupPFInstallation:patronId withPunchCode:punchCode withCompletionHandler:handler];
+			 //setup Installation
+			 [AuthenticationManager setupInstallation:patron.objectId withPunchCode:patron.punch_code withCompletionHandler:handler];
 		 }
 		 else {
 			 handler(0);
@@ -168,13 +164,14 @@ withCompletionHandler:(AuthenticationManagerHandler)handler;
 	 }];
 }
 
-+ (void)setupPFInstallation:(NSString*)patronId
++ (void)setupInstallation:(NSString*)patronId
 			  withPunchCode:(NSString*)punchCode
 	  withCompletionHandler:(AuthenticationManagerHandler)handler
 {
-	[[PFInstallation currentInstallation] setObject:patronId forKey:@"patron_id"];
-	[[PFInstallation currentInstallation] setObject:punchCode forKey:@"punch_code"];
-	[[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL success, NSError *error) {
+	RPInstallation *installation = [RPInstallation currentInstallation];
+	installation.patron_id = patronId;
+	installation.punch_code = punchCode;
+	[installation saveInBackgroundWithBlock:^(BOOL success, NSError *error) {
 		handler(0);
 	}];
 }
@@ -182,7 +179,7 @@ withCompletionHandler:(AuthenticationManagerHandler)handler;
 + (NSInteger)parseErrorCode:(NSError *)error
 {
 	NSDictionary *errorInfo = [error userInfo];
-	NSInteger errorCode = [[errorInfo objectForKey:@"code"] integerValue];
+	NSInteger errorCode = [errorInfo[@"code"] integerValue];
 	
 	return errorCode;
 }

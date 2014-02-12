@@ -26,7 +26,6 @@ typedef enum {
     kRPErrorNone,
     kRPErrorDidFailUnknown,
     kRPErrorNetworkConnection,
-    
     kRPErrorStoreAvatarIsNotAvailibleOnServer,
     
 } RPErrorCode;
@@ -34,7 +33,13 @@ typedef enum {
 
 @class RPStore;
 
-typedef void(^StoreUpdateHandler)(RPStore *store, RPErrorCode errorCode);
-typedef void(^StoreAvatarUpdateHandler)(UIImage *avatar, NSError *error);
+//typedef void(^StoreUpdateHandler)(RPStore *store, RPErrorCode errorCode);
+typedef void(^StoreImageUpdateHandler)(UIImage *image, NSError *error);
+
+@class RPStoreLocation;
+
+//typedef void(^StoreLocationUpdateHandler)(RPStoreLocation *store, RPErrorCode errorCode);
+typedef void(^StoreLocationImageUpdateHandler)(UIImage *image, NSError *error);
 
 #endif
+                                                                            

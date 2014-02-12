@@ -24,9 +24,9 @@
 + (StoreDetailTableViewCell *)cell
 {
 	StoreDetailTableViewCell *customCell = [[[NSBundle mainBundle] loadNibNamed:[self reuseIdentifier]
-																	 owner:self
-																   options:nil]
-									   objectAtIndex:0];
+																		  owner:self
+																		options:nil]
+											objectAtIndex:0];
 	
 	UIView *selectedView = [[UIView alloc] initWithFrame:customCell.frame];
 	selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];

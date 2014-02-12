@@ -14,6 +14,9 @@
 @dynamic pending_reward;
 @dynamic all_time_punches;
 @dynamic punch_count;
+@dynamic Patron;
+@dynamic Store;
+@dynamic FacebookPost;
 
 + (NSString *)parseClassName
 {

@@ -29,7 +29,7 @@
 @dynamic city;
 @dynamic zip;
 @dynamic phone_number;
-@dynamic store_avatar;
+@dynamic cover_image;
 @dynamic coordinates;
 @dynamic Store;
 
@@ -38,28 +38,6 @@
 + (NSString *)parseClassName
 {
     return @"StoreLocation";
-}
-
-#pragma mark - Update StoreLocation
-
-- (void)updateStoreAvatarWithCompletionHander:(StoreAvatarUpdateHandler)handler
-{
-	if( IS_NIL(self.store_avatar) ) {
-		BLOCK_SAFE_RUN(handler, nil, nil);
-		return;
-	}
-    __weak typeof(self) weakSelf = self;
-    
-    [self.store_avatar getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-        if (!error) {
-            avatar = [UIImage imageWithData:data];
-			[[DataManager getSharedInstance] addStoreImage:avatar forKey:weakSelf.objectId];
-            BLOCK_SAFE_RUN(handler, weakSelf.avatar, error);
-        }
-        else {
-            BLOCK_SAFE_RUN(handler, nil, error);
-        }
-    }];
 }
 
 - (NSString *)formattedAddress

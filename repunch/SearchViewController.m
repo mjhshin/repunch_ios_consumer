@@ -317,7 +317,7 @@
 	
 	for (int i = 0; i < storeLocation.Store.categories.count; i++)
 	{
-		formattedCategories = [formattedCategories stringByAppendingString:[storeLocation.Store.categories[i] objectForKey:@"name"]];
+		formattedCategories = [formattedCategories stringByAppendingString:storeLocation.Store.categories[i][@"name"]];
 		
 		if (i != [storeLocation.Store.categories count] - 1) {
 			formattedCategories = [formattedCategories stringByAppendingFormat:@", "];
@@ -332,10 +332,10 @@
 		[cell.numPunches setHidden:YES];
 	}
 	else {
-		int punches = [patronStore.punch_count intValue];
+		NSInteger punchCount = patronStore.punch_count;
 		[cell.punchIcon setHidden:NO];
 		[cell.numPunches setHidden:NO];
-		[cell.numPunches setText:[NSString stringWithFormat:@"%d %@", punches, (punches==1) ? @"Punch" : @"Punches"]];
+		[cell.numPunches setText:[NSString stringWithFormat:@"%i %@", punchCount, (punchCount == 1) ? @"Punch" : @"Punches"]];
 	}
 	
 	cell.storeAddress.text = street;
@@ -348,13 +348,13 @@
     //{
 	//if (self.myPlacesTableView.dragging == NO && self.myPlacesTableView.decelerating == NO)
 	//{
-	if( !IS_NIL(storeLocation.store_avatar) )
+	if( !IS_NIL(storeLocation.cover_image) )
 	{
 		UIImage *storeImage = [self.sharedData getStoreImage:storeLocationId];
 		if(storeImage == nil)
 		{
 			cell.storeImage.image = [UIImage imageNamed:@"store_placeholder.png"];
-			[self downloadImage:storeLocation.store_avatar forIndexPath:indexPath withStoreId:storeLocationId];
+			[self downloadImage:storeLocation.cover_image forIndexPath:indexPath withStoreId:storeLocationId];
 		} else {
 			cell.storeImage.image = storeImage;
 		}
@@ -392,7 +392,7 @@
 		return;
 	}
 	
-    PFFile *existingImageFile = [self.imageDownloadsInProgress objectForKey:indexPath];
+    PFFile *existingImageFile = self.imageDownloadsInProgress[indexPath];
     if (existingImageFile == nil)
     {
         [self.imageDownloadsInProgress setObject:imageFile forKey:indexPath];
