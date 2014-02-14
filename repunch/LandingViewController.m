@@ -21,9 +21,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
-	[RepunchUtils setDefaultButtonStyle:self.registerButton];
-	[RepunchUtils setDefaultButtonStyle:self.loginButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated

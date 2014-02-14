@@ -11,6 +11,7 @@
 #import "DataManager.h"
 #import <Parse/Parse.h>
 #import "RPConstants.h"
+#import "RPButton.h"
 
 @class IncomingMessageViewController;
 
@@ -45,7 +46,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *attachmentTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *attachmentItemLabel;
 @property (weak, nonatomic) IBOutlet UILabel *attachmentDescriptionLabel;
-@property (weak, nonatomic) IBOutlet UIButton *redeemButton;
+@property (weak, nonatomic) IBOutlet RPButton *redeemButton;
 @property (weak, nonatomic) IBOutlet UIButton *replyButton;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *attachmentTitleVerticalConstraint;

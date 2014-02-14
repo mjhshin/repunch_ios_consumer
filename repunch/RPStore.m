@@ -17,10 +17,10 @@
 @implementation RPStore
 
 #pragma mark - Synthesize properties
-@synthesize avatar;
 
 @dynamic active;
 @dynamic thumbnail_image;
+@dynamic cover_image;
 @dynamic rewards;
 @dynamic categories;
 @dynamic store_name;
@@ -32,26 +32,6 @@
 + (NSString *)parseClassName
 {
     return @"Store";
-}
-
-- (void)updateStoreImageWithCompletionHander:(StoreImageUpdateHandler)handler
-{
-	if( IS_NIL(self.thumbnail_image) ) {
-		BLOCK_SAFE_RUN(handler, nil, nil);
-		return;
-	}
-    __weak typeof(self) weakSelf = self;
-    
-    [self.thumbnail_image getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-        if (!error) {
-            avatar = [UIImage imageWithData:data];
-			[[DataManager getSharedInstance] addStoreImage:avatar forKey:weakSelf.objectId];
-            BLOCK_SAFE_RUN(handler, weakSelf.avatar, error);
-        }
-        else {
-            BLOCK_SAFE_RUN(handler, nil, error);
-        }
-    }];
 }
 
 @end

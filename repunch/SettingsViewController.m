@@ -48,7 +48,7 @@
 	if(section == 0) {
 		return 2;
 	} else {
-		return 1;
+		return 2;
 	}
 }
 
@@ -59,12 +59,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-	return (section == 1) ? 50 : 0;
+	return (section == 0) ? 0 : 50;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	return (indexPath.section == 1) ? 60 : 45;
+	return (indexPath.section == 0) ? 45 : 60;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -113,7 +113,7 @@
 	
 	if(indexPath.section == 0)
 	{
-		static NSString *Style1CellIdentifier = @"Style1Cell";
+		static NSString *Style1CellIdentifier = @"CellStyle1";
 		
 		cell = [tableView dequeueReusableCellWithIdentifier:Style1CellIdentifier];
 		if (cell == nil) {
@@ -123,10 +123,9 @@
 			selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
 			cell.selectedBackgroundView = selectedView;
 			
+			cell.textLabel.font = [RepunchUtils repunchFontWithSize:16 isBold:YES];
 			cell.textLabel.highlightedTextColor = [UIColor whiteColor];
 		}
-		
-		cell.textLabel.font = [RepunchUtils repunchFontWithSize:16 isBold:YES];
 		
 		if(indexPath.row == 0) {
 			cell.textLabel.text = @"Terms and Conditions";
@@ -137,7 +136,7 @@
 	}
 	else
 	{
-		static NSString *Style2CellIdentifier = @"Style1Cell";
+		static NSString *Style2CellIdentifier = @"CellStyleSubtitle";
 		
 		cell = [tableView dequeueReusableCellWithIdentifier:Style2CellIdentifier];
 		if (cell == nil) {
@@ -147,16 +146,24 @@
 			selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
 			cell.selectedBackgroundView = selectedView;
 			
+			cell.textLabel.font = [RepunchUtils repunchFontWithSize:16 isBold:YES];
 			cell.textLabel.highlightedTextColor = [UIColor whiteColor];
+			
+			cell.detailTextLabel.font = [RepunchUtils repunchFontWithSize:13 isBold:NO];
 			cell.detailTextLabel.highlightedTextColor = [UIColor whiteColor];
 		}
-		cell.textLabel.font = [RepunchUtils repunchFontWithSize:16 isBold:YES];
-		cell.textLabel.text = @"Log Out";
 		
 		RPPatron* patron = [sharedData patron];
 		
-		cell.detailTextLabel.font = [RepunchUtils repunchFontWithSize:13 isBold:NO];
-		cell.detailTextLabel.text = [NSString stringWithFormat:@"Logged in as %@", patron.full_name];
+		if(indexPath.row == 0) {
+			cell.textLabel.text = patron.punch_code;
+			cell.detailTextLabel.text = @"My Punch Code";
+			cell.userInteractionEnabled = NO;
+		}
+		else {
+			cell.textLabel.text = @"Log Out";
+			cell.detailTextLabel.text = [NSString stringWithFormat:@"Logged in as %@", patron.full_name];
+		}
 	}
 	
 	return cell;
@@ -171,7 +178,8 @@
 		activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 		activityIndicator.hidesWhenStopped = YES;
 		
-		if(indexPath.row == 0) {
+		if(indexPath.row == 0)
+		{
 			UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
 			[webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.repunch.com/terms-mobile"]]];
 			webView.delegate = self;
@@ -206,36 +214,43 @@
 			return;
 		}
 		
-		UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-		spinner.hidesWhenStopped = YES;
-		spinner.frame = CGRectMake(0, 0, 24, 24);
-		UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-		cell.accessoryView = spinner;
-		[spinner startAnimating];
-		tableView.userInteractionEnabled = NO;
-		
-		//set blank "patron_id" and "punch_code" in installation so push notifications not received when logged out
-		RPInstallation *installation = [RPInstallation currentInstallation];
-		installation.punch_code = @"";
-		installation.patron_id = @"";
-		[installation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-			 [spinner stopAnimating];
-			 tableView.userInteractionEnabled = YES;
+		if(indexPath.row == 0)
+		{
+			//Punch Code - do nothing
+		}
+		else
+		{
+			//Log out - do nothing
+			UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+			spinner.hidesWhenStopped = YES;
+			spinner.frame = CGRectMake(0, 0, 24, 24);
+			UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+			cell.accessoryView = spinner;
+			[spinner startAnimating];
+			tableView.userInteractionEnabled = NO;
 			
-			//[[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:@"kRPShowInstructions"];
-			[[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:@"kRPShowPunchCode"];
-			[[NSUserDefaults standardUserDefaults] synchronize];
-			 
-			 if(!error) {
-				 [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-				 AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-				 [appDelegate logout];
-			 }
-			 else {
-				 [RepunchUtils showDialogWithTitle:@"Failed to Log Out" withMessage:@"Sorry, something went wrong"];
-			 }
-		 }];
-
+			//set blank "patron_id" and "punch_code" in installation so push notifications not received when logged out
+			RPInstallation *installation = [RPInstallation currentInstallation];
+			installation.punch_code = @"";
+			installation.patron_id = @"";
+			[installation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+				[spinner stopAnimating];
+				tableView.userInteractionEnabled = YES;
+				
+				//[[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:@"kRPShowInstructions"];
+				[[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:@"kRPShowPunchCode"];
+				[[NSUserDefaults standardUserDefaults] synchronize];
+				
+				if(!error) {
+					[UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+					AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+					[appDelegate logout];
+				}
+				else {
+					[RepunchUtils showDialogWithTitle:@"Failed to Log Out" withMessage:@"Sorry, something went wrong"];
+				}
+			}];
+		}
 	}
 }
 

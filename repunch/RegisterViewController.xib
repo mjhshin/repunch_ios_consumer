@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
@@ -17,7 +17,6 @@
                 <outlet property="lastNameInput" destination="75" id="107"/>
                 <outlet property="passwordInput" destination="6" id="125"/>
                 <outlet property="registerButton" destination="126" id="1143"/>
-                <outlet property="registerButtonSpinner" destination="9C2-c3-aAq" id="0um-jb-RlG"/>
                 <outlet property="scrollView" destination="271" id="1316"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
@@ -171,7 +170,7 @@
                             </segments>
                             <color key="tintColor" red="0.92361582880000004" green="0.55974298280000001" blue="0.1052079196" alpha="1" colorSpace="calibratedRGB"/>
                         </segmentedControl>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="126" userLabel="RegisterButton">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="126" userLabel="RegisterButton" customClass="RPButton">
                             <rect key="frame" x="51" y="467" width="221" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <constraints>
@@ -189,10 +188,6 @@
                                 <action selector="registerWithRepunch:" destination="-1" eventType="touchUpInside" id="1318"/>
                             </connections>
                         </button>
-                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="9C2-c3-aAq" userLabel="RegisterButtonSpinner">
-                            <rect key="frame" x="142" y="470" width="37" height="37"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </activityIndicatorView>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By joining Repunch you agree to the" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fkC-M5-8ec" userLabel="LegalLabel">
                             <rect key="frame" x="20" y="550" width="281" height="24"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -246,7 +241,6 @@
                         <constraint firstAttribute="trailing" secondItem="8" secondAttribute="trailing" constant="20" symbolic="YES" id="1QP-Km-vkK"/>
                         <constraint firstItem="Gex-Jw-taJ" firstAttribute="bottom" secondItem="gVs-pX-f9g" secondAttribute="bottom" id="20f-Dc-vOf"/>
                         <constraint firstItem="7" firstAttribute="top" secondItem="271" secondAttribute="top" constant="25" id="315-eT-OnH"/>
-                        <constraint firstItem="9C2-c3-aAq" firstAttribute="top" secondItem="1014" secondAttribute="bottom" constant="35" id="60W-fF-tk8"/>
                         <constraint firstItem="199" firstAttribute="leading" secondItem="7" secondAttribute="trailing" constant="-91" id="6cs-Yv-Vfi"/>
                         <constraint firstItem="1014" firstAttribute="top" secondItem="96" secondAttribute="bottom" constant="24" id="726-tx-6VD"/>
                         <constraint firstItem="6" firstAttribute="trailing" secondItem="8" secondAttribute="trailing" id="7XW-8f-fjs"/>
@@ -290,7 +284,6 @@
                         <constraint firstItem="8" firstAttribute="leading" secondItem="271" secondAttribute="leading" constant="20" symbolic="YES" id="lB4-Y1-gVp"/>
                         <constraint firstItem="126" firstAttribute="top" secondItem="1014" secondAttribute="bottom" constant="32" id="p2f-Eb-hpP"/>
                         <constraint firstItem="68" firstAttribute="top" secondItem="6" secondAttribute="bottom" constant="8" symbolic="YES" id="pBz-5A-gur"/>
-                        <constraint firstItem="9C2-c3-aAq" firstAttribute="centerX" secondItem="1014" secondAttribute="centerX" id="s2j-gE-Q52"/>
                         <constraint firstItem="96" firstAttribute="centerX" secondItem="1014" secondAttribute="centerX" id="s3k-5z-uKu"/>
                         <constraint firstItem="11" firstAttribute="leading" secondItem="271" secondAttribute="leading" id="xTW-Hm-edH"/>
                         <constraint firstItem="fkC-M5-8ec" firstAttribute="top" secondItem="126" secondAttribute="bottom" constant="39" id="zT4-ff-D2l"/>

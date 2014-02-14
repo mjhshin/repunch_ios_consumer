@@ -15,12 +15,9 @@
 
 @interface RPStoreLocation : PFObject <PFSubclassing>
 
-// Info
-@property (strong, readonly, atomic) PFFile *cover_image;
 @property (strong, readonly, atomic) PFGeoPoint *coordinates;
 @property (strong, readonly, atomic) NSArray *hours;
 
-// Address
 @property (strong, readonly, atomic) NSString *street;
 @property (strong, readonly, atomic) NSString *neighborhood;
 @property (strong, readonly, atomic) NSString *state;
@@ -31,7 +28,6 @@
 @property (strong, readonly, atomic) RPStore *Store;
 
 // Not Inherited
-@property (strong, readonly, atomic) UIImage *avatar;
 @property (strong, readonly, atomic) NSString* formattedAddress;
 @property (strong, readonly, atomic) RPStoreHours *hoursManager;
 @property (strong, atomic) RPStoreHours *m_storeHoursManager;

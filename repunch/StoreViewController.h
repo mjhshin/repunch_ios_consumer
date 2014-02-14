@@ -15,6 +15,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "FacebookPost.h"
 #import "RPConstants.h"
+#import "RPTableView.h"
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
@@ -24,7 +25,7 @@
 @property (nonatomic, strong) NSString *storeId;
 @property (nonatomic, strong) NSString *storeLocationId;
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet RPTableView *tableView;
 
 // store header
 @property (strong, nonatomic) IBOutlet UIView *headerView;
@@ -47,17 +48,11 @@
 - (IBAction)callButtonAction:(id)sender;
 - (IBAction)mapButtonAction:(id)sender;
 - (IBAction)feedbackButtonAction:(id)sender;
-- (IBAction)storeInfoButtonAction:(id)sender;
+- (IBAction)storeInfoGestureAction:(UITapGestureRecognizer *)sender;
 
 // tableview section header
 @property (strong, nonatomic) IBOutlet UIView *sectionHeaderView;
-@property (weak, nonatomic) IBOutlet UIView *sectionHeaderContentView;
 @property (weak, nonatomic) IBOutlet UILabel *punchCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *punchStaticLabel;
-@property (weak, nonatomic) IBOutlet UILabel *rewardsLabel;
-@property (weak, nonatomic) IBOutlet UIButton *saveButton;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *saveButtonSpinner;
-
-- (IBAction)saveButtonAction:(id)sender;
 
 @end

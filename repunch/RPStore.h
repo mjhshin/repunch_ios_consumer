@@ -15,17 +15,14 @@
 
 @interface RPStore : PFObject <PFSubclassing>
 
-// Info
 @property (strong, readonly, atomic) NSString *store_name;
 @property (strong, readonly, atomic) PFFile *thumbnail_image;
+@property (strong, readonly, atomic) PFFile *cover_image;
 @property (assign, readonly, atomic) BOOL active;
 @property (assign, readonly, atomic) NSInteger punches_facebook;
 @property (strong, readonly, atomic) NSArray *categories;
 @property (strong, readonly, atomic) NSArray *rewards;
 @property (strong, readonly, atomic) NSArray *store_locations;
-
-// Not Inherited
-@property (strong, readonly, atomic) UIImage *avatar;
 
 // Unused (PFRelations also unused, not listed)
 //@property (strong, readonly, atomic) NSString *country;
@@ -37,6 +34,6 @@
 + (NSString *)parseClassName;
 
 //- (void)updateStoreWithCompletionHandler:(StoreUpdateHandler)handler;
-- (void)updateStoreImageWithCompletionHander:(StoreImageUpdateHandler)handler;
+//- (void)updateStoreImageWithCompletionHander:(StoreImageUpdateHandler)handler;
 
 @end

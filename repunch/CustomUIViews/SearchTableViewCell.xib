@@ -20,7 +20,7 @@
                             <constraint firstAttribute="height" constant="20" id="5qi-3n-rr2"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="15"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="152 Lexington St, Cobble Hill" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="19" userLabel="StreetLabel">
@@ -62,7 +62,7 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ic_tab_punch_tiny.png" translatesAutoresizingMaskIntoConstraints="NO" id="54" userLabel="PunchIconImageView">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="star.png" translatesAutoresizingMaskIntoConstraints="NO" id="54" userLabel="PunchIconImageView">
                         <rect key="frame" x="108" y="83" width="12" height="12"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
@@ -114,6 +114,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="ic_tab_punch_tiny.png" width="22" height="22"/>
+        <image name="star.png" width="32" height="32"/>
     </resources>
 </document>

@@ -6,6 +6,7 @@
 //
 
 #import "SearchViewController.h"
+#import "RPButton.h"
 
 @implementation SearchViewController
 {
@@ -15,7 +16,7 @@
 	int paginateCount;
 	BOOL paginateReachEnd;
 	UIActivityIndicatorView *spinner;
-	UIButton *paginateButton;
+	RPButton *paginateButton;
 }
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
@@ -123,33 +124,12 @@
 
 - (void)setupTableView
 {
-	/*
-	self.tableViewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
-	[self addChildViewController:self.tableViewController];
-	
-	//self.tableViewController.refreshControl = [[UIRefreshControl alloc] init];
-	//[self.tableViewController.refreshControl addTarget:self
-	//											action:@selector(loadMyPlaces)
-	//								  forControlEvents:UIControlEventValueChanged];
-	
-    self.tableViewController.view.frame = self.view.bounds;
-	self.tableViewController.view.layer.zPosition = -1;
-	
-    [self.tableViewController.tableView setDataSource:self];
-    [self.tableViewController.tableView setDelegate:self];
-	*/
-	
 	self.tableView.delegate = self;
 	self.tableView.dataSource = self;
 	
-	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 1)];
-	footer.backgroundColor = [UIColor clearColor];
-	[self.tableView setTableFooterView:footer];
-	
 	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 	
-	paginateButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 260, 50)];
-	[RepunchUtils setDefaultButtonStyle:paginateButton];
+	paginateButton = [[RPButton alloc] initWithFrame:CGRectMake(0, 0, 260, 50)];
 	paginateButton.titleLabel.font = [RepunchUtils repunchFontWithSize:17 isBold:YES];
 	paginateButton.adjustsImageWhenDisabled = NO;
 	[paginateButton addTarget:self action:@selector(paginate) forControlEvents:UIControlEventTouchUpInside];
@@ -221,9 +201,9 @@
 	}
 	
     PFQuery *storeQuery = [RPStoreLocation query];
-	[storeQuery includeKey:@"Store"];
-    //[storeQuery whereKey:@"Store.active" equalTo:[NSNumber numberWithBool:YES]];
-	[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation];
+	[storeQuery includeKey:@"Store.store_locations"];
+    //[storeQuery includeKey:@"Store.active" equalTo:[NSNumber numberWithBool:YES]];
+	//[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation];
 	[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation withinMiles:50];
 	[storeQuery setLimit:20];
 	
@@ -253,9 +233,11 @@
 			 }
 			
 			 for (RPStoreLocation *storeLocation in results) {
-				 [self.sharedData addStoreLocation:storeLocation];
-				 [self.sharedData addStore:storeLocation.Store];
-				 [self.storeLocationIdArray addObject:storeLocation.objectId];
+				 if(storeLocation.Store.active) {
+					 [self.sharedData addStoreLocation:storeLocation];
+					 [self.sharedData addStore:storeLocation.Store];
+					 [self.storeLocationIdArray addObject:storeLocation.objectId];
+				 }
 			 }
 			 
 			 if(paginate != NO && results.count == 0) {
@@ -341,26 +323,26 @@
 	cell.storeAddress.text = street;
 	cell.storeCategories.text = formattedCategories;
 	cell.storeName.text = storeLocation.Store.store_name;
-	cell.storeImage.image = [UIImage imageNamed:@"store_placeholder.png"];
 	
 	// Only load cached images; defer new downloads until scrolling ends
     //if (cell.storeImage == nil)
     //{
 	//if (self.myPlacesTableView.dragging == NO && self.myPlacesTableView.decelerating == NO)
 	//{
-	if( !IS_NIL(storeLocation.cover_image) )
+	if( !IS_NIL(storeLocation.Store.thumbnail_image) )
 	{
-		UIImage *storeImage = [self.sharedData getStoreImage:storeLocationId];
+		cell.storeImage.image = [UIImage imageNamed:@"placeholder_thumbnail_image"];
+		UIImage *storeImage = [self.sharedData getThumbnailImage:storeLocation.Store.objectId];
 		if(storeImage == nil)
 		{
-			cell.storeImage.image = [UIImage imageNamed:@"store_placeholder.png"];
-			[self downloadImage:storeLocation.cover_image forIndexPath:indexPath withStoreId:storeLocationId];
+			cell.storeImage.image = [UIImage imageNamed:@"placeholder_thumbnail_image"];
+			[self downloadImage:storeLocation.Store.thumbnail_image forIndexPath:indexPath withStoreId:storeLocation.Store.objectId];
 		} else {
 			cell.storeImage.image = storeImage;
 		}
 	} else {
 		// if a download is deferred or in progress, return a placeholder image
-		cell.storeImage.image = [UIImage imageNamed:@"store_placeholder.png"];
+		cell.storeImage.image = [UIImage imageNamed:@"placeholder_thumbnail_image"];
 	}
 	//}
     //}
@@ -406,7 +388,7 @@
 				 UIImage *storeImage = [UIImage imageWithData:data];
 				 cell.storeImage.image = storeImage;
 				 [self.imageDownloadsInProgress removeObjectForKey:indexPath]; // Remove the PFFile from the in-progress list
-				 [self.sharedData addStoreImage:storeImage forKey:storeId];
+				 [self.sharedData addThumbnailImage:storeImage forKey:storeId];
 			 }
 			 else
 			 {
@@ -461,9 +443,7 @@
 	}
 	else
 	{
-		UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
-		footer.backgroundColor = [UIColor clearColor];
-		self.tableView.tableFooterView = footer;
+		[self.tableView setDefaultFooter];
 	}
 }
 

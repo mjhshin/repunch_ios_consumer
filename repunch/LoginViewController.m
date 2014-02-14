@@ -23,8 +23,6 @@
                                    initWithTarget:self
                                    action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
-	
-	[RepunchUtils setDefaultButtonStyle:self.loginButton];
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -137,9 +135,7 @@
 
 - (void)enableViews
 {
-	[self.loginButtonSpinner stopAnimating];
-	[self.loginButton setTitle:@"Sign In" forState:UIControlStateNormal];
-	[self.loginButton setEnabled:YES];
+	[self.loginButton stopSpinner];
 	
 	[self.facebookSpinner stopAnimating];
 	[self.facebookButtonLabel setHidden:NO];
@@ -155,10 +151,7 @@
 		[self.facebookButtonLabel setHidden:YES];
 	}
 	else {
-		[self.loginButton setTitle:@"" forState:UIControlStateNormal];
-		[self.loginButton setEnabled:NO];
-		[self.facebookButton setEnabled:NO];
-		[self.loginButtonSpinner startAnimating];
+		[self.loginButton startSpinner];
 	}
 }
 

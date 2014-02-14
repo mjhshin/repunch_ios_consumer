@@ -28,8 +28,8 @@
 @property (strong, atomic) NSMutableDictionary *stores;
 @property (strong, atomic) NSMutableDictionary *storeLocations;
 @property (strong, atomic) NSMutableDictionary *messageStatuses;
-@property (strong, atomic) NSCache *storeImageCache;
-@property (strong, atomic) NSCache *storeLocationImageCache;
+@property (strong, atomic) NSCache *storeThumbnailImageCache;
+@property (strong, atomic) NSCache *storeCoverImageCache;
 
 - (void) clearData;
 
@@ -44,17 +44,15 @@
 - (void)addStore:(RPStore *)store;
 - (RPStore *)getStore:(NSString *)objectId;
 
-// Store image cache methods
-- (void)addStoreImage:(UIImage *)image forKey:(NSString *)storeId;
-- (UIImage *)getStoreImage:(NSString *)storeId;
-
 // StoreLocation methods
 - (void)addStoreLocation:(RPStoreLocation *)storeLocation;
 - (RPStoreLocation *)getStoreLocation:(NSString *)objectId;
 
-// StoreLocation image cache methods
-- (void)addStoreLocationImage:(UIImage *)image forKey:(NSString *)storeId;
-- (UIImage *)getStoreLocationImage:(NSString *)storeId;
+// Store image methods
+- (void)addThumbnailImage:(UIImage *)image forKey:(NSString *)storeId;
+- (UIImage *)getThumbnailImage:(NSString *)storeId;
+- (void)addCoverImage:(UIImage *)image forKey:(NSString *)storeId;
+- (UIImage *)getCoverImage:(NSString *)storeId;
 
 // MessageStatus/Message methods
 - (void)addMessage:(RPMessageStatus *)messageStatus;

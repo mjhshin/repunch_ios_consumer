@@ -14,6 +14,7 @@
 
 - (void)setMessageRead;
 - (void)setMessageUnread;
+- (void)setMessageTypeIcon:(NSString *)messageType forReadMessage:(BOOL)isRead;
 
 @property (weak, nonatomic) IBOutlet UILabel *senderName;
 @property (weak, nonatomic) IBOutlet UILabel *subjectLabel;

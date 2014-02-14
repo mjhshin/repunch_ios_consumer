@@ -42,8 +42,6 @@
 	
     self.ageInput.inputAccessoryView = numberToolbar;
 	
-	[RepunchUtils setDefaultButtonStyle:self.registerButton];
-	
 	webViewSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 	webViewSpinner.hidesWhenStopped = YES;
 	
@@ -150,9 +148,7 @@
 
 - (void)enableViews
 {
-	[self.registerButtonSpinner stopAnimating];
-	[self.registerButton setTitle:@"Sign In" forState:UIControlStateNormal];
-	[self.registerButton setEnabled:YES];
+	[self.registerButton stopSpinner];
 	
 	[self.facebookSpinner stopAnimating];
 	[self.facebookButtonLabel setHidden:NO];
@@ -168,10 +164,9 @@
 		[self.facebookSpinner startAnimating];
 	}
 	else {
-		[self.registerButton setTitle:@"" forState:UIControlStateNormal];
-		[self.registerButton setEnabled:NO];
 		[self.facebookButton setEnabled:NO];
-		[self.registerButtonSpinner startAnimating];
+		
+		[self.registerButton startSpinner];
 	}
 }
 

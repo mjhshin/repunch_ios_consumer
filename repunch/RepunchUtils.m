@@ -120,14 +120,14 @@
 	
 	[[UIActivityIndicatorView appearance] setTintColor:[self repunchOrangeColor]];
 	
-	//[[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"nav_back.png"]];
-	//[[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"nav_back.png"]];
+	//[[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"nav_back"]];
+	//[[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"nav_back"]];
 }
 
 + (void)setupNavigationController:(UINavigationController *)navController
 {
 	navController.navigationBar.tintColor = [UIColor whiteColor];
-	[navController.navigationBar setBackgroundImage:[UIImage imageNamed:@"orange_gradient.png"] forBarMetrics:UIBarMetricsDefault];
+	[navController.navigationBar setBackgroundImage:[UIImage imageNamed:@"orange_gradient"] forBarMetrics:UIBarMetricsDefault];
 	//navController.navigationBar.barTintColor = [RepunchUtils repunchOrangeColor];
 	navController.navigationBar.barStyle = UIBarStyleBlack;
 	navController.navigationBar.translucent = YES;
@@ -136,7 +136,7 @@
 + (CAGradientLayer *)blackGradient
 {
 	
-    UIColor *darkBlack = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
+    UIColor *darkBlack = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.4];
     UIColor *lightBlack = [UIColor colorWithRed:0.0  green:0.0 blue:0.0 alpha:0.0];
 	
     NSArray *colors = [NSArray arrayWithObjects:(id)lightBlack.CGColor, darkBlack.CGColor, nil];
@@ -146,22 +146,6 @@
 	//gradientLayer.locations = @[@0.00f, @0.55f, @1.00f];
 	
     return gradientLayer;
-}
-
-+ (void)setDefaultButtonStyle:(UIButton *)button
-{
-	[button setBackgroundImage:[UIImage imageNamed:@"orange_gradient_button.png"] forState:UIControlStateNormal];
-	[button setBackgroundImage:[UIImage imageNamed:@"orange_gradient_button_highlighted.png"] forState:UIControlStateHighlighted];
-	[button.layer setCornerRadius:5];
-	[button setClipsToBounds:YES];
-}
-
-+ (void)setDisabledButtonStyle:(UIButton *)button
-{
-	[button setBackgroundImage:[UIImage imageNamed:@"grey_button.png"] forState:UIControlStateNormal];
-	[button setBackgroundImage:[UIImage imageNamed:@"grey_button.png"] forState:UIControlStateHighlighted];
-	[button.layer setCornerRadius:5];
-	[button setClipsToBounds:YES];
 }
 
 + (UIColor *)repunchOrangeColor // RGBA = F79234FF
@@ -196,6 +180,30 @@
 	[UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 	[UIApplication sharedApplication].applicationIconBadgeNumber = badgeCount;
 	[[UIApplication sharedApplication] cancelAllLocalNotifications];	// make sure no pending local notifications
+}
+
++ (UIImage *)imageScaledForThumbnail:(UIImage *)image
+{
+	CGFloat imageWidth = 128;
+	CGFloat imageHeight = 128;
+	
+	CGRect imageFrame = CGRectMake(0, 0, imageWidth, imageHeight);
+	
+	CALayer *imageLayer = [CALayer layer];
+	imageLayer.frame = imageFrame;
+	imageLayer.contents = (id) image.CGImage;
+	
+	imageLayer.cornerRadius = 16;
+	imageLayer.masksToBounds = YES;
+	
+	UIGraphicsBeginImageContext(CGSizeMake(imageWidth, imageHeight));
+	
+	[imageLayer renderInContext:UIGraphicsGetCurrentContext()];
+	UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+	
+	UIGraphicsEndImageContext();
+	
+    return newImage;
 }
 
 @end

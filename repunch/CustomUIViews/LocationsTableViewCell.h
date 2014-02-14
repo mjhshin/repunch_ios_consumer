@@ -8,12 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface StoreDetailTableViewCell : UITableViewCell
+@interface LocationsTableViewCell : UITableViewCell
 
-+ (StoreDetailTableViewCell *)cell;
++ (LocationsTableViewCell *)cell;
 + (NSString *)reuseIdentifier;
 
-@property (weak, nonatomic) IBOutlet UIImageView *locationImage;
 @property (weak, nonatomic) IBOutlet UILabel *locationTitle;
 @property (weak, nonatomic) IBOutlet UILabel *locationSubtitle;
 @property (weak, nonatomic) IBOutlet UILabel *locationHours;

@@ -28,7 +28,7 @@
 	
 	containsReply = ( !IS_NIL(self.reply) );
 	
-	UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"delete_icon"]
+	UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_delete"]
 																	 style:UIBarButtonItemStylePlain
 																	target:self
 																	action:@selector(deleteButtonAction)];
@@ -294,7 +294,7 @@
 			 if(!error)
 			 {
 				 [self.messageStatus setObject:@"pending" forKey:@"redeem_available"];
-				 [RepunchUtils setDisabledButtonStyle:self.redeemButton];
+				 [self.redeemButton setDisabled];
 				 [RepunchUtils showDialogWithTitle:@"Waiting for confirmation"
 									   withMessage:@"Please wait for this item to be validated"];
 			 }

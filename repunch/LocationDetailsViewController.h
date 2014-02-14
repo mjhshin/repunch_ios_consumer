@@ -25,11 +25,13 @@
 @property (weak, nonatomic) IBOutlet UIButton *expandedMapExitButton;
 @property (weak, nonatomic) IBOutlet UIButton *expandedMapDirectionsButton;
 @property (unsafe_unretained, nonatomic) IBOutlet UIView *expandedMapStatusBar;
+@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapGestureRecognizer;
 
 - (IBAction)bigMapExitButtonAction:(id)sender;
 - (IBAction)bigMapDirectionsButtonAction:(id)sender;
 
 - (IBAction)mapButtonAction:(id)sender;
 - (IBAction)callButtonAction:(id)sender;
+- (IBAction)mapTapGestureAction:(UITapGestureRecognizer *)sender;
 
 @end

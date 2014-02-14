@@ -27,8 +27,8 @@ static DataManager *sharedDataManager = nil;    // static instance variable
         self.patronStores = [[NSMutableDictionary alloc] init];
         self.stores = [[NSMutableDictionary alloc] init];
 		self.storeLocations = [[NSMutableDictionary alloc] init];
-        self.storeImageCache = [[NSCache alloc] init];
-		self.storeLocationImageCache = [[NSCache alloc] init];
+        self.storeThumbnailImageCache = [[NSCache alloc] init];
+		self.storeCoverImageCache = [[NSCache alloc] init];
         self.messageStatuses = [[NSMutableDictionary alloc] init];
 	}
 	return self;
@@ -91,30 +91,25 @@ static DataManager *sharedDataManager = nil;    // static instance variable
 	return [self.storeLocations objectForKey:objectId];
 }
 
-// Store image cache methods
-- (void)addStoreImage:(UIImage *)image forKey:(NSString *)storeId
+// Store image methods
+- (void)addThumbnailImage:(UIImage *)image forKey:(NSString *)storeId
 {
-	if(image != nil) {
-		[self.storeImageCache setObject:image forKey:storeId];
-	}
+	[self.storeThumbnailImageCache setObject:image forKey:storeId];
 }
 
-- (UIImage *)getStoreImage:(NSString *)storeId
+- (UIImage *)getThumbnailImage:(NSString *)storeId
 {
-    return [self.storeImageCache objectForKey:storeId];
+	return [self.storeThumbnailImageCache objectForKey:storeId];
 }
 
-// StoreLocation image cache methods
-- (void)addStoreLocationImage:(UIImage *)image forKey:(NSString *)storeId
+- (void)addCoverImage:(UIImage *)image forKey:(NSString *)storeId
 {
-	if(image != nil) {
-		[self.storeLocationImageCache setObject:image forKey:storeId];
-	}
+	[self.storeCoverImageCache setObject:image forKey:storeId];
 }
 
-- (UIImage *)getStoreLocationImage:(NSString *)storeId
+- (UIImage *)getCoverImage:(NSString *)storeId
 {
-    return [self.storeLocationImageCache objectForKey:storeId];
+	return [self.storeCoverImageCache objectForKey:storeId];
 }
 
 // MessageStatus/Message methods

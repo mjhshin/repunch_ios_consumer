@@ -209,8 +209,8 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
     myPlacesNavController.tabBarItem.title = @"My Places";
     inboxNavController.tabBarItem.title = @"Inbox";
     
-    myPlacesNavController.tabBarItem.image = [UIImage imageNamed:@"ico-tab-places.png"];
-    inboxNavController.tabBarItem.image = [UIImage imageNamed:@"ico-tab-inbox.png"];
+    myPlacesNavController.tabBarItem.image = [UIImage imageNamed:@"tab_my_places"];
+    inboxNavController.tabBarItem.image = [UIImage imageNamed:@"ico-tab-inbox"];
     
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
 	tabBarController.viewControllers = @[myPlacesNavController, inboxNavController];
@@ -218,8 +218,13 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 	self.window.rootViewController = tabBarController;
 	[self.window makeKeyAndVisible];
 	
-	[inboxVC view]; //pre-load second tab
-	[FBFriendPickerViewController class]; //pre-load Facebook friend picker
+	//pre-load inbox tab
+	[inboxVC view];
+	
+	//pre-load Facebook friend picker
+	if([PFFacebookUtils isLinkedWithUser:[RPUser currentUser]]) {
+		[FBFriendPickerViewController class];
+	}
 }
 
 - (void)presentLandingViews

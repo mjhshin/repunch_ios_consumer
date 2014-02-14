@@ -8,10 +8,6 @@
 
 #import "FacebookFriendsViewController.h"
 
-@interface FacebookFriendsViewController ()
-
-@end
-
 @implementation FacebookFriendsViewController
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle

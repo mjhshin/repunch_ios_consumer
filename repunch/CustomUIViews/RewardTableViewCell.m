@@ -54,16 +54,20 @@
 {
 	self.userInteractionEnabled = YES;
 	self.rewardStatusIcon.hidden = NO;
-	self.rewardStatusIcon.image = [UIImage imageNamed:@"unlocked_icon"];
-	self.contentView.backgroundColor = [UIColor whiteColor];
+	self.rewardStatusIcon.image = [UIImage imageNamed:@"checkmark_icon"];
+	self.rewardPunches.textColor = [RepunchUtils repunchOrangeColor];
+	self.rewardPunchesStatic.textColor = [RepunchUtils repunchOrangeColor];
+	//self.contentView.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)setRewardLocked
 {
 	self.userInteractionEnabled = NO;
 	self.rewardStatusIcon.hidden = NO;
-	self.rewardStatusIcon.image = [UIImage imageNamed:@"locked_icon"];
-	self.contentView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+	self.rewardStatusIcon.image = [UIImage imageNamed:@"reward_locked"];
+	self.rewardPunches.textColor = [UIColor darkGrayColor];
+	self.rewardPunchesStatic.textColor = [UIColor darkGrayColor];
+	//self.contentView.backgroundColor = [UIColor groupTableViewBackgroundColor];
 }
 
 @end

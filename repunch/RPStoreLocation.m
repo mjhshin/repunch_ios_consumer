@@ -18,7 +18,6 @@
 
 #pragma mark - properties synthesize
 
-@synthesize avatar;
 @synthesize hoursManager;
 @synthesize m_storeHoursManager;
 
@@ -29,7 +28,6 @@
 @dynamic city;
 @dynamic zip;
 @dynamic phone_number;
-@dynamic cover_image;
 @dynamic coordinates;
 @dynamic Store;
 

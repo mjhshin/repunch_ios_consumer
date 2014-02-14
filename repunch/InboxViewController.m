@@ -90,13 +90,13 @@
 - (void)setupNavigationBar
 {
 	UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc]
-									   initWithImage:[UIImage imageNamed:@"settings_icon.png"]
+									   initWithImage:[UIImage imageNamed:@"nav_settings"]
 									   style:UIBarButtonItemStylePlain
 									   target:self
 									   action:@selector(openSettings)];
 	
 	UIBarButtonItem *searchButton = [[UIBarButtonItem alloc]
-									 initWithImage:[UIImage imageNamed:@"search_icon.png"]
+									 initWithImage:[UIImage imageNamed:@"nav_search"]
 									 style:UIBarButtonItemStylePlain
 									 target:self
 									 action:@selector(openSearch)];
@@ -242,29 +242,19 @@
     RPMessage *message = messageStatus.Message;
     RPMessage *reply = message.Reply;
     
-    if ( !IS_NIL(reply) ) {
-        cell.senderName.text = reply.sender_name;
-        cell.subjectLabel.text = [NSString stringWithFormat:@"RE: %@ - %@", message.subject, reply.body];
-        cell.dateSent.text = [self formattedDateString:reply.createdAt];
-    }
-	else {
-		cell.senderName.text = message.sender_name;
-        cell.subjectLabel.text = [NSString stringWithFormat:@"%@ - %@", message.subject, message.body];
-        cell.dateSent.text = [self formattedDateString:message.createdAt];
-    }
-    
-    if ([message.message_type isEqualToString:@"offer"]) {
-        [cell.offerPic setHidden:NO];
-        [cell.offerPic setImage:[UIImage imageNamed:@"ico_message_coupon"]];
-    }
-	else if ([message.message_type isEqualToString:@"gift"]) {
-        [cell.offerPic setHidden:NO];
-        [cell.offerPic setImage:[UIImage imageNamed:@"message_gift"]];
-    }
-	else {
-		[cell.offerPic setHidden:YES];
+	cell.senderName.text = IS_NIL(reply) ? message.sender_name : reply.sender_name;
+	cell.dateSent.text = IS_NIL(reply) ? [self formattedDateString:message.createdAt] : [self formattedDateString:message.createdAt];
+	
+	if(IS_NIL(message.subject)) {
+		cell.subjectLabel.text = IS_NIL(reply) ? message.body : [NSString stringWithFormat:@"RE: %@", reply.body];
 	}
+	else { //only offers will have subject
+		cell.subjectLabel.text = [NSString stringWithFormat:@"RE: %@ - %@", message.subject, message.body];
+	}
+	
     
+	[cell setMessageTypeIcon:message.message_type forReadMessage:messageStatus.is_read];
+	
     if (messageStatus.is_read) {
 		[cell setMessageRead];
     }

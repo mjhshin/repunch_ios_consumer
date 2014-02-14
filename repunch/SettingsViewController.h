@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RPTableView.h"
 
 @interface SettingsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet RPTableView *tableView;
 
 @end

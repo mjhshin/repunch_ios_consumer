@@ -13,7 +13,6 @@
 @end
 
 @implementation LocationDetailsViewController {
-	UITapGestureRecognizer *tapGestureRecognizer;
 	CLLocationCoordinate2D coordinates;
 	NSString *storeName;
 }
@@ -27,26 +26,11 @@
 {
     [super viewDidLoad];
 	
-	// Make header selectable
-	tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-																   action:@selector(handleTapGesture:)];
-	[tapGestureRecognizer setDelegate:self];
-	tapGestureRecognizer.numberOfTouchesRequired = 1;
-	tapGestureRecognizer.numberOfTapsRequired = 1;
-	[self.mapView addGestureRecognizer:tapGestureRecognizer];
 	self.mapView.zoomEnabled = NO;
 	self.mapView.scrollEnabled = NO;
 	
 	[self setInformation];
 	[self addMapAnnotation];
-}
-
-- (void)handleTapGesture:(UITapGestureRecognizer *)sender
-{
-    if (sender.state == UIGestureRecognizerStateEnded)
-	{
-        [self expandMapView];
-    }
 }
 
 - (void)setInformation
@@ -85,7 +69,7 @@
 	self.mapViewHeightConstraint.constant = [UIScreen mainScreen].bounds.size.height + 44.0f;
 	[self.navigationController setNavigationBarHidden:YES];
 	
-	tapGestureRecognizer.enabled = NO;
+	self.tapGestureRecognizer.enabled = NO;
 	self.mapView.zoomEnabled = YES;
 	self.mapView.scrollEnabled = YES;
 	
@@ -99,7 +83,7 @@
 	self.mapViewHeightConstraint.constant = 300.0f;
 	[self.navigationController setNavigationBarHidden:NO];
 	
-	tapGestureRecognizer.enabled = YES;
+	self.tapGestureRecognizer.enabled = YES;
 	self.mapView.zoomEnabled = NO;
 	self.mapView.scrollEnabled = NO;
 	
@@ -157,6 +141,14 @@
 	
     NSString *phoneNumberUrl = [@"tel://" stringByAppendingString:phoneNumber];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumberUrl]];
+}
+
+- (IBAction)mapTapGestureAction:(UITapGestureRecognizer *)sender
+{
+	if (sender.state == UIGestureRecognizerStateEnded)
+	{
+        [self expandMapView];
+    }
 }
 
 @end

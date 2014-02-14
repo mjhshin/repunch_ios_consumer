@@ -6,11 +6,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RPButton.h"
 
 @interface LandingViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UIButton *loginButton;
-@property (weak, nonatomic) IBOutlet UIButton *registerButton;
+@property (weak, nonatomic) IBOutlet RPButton *loginButton;
+@property (weak, nonatomic) IBOutlet RPButton *registerButton;
 @property (weak, nonatomic) IBOutlet UIImageView *background;
 
 - (IBAction)registerButtonPress:(id)sender;

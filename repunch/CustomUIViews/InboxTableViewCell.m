@@ -50,4 +50,24 @@
 	self.dateSent.textColor = [RepunchUtils repunchOrangeColor];
 }
 
+- (void)setMessageTypeIcon:(NSString *)messageType forReadMessage:(BOOL)isRead
+{
+	if ([messageType isEqualToString:@"offer"])
+	{
+		self.offerPic.image = isRead ? [UIImage imageNamed:@"message_type_offer"]
+										: [UIImage imageNamed:@"message_type_offer_orange"];
+		self.offerPic.hidden = NO;
+    }
+	else if ([messageType isEqualToString:@"gift"])
+	{
+		self.offerPic.image = isRead ? [UIImage imageNamed:@"message_type_gift"]
+										: [UIImage imageNamed:@"message_type_gift_orange"];
+		self.offerPic.hidden = NO;
+    }
+	else
+	{
+		self.offerPic.hidden = YES;
+	}
+}
+
 @end

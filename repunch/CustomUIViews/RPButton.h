@@ -10,6 +10,10 @@
 
 @interface RPButton : UIButton
 
-@property (strong, nonatomic) UIActivityIndicatorView *spinner;
+- (void)setEnabled;
+- (void)setDisabled;
+- (void)setTitle:(NSString *)text;
+- (void)startSpinner;
+- (void)stopSpinner;
 
 @end

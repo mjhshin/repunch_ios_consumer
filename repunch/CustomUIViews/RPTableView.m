@@ -10,12 +10,22 @@
 
 @implementation RPTableView
 
-- (void)awakeFromNib
+/*- (void)awakeFromNib
 {
 	[super awakeFromNib];
 	
 	[self initFooters];
 	[self setDefaultFooter];
+}*/
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+	if(self = [super initWithCoder:aDecoder]) {
+		[self initFooters];
+		[self setDefaultFooter];
+	}
+	
+	return self;
 }
 
 - (void)initFooters

@@ -8,13 +8,9 @@
 
 #import "LocationsViewController.h"
 #import "LocationDetailsViewController.h"
-#import "StoreDetailTableViewCell.h"
+#import "LocationsTableViewCell.h"
 #import "RPStoreLocation.h"
 #import "RepunchUtils.h"
-
-@interface LocationsViewController()
-
-@end
 
 @implementation LocationsViewController
 {
@@ -28,9 +24,6 @@
     if (self) {
         // Custom initialization
 		self.navigationItem.title = @"Locations";
-		
-		UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 1)];
-		[self.tableView setTableFooterView:footer];
     }
     return self;
 }
@@ -113,10 +106,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    StoreDetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[StoreDetailTableViewCell reuseIdentifier]];
+    LocationsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[LocationsTableViewCell reuseIdentifier]];
 	
 	if (cell == nil) {
-        cell = [StoreDetailTableViewCell cell];
+        cell = [LocationsTableViewCell cell];
     }
 	
 	RPStoreLocation *storeLocation = self.locationsArray[indexPath.row];

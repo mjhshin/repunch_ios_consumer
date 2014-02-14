@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
@@ -12,7 +12,6 @@
                 <outlet property="facebookButtonLabel" destination="296" id="426"/>
                 <outlet property="facebookSpinner" destination="427" id="430"/>
                 <outlet property="loginButton" destination="52" id="410"/>
-                <outlet property="loginButtonSpinner" destination="wiu-Vr-3S7" id="J05-R5-ViY"/>
                 <outlet property="passwordInput" destination="6" id="50"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
@@ -117,7 +116,7 @@
                         <outlet property="delegate" destination="-1" id="344"/>
                     </connections>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="52" userLabel="LoginButton">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="52" userLabel="LoginButton" customClass="RPButton">
                     <rect key="frame" x="50" y="341" width="220" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
@@ -135,10 +134,6 @@
                         <action selector="loginWithRepunch:" destination="-1" eventType="touchUpInside" id="416"/>
                     </connections>
                 </button>
-                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="wiu-Vr-3S7" userLabel="LoginButtonSpinner">
-                    <rect key="frame" x="142" y="345" width="37" height="37"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                </activityIndicatorView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="57" userLabel="ForgotPasswordButton">
                     <rect key="frame" x="79" y="415" width="163" height="33"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -166,7 +161,6 @@
                 <constraint firstAttribute="trailing" secondItem="11" secondAttribute="trailing" id="OPP-sN-BfS"/>
                 <constraint firstItem="296" firstAttribute="leading" secondItem="7" secondAttribute="trailing" constant="-84" id="Okp-h0-Xjk"/>
                 <constraint firstAttribute="centerX" secondItem="8" secondAttribute="centerX" id="R1y-JS-Te9"/>
-                <constraint firstItem="wiu-Vr-3S7" firstAttribute="centerX" secondItem="52" secondAttribute="centerX" id="Sgq-Ni-iq6"/>
                 <constraint firstAttribute="centerX" secondItem="57" secondAttribute="centerX" id="Szx-Kc-kvW"/>
                 <constraint firstItem="7" firstAttribute="top" secondItem="1" secondAttribute="top" constant="90" id="Y3u-hg-q6B"/>
                 <constraint firstItem="6" firstAttribute="top" secondItem="8" secondAttribute="bottom" constant="8" id="YB1-YD-Wj5"/>
@@ -176,7 +170,6 @@
                 <constraint firstItem="427" firstAttribute="leading" secondItem="7" secondAttribute="trailing" constant="-78" id="lW2-ll-kjP"/>
                 <constraint firstItem="9" firstAttribute="top" secondItem="7" secondAttribute="bottom" constant="30" id="nji-5d-fca"/>
                 <constraint firstItem="10" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="ptx-Dx-EIy"/>
-                <constraint firstItem="wiu-Vr-3S7" firstAttribute="centerY" secondItem="52" secondAttribute="centerY" id="rTw-Hn-pG9"/>
                 <constraint firstAttribute="centerX" secondItem="9" secondAttribute="centerX" id="tcr-eh-oN3"/>
                 <constraint firstItem="8" firstAttribute="top" secondItem="9" secondAttribute="bottom" constant="30" id="ue4-50-msC"/>
                 <constraint firstAttribute="centerX" secondItem="52" secondAttribute="centerX" id="yYW-On-NPf"/>

@@ -120,18 +120,18 @@
 
 - (void)setupNavigationBar
 {
-	UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"settings_icon.png"]
+	UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_settings"]
 																	   style:UIBarButtonItemStylePlain
 																	  target:self
 																	  action:@selector(openSettings)];
 	
-	UIBarButtonItem *searchButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"search_icon.png"]
+	UIBarButtonItem *searchButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_search"]
 																	 style:UIBarButtonItemStylePlain
 																	target:self
 																	action:@selector(openSearch)];
 	
 	UIButton *punchCodeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, 50)];
-	[punchCodeButton setImage:[UIImage imageNamed:@"repunch-logo.png"] forState:UIControlStateNormal];
+	[punchCodeButton setImage:[UIImage imageNamed:@"repunch-logo"] forState:UIControlStateNormal];
 	[punchCodeButton addTarget:self action:@selector(showPunchCode) forControlEvents:UIControlEventTouchUpInside];
 	
 	self.navigationItem.leftBarButtonItem = settingsButton;
@@ -271,17 +271,17 @@
 		//{
 		if( !IS_NIL(store.thumbnail_image) )
         {
-            UIImage *storeImage = [self.sharedData getStoreImage:storeId];
+            UIImage *storeImage = [self.sharedData getThumbnailImage:storeId];
 			if(storeImage == nil)
 			{
-				cell.storeImage.image = [UIImage imageNamed:@"store_placeholder.png"];
+				cell.storeImage.image = [UIImage imageNamed:@"placeholder_thumbnail_image"];
 				[self downloadImage:store.thumbnail_image forIndexPath:indexPath withStoreId:storeId];
 			} else {
 				cell.storeImage.image = storeImage;
 			}
         } else {
 			// if a download is deferred or in progress, return a placeholder image
-			cell.storeImage.image = [UIImage imageNamed:@"store_placeholder.png"];
+			cell.storeImage.image = [UIImage imageNamed:@"placeholder_thumbnail_image"];
 		}
 		//}
     //}
@@ -324,7 +324,7 @@
 				if(storeImage) {
 					MyPlacesTableViewCell *cell = (MyPlacesTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
 					cell.storeImage.image = storeImage;
-					[self.sharedData addStoreImage:storeImage forKey:storeId];
+					[self.sharedData addThumbnailImage:storeImage forKey:storeId];
 				}
             }
             else {

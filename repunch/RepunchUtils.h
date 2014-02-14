@@ -21,9 +21,6 @@
 
 + (void)setupNavigationController:(UINavigationController *)navController;
 
-+ (void)setDefaultButtonStyle:(UIButton *)button;
-+ (void)setDisabledButtonStyle:(UIButton *)button;
-
 + (UIColor *)repunchOrangeColor;
 + (UIColor *)lightRepunchOrangeColor;
 + (UIColor *)repunchOrangeHighlightedColor;
@@ -33,5 +30,7 @@
 
 + (void)clearNotificationCenter;
 + (void)configureAppearance;
+
++ (UIImage *)imageScaledForThumbnail:(UIImage *)image;
 
 @end

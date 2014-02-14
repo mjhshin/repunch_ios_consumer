@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
-#import "StoreDetailTableViewCell.h"
+#import "LocationsTableViewCell.h"
 #import "RepunchUtils.h"
 
-@implementation StoreDetailTableViewCell
+@implementation LocationsTableViewCell
 
 + (NSString *)reuseIdentifier
 {
@@ -21,9 +21,9 @@
     return [[self class] reuseIdentifier];
 }
 
-+ (StoreDetailTableViewCell *)cell
++ (LocationsTableViewCell *)cell
 {
-	StoreDetailTableViewCell *customCell = [[[NSBundle mainBundle] loadNibNamed:[self reuseIdentifier]
+	LocationsTableViewCell *customCell = [[[NSBundle mainBundle] loadNibNamed:[self reuseIdentifier]
 																		  owner:self
 																		options:nil]
 											objectAtIndex:0];
@@ -31,9 +31,6 @@
 	UIView *selectedView = [[UIView alloc] initWithFrame:customCell.frame];
 	selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
 	customCell.selectedBackgroundView = selectedView;
-	
-	customCell.locationImage.layer.cornerRadius = 10.0;
-	customCell.locationImage.layer.masksToBounds = YES;
 	
 	return customCell;
 }

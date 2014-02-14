@@ -72,12 +72,12 @@
 	[[NSBundle mainBundle] loadNibNamed:@"RewardTableViewHeaderView" owner:self options:nil];
 	[[NSBundle mainBundle] loadNibNamed:@"StoreSectionHeaderView" owner:self options:nil];
 	
-	deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"delete_icon.png"]
+	deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_delete"]
 													style:UIBarButtonItemStyleBordered
 												   target:self
 												   action:@selector(deleteStore)];
 	
-	addButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"add_icon.png"]
+	addButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_add_store"]
 													style:UIBarButtonItemStylePlain
 												   target:self
 												   action:@selector(addStore)];
@@ -117,44 +117,81 @@
 	CAGradientLayer *bgLayer = [RepunchUtils blackGradient];
 	bgLayer.frame = self.storeNameBackground.bounds;
 	[self.storeNameBackground.layer insertSublayer:bgLayer atIndex:0];
-	
-	//self.storeName.backgroundColor = [UIColor colorWithPatternImage:[UIImage
-	//imageNamed:@"black_alpha_gradient_reverse"]];
-	
-	UIImage *storeImage;
     
     [self.storeAddress setPreferredMaxLayoutWidth:260];
     [self.storeHours setPreferredMaxLayoutWidth:230];
 	
 	if(self.storeLocationId != nil) {
-		storeImage = [sharedData getStoreLocationImage:self.storeLocationId];
 		self.storeAddress.text = storeLocation.formattedAddress;
 		[self setStoreHours];
 	}
     else {
-		storeImage = [sharedData getStoreImage:self.storeId];
 		self.storeAddress.text = @"Multiple Locations";
 		self.storeHours.hidden = YES;
 		self.storeHoursOpen.hidden = YES;
 	}
+	
+	[self setStoreImage];
+}
 
-	if(storeImage != nil) {
-		self.storeImage.image = storeImage;
+- (void)setStoreImage
+{
+	if ( !IS_NIL(store.cover_image) ) {
+		self.storeImage.contentMode = UIViewContentModeScaleAspectFill;
+		
+		UIImage *coverImage = [sharedData getCoverImage:self.storeId];
+		
+		if(coverImage != nil) {
+			self.storeImage.image = coverImage;
+		}
+		else {
+			self.storeImage.image = [UIImage imageNamed:@"placeholder_cover_image"];
+			
+			[store.cover_image getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+				if (!error) {
+					
+					UIImage *downloadedImage = [UIImage imageWithData:data];
+					if(downloadedImage) {
+						self.storeImage.image = downloadedImage;
+						[sharedData addThumbnailImage:downloadedImage forKey:store.objectId];
+					}
+				}
+				else {
+					NSLog(@"image download failed");
+				}
+			}];
+		}
+	}
+	else if( !IS_NIL(store.thumbnail_image) ) {
+		self.storeImage.contentMode = UIViewContentModeCenter;
+		
+		UIImage *thumbnailImage = [sharedData getThumbnailImage:self.storeId];
+		
+		if(thumbnailImage != nil) {
+			self.storeImage.image = [RepunchUtils imageScaledForThumbnail:thumbnailImage];
+		}
+		else {
+			self.storeImage.image = [UIImage imageNamed:@"placeholder_thumbnail_image"];
+			
+			[store.thumbnail_image getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+				if (!error) {
+					
+					UIImage *downloadedImage = [UIImage imageWithData:data];
+					if(downloadedImage) {
+						self.storeImage.image = [RepunchUtils imageScaledForThumbnail:downloadedImage];
+						[sharedData addThumbnailImage:downloadedImage forKey:store.objectId];
+					}
+				}
+				else {
+					NSLog(@"image download failed");
+				}
+			}];
+		}
 	}
 	else {
-		self.storeImage.image = [UIImage imageNamed:@"store_placeholder.png"];
+		self.storeImage.contentMode = UIViewContentModeScaleAspectFill;
 		
-		__weak typeof(self) weakSelf = self;
-		
-		[store updateStoreImageWithCompletionHander:^(UIImage *avatar, NSError *error) {
-			if (avatar) {
-				weakSelf.storeImage.image = avatar;
-			}
-			else {
-				weakSelf.storeImage.image = [UIImage imageNamed:@"store_placeholder.png"];
-			}
-		}];
-		
+		//set placeholder cover image
 	}
 }
 
@@ -176,16 +213,6 @@
 	CGRect headerFrame = self.headerView.frame;
 	headerFrame.size.height = 350.0f + self.storeInfoViewHeightConstraint.constant;
 	self.headerView.frame = headerFrame;
-	
-	// layout after adjusting height constraint
-	//[self.storeInfoView setNeedsLayout];
-	//[self.storeInfoView layoutIfNeeded];
-	
-	// add shadow
-	//[self.storeInfoView.layer setShadowColor:[UIColor darkGrayColor].CGColor];
-	//[self.storeInfoView.layer setShadowOpacity:0.7];
-	//[self.storeInfoView.layer setShadowRadius:1.0];
-	//[self.storeInfoView.layer setShadowOffset:CGSizeMake(0.5f, 0.5f)];
 }
 
 - (void)checkPatronStore
@@ -290,10 +317,6 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
 	self.tableView.tableHeaderView = self.headerView;
-
-	UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 1)];
-	footer.backgroundColor = [UIColor clearColor];
-	self.tableView.tableFooterView = footer;
 }
 
 - (void)setOpaqueNavigationBar
@@ -329,7 +352,7 @@
 	[UIView setAnimationDuration:0.25f];
 	
 	self.navigationItem.title = @"";
-	[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"black_alpha_gradient.png"] forBarMetrics:UIBarMetricsDefault];
+	[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"black_alpha_gradient"] forBarMetrics:UIBarMetricsDefault];
 	self.navigationController.navigationBar.shadowImage = [UIImage new];
 	navigationBarIsOpaque = NO;
 	self.tableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
@@ -386,13 +409,13 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
 	if(patronStoreExists) {
-		self.saveButton.hidden = YES;
+		//self.saveButton.hidden = YES;
 	
 		self.punchCountLabel.text = [NSString stringWithFormat:@"%i", punchCount];
 		self.punchStaticLabel.text = (punchCount == 1) ? @"Punch": @"Punches";
 	}
 	else {
-		self.saveButton.hidden = NO;
+		//self.saveButton.hidden = NO;
 	}
 
 	return self.sectionHeaderView;
@@ -547,17 +570,20 @@
 	[self presentViewController:navController animated:YES completion:nil];
 }
 
-- (IBAction)storeInfoButtonAction:(id)sender
+- (IBAction)storeInfoGestureAction:(UITapGestureRecognizer *)sender
 {
-	if(self.storeLocationId == nil) {
-		LocationsViewController *locationsVC = [[LocationsViewController alloc] init];
-		locationsVC.store = store;
-		[self.navigationController pushViewController:locationsVC animated:YES];
-	}
-	else {
-		LocationDetailsViewController *locationDetailsVC = [[LocationDetailsViewController alloc] init];
-		locationDetailsVC.storeLocation = storeLocation;
-		[self.navigationController pushViewController:locationDetailsVC animated:YES];
+	if (sender.state == UIGestureRecognizerStateEnded)
+	{
+		if(self.storeLocationId == nil) {
+			LocationsViewController *locationsVC = [[LocationsViewController alloc] init];
+			locationsVC.store = store;
+			[self.navigationController pushViewController:locationsVC animated:YES];
+		}
+		else {
+			LocationDetailsViewController *locationDetailsVC = [[LocationDetailsViewController alloc] init];
+			locationDetailsVC.storeLocation = storeLocation;
+			[self.navigationController pushViewController:locationDetailsVC animated:YES];
+		}
 	}
 }
 
@@ -769,6 +795,4 @@
 	[self presentViewController:composeNavController animated:YES completion:nil];
 }
 
-- (IBAction)saveButtonAction:(id)sender {
-}
 @end

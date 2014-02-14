@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
@@ -14,6 +14,7 @@
                 <outlet property="mapView" destination="g53-I1-Vet" id="ULP-Dn-uNJ"/>
                 <outlet property="mapViewHeightConstraint" destination="IqC-2i-6UC" id="eZ4-HL-6F5"/>
                 <outlet property="scrollView" destination="aM2-vq-0Lv" id="GC5-gH-qZx"/>
+                <outlet property="tapGestureRecognizer" destination="hxc-yT-TCF" id="qeE-14-LGb"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
@@ -29,9 +30,13 @@
                         <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="g53-I1-Vet">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <gestureRecognizers/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="300" id="IqC-2i-6UC"/>
                             </constraints>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="hxc-yT-TCF" appends="YES" id="VsR-Cj-w0B"/>
+                            </connections>
                         </mapView>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zSd-iD-XRm" userLabel="DirectionsButton">
                             <rect key="frame" x="0.0" y="301" width="320" height="75"/>
@@ -243,6 +248,11 @@ Sun</string>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
+        <tapGestureRecognizer id="hxc-yT-TCF">
+            <connections>
+                <action selector="mapTapGestureAction:" destination="-1" id="r9f-D7-BtQ"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
     <resources>
         <image name="circular_exit_button.png" width="32" height="32"/>
