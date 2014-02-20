@@ -206,4 +206,39 @@
     return newImage;
 }
 
+
++ (CGRect)frameForViewWithInitialFrame:(CGRect)viewInitialFrame withDynamicLabels:(NSArray*)labels andInitialHights:(NSArray*)initialHeights
+{
+    CGFloat totalDelta = 0;
+
+    
+    for (NSUInteger i = 0  ; i < labels.count; i++) {
+
+        UILabel *label = labels[i];
+        CGFloat initialHeight = [initialHeights[i] floatValue];
+
+        CGSize max = CGSizeMake(label.frame.size.width, CGFLOAT_MAX);
+
+        CGFloat expectedHeight = [label.text sizeWithFont:label.font
+                                        constrainedToSize:max
+                                            lineBreakMode:label.lineBreakMode].height;
+
+        CGFloat delta = expectedHeight - initialHeight;
+
+        if (delta < 1) {
+            delta = 0;
+        }
+
+        if (label.text.length < 1) {
+            delta -= label.font.pointSize * 1.4f;
+        }
+
+        totalDelta += delta;
+    }
+
+    viewInitialFrame.size.height +=  totalDelta;
+    
+    return viewInitialFrame;
+}
+
 @end

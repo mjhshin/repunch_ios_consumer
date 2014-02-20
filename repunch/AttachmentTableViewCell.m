@@ -9,6 +9,7 @@
 #import "AttachmentTableViewCell.h"
 #import "OfferBorderView.h"
 #import "GiftBorderView.h"
+#import "RepunchUtils.h"
 
 @implementation AttachmentTableViewCell
 
@@ -27,6 +28,15 @@
 	return [[[NSBundle mainBundle] loadNibNamed:[self reuseIdentifier]
 										  owner:self
 										options:nil] objectAtIndex:0];
+}
+
+- (void)awakeFromNib
+{
+    self.frame = [RepunchUtils frameForViewWithInitialFrame:self.frame
+                                          withDynamicLabels:@[self.title, self.rewardTitle, self.rewardDescription]
+                                           andInitialHights:@[@(CGRectGetHeight(self.title.frame)),
+                                                              @(CGRectGetHeight(self.rewardTitle.frame)),
+                                                              @(CGRectGetHeight(self.rewardDescription.frame))]];
 }
 
 - (void)setOfferBorder
@@ -52,5 +62,6 @@
 	background.frame = self.borderView.bounds;
 	[self.borderView addSubview:background];
 }
+
 
 @end

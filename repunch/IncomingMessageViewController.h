@@ -20,13 +20,11 @@
 - (void)removeMessage:(IncomingMessageViewController *)controller forMsgStatus:(RPMessageStatus *)msgStatus;
 @end
 
-@interface IncomingMessageViewController : UIViewController<ComposeMessageDelegate, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
+@interface IncomingMessageViewController : UITableViewController <ComposeMessageDelegate>
 
 @property (nonatomic, weak) id <IncomingMessageVCDelegate> delegate;
 
 @property (strong, nonatomic) NSString *messageStatusId;
-
-@property (weak, nonatomic) IBOutlet RPTableView *tableView;
 
 //@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 //@property (weak, nonatomic) IBOutlet UILabel *subjectLabel;

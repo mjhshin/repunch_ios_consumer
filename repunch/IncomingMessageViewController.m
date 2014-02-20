@@ -23,6 +23,15 @@
 	UIActivityIndicatorView *attachmentSpinner;
 }
 
+- (id)init
+{
+    self = [super initWithNibName:@"IncomingMessageViewController" bundle:nil];
+    if (self) {
+
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -53,6 +62,7 @@
 	else {
 		self.navigationItem.title = @"Message";
 	}
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -227,6 +237,15 @@
     return rows;
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
+    if ([cell isKindOfClass:[MessageTableViewCell class]]) {
+        return [((MessageTableViewCell*)cell) height];
+    }
+    return 400;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if(indexPath.row == 0)
@@ -248,7 +267,7 @@
 		cell.senderName.text = message.sender_name;
 		cell.sendTime.text = [self formattedDateString:message.createdAt];
 		cell.body.text = message.body;
-		
+
 		return cell;
 	}
 	else if(indexPath.row == 1 && [messageType isEqualToString:@"offer"])
@@ -264,6 +283,7 @@
 		cell.rewardDescription.text = @"Timer goes here";
 		
 		[cell setOfferBorder];
+    
 		
 		return cell;
 	}
@@ -295,7 +315,7 @@
 		cell.senderName.text = message.Reply.sender_name;
 		cell.sendTime.text = [self formattedDateString:message.Reply.createdAt];
 		cell.body.text = message.Reply.body;
-		
+
 		return cell;
 	}
 }
@@ -305,10 +325,6 @@
 
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 400;
-}
 
 #pragma mark - Helper Methods
 
