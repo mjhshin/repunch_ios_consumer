@@ -17,7 +17,7 @@
 - (void)setMessageTypeIcon:(NSString *)messageType forReadMessage:(BOOL)isRead;
 
 @property (weak, nonatomic) IBOutlet UILabel *senderName;
-@property (weak, nonatomic) IBOutlet UILabel *subjectLabel;
+@property (weak, nonatomic) IBOutlet UILabel *messagePreview;
 @property (weak, nonatomic) IBOutlet UILabel *dateSent;
 @property (weak, nonatomic) IBOutlet UIImageView *offerPic;
 

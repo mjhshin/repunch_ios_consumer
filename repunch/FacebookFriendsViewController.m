@@ -67,7 +67,7 @@
 				[friendIds addObject:friend.id];
 			}
 			
-			PFQuery *patronQuery = [PFQuery queryWithClassName:[RPPatron parseClassName]];
+			PFQuery *patronQuery = [RPPatron query];
 			[patronQuery whereKey:@"facebook_id" containedIn:friendIds];
 			[patronQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
 			{

@@ -15,24 +15,24 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Sender" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3" userLabel="SenderLabel">
-                        <rect key="frame" x="15" y="10" width="223" height="24"/>
+                        <rect key="frame" x="15" y="10" width="222" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="00:00 PM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="16" userLabel="DateLabel">
-                        <rect key="frame" x="246" y="12" width="64" height="20"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="11:48 AM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="16" userLabel="DateLabel">
+                        <rect key="frame" x="245" y="12" width="65" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="64" id="452"/>
+                            <constraint firstAttribute="width" constant="65" id="452"/>
                             <constraint firstAttribute="height" constant="20" id="483"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
                         <color key="textColor" red="0.88801375680000005" green="0.4631055026" blue="0.044528202590000003" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" text="Subject Line" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="258" translatesAutoresizingMaskIntoConstraints="NO" id="34" userLabel="PreviewLabel">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" text="Message preview - bla bla bla bla hello bonjour goodbye rabble rabble ellipses" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="258" translatesAutoresizingMaskIntoConstraints="NO" id="34" userLabel="PreviewLabel">
                         <rect key="frame" x="15" y="42" width="258" height="43"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
@@ -69,9 +69,9 @@
             </constraints>
             <connections>
                 <outlet property="dateSent" destination="16" id="31"/>
+                <outlet property="messagePreview" destination="34" id="iQI-rV-VGx"/>
                 <outlet property="offerPic" destination="245" id="339"/>
                 <outlet property="senderName" destination="3" id="29"/>
-                <outlet property="subjectLabel" destination="34" id="79"/>
             </connections>
         </tableViewCell>
     </objects>

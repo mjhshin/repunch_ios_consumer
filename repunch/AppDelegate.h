@@ -6,6 +6,7 @@
 //
 
 #import "MyPlacesViewController.h"
+#import "RPNavigationController.h"
 #import "InboxViewController.h"
 #import "LandingViewController.h"
 #import <Parse/Parse.h>

@@ -24,7 +24,6 @@
 	UIBarButtonItem *deleteButton;
 	UIBarButtonItem *addButton;
     NSMutableArray *timers;
-	UIButton *addToMyPlacesButton;
 	CGFloat transitionScrollOffset;
 	CGFloat lastContentOffset;
 }
@@ -69,22 +68,26 @@
 		self.storeLocationId = storeLocation.objectId;
 	}
 	
-	[[NSBundle mainBundle] loadNibNamed:@"RewardTableViewHeaderView" owner:self options:nil];
+	[[NSBundle mainBundle] loadNibNamed:@"StoreTableViewHeaderView" owner:self options:nil];
 	[[NSBundle mainBundle] loadNibNamed:@"StoreSectionHeaderView" owner:self options:nil];
+	[[NSBundle mainBundle] loadNibNamed:@"StoreSectionHeaderViewAdd" owner:self options:nil];
 	
 	deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_delete"]
 													style:UIBarButtonItemStyleBordered
 												   target:self
-												   action:@selector(deleteStore)];
+												   action:@selector(showDeleteStoreDialog)];
 	
 	addButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_add_store"]
 													style:UIBarButtonItemStylePlain
 												   target:self
 												   action:@selector(addStore)];
 	
+	self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+	
 	[self setStoreInformation];
+	[self setupTableViewHeader];
 	[self checkPatronStore];
-	[self setRewardTableView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -122,10 +125,12 @@
     [self.storeHours setPreferredMaxLayoutWidth:230];
 	
 	if(self.storeLocationId != nil) {
+		self.chainFeedbackButton.hidden = YES;
 		self.storeAddress.text = storeLocation.formattedAddress;
 		[self setStoreHours];
 	}
     else {
+		self.chainFeedbackButton.hidden = NO;
 		self.storeAddress.text = @"Multiple Locations";
 		self.storeHours.hidden = YES;
 		self.storeHoursOpen.hidden = YES;
@@ -152,8 +157,8 @@
 					
 					UIImage *downloadedImage = [UIImage imageWithData:data];
 					if(downloadedImage) {
-						self.storeImage.image = downloadedImage;
-						[sharedData addThumbnailImage:downloadedImage forKey:store.objectId];
+						[self.storeImage setImageWithAnimation:downloadedImage];
+						[sharedData addCoverImage:downloadedImage forKey:store.objectId];
 					}
 				}
 				else {
@@ -178,7 +183,8 @@
 					
 					UIImage *downloadedImage = [UIImage imageWithData:data];
 					if(downloadedImage) {
-						self.storeImage.image = [RepunchUtils imageScaledForThumbnail:downloadedImage];
+						UIImage *scaledImage = [RepunchUtils imageScaledForThumbnail:downloadedImage];
+						[self.storeImage setImageWithAnimation:scaledImage];
 						[sharedData addThumbnailImage:downloadedImage forKey:store.objectId];
 					}
 				}
@@ -195,7 +201,7 @@
 	}
 }
 
-- (void)adjustHeaderBasedOnContent
+- (void)setupTableViewHeader
 {
 	// layout after setting labels' text
 	[self.storeInfoView setNeedsLayout];
@@ -211,8 +217,13 @@
 		
 	// adjust height of headerView frame
 	CGRect headerFrame = self.headerView.frame;
-	headerFrame.size.height = 350.0f + self.storeInfoViewHeightConstraint.constant;
+	headerFrame.size.height = 345.0f + self.storeInfoViewHeightConstraint.constant;
 	self.headerView.frame = headerFrame;
+	
+	[self.contentView setNeedsLayout];
+	[self.contentView layoutIfNeeded];
+	
+	self.tableView.tableHeaderView = self.headerView;
 }
 
 - (void)checkPatronStore
@@ -310,15 +321,6 @@
 	}
 }
 
-- (void)setRewardTableView
-{
-	[self adjustHeaderBasedOnContent];
-	
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
-	self.tableView.tableHeaderView = self.headerView;
-}
-
 - (void)setOpaqueNavigationBar
 {
 	CATransition *animation = [CATransition animation];
@@ -393,12 +395,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 150;
+    return [RewardTableViewCell height];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 140;
+    return patronStoreExists ? self.sectionHeaderView.frame.size.height : self.sectionHeaderViewAdd.frame.size.height;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -409,16 +411,14 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
 	if(patronStoreExists) {
-		//self.saveButton.hidden = YES;
-	
 		self.punchCountLabel.text = [NSString stringWithFormat:@"%i", punchCount];
 		self.punchStaticLabel.text = (punchCount == 1) ? @"Punch": @"Punches";
+		
+		return self.sectionHeaderView;
 	}
 	else {
-		//self.saveButton.hidden = NO;
+		return self.sectionHeaderViewAdd;
 	}
-
-	return self.sectionHeaderView;
 }
 
 #pragma mark - Table view data source delegate
@@ -540,22 +540,42 @@
 
 - (IBAction)callButtonAction:(id)sender
 {
-    /*NSString *phoneNumber = [store.phone_number stringByReplacingOccurrencesOfString:@"[^0-9]"
-															  withString:@""
-																 options:NSRegularExpressionSearch
-																   range:NSMakeRange(0, store.phone_number.length)];*/
+	NSString *urlString = [@"tel://" stringByAppendingString:storeLocation.phone_number];
+	NSURL *url = [NSURL URLWithString:urlString];
 	
-	NSString * phoneNumber = @"(123) 456-7890";
-	
-    NSString *phoneNumberUrl = [@"tel://" stringByAppendingString:phoneNumber];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumberUrl]];
+	if( [[UIApplication sharedApplication] canOpenURL:url] ) {
+		[[UIApplication sharedApplication] openURL:url];
+	}
+	else {
+		[RepunchUtils showDialogWithTitle:@"This device does not support phone calls" withMessage:nil];
+	}
 }
 
 - (IBAction)mapButtonAction:(id)sender
 {
-	StoreMapViewController *storeMapVC = [[StoreMapViewController alloc] init];
-	storeMapVC.storeLocation = storeLocation;
-    [self.navigationController pushViewController:storeMapVC animated:YES];
+	CLLocationCoordinate2D coordinates = CLLocationCoordinate2DMake(storeLocation.coordinates.latitude,
+																	storeLocation.coordinates.longitude);
+	
+	Class mapItemClass = [MKMapItem class];
+    if (mapItemClass && [mapItemClass respondsToSelector:@selector(openMapsWithItems:launchOptions:)])
+    {
+        MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:coordinates
+                                                       addressDictionary:nil];
+		
+        MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
+        mapItem.name = storeLocation.Store.store_name;
+        
+        // Set the directions mode to "Driving"
+        NSDictionary *launchOptions = @{MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving};
+        
+        // Get the "Current User Location" MKMapItem
+        MKMapItem *currentLocationMapItem = [MKMapItem mapItemForCurrentLocation];
+		
+        // Pass the current location and destination map items to the Maps app
+        // Set the direction mode in the launchOptions dictionary
+		[MKMapItem openMapsWithItems:@[currentLocationMapItem, mapItem]
+					   launchOptions:launchOptions];
+	}
 }
 
 - (IBAction)feedbackButtonAction:(id)sender
@@ -570,13 +590,18 @@
 	[self presentViewController:navController animated:YES completion:nil];
 }
 
+- (IBAction)saveStoreButtonAction:(id)sender
+{
+	[self addStore];
+}
+
 - (IBAction)storeInfoGestureAction:(UITapGestureRecognizer *)sender
 {
 	if (sender.state == UIGestureRecognizerStateEnded)
 	{
 		if(self.storeLocationId == nil) {
 			LocationsViewController *locationsVC = [[LocationsViewController alloc] init];
-			locationsVC.store = store;
+			locationsVC.storeId = self.storeId;
 			[self.navigationController pushViewController:locationsVC animated:YES];
 		}
 		else {
@@ -593,15 +618,9 @@
 		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
-	
-	[addToMyPlacesButton setTitle:@"" forState:UIControlStateNormal];
-	[addToMyPlacesButton setEnabled:NO];
-	
-	UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-	spinner.frame = addToMyPlacesButton.bounds;
-	[addToMyPlacesButton addSubview:spinner];
-	spinner.hidesWhenStopped = YES;
-	[spinner startAnimating];
+
+	self.saveStoreButton.enabled = NO;
+	addButton.enabled = NO;
 	
 	NSDictionary *inputArgs = [NSDictionary dictionaryWithObjectsAndKeys:
 									patron.objectId,		@"patron_id",
@@ -610,13 +629,14 @@
 	
 	[PFCloud callFunctionInBackground: @"add_patronstore"
 					   withParameters:inputArgs
-								block:^(PFObject *result, NSError *error)
+								block:^(RPPatronStore *result, NSError *error)
 	{
-		[spinner stopAnimating];
+		self.saveStoreButton.enabled = YES;
+		addButton.enabled = YES;
 		
 		if(!error)
 		{
-			[sharedData addPatronStore:(RPPatronStore *)result forKey:self.storeId];
+			[sharedData addPatronStore:result forKey:self.storeId];
 			[self checkPatronStore];
 			
 			NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:self.storeId, @"store_id", nil];
@@ -625,13 +645,12 @@
 		else
 		{
 			NSLog(@"add_patronStore error: %@", error);
-			[addToMyPlacesButton setTitle:@"Add to My Places" forState:UIControlStateNormal];
 			[RepunchUtils showConnectionErrorDialog];
 		}
 	}];
 }
 
-- (void)deleteStore
+- (void)showDeleteStoreDialog
 {
 	SIAlertView *warningView = [[SIAlertView alloc] initWithTitle:@"Remove from My Places"
 													   andMessage:@"WARNING: You will lose all your punches!"];
@@ -644,27 +663,20 @@
 	[warningView addButtonWithTitle:@"Remove"
 							   type:SIAlertViewButtonTypeDestructive
 							handler:^(SIAlertView *alert) {
-								[self performDelete];
+								[self deleteStore];
 								[alert dismissAnimated:YES];
 							}];
 	[warningView show];
 }
 
-- (void)performDelete
+- (void)deleteStore
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
 		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
 	
-	[addToMyPlacesButton setTitle:@"" forState:UIControlStateNormal];
-	[addToMyPlacesButton setEnabled:NO];
-	
-	UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-	spinner.frame = addToMyPlacesButton.bounds;
-	[addToMyPlacesButton addSubview:spinner];
-	spinner.hidesWhenStopped = YES;
-	[spinner startAnimating];
+	deleteButton.enabled = NO;
 	
 	NSDictionary *inputArgs = [NSDictionary dictionaryWithObjectsAndKeys:
 							   patronStore.objectId,	@"patron_store_id",
@@ -676,7 +688,7 @@
 					   withParameters:inputArgs
 								block:^(NSString *result, NSError *error)
 	 {
-		 [spinner stopAnimating];
+		 deleteButton.enabled = YES;
 		 
 		 if(!error)
 		 {
@@ -690,48 +702,21 @@
 		 else
 		 {
 			 NSLog(@"delete_patronStore error: %@", error);
-			 NSString *buttonText = [NSString stringWithFormat:@"%i %@", punchCount, (punchCount == 1) ? @"Punch": @"Punches"];
-			 [addToMyPlacesButton setTitle:buttonText forState:UIControlStateNormal];
 			 [RepunchUtils showConnectionErrorDialog];
 		 }
 	 }];
 }
 
-- (void)gift
-{
-	if( ![RepunchUtils isConnectionAvailable] ) {
-		[RepunchUtils showDefaultDropdownView:self.view];
-		return;
-	}
-	
-	if( patron.facebook_id == nil)
-	{
-		[RepunchUtils showDialogWithTitle:@"It's better together"
-							  withMessage:@"Log in with Facebook to send gifts to your friends"];
-	}
-	else
-	{
-		FacebookFriendsViewController *facebookFriendsVC = [[FacebookFriendsViewController alloc] init];
-		facebookFriendsVC.myDelegate = self;
-		
-		UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:facebookFriendsVC];
-		[RepunchUtils setupNavigationController:navController];
-		
-		[self presentViewController:navController animated:YES completion:nil];
-	}
-}
-
 - (void)refreshPatronStoreObject
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
-		//[self.tableViewController.refreshControl endRefreshing];
 		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
 	
 	if(patronStoreExists)
 	{
-		PFQuery *query = [PFQuery queryWithClassName:[RPPatronStore parseClassName]];
+		PFQuery *query = [RPPatronStore query];
 		[query includeKey:@"Store"];
         [query includeKey:@"Store.store_locations"];
 		[query includeKey:@"FacebookPost"];
@@ -745,8 +730,8 @@
 				 [sharedData addStore:store];
 				 
 				 [self setStoreInformation];
+				 [self setupTableViewHeader];
 				 [self checkPatronStore];
-				 [self setRewardTableView];
 				 
 				 [[NSNotificationCenter defaultCenter] postNotificationName:@"AddOrRemoveStore" object:self userInfo:nil];
 			 }
@@ -767,7 +752,7 @@
 				 store = (RPStore *)result;
 				 [sharedData addStore:store];
 				 [self setStoreInformation];
-				 [self setRewardTableView];
+				 [self setupTableViewHeader];
 			 }
 			 else
 			 {
@@ -775,6 +760,30 @@
 				 [RepunchUtils showConnectionErrorDialog];
 			 }
 		 }];
+	}
+}
+
+- (void)gift
+{
+	if( ![RepunchUtils isConnectionAvailable] ) {
+		[RepunchUtils showDefaultDropdownView:self.view];
+		return;
+	}
+	
+	if( [PFFacebookUtils isLinkedWithUser:[RPUser currentUser]] )
+	{
+		[RepunchUtils showDialogWithTitle:@"It's better together"
+							  withMessage:@"Log in with Facebook to send gifts to your friends"];
+	}
+	else
+	{
+		FacebookFriendsViewController *facebookFriendsVC = [[FacebookFriendsViewController alloc] init];
+		facebookFriendsVC.myDelegate = self;
+		
+		UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:facebookFriendsVC];
+		[RepunchUtils setupNavigationController:navController];
+		
+		[self presentViewController:navController animated:YES completion:nil];
 	}
 }
 

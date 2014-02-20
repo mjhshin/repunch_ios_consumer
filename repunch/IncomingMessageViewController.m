@@ -6,11 +6,19 @@
 //
 
 #import "IncomingMessageViewController.h"
+#import "MessageTableViewCell.h"
+#import "AttachmentTableViewCell.h"
 #import "OfferBorderView.h"
 #import "GiftBorderView.h"
 
 @implementation IncomingMessageViewController
 {
+	DataManager *sharedData;
+	NSString *messageType;
+	RPMessageStatus *messageStatus;
+	RPMessage *message;
+	RPPatron *patron;
+	NSTimer *timer;
 	BOOL containsReply;
 	UIActivityIndicatorView *attachmentSpinner;
 }
@@ -19,14 +27,13 @@
 {
     [super viewDidLoad];
 	
-	self.sharedData = [DataManager getSharedInstance];
-	self.patron = self.sharedData.patron;
-	self.messageStatus = [self.sharedData getMessage:self.messageStatusId];
-	self.message = self.messageStatus.Message;
-	self.reply = self.message.Reply;
-	self.messageType = self.message.message_type;
+	sharedData = [DataManager getSharedInstance];
+	patron = sharedData.patron;
+	messageStatus = [sharedData getMessage:self.messageStatusId];
+	message = messageStatus.Message;
+	messageType = message.message_type;
 	
-	containsReply = ( !IS_NIL(self.reply) );
+	containsReply = ( !IS_NIL(message.Reply) );
 	
 	UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_delete"]
 																	 style:UIBarButtonItemStylePlain
@@ -34,16 +41,27 @@
 																	action:@selector(deleteButtonAction)];
 	self.navigationItem.rightBarButtonItem = deleteButton;
 	
-	[self setupMessage];
+	//[[NSBundle mainBundle] loadNibNamed:@"AttachmentView" owner:self options:nil];
+	
+	//[self setupMessage];
+	if ([messageType isEqualToString:@"offer"]) {
+		self.navigationItem.title = @"Offer";
+    }
+    else if ([messageType isEqualToString:@"gift"]) {
+		self.navigationItem.title = @"Gift";
+    }
+	else {
+		self.navigationItem.title = @"Message";
+	}
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
 	
-    if( [self.messageType isEqualToString:@"offer"] )
+    if( [messageType isEqualToString:@"offer"] )
 	{
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f
+        timer = [NSTimer scheduledTimerWithTimeInterval:1.0f
                                                  target:self
                                                selector:@selector(updateTimer)
                                                userInfo:nil
@@ -57,34 +75,29 @@
 {
 	[super viewWillDisappear:animated];
 	
-	if(self.timer != nil) {
-		[self.timer invalidate];
+	if(timer != nil) {
+		[timer invalidate];
 	}
 }
 
+/*
 - (void)setupMessage
 {
-	if(containsReply) {
-		NSString *title = [NSString stringWithFormat:@"RE: %@", self.message.subject];
-		self.subjectLabel.text = title;
-	}
-	else {
-		self.subjectLabel.text = self.message.subject;
+	if( !IS_NIL(message.subject) ) {
+		self.subjectLabel.text = containsReply ? [NSString stringWithFormat:@"RE: %@", message.subject] :
+													message.subject;
 	}
 	
-    self.sendTimeLabel.text = [self formattedDateString:self.message.createdAt];
-	self.senderLabel.text = self.message.sender_name;
-	self.bodyTextView.text = self.message.body;
-	self.bodyHeightConstraint.constant = self.bodyTextView.contentSize.height;
+    self.sendTimeLabel.text = [self formattedDateString:message.createdAt];
+	self.senderLabel.text = message.sender_name;
+	self.bodyTextView.text = message.body;
+	[self.bodyTextView sizeToFit];
 	
-	[self.bodyTextView setNeedsLayout];
-	[self.bodyTextView layoutIfNeeded];
-	
-	if ([self.messageType isEqualToString:@"offer"]) {
+	if ([messageType isEqualToString:@"offer"]) {
 		self.navigationItem.title = @"Offer";
 		[self setupOffer];
     }
-    else if ([self.messageType isEqualToString:@"gift"]) {
+    else if ([messageType isEqualToString:@"gift"]) {
 		self.navigationItem.title = @"Gift";
         [self setupGift];
     }
@@ -99,9 +112,21 @@
 	else {
 		self.replyView.hidden = YES;
 	}
-
+	
+	if ( [messageType isEqualToString:@"offer"] || [messageType isEqualToString:@"gift"] ) {
+		[self.attachmentViewContainer addSubview:self.attachmentView];
+		self.attachmentView.center = self.attachmentViewContainer.center;
+		self.attachmentHeightConstraint.constant = self.attachmentView.frame.size.height + 50;
+    }
+	else {
+		self.attachmentHeightConstraint.constant = 0;
+	}
+	
 	[self.scrollView setNeedsLayout];
 	[self.scrollView layoutIfNeeded];
+	
+	self.bodyHeightConstraint.constant = self.bodyTextView.contentSize.height;
+	self.replyBodyHeightConstraint.constant = self.bodyTextView.contentSize.height;
 }
 
 - (void)setupOffer
@@ -109,9 +134,7 @@
 	self.attachmentTitleVerticalConstraint.constant = 26.0f;
 	
 	self.attachmentTitleLabel.text = @"Offer";
-	self.attachmentItemLabel.text = self.message.offer_title;
-	
-	self.replyButton.hidden = YES;
+	self.attachmentItemLabel.text = message.offer_title;
 	
 	[self.attachmentView setNeedsLayout];
 	[self.attachmentView layoutIfNeeded];
@@ -125,13 +148,12 @@
 {
 	self.attachmentTitleVerticalConstraint.constant = 80.0f;
 	
-	NSString *storeId = self.message.store_id;
-	RPStore *store = [self.sharedData getStore:storeId];
-	
-	self.attachmentItemLabel.text = self.message.gift_title;
-	self.attachmentDescriptionLabel.text = self.message.gift_description;
+	self.attachmentItemLabel.text = message.gift_title;
+	self.attachmentDescriptionLabel.text = message.gift_description;
 	self.attachmentDescriptionLabel.font = [RepunchUtils repunchFontWithSize:17 isBold:NO];
 	
+	RPStore *store = [sharedData getStore:message.store_id];
+ 
 	if(store)
 	{
 		self.attachmentTitleLabel.text = store.store_name;
@@ -145,12 +167,12 @@
 		[attachmentSpinner startAnimating];
 		
 		PFQuery *query = [RPStore query];
-		[query getObjectInBackgroundWithId:storeId block:^(PFObject *result, NSError *error) {
+		[query getObjectInBackgroundWithId:message.store_id block:^(PFObject *result, NSError *error) {
 			if(result)
 			{
 				RPStore *resultStore = (RPStore *)result;
 				[attachmentSpinner stopAnimating];
-				[self.sharedData addStore:resultStore];
+				[sharedData addStore:resultStore];
 				self.attachmentTitleLabel.text = resultStore.store_name;
 			}
 			else
@@ -165,6 +187,13 @@
 	[self.attachmentView setNeedsLayout];
 	[self.attachmentView layoutIfNeeded];
 	
+	[self.redeemButton setNeedsLayout];
+	[self.redeemButton layoutIfNeeded];
+	
+	CGRect frame = self.attachmentView.frame;
+	frame.size.height = self.redeemButton.frame.origin.y + self.redeemButton.frame.size.height + 30.0f;
+	self.attachmentView.frame = frame;
+	
 	GiftBorderView *background = [[GiftBorderView alloc] init];
 	background.frame = self.attachmentView.bounds;
 	[self.attachmentView addSubview:background];
@@ -172,17 +201,117 @@
 
 - (void)setupReply
 {
-	self.replySenderLabel.text = self.reply.sender_name;
-    self.replyTimeLabel.text = [self formattedDateString:self.reply.createdAt];
-	self.replyBodyTextView.text = self.reply.body;
-	self.replyBodyHeightConstraint.constant = self.replyBodyTextView.contentSize.height;
-	
-	[self.replyBodyTextView setNeedsLayout];
-	[self.replyBodyTextView layoutIfNeeded];
+	self.replySenderLabel.text = message.Reply.sender_name;
+    self.replyTimeLabel.text = [self formattedDateString:message.Reply.createdAt];
+	self.replyBodyTextView.text = message.Reply.body;
+	[self.replyBodyTextView sizeToFit];
+}
+*/
+
+#pragma mark - tableview delegate
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+	NSInteger rows = 1;
+	if(containsReply) {
+		++rows;
+	}
+	if([messageType isEqualToString:@"offer"] || [messageType isEqualToString:@"gift"]) {
+		++rows;
+	}
+    return rows;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if(indexPath.row == 0)
+	{
+		MessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"message"];
+		
+		if (cell == nil) {
+			cell = [MessageTableViewCell cell];
+		}
+		
+		if( !IS_NIL(message.subject) ) {
+			cell.subject.text = containsReply ? [NSString stringWithFormat:@"RE: %@", message.subject] :
+			message.subject;
+		}
+		else {
+			cell.subject.text = nil;
+		}
+		
+		cell.senderName.text = message.sender_name;
+		cell.sendTime.text = [self formattedDateString:message.createdAt];
+		cell.body.text = message.body;
+		
+		return cell;
+	}
+	else if(indexPath.row == 1 && [messageType isEqualToString:@"offer"])
+	{
+		AttachmentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"attachment"];
+		
+		if (cell == nil) {
+			cell = [AttachmentTableViewCell cell];
+		}
+		
+		cell.title.text = @"Offer";
+		cell.rewardTitle.text = message.offer_title;
+		cell.rewardDescription.text = @"Timer goes here";
+		
+		[cell setOfferBorder];
+		
+		return cell;
+	}
+	else if(indexPath.row == 1 && [messageType isEqualToString:@"gift"])
+	{
+		AttachmentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"attachment"];
+		
+		if (cell == nil) {
+			cell = [AttachmentTableViewCell cell];
+		}
+		
+		cell.title.text = message.store_id;
+		cell.rewardTitle.text = message.gift_title;
+		cell.rewardDescription.text = message.gift_description;
+		
+		[cell setGiftBorder];
+		
+		return cell;
+	}
+	else // Reply
+	{
+		MessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reply"];
+		
+		if (cell == nil) {
+			cell = [MessageTableViewCell cell];
+		}
+		
+		cell.subject.text = nil;
+		cell.senderName.text = message.Reply.sender_name;
+		cell.sendTime.text = [self formattedDateString:message.Reply.createdAt];
+		cell.body.text = message.Reply.body;
+		
+		return cell;
+	}
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 400;
 }
 
 #pragma mark - Helper Methods
-         
+
  - (NSString *)formattedDateString:(NSDate *)dateCreated
 {     
      NSCalendar *cal = [NSCalendar currentCalendar];
@@ -211,19 +340,19 @@
 
 - (void)updateTimer
 {
-    NSDate *offer = self.message.date_offer_expiration;
+    NSDate *offer = message.date_offer_expiration;
     NSDate *currentDate = [NSDate date];
     
     NSTimeInterval timeLeft = [offer timeIntervalSinceDate:currentDate];
-    self.attachmentDescriptionLabel.text = [NSString stringWithFormat:@"Time Left: %@", [self stringFromInterval:timeLeft]];
+    //self.attachmentDescriptionLabel.text = [NSString stringWithFormat:@"Time Left: %@", [self stringFromInterval:timeLeft]];
     
     if (timeLeft <= 0)
 	{
-        self.attachmentDescriptionLabel.text = @"Expired";
-        self.timer = nil;
+        //self.attachmentDescriptionLabel.text = @"Expired";
+        timer = nil;
 		
 		//[RepunchUtils setDisabledButtonStyle:self.redeemButton];
-		self.attachmentDescriptionLabel.enabled = NO;
+		//self.attachmentDescriptionLabel.enabled = NO;
     }
 }
 
@@ -258,43 +387,42 @@
 		return;
 	}
 	
-	if(self.timer == nil && ![self.messageType isEqualToString:@"gift"]) { //timer is nil when it expires.
+	if(timer == nil && ![messageType isEqualToString:@"gift"]) { //timer is nil when it expires.
 		return;
 	}
 	
-	if( [self.messageStatus.redeem_available isEqualToString:@"yes"] )
+	if( [messageStatus.redeem_available isEqualToString:@"yes"] )
 	{
-		self.redeemButton.enabled = NO;
+		//self.redeemButton.enabled = NO;
 		
-		NSString *storeId = self.message.store_id;
-		NSString *patronStoreId = [[self.sharedData getPatronStore:storeId] objectId];
+		NSString *patronStoreId = [[sharedData getPatronStore:message.store_id] objectId];
 		
 		if(patronStoreId == nil) {
 			patronStoreId = (id)[NSNull null];
 		}
 		
-		NSString *rewardTitle = [self.messageType isEqualToString:@"offer"] ?
-		self.message.offer_title : self.message.gift_title;
+		NSString *rewardTitle = [messageType isEqualToString:@"offer"] ?
+		message.offer_title : message.gift_title;
 		
 		NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-									self.patron.objectId,			@"patron_id",
-									storeId,						@"store_id",
+									patron.objectId,				@"patron_id",
+									message.store_id,				@"store_id",
 									patronStoreId,					@"patron_store_id",
 									rewardTitle,					@"title",
-									self.patron.full_name,			@"name",
-									self.messageStatus.objectId,	@"message_status_id",
+									patron.full_name,				@"name",
+									messageStatus.objectId,			@"message_status_id",
 									nil];
 		
 		[PFCloud callFunctionInBackground: @"request_redeem"
 						   withParameters:parameters
 									block:^(NSString *result, NSError *error)
 		 {
-			 self.redeemButton.enabled = YES;
+			 //self.redeemButton.enabled = YES;
 			 
 			 if(!error)
 			 {
-				 [self.messageStatus setObject:@"pending" forKey:@"redeem_available"];
-				 [self.redeemButton setDisabled];
+				 [messageStatus setObject:@"pending" forKey:@"redeem_available"];
+				 //[self.redeemButton setDisabled];
 				 [RepunchUtils showDialogWithTitle:@"Waiting for confirmation"
 									   withMessage:@"Please wait for this item to be validated"];
 			 }
@@ -306,7 +434,7 @@
 		 }];
 		
 	}
-	else if( [self.messageStatus.redeem_available isEqualToString:@"pending"] )
+	else if( [messageStatus.redeem_available isEqualToString:@"pending"] )
 	{
 		[RepunchUtils showDialogWithTitle:@"Offer pending"
 							  withMessage:@"You can only request this item once"];
@@ -325,14 +453,12 @@
 		return;
 	}
 	
-	NSString *storeId = [self.sharedData getStore:self.message.store_id].objectId;
-	
 	ComposeMessageViewController *composeVC = [[ComposeMessageViewController alloc] init];
 	composeVC.delegate = self;
 	composeVC.messageType = @"gift_reply";
-	composeVC.storeId = storeId;
-	composeVC.recepientName = self.message.sender_name;
-	composeVC.giftReplyMessageId = self.message.objectId;
+	composeVC.storeId = message.store_id;
+	composeVC.recepientName = message.sender_name;
+	composeVC.giftReplyMessageId = message.objectId;
 	composeVC.giftMessageStatusId = self.messageStatusId;
 	
 	UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:composeVC];
@@ -358,8 +484,8 @@
 	[alert addButtonWithTitle:@"Delete"
 							   type:SIAlertViewButtonTypeDestructive
 							handler:^(SIAlertView *alert) {
-								[self.sharedData removeMessage:self.messageStatusId];
-								[self.delegate removeMessage:self forMsgStatus:self.messageStatus];
+								[sharedData removeMessage:self.messageStatusId];
+								[self.delegate removeMessage:self forMsgStatus:messageStatus];
 								[self.navigationController popViewControllerAnimated:NO];
 								[alert dismissAnimated:YES];
 							}];
@@ -368,9 +494,8 @@
 
 - (void)giftReplySent:(ComposeMessageViewController *)controller
 {
-	self.reply = self.message.Reply;
-	containsReply = !IS_NIL(self.reply);
-	[self setupMessage];
+	containsReply = !IS_NIL(message.Reply);
+	//[self setupMessage];
 	[self.delegate removeMessage:self forMsgStatus:nil];
 }
 

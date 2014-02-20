@@ -16,23 +16,23 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="140"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="Current Punches" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DY8-qz-dFc" userLabel="CurrentPunchesLabel">
-                    <rect key="frame" x="20" y="0.0" width="280" height="22"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Current Punches" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DY8-qz-dFc" userLabel="CurrentPunchesLabel">
+                    <rect key="frame" x="20" y="0.0" width="280" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="15"/>
                     <color key="textColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </label>
                 <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6dY-Ms-h7t" userLabel="DividerView">
-                    <rect key="frame" x="0.0" y="22" width="320" height="2"/>
+                    <rect key="frame" x="0.0" y="21" width="320" height="1"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="0.5" id="nn8-HM-4Kb"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" misplaced="YES" placeholderIntrinsicWidth="150" placeholderIntrinsicHeight="70" translatesAutoresizingMaskIntoConstraints="NO" id="NA7-zi-Aiu" userLabel="Subview">
-                    <rect key="frame" x="85" y="34" width="150" height="50"/>
+                <view contentMode="scaleToFill" placeholderIntrinsicWidth="150" placeholderIntrinsicHeight="70" translatesAutoresizingMaskIntoConstraints="NO" id="NA7-zi-Aiu" userLabel="Subview">
+                    <rect key="frame" x="85" y="32" width="150" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="14" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ffb-fq-jxE" userLabel="PunchCountLabel">
@@ -66,15 +66,15 @@
                         <constraint firstAttribute="centerY" secondItem="Ffb-fq-jxE" secondAttribute="centerY" id="zcm-Bx-8Ho"/>
                     </constraints>
                 </view>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="Rewards" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DJQ-P3-HS2" userLabel="RewardsLabel">
-                    <rect key="frame" x="20" y="114" width="280" height="22"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Rewards" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DJQ-P3-HS2" userLabel="RewardsLabel">
+                    <rect key="frame" x="20" y="107" width="280" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="15"/>
                     <color key="textColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </label>
                 <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YUx-uc-WIM" userLabel="DividerView2">
-                    <rect key="frame" x="0.0" y="136" width="320" height="2"/>
+                    <rect key="frame" x="0.0" y="128" width="320" height="1"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -88,7 +88,7 @@
                 <constraint firstAttribute="trailing" secondItem="DY8-qz-dFc" secondAttribute="trailing" constant="20" id="40G-dK-50R"/>
                 <constraint firstItem="YUx-uc-WIM" firstAttribute="top" secondItem="DJQ-P3-HS2" secondAttribute="bottom" id="4GJ-kP-02e"/>
                 <constraint firstItem="DY8-qz-dFc" firstAttribute="leading" secondItem="t1f-qY-Lda" secondAttribute="leading" constant="20" id="7g6-C5-cKm"/>
-                <constraint firstItem="DJQ-P3-HS2" firstAttribute="top" secondItem="NA7-zi-Aiu" secondAttribute="bottom" constant="30" id="IId-V5-2uq"/>
+                <constraint firstItem="DJQ-P3-HS2" firstAttribute="top" secondItem="NA7-zi-Aiu" secondAttribute="bottom" constant="25" id="IId-V5-2uq"/>
                 <constraint firstItem="DY8-qz-dFc" firstAttribute="top" secondItem="t1f-qY-Lda" secondAttribute="top" id="IXY-Zf-dQF"/>
                 <constraint firstAttribute="trailing" secondItem="DJQ-P3-HS2" secondAttribute="trailing" constant="20" id="KZZ-zC-nLZ"/>
                 <constraint firstAttribute="centerX" secondItem="NA7-zi-Aiu" secondAttribute="centerX" id="Klk-Ik-r4j"/>

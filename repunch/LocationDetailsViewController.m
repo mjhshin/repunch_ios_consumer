@@ -7,6 +7,7 @@
 //
 
 #import "LocationDetailsViewController.h"
+#import "LocationsViewController.h"
 
 @interface LocationDetailsViewController ()
 
@@ -42,6 +43,9 @@
 	self.mapButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
 	[self.mapButton setTitle:self.storeLocation.formattedAddress forState:UIControlStateNormal];
 	[self.callButton setTitle:self.storeLocation.phone_number forState:UIControlStateNormal];
+
+	self.otherLocationsButton.hidden = (store.store_locations.count <= 1);
+	self.bottomDivider.hidden = (store.store_locations.count <= 1);
 }
 
 - (void)addMapAnnotation
@@ -101,7 +105,7 @@
                                                        addressDictionary:nil];
 		
         MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
-        mapItem.name = @"BLA";//self.storeLocation.Store.store_name;
+        mapItem.name = self.storeLocation.Store.store_name;
         
         // Set the directions mode to "Driving"
         NSDictionary *launchOptions = @{MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving};
@@ -132,15 +136,23 @@
 }
 
 - (IBAction)callButtonAction:(id)sender
-{
-	NSString *phoneNumber
-		= [self.storeLocation.phone_number stringByReplacingOccurrencesOfString:@"[^0-9]"
-																	 withString:@""
-																		options:NSRegularExpressionSearch
-																		  range:NSMakeRange(0, self.storeLocation.phone_number.length)];
+{	
+	NSString *urlString = [@"tel://" stringByAppendingString:self.storeLocation.phone_number];
+	NSURL *url = [NSURL URLWithString:urlString];
 	
-    NSString *phoneNumberUrl = [@"tel://" stringByAppendingString:phoneNumber];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumberUrl]];
+	if( [[UIApplication sharedApplication] canOpenURL:url] ) {
+		[[UIApplication sharedApplication] openURL:url];
+	}
+	else {
+		[RepunchUtils showDialogWithTitle:@"This device does not support phone calls" withMessage:nil];
+	}
+}
+
+- (IBAction)otherLocationsButtonAction:(id)sender
+{
+	LocationsViewController *locationsVC = [[LocationsViewController alloc] init];
+	locationsVC.storeId = self.storeLocation.Store.objectId;
+	[self.navigationController pushViewController:locationsVC animated:YES];
 }
 
 - (IBAction)mapTapGestureAction:(UITapGestureRecognizer *)sender

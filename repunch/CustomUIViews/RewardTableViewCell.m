@@ -47,7 +47,8 @@
 {
 	self.userInteractionEnabled = NO;
 	self.rewardStatusIcon.hidden = YES;
-	self.contentView.backgroundColor = [UIColor whiteColor];
+	self.rewardPunches.textColor = [RepunchUtils repunchOrangeColor];
+	self.rewardPunchesStatic.textColor = [RepunchUtils repunchOrangeColor];
 }
 
 - (void)setRewardUnlocked
@@ -57,7 +58,6 @@
 	self.rewardStatusIcon.image = [UIImage imageNamed:@"checkmark_icon"];
 	self.rewardPunches.textColor = [RepunchUtils repunchOrangeColor];
 	self.rewardPunchesStatic.textColor = [RepunchUtils repunchOrangeColor];
-	//self.contentView.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)setRewardLocked
@@ -67,7 +67,11 @@
 	self.rewardStatusIcon.image = [UIImage imageNamed:@"reward_locked"];
 	self.rewardPunches.textColor = [UIColor darkGrayColor];
 	self.rewardPunchesStatic.textColor = [UIColor darkGrayColor];
-	//self.contentView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+}
+
++ (CGFloat)height
+{
+	return 150.0f;
 }
 
 @end

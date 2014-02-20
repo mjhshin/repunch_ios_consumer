@@ -24,4 +24,6 @@
 - (void)setRewardUnlocked;
 - (void)setRewardLocked;
 
++ (CGFloat)height;
+
 @end

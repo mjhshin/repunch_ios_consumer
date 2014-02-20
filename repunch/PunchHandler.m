@@ -39,7 +39,7 @@
 	}
 	else
 	{
-		PFQuery *query = [PFQuery queryWithClassName:[RPPatronStore parseClassName]];
+		PFQuery *query = [RPPatronStore query];
 		[query includeKey:@"Store"];
 		[query includeKey:@"FacebookPost"];
 		

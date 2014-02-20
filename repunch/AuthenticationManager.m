@@ -146,7 +146,7 @@ withCompletionHandler:(AuthenticationManagerHandler)handler;
 		handler(0);
 	}
 	
-	PFQuery *query = [PFQuery queryWithClassName:[RPPatron parseClassName]];
+	PFQuery *query = [RPPatron query];
 	query.cachePolicy = kPFCachePolicyNetworkOnly;
 	
 	[query getObjectInBackgroundWithId:patronId block:^(PFObject *result, NSError *error) {

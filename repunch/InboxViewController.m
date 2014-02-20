@@ -175,11 +175,12 @@
 			if(paginate == YES && results.count < 20) {
 				paginateReachEnd = YES;
 			}
-			loadInProgress = NO;
         }
 		else {
             [RepunchUtils showConnectionErrorDialog];
         }
+		
+		loadInProgress = NO;
     }];
 }
 
@@ -243,13 +244,16 @@
     RPMessage *reply = message.Reply;
     
 	cell.senderName.text = IS_NIL(reply) ? message.sender_name : reply.sender_name;
-	cell.dateSent.text = IS_NIL(reply) ? [self formattedDateString:message.createdAt] : [self formattedDateString:message.createdAt];
+	cell.dateSent.text = IS_NIL(reply) ? [self formattedDateString:message.createdAt]
+										: [self formattedDateString:reply.createdAt];
 	
-	if(IS_NIL(message.subject)) {
-		cell.subjectLabel.text = IS_NIL(reply) ? message.body : [NSString stringWithFormat:@"RE: %@", reply.body];
+	if( IS_NIL(message.subject) ) {
+		cell.messagePreview.text = IS_NIL(reply) ? message.body : reply.body;
 	}
 	else { //only offers will have subject
-		cell.subjectLabel.text = [NSString stringWithFormat:@"RE: %@ - %@", message.subject, message.body];
+		cell.messagePreview.text = IS_NIL(reply) ?
+			[NSString stringWithFormat:@"%@ - %@", message.subject, message.body] :
+			[NSString stringWithFormat:@"RE: %@ - %@", message.subject, reply.body];
 	}
 	
     

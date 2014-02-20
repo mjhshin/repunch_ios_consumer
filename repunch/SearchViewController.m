@@ -15,6 +15,7 @@
 	BOOL searchResultsLoaded;
 	int paginateCount;
 	BOOL paginateReachEnd;
+	BOOL loadInProgress;
 	UIActivityIndicatorView *spinner;
 	RPButton *paginateButton;
 }
@@ -45,6 +46,7 @@
 	spinner.hidesWhenStopped = YES;
 	paginateCount = 0;
 	paginateReachEnd = NO;
+	loadInProgress = NO;
 	searchResultsLoaded = NO;
 }
 
@@ -200,6 +202,8 @@
 		return;
 	}
 	
+	loadInProgress = YES;
+	
     PFQuery *storeQuery = [RPStoreLocation query];
 	[storeQuery includeKey:@"Store.store_locations"];
     //[storeQuery includeKey:@"Store.active" equalTo:[NSNumber numberWithBool:YES]];
@@ -210,20 +214,23 @@
 	if(paginate == YES) {
 		++paginateCount;
 		[storeQuery setSkip:paginateCount*20];
+		
+		[self.tableView setPaginationFooter];
 	}
 	else if(self.storeLocationIdArray.count == 0) {
 		[self.activityIndicatorView setHidden:NO];
 		[self.activityIndicator startAnimating];
 	}
-	[self setFooter:YES];
 	
     [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
-		
-		 if(paginate == NO) {
+		if(paginate == NO) {
 			 [self.activityIndicatorView setHidden:YES];
 			 [self.activityIndicator stopAnimating];
 			 [self.storeLocationIdArray removeAllObjects];
 		 }
+		else {
+			[self.tableView setDefaultFooter];
+		}
 		 
 		 if (!error) {
 			 if(paginate == NO) {
@@ -234,7 +241,6 @@
 			
 			 for (RPStoreLocation *storeLocation in results) {
 				 if(storeLocation.Store.active) {
-					 [self.sharedData addStoreLocation:storeLocation];
 					 [self.sharedData addStore:storeLocation.Store];
 					 [self.storeLocationIdArray addObject:storeLocation.objectId];
 				 }
@@ -245,13 +251,14 @@
 			 }
 			 
 			 [self refreshTableView];
-			 [self setFooter:NO];
 		 }
 		 else {
 			 NSLog(@"search view controller serror: %@", error);
 			 [RepunchUtils showConnectionErrorDialog];
 		 }
-	 }];
+		
+		loadInProgress = NO;
+	}];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -262,6 +269,11 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 	return [self.storeLocationIdArray count];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 106;
 }
  
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -274,6 +286,7 @@
 	
 	NSString *storeLocationId = self.storeLocationIdArray[indexPath.row];
 	RPStoreLocation *storeLocation = [self.sharedData getStoreLocation:storeLocationId];
+	RPStore *store = [self.sharedData getStore:storeLocation.Store.objectId];
 
 	// Set distance to store
 	double distanceToStore = [userLocation distanceInMilesTo:storeLocation.coordinates];
@@ -297,17 +310,17 @@
 	// Set Categories
 	NSString *formattedCategories = @"";
 	
-	for (int i = 0; i < storeLocation.Store.categories.count; i++)
+	for (int i = 0; i < store.categories.count; i++)
 	{
-		formattedCategories = [formattedCategories stringByAppendingString:storeLocation.Store.categories[i][@"name"]];
+		formattedCategories = [formattedCategories stringByAppendingString:store.categories[i][@"name"]];
 		
-		if (i != [storeLocation.Store.categories count] - 1) {
+		if (i != [store.categories count] - 1) {
 			formattedCategories = [formattedCategories stringByAppendingFormat:@", "];
 		}
 	}
 	
 	// Set punches and reward info
-	RPPatronStore *patronStore = [self.sharedData getPatronStore:storeLocation.Store.objectId];
+	RPPatronStore *patronStore = [self.sharedData getPatronStore:store.objectId];
 	
 	if(patronStore == nil) {
 		[cell.punchIcon setHidden:YES];
@@ -322,21 +335,21 @@
 	
 	cell.storeAddress.text = street;
 	cell.storeCategories.text = formattedCategories;
-	cell.storeName.text = storeLocation.Store.store_name;
+	cell.storeName.text = store.store_name;
 	
 	// Only load cached images; defer new downloads until scrolling ends
     //if (cell.storeImage == nil)
     //{
 	//if (self.myPlacesTableView.dragging == NO && self.myPlacesTableView.decelerating == NO)
 	//{
-	if( !IS_NIL(storeLocation.Store.thumbnail_image) )
+	if( !IS_NIL(store.thumbnail_image) )
 	{
 		cell.storeImage.image = [UIImage imageNamed:@"placeholder_thumbnail_image"];
-		UIImage *storeImage = [self.sharedData getThumbnailImage:storeLocation.Store.objectId];
+		UIImage *storeImage = [self.sharedData getThumbnailImage:store.objectId];
 		if(storeImage == nil)
 		{
 			cell.storeImage.image = [UIImage imageNamed:@"placeholder_thumbnail_image"];
-			[self downloadImage:storeLocation.Store.thumbnail_image forIndexPath:indexPath withStoreId:storeLocation.Store.objectId];
+			[self downloadImage:store.thumbnail_image forIndexPath:indexPath withStoreId:store.objectId];
 		} else {
 			cell.storeImage.image = storeImage;
 		}
@@ -363,9 +376,15 @@
 	[self.navigationController pushViewController:storeVC animated:YES];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    return 106;
+    float scrollLocation = MIN(scrollView.contentSize.height, scrollView.bounds.size.height) + scrollView.contentOffset.y - scrollView.contentInset.bottom;
+    float scrollHeight = MAX(scrollView.contentSize.height, scrollView.bounds.size.height);
+	
+    if(scrollLocation >= scrollHeight + 5 && !loadInProgress && !paginateReachEnd)
+	{
+		[self performSearch:YES];
+    }
 }
 
 - (void)downloadImage:(PFFile *)imageFile forIndexPath:(NSIndexPath *)indexPath withStoreId:(NSString *)storeId
@@ -386,7 +405,8 @@
 				 SearchTableViewCell *cell = (SearchTableViewCell *)
 												[self.tableView cellForRowAtIndexPath:indexPath];
 				 UIImage *storeImage = [UIImage imageWithData:data];
-				 cell.storeImage.image = storeImage;
+				 //cell.storeImage.image = storeImage;
+				 [cell.storeImage setImageWithAnimation:storeImage];
 				 [self.imageDownloadsInProgress removeObjectForKey:indexPath]; // Remove the PFFile from the in-progress list
 				 [self.sharedData addThumbnailImage:storeImage forKey:storeId];
 			 }
@@ -404,47 +424,6 @@
     {
         [imageFile cancel];
     }
-}
-
-- (void)paginate
-{
-	[self performSearch:YES];
-}
-
-- (void)setFooter:(BOOL)loadInProgress
-{	
-	if(self.storeLocationIdArray.count >= 20 && !paginateReachEnd)
-	{
-		UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 70)];
-		footer.backgroundColor = [UIColor clearColor];
-		self.tableView.tableFooterView = footer;
-		
-		CGRect paginateButtonFrame = CGRectMake(footer.frame.size.width/2 - paginateButton.frame.size.width/2,
-												footer.frame.size.height/2 - paginateButton.frame.size.height/2,
-												paginateButton.frame.size.width,
-												paginateButton.frame.size.height);
-		paginateButton.enabled = !loadInProgress;
-		paginateButton.frame = paginateButtonFrame;
-		[self.tableView.tableFooterView addSubview:paginateButton];
-	
-		if(loadInProgress)
-		{
-			[paginateButton setHidden:YES];
-			spinner.frame = self.tableView.tableFooterView.bounds;
-			[self.tableView.tableFooterView addSubview:spinner];
-			[spinner startAnimating];
-		}
-		else
-		{
-			[paginateButton setHidden:NO];
-			[spinner removeFromSuperview];
-			[spinner stopAnimating];
-		}
-	}
-	else
-	{
-		[self.tableView setDefaultFooter];
-	}
 }
 
 - (void)refreshTableView

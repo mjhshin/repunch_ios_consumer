@@ -5,7 +5,6 @@
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
-#import "StoreMapViewController.h"
 #import "SIAlertView.h"
 #import "RewardTableViewCell.h"
 #import "AppDelegate.h"
@@ -15,6 +14,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "FacebookPost.h"
 #import "RPConstants.h"
+#import "RPImageView.h"
 #import "RPTableView.h"
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
@@ -30,9 +30,10 @@
 // store header
 @property (strong, nonatomic) IBOutlet UIView *headerView;
 
+@property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (unsafe_unretained, nonatomic) IBOutlet UIView *storeNameBackground;
 @property (weak, nonatomic) IBOutlet UILabel *storeName;
-@property (weak, nonatomic) IBOutlet UIImageView *storeImage;
+@property (weak, nonatomic) IBOutlet RPImageView *storeImage;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *storeImageHeightConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *storeCategory;
 @property (weak, nonatomic) IBOutlet UILabel *storeAddress;
@@ -44,6 +45,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *callButton;
 @property (weak, nonatomic) IBOutlet UIButton *mapButton;
 @property (weak, nonatomic) IBOutlet UIButton *feedbackButton;
+@property (weak, nonatomic) IBOutlet UIButton *chainFeedbackButton;
 
 - (IBAction)callButtonAction:(id)sender;
 - (IBAction)mapButtonAction:(id)sender;
@@ -54,5 +56,9 @@
 @property (strong, nonatomic) IBOutlet UIView *sectionHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *punchCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *punchStaticLabel;
+@property (strong, nonatomic) IBOutlet UIView *sectionHeaderViewAdd;
+
+@property (weak, nonatomic) IBOutlet UIButton *saveStoreButton;
+- (IBAction)saveStoreButtonAction:(id)sender;
 
 @end

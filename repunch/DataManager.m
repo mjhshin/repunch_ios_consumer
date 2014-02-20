@@ -58,7 +58,7 @@ static DataManager *sharedDataManager = nil;    // static instance variable
     [self.patronStores setObject:patronStore forKey:storeId];
 }
 
-- (void) deletePatronStore:(NSString *)storeId
+- (void)deletePatronStore:(NSString *)storeId
 {
 	[self.patronStores removeObjectForKey:storeId];
 }
@@ -73,6 +73,10 @@ static DataManager *sharedDataManager = nil;    // static instance variable
 - (void)addStore:(RPStore *)store
 {
 	[self.stores setObject:store forKey:store.objectId];
+	
+	for(RPStoreLocation *location in store.store_locations) {
+		[self.storeLocations setObject:location forKey:location.objectId];
+	}
 }
 
 - (RPStore *)getStore:(NSString *)objectId
@@ -81,11 +85,6 @@ static DataManager *sharedDataManager = nil;    // static instance variable
 }
 
 // StoreLocation methods
-- (void)addStoreLocation:(RPStoreLocation *)storeLocation
-{
-	[self.storeLocations setObject:storeLocation forKey:storeLocation.objectId];
-}
-
 - (RPStoreLocation *)getStoreLocation:(NSString *)objectId
 {
 	return [self.storeLocations objectForKey:objectId];

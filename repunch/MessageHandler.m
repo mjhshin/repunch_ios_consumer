@@ -18,7 +18,7 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
     NSString *messageId = pushPayload[@"message_id"];
 	NSString *alert = pushPayload[@"aps"][@"alert"];
     
-    PFQuery *msgQuery = [PFQuery queryWithClassName:[RPMessage parseClassName]];
+    PFQuery *msgQuery = [RPMessage query];
     [msgQuery whereKey:@"objectId" equalTo:messageId];
     
     PFRelation *relation = [[sharedData patron] relationforKey:@"ReceivedMessages"];
@@ -56,7 +56,7 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
     NSString *messageStatusId = pushPayload[@"message_status_id"];
 	NSString *alert = pushPayload[@"aps"][@"alert"];
     
-    PFQuery *msgStatusQuery = [PFQuery queryWithClassName:[RPMessageStatus parseClassName]];
+    PFQuery *msgStatusQuery = [RPMessageStatus query];
     [msgStatusQuery includeKey:@"Message.Reply"];
     
     [msgStatusQuery getObjectInBackgroundWithId:messageStatusId block:^(PFObject *result, NSError *error) {

@@ -40,12 +40,15 @@
 - (void)deletePatronStore:(NSString *)storeId;
 - (void)updatePatronStore:(NSString *)storeId withPunches:(NSInteger)punches;
 
+// Assumptions:
+// StoreLocation->Store will always be null
+// Store -> StoreLocation will always work
+
 // Store methods
 - (void)addStore:(RPStore *)store;
 - (RPStore *)getStore:(NSString *)objectId;
 
 // StoreLocation methods
-- (void)addStoreLocation:(RPStoreLocation *)storeLocation;
 - (RPStoreLocation *)getStoreLocation:(NSString *)objectId;
 
 // Store image methods

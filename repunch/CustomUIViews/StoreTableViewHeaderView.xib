@@ -7,6 +7,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StoreViewController">
             <connections>
                 <outlet property="callButton" destination="YLG-Ku-RJG" id="B4C-l0-SDm"/>
+                <outlet property="chainFeedbackButton" destination="FqP-f2-BE6" id="Zuu-tp-hRq"/>
+                <outlet property="contentView" destination="0kk-th-FUQ" id="aFi-hD-eHH"/>
                 <outlet property="feedbackButton" destination="2Xk-Jk-zrq" id="d92-m9-y8D"/>
                 <outlet property="headerView" destination="BWH-Aq-4MY" id="hgr-uY-eMp"/>
                 <outlet property="mapButton" destination="HXh-ax-KcD" id="Gg0-Fh-JDP"/>
@@ -22,11 +24,11 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view autoresizesSubviews="NO" contentMode="scaleAspectFit" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="250" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="371" id="BWH-Aq-4MY">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="410"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="400"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0kk-th-FUQ" userLabel="Subview">
-                    <rect key="frame" x="0.0" y="240" width="320" height="170"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0kk-th-FUQ" userLabel="ContentView">
+                    <rect key="frame" x="0.0" y="240" width="320" height="160"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Kai-AD-O7z" userLabel="StoreInfoView">
@@ -63,7 +65,7 @@
                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="0.0" text="Open 9:00 AM - 12:30 PM" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="230" translatesAutoresizingMaskIntoConstraints="NO" id="Mxc-iM-9Jg" userLabel="HoursLabel">
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="0.0" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="230" translatesAutoresizingMaskIntoConstraints="NO" id="Mxc-iM-9Jg" userLabel="HoursLabel">
                                     <rect key="frame" x="20" y="58" width="230" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <accessibility key="accessibilityConfiguration" label="Hours Today"/>
@@ -113,7 +115,7 @@
                                 <constraint firstAttribute="width" constant="100" id="lPb-ys-fSe"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="10"/>
-                            <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="50" maxY="0.0"/>
+                            <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="19" maxY="0.0"/>
                             <state key="normal" image="call_button.png">
                                 <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -197,11 +199,31 @@
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FqP-f2-BE6" userLabel="ChainFeedbackButton">
+                            <rect key="frame" x="0.0" y="73" width="320" height="80"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="80" id="2nt-Zv-uUe"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                            <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="15"/>
+                            <inset key="titleEdgeInsets" minX="-100" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="imageEdgeInsets" minX="-130" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="Send Feedback" image="feedback_button.png">
+                                <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="feedbackButtonAction:" destination="-1" eventType="touchUpInside" id="9nR-fh-hRM"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="Kai-AD-O7z" firstAttribute="leading" secondItem="0kk-th-FUQ" secondAttribute="leading" id="1Ly-LS-Hie"/>
                         <constraint firstItem="YLG-Ku-RJG" firstAttribute="centerY" secondItem="2Xk-Jk-zrq" secondAttribute="centerY" id="2JD-Oa-VH8"/>
+                        <constraint firstItem="HXh-ax-KcD" firstAttribute="top" secondItem="FqP-f2-BE6" secondAttribute="top" id="2r4-e7-q25"/>
                         <constraint firstItem="MVM-0k-72i" firstAttribute="centerX" secondItem="HXh-ax-KcD" secondAttribute="centerX" id="6DG-16-IrW"/>
                         <constraint firstItem="YLG-Ku-RJG" firstAttribute="centerY" secondItem="HXh-ax-KcD" secondAttribute="centerY" id="85h-C8-U1k"/>
                         <constraint firstItem="2Xk-Jk-zrq" firstAttribute="centerX" secondItem="SRy-nU-hdq" secondAttribute="centerX" id="Hws-3x-Llt"/>
@@ -210,10 +232,12 @@
                         <constraint firstItem="v8f-fB-H2i" firstAttribute="top" secondItem="YLG-Ku-RJG" secondAttribute="bottom" id="bdp-oR-3bQ"/>
                         <constraint firstAttribute="trailing" secondItem="2Xk-Jk-zrq" secondAttribute="trailing" id="cug-2z-EDp"/>
                         <constraint firstItem="YLG-Ku-RJG" firstAttribute="centerX" secondItem="v8f-fB-H2i" secondAttribute="centerX" id="dqa-mt-zWC"/>
+                        <constraint firstAttribute="trailing" secondItem="FqP-f2-BE6" secondAttribute="trailing" id="hNr-3B-Dhj"/>
                         <constraint firstItem="MVM-0k-72i" firstAttribute="top" secondItem="HXh-ax-KcD" secondAttribute="bottom" id="kaE-NE-EQh"/>
                         <constraint firstAttribute="trailing" secondItem="Kai-AD-O7z" secondAttribute="trailing" id="kdJ-Tx-L9j"/>
                         <constraint firstItem="YLG-Ku-RJG" firstAttribute="leading" secondItem="0kk-th-FUQ" secondAttribute="leading" id="l0C-Fh-Uy5"/>
                         <constraint firstItem="Kai-AD-O7z" firstAttribute="top" secondItem="0kk-th-FUQ" secondAttribute="top" id="luq-dM-nM4"/>
+                        <constraint firstItem="FqP-f2-BE6" firstAttribute="leading" secondItem="0kk-th-FUQ" secondAttribute="leading" id="pBa-se-3Ji"/>
                         <constraint firstItem="SRy-nU-hdq" firstAttribute="top" secondItem="2Xk-Jk-zrq" secondAttribute="bottom" id="vAN-Z2-k3t"/>
                     </constraints>
                 </view>

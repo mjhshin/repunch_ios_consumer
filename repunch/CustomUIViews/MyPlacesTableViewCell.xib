@@ -20,7 +20,7 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
-                    <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5" userLabel="ThumbnailImageView">
+                    <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5" userLabel="ThumbnailImageView" customClass="RPImageView">
                         <rect key="frame" x="8" y="7" width="90" height="90"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>

@@ -11,9 +11,11 @@
 #import "LocationsTableViewCell.h"
 #import "RPStoreLocation.h"
 #import "RepunchUtils.h"
+#import "DataManager.h"
 
 @implementation LocationsViewController
 {
+	RPStore *store;
 	CLLocationManager *locationManager;
 	PFGeoPoint *userLocation;
 }
@@ -31,6 +33,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
+	store = [[DataManager getSharedInstance] getStore:self.storeId];
 	
 	locationManager = [[CLLocationManager alloc] init];
 	locationManager.delegate = self;
@@ -143,7 +147,7 @@
 
 - (void)reloadTableView
 {
-	self.locationsArray = [NSMutableArray arrayWithArray:self.store.store_locations];//[self.store.store_locations mutableCopy];
+	self.locationsArray = [NSMutableArray arrayWithArray:store.store_locations];//[self.store.store_locations mutableCopy];
 	[self sortLocationsByDistance];
 	[self.tableView reloadData];
 }

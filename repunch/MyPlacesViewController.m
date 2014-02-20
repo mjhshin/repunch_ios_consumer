@@ -131,7 +131,7 @@
 																	action:@selector(openSearch)];
 	
 	UIButton *punchCodeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, 50)];
-	[punchCodeButton setImage:[UIImage imageNamed:@"repunch-logo"] forState:UIControlStateNormal];
+	[punchCodeButton setImage:[UIImage imageNamed:@"nav_repunch_logo"] forState:UIControlStateNormal];
 	[punchCodeButton addTarget:self action:@selector(showPunchCode) forControlEvents:UIControlEventTouchUpInside];
 	
 	self.navigationItem.leftBarButtonItem = settingsButton;
@@ -323,7 +323,8 @@
 				UIImage *storeImage = [UIImage imageWithData:data];
 				if(storeImage) {
 					MyPlacesTableViewCell *cell = (MyPlacesTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
-					cell.storeImage.image = storeImage;
+					//cell.storeImage.image = storeImage;
+					[cell.storeImage setImageWithAnimation:storeImage];
 					[self.sharedData addThumbnailImage:storeImage forKey:storeId];
 				}
             }

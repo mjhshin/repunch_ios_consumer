@@ -6,6 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RPImageView.h"
 
 @interface SearchTableViewCell : UITableViewCell
 
@@ -15,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *storeName;
 @property (weak, nonatomic) IBOutlet UILabel *storeAddress;
 @property (weak, nonatomic) IBOutlet UILabel *storeCategories;
-@property (weak, nonatomic) IBOutlet UIImageView *storeImage;
+@property (weak, nonatomic) IBOutlet RPImageView *storeImage;
 @property (weak, nonatomic) IBOutlet UILabel *numPunches;
 @property (weak, nonatomic) IBOutlet UIImageView *punchIcon;
 @property (weak, nonatomic) IBOutlet UILabel *distance;

@@ -10,4 +10,6 @@
 
 @interface RPNavigationController : UINavigationController
 
+@property (strong, nonatomic) NSString *previousTitle;
+
 @end

@@ -155,7 +155,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 			[self checkLoginState];
 		}
 		else {
-			patronQuery = [PFQuery queryWithClassName:[RPPatron parseClassName]];
+			patronQuery = [RPPatron query];
 			patronQuery.cachePolicy = kPFCachePolicyCacheOnly;
 			//BOOL isInCache = [patronQuery hasCachedResult];
 			//NSLog(isInCache ? @"Yes - cached query" : @"No - cached query"); //Parse bug with hasCachedResult
@@ -201,8 +201,8 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
     MyPlacesViewController *myPlacesVC = [[MyPlacesViewController alloc] init];
     InboxViewController *inboxVC = [[InboxViewController alloc] init];
 	
-	UINavigationController *myPlacesNavController = [[UINavigationController alloc] initWithRootViewController:myPlacesVC];
-	UINavigationController *inboxNavController = [[UINavigationController alloc] initWithRootViewController:inboxVC];
+	RPNavigationController *myPlacesNavController = [[RPNavigationController alloc] initWithRootViewController:myPlacesVC];
+	RPNavigationController *inboxNavController = [[RPNavigationController alloc] initWithRootViewController:inboxVC];
 	[RepunchUtils setupNavigationController:myPlacesNavController];
 	[RepunchUtils setupNavigationController:inboxNavController];
     
@@ -210,7 +210,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
     inboxNavController.tabBarItem.title = @"Inbox";
     
     myPlacesNavController.tabBarItem.image = [UIImage imageNamed:@"tab_my_places"];
-    inboxNavController.tabBarItem.image = [UIImage imageNamed:@"ico-tab-inbox"];
+    inboxNavController.tabBarItem.image = [UIImage imageNamed:@"tab_inbox"];
     
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
 	tabBarController.viewControllers = @[myPlacesNavController, inboxNavController];
@@ -230,7 +230,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 - (void)presentLandingViews
 {
 	LandingViewController *landingVC = [[LandingViewController alloc] init];
-	UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:landingVC];
+	RPNavigationController *navController = [[RPNavigationController alloc] initWithRootViewController:landingVC];
 	[RepunchUtils setupNavigationController:navController];
 	self.window.rootViewController = navController;
     [self.window makeKeyAndVisible];
