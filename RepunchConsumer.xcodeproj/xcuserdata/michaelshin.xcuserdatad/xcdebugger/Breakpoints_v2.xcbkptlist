@@ -312,12 +312,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Repunch/IncomingMessageViewController.h"
-            timestampString = "414542651.338131"
+            timestampString = "414719715.545678"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "messageStatusId"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "messageView"
             landmarkType = "19">
          </BreakpointContent>
       </BreakpointProxy>
@@ -391,12 +391,12 @@
                   symbolName = "-[StoreViewController setStoreImage]"
                   moduleName = "Repunch"
                   urlString = "file:///Users/michaelshin/workspace/shin_repunch_ios_consumer/Repunch/StoreViewController.m"
-                  timestampString = "414610607.868724"
+                  timestampString = "414722568.680406"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "155"
                   endingLineNumber = "155"
-                  offsetFromSymbolStart = "816">
+                  offsetFromSymbolStart = "716">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -405,12 +405,12 @@
                   symbolName = "__36-[StoreViewController setStoreImage]_block_invoke"
                   moduleName = "Repunch"
                   urlString = "file:///Users/michaelshin/workspace/shin_repunch_ios_consumer/Repunch/StoreViewController.m"
-                  timestampString = "414610607.868907"
+                  timestampString = "414722568.680607"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "155"
                   endingLineNumber = "155"
-                  offsetFromSymbolStart = "54">
+                  offsetFromSymbolStart = "83">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -434,16 +434,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Repunch/IncomingMessageViewController.m"
-            timestampString = "414544277.170574"
+            timestampString = "414722912.282659"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "385"
-            endingLineNumber = "385"
-            landmarkName = "-redeemButtonAction:"
+            startingLineNumber = "289"
+            endingLineNumber = "289"
+            landmarkName = "-stringFromInterval:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -589,6 +589,54 @@
             endingLineNumber = "16"
             landmarkName = "@protocol NSObject"
             landmarkType = "2">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Repunch/IncomingMessageViewController.m"
+            timestampString = "414722912.282659"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "193"
+            endingLineNumber = "193"
+            landmarkName = "-adjustConstraints"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Repunch/IncomingMessageViewController.m"
+            timestampString = "414722568.367297"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
+            landmarkName = "-setupMessage"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Repunch/IncomingMessageViewController.m"
+            timestampString = "414722912.282659"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "305"
+            endingLineNumber = "305"
+            landmarkName = "-redeemButtonAction:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

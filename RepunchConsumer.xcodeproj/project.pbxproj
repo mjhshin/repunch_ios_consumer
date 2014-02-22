@@ -10,7 +10,6 @@
 		202F1DFA18523DC500495BDF /* NSDate+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 202F1DF318523DC500495BDF /* NSDate+Additions.m */; };
 		202F1DFB18523DC500495BDF /* RPStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 202F1DF518523DC500495BDF /* RPStore.m */; };
 		202F1DFC18523DC500495BDF /* RPStoreHours.m in Sources */ = {isa = PBXBuildFile; fileRef = 202F1DF718523DC500495BDF /* RPStoreHours.m */; };
-		204D4FAD18B6C459001B9560 /* IncomingMessageViewController.bak.xib in Resources */ = {isa = PBXBuildFile; fileRef = 204D4FAB18B6C459001B9560 /* IncomingMessageViewController.bak.xib */; };
 		204D4FB218B6C508001B9560 /* IncomingMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 204D4FB018B6C508001B9560 /* IncomingMessageViewController.xib */; };
 		207AA96A181195C300E73B2E /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2027286D181031E4004BD1A6 /* Parse.framework */; };
 		798D6DE81785B98A00CF8109 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 798D6DE71785B98A00CF8109 /* libsqlite3.dylib */; };
@@ -33,10 +32,6 @@
 		7996B3B017820B1C00CCAFED /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B3AF17820B1C00CCAFED /* Accounts.framework */; };
 		EE031C0318B3DE8B0027E79F /* message_recepient_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EE031C0118B3DE8B0027E79F /* message_recepient_icon.png */; };
 		EE031C0418B3DE8B0027E79F /* message_recepient_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE031C0218B3DE8B0027E79F /* message_recepient_icon@2x.png */; };
-		EE031C0C18B544910027E79F /* MessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE031C0B18B544910027E79F /* MessageTableViewCell.xib */; };
-		EE031C0E18B5449E0027E79F /* AttachmentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE031C0D18B5449E0027E79F /* AttachmentTableViewCell.xib */; };
-		EE031C1118B550250027E79F /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE031C1018B550250027E79F /* MessageTableViewCell.m */; };
-		EE031C1418B550330027E79F /* AttachmentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE031C1318B550330027E79F /* AttachmentTableViewCell.m */; };
 		EE031C1618B580BB0027E79F /* RedeemDialogView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE031C1518B580BB0027E79F /* RedeemDialogView.xib */; };
 		EE031C1918B66B470027E79F /* redeem_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EE031C1718B66B470027E79F /* redeem_icon.png */; };
 		EE031C1A18B66B470027E79F /* redeem_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE031C1818B66B470027E79F /* redeem_icon@2x.png */; };
@@ -96,6 +91,8 @@
 		EE79DF8117BD702500E92DE5 /* nav_search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE79DF7917BD702500E92DE5 /* nav_search@2x.png */; };
 		EE79DF8217BD702500E92DE5 /* nav_settings.png in Resources */ = {isa = PBXBuildFile; fileRef = EE79DF7A17BD702500E92DE5 /* nav_settings.png */; };
 		EE79DF8317BD702500E92DE5 /* nav_settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE79DF7B17BD702500E92DE5 /* nav_settings@2x.png */; };
+		EE8D702618B8271500ADE0DB /* forward_button_white.png in Resources */ = {isa = PBXBuildFile; fileRef = EE8D702418B8271500ADE0DB /* forward_button_white.png */; };
+		EE8D702718B8271500ADE0DB /* forward_button_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE8D702518B8271500ADE0DB /* forward_button_white@2x.png */; };
 		EE92C01F17E7D0F900532CBE /* call_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE92C01C17E7D0F900532CBE /* call_button@2x.png */; };
 		EE92C02117E7D0F900532CBE /* map_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE92C01E17E7D0F900532CBE /* map_button@2x.png */; };
 		EE93162D18AA9A7100ECEABF /* RPTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE93162C18AA9A7100ECEABF /* RPTableView.m */; };
@@ -223,7 +220,6 @@
 		202F1DF518523DC500495BDF /* RPStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPStore.m; sourceTree = "<group>"; };
 		202F1DF618523DC500495BDF /* RPStoreHours.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPStoreHours.h; sourceTree = "<group>"; };
 		202F1DF718523DC500495BDF /* RPStoreHours.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPStoreHours.m; sourceTree = "<group>"; };
-		204D4FAB18B6C459001B9560 /* IncomingMessageViewController.bak.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IncomingMessageViewController.bak.xib; path = repunch/IncomingMessageViewController.bak.xib; sourceTree = SOURCE_ROOT; };
 		204D4FB018B6C508001B9560 /* IncomingMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IncomingMessageViewController.xib; path = repunch/IncomingMessageViewController.xib; sourceTree = SOURCE_ROOT; };
 		798D6DE71785B98A00CF8109 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		7996B35917820A9700CCAFED /* Repunch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Repunch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -247,12 +243,6 @@
 		7996B3AF17820B1C00CCAFED /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		EE031C0118B3DE8B0027E79F /* message_recepient_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = message_recepient_icon.png; sourceTree = "<group>"; };
 		EE031C0218B3DE8B0027E79F /* message_recepient_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "message_recepient_icon@2x.png"; sourceTree = "<group>"; };
-		EE031C0B18B544910027E79F /* MessageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageTableViewCell.xib; path = repunch/MessageTableViewCell.xib; sourceTree = SOURCE_ROOT; };
-		EE031C0D18B5449E0027E79F /* AttachmentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AttachmentTableViewCell.xib; path = repunch/AttachmentTableViewCell.xib; sourceTree = SOURCE_ROOT; };
-		EE031C0F18B550250027E79F /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageTableViewCell.h; path = repunch/MessageTableViewCell.h; sourceTree = SOURCE_ROOT; };
-		EE031C1018B550250027E79F /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageTableViewCell.m; path = repunch/MessageTableViewCell.m; sourceTree = SOURCE_ROOT; };
-		EE031C1218B550330027E79F /* AttachmentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AttachmentTableViewCell.h; path = repunch/AttachmentTableViewCell.h; sourceTree = SOURCE_ROOT; };
-		EE031C1318B550330027E79F /* AttachmentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AttachmentTableViewCell.m; path = repunch/AttachmentTableViewCell.m; sourceTree = SOURCE_ROOT; };
 		EE031C1518B580BB0027E79F /* RedeemDialogView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RedeemDialogView.xib; path = repunch/RedeemDialogView.xib; sourceTree = SOURCE_ROOT; };
 		EE031C1718B66B470027E79F /* redeem_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redeem_icon.png; sourceTree = "<group>"; };
 		EE031C1818B66B470027E79F /* redeem_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redeem_icon@2x.png"; sourceTree = "<group>"; };
@@ -322,6 +312,8 @@
 		EE79DF7917BD702500E92DE5 /* nav_search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_search@2x.png"; sourceTree = "<group>"; };
 		EE79DF7A17BD702500E92DE5 /* nav_settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_settings.png; sourceTree = "<group>"; };
 		EE79DF7B17BD702500E92DE5 /* nav_settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_settings@2x.png"; sourceTree = "<group>"; };
+		EE8D702418B8271500ADE0DB /* forward_button_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = forward_button_white.png; sourceTree = "<group>"; };
+		EE8D702518B8271500ADE0DB /* forward_button_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "forward_button_white@2x.png"; sourceTree = "<group>"; };
 		EE92C01C17E7D0F900532CBE /* call_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "call_button@2x.png"; sourceTree = "<group>"; };
 		EE92C01E17E7D0F900532CBE /* map_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_button@2x.png"; sourceTree = "<group>"; };
 		EE93162B18AA9A7100ECEABF /* RPTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPTableView.h; path = repunch/CustomUIViews/RPTableView.h; sourceTree = SOURCE_ROOT; };
@@ -790,6 +782,8 @@
 				EE93166518AD552500ECEABF /* message_type_offer_orange@2x.png */,
 				EE93164618AC242A00ECEABF /* nav_add_store.png */,
 				EE93164718AC242A00ECEABF /* nav_add_store@2x.png */,
+				EE8D702418B8271500ADE0DB /* forward_button_white.png */,
+				EE8D702518B8271500ADE0DB /* forward_button_white@2x.png */,
 				EEB75AA21884B2FD00AA4F89 /* nav_back.png */,
 				EEB75AA31884B2FD00AA4F89 /* nav_back@2x.png */,
 				EE93165218AC27D200ECEABF /* nav_delete.png */,
@@ -847,18 +841,11 @@
 			children = (
 				EE9D4BA117A83F4A005E0CC5 /* IncomingMessageViewController.h */,
 				EE9D4BA217A83F4A005E0CC5 /* IncomingMessageViewController.m */,
-				204D4FAB18B6C459001B9560 /* IncomingMessageViewController.bak.xib */,
 				204D4FB018B6C508001B9560 /* IncomingMessageViewController.xib */,
 				EEE4D228189834C800A5EC25 /* OfferBorderView.h */,
 				EEE4D229189834C800A5EC25 /* OfferBorderView.m */,
 				EEE4D22F1899653C00A5EC25 /* GiftBorderView.h */,
 				EEE4D2301899653C00A5EC25 /* GiftBorderView.m */,
-				EE031C0F18B550250027E79F /* MessageTableViewCell.h */,
-				EE031C1018B550250027E79F /* MessageTableViewCell.m */,
-				EE031C0B18B544910027E79F /* MessageTableViewCell.xib */,
-				EE031C1218B550330027E79F /* AttachmentTableViewCell.h */,
-				EE031C1318B550330027E79F /* AttachmentTableViewCell.m */,
-				EE031C0D18B5449E0027E79F /* AttachmentTableViewCell.xib */,
 			);
 			name = Message;
 			sourceTree = "<group>";
@@ -967,6 +954,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE93168D18B29AF700ECEABF /* store_save_icon@2x.png in Resources */,
+				EE8D702618B8271500ADE0DB /* forward_button_white.png in Resources */,
 				EEE777B117E7D2020023768B /* feedback_button@2x.png in Resources */,
 				EE398B4018908A00005BEDFE /* location_hours_icon@2x.png in Resources */,
 				EE9D4C6917A83F4B005E0CC5 /* ComposeMessageView.xib in Resources */,
@@ -1005,7 +993,6 @@
 				EE93164918AC242A00ECEABF /* nav_add_store@2x.png in Resources */,
 				EE93164818AC242A00ECEABF /* nav_add_store.png in Resources */,
 				EE031C1D18B66C8A0027E79F /* redeem_gift_icon.png in Resources */,
-				EE031C0E18B5449E0027E79F /* AttachmentTableViewCell.xib in Resources */,
 				EE031C2518B66EDC0027E79F /* redeem_gift_icon_white.png in Resources */,
 				EEB8A44117EA314B0020E2EE /* splash_screen_640x960.png in Resources */,
 				EEB75A8D186E187700AA4F89 /* nav_forward.png in Resources */,
@@ -1041,7 +1028,6 @@
 				EE398B4518908A31005BEDFE /* location_map_icon.png in Resources */,
 				EE5378BD17B2E8D6002D8B18 /* StoreTableViewHeaderView.xib in Resources */,
 				EE5378CA17B2FEA9002D8B18 /* call_button.png in Resources */,
-				EE031C0C18B544910027E79F /* MessageTableViewCell.xib in Resources */,
 				EE5378CC17B2FEA9002D8B18 /* feedback_button.png in Resources */,
 				EE06E66217E7525000073AAF /* app_icon_114x114.png in Resources */,
 				EE398B4818908A31005BEDFE /* location_map_icon@2x.png in Resources */,
@@ -1075,6 +1061,7 @@
 				EE79DF8217BD702500E92DE5 /* nav_settings.png in Resources */,
 				EE79DF8317BD702500E92DE5 /* nav_settings@2x.png in Resources */,
 				EE031C1918B66B470027E79F /* redeem_icon.png in Resources */,
+				EE8D702718B8271500ADE0DB /* forward_button_white@2x.png in Resources */,
 				EEE777B317E7ECEB0023768B /* nav_send@2x.png in Resources */,
 				EE398B4A1891B08C005BEDFE /* orange_highlighted.png in Resources */,
 				EEA181AD17C6FD9B00553336 /* FacebookFriendsViewController.xib in Resources */,
@@ -1090,7 +1077,6 @@
 				EEA181C317CD20D300553336 /* map_button_highlighted@2x.png in Resources */,
 				EE93168718B2899F00ECEABF /* nav_repunch_logo@2x.png in Resources */,
 				EE031C1E18B66C8A0027E79F /* redeem_gift_icon@2x.png in Resources */,
-				204D4FAD18B6C459001B9560 /* IncomingMessageViewController.bak.xib in Resources */,
 				EE48FA5417D90A490084B47B /* landing.png in Resources */,
 				EEE4D2251898234400A5EC25 /* PunchCodeGuideView.xib in Resources */,
 				EE48FA5517D90A490084B47B /* landing@2x.png in Resources */,
@@ -1141,7 +1127,6 @@
 				EEE4D22A189834C800A5EC25 /* OfferBorderView.m in Sources */,
 				EE93163F18AC091800ECEABF /* RPUser.m in Sources */,
 				EE5250BE18B2D60C00AC7E6B /* RPImageView.m in Sources */,
-				EE031C1418B550330027E79F /* AttachmentTableViewCell.m in Sources */,
 				EE93163918AACA5F00ECEABF /* RPFacebookPost.m in Sources */,
 				EE04ABD8181EFAC100DDA5D0 /* ParseManager.m in Sources */,
 				EE93163318AAC51000ECEABF /* RPMessageStatus.m in Sources */,
@@ -1152,7 +1137,6 @@
 				EE9D4C8717A83F4B005E0CC5 /* StoreViewController.m in Sources */,
 				EE5F947417FB5471006E6F67 /* AuthenticationManager.m in Sources */,
 				EE9D4C8917A83F4B005E0CC5 /* SearchViewController.m in Sources */,
-				EE031C1118B550250027E79F /* MessageTableViewCell.m in Sources */,
 				EE9D4C8B17A83F4B005E0CC5 /* MyPlacesViewController.m in Sources */,
 				EE9D4C8F17A83F4B005E0CC5 /* RegisterViewController.m in Sources */,
 				EEE4D26C18A30C9C00A5EC25 /* RPNavigationController.m in Sources */,
