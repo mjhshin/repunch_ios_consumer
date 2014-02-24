@@ -10,6 +10,8 @@
 #import "LocationDetailsViewController.h"
 #import "RPStore.h"
 
+#import "RPCustomAlertController.h"
+
 @implementation StoreViewController
 {
 	DataManager *sharedData;
@@ -465,84 +467,66 @@
 	NSString *rewardIdString = [NSString stringWithFormat:@"%i", rewardId];
 	NSString *rewardName = reward[@"reward_name"];
 	
-	NSString *str1 = [NSString stringWithFormat:(rewardPunches == 1 ? @"%i Punch" :  @"%i Punches"), rewardPunches];
-	NSString *message = [str1 stringByAppendingFormat:@"\n\n%@", reward[@"description"]];
+	NSString *punches = [NSString stringWithFormat:(rewardPunches == 1 ? @"%i Punch" :  @"%i Punches"), rewardPunches];
 
-	SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:reward[@"reward_name"]
-													 andMessage:message];
-	
-	if (punchCount >= rewardPunches)
-	{
-		[alertView addButtonWithTitle:@"Redeem"
-								 type:SIAlertViewButtonTypeDefault
-							  handler:^(SIAlertView *alert) {
-								  
-			if( ![RepunchUtils isConnectionAvailable] ) {
-				[RepunchUtils showDefaultDropdownView:self.view];
-				return;
-			}
-								  
-			NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:
-													patron.objectId,			@"patron_id",
-													store.objectId,				@"store_id",
-													patronStore.objectId,		@"patron_store_id",
-													rewardName,					@"title",
-													rewardIdString,				@"reward_id",
-													rewardPunchesString,		@"num_punches",
-													patron.full_name,			@"name",
-													nil];
+	if (punchCount >= rewardPunches) {
 
-			[PFCloud callFunctionInBackground:@"request_redeem"
-							   withParameters:functionArguments
-										block:^(NSString *success, NSError *error) {
-				if (!error)
-				{
-					if ([success isEqualToString:@"pending"])
-					{
-						NSLog(@"function call is: %@", success);
-						[RepunchUtils showDialogWithTitle:@"Pending"
-											  withMessage:@"You can only request one reward at a time. Please wait for your reward to be approved."];
-					}
-					else
-					{
-						NSLog(@"function call is: %@", success);
-						[RepunchUtils showDialogWithTitle:@"Waiting for confirmation"
-											  withMessage:@"Please wait for your reward to be approved"];
-					}
-				}
-				else
-				{
-					NSLog(@"error occurred: %@", error);
-					[RepunchUtils showConnectionErrorDialog];
-				}
-			}];
-		}];
+        [RPCustomAlertController alertForRedeemWithTitle:rewardName punches:punches dectiption: reward[@"description"] andBlock:^(RPCustomAlertActionButton buttonType) {
 
-		[alertView addButtonWithTitle:@"Gift"
-								 type:SIAlertViewButtonTypeDefault
-							  handler:^(SIAlertView *alert) {
-			 [self gift];
-		 }];
+            if (buttonType == RedeemButton) {
+                if( ![RepunchUtils isConnectionAvailable] ) {
+                    [RepunchUtils showDefaultDropdownView:self.view];
+                    return;
+                }
+
+                NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                   patron.objectId,			@"patron_id",
+                                                   store.objectId,				@"store_id",
+                                                   patronStore.objectId,		@"patron_store_id",
+                                                   rewardName,					@"title",
+                                                   rewardIdString,				@"reward_id",
+                                                   rewardPunchesString,		@"num_punches",
+                                                   patron.full_name,			@"name",
+                                                   nil];
+
+                [PFCloud callFunctionInBackground:@"request_redeem" withParameters:functionArguments block:^(NSString *success, NSError *error) {
+
+                    if (!error) {
+                        if ([success isEqualToString:@"pending"]) {
+                            NSLog(@"function call is: %@", success);
+                            [RepunchUtils showDialogWithTitle:@"Pending"
+                                                  withMessage:@"You can only request one reward at a time. Please wait for your reward to be approved."];
+                        }
+                        else {
+                            NSLog(@"function call is: %@", success);
+                            [RepunchUtils showDialogWithTitle:@"Waiting for confirmation"
+                                                  withMessage:@"Please wait for your reward to be approved"];
+                        }
+                    }
+                    else {
+                        NSLog(@"error occurred: %@", error);
+                        [RepunchUtils showConnectionErrorDialog];
+                    }
+                }];
+                
+            }
+            else if (buttonType == GiftButton) {
+                [self gift];
+            }
             
-		[alertView addButtonWithTitle:@"Cancel"
-								 type:SIAlertViewButtonTypeDefault
-							  handler:nil];
+        }];
+        
 	}
-	else
-	{
-		[alertView addButtonWithTitle:@"OK"
-								 type:SIAlertViewButtonTypeDefault
-							  handler:nil];
+	else {
+        [RPCustomAlertController alertWithTitle:rewardName andMessage:reward[@"reward_name"]];
 	}
-	
-	[alertView show];
 }
 
 - (IBAction)callButtonAction:(id)sender
 {
 	NSString *urlString = [@"tel://" stringByAppendingString:storeLocation.phone_number];
 	NSURL *url = [NSURL URLWithString:urlString];
-	
+
 	if( [[UIApplication sharedApplication] canOpenURL:url] ) {
 		[[UIApplication sharedApplication] openURL:url];
 	}

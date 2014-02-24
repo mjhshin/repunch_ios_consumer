@@ -79,10 +79,14 @@
     alert.label1.text = punch;
     alert.label2.text = desc;
 
+
     alert.view.frame = [RPCustomAlertController frameForViewWithInitialFrame:alert.view.frame
                                                            withDynamicLabels:@[alert.label1, alert.label2]
                                                             andInitialHights:@[@(CGRectGetHeight(alert.label1.frame)), @(CGRectGetHeight(alert.label2.frame))]];
+
     alert.initialFrame = alert.view.frame;
+    [alert.view setNeedsLayout];
+    [alert.view setNeedsUpdateConstraints];
 
     alert.alertBlock = block;
     [alert showAlert];
