@@ -1,5 +1,5 @@
 //
-//  RewardTableViewCell.h
+//  StoreTableViewCell.h
 //  Repunch
 //
 //  Copyright (c) 2013 Repunch. All rights reserved.
@@ -7,9 +7,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RewardTableViewCell : UITableViewCell
+@interface StoreTableViewCell : UITableViewCell
 
-+ (RewardTableViewCell *)cell;
++ (StoreTableViewCell *)cell;
 + (NSString *)reuseIdentifier;
 
 @property (weak, nonatomic) IBOutlet UILabel *rewardTitle;

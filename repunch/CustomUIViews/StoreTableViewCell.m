@@ -1,14 +1,14 @@
 //
-//  RewardTableViewCell.m
+//  StoreTableViewCell.m
 //  Repunch
 //
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
-#import "RewardTableViewCell.h"
+#import "StoreTableViewCell.h"
 #import "RepunchUtils.h"
 
-@implementation RewardTableViewCell
+@implementation StoreTableViewCell
 
 + (NSString *)reuseIdentifier
 {
@@ -20,9 +20,9 @@
     return [[self class] reuseIdentifier];
 }
 
-+ (RewardTableViewCell *)cell
++ (StoreTableViewCell *)cell
 {
-	RewardTableViewCell *customCell = [[[NSBundle mainBundle] loadNibNamed:[self reuseIdentifier]
+	StoreTableViewCell *customCell = [[[NSBundle mainBundle] loadNibNamed:[self reuseIdentifier]
 																	 owner:self
 																   options:nil]
 									   objectAtIndex:0];

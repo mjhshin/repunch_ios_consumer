@@ -19,22 +19,6 @@
 	return (status != NotReachable);
 }
 
-+ (void)showDialogWithTitle:(NSString *)title withMessage:(NSString *)message
-{
-	SIAlertView *errorDialog = [[SIAlertView alloc] initWithTitle:title
-													   andMessage:message];
-	[errorDialog addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
-	[errorDialog show];
-}
-
-+ (void)showConnectionErrorDialog
-{
-	SIAlertView *errorDialog = [[SIAlertView alloc] initWithTitle:@"Error"
-													   andMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
-	[errorDialog addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
-	[errorDialog show];
-}
-
 + (void)showCustomDropdownView:(UIView *)parentView withMessage:(NSString *)message
 {
 	[self showNavigationBarDropdownView:parentView withMessage:message];

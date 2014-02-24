@@ -6,7 +6,7 @@
 //
 
 #import "SIAlertView.h"
-#import "RewardTableViewCell.h"
+#import "StoreTableViewCell.h"
 #import "AppDelegate.h"
 #import "ComposeMessageViewController.h"
 #import "FacebookFriendsViewController.h"
@@ -20,7 +20,8 @@
 #import <Parse/Parse.h>
 
 @interface StoreViewController : UIViewController<UITableViewDataSource, UITableViewDelegate,
-													UIGestureRecognizerDelegate, FacebookFriendsDelegate, UIScrollViewDelegate>
+													UIGestureRecognizerDelegate, FacebookFriendsDelegate,
+													UIScrollViewDelegate>
 
 @property (nonatomic, strong) NSString *storeId;
 @property (nonatomic, strong) NSString *storeLocationId;

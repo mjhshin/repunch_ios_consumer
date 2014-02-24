@@ -137,8 +137,8 @@
 		EE9D4C6917A83F4B005E0CC5 /* ComposeMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B7517A83F4A005E0CC5 /* ComposeMessageView.xib */; };
 		EE9D4C7517A83F4B005E0CC5 /* InboxTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B8E17A83F4A005E0CC5 /* InboxTableViewCell.m */; };
 		EE9D4C7617A83F4B005E0CC5 /* InboxTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B8F17A83F4A005E0CC5 /* InboxTableViewCell.xib */; };
-		EE9D4C7717A83F4B005E0CC5 /* RewardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B9117A83F4A005E0CC5 /* RewardTableViewCell.m */; };
-		EE9D4C7817A83F4B005E0CC5 /* RewardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B9217A83F4A005E0CC5 /* RewardTableViewCell.xib */; };
+		EE9D4C7717A83F4B005E0CC5 /* StoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B9117A83F4A005E0CC5 /* StoreTableViewCell.m */; };
+		EE9D4C7817A83F4B005E0CC5 /* StoreTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B9217A83F4A005E0CC5 /* StoreTableViewCell.xib */; };
 		EE9D4C7917A83F4B005E0CC5 /* MyPlacesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B9417A83F4A005E0CC5 /* MyPlacesTableViewCell.m */; };
 		EE9D4C7A17A83F4B005E0CC5 /* MyPlacesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B9517A83F4A005E0CC5 /* MyPlacesTableViewCell.xib */; };
 		EE9D4C7B17A83F4B005E0CC5 /* SearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B9717A83F4A005E0CC5 /* SearchTableViewCell.m */; };
@@ -192,7 +192,6 @@
 		EEE19F3618621A5B0084C63B /* LocationsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEE19F3418621A5B0084C63B /* LocationsViewController.xib */; };
 		EEE19F41186223220084C63B /* LocationsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE19F40186223220084C63B /* LocationsTableViewCell.m */; };
 		EEE19F43186226F60084C63B /* LocationsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEE19F42186226F60084C63B /* LocationsTableViewCell.xib */; };
-		EEE4D2251898234400A5EC25 /* PunchCodeGuideView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEE4D2241898234400A5EC25 /* PunchCodeGuideView.xib */; };
 		EEE4D22A189834C800A5EC25 /* OfferBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE4D229189834C800A5EC25 /* OfferBorderView.m */; };
 		EEE4D22C1898524600A5EC25 /* scissors@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEE4D22B1898524600A5EC25 /* scissors@2x.png */; };
 		EEE4D22E18985E6D00A5EC25 /* scissors.png in Resources */ = {isa = PBXBuildFile; fileRef = EEE4D22D18985E6D00A5EC25 /* scissors.png */; };
@@ -299,7 +298,7 @@
 		EE5250B918B2BCD000AC7E6B /* location_others_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "location_others_icon@2x.png"; sourceTree = "<group>"; };
 		EE5250BC18B2D60C00AC7E6B /* RPImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPImageView.h; path = repunch/CustomUIViews/RPImageView.h; sourceTree = SOURCE_ROOT; };
 		EE5250BD18B2D60C00AC7E6B /* RPImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RPImageView.m; path = repunch/CustomUIViews/RPImageView.m; sourceTree = SOURCE_ROOT; };
-		EE5378BC17B2E8D6002D8B18 /* StoreTableViewHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreTableViewHeaderView.xib; sourceTree = "<group>"; };
+		EE5378BC17B2E8D6002D8B18 /* StoreTableViewHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StoreTableViewHeaderView.xib; path = CustomUIViews/StoreTableViewHeaderView.xib; sourceTree = "<group>"; };
 		EE5378C417B2FEA8002D8B18 /* call_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = call_button.png; sourceTree = "<group>"; };
 		EE5378C617B2FEA9002D8B18 /* feedback_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = feedback_button.png; sourceTree = "<group>"; };
 		EE5378C817B2FEA9002D8B18 /* map_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_button.png; sourceTree = "<group>"; };
@@ -365,18 +364,18 @@
 		EE9D4B7317A83F4A005E0CC5 /* ComposeMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComposeMessageViewController.h; sourceTree = "<group>"; };
 		EE9D4B7417A83F4A005E0CC5 /* ComposeMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComposeMessageViewController.m; sourceTree = "<group>"; };
 		EE9D4B7517A83F4A005E0CC5 /* ComposeMessageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComposeMessageView.xib; sourceTree = "<group>"; };
-		EE9D4B8D17A83F4A005E0CC5 /* InboxTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InboxTableViewCell.h; sourceTree = "<group>"; };
-		EE9D4B8E17A83F4A005E0CC5 /* InboxTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InboxTableViewCell.m; sourceTree = "<group>"; };
-		EE9D4B8F17A83F4A005E0CC5 /* InboxTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InboxTableViewCell.xib; sourceTree = "<group>"; };
-		EE9D4B9017A83F4A005E0CC5 /* RewardTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardTableViewCell.h; sourceTree = "<group>"; };
-		EE9D4B9117A83F4A005E0CC5 /* RewardTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardTableViewCell.m; sourceTree = "<group>"; };
-		EE9D4B9217A83F4A005E0CC5 /* RewardTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RewardTableViewCell.xib; sourceTree = "<group>"; };
-		EE9D4B9317A83F4A005E0CC5 /* MyPlacesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPlacesTableViewCell.h; sourceTree = "<group>"; };
-		EE9D4B9417A83F4A005E0CC5 /* MyPlacesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPlacesTableViewCell.m; sourceTree = "<group>"; };
-		EE9D4B9517A83F4A005E0CC5 /* MyPlacesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPlacesTableViewCell.xib; sourceTree = "<group>"; };
-		EE9D4B9617A83F4A005E0CC5 /* SearchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTableViewCell.h; sourceTree = "<group>"; };
-		EE9D4B9717A83F4A005E0CC5 /* SearchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTableViewCell.m; sourceTree = "<group>"; };
-		EE9D4B9817A83F4A005E0CC5 /* SearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
+		EE9D4B8D17A83F4A005E0CC5 /* InboxTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InboxTableViewCell.h; path = CustomUIViews/InboxTableViewCell.h; sourceTree = "<group>"; };
+		EE9D4B8E17A83F4A005E0CC5 /* InboxTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InboxTableViewCell.m; path = CustomUIViews/InboxTableViewCell.m; sourceTree = "<group>"; };
+		EE9D4B8F17A83F4A005E0CC5 /* InboxTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InboxTableViewCell.xib; path = CustomUIViews/InboxTableViewCell.xib; sourceTree = "<group>"; };
+		EE9D4B9017A83F4A005E0CC5 /* StoreTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StoreTableViewCell.h; path = CustomUIViews/StoreTableViewCell.h; sourceTree = "<group>"; };
+		EE9D4B9117A83F4A005E0CC5 /* StoreTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoreTableViewCell.m; path = CustomUIViews/StoreTableViewCell.m; sourceTree = "<group>"; };
+		EE9D4B9217A83F4A005E0CC5 /* StoreTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StoreTableViewCell.xib; path = CustomUIViews/StoreTableViewCell.xib; sourceTree = "<group>"; };
+		EE9D4B9317A83F4A005E0CC5 /* MyPlacesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyPlacesTableViewCell.h; path = CustomUIViews/MyPlacesTableViewCell.h; sourceTree = "<group>"; };
+		EE9D4B9417A83F4A005E0CC5 /* MyPlacesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyPlacesTableViewCell.m; path = CustomUIViews/MyPlacesTableViewCell.m; sourceTree = "<group>"; };
+		EE9D4B9517A83F4A005E0CC5 /* MyPlacesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyPlacesTableViewCell.xib; path = CustomUIViews/MyPlacesTableViewCell.xib; sourceTree = "<group>"; };
+		EE9D4B9617A83F4A005E0CC5 /* SearchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchTableViewCell.h; path = CustomUIViews/SearchTableViewCell.h; sourceTree = "<group>"; };
+		EE9D4B9717A83F4A005E0CC5 /* SearchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchTableViewCell.m; path = CustomUIViews/SearchTableViewCell.m; sourceTree = "<group>"; };
+		EE9D4B9817A83F4A005E0CC5 /* SearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SearchTableViewCell.xib; path = CustomUIViews/SearchTableViewCell.xib; sourceTree = "<group>"; };
 		EE9D4B9B17A83F4A005E0CC5 /* InboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InboxViewController.h; sourceTree = "<group>"; };
 		EE9D4B9C17A83F4A005E0CC5 /* InboxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InboxViewController.m; sourceTree = "<group>"; };
 		EE9D4B9D17A83F4A005E0CC5 /* InboxViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InboxViewController.xib; sourceTree = "<group>"; };
@@ -447,7 +446,6 @@
 		EEE19F3F186223220084C63B /* LocationsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationsTableViewCell.h; path = repunch/CustomUIViews/LocationsTableViewCell.h; sourceTree = SOURCE_ROOT; };
 		EEE19F40186223220084C63B /* LocationsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationsTableViewCell.m; path = repunch/CustomUIViews/LocationsTableViewCell.m; sourceTree = SOURCE_ROOT; };
 		EEE19F42186226F60084C63B /* LocationsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LocationsTableViewCell.xib; path = repunch/CustomUIViews/LocationsTableViewCell.xib; sourceTree = SOURCE_ROOT; };
-		EEE4D2241898234400A5EC25 /* PunchCodeGuideView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PunchCodeGuideView.xib; path = repunch/PunchCodeGuideView.xib; sourceTree = SOURCE_ROOT; };
 		EEE4D228189834C800A5EC25 /* OfferBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OfferBorderView.h; path = repunch/CustomUIViews/OfferBorderView.h; sourceTree = SOURCE_ROOT; };
 		EEE4D229189834C800A5EC25 /* OfferBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OfferBorderView.m; path = repunch/CustomUIViews/OfferBorderView.m; sourceTree = SOURCE_ROOT; };
 		EEE4D22B1898524600A5EC25 /* scissors@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scissors@2x.png"; sourceTree = "<group>"; };
@@ -504,7 +502,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		202F1DFE18523DCC00495BDF /* RPClasses */ = {
+		202F1DFE18523DCC00495BDF /* Parse */ = {
 			isa = PBXGroup;
 			children = (
 				EE93163718AACA5F00ECEABF /* RPFacebookPost.h */,
@@ -528,7 +526,7 @@
 				EE93163D18AC091800ECEABF /* RPUser.h */,
 				EE93163E18AC091800ECEABF /* RPUser.m */,
 			);
-			name = RPClasses;
+			name = Parse;
 			sourceTree = "<group>";
 		};
 		7996B35017820A9700CCAFED = {
@@ -583,35 +581,19 @@
 		EE04ABCF181AF26800DDA5D0 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				EE8D702F18BBB15A00ADE0DB /* Inbox */,
+				EE8D702E18BBB14400ADE0DB /* FacebookFriends */,
+				EE8D702D18BBB13800ADE0DB /* LocationDetails */,
+				EE8D702C18BBB12800ADE0DB /* Locations */,
+				EE8D702B18BBB12100ADE0DB /* Settings */,
+				EE8D702A18BBB11B00ADE0DB /* Store */,
+				EE8D702918BBB11500ADE0DB /* Search */,
+				EE8D702818BBB10D00ADE0DB /* MyPlaces */,
 				EEE4D2321899654C00A5EC25 /* Message */,
 				EE9D4B7317A83F4A005E0CC5 /* ComposeMessageViewController.h */,
 				EE9D4B7417A83F4A005E0CC5 /* ComposeMessageViewController.m */,
 				EE9D4B7517A83F4A005E0CC5 /* ComposeMessageView.xib */,
-				EEA181A917C6FD9A00553336 /* FacebookFriendsViewController.h */,
-				EEA181AA17C6FD9A00553336 /* FacebookFriendsViewController.m */,
-				EEA181AB17C6FD9A00553336 /* FacebookFriendsViewController.xib */,
-				EE9D4B9B17A83F4A005E0CC5 /* InboxViewController.h */,
-				EE9D4B9C17A83F4A005E0CC5 /* InboxViewController.m */,
-				EE9D4B9D17A83F4A005E0CC5 /* InboxViewController.xib */,
-				EEFBA1711810A6BE00783F05 /* Landing */,
-				EE9D4BAF17A83F4A005E0CC5 /* MyPlacesViewController.h */,
-				EE9D4BB017A83F4A005E0CC5 /* MyPlacesViewController.m */,
-				EE9D4BB117A83F4A005E0CC5 /* MyPlacesViewController.xib */,
-				EE9D4BAC17A83F4A005E0CC5 /* SearchViewController.h */,
-				EE9D4BAD17A83F4A005E0CC5 /* SearchViewController.m */,
-				EE9D4BAE17A83F4A005E0CC5 /* SearchViewController.xib */,
-				EEB8A44A17EA61140020E2EE /* SettingsViewController.h */,
-				EEB8A44B17EA61140020E2EE /* SettingsViewController.m */,
-				EEB8A44C17EA61140020E2EE /* SettingsViewController.xib */,
-				EE9D4BA917A83F4A005E0CC5 /* StoreViewController.h */,
-				EE9D4BAA17A83F4A005E0CC5 /* StoreViewController.m */,
-				EE9D4BAB17A83F4A005E0CC5 /* StoreViewController.xib */,
-				EEE19F3218621A5B0084C63B /* LocationsViewController.h */,
-				EEE19F3318621A5B0084C63B /* LocationsViewController.m */,
-				EEE19F3418621A5B0084C63B /* LocationsViewController.xib */,
-				EEB75A8F18722D0800AA4F89 /* LocationDetailsViewController.h */,
-				EEB75A9018722D0800AA4F89 /* LocationDetailsViewController.m */,
-				EEB75A9118722D0800AA4F89 /* LocationDetailsViewController.xib */,
+				EEFBA1711810A6BE00783F05 /* Welcome */,
 				EE031C1518B580BB0027E79F /* RedeemDialogView.xib */,
 			);
 			name = ViewControllers;
@@ -630,6 +612,104 @@
 			name = Push;
 			sourceTree = "<group>";
 		};
+		EE8D702818BBB10D00ADE0DB /* MyPlaces */ = {
+			isa = PBXGroup;
+			children = (
+				EE9D4BAF17A83F4A005E0CC5 /* MyPlacesViewController.h */,
+				EE9D4BB017A83F4A005E0CC5 /* MyPlacesViewController.m */,
+				EE9D4BB117A83F4A005E0CC5 /* MyPlacesViewController.xib */,
+				EE9D4B9317A83F4A005E0CC5 /* MyPlacesTableViewCell.h */,
+				EE9D4B9417A83F4A005E0CC5 /* MyPlacesTableViewCell.m */,
+				EE9D4B9517A83F4A005E0CC5 /* MyPlacesTableViewCell.xib */,
+			);
+			name = MyPlaces;
+			sourceTree = "<group>";
+		};
+		EE8D702918BBB11500ADE0DB /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				EE9D4B9617A83F4A005E0CC5 /* SearchTableViewCell.h */,
+				EE9D4B9717A83F4A005E0CC5 /* SearchTableViewCell.m */,
+				EE9D4B9817A83F4A005E0CC5 /* SearchTableViewCell.xib */,
+				EE9D4BAC17A83F4A005E0CC5 /* SearchViewController.h */,
+				EE9D4BAD17A83F4A005E0CC5 /* SearchViewController.m */,
+				EE9D4BAE17A83F4A005E0CC5 /* SearchViewController.xib */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
+		EE8D702A18BBB11B00ADE0DB /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				EEB75A9C188457EE00AA4F89 /* StoreSectionHeaderView.xib */,
+				EE93168818B28E0B00ECEABF /* StoreSectionHeaderViewAdd.xib */,
+				EE5378BC17B2E8D6002D8B18 /* StoreTableViewHeaderView.xib */,
+				EE9D4BA917A83F4A005E0CC5 /* StoreViewController.h */,
+				EE9D4BAA17A83F4A005E0CC5 /* StoreViewController.m */,
+				EE9D4BAB17A83F4A005E0CC5 /* StoreViewController.xib */,
+				EE9D4B9017A83F4A005E0CC5 /* StoreTableViewCell.h */,
+				EE9D4B9117A83F4A005E0CC5 /* StoreTableViewCell.m */,
+				EE9D4B9217A83F4A005E0CC5 /* StoreTableViewCell.xib */,
+			);
+			name = Store;
+			sourceTree = "<group>";
+		};
+		EE8D702B18BBB12100ADE0DB /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				EEB8A44A17EA61140020E2EE /* SettingsViewController.h */,
+				EEB8A44B17EA61140020E2EE /* SettingsViewController.m */,
+				EEB8A44C17EA61140020E2EE /* SettingsViewController.xib */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		EE8D702C18BBB12800ADE0DB /* Locations */ = {
+			isa = PBXGroup;
+			children = (
+				EEE19F3F186223220084C63B /* LocationsTableViewCell.h */,
+				EEE19F40186223220084C63B /* LocationsTableViewCell.m */,
+				EEE19F42186226F60084C63B /* LocationsTableViewCell.xib */,
+				EEE19F3218621A5B0084C63B /* LocationsViewController.h */,
+				EEE19F3318621A5B0084C63B /* LocationsViewController.m */,
+				EEE19F3418621A5B0084C63B /* LocationsViewController.xib */,
+			);
+			name = Locations;
+			sourceTree = "<group>";
+		};
+		EE8D702D18BBB13800ADE0DB /* LocationDetails */ = {
+			isa = PBXGroup;
+			children = (
+				EEB75A8F18722D0800AA4F89 /* LocationDetailsViewController.h */,
+				EEB75A9018722D0800AA4F89 /* LocationDetailsViewController.m */,
+				EEB75A9118722D0800AA4F89 /* LocationDetailsViewController.xib */,
+			);
+			name = LocationDetails;
+			sourceTree = "<group>";
+		};
+		EE8D702E18BBB14400ADE0DB /* FacebookFriends */ = {
+			isa = PBXGroup;
+			children = (
+				EEA181A917C6FD9A00553336 /* FacebookFriendsViewController.h */,
+				EEA181AA17C6FD9A00553336 /* FacebookFriendsViewController.m */,
+				EEA181AB17C6FD9A00553336 /* FacebookFriendsViewController.xib */,
+			);
+			name = FacebookFriends;
+			sourceTree = "<group>";
+		};
+		EE8D702F18BBB15A00ADE0DB /* Inbox */ = {
+			isa = PBXGroup;
+			children = (
+				EE9D4B9B17A83F4A005E0CC5 /* InboxViewController.h */,
+				EE9D4B9C17A83F4A005E0CC5 /* InboxViewController.m */,
+				EE9D4B9D17A83F4A005E0CC5 /* InboxViewController.xib */,
+				EE9D4B8D17A83F4A005E0CC5 /* InboxTableViewCell.h */,
+				EE9D4B8E17A83F4A005E0CC5 /* InboxTableViewCell.m */,
+				EE9D4B8F17A83F4A005E0CC5 /* InboxTableViewCell.xib */,
+			);
+			name = Inbox;
+			sourceTree = "<group>";
+		};
 		EE9D4B1017A83F4A005E0CC5 /* External */ = {
 			isa = PBXGroup;
 			children = (
@@ -644,7 +724,7 @@
 			children = (
 				EE9D4B7117A83F4A005E0CC5 /* AppDelegate.h */,
 				EE9D4B7217A83F4A005E0CC5 /* AppDelegate.m */,
-				202F1DFE18523DCC00495BDF /* RPClasses */,
+				202F1DFE18523DCC00495BDF /* Parse */,
 				EE9D4B8717A83F4A005E0CC5 /* CustomUI */,
 				EEFBA1721810A6EB00783F05 /* Facebook */,
 				EE3F36D517B5865800D28FC9 /* Push */,
@@ -659,24 +739,6 @@
 		EE9D4B8717A83F4A005E0CC5 /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
-				EE9D4B8D17A83F4A005E0CC5 /* InboxTableViewCell.h */,
-				EE9D4B8E17A83F4A005E0CC5 /* InboxTableViewCell.m */,
-				EE9D4B8F17A83F4A005E0CC5 /* InboxTableViewCell.xib */,
-				EE9D4B9317A83F4A005E0CC5 /* MyPlacesTableViewCell.h */,
-				EE9D4B9417A83F4A005E0CC5 /* MyPlacesTableViewCell.m */,
-				EE9D4B9517A83F4A005E0CC5 /* MyPlacesTableViewCell.xib */,
-				EE9D4B9017A83F4A005E0CC5 /* RewardTableViewCell.h */,
-				EE9D4B9117A83F4A005E0CC5 /* RewardTableViewCell.m */,
-				EE9D4B9217A83F4A005E0CC5 /* RewardTableViewCell.xib */,
-				EE9D4B9617A83F4A005E0CC5 /* SearchTableViewCell.h */,
-				EE9D4B9717A83F4A005E0CC5 /* SearchTableViewCell.m */,
-				EE9D4B9817A83F4A005E0CC5 /* SearchTableViewCell.xib */,
-				EEB75A9C188457EE00AA4F89 /* StoreSectionHeaderView.xib */,
-				EE93168818B28E0B00ECEABF /* StoreSectionHeaderViewAdd.xib */,
-				EE5378BC17B2E8D6002D8B18 /* StoreTableViewHeaderView.xib */,
-				EEE19F3F186223220084C63B /* LocationsTableViewCell.h */,
-				EEE19F40186223220084C63B /* LocationsTableViewCell.m */,
-				EEE19F42186226F60084C63B /* LocationsTableViewCell.xib */,
 				EEE4D26A18A30C9C00A5EC25 /* RPNavigationController.h */,
 				EEE4D26B18A30C9C00A5EC25 /* RPNavigationController.m */,
 				EE93162B18AA9A7100ECEABF /* RPTableView.h */,
@@ -850,7 +912,7 @@
 			name = Message;
 			sourceTree = "<group>";
 		};
-		EEFBA1711810A6BE00783F05 /* Landing */ = {
+		EEFBA1711810A6BE00783F05 /* Welcome */ = {
 			isa = PBXGroup;
 			children = (
 				EE9D4B9E17A83F4A005E0CC5 /* LandingViewController.h */,
@@ -862,9 +924,8 @@
 				EE9D4BB717A83F4A005E0CC5 /* RegisterViewController.h */,
 				EE9D4BB817A83F4A005E0CC5 /* RegisterViewController.m */,
 				EE9D4BB917A83F4A005E0CC5 /* RegisterViewController.xib */,
-				EEE4D2241898234400A5EC25 /* PunchCodeGuideView.xib */,
 			);
-			name = Landing;
+			name = Welcome;
 			sourceTree = "<group>";
 		};
 		EEFBA1721810A6EB00783F05 /* Facebook */ = {
@@ -961,7 +1022,7 @@
 				EE398B4618908A31005BEDFE /* location_call_icon.png in Resources */,
 				EEE4D251189AD39A00A5EC25 /* star.png in Resources */,
 				EE9D4C7617A83F4B005E0CC5 /* InboxTableViewCell.xib in Resources */,
-				EE9D4C7817A83F4B005E0CC5 /* RewardTableViewCell.xib in Resources */,
+				EE9D4C7817A83F4B005E0CC5 /* StoreTableViewCell.xib in Resources */,
 				EE5250BA18B2BCD000AC7E6B /* location_others_icon.png in Resources */,
 				EE9D4C7A17A83F4B005E0CC5 /* MyPlacesTableViewCell.xib in Resources */,
 				EE9D4C7C17A83F4B005E0CC5 /* SearchTableViewCell.xib in Resources */,
@@ -1078,7 +1139,6 @@
 				EE93168718B2899F00ECEABF /* nav_repunch_logo@2x.png in Resources */,
 				EE031C1E18B66C8A0027E79F /* redeem_gift_icon@2x.png in Resources */,
 				EE48FA5417D90A490084B47B /* landing.png in Resources */,
-				EEE4D2251898234400A5EC25 /* PunchCodeGuideView.xib in Resources */,
 				EE48FA5517D90A490084B47B /* landing@2x.png in Resources */,
 				EE48FA5717D90A600084B47B /* landing-568h@2x.png in Resources */,
 				EE93165518AC27D200ECEABF /* nav_delete@2x.png in Resources */,
@@ -1116,7 +1176,7 @@
 				EE9D4C6817A83F4B005E0CC5 /* ComposeMessageViewController.m in Sources */,
 				EE93163C18AC090600ECEABF /* RPInstallation.m in Sources */,
 				EE9D4C7517A83F4B005E0CC5 /* InboxTableViewCell.m in Sources */,
-				EE9D4C7717A83F4B005E0CC5 /* RewardTableViewCell.m in Sources */,
+				EE9D4C7717A83F4B005E0CC5 /* StoreTableViewCell.m in Sources */,
 				EEE19EE2185A541A0084C63B /* RPStoreLocation.m in Sources */,
 				EEE4D2311899653C00A5EC25 /* GiftBorderView.m in Sources */,
 				EEE19F41186223220084C63B /* LocationsTableViewCell.m in Sources */,
