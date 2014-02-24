@@ -80,8 +80,8 @@
     alert.label2.text = desc;
 
     alert.view.frame = [RPCustomAlertController frameForViewWithInitialFrame:alert.view.frame
-                                                           withDynamicLabels:@[alert.label1]
-                                                            andInitialHights:@[@(CGRectGetHeight(alert.label1.frame))]];
+                                                           withDynamicLabels:@[alert.label1, alert.label2]
+                                                            andInitialHights:@[@(CGRectGetHeight(alert.label1.frame)), @(CGRectGetHeight(alert.label2.frame))]];
     alert.initialFrame = alert.view.frame;
 
     alert.alertBlock = block;
@@ -117,6 +117,9 @@
         CGFloat initialHeight = [initialHeights[i] floatValue];
 
         CGSize max = CGSizeMake(label.frame.size.width, CGFLOAT_MAX);
+
+
+        ///CGRect expectedRect =
 
         CGFloat expectedHeight = [label.text sizeWithFont:label.font
                                         constrainedToSize:max
