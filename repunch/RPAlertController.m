@@ -63,9 +63,19 @@ static NSMutableArray *alertStack;
 
         alert.initialFrame = alert.view.frame;
         alert.view.layer.cornerRadius = 10;
-        alert.view.layer.shadowOffset = CGSizeZero;
-        alert.view.layer.shadowRadius = 5;
-        alert.view.layer.shadowOpacity = 0.4;
+        alert.view.layer.masksToBounds = YES;
+
+        // make a shadow view since mask to bounds will clip the shadow
+
+        UIView *shadowView = [[UIView alloc] initWithFrame:alert.view.frame];
+        shadowView.layer.shadowOffset = CGSizeZero;
+        shadowView.layer.shadowRadius = 5;
+        shadowView.layer.cornerRadius = 10;
+
+        shadowView.layer.shadowOpacity = 0.4;
+
+        [shadowView addSubview:alert.view];
+        alert.view = shadowView;
 
         [alertStack addObject:alert];
         [self hideAlert:alert isDown:YES];
