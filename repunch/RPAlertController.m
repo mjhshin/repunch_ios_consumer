@@ -18,7 +18,6 @@ static NSMutableArray *alertStack;
 
 @interface RPAlertController ()
 @property (assign, nonatomic) CGPoint lastCenter;
-@property (assign, nonatomic) BOOL isVisible;
 
 @end
 
@@ -37,12 +36,7 @@ static NSMutableArray *alertStack;
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    if (self.isVisible ) {
-        [RPAlertController centerView:self];
-    }
-    else{
-        [RPAlertController hideAlert:self isDown:YES];
-    }
+    [RPAlertController centerView:self];
 }
 
 
@@ -57,6 +51,7 @@ static NSMutableArray *alertStack;
 {
 
     if (![alertStack containsObject:alert]) {
+
         if (!alertStack) {
             alertStack = [NSMutableArray array];
         }
@@ -78,12 +73,9 @@ static NSMutableArray *alertStack;
         alert.view = shadowView;
 
         [alertStack addObject:alert];
-        [self hideAlert:alert isDown:YES];
+        [RPAlertController hideAlert:alert isDown:YES];
     }
 
-    if (alertStack.count > 1 || alert.isVisible) {
-        return;
-    }
 
     if (!alertWindow) {
         alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -97,42 +89,51 @@ static NSMutableArray *alertStack;
         dim.alpha = 0.3;
         [alertWindow addSubview:dim];
     }
-    
+
     [alertWindow makeKeyAndVisible];
+
+    if (alertStack.count > 1) {
+        return;
+    }
 
 
     alertWindow.rootViewController = alert;
     alert.view.frame = alert.initialFrame;
-    [self hideAlert:alert isDown:YES];
+    [RPAlertController hideAlert:alert isDown:YES];
 
     [UIAlertView animateWithDuration:ANIMATION_DURATION animations:^{
-        [self centerView:alert];
+        [RPAlertController centerView:alert];
     }];
 }
 
 
 + (void)popAlert
 {
-    RPAlertController *toRemove = [alertStack firstObject];
+
+    __block RPAlertController *toRemove = [alertStack firstObject];
 
     [UIView animateWithDuration:ANIMATION_DURATION animations:^{
-        [self hideAlert:toRemove isDown:NO];
+        [RPAlertController hideAlert:toRemove isDown:NO];
 
     } completion:^(BOOL finished) {
 
         [alertStack removeObject:toRemove];
+        toRemove = nil;
 
         RPAlertController *toDisplay = [alertStack firstObject];
         alertWindow.rootViewController = toDisplay;
         toDisplay.view.frame = toDisplay.initialFrame;
-        [self hideAlert:toDisplay isDown:YES];
+        [RPAlertController hideAlert:toDisplay isDown:YES];
 
         [UIView animateWithDuration:ANIMATION_DURATION animations:^{
-            [self centerView:toDisplay];
+            [RPAlertController centerView:toDisplay];
         } completion:^(BOOL finished) {
             if (!toDisplay) {
                 [[[[UIApplication sharedApplication] delegate] window] makeKeyAndVisible];
+                [alertWindow resignKeyWindow];
+                [alertWindow removeFromSuperview];
                 alertWindow = nil;
+                alertStack = nil;
             }
         }];
         
@@ -151,7 +152,6 @@ static NSMutableArray *alertStack;
     frame = CGRectIntegral(frame);
 
     controller.view.frame = frame;
-    controller.isVisible = YES;
 
 }
 
@@ -188,7 +188,6 @@ static NSMutableArray *alertStack;
     frame = CGRectIntegral(frame);
 
     alert.view.frame = frame;
-    alert.isVisible = NO;
 }
 
 
