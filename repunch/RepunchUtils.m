@@ -9,6 +9,7 @@
 #import "SIAlertView.h"
 #import "RepunchUtils.h"
 #import "Reachability.h"
+#import "RPCustomAlertController.h"
 
 @implementation RepunchUtils
 
@@ -29,19 +30,19 @@
 	[self showNavigationBarDropdownView:parentView withMessage:nil];
 }
 
++ (void)showDialogWithTitle:(NSString *)title withMessage:(NSString *)message
+{
+    [RPCustomAlertController alertWithTitle:title andMessage:message];
+}
+
 + (void)showPunchCode:(NSString *)punchCode
 {
-	SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Your Punch Code"
-                                                 andMessage:punchCode];
-	
-	[alert setTitleFont:[RepunchUtils repunchFontWithSize:20 isBold:NO]];
-	[alert setMessageFont:[RepunchUtils repunchFontWithSize:36 isBold:YES]];
-    [alert addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
-    [alert show];
+    [RPCustomAlertController alertWithTitle:@"Your Punch Code" andMessage:punchCode];
 }
 
 + (void)showNavigationBarDropdownView:(UIView *)parentView withMessage:(NSString *)message
 {
+    
 	UILabel *dropdownLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
 	
 	if(message == nil) {

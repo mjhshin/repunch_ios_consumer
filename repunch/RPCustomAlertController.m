@@ -7,11 +7,10 @@
 //
 
 #import "RPCustomAlertController.h"
-#import "RPReward+RewardAddOn.h"
-#import "RPRedeem+RedeemAddOn.h"
-#import "RPVCSceneManager.h"
-#import "Macros.h"
-#import "Utilities.h"
+//#import "RPRedeem+RedeemAddOn.h"
+//#import "RPVCSceneManager.h"
+//#import "Macros.h"
+//#import "Utilities.h"
 
 @interface RPCustomAlertController ()
 
@@ -19,11 +18,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *label1;
 @property (weak, nonatomic) IBOutlet UILabel *label2;
 @property (weak, nonatomic) IBOutlet UIButton *closeButton;
-@property (weak, nonatomic) IBOutlet UILabel *label3;
-@property (weak, nonatomic) IBOutlet UIButton *validateButton;
-@property (weak, nonatomic) IBOutlet UIButton *rejectButton;
-@property (weak, nonatomic) IBOutlet UIButton *saveButton;
-
+@property (weak, nonatomic) IBOutlet UIButton *redeemButton;
+@property (weak, nonatomic) IBOutlet UIButton *giftButton;
 
 
 @property (strong, nonatomic) RPCustomAlertActionButtonBlock alertBlock;
@@ -43,41 +39,8 @@
     RPCustomAlertController *alert = [storyboard instantiateViewControllerWithIdentifier:string];
     UIView *view = alert.view;
     view = nil; // preload
-    return alert;
-}
+    return alert;}
 
-+ (void)alertViewForRedeemHistory:(RPRedeem *)redeem
-{
-    RPCustomAlertController *alert = [RPCustomAlertController alertFromStoryboard:@"HistoryRedeemAlert"];
-    [alert configureForRedeem:redeem];
-    [alert showAlert];
-
-}
-
-+ (void)alertViewForRedeemPending:(RPRedeem *)redeem withRejectValidateBlock:(RPCustomAlertActionButtonBlock)block
-{
-     RPCustomAlertController *alert = [RPCustomAlertController alertFromStoryboard:@"PendingRedeemAlert"];
-    [alert configureForRedeem:redeem];
-    alert.alertBlock = block;
-    [alert showAlert];
-
-}
-
-+ (void)alertForReward:(RPReward *)reward
-{
-    RPCustomAlertController * alert = [RPCustomAlertController alertFromStoryboard:@"RewardAlert"];
-
-    alert.titleLabel.text = reward.name;
-    alert.label3.text = reward.rewardDescription;
-    alert.label1.text = [reward.punches stringValue];
-
-    alert.view.frame = [Utilities frameForViewWithInitialFrame:alert.view.frame
-                                                                   withDynamicLabels:@[alert.label3]
-                                                             andInitialHights:@[@(CGRectGetHeight(alert.label3.frame))]];
-    alert.initialFrame = alert.view.frame;
-
-    [alert showAlert];
-}
 
 
 + (void)alertForNetworkError
@@ -91,13 +54,14 @@
     [alert showAlert];
 }
 
+
 + (void)alertWithTitle:(NSString*)title andMessage:(NSString*)message
 {
     RPCustomAlertController * alert = [RPCustomAlertController alertFromStoryboard:@"MessageAlert"];
     alert.titleLabel.text = NSLocalizedString(title, nil) ;
     alert.label1.text = NSLocalizedString(message, nil);
 
-    alert.view.frame = [Utilities frameForViewWithInitialFrame:alert.view.frame
+    alert.view.frame = [RPCustomAlertController frameForViewWithInitialFrame:alert.view.frame
                                                                   withDynamicLabels:@[alert.label1]
                                                             andInitialHights:@[@(CGRectGetHeight(alert.label1.frame))]];
     alert.initialFrame = alert.view.frame;
@@ -106,14 +70,17 @@
     [alert showAlert];
 }
 
-+ (void)alertForSaveWithTitle:(NSString*)title andMessage:(NSString*)message withBlock:(RPCustomAlertActionButtonBlock)block
-{
-    RPCustomAlertController * alert = [RPCustomAlertController alertFromStoryboard:@"MessageSaveAlert"];
-    alert.titleLabel.text = NSLocalizedString(title, nil) ;
-    alert.label1.text = NSLocalizedString(message, nil);
 
-    alert.view.frame = [Utilities frameForViewWithInitialFrame:alert.view.frame
-                                                                  withDynamicLabels:@[alert.label1]
++(void)alertForRedeemWithTitle:(NSString *)title punches:(NSString *)punch dectiption:(NSString *)desc andBlock:(RPCustomAlertActionButtonBlock)block
+{
+
+    RPCustomAlertController * alert = [RPCustomAlertController alertFromStoryboard:@"RedeemAlert"];
+    alert.titleLabel.text = title ;
+    alert.label1.text = punch;
+    alert.label2.text = desc;
+
+    alert.view.frame = [RPCustomAlertController frameForViewWithInitialFrame:alert.view.frame
+                                                           withDynamicLabels:@[alert.label1]
                                                             andInitialHights:@[@(CGRectGetHeight(alert.label1.frame))]];
     alert.initialFrame = alert.view.frame;
 
@@ -121,55 +88,59 @@
     [alert showAlert];
 }
 
-
--(void)dealloc
-{
-    NSLog(@"Controller Dealloc");
-}
-
-- (void)configureForRedeem:(RPRedeem*)redeem{
-
-
-    NSString *punchesString = nil;
-    if ([redeem.punches integerValue] == 0) {
-        punchesString = @"Gift/Offert";
-    }
-    else {
-        NSString *pluralString	= [redeem.punches integerValue] > 1 ? @"Punches" : @"Punch";
-        punchesString = [NSString stringWithFormat:@"%@ %@", redeem.punches, pluralString];
-    }
-    
-    static NSDateFormatter * formatter = nil;
-
-    if (!formatter) {
-        formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"h:mm a"];
-    }
-
-    self.titleLabel.text = redeem.title;
-    self.label1.text = punchesString;
-    self.label2.text = [formatter stringFromDate:redeem.updatedAt];
-    self.label3.text = redeem.customerName;
-    if ([redeem.punches integerValue] > 0) {
-        // TODO: set offer/gift
-    }
-}
-
-
 - (IBAction)close:(UIButton*)sender
 {
-    if (sender == self.rejectButton) {
-        BLOCK_SAFE_RUN(self.alertBlock, RejectButton);
+
+    RPCustomAlertActionButton button = NoneButton;
+    if (sender == self.redeemButton) {
+        button = RedeemButton;
     }
-    else if (self.validateButton == sender){
-        BLOCK_SAFE_RUN(self.alertBlock, ValidateButton);
+    else if (self.giftButton == sender){
+        button = GiftButton;
     }
-    else if (self.saveButton == sender){
-        BLOCK_SAFE_RUN(self.alertBlock, Save);
+
+    if (self.alertBlock) {
+        self.alertBlock(button);
     }
+
 
     [self hideAlert];
 }
+
++ (CGRect)frameForViewWithInitialFrame:(CGRect)viewInitialFrame withDynamicLabels:(NSArray*)labels andInitialHights:(NSArray*)initialHeights
+{
+    CGFloat totalDelta = 0;
+
+    for (NSUInteger i = 0  ; i < labels.count; i++) {
+
+        UILabel *label = labels[i];
+        CGFloat initialHeight = [initialHeights[i] floatValue];
+
+        CGSize max = CGSizeMake(label.frame.size.width, CGFLOAT_MAX);
+
+        CGFloat expectedHeight = [label.text sizeWithFont:label.font
+                                        constrainedToSize:max
+                                            lineBreakMode:label.lineBreakMode].height;
+
+        CGFloat delta = expectedHeight - initialHeight;
+
+        if (delta < 1) {
+            delta = 0;
+        }
+
+        if (label.text.length < 1) {
+            delta -= label.font.pointSize * 1.4f;
+        }
+
+        totalDelta += delta;
+    }
+
+    viewInitialFrame.size.height +=  totalDelta;
+    
+    return viewInitialFrame;
+}
+
+
 
 
 @end

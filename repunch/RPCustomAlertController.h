@@ -8,24 +8,20 @@
 
 #import <UIKit/UIKit.h>
 #import "RPAlertController.h"
-@class RPReward;
-@class RPRedeem;
 
-typedef NS_ENUM(NSUInteger, RPCustomAlertActionButton)
-{
-    RejectButton, ValidateButton, Save
+typedef NS_ENUM(NSUInteger, RPCustomAlertActionButton) {
+    NoneButton, RedeemButton, GiftButton
 };
 
 typedef void(^RPCustomAlertActionButtonBlock)(RPCustomAlertActionButton buttonType);
 
+
 @interface RPCustomAlertController : RPAlertController
 
-+ (void)alertViewForRedeemHistory:(RPRedeem*)redeem;
-+ (void)alertViewForRedeemPending:(RPRedeem*)redeem withRejectValidateBlock:(RPCustomAlertActionButtonBlock)block;
-+ (void)alertForReward:(RPReward*)reward;
 + (void)alertWithTitle:(NSString*)title andMessage:(NSString*)message;
-+ (void)alertForSaveWithTitle:(NSString*)title andMessage:(NSString*)message withBlock:(RPCustomAlertActionButtonBlock)block;
 
 + (void)alertForNetworkError;
+
++ (void)alertForRedeemWithTitle:(NSString*)title punches:(NSString*)punch dectiption:(NSString*)desc andBlock:(RPCustomAlertActionButtonBlock)block ;
 
 @end
