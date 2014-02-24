@@ -12,6 +12,9 @@
 		202F1DFC18523DC500495BDF /* RPStoreHours.m in Sources */ = {isa = PBXBuildFile; fileRef = 202F1DF718523DC500495BDF /* RPStoreHours.m */; };
 		204D4FB218B6C508001B9560 /* IncomingMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 204D4FB018B6C508001B9560 /* IncomingMessageViewController.xib */; };
 		207AA96A181195C300E73B2E /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2027286D181031E4004BD1A6 /* Parse.framework */; };
+		20E8609B18BBB686007DB153 /* RPAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20E8609818BBB686007DB153 /* RPAlertController.m */; };
+		20E8609C18BBB686007DB153 /* RPCustomAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20E8609A18BBB686007DB153 /* RPCustomAlertController.m */; };
+		20E860A518BBBD25007DB153 /* Alerts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20E860A418BBBD25007DB153 /* Alerts.storyboard */; };
 		798D6DE81785B98A00CF8109 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 798D6DE71785B98A00CF8109 /* libsqlite3.dylib */; };
 		7996B35D17820A9700CCAFED /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B35C17820A9700CCAFED /* UIKit.framework */; };
 		7996B35F17820A9700CCAFED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7996B35E17820A9700CCAFED /* Foundation.framework */; };
@@ -220,6 +223,11 @@
 		202F1DF618523DC500495BDF /* RPStoreHours.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPStoreHours.h; sourceTree = "<group>"; };
 		202F1DF718523DC500495BDF /* RPStoreHours.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPStoreHours.m; sourceTree = "<group>"; };
 		204D4FB018B6C508001B9560 /* IncomingMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IncomingMessageViewController.xib; path = repunch/IncomingMessageViewController.xib; sourceTree = SOURCE_ROOT; };
+		20E8609718BBB686007DB153 /* RPAlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPAlertController.h; sourceTree = "<group>"; };
+		20E8609818BBB686007DB153 /* RPAlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPAlertController.m; sourceTree = "<group>"; };
+		20E8609918BBB686007DB153 /* RPCustomAlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPCustomAlertController.h; sourceTree = "<group>"; };
+		20E8609A18BBB686007DB153 /* RPCustomAlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPCustomAlertController.m; sourceTree = "<group>"; };
+		20E860A418BBBD25007DB153 /* Alerts.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Alerts.storyboard; sourceTree = "<group>"; };
 		798D6DE71785B98A00CF8109 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		7996B35917820A9700CCAFED /* Repunch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Repunch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7996B35C17820A9700CCAFED /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -529,6 +537,18 @@
 			name = Parse;
 			sourceTree = "<group>";
 		};
+		20E8609618BBB5E6007DB153 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				20E8609718BBB686007DB153 /* RPAlertController.h */,
+				20E8609818BBB686007DB153 /* RPAlertController.m */,
+				20E8609918BBB686007DB153 /* RPCustomAlertController.h */,
+				20E8609A18BBB686007DB153 /* RPCustomAlertController.m */,
+				20E860A418BBBD25007DB153 /* Alerts.storyboard */,
+			);
+			name = Alert;
+			sourceTree = "<group>";
+		};
 		7996B35017820A9700CCAFED = {
 			isa = PBXGroup;
 			children = (
@@ -581,6 +601,7 @@
 		EE04ABCF181AF26800DDA5D0 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				20E8609618BBB5E6007DB153 /* Alert */,
 				EE8D702F18BBB15A00ADE0DB /* Inbox */,
 				EE8D702E18BBB14400ADE0DB /* FacebookFriends */,
 				EE8D702D18BBB13800ADE0DB /* LocationDetails */,
@@ -1145,6 +1166,7 @@
 				EE93167F18ADAD3D00ECEABF /* placeholder_thumbnail_image@2x.png in Resources */,
 				EE06E65E17E7525000073AAF /* app_icon_29x29.png in Resources */,
 				EE93165818AC32A800ECEABF /* tab_my_places.png in Resources */,
+				20E860A518BBBD25007DB153 /* Alerts.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1198,6 +1220,7 @@
 				EE5F947417FB5471006E6F67 /* AuthenticationManager.m in Sources */,
 				EE9D4C8917A83F4B005E0CC5 /* SearchViewController.m in Sources */,
 				EE9D4C8B17A83F4B005E0CC5 /* MyPlacesViewController.m in Sources */,
+				20E8609B18BBB686007DB153 /* RPAlertController.m in Sources */,
 				EE9D4C8F17A83F4B005E0CC5 /* RegisterViewController.m in Sources */,
 				EEE4D26C18A30C9C00A5EC25 /* RPNavigationController.m in Sources */,
 				EE9D4C9617A83F4B005E0CC5 /* LoginViewController.m in Sources */,
@@ -1207,6 +1230,7 @@
 				EE9D4C9A17A83F4B005E0CC5 /* NSDate+whenString.m in Sources */,
 				EE28DAE017AC447E00E4C460 /* DataManager.m in Sources */,
 				202F1DFA18523DC500495BDF /* NSDate+Additions.m in Sources */,
+				20E8609C18BBB686007DB153 /* RPCustomAlertController.m in Sources */,
 				EE3F36D417B585B300D28FC9 /* PunchHandler.m in Sources */,
 				EEB8A44D17EA61140020E2EE /* SettingsViewController.m in Sources */,
 				EE04ABCE181AEC5D00DDA5D0 /* Reachability.m in Sources */,
