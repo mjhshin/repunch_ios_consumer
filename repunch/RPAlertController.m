@@ -17,7 +17,6 @@ static UIWindow *alertWindow;
 static NSMutableArray *alertStack;
 
 @interface RPAlertController ()
-@property (assign, nonatomic) CGPoint lastCenter;
 
 @end
 
@@ -34,18 +33,18 @@ static NSMutableArray *alertStack;
     [RPAlertController popAlert];
 }
 
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    [RPAlertController centerView:self];
-}
-
 
 - (NSUInteger)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskAll;
 }
 
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [RPAlertController centerView:self];
 
+
+}
 
 + (void)pushAlert:(RPAlertController*)alert
 {
@@ -56,11 +55,8 @@ static NSMutableArray *alertStack;
             alertStack = [NSMutableArray array];
         }
 
-        alert.initialFrame = alert.view.frame;
         alert.view.layer.cornerRadius = 10;
         alert.view.layer.masksToBounds = YES;
-
-        // make a shadow view since mask to bounds will clip the shadow
 
         UIView *shadowView = [[UIView alloc] initWithFrame:alert.view.frame];
         shadowView.layer.shadowOffset = CGSizeZero;
@@ -70,10 +66,10 @@ static NSMutableArray *alertStack;
         shadowView.layer.shadowOpacity = 0.4;
 
         [shadowView addSubview:alert.view];
+
         alert.view = shadowView;
 
         [alertStack addObject:alert];
-        [RPAlertController hideAlert:alert isDown:YES];
     }
 
 
@@ -84,10 +80,16 @@ static NSMutableArray *alertStack;
         alertWindow.windowLevel = UIWindowLevelNormal;
         [alertWindow setAutoresizesSubviews:NO];
 
+        UIViewController * rootController = [[UIViewController alloc] init];
         UIView *dim = [[UIView alloc] initWithFrame:alertWindow.frame];
+
         dim.backgroundColor = [UIColor blackColor];
         dim.alpha = 0.3;
-        [alertWindow addSubview:dim];
+        dim.autoresizingMask = alertWindow.autoresizingMask;
+        [rootController.view addSubview:dim];
+
+
+        alertWindow.rootViewController = rootController;
     }
 
     [alertWindow makeKeyAndVisible];
@@ -97,8 +99,9 @@ static NSMutableArray *alertStack;
     }
 
 
-    alertWindow.rootViewController = alert;
-    alert.view.frame = alert.initialFrame;
+    [alertWindow.rootViewController addChildViewController:alert];
+    [alertWindow.rootViewController.view addSubview:alert.view];
+
     [RPAlertController hideAlert:alert isDown:YES];
 
     [UIAlertView animateWithDuration:ANIMATION_DURATION animations:^{
@@ -107,100 +110,87 @@ static NSMutableArray *alertStack;
 }
 
 
+
 + (void)popAlert
 {
 
-    __block RPAlertController *toRemove = [alertStack firstObject];
+    RPAlertController *toRemove = [alertStack firstObject];
+    [alertStack removeObject:toRemove];
+
+    RPAlertController *toDisplay = [alertStack firstObject];
+
+    if (toDisplay) {
+
+        [alertWindow.rootViewController addChildViewController: toDisplay];
+        [alertWindow.rootViewController.view addSubview:toDisplay.view];
+        [RPAlertController hideAlert:toDisplay isDown:YES];
+    }
 
     [UIView animateWithDuration:ANIMATION_DURATION animations:^{
+
         [RPAlertController hideAlert:toRemove isDown:NO];
+        [RPAlertController centerView:toDisplay];
 
     } completion:^(BOOL finished) {
 
-        [alertStack removeObject:toRemove];
-        toRemove = nil;
+        [toRemove removeFromParentViewController];
+        [toRemove.view removeFromSuperview];
 
-        RPAlertController *toDisplay = [alertStack firstObject];
-        alertWindow.rootViewController = toDisplay;
-        toDisplay.view.frame = toDisplay.initialFrame;
-        [RPAlertController hideAlert:toDisplay isDown:YES];
+        if (!toDisplay){
 
-        [UIView animateWithDuration:ANIMATION_DURATION animations:^{
-            [RPAlertController centerView:toDisplay];
-        } completion:^(BOOL finished) {
-            if (!toDisplay) {
-                [[[[UIApplication sharedApplication] delegate] window] makeKeyAndVisible];
-                [alertWindow resignKeyWindow];
-                [alertWindow removeFromSuperview];
-                alertWindow = nil;
-                alertStack = nil;
-            }
-        }];
-        
+            [[[[UIApplication sharedApplication] delegate] window] makeKeyAndVisible];
+            [alertWindow resignKeyWindow];
+            [alertWindow removeFromSuperview];
+            alertWindow.rootViewController = nil;
+            alertWindow = nil;
+            alertStack = nil;
+        }
     }];
 }
 
-+ (void)centerView:(RPAlertController*)controller
+
+
++ (void)centerView:(RPAlertController*)alert
 {
-    CGRect frame = [controller initialFrame];
+    CGRect alertFrame = alert.view.frame;
+    CGRect windowFrame = alertWindow.frame;
 
-    frame.size = [self fixSize:frame.size];
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication]statusBarOrientation];
+    if (UIInterfaceOrientationIsLandscape(orientation)){
+        CGFloat temp = windowFrame.size.height;
+        windowFrame.size.height = windowFrame.size.width;
+        windowFrame.size.width = temp;
+    }
 
-    frame.origin.x = (CGRectGetWidth(alertWindow.frame) - CGRectGetWidth(frame)) /2;
-    frame.origin.y = (CGRectGetHeight(alertWindow.frame)- CGRectGetHeight(frame))/2;
-
-    frame = CGRectIntegral(frame);
-
-    controller.view.frame = frame;
+    alertFrame.origin.x = (CGRectGetWidth(windowFrame) - CGRectGetWidth(alertFrame))/2;
+    alertFrame.origin.y = (CGRectGetHeight(windowFrame) - CGRectGetHeight(alertFrame))/2;
+    alert.view.frame = alertFrame;
 
 }
 
 
-+(void)hideAlert:(RPAlertController*)alert isDown:(BOOL)isDown
++ (void)hideAlert:(RPAlertController*)alert isDown:(BOOL)isDown
 {
-    CGRect frame = [alert initialFrame];
-    frame.size = [self fixSize:frame.size];
-
-    NSInteger ss = isDown ? 1 : -1;
+    CGRect alertFrame = alert.view.frame;
+    CGRect windowFrame = alertWindow.frame;
 
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication]statusBarOrientation];
+
     if (UIInterfaceOrientationIsLandscape(orientation)){
-        // Fix Velocity
-        NSInteger s = orientation == UIInterfaceOrientationLandscapeLeft ? 1 : -1;
+        CGFloat temp = windowFrame.size.height;
+        windowFrame.size.height = windowFrame.size.width;
+        windowFrame.size.width = temp;
+    }
 
-        CGRect rect1  =  orientation == UIInterfaceOrientationLandscapeLeft ? alertWindow.frame : frame;
-        CGRect rect2  =  orientation != UIInterfaceOrientationLandscapeLeft ? alertWindow.frame : frame;
-        CGRect rect3 = isDown ? rect1 : rect2;
-
-        frame.origin.x = ss*s* CGRectGetWidth(rect3) ;
-        frame.origin.y = (CGRectGetHeight(alertWindow.frame)- CGRectGetHeight(frame)) /2 ;
+    alertFrame.origin.x = (CGRectGetWidth(windowFrame) - CGRectGetWidth(alertFrame))/2;
+    
+    if (isDown) {
+        alertFrame.origin.y = CGRectGetHeight(windowFrame);
     }
     else {
-        NSInteger s = orientation == UIInterfaceOrientationPortrait ? 1 : -1;
-        CGRect rect1  = orientation == UIInterfaceOrientationPortrait ? alertWindow.frame : frame;
-        CGRect rect2  = orientation != UIInterfaceOrientationPortrait ? alertWindow.frame : frame;
-        CGRect rect3 = isDown ? rect1 : rect2;
-
-        frame.origin.x = (CGRectGetWidth(alertWindow.frame) - CGRectGetWidth(frame)) /2;
-        frame.origin.y = ss*s*(CGRectGetHeight(rect3));
+        alertFrame.origin.y = - CGRectGetHeight(alertFrame);
     }
-
-    frame = CGRectIntegral(frame);
-
-    alert.view.frame = frame;
-}
-
-
-+ (CGSize)fixSize:(CGSize)size
-{
-    UIInterfaceOrientation orientation = [[UIApplication sharedApplication]statusBarOrientation];
-    if (UIInterfaceOrientationIsLandscape(orientation)){
-        CGFloat t = size.width;
-        size.width = size.height;
-        size.height = t;
-    }
-
-    return size;
+    alert.view.frame = alertFrame;
 }
 
 

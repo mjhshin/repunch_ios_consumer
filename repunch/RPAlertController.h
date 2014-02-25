@@ -10,9 +10,6 @@
 
 @interface RPAlertController : UIViewController
 
-@property (assign, nonatomic) CGRect initialFrame;
-
-
 - (void)showAlert;
 - (void)hideAlert;
 

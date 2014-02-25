@@ -64,7 +64,6 @@
     alert.view.frame = [RPCustomAlertController frameForViewWithInitialFrame:alert.view.frame
                                                                   withDynamicLabels:@[alert.label1]
                                                             andInitialHights:@[@(CGRectGetHeight(alert.label1.frame))]];
-    alert.initialFrame = alert.view.frame;
 
 
     [alert showAlert];
@@ -83,8 +82,6 @@
     alert.view.frame = [RPCustomAlertController frameForViewWithInitialFrame:alert.view.frame
                                                            withDynamicLabels:@[alert.label1, alert.label2]
                                                             andInitialHights:@[@(CGRectGetHeight(alert.label1.frame)), @(CGRectGetHeight(alert.label2.frame))]];
-
-    alert.initialFrame = alert.view.frame;
 
     alert.alertBlock = block;
     [alert showAlert];
