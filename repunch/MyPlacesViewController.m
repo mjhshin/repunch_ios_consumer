@@ -34,7 +34,12 @@
 	[self registerForNotifications];
 	[self setupNavigationBar];
 	[self loadMyPlaces];
-	[self showHelpViews];
+
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self showHelpViews];
 }
 
 - (void)didReceiveMemoryWarning
