@@ -636,21 +636,15 @@
 
 - (void)showDeleteStoreDialog
 {
-	SIAlertView *warningView = [[SIAlertView alloc] initWithTitle:@"Remove from My Places"
-													   andMessage:@"WARNING: You will lose all your punches!"];
-	[warningView addButtonWithTitle:@"Cancel"
-							   type:SIAlertViewButtonTypeDefault
-							handler:^(SIAlertView *alert) {
-								[alert dismissAnimated:YES];
-							}];
-	
-	[warningView addButtonWithTitle:@"Remove"
-							   type:SIAlertViewButtonTypeDestructive
-							handler:^(SIAlertView *alert) {
-								[self deleteStore];
-								[alert dismissAnimated:YES];
-							}];
-	[warningView show];
+
+    __weak typeof(self) weakSelf = self;
+    [RPCustomAlertController alertForDeletingPlacesWithBlock:^(RPCustomAlertActionButton buttonType) {
+
+        if (buttonType == DeleteButton) {
+            [weakSelf deleteStore];
+        }
+    }];
+
 }
 
 - (void)deleteStore

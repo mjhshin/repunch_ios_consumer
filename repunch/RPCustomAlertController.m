@@ -10,7 +10,7 @@
 //#import "RPRedeem+RedeemAddOn.h"
 //#import "RPVCSceneManager.h"
 //#import "Macros.h"
-//#import "Utilities.h"
+#import "RepunchUtils.h"
 
 @interface RPCustomAlertController ()
 
@@ -71,7 +71,7 @@
 }
 
 
-+(void)alertForRedeemWithTitle:(NSString *)title punches:(NSString *)punch dectiption:(NSString *)desc andBlock:(RPCustomAlertActionButtonBlock)block
++ (void)alertForRedeemWithTitle:(NSString *)title punches:(NSString *)punch dectiption:(NSString *)desc andBlock:(RPCustomAlertActionButtonBlock)block
 {
 
     RPCustomAlertController * alert = [RPCustomAlertController alertFromStoryboard:@"RedeemAlert"];
@@ -92,6 +92,25 @@
 {
     RPCustomAlertController * alert = [RPCustomAlertController alertFromStoryboard:@"DeleteAlert"];
     alert.alertBlock = block;
+    [alert showAlert];
+}
+
++(void)alertForDeletingPlacesWithBlock:(RPCustomAlertActionButtonBlock)block
+{
+    RPCustomAlertController * alert = [RPCustomAlertController alertFromStoryboard:@"DeleteAlert"];
+    alert.titleLabel.text = @"Remove from My Places";
+    alert.label1.text = @"WARNING: You will lose all your punches!";
+    alert.label1.font = [RepunchUtils repunchFontWithSize:15 isBold:NO];
+    [alert.label1 setTextColor:[UIColor darkGrayColor]];
+    [alert.deleteButton setTitle:@"Remove" forState:UIControlStateNormal];
+    [alert.deleteButton setTitle:@"Remove" forState:UIControlStateHighlighted];
+
+    alert.alertBlock = block;
+
+    alert.view.frame = [RPCustomAlertController frameForViewWithInitialFrame:alert.view.frame
+                                                           withDynamicLabels:@[alert.label1]
+                                                            andInitialHights:@[@(CGRectGetHeight(alert.label1.frame))]];
+
     [alert showAlert];
 }
 
