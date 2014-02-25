@@ -16,6 +16,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
 	
 	BOOL isProduction = NO; // DON'T FORGET TO SET!!!!
 	

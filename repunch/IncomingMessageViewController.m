@@ -8,6 +8,7 @@
 #import "IncomingMessageViewController.h"
 #import "OfferBorderView.h"
 #import "GiftBorderView.h"
+#import "RPCustomAlertController.h"
 
 @implementation IncomingMessageViewController
 {
@@ -422,24 +423,16 @@
 		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
-	
-	SIAlertView *alert = [[SIAlertView alloc] initWithTitle:@"Delete this message?" andMessage:nil];
-	[alert addButtonWithTitle:@"Cancel"
-							   type:SIAlertViewButtonTypeDefault
-							handler:^(SIAlertView *alert) {
-								[alert dismissAnimated:YES];
-							}];
-	
-	
-	[alert addButtonWithTitle:@"Delete"
-							   type:SIAlertViewButtonTypeDestructive
-							handler:^(SIAlertView *alert) {
-								[sharedData removeMessage:self.messageStatusId];
-								[self.delegate removeMessage:self forMsgStatus:messageStatus];
-								[self.navigationController popViewControllerAnimated:NO];
-								[alert dismissAnimated:YES];
-							}];
-	[alert show];
+
+    [RPCustomAlertController alertForDeletingMessageWithBlock:^(RPCustomAlertActionButton buttonType) {
+
+        if (buttonType == DeleteButton) {
+            [sharedData removeMessage:self.messageStatusId];
+            [self.delegate removeMessage:self forMsgStatus:messageStatus];
+            [self.navigationController popViewControllerAnimated:NO];
+        }
+    }];
+
 }
 
 - (void)giftReplySent:(ComposeMessageViewController *)controller

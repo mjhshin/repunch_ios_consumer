@@ -10,7 +10,7 @@
 #import "RPAlertController.h"
 
 typedef NS_ENUM(NSUInteger, RPCustomAlertActionButton) {
-    NoneButton, RedeemButton, GiftButton
+    NoneButton, RedeemButton, GiftButton, DeleteButton
 };
 
 typedef void(^RPCustomAlertActionButtonBlock)(RPCustomAlertActionButton buttonType);
@@ -24,4 +24,5 @@ typedef void(^RPCustomAlertActionButtonBlock)(RPCustomAlertActionButton buttonTy
 
 + (void)alertForRedeemWithTitle:(NSString*)title punches:(NSString*)punch dectiption:(NSString*)desc andBlock:(RPCustomAlertActionButtonBlock)block ;
 
++ (void)alertForDeletingMessageWithBlock:(RPCustomAlertActionButtonBlock)block;
 @end

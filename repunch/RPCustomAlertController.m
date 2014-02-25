@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *closeButton;
 @property (weak, nonatomic) IBOutlet UIButton *redeemButton;
 @property (weak, nonatomic) IBOutlet UIButton *giftButton;
+@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 
 
 @property (strong, nonatomic) RPCustomAlertActionButtonBlock alertBlock;
@@ -87,6 +88,14 @@
     [alert showAlert];
 }
 
++ (void)alertForDeletingMessageWithBlock:(RPCustomAlertActionButtonBlock)block
+{
+    RPCustomAlertController * alert = [RPCustomAlertController alertFromStoryboard:@"DeleteAlert"];
+    alert.alertBlock = block;
+    [alert showAlert];
+}
+
+
 - (IBAction)close:(UIButton*)sender
 {
 
@@ -96,6 +105,9 @@
     }
     else if (self.giftButton == sender){
         button = GiftButton;
+    }
+    else if (self.deleteButton == sender ){
+        button = DeleteButton;
     }
 
     if (self.alertBlock) {
