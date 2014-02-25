@@ -17,10 +17,38 @@ static UIWindow *alertWindow;
 static NSMutableArray *alertStack;
 
 @interface RPAlertController ()
-
+@property (assign, nonatomic) CGRect keyboardFrame;
 @end
 
 @implementation RPAlertController
+
+
+- (void)viewDidLoad
+{
+    self.keyboardFrame = CGRectZero;
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(didShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
+    [center addObserver:self selector:@selector(didHidekeyboard:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)didShowKeyboard:(NSNotification*)notification
+{
+    NSValue* value = notification.userInfo[UIKeyboardFrameEndUserInfoKey];
+    self.keyboardFrame = value.CGRectValue;
+
+    [UIAlertView animateWithDuration:ANIMATION_DURATION animations:^{
+        [RPAlertController centerView:self];
+    }];
+}
+
+- (void)didHidekeyboard:(NSNotification*)notification
+{
+    self.keyboardFrame = CGRectZero;
+
+    [UIAlertView animateWithDuration:ANIMATION_DURATION animations:^{
+        [RPAlertController centerView:self];
+    }];
+}
 
 
 - (void)showAlert
@@ -164,8 +192,9 @@ static NSMutableArray *alertStack;
         windowFrame.size.width = temp;
     }
 
-    alertFrame.origin.x = (CGRectGetWidth(windowFrame) - CGRectGetWidth(alertFrame))/2;
-    alertFrame.origin.y = (CGRectGetHeight(windowFrame) - CGRectGetHeight(alertFrame))/2;
+    alertFrame.origin.x = (CGRectGetWidth(windowFrame) - CGRectGetWidth(alertFrame))/2 ;
+    alertFrame.origin.y = (CGRectGetHeight(windowFrame) - CGRectGetHeight(alertFrame))/2 ;
+    alertFrame.origin.y -= CGRectGetHeight(alert.keyboardFrame) /2;
     alert.view.frame = alertFrame;
 
 }
