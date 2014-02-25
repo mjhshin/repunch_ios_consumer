@@ -135,6 +135,8 @@ static NSMutableArray *alertStack;
 
         [toRemove removeFromParentViewController];
         [toRemove.view removeFromSuperview];
+        // Remove ShadowView
+        toRemove.view = [[toRemove.view subviews] firstObject];
 
         if (!toDisplay){
 
