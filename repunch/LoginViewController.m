@@ -74,11 +74,11 @@
 		return;
 	}
 	else if(email.length == 0) {
-		[RepunchUtils showDialogWithTitle:@"Please enter your email" withMessage:nil];
+		[RepunchUtils showDialogWithTitle:@"Empty Field" withMessage:@"Please enter your email"];
 		return;
 	}
 	else if(password.length == 0) {
-		[RepunchUtils showDialogWithTitle:@"Please enter your password" withMessage:nil];
+		[RepunchUtils showDialogWithTitle:@"Empty Field" withMessage:@"Please enter your password"];
 		return;
 	}
 	

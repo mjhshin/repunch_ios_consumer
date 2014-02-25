@@ -174,14 +174,14 @@
 {
     if(_emailInput.text.length == 0 || _passwordInput.text.length == 0 ||
 		_firstNameInput.text.length == 0 || _lastNameInput.text.length == 0 || _ageInput.text.length == 0) {
-		[RepunchUtils showDialogWithTitle:@"Please fill in all fields"
-							  withMessage:nil];
+		[RepunchUtils showDialogWithTitle:@"Empty Field"
+							  withMessage:@"Please fill in all fields"];
         return NO;
     }
 	
 	if(_genderSelector.selectedSegmentIndex == UISegmentedControlNoSegment) {
-		[RepunchUtils showDialogWithTitle:@"Please specify your gender"
-							  withMessage:nil];
+		[RepunchUtils showDialogWithTitle:@"Empty Filed"
+							  withMessage:@"Please specify your gender"];
 		return NO;
 	}
     
@@ -198,8 +198,8 @@
 	}
 	
 	if( [_ageInput.text intValue] > 125 ) {
-		[RepunchUtils showDialogWithTitle:@"Please enter your real age"
-							  withMessage:nil];
+		[RepunchUtils showDialogWithTitle:@"Field Validation"
+							  withMessage:@"Please enter your real age"];
 		return NO;
 	}
     
