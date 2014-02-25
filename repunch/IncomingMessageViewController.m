@@ -75,7 +75,7 @@
 - (void)setupMessage
 {
 	if( !IS_NIL(message.subject) ) {
-		self.subject.text = containsReply ? [NSString stringWithFormat:@"RE: %@", message.subject] : message.subject;
+		self.subject.text = [NSString stringWithFormat:(containsReply ? @"RE: %@" : @"%@"), message.subject];
 	}
 	
     self.sendDate.text = [self formattedDateString:message.createdAt];
@@ -120,12 +120,19 @@
 	self.attachmentTitle.text = @"Offer";
 	self.attachmentItem.text = message.offer_title;
 	
+	if([messageStatus.redeem_available isEqualToString:@"yes"]) {
+		[self.redeemButton setEnabled];
+	} else {
+		[self.redeemButton setDisabled];
+	}
+	
 	[self.attachmentView setNeedsLayout];
 	[self.attachmentView layoutIfNeeded];
 	
 	OfferBorderView *background = [[OfferBorderView alloc] init];
 	background.frame = self.attachmentView.bounds;
 	[self.attachmentView addSubview:background];
+	[self.attachmentView sendSubviewToBack:background];
 }
 
 - (void)setupGift
@@ -163,8 +170,32 @@
 		}];
 	}
 	
-	//animate showing this
-	self.replyButton.hidden = containsReply;
+	// Show reply button if there is no reply
+	if(containsReply) {
+		self.replyButton.hidden = YES;
+	} else {
+		[self.replyButton showButton];
+	}
+	
+	// Disable redeem button if pending or already redeemed
+	if([messageStatus.redeem_available isEqualToString:@"yes"]) {
+		[self.redeemButton setEnabled];
+	} else {
+		[self.redeemButton setDisabled];
+	}
+	
+	// Hide redeem button if user was the gift sender
+	if([message.patron_id isEqualToString:patron.objectId]) {
+		[self.redeemButton removeFromSuperview];
+		NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.attachmentView
+																	  attribute:NSLayoutAttributeBottom
+																	  relatedBy:NSLayoutRelationEqual
+																		 toItem:self.attachmentDescription
+																	  attribute:NSLayoutAttributeBottom
+																	 multiplier:1
+																	   constant:40];
+		[self.attachmentView addConstraint:constraint];
+	}
 	
 	[self.attachmentView setNeedsLayout];
 	[self.attachmentView layoutIfNeeded];
@@ -172,6 +203,7 @@
 	GiftBorderView *background = [[GiftBorderView alloc] init];
 	background.frame = self.attachmentView.bounds;
 	[self.attachmentView addSubview:background];
+	[self.attachmentView sendSubviewToBack:background]; //needs to be behind redeem button
 }
 
 - (void)adjustConstraints
@@ -336,7 +368,7 @@
 		[PFCloud callFunctionInBackground: @"request_redeem"
 						   withParameters:parameters
 									block:^(NSString *result, NSError *error) {
-			
+
 			self.redeemButton.enabled = YES;
 			[self.redeemButton stopSpinner];
 			 
@@ -413,7 +445,8 @@
 - (void)giftReplySent:(ComposeMessageViewController *)controller
 {
 	containsReply = !IS_NIL(message.Reply);
-	//[self setupMessage];
+	[self.replyButton hideButton];
+	[self setupMessage];
 	[self.delegate removeMessage:self forMsgStatus:nil];
 }
 

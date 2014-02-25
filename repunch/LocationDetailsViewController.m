@@ -15,7 +15,8 @@
 
 @implementation LocationDetailsViewController {
 	CLLocationCoordinate2D coordinates;
-	NSString *storeName;
+	RPStore *store;
+	RPStoreLocation *storeLocation;
 }
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
@@ -36,22 +37,60 @@
 
 - (void)setInformation
 {
-	RPStore *store = [[DataManager getSharedInstance] getStore:self.storeLocation.Store.objectId];
-	storeName = store.store_name;
-	self.navigationItem.title = storeName;
+	storeLocation = [[DataManager getSharedInstance] getStoreLocation:self.storeLocationId];
+	store = [[DataManager getSharedInstance] getStore:storeLocation.Store.objectId];
+	self.navigationItem.title = store.store_name;
 	
 	self.mapButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-	[self.mapButton setTitle:self.storeLocation.formattedAddress forState:UIControlStateNormal];
-	[self.callButton setTitle:self.storeLocation.phone_number forState:UIControlStateNormal];
+	[self.mapButton setTitle:storeLocation.formattedAddress forState:UIControlStateNormal];
+	[self.callButton setTitle:storeLocation.phone_number forState:UIControlStateNormal];
 
-	self.otherLocationsButton.hidden = (store.store_locations.count <= 1);
-	self.bottomDivider.hidden = (store.store_locations.count <= 1);
+	// TODO: add this feature
+	self.otherLocationsButton.hidden = YES;//(store.store_locations.count <= 1);
+	self.bottomDivider.hidden = YES;//(store.store_locations.count <= 1);
+	
+	[self setStoreHours];
+}
+
+- (void)setStoreHours
+{
+	if(storeLocation.hours.count == 0) {
+		self.hoursView.hidden = YES;
+		return;
+	}
+	else if([storeLocation.hours lastObject][@"day"] == 0) {
+		self.daysLabel.text = @"Open 24/7";
+		return;
+	}
+	
+	NSArray *days = [NSArray arrayWithObjects: @"Sun", @"Mon", @"Tue", @"Wed", @"Thu", @"Fri", @"Sat", nil];
+	NSMutableAttributedString *dayString = [[NSMutableAttributedString alloc] init];
+	NSMutableAttributedString *hourString = [[NSMutableAttributedString alloc] init];
+	
+	for(int day = 1; day <= 7; day++)
+	{
+		BOOL found = NO;
+		for(id entry in storeLocation.hours)
+		{
+			if([entry[@"day"] intValue] == day) {
+				if(!found) {
+					[dayString appendAttributedString:[[NSAttributedString alloc] initWithString:days[day - 1]]];
+					[hourString appendAttributedString:[[NSAttributedString alloc] initWithString:entry[@"open_time"]]];
+				} else {
+					[dayString appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
+					[hourString appendAttributedString:[[NSAttributedString alloc] initWithString:days[day - 1]]];
+				}
+				found = YES;
+			}
+		}
+	}
+	
 }
 
 - (void)addMapAnnotation
 {
-	coordinates = CLLocationCoordinate2DMake(self.storeLocation.coordinates.latitude,
-											 self.storeLocation.coordinates.longitude);
+	coordinates = CLLocationCoordinate2DMake(storeLocation.coordinates.latitude,
+											 storeLocation.coordinates.longitude);
 	
 	[self.mapView setCenterCoordinate:coordinates
 							zoomLevel:15
@@ -59,8 +98,8 @@
 	
 	
     MapPin *placePin = [[MapPin alloc] initWithCoordinates:coordinates
-												 placeName:storeName
-											   description:self.storeLocation.street];
+												 placeName:store.store_name
+											   description:storeLocation.street];
 	//placePin.can
     
     [self.mapView addAnnotation:placePin];
@@ -105,7 +144,7 @@
                                                        addressDictionary:nil];
 		
         MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
-        mapItem.name = self.storeLocation.Store.store_name;
+        mapItem.name = store.store_name;
         
         // Set the directions mode to "Driving"
         NSDictionary *launchOptions = @{MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving};
@@ -137,7 +176,7 @@
 
 - (IBAction)callButtonAction:(id)sender
 {	
-	NSString *urlString = [@"tel://" stringByAppendingString:self.storeLocation.phone_number];
+	NSString *urlString = [@"tel://" stringByAppendingString:storeLocation.phone_number];
 	NSURL *url = [NSURL URLWithString:urlString];
 	
 	if( [[UIApplication sharedApplication] canOpenURL:url] ) {
@@ -151,7 +190,7 @@
 - (IBAction)otherLocationsButtonAction:(id)sender
 {
 	LocationsViewController *locationsVC = [[LocationsViewController alloc] init];
-	locationsVC.storeId = self.storeLocation.Store.objectId;
+	locationsVC.storeId = store.objectId;
 	[self.navigationController pushViewController:locationsVC animated:YES];
 }
 

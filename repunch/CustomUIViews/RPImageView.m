@@ -31,12 +31,7 @@
 	
 	[self.layer addAnimation:transition forKey:nil];
 	
-	[UIView beginAnimations:nil context:NULL];
-	[UIView setAnimationDuration:5];
-	
 	self.image = newImage;
-	
-	[UIView commitAnimations];
 }
 
 @end

@@ -19,6 +19,22 @@
 	NetworkStatus status = [reach currentReachabilityStatus];
 	return (status != NotReachable);
 }
+/*
++ (void)showDialogWithTitle:(NSString *)title withMessage:(NSString *)message
+{
+	SIAlertView *errorDialog = [[SIAlertView alloc] initWithTitle:title
+													   andMessage:message];
+	[errorDialog addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
+	[errorDialog show];
+}
+*/
++ (void)showConnectionErrorDialog
+{
+	SIAlertView *errorDialog = [[SIAlertView alloc] initWithTitle:@"Error"
+													   andMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
+	[errorDialog addButtonWithTitle:@"OK" type:SIAlertViewButtonTypeDefault handler:nil];
+	[errorDialog show];
+}
 
 + (void)showCustomDropdownView:(UIView *)parentView withMessage:(NSString *)message
 {
@@ -189,41 +205,6 @@
 	UIGraphicsEndImageContext();
 	
     return newImage;
-}
-
-
-+ (CGRect)frameForViewWithInitialFrame:(CGRect)viewInitialFrame withDynamicLabels:(NSArray*)labels andInitialHights:(NSArray*)initialHeights
-{
-    CGFloat totalDelta = 0;
-
-    
-    for (NSUInteger i = 0  ; i < labels.count; i++) {
-
-        UILabel *label = labels[i];
-        CGFloat initialHeight = [initialHeights[i] floatValue];
-
-        CGSize max = CGSizeMake(label.frame.size.width, CGFLOAT_MAX);
-
-        CGFloat expectedHeight = [label.text sizeWithFont:label.font
-                                        constrainedToSize:max
-                                            lineBreakMode:label.lineBreakMode].height;
-
-        CGFloat delta = expectedHeight - initialHeight;
-
-        if (delta < 1) {
-            delta = 0;
-        }
-
-        if (label.text.length < 1) {
-            delta -= label.font.pointSize * 1.4f;
-        }
-
-        totalDelta += delta;
-    }
-
-    viewInitialFrame.size.height +=  totalDelta;
-    
-    return viewInitialFrame;
 }
 
 @end

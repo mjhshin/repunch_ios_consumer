@@ -57,6 +57,7 @@
 		EE06E66317E7525000073AAF /* app_icon_120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = EE06E65D17E7525000073AAF /* app_icon_120x120.png */; };
 		EE125A0417F1E40100E2946E /* splash_screen_320x480.png in Resources */ = {isa = PBXBuildFile; fileRef = EE125A0317F1E40100E2946E /* splash_screen_320x480.png */; };
 		EE17EE0E17FA34EE0053C36C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE17EE0D17FA34EE0053C36C /* Crashlytics.framework */; };
+		EE255EA418BD38C800A6E15E /* RPPopupButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EE255EA318BD38C800A6E15E /* RPPopupButton.m */; };
 		EE28DAE017AC447E00E4C460 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE28DADF17AC447E00E4C460 /* DataManager.m */; };
 		EE2AFE7C1819B3420046CF74 /* SIAlertView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EE2AFE791819B3420046CF74 /* SIAlertView.bundle */; };
 		EE2AFE7D1819B3420046CF74 /* SIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE2AFE7B1819B3420046CF74 /* SIAlertView.m */; };
@@ -275,6 +276,8 @@
 		EE06E65D17E7525000073AAF /* app_icon_120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_120x120.png; sourceTree = "<group>"; };
 		EE125A0317F1E40100E2946E /* splash_screen_320x480.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash_screen_320x480.png; sourceTree = "<group>"; };
 		EE17EE0D17FA34EE0053C36C /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
+		EE255EA218BD38C800A6E15E /* RPPopupButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPPopupButton.h; path = repunch/CustomUIViews/RPPopupButton.h; sourceTree = SOURCE_ROOT; };
+		EE255EA318BD38C800A6E15E /* RPPopupButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RPPopupButton.m; path = repunch/CustomUIViews/RPPopupButton.m; sourceTree = SOURCE_ROOT; };
 		EE28DADE17AC447E00E4C460 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		EE28DADF17AC447E00E4C460 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		EE2AFE791819B3420046CF74 /* SIAlertView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SIAlertView.bundle; sourceTree = "<group>"; };
@@ -764,6 +767,8 @@
 				EEE4D26B18A30C9C00A5EC25 /* RPNavigationController.m */,
 				EE93162B18AA9A7100ECEABF /* RPTableView.h */,
 				EE93162C18AA9A7100ECEABF /* RPTableView.m */,
+				EE255EA218BD38C800A6E15E /* RPPopupButton.h */,
+				EE255EA318BD38C800A6E15E /* RPPopupButton.m */,
 				EE93162E18AAA24300ECEABF /* RPButton.h */,
 				EE93162F18AAA24300ECEABF /* RPButton.m */,
 				EE5250BC18B2D60C00AC7E6B /* RPImageView.h */,
@@ -1197,6 +1202,7 @@
 				EE9D4C6717A83F4B005E0CC5 /* AppDelegate.m in Sources */,
 				EE9D4C6817A83F4B005E0CC5 /* ComposeMessageViewController.m in Sources */,
 				EE93163C18AC090600ECEABF /* RPInstallation.m in Sources */,
+				EE255EA418BD38C800A6E15E /* RPPopupButton.m in Sources */,
 				EE9D4C7517A83F4B005E0CC5 /* InboxTableViewCell.m in Sources */,
 				EE9D4C7717A83F4B005E0CC5 /* StoreTableViewCell.m in Sources */,
 				EEE19EE2185A541A0084C63B /* RPStoreLocation.m in Sources */,

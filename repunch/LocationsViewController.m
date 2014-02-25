@@ -141,7 +141,7 @@
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
     LocationDetailsViewController *locationDetailsVC = [[LocationDetailsViewController alloc] init];
-    locationDetailsVC.storeLocation = self.locationsArray[indexPath.row];
+    locationDetailsVC.storeLocationId = [self.locationsArray[indexPath.row] objectId];
     [self.navigationController pushViewController:locationDetailsVC animated:YES];
 }
 

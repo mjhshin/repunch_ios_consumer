@@ -590,7 +590,7 @@
 		}
 		else {
 			LocationDetailsViewController *locationDetailsVC = [[LocationDetailsViewController alloc] init];
-			locationDetailsVC.storeLocation = storeLocation;
+			locationDetailsVC.storeLocationId = self.storeLocationId;
 			[self.navigationController pushViewController:locationDetailsVC animated:YES];
 		}
 	}

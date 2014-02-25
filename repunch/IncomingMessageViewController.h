@@ -12,6 +12,7 @@
 #import <Parse/Parse.h>
 #import "RPConstants.h"
 #import "RPButton.h"
+#import "RPPopupButton.h"
 #import "RPTableView.h"
 
 @class IncomingMessageViewController;
@@ -26,7 +27,7 @@
 @property (strong, nonatomic) NSString *messageStatusId;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (weak, nonatomic) IBOutlet UIButton *replyButton;
+@property (weak, nonatomic) IBOutlet RPPopupButton *replyButton;
 - (IBAction)replyButtonAction:(id)sender;
 
 // Original Message
