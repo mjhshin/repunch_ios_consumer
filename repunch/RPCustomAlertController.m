@@ -62,64 +62,111 @@
     alert.titleLabel.text = NSLocalizedString(title, nil) ;
     alert.label1.text = NSLocalizedString(message, nil);
 
-    alert.view.frame = [RPCustomAlertController frameForViewWithInitialFrame:alert.view.frame
+    CGRect frame = [RPCustomAlertController frameForViewWithInitialFrame:alert.view.frame
                                                                   withDynamicLabels:@[alert.label1]
                                                             andInitialHights:@[@(CGRectGetHeight(alert.label1.frame))]];
 
 
+    if (!message) {
+        //frame.size.height -= 20;
+    }
+    alert.view.frame = frame;
+
+
     [alert showAlert];
 }
 
 
-+ (void)alertForRedeemWithTitle:(NSString *)title punches:(NSString *)punch dectiption:(NSString *)desc andBlock:(RPCustomAlertActionButtonBlock)block
++ (void)alertForRedeemWithTitle:(NSString*)title punches:(NSInteger)punches andBlock:(RPCustomAlertActionButtonBlock)block ;
 {
 
-    RPCustomAlertController * alert = [RPCustomAlertController alertFromStoryboard:@"RedeemAlert"];
+    RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"RedeemAlert" ];
     alert.titleLabel.text = title ;
-    alert.label1.text = punch;
-    alert.label2.text = desc;
+
+    alert.label2.text = [NSString stringWithFormat:@"%i %@", punches , punches == 1 ? @"Punch" : @"Punches"];
+
+    //alert.label1.text = punch;
+    //alert.label2.text = desc;
 
 
-    alert.view.frame = [RPCustomAlertController frameForViewWithInitialFrame:alert.view.frame
-                                                           withDynamicLabels:@[alert.label1, alert.label2]
-                                                            andInitialHights:@[@(CGRectGetHeight(alert.label1.frame)), @(CGRectGetHeight(alert.label2.frame))]];
+    //alert.view.frame = [RPCustomAlertController frameForViewWithInitialFrame:alert.view.frame
+    //withDynamicLabels:@[alert.label1, alert.label2]
+    //andInitialHights:@[@(CGRectGetHeight(alert.label1.frame)), @(CGRectGetHeight(alert.label2.frame))]];
+
 
     alert.alertBlock = block;
-    [alert showAlert];
+    [alert showAsAction];
 }
 
 + (void)alertForDeletingMessageWithBlock:(RPCustomAlertActionButtonBlock)block
 {
-    RPCustomAlertController * alert = [RPCustomAlertController alertFromStoryboard:@"DeleteAlert"];
-    alert.alertBlock = block;
+
+    RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"DeleteMessageAlert" ];
+    alert.alertBlock  = block;
 
     [alert showAsAction];
 }
+
 
 +(void)alertForDeletingPlacesWithBlock:(RPCustomAlertActionButtonBlock)block
 {
-    RPCustomAlertController * alert = [RPCustomAlertController alertFromStoryboard:@"DeleteAlert"];
-    alert.titleLabel.text = @"Remove from My Places";
-    alert.label1.text = @"WARNING: You will lose all your punches!";
-    alert.label1.font = [RepunchUtils repunchFontWithSize:15 isBold:NO];
-    [alert.label1 setTextColor:[UIColor darkGrayColor]];
-    [alert.deleteButton setTitle:@"Remove" forState:UIControlStateNormal];
-    [alert.deleteButton setTitle:@"Remove" forState:UIControlStateHighlighted];
-
+    RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"DeleteStoreAlert" ];
     alert.alertBlock = block;
-
-    alert.view.frame = [RPCustomAlertController frameForViewWithInitialFrame:alert.view.frame
-                                                           withDynamicLabels:@[alert.label1]
-                                                            andInitialHights:@[@(CGRectGetHeight(alert.label1.frame))]];
-
     [alert showAsAction];
 }
+
+
++ (instancetype)actionForIdentifier:(NSString*)name;
+{
+    RPCustomAlertController * alert = [RPCustomAlertController alertFromStoryboard:name];
+    alert.titleLabel.layer.cornerRadius = 5;
+    alert.closeButton.layer.cornerRadius = 5;
+
+
+    UIView *header = nil;
+
+    for (UIView *view in alert.view.subviews) {
+        if ([view.restorationIdentifier isEqualToString:@"HeaderLabel"]) {
+            header = view;
+            break;
+        }
+    }
+
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:header.bounds
+                                                   byRoundingCorners: UIRectCornerTopLeft| UIRectCornerTopRight
+                                                         cornerRadii:CGSizeMake(5.0, 15.0)];
+
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    maskLayer.frame = header.bounds;
+    maskLayer.path = maskPath.CGPath;
+    header.layer.mask = maskLayer;
+
+
+
+    UIButton *button = alert.deleteButton ? alert.deleteButton : alert.giftButton;
+    UIBezierPath *maskPath2 = [UIBezierPath bezierPathWithRoundedRect:button.bounds
+                                                    byRoundingCorners: UIRectCornerBottomLeft| UIRectCornerBottomRight
+                                                          cornerRadii:CGSizeMake(5.0, 15.0)];
+
+    CAShapeLayer *maskLayer2 = [[CAShapeLayer alloc] init];
+    maskLayer2.frame = button.bounds;
+    maskLayer2.path = maskPath2.CGPath;
+
+    button.layer.mask = maskLayer2;
+
+    return alert;
+
+}
+
 
 
 - (IBAction)close:(UIButton*)sender
 {
 
+    [self hideAlert];
+
     RPCustomAlertActionButton button = NoneButton;
+
     if (sender == self.redeemButton) {
         button = RedeemButton;
     }
@@ -134,8 +181,6 @@
         self.alertBlock(button);
     }
 
-
-    [self hideAlert];
 }
 
 + (CGRect)frameForViewWithInitialFrame:(CGRect)viewInitialFrame withDynamicLabels:(NSArray*)labels andInitialHights:(NSArray*)initialHeights

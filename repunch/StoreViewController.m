@@ -467,15 +467,17 @@
 	NSString *rewardIdString = [NSString stringWithFormat:@"%i", rewardId];
 	NSString *rewardName = reward[@"reward_name"];
 	
-	NSString *punches = [NSString stringWithFormat:(rewardPunches == 1 ? @"%i Punch" :  @"%i Punches"), rewardPunches];
+	//NSString *punches = [NSString stringWithFormat:(rewardPunches == 1 ? @"%i Punch" :  @"%i Punches"), rewardPunches];
+
+    __weak typeof (self) weakSelf = self;
 
 	if (punchCount >= rewardPunches) {
 
-        [RPCustomAlertController alertForRedeemWithTitle:rewardName punches:punches dectiption: reward[@"description"] andBlock:^(RPCustomAlertActionButton buttonType) {
+        [RPCustomAlertController alertForRedeemWithTitle:rewardName punches:rewardPunches andBlock:^(RPCustomAlertActionButton buttonType) {
 
             if (buttonType == RedeemButton) {
                 if( ![RepunchUtils isConnectionAvailable] ) {
-                    [RepunchUtils showDefaultDropdownView:self.view];
+                    [RepunchUtils showDefaultDropdownView:weakSelf.view];
                     return;
                 }
 
@@ -511,7 +513,7 @@
                 
             }
             else if (buttonType == GiftButton) {
-                [self gift];
+                [weakSelf gift];
             }
             
         }];
@@ -644,20 +646,6 @@
             [weakSelf deleteStore];
         }
     }];
-
-    [RPCustomAlertController alertWithTitle:@"TES" andMessage:@"TES"];
-    [RPCustomAlertController alertWithTitle:@"TES" andMessage:@"TES"];
-    [RPCustomAlertController alertWithTitle:@"TES" andMessage:@"TES"];
-
-
-    [RPCustomAlertController alertForDeletingPlacesWithBlock:^(RPCustomAlertActionButton buttonType) {
-
-        if (buttonType == DeleteButton) {
-            [weakSelf deleteStore];
-        }
-    }];
-
-
 }
 
 - (void)deleteStore

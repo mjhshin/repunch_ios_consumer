@@ -66,7 +66,7 @@ static NSMutableArray *actionStack;
 
 - (void)hideAlert
 {
-    [RPAlertController popAlert];
+    [RPAlertController popAlert:self];
 }
 
 - (void)showAsAction
@@ -158,18 +158,19 @@ static NSMutableArray *actionStack;
 
 
 
-+ (void)popAlert
++ (void)popAlert:(RPAlertController*)toPop
 {
 
-    BOOL isAction = alertStack.count < 1;
+    if (toPop.isAction) {
+        [actionStack removeObject:toPop];
+    }
+    else{
+        [alertStack removeObject:toPop];
+    }
 
-    NSMutableArray *array = isAction ? actionStack : alertStack;
+    [toPop.view endEditing:YES];
 
-    RPAlertController *toRemove = [array firstObject];
-    [array removeObject:toRemove];
-    [toRemove.view endEditing:YES];
-
-    RPAlertController *toDisplay = ([array firstObject]) ? [array firstObject] : [actionStack firstObject];
+    RPAlertController *toDisplay = alertStack.count > 0 ? [alertStack firstObject] : [actionStack firstObject];
 
     if (toDisplay) {
 
@@ -180,45 +181,38 @@ static NSMutableArray *actionStack;
 
     [UIView animateWithDuration:ANIMATION_DURATION animations:^{
 
-        [RPAlertController hideAlert:toRemove isDown:isAction];
-        if (!toRemove.isAction) {
-            // animate when displaying an alert not an action, otherwise complete animation then animate
+        [RPAlertController hideAlert:toPop isDown:toPop.isAction];
+        if (!toPop.isAction) {
+            // animate when displaying an alert, otherwise complete animation then animate
             [RPAlertController centerView:toDisplay];
         }
 
     } completion:^(BOOL finished) {
 
         [UIView animateWithDuration:ANIMATION_DURATION animations:^{
-            if (toRemove.isAction) {
+            if (toPop.isAction) {
                 [RPAlertController centerView:toDisplay];
             }
+
         } completion:^(BOOL finished) {
 
-            [toRemove removeFromParentViewController];
-            [toRemove.view removeFromSuperview];
+            [toPop removeFromParentViewController];
+            [toPop.view removeFromSuperview];
             // Remove ShadowView
-            toRemove.view = [[toRemove.view subviews] firstObject];
+            toPop.view = [[toPop.view subviews] firstObject];
 
-            if (!toDisplay){
-
-                if (actionStack.count < 1) {
-                    [[[[UIApplication sharedApplication] delegate] window] makeKeyAndVisible];
-                    [alertWindow resignKeyWindow];
-                    [alertWindow removeFromSuperview];
-                    alertWindow.rootViewController = nil;
-                    alertWindow = nil;
-                    actionStack = nil;
-
-                }
-                else{
-                    alertStack = nil;
-                }
+            if (alertStack.count < 1 && actionStack.count < 1){
+                [[[[UIApplication sharedApplication] delegate] window] makeKeyAndVisible];
+                [alertWindow resignKeyWindow];
+                [alertWindow removeFromSuperview];
+                alertWindow.rootViewController = nil;
+                alertWindow = nil;
+                actionStack = nil;
             }
+
         }];
-        
     }];
 }
-
 
 
 + (void)centerView:(RPAlertController*)alert
@@ -260,7 +254,7 @@ static NSMutableArray *actionStack;
     }
 
     alertFrame.origin.x = (CGRectGetWidth(windowFrame) - CGRectGetWidth(alertFrame))/2;
-    
+
     if (isDown) {
         alertFrame.origin.y = CGRectGetHeight(windowFrame);
     }
@@ -281,11 +275,11 @@ static NSMutableArray *actionStack;
     shadowView.layer.shadowOffset = CGSizeZero;
     shadowView.layer.shadowRadius = 5;
     shadowView.layer.cornerRadius = 10;
-
+    
     shadowView.layer.shadowOpacity = 0.4;
-
+    
     [shadowView addSubview:alert.view];
-
+    
     alert.view = shadowView;
 }
 
