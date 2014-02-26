@@ -473,7 +473,7 @@
 
 	if (punchCount >= rewardPunches) {
 
-        [RPCustomAlertController alertForRedeemWithTitle:rewardName punches:rewardPunches andBlock:^(RPCustomAlertActionButton buttonType) {
+        [RPCustomAlertController alertForRedeemWithTitle:rewardName punches:rewardPunches andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
 
             if (buttonType == RedeemButton) {
                 if( ![RepunchUtils isConnectionAvailable] ) {
@@ -566,6 +566,7 @@
 
 - (IBAction)feedbackButtonAction:(id)sender
 {
+    /*
 	ComposeMessageViewController *composeVC = [[ComposeMessageViewController alloc] init];
 	composeVC.messageType = @"feedback"; //TODO: make this enum
 	composeVC.storeId = self.storeId;
@@ -574,6 +575,14 @@
 	[RepunchUtils setupNavigationController:navController];
 	
 	[self presentViewController:navController animated:YES completion:nil];
+     */
+
+    [RPCustomAlertController alertForPostWithTitle:@"Some Title" andBlock:^(RPCustomAlertActionButton buttonType, id anObject){
+        if (buttonType == SendButton) {
+            NSLog(@"%@", anObject);
+        }
+    }];
+
 }
 
 - (IBAction)saveStoreButtonAction:(id)sender
@@ -640,12 +649,14 @@
 {
 
     __weak typeof(self) weakSelf = self;
-    [RPCustomAlertController alertForDeletingPlacesWithBlock:^(RPCustomAlertActionButton buttonType) {
+    [RPCustomAlertController alertForDeletingPlacesWithBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
 
         if (buttonType == DeleteButton) {
             [weakSelf deleteStore];
         }
     }];
+
+
 }
 
 - (void)deleteStore

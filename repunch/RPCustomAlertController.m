@@ -12,7 +12,7 @@
 //#import "Macros.h"
 #import "RepunchUtils.h"
 
-@interface RPCustomAlertController ()
+@interface RPCustomAlertController () <UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *label1;
@@ -21,6 +21,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *redeemButton;
 @property (weak, nonatomic) IBOutlet UIButton *giftButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
+@property (weak, nonatomic) IBOutlet UIButton *sendButton;
+@property (weak, nonatomic) IBOutlet UITextView *postTextView;
+@property (weak, nonatomic) IBOutlet UILabel *postCharCount;
 
 
 @property (strong, nonatomic) RPCustomAlertActionButtonBlock alertBlock;
@@ -98,6 +101,18 @@
     [alert showAsAction];
 }
 
++ (void)alertForPostWithTitle:(NSString*)title andBlock:(RPCustomAlertActionButtonBlock)block;
+{
+
+    RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"PostAlert" ];
+    alert.alertBlock  = block;
+    alert.titleLabel.text = title;
+    alert.postTextView.delegate = alert;
+
+    [alert showAlert];
+}
+
+
 + (void)alertForDeletingMessageWithBlock:(RPCustomAlertActionButtonBlock)block
 {
 
@@ -108,12 +123,13 @@
 }
 
 
-+(void)alertForDeletingPlacesWithBlock:(RPCustomAlertActionButtonBlock)block
++ (void)alertForDeletingPlacesWithBlock:(RPCustomAlertActionButtonBlock)block
 {
     RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"DeleteStoreAlert" ];
     alert.alertBlock = block;
     [alert showAsAction];
 }
+
 
 
 + (instancetype)actionForIdentifier:(NSString*)name;
@@ -166,6 +182,7 @@
     [self hideAlert];
 
     RPCustomAlertActionButton button = NoneButton;
+    id anObject = nil;
 
     if (sender == self.redeemButton) {
         button = RedeemButton;
@@ -176,9 +193,13 @@
     else if (self.deleteButton == sender ){
         button = DeleteButton;
     }
+    else if (self.sendButton == sender ){
+        button = SendButton;
+        anObject = self.postTextView.text;
+    }
 
     if (self.alertBlock) {
-        self.alertBlock(button);
+        self.alertBlock(button, anObject);
     }
 
 }
@@ -219,7 +240,18 @@
     return viewInitialFrame;
 }
 
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    NSMutableString *string = [textView.text mutableCopy];
+    [string replaceCharactersInRange:range withString:text];
 
+    return  string.length <= 150;
+
+}
+-(void)textViewDidChangeSelection:(UITextView *)textView
+{
+    self.postCharCount.text = [@(150 - self.postTextView.text.length) stringValue];
+}
 
 
 @end
