@@ -15,9 +15,11 @@ static const UIWindowLevel UIWindowLevelORAlertBackground = 1998.0; // below the
 
 static UIWindow *alertWindow;
 static NSMutableArray *alertStack;
+static NSMutableArray *actionStack;
 
 @interface RPAlertController ()
 @property (assign, nonatomic) CGRect keyboardFrame;
+@property (assign, nonatomic) BOOL isAction;
 @end
 
 @implementation RPAlertController
@@ -29,6 +31,11 @@ static NSMutableArray *alertStack;
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(didShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [center addObserver:self selector:@selector(didHidekeyboard:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+-(void)dealloc
+{
+    NSLog(@"Dealloc Alert");
 }
 
 - (void)didShowKeyboard:(NSNotification*)notification
@@ -53,12 +60,19 @@ static NSMutableArray *alertStack;
 
 - (void)showAlert
 {
+    self.isAction = NO;
     [RPAlertController pushAlert:self];
 }
 
 - (void)hideAlert
 {
     [RPAlertController popAlert];
+}
+
+- (void)showAsAction
+{
+    self.isAction = YES;
+    [RPAlertController pushAlert:self];
 }
 
 
@@ -70,36 +84,30 @@ static NSMutableArray *alertStack;
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [RPAlertController centerView:self];
-
-
 }
+
+
 
 + (void)pushAlert:(RPAlertController*)alert
 {
-
-    if (![alertStack containsObject:alert]) {
+    if (![alertStack containsObject:alert] && !alert.isAction) {
 
         if (!alertStack) {
             alertStack = [NSMutableArray array];
         }
 
-        alert.view.layer.cornerRadius = 10;
-        alert.view.layer.masksToBounds = YES;
-
-        UIView *shadowView = [[UIView alloc] initWithFrame:alert.view.frame];
-        shadowView.layer.shadowOffset = CGSizeZero;
-        shadowView.layer.shadowRadius = 5;
-        shadowView.layer.cornerRadius = 10;
-
-        shadowView.layer.shadowOpacity = 0.4;
-
-        [shadowView addSubview:alert.view];
-
-        alert.view = shadowView;
-
+        [RPAlertController addShadowToAlert:alert];
         [alertStack addObject:alert];
     }
+    else if (![actionStack containsObject:alert] && alert.isAction){
 
+        if (!actionStack) {
+            actionStack = [NSMutableArray array];
+        }
+
+        [RPAlertController addShadowToAlert:alert];
+        [actionStack addObject:alert];
+    }
 
     if (!alertWindow) {
         alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -116,24 +124,35 @@ static NSMutableArray *alertStack;
         dim.autoresizingMask = alertWindow.autoresizingMask;
         [rootController.view addSubview:dim];
 
-
         alertWindow.rootViewController = rootController;
     }
 
     [alertWindow makeKeyAndVisible];
 
-    if (alertStack.count > 1) {
+    if ((alertStack.count > 1 && !alert.isAction) || (actionStack.count > 1 && alert.isAction)) {
         return;
     }
 
+    RPAlertController *action = [actionStack firstObject];
 
-    [alertWindow.rootViewController addChildViewController:alert];
-    [alertWindow.rootViewController.view addSubview:alert.view];
+    [UIView animateWithDuration:ANIMATION_DURATION animations:^{
+        if (!alert.isAction) {
+            [RPAlertController hideAlert:action isDown:YES];
+        }
+    } completion:^(BOOL finished) {
 
-    [RPAlertController hideAlert:alert isDown:YES];
+        [action removeFromParentViewController];
+        [action.view removeFromSuperview];
 
-    [UIAlertView animateWithDuration:ANIMATION_DURATION animations:^{
-        [RPAlertController centerView:alert];
+        [alertWindow.rootViewController addChildViewController:alert];
+        [alertWindow.rootViewController.view addSubview:alert.view];
+
+        [RPAlertController hideAlert:alert isDown:YES];
+
+        [UIAlertView animateWithDuration:ANIMATION_DURATION animations:^{
+            [RPAlertController centerView:alert];
+        }];
+
     }];
 }
 
@@ -142,10 +161,15 @@ static NSMutableArray *alertStack;
 + (void)popAlert
 {
 
-    RPAlertController *toRemove = [alertStack firstObject];
-    [alertStack removeObject:toRemove];
+    BOOL isAction = alertStack.count < 1;
 
-    RPAlertController *toDisplay = [alertStack firstObject];
+    NSMutableArray *array = isAction ? actionStack : alertStack;
+
+    RPAlertController *toRemove = [array firstObject];
+    [array removeObject:toRemove];
+    [toRemove.view endEditing:YES];
+
+    RPAlertController *toDisplay = ([array firstObject]) ? [array firstObject] : [actionStack firstObject];
 
     if (toDisplay) {
 
@@ -156,25 +180,42 @@ static NSMutableArray *alertStack;
 
     [UIView animateWithDuration:ANIMATION_DURATION animations:^{
 
-        [RPAlertController hideAlert:toRemove isDown:NO];
-        [RPAlertController centerView:toDisplay];
+        [RPAlertController hideAlert:toRemove isDown:isAction];
+        if (!toRemove.isAction) {
+            // animate when displaying an alert not an action, otherwise complete animation then animate
+            [RPAlertController centerView:toDisplay];
+        }
 
     } completion:^(BOOL finished) {
 
-        [toRemove removeFromParentViewController];
-        [toRemove.view removeFromSuperview];
-        // Remove ShadowView
-        toRemove.view = [[toRemove.view subviews] firstObject];
+        [UIView animateWithDuration:ANIMATION_DURATION animations:^{
+            if (toRemove.isAction) {
+                [RPAlertController centerView:toDisplay];
+            }
+        } completion:^(BOOL finished) {
 
-        if (!toDisplay){
+            [toRemove removeFromParentViewController];
+            [toRemove.view removeFromSuperview];
+            // Remove ShadowView
+            toRemove.view = [[toRemove.view subviews] firstObject];
 
-            [[[[UIApplication sharedApplication] delegate] window] makeKeyAndVisible];
-            [alertWindow resignKeyWindow];
-            [alertWindow removeFromSuperview];
-            alertWindow.rootViewController = nil;
-            alertWindow = nil;
-            alertStack = nil;
-        }
+            if (!toDisplay){
+
+                if (actionStack.count < 1) {
+                    [[[[UIApplication sharedApplication] delegate] window] makeKeyAndVisible];
+                    [alertWindow resignKeyWindow];
+                    [alertWindow removeFromSuperview];
+                    alertWindow.rootViewController = nil;
+                    alertWindow = nil;
+                    actionStack = nil;
+
+                }
+                else{
+                    alertStack = nil;
+                }
+            }
+        }];
+        
     }];
 }
 
@@ -193,7 +234,12 @@ static NSMutableArray *alertStack;
     }
 
     alertFrame.origin.x = (CGRectGetWidth(windowFrame) - CGRectGetWidth(alertFrame))/2 ;
-    alertFrame.origin.y = (CGRectGetHeight(windowFrame) - CGRectGetHeight(alertFrame))/2 ;
+    if (alert.isAction) {
+        alertFrame.origin.y = CGRectGetHeight(windowFrame) - CGRectGetHeight(alertFrame);
+    }
+    else{
+        alertFrame.origin.y = (CGRectGetHeight(windowFrame) - CGRectGetHeight(alertFrame))/2 ;
+    }
     alertFrame.origin.y -= CGRectGetHeight(alert.keyboardFrame) /2;
     alert.view.frame = alertFrame;
 
@@ -222,6 +268,25 @@ static NSMutableArray *alertStack;
         alertFrame.origin.y = - CGRectGetHeight(alertFrame);
     }
     alert.view.frame = alertFrame;
+}
+
++ (void) addShadowToAlert:(RPAlertController*)alert
+{
+    if (!alert.isAction) {
+        alert.view.layer.cornerRadius = 10;
+        alert.view.layer.masksToBounds = YES;
+    }
+
+    UIView *shadowView = [[UIView alloc] initWithFrame:alert.view.frame];
+    shadowView.layer.shadowOffset = CGSizeZero;
+    shadowView.layer.shadowRadius = 5;
+    shadowView.layer.cornerRadius = 10;
+
+    shadowView.layer.shadowOpacity = 0.4;
+
+    [shadowView addSubview:alert.view];
+
+    alert.view = shadowView;
 }
 
 

@@ -92,7 +92,8 @@
 {
     RPCustomAlertController * alert = [RPCustomAlertController alertFromStoryboard:@"DeleteAlert"];
     alert.alertBlock = block;
-    [alert showAlert];
+
+    [alert showAsAction];
 }
 
 +(void)alertForDeletingPlacesWithBlock:(RPCustomAlertActionButtonBlock)block
@@ -111,7 +112,7 @@
                                                            withDynamicLabels:@[alert.label1]
                                                             andInitialHights:@[@(CGRectGetHeight(alert.label1.frame))]];
 
-    [alert showAlert];
+    [alert showAsAction];
 }
 
 

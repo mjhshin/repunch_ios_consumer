@@ -645,6 +645,19 @@
         }
     }];
 
+    [RPCustomAlertController alertWithTitle:@"TES" andMessage:@"TES"];
+    [RPCustomAlertController alertWithTitle:@"TES" andMessage:@"TES"];
+    [RPCustomAlertController alertWithTitle:@"TES" andMessage:@"TES"];
+
+
+    [RPCustomAlertController alertForDeletingPlacesWithBlock:^(RPCustomAlertActionButton buttonType) {
+
+        if (buttonType == DeleteButton) {
+            [weakSelf deleteStore];
+        }
+    }];
+
+
 }
 
 - (void)deleteStore

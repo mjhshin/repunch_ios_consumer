@@ -11,6 +11,7 @@
 @interface RPAlertController : UIViewController
 
 - (void)showAlert;
+- (void)showAsAction;
 - (void)hideAlert;
 
 @end
