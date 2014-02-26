@@ -20,8 +20,8 @@
     return ([self compare:date]) == NSOrderedDescending;
 }
 
-
-- (NSString *)prettyDate{
+- (NSString *)prettyDate
+{
     NSString * prettyTimestamp;
     
     float delta = [self timeIntervalSinceNow] * -1;
@@ -47,6 +47,18 @@
         prettyTimestamp = [NSString stringWithFormat:@"%@", [formatter stringFromDate:self]];
     }
     return prettyTimestamp;
+}
+
++ (NSString *)formattedDateFromStoreHours:(NSString *)dateString
+{
+	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+	formatter.dateFormat = @"HHmm";
+	
+	NSDate *date = [formatter dateFromString:dateString];
+	
+	formatter.dateFormat = @"h:mm a";
+	
+	return [formatter stringFromDate:date];
 }
 
 @end

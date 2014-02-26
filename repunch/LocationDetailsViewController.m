@@ -56,35 +56,76 @@
 {
 	if(storeLocation.hours.count == 0) {
 		self.hoursView.hidden = YES;
+		self.daysLabel.text = nil;
+		self.hoursLabel.text = nil;
 		return;
 	}
 	else if([storeLocation.hours lastObject][@"day"] == 0) {
 		self.daysLabel.text = @"Open 24/7";
+		self.hoursLabel.text = nil;
 		return;
 	}
 	
-	NSArray *days = [NSArray arrayWithObjects: @"Sun", @"Mon", @"Tue", @"Wed", @"Thu", @"Fri", @"Sat", nil];
+	NSArray *days = [NSArray arrayWithObjects: @"Sunday", @"Monday", @"Tuesday",
+										@"Wednesday", @"Thursday", @"Friday", @"Saturday", nil];
 	NSMutableAttributedString *dayString = [[NSMutableAttributedString alloc] init];
 	NSMutableAttributedString *hourString = [[NSMutableAttributedString alloc] init];
 	
-	for(int day = 1; day <= 7; day++)
+	NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+	NSDateComponents *components = [gregorian components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
+	NSInteger weekday = [components weekday];
+	
+	for(NSInteger day = 1; day <= 7; day++)
 	{
+		NSInteger dayStringBeginIndex = dayString.length;
+		NSInteger hourStringBeginIndex = hourString.length;
+		
 		BOOL found = NO;
 		for(id entry in storeLocation.hours)
 		{
 			if([entry[@"day"] intValue] == day) {
+				
 				if(!found) {
 					[dayString appendAttributedString:[[NSAttributedString alloc] initWithString:days[day - 1]]];
-					[hourString appendAttributedString:[[NSAttributedString alloc] initWithString:entry[@"open_time"]]];
+					[dayString appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
 				} else {
 					[dayString appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
-					[hourString appendAttributedString:[[NSAttributedString alloc] initWithString:days[day - 1]]];
 				}
+				
+				NSString *openTime = [NSDate formattedDateFromStoreHours:entry[@"open_time"]];
+				NSString *closeTime = [NSDate formattedDateFromStoreHours:entry[@"close_time"]];
+				
+				[hourString appendAttributedString:[[NSAttributedString alloc] initWithString:openTime]];
+				[hourString appendAttributedString:[[NSAttributedString alloc] initWithString:@" - "]];
+				[hourString appendAttributedString:[[NSAttributedString alloc] initWithString:closeTime]];
+				[hourString appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
+				
 				found = YES;
 			}
 		}
+		
+		if(!found) {
+			[dayString appendAttributedString:[[NSAttributedString alloc] initWithString:days[day - 1]]];
+			[dayString appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
+			[hourString appendAttributedString:[[NSAttributedString alloc] initWithString:@"Closed\n"]];
+		}
+		
+		if(day == weekday) {
+			NSInteger dayStringLength = dayString.length - dayStringBeginIndex;
+			NSInteger hourStringLength = hourString.length - hourStringBeginIndex;
+			
+			[dayString addAttribute:NSForegroundColorAttributeName
+							  value:[RepunchUtils repunchOrangeColor]
+							  range:NSMakeRange(dayStringBeginIndex, dayStringLength)];
+			
+			[hourString addAttribute:NSForegroundColorAttributeName
+							   value:[RepunchUtils repunchOrangeColor]
+							   range:NSMakeRange(hourStringBeginIndex, hourStringLength)];
+		}
 	}
 	
+	self.daysLabel.attributedText = dayString;
+	self.hoursLabel.attributedText = hourString;
 }
 
 - (void)addMapAnnotation
