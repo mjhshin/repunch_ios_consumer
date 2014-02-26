@@ -16,4 +16,6 @@
 
 - (BOOL)isGreaterThan:(NSDate*)date;
 
++ (NSString *)formattedDateFromStoreHours:(NSString *)time;
+
 @end
