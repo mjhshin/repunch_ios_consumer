@@ -53,11 +53,9 @@
     alert.label1.text = NSLocalizedString(message, nil);
 
     CGRect frame = [RPCustomAlertController frameForViewWithInitialFrame:alert.view.frame
-                                                                  withDynamicLabels:@[alert.label1]
-                                                            andInitialHights:@[@(CGRectGetHeight(alert.label1.frame))]];
-    if (!message) {
-        //frame.size.height -= 20;
-    }
+                                                                  withDynamicLabels:@[alert.titleLabel, alert.label1]
+                                                            andInitialHights:@[@(CGRectGetHeight(alert.titleLabel.frame)),
+																			   @(CGRectGetHeight(alert.label1.frame))]];
     alert.view.frame = frame;
 
     [alert showAlert];

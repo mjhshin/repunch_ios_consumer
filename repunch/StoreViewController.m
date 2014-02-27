@@ -521,8 +521,9 @@
 
 - (IBAction)callButtonAction:(id)sender
 {
-	NSString *urlString = [@"tel://" stringByAppendingString:storeLocation.phone_number];
+	NSString *urlString = [@"telprompt://" stringByAppendingString:storeLocation.phone_number]; //TODO: must remove parantheses for URL to work!!
 	NSURL *url = [NSURL URLWithString:urlString];
+	//NSURL *url = [NSURL URLWithString:@"telprompt://123-456-7890"];
 
 	if( [[UIApplication sharedApplication] canOpenURL:url] ) {
 		[[UIApplication sharedApplication] openURL:url];
@@ -544,7 +545,7 @@
                                                        addressDictionary:nil];
 		
         MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
-        mapItem.name = storeLocation.Store.store_name;
+        mapItem.name = store.store_name;
         
         // Set the directions mode to "Driving"
         NSDictionary *launchOptions = @{MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving};
