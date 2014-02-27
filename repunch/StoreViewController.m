@@ -444,7 +444,7 @@
 	if(!patronStoreExists) {
 		[cell setPatronStoreNotAdded];
 	}
-	else if(punchCount >= rewardPunches){
+	else if(punchCount >= rewardPunches) {
 		[cell setRewardUnlocked];
 	}
 	else {
@@ -471,9 +471,9 @@
 
     __weak typeof (self) weakSelf = self;
 
-	if (punchCount >= rewardPunches) {
-
-        [RPCustomAlertController alertForRedeemWithTitle:rewardName punches:rewardPunches andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
+        [RPCustomAlertController showRedeemAlertWithTitle:rewardName
+												  punches:rewardPunches
+												 andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
 
             if (buttonType == RedeemButton) {
                 if( ![RepunchUtils isConnectionAvailable] ) {
@@ -517,11 +517,6 @@
             }
             
         }];
-        
-	}
-	else {
-        [RPCustomAlertController alertWithTitle:rewardName andMessage:reward[@"reward_name"]];
-	}
 }
 
 - (IBAction)callButtonAction:(id)sender
@@ -566,18 +561,8 @@
 
 - (IBAction)feedbackButtonAction:(id)sender
 {
-    /*
-	ComposeMessageViewController *composeVC = [[ComposeMessageViewController alloc] init];
-	composeVC.messageType = @"feedback"; //TODO: make this enum
-	composeVC.storeId = self.storeId;
-	
-	UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:composeVC];
-	[RepunchUtils setupNavigationController:navController];
-	
-	[self presentViewController:navController animated:YES completion:nil];
-     */
-
-    [RPCustomAlertController alertForPostWithTitle:@"Some Title" andBlock:^(RPCustomAlertActionButton buttonType, id anObject){
+    [RPCustomAlertController showCreateMessageAlertWithTitle:@"Some Title"
+													andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
         if (buttonType == SendButton) {
             NSLog(@"%@", anObject);
         }
@@ -624,8 +609,8 @@
 	
 	[PFCloud callFunctionInBackground: @"add_patronstore"
 					   withParameters:inputArgs
-								block:^(RPPatronStore *result, NSError *error)
-	{
+								block:^(RPPatronStore *result, NSError *error) {
+									
 		self.saveStoreButton.enabled = YES;
 		addButton.enabled = YES;
 		
@@ -647,16 +632,13 @@
 
 - (void)showDeleteStoreDialog
 {
-
     __weak typeof(self) weakSelf = self;
-    [RPCustomAlertController alertForDeletingPlacesWithBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
+    [RPCustomAlertController showDeleteMyPlaceAlertWithBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
 
         if (buttonType == DeleteButton) {
             [weakSelf deleteStore];
         }
     }];
-
-
 }
 
 - (void)deleteStore
@@ -676,12 +658,10 @@
 	
 	[PFCloud callFunctionInBackground: @"delete_patronstore"
 					   withParameters:inputArgs
-								block:^(NSString *result, NSError *error)
-	 {
+								block:^(NSString *result, NSError *error) {
 		 deleteButton.enabled = YES;
 		 
-		 if(!error)
-		 {
+		 if(!error) {
 			 [sharedData deletePatronStore:self.storeId];
 			 [self checkPatronStore];
 			 [self.tableView reloadData];
@@ -689,8 +669,7 @@
 			 NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:self.storeId, @"store_id", nil];
 			 [[NSNotificationCenter defaultCenter] postNotificationName:@"AddOrRemoveStore" object:self userInfo:args];
 		 }
-		 else
-		 {
+		 else {
 			 NSLog(@"delete_patronStore error: %@", error);
 			 [RepunchUtils showConnectionErrorDialog];
 		 }

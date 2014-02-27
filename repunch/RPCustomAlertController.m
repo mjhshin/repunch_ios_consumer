@@ -43,23 +43,10 @@
     RPCustomAlertController *alert = [storyboard instantiateViewControllerWithIdentifier:string];
     UIView *view = alert.view;
     view = nil; // preload
-    return alert;}
-
-
-
-+ (void)alertForNetworkError
-{
-
-    static RPCustomAlertController * alert =  nil;
-    if (!alert) {
-        alert = [RPCustomAlertController alertFromStoryboard:@"NetworkAlert"];
-    }
-    
-    [alert showAlert];
+    return alert;
 }
 
-
-+ (void)alertWithTitle:(NSString*)title andMessage:(NSString*)message
++ (void)showDefaultAlertWithTitle:(NSString*)title andMessage:(NSString*)message
 {
     RPCustomAlertController * alert = [RPCustomAlertController alertFromStoryboard:@"MessageAlert"];
     alert.titleLabel.text = NSLocalizedString(title, nil) ;
@@ -68,52 +55,38 @@
     CGRect frame = [RPCustomAlertController frameForViewWithInitialFrame:alert.view.frame
                                                                   withDynamicLabels:@[alert.label1]
                                                             andInitialHights:@[@(CGRectGetHeight(alert.label1.frame))]];
-
-
     if (!message) {
         //frame.size.height -= 20;
     }
     alert.view.frame = frame;
 
-
     [alert showAlert];
 }
 
-
-+ (void)alertForRedeemWithTitle:(NSString*)title punches:(NSInteger)punches andBlock:(RPCustomAlertActionButtonBlock)block ;
++ (void)showNetworkErrorAlert
 {
+    static RPCustomAlertController * alert =  nil;
+    if (!alert) {
+        alert = [RPCustomAlertController alertFromStoryboard:@"NetworkAlert"];
+    }
+    
+    [alert showAlert];
+}
 
++ (void)showRedeemAlertWithTitle:(NSString*)title
+						 punches:(NSInteger)punches
+						andBlock:(RPCustomAlertActionButtonBlock)block
+{
     RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"RedeemAlert" ];
     alert.titleLabel.text = title ;
 
     alert.label2.text = [NSString stringWithFormat:@"%i %@", punches , punches == 1 ? @"Punch" : @"Punches"];
-
-    //alert.label1.text = punch;
-    //alert.label2.text = desc;
-
-
-    //alert.view.frame = [RPCustomAlertController frameForViewWithInitialFrame:alert.view.frame
-    //withDynamicLabels:@[alert.label1, alert.label2]
-    //andInitialHights:@[@(CGRectGetHeight(alert.label1.frame)), @(CGRectGetHeight(alert.label2.frame))]];
-
-
-    alert.alertBlock = block;
+	alert.alertBlock = block;
+	
     [alert showAsAction];
 }
 
-+ (void)alertForPostWithTitle:(NSString*)title andBlock:(RPCustomAlertActionButtonBlock)block;
-{
-
-    RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"PostAlert" ];
-    alert.alertBlock  = block;
-    alert.titleLabel.text = title;
-    alert.postTextView.delegate = alert;
-
-    [alert showAlert];
-}
-
-
-+ (void)alertForDeletingMessageWithBlock:(RPCustomAlertActionButtonBlock)block
++ (void)showDeleteMessageAlertWithBlock:(RPCustomAlertActionButtonBlock)block
 {
 
     RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"DeleteMessageAlert" ];
@@ -122,15 +95,23 @@
     [alert showAsAction];
 }
 
-
-+ (void)alertForDeletingPlacesWithBlock:(RPCustomAlertActionButtonBlock)block
++ (void)showDeleteMyPlaceAlertWithBlock:(RPCustomAlertActionButtonBlock)block
 {
     RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"DeleteStoreAlert" ];
     alert.alertBlock = block;
+	
     [alert showAsAction];
 }
 
-
++ (void)showCreateMessageAlertWithTitle:(NSString*)title andBlock:(RPCustomAlertActionButtonBlock)block;
+{
+    RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"PostAlert" ];
+    alert.alertBlock  = block;
+    alert.titleLabel.text = title;
+    alert.postTextView.delegate = alert;
+	
+    [alert showAlert];
+}
 
 + (instancetype)actionForIdentifier:(NSString*)name;
 {
@@ -157,8 +138,6 @@
     maskLayer.path = maskPath.CGPath;
     header.layer.mask = maskLayer;
 
-
-
     UIButton *button = alert.deleteButton ? alert.deleteButton : alert.giftButton;
     UIBezierPath *maskPath2 = [UIBezierPath bezierPathWithRoundedRect:button.bounds
                                                     byRoundingCorners: UIRectCornerBottomLeft| UIRectCornerBottomRight
@@ -171,14 +150,10 @@
     button.layer.mask = maskLayer2;
 
     return alert;
-
 }
-
-
 
 - (IBAction)close:(UIButton*)sender
 {
-
     [self hideAlert];
 
     RPCustomAlertActionButton button = NoneButton;
@@ -201,10 +176,11 @@
     if (self.alertBlock) {
         self.alertBlock(button, anObject);
     }
-
 }
 
-+ (CGRect)frameForViewWithInitialFrame:(CGRect)viewInitialFrame withDynamicLabels:(NSArray*)labels andInitialHights:(NSArray*)initialHeights
++ (CGRect)frameForViewWithInitialFrame:(CGRect)viewInitialFrame
+					 withDynamicLabels:(NSArray*)labels
+					  andInitialHights:(NSArray*)initialHeights
 {
     CGFloat totalDelta = 0;
 
@@ -214,9 +190,6 @@
         CGFloat initialHeight = [initialHeights[i] floatValue];
 
         CGSize max = CGSizeMake(label.frame.size.width, CGFLOAT_MAX);
-
-
-        ///CGRect expectedRect =
 
         CGFloat expectedHeight = [label.text sizeWithFont:label.font
                                         constrainedToSize:max
@@ -240,18 +213,17 @@
     return viewInitialFrame;
 }
 
--(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     NSMutableString *string = [textView.text mutableCopy];
     [string replaceCharactersInRange:range withString:text];
 
     return  string.length <= 150;
-
 }
--(void)textViewDidChangeSelection:(UITextView *)textView
+
+- (void)textViewDidChangeSelection:(UITextView *)textView
 {
     self.postCharCount.text = [@(150 - self.postTextView.text.length) stringValue];
 }
-
 
 @end

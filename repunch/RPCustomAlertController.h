@@ -18,16 +18,17 @@ typedef void(^RPCustomAlertActionButtonBlock)(RPCustomAlertActionButton buttonTy
 
 @interface RPCustomAlertController : RPAlertController
 
-+ (void)alertWithTitle:(NSString*)title andMessage:(NSString*)message;
++ (void)showDefaultAlertWithTitle:(NSString*)title andMessage:(NSString*)message;
 
-+ (void)alertForNetworkError;
++ (void)showNetworkErrorAlert;
 
-+ (void)alertForRedeemWithTitle:(NSString*)title punches:(NSInteger)punches andBlock:(RPCustomAlertActionButtonBlock)block ;
++ (void)showRedeemAlertWithTitle:(NSString*)title
+						 punches:(NSInteger)punches
+						andBlock:(RPCustomAlertActionButtonBlock)block;
 
-+ (void)alertForDeletingMessageWithBlock:(RPCustomAlertActionButtonBlock)block;
-+ (void)alertForDeletingPlacesWithBlock:(RPCustomAlertActionButtonBlock)block;
++ (void)showDeleteMessageAlertWithBlock:(RPCustomAlertActionButtonBlock)block;
++ (void)showDeleteMyPlaceAlertWithBlock:(RPCustomAlertActionButtonBlock)block;
 
-+ (void)alertForPostWithTitle:(NSString*)title andBlock:(RPCustomAlertActionButtonBlock)block;
-
++ (void)showCreateMessageAlertWithTitle:(NSString*)title andBlock:(RPCustomAlertActionButtonBlock)block;
 
 @end

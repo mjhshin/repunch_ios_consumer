@@ -424,7 +424,7 @@
 		return;
 	}
 
-    [RPCustomAlertController alertForDeletingMessageWithBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
+    [RPCustomAlertController showDeleteMessageAlertWithBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
 
         if (buttonType == DeleteButton) {
             [sharedData removeMessage:self.messageStatusId];
