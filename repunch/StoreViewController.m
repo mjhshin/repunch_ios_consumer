@@ -562,11 +562,30 @@
 
 - (IBAction)feedbackButtonAction:(id)sender
 {
-    [RPCustomAlertController showCreateMessageAlertWithRecepient:@"Some Title"
-													andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
+    [RPCustomAlertController showCreateMessageAlertWithRecepient:self.storeName.text andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
 
         if (buttonType == SendButton) {
             NSLog(@"%@", anObject);
+
+
+            NSDictionary *inputsArgs = @{@"patron_id": patron.objectId,
+                                        @"store_id": store.objectId,
+                                        @"body": anObject,
+                                        @"sender_name": patron.full_name,
+                                        @"subject": @"Feedback"};
+
+
+            [PFCloud callFunctionInBackground:@"send_feedback" withParameters:inputsArgs block:^(NSString *result, NSError *error){
+
+                if (!error) {
+                    [RepunchUtils showDialogWithTitle:@"Thanks for your feedback!" withMessage:nil];
+                    NSLog(@"send_feedback result: %@", result);
+                }
+                else {
+                    [RepunchUtils showDialogWithTitle:@"Send Failed" withMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
+                    NSLog(@"send_feedback error: %@", error);
+                }
+            }];
         }
     }];
 
