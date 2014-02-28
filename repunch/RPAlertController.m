@@ -163,7 +163,6 @@ static NSMutableArray *actionStack;
         [alertStack removeObject:toPop];
     }
 
-    [toPop.view endEditing:YES];
 
     RPAlertController *toDisplay = (alertStack.count > 0) ? [alertStack firstObject] : [actionStack firstObject];
 
@@ -191,7 +190,9 @@ static NSMutableArray *actionStack;
         } completion:^(BOOL finished) {
 			[toPop removeFromParentViewController];
             [toPop.view removeFromSuperview];
-			
+            [toPop.view endEditing:YES];
+
+
             // Remove ShadowView
             toPop.view = [[toPop.view subviews] firstObject];
 

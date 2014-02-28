@@ -86,17 +86,7 @@
 
 
 
-+ (void)alertForGiftPostWithRecepient:(NSString*)recepient redeemTitle:(NSString*)redeemTitle andBlock:(RPCustomAlertActionButtonBlock)block
-{
 
-    RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"GiftPostAlert" ];
-    alert.alertBlock  = block;
-    alert.titleLabel.text = recepient;
-    alert.label1.text = redeemTitle;
-    alert.postTextView.delegate = alert;
-
-    [alert showAlert];
-}
 
 
 + (void)showDeleteMessageAlertWithBlock:(RPCustomAlertActionButtonBlock)block
@@ -116,13 +106,28 @@
     [alert showAsAction];
 }
 
-+ (void)showCreateMessageAlertWithTitle:(NSString*)title andBlock:(RPCustomAlertActionButtonBlock)block;
++ (void)showCreateMessageAlertWithRecepient:(NSString*)recepient andBlock:(RPCustomAlertActionButtonBlock)block;
 {
     RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"PostAlert" ];
     alert.alertBlock  = block;
-    alert.titleLabel.text = title;
+    alert.titleLabel.text = recepient;
     alert.postTextView.delegate = alert;
-	
+    [alert.postTextView flashScrollIndicators];
+
+
+    [alert showAlert];
+}
+
++ (void)showCreateGiftMessageAlertWithRecepient:(NSString*)recepient redeemTitle:(NSString*)redeemTitle andBlock:(RPCustomAlertActionButtonBlock)block;
+{
+
+    RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"GiftPostAlert" ];
+    alert.alertBlock  = block;
+    alert.titleLabel.text = recepient;
+    alert.label1.text = redeemTitle;
+    alert.postTextView.delegate = alert;
+    [alert.postTextView flashScrollIndicators];
+
     [alert showAlert];
 }
 

@@ -562,13 +562,22 @@
 
 - (IBAction)feedbackButtonAction:(id)sender
 {
-    [RPCustomAlertController showCreateMessageAlertWithTitle:@"Some Title"
+    [RPCustomAlertController showCreateMessageAlertWithRecepient:@"Some Title"
 													andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
 
         if (buttonType == SendButton) {
             NSLog(@"%@", anObject);
         }
     }];
+
+    /*  Demo For Gift
+    [RPCustomAlertController showCreateGiftMessageAlertWithRecepient:@"Recepient!!" redeemTitle:@"Some Redeem title" andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
+
+        if (buttonType == SendButton) {
+            NSLog(@"%@", anObject);
+        }
+    }];
+     */
 
 }
 

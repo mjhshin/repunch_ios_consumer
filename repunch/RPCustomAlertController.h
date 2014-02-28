@@ -28,12 +28,13 @@ typedef void(^RPCustomAlertActionButtonBlock)(RPCustomAlertActionButton buttonTy
 
 
 
-+ (void)alertForGiftPostWithRecepient:(NSString*)recepient redeemTitle:(NSString*)redeemTitle andBlock:(RPCustomAlertActionButtonBlock)block;
 
 
 + (void)showDeleteMessageAlertWithBlock:(RPCustomAlertActionButtonBlock)block;
 + (void)showDeleteMyPlaceAlertWithBlock:(RPCustomAlertActionButtonBlock)block;
 
-+ (void)showCreateMessageAlertWithTitle:(NSString*)title andBlock:(RPCustomAlertActionButtonBlock)block;
++ (void)showCreateMessageAlertWithRecepient:(NSString*)recepient andBlock:(RPCustomAlertActionButtonBlock)block;
++ (void)showCreateGiftMessageAlertWithRecepient:(NSString*)recepient redeemTitle:(NSString*)redeemTitle andBlock:(RPCustomAlertActionButtonBlock)block;
+
 
 @end
