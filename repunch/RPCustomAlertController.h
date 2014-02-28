@@ -26,10 +26,6 @@ typedef void(^RPCustomAlertActionButtonBlock)(RPCustomAlertActionButton buttonTy
 						 punches:(NSInteger)punches
 						andBlock:(RPCustomAlertActionButtonBlock)block;
 
-
-
-
-
 + (void)showDeleteMessageAlertWithBlock:(RPCustomAlertActionButtonBlock)block;
 + (void)showDeleteMyPlaceAlertWithBlock:(RPCustomAlertActionButtonBlock)block;
 

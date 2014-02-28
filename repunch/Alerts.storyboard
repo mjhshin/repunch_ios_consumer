@@ -196,7 +196,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VOQ-Of-PoE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="280" y="371"/>
+            <point key="canvasLocation" x="275" y="371"/>
         </scene>
         <!--Custom Alert Controller - Delete Store Dialog-->
         <scene sceneID="dsM-YV-PON">
@@ -315,7 +315,7 @@ You will lose all your punches!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pl0-mE-9fy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="678" y="416"/>
+            <point key="canvasLocation" x="663" y="416"/>
         </scene>
         <!--Custom Alert Controller - Redeem Dialog-->
         <scene sceneID="NRg-Rm-lUt">
@@ -599,10 +599,10 @@ You will lose all your punches!</string>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tgf-hV-tD5" userLabel="SendButton">
-                                        <rect key="frame" x="257" y="2" width="35" height="40"/>
+                                        <rect key="frame" x="252" y="2" width="40" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="35" id="KGG-z0-UzH"/>
+                                            <constraint firstAttribute="width" constant="40" id="KGG-z0-UzH"/>
                                             <constraint firstAttribute="height" constant="40" id="YDM-2t-oc3"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
@@ -658,7 +658,7 @@ You will lose all your punches!</string>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="message_recepient_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="pKw-9K-tE0" userLabel="RecepientIcon">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="message_send_feedback_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="pKw-9K-tE0" userLabel="RecepientIcon">
                                 <rect key="frame" x="10" y="48" width="32" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
@@ -728,10 +728,10 @@ You will lose all your punches!</string>
             </objects>
             <point key="canvasLocation" x="1076" y="451"/>
         </scene>
-        <!--Custom Alert Controller-->
+        <!--Custom Alert Controller - Gift Dialog-->
         <scene sceneID="yVE-aY-Wws">
             <objects>
-                <viewController storyboardIdentifier="GiftPostAlert" autoresizesArchivedViewToFullSize="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Q7z-kX-hZk" customClass="RPCustomAlertController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GiftPostAlert" autoresizesArchivedViewToFullSize="NO" title="Gift Dialog" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Q7z-kX-hZk" customClass="RPCustomAlertController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="LD8-RH-yzO"/>
                         <viewControllerLayoutGuide type="bottom" id="OS3-mi-xyb"/>
@@ -740,13 +740,17 @@ You will lose all your punches!</string>
                         <rect key="frame" x="0.0" y="0.0" width="300" height="280"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aee-yg-3BK">
-                                <rect key="frame" x="0.0" y="-1" width="300" height="42"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aee-yg-3BK" userLabel="TitleView">
+                                <rect key="frame" x="0.0" y="-1" width="300" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qEf-S2-YBE">
-                                        <rect key="frame" x="257" y="5" width="35" height="33"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qEf-S2-YBE" userLabel="SendButton">
+                                        <rect key="frame" x="252" y="2" width="40" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="wOF-YL-6gK"/>
+                                            <constraint firstAttribute="height" constant="40" id="z3k-Bj-aA7"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
                                         <state key="normal" title="Send">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -759,9 +763,13 @@ You will lose all your punches!</string>
                                             <action selector="close:" destination="Q7z-kX-hZk" eventType="touchUpInside" id="Xxc-By-8Sz"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gIz-ze-Lj8">
-                                        <rect key="frame" x="8" y="5" width="32" height="32"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gIz-ze-Lj8" userLabel="ExitButton">
+                                        <rect key="frame" x="8" y="2" width="40" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="ayj-EO-Iuc"/>
+                                            <constraint firstAttribute="height" constant="40" id="qlM-tZ-Qtg"/>
+                                        </constraints>
                                         <state key="normal" image="nav_exit.png">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -770,8 +778,8 @@ You will lose all your punches!</string>
                                             <action selector="close:" destination="Q7z-kX-hZk" eventType="touchUpInside" id="8JX-9a-AOK"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gift" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w21-Hr-jgF">
-                                        <rect key="frame" x="135" y="9" width="31" height="24"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gift" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w21-Hr-jgF" userLabel="TitleLabel">
+                                        <rect key="frame" x="135" y="10" width="31" height="24"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -783,21 +791,21 @@ You will lose all your punches!</string>
                                     <constraint firstItem="gIz-ze-Lj8" firstAttribute="leading" secondItem="Aee-yg-3BK" secondAttribute="leading" constant="8" id="03r-FZ-Kij"/>
                                     <constraint firstAttribute="centerY" secondItem="gIz-ze-Lj8" secondAttribute="centerY" id="cPj-xQ-cQ4"/>
                                     <constraint firstAttribute="centerX" secondItem="w21-Hr-jgF" secondAttribute="centerX" id="dAH-nt-eJa"/>
-                                    <constraint firstAttribute="height" constant="42" id="kMk-eH-3n9"/>
+                                    <constraint firstAttribute="height" constant="44" id="kMk-eH-3n9"/>
                                     <constraint firstAttribute="centerY" secondItem="w21-Hr-jgF" secondAttribute="centerY" id="nga-9J-o2g"/>
                                     <constraint firstAttribute="centerY" secondItem="qEf-S2-YBE" secondAttribute="centerY" id="yTH-cw-nns"/>
                                     <constraint firstAttribute="trailing" secondItem="qEf-S2-YBE" secondAttribute="trailing" constant="8" id="yZ0-QU-zh3"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Friend Name" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="220" translatesAutoresizingMaskIntoConstraints="NO" id="vAn-R9-67X" userLabel="RecepientName">
-                                <rect key="frame" x="60" y="49" width="220" height="22"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scarlett Johanssen" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="230" translatesAutoresizingMaskIntoConstraints="NO" id="vAn-R9-67X" userLabel="RecepientName">
+                                <rect key="frame" x="50" y="53" width="230" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="message_recepient_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="1dq-1R-JiQ" userLabel="RecepientIcon">
-                                <rect key="frame" x="20" y="44" width="32" height="32"/>
+                                <rect key="frame" x="10" y="48" width="32" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="32" id="m6c-3g-LVm"/>
@@ -805,7 +813,7 @@ You will lose all your punches!</string>
                                 </constraints>
                             </imageView>
                             <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Ix-ff-1jb" userLabel="Divider1">
-                                <rect key="frame" x="20" y="79" width="260" height="1"/>
+                                <rect key="frame" x="10" y="85" width="280" height="1"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -813,7 +821,7 @@ You will lose all your punches!</string>
                                 </constraints>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mHG-Na-WEX">
-                                <rect key="frame" x="20" y="88" width="260" height="95"/>
+                                <rect key="frame" x="20" y="94" width="260" height="89"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -855,19 +863,19 @@ You will lose all your punches!</string>
                         <color key="backgroundColor" white="1" alpha="0.90000000000000002" colorSpace="calibratedWhite"/>
                         <color key="tintColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="vAn-R9-67X" firstAttribute="trailing" secondItem="5Ix-ff-1jb" secondAttribute="trailing" id="3Pa-bX-dU8"/>
                             <constraint firstItem="vAn-R9-67X" firstAttribute="leading" secondItem="1dq-1R-JiQ" secondAttribute="trailing" constant="8" symbolic="YES" id="4Xv-Xj-3e8"/>
                             <constraint firstItem="mHG-Na-WEX" firstAttribute="leading" secondItem="2Te-Cv-Wns" secondAttribute="leading" constant="20" symbolic="YES" id="AfZ-zK-6U7"/>
                             <constraint firstItem="5pB-vK-YKw" firstAttribute="top" secondItem="lkv-ii-ylf" secondAttribute="bottom" constant="8" id="DxE-XO-I8A"/>
-                            <constraint firstItem="1dq-1R-JiQ" firstAttribute="leading" secondItem="2Te-Cv-Wns" secondAttribute="leading" constant="20" symbolic="YES" id="IDJ-qd-HME"/>
+                            <constraint firstItem="1dq-1R-JiQ" firstAttribute="leading" secondItem="2Te-Cv-Wns" secondAttribute="leading" constant="10" id="IDJ-qd-HME"/>
                             <constraint firstAttribute="trailing" secondItem="6ov-pF-gXD" secondAttribute="trailing" constant="20" symbolic="YES" id="IyN-YQ-6oe"/>
                             <constraint firstAttribute="trailing" secondItem="5pB-vK-YKw" secondAttribute="trailing" id="Ufd-zy-fKR"/>
                             <constraint firstItem="6ov-pF-gXD" firstAttribute="top" secondItem="5pB-vK-YKw" secondAttribute="bottom" constant="8" symbolic="YES" id="Urx-Yt-UmH"/>
                             <constraint firstAttribute="trailing" secondItem="mHG-Na-WEX" secondAttribute="trailing" constant="20" symbolic="YES" id="UwE-go-W1u"/>
+                            <constraint firstItem="5Ix-ff-1jb" firstAttribute="leading" secondItem="2Te-Cv-Wns" secondAttribute="leading" constant="10" id="W2J-0y-9bH"/>
                             <constraint firstItem="6ov-pF-gXD" firstAttribute="leading" secondItem="Nzz-2h-39X" secondAttribute="trailing" constant="15" id="Wh5-AT-jqi"/>
                             <constraint firstItem="Aee-yg-3BK" firstAttribute="leading" secondItem="2Te-Cv-Wns" secondAttribute="leading" id="XFm-cn-lpi"/>
                             <constraint firstAttribute="trailing" secondItem="Aee-yg-3BK" secondAttribute="trailing" id="XJm-0B-r2G"/>
-                            <constraint firstItem="5Ix-ff-1jb" firstAttribute="top" secondItem="vAn-R9-67X" secondAttribute="bottom" constant="8" symbolic="YES" id="YKH-y2-GEA"/>
+                            <constraint firstItem="5Ix-ff-1jb" firstAttribute="top" secondItem="vAn-R9-67X" secondAttribute="bottom" constant="10" id="YKH-y2-GEA"/>
                             <constraint firstAttribute="trailing" secondItem="lkv-ii-ylf" secondAttribute="trailing" constant="8" id="cCc-gX-9cN"/>
                             <constraint firstAttribute="bottom" secondItem="6ov-pF-gXD" secondAttribute="bottom" constant="8" id="gol-vM-awi"/>
                             <constraint firstItem="Aee-yg-3BK" firstAttribute="top" secondItem="2Te-Cv-Wns" secondAttribute="top" constant="-1" id="hRo-zC-qA0"/>
@@ -875,10 +883,10 @@ You will lose all your punches!</string>
                             <constraint firstAttribute="trailing" secondItem="vAn-R9-67X" secondAttribute="trailing" constant="20" symbolic="YES" id="ot6-z1-e7n"/>
                             <constraint firstItem="5pB-vK-YKw" firstAttribute="leading" secondItem="2Te-Cv-Wns" secondAttribute="leading" id="ozf-GR-9rn"/>
                             <constraint firstItem="mHG-Na-WEX" firstAttribute="top" secondItem="5Ix-ff-1jb" secondAttribute="bottom" constant="8" symbolic="YES" id="rGE-z2-rti"/>
-                            <constraint firstItem="1dq-1R-JiQ" firstAttribute="leading" secondItem="5Ix-ff-1jb" secondAttribute="leading" id="v56-5k-Xsd"/>
+                            <constraint firstAttribute="trailing" secondItem="5Ix-ff-1jb" secondAttribute="trailing" constant="10" id="utt-r5-uei"/>
                             <constraint firstItem="Nzz-2h-39X" firstAttribute="centerY" secondItem="6ov-pF-gXD" secondAttribute="centerY" id="w0B-yY-Zb7"/>
                             <constraint firstItem="lkv-ii-ylf" firstAttribute="top" secondItem="mHG-Na-WEX" secondAttribute="bottom" constant="8" symbolic="YES" id="yhW-b6-M9e"/>
-                            <constraint firstItem="vAn-R9-67X" firstAttribute="top" secondItem="Aee-yg-3BK" secondAttribute="bottom" constant="8" symbolic="YES" id="yit-op-w38"/>
+                            <constraint firstItem="vAn-R9-67X" firstAttribute="top" secondItem="Aee-yg-3BK" secondAttribute="bottom" constant="10" id="yit-op-w38"/>
                             <constraint firstItem="vAn-R9-67X" firstAttribute="centerY" secondItem="1dq-1R-JiQ" secondAttribute="centerY" id="zEZ-TI-xvl"/>
                         </constraints>
                         <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -901,6 +909,7 @@ You will lose all your punches!</string>
     </scenes>
     <resources>
         <image name="message_recepient_icon.png" width="32" height="32"/>
+        <image name="message_send_feedback_icon.png" width="32" height="32"/>
         <image name="message_type_gift_orange.png" width="32" height="32"/>
         <image name="nav_exit.png" width="32" height="32"/>
         <image name="orange_highlighted.png" width="256" height="32"/>

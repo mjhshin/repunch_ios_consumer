@@ -356,7 +356,8 @@
 	[UIView setAnimationDuration:0.25f];
 	
 	self.navigationItem.title = @"";
-	[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"black_alpha_gradient"] forBarMetrics:UIBarMetricsDefault];
+	[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"black_alpha_gradient"]
+												  forBarMetrics:UIBarMetricsDefault];
 	self.navigationController.navigationBar.shadowImage = [UIImage new];
 	navigationBarIsOpaque = NO;
 	self.tableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
@@ -722,8 +723,8 @@
 		[query includeKey:@"Store"];
         [query includeKey:@"Store.store_locations"];
 		[query includeKey:@"FacebookPost"];
-		[query getObjectInBackgroundWithId:patronStore.objectId block:^(PFObject *result, NSError *error)
-		 {
+		[query getObjectInBackgroundWithId:patronStore.objectId block:^(PFObject *result, NSError *error) {
+			
 			 if(!error)
 			 {
 				 patronStore = (RPPatronStore *)result;
@@ -777,8 +778,7 @@
 		[RepunchUtils showDialogWithTitle:@"It's better together"
 							  withMessage:@"Log in with Facebook to send gifts to your friends"];
 	}
-	else
-	{
+	else {
 		FacebookFriendsViewController *facebookFriendsVC = [[FacebookFriendsViewController alloc] init];
 		facebookFriendsVC.myDelegate = self;
 		

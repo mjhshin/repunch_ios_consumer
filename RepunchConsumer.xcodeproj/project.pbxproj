@@ -48,6 +48,8 @@
 		EE04ABE2182872BB00DDA5D0 /* grey_button.png in Resources */ = {isa = PBXBuildFile; fileRef = EE04ABDF182872BB00DDA5D0 /* grey_button.png */; };
 		EE04ABE3182872BB00DDA5D0 /* orange_gradient_button_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = EE04ABE0182872BB00DDA5D0 /* orange_gradient_button_highlighted.png */; };
 		EE04ABE4182872BB00DDA5D0 /* orange_gradient_button.png in Resources */ = {isa = PBXBuildFile; fileRef = EE04ABE1182872BB00DDA5D0 /* orange_gradient_button.png */; };
+		EE065D7518C1251A00332F45 /* message_send_feedback_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EE065D7318C1251A00332F45 /* message_send_feedback_icon.png */; };
+		EE065D7618C1251A00332F45 /* message_send_feedback_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE065D7418C1251A00332F45 /* message_send_feedback_icon@2x.png */; };
 		EE06E65E17E7525000073AAF /* app_icon_29x29.png in Resources */ = {isa = PBXBuildFile; fileRef = EE06E65817E7525000073AAF /* app_icon_29x29.png */; };
 		EE06E65F17E7525000073AAF /* app_icon_57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = EE06E65917E7525000073AAF /* app_icon_57x57.png */; };
 		EE06E66017E7525000073AAF /* app_icon_58x58.png in Resources */ = {isa = PBXBuildFile; fileRef = EE06E65A17E7525000073AAF /* app_icon_58x58.png */; };
@@ -266,6 +268,8 @@
 		EE04ABDF182872BB00DDA5D0 /* grey_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grey_button.png; sourceTree = "<group>"; };
 		EE04ABE0182872BB00DDA5D0 /* orange_gradient_button_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orange_gradient_button_highlighted.png; sourceTree = "<group>"; };
 		EE04ABE1182872BB00DDA5D0 /* orange_gradient_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orange_gradient_button.png; sourceTree = "<group>"; };
+		EE065D7318C1251A00332F45 /* message_send_feedback_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = message_send_feedback_icon.png; sourceTree = "<group>"; };
+		EE065D7418C1251A00332F45 /* message_send_feedback_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "message_send_feedback_icon@2x.png"; sourceTree = "<group>"; };
 		EE06E65817E7525000073AAF /* app_icon_29x29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_29x29.png; sourceTree = "<group>"; };
 		EE06E65917E7525000073AAF /* app_icon_57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_57x57.png; sourceTree = "<group>"; };
 		EE06E65A17E7525000073AAF /* app_icon_58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_58x58.png; sourceTree = "<group>"; };
@@ -884,6 +888,8 @@
 				EE93168418B2899F00ECEABF /* nav_repunch_logo.png */,
 				EE93168518B2899F00ECEABF /* nav_repunch_logo@2x.png */,
 				EE79DF7817BD702500E92DE5 /* nav_search.png */,
+				EE065D7318C1251A00332F45 /* message_send_feedback_icon.png */,
+				EE065D7418C1251A00332F45 /* message_send_feedback_icon@2x.png */,
 				EE79DF7917BD702500E92DE5 /* nav_search@2x.png */,
 				EE9D4E7C17A84ABB005E0CC5 /* nav_send.png */,
 				EE5250B818B2BCD000AC7E6B /* location_others_icon.png */,
@@ -1112,6 +1118,7 @@
 				EE5378BD17B2E8D6002D8B18 /* StoreTableViewHeaderView.xib in Resources */,
 				EE5378CA17B2FEA9002D8B18 /* call_button.png in Resources */,
 				EE5378CC17B2FEA9002D8B18 /* feedback_button.png in Resources */,
+				EE065D7618C1251A00332F45 /* message_send_feedback_icon@2x.png in Resources */,
 				EE06E66217E7525000073AAF /* app_icon_114x114.png in Resources */,
 				EE398B4818908A31005BEDFE /* location_map_icon@2x.png in Resources */,
 				EE031C2318B66EDC0027E79F /* redeem_gift_icon_white@2x.png in Resources */,
@@ -1121,6 +1128,7 @@
 				EE04ABE4182872BB00DDA5D0 /* orange_gradient_button.png in Resources */,
 				EE5250BB18B2BCD000AC7E6B /* location_others_icon@2x.png in Resources */,
 				EE92C02117E7D0F900532CBE /* map_button@2x.png in Resources */,
+				EE065D7518C1251A00332F45 /* message_send_feedback_icon.png in Resources */,
 				EE93168318B287D500ECEABF /* tab_inbox@2x.png in Resources */,
 				EE125A0417F1E40100E2946E /* splash_screen_320x480.png in Resources */,
 				EE06E66317E7525000073AAF /* app_icon_120x120.png in Resources */,
