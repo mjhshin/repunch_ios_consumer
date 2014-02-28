@@ -139,7 +139,6 @@
 		EE9D4C6617A83F4B005E0CC5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B6E17A83F4A005E0CC5 /* main.m */; };
 		EE9D4C6717A83F4B005E0CC5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B7217A83F4A005E0CC5 /* AppDelegate.m */; };
 		EE9D4C6817A83F4B005E0CC5 /* ComposeMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B7417A83F4A005E0CC5 /* ComposeMessageViewController.m */; };
-		EE9D4C6917A83F4B005E0CC5 /* ComposeMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B7517A83F4A005E0CC5 /* ComposeMessageView.xib */; };
 		EE9D4C7517A83F4B005E0CC5 /* InboxTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B8E17A83F4A005E0CC5 /* InboxTableViewCell.m */; };
 		EE9D4C7617A83F4B005E0CC5 /* InboxTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B8F17A83F4A005E0CC5 /* InboxTableViewCell.xib */; };
 		EE9D4C7717A83F4B005E0CC5 /* StoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B9117A83F4A005E0CC5 /* StoreTableViewCell.m */; };
@@ -376,7 +375,6 @@
 		EE9D4B7217A83F4A005E0CC5 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		EE9D4B7317A83F4A005E0CC5 /* ComposeMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComposeMessageViewController.h; sourceTree = "<group>"; };
 		EE9D4B7417A83F4A005E0CC5 /* ComposeMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComposeMessageViewController.m; sourceTree = "<group>"; };
-		EE9D4B7517A83F4A005E0CC5 /* ComposeMessageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComposeMessageView.xib; sourceTree = "<group>"; };
 		EE9D4B8D17A83F4A005E0CC5 /* InboxTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InboxTableViewCell.h; path = CustomUIViews/InboxTableViewCell.h; sourceTree = "<group>"; };
 		EE9D4B8E17A83F4A005E0CC5 /* InboxTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InboxTableViewCell.m; path = CustomUIViews/InboxTableViewCell.m; sourceTree = "<group>"; };
 		EE9D4B8F17A83F4A005E0CC5 /* InboxTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InboxTableViewCell.xib; path = CustomUIViews/InboxTableViewCell.xib; sourceTree = "<group>"; };
@@ -618,7 +616,6 @@
 				EEE4D2321899654C00A5EC25 /* Message */,
 				EE9D4B7317A83F4A005E0CC5 /* ComposeMessageViewController.h */,
 				EE9D4B7417A83F4A005E0CC5 /* ComposeMessageViewController.m */,
-				EE9D4B7517A83F4A005E0CC5 /* ComposeMessageView.xib */,
 				EEFBA1711810A6BE00783F05 /* Welcome */,
 			);
 			name = ViewControllers;
@@ -1047,7 +1044,6 @@
 				EE8D702618B8271500ADE0DB /* forward_button_white.png in Resources */,
 				EEE777B117E7D2020023768B /* feedback_button@2x.png in Resources */,
 				EE398B4018908A00005BEDFE /* location_hours_icon@2x.png in Resources */,
-				EE9D4C6917A83F4B005E0CC5 /* ComposeMessageView.xib in Resources */,
 				EE398B4618908A31005BEDFE /* location_call_icon.png in Resources */,
 				EEE4D251189AD39A00A5EC25 /* star.png in Resources */,
 				EE9D4C7617A83F4B005E0CC5 /* InboxTableViewCell.xib in Resources */,
