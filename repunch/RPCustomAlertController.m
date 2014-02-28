@@ -118,13 +118,13 @@
     [alert showAlert];
 }
 
-+ (void)showCreateGiftMessageAlertWithRecepient:(NSString*)recepient redeemTitle:(NSString*)redeemTitle andBlock:(RPCustomAlertActionButtonBlock)block;
++ (void)showCreateGiftMessageAlertWithRecepient:(NSString*)recepient rewardTitle:(NSString*)rewardTitle andBlock:(RPCustomAlertActionButtonBlock)block;
 {
 
     RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"GiftPostAlert" ];
     alert.alertBlock  = block;
     alert.titleLabel.text = recepient;
-    alert.label1.text = redeemTitle;
+    alert.label1.text = rewardTitle;
     alert.postTextView.delegate = alert;
     [alert.postTextView flashScrollIndicators];
 

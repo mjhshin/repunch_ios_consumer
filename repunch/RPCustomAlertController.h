@@ -34,7 +34,7 @@ typedef void(^RPCustomAlertActionButtonBlock)(RPCustomAlertActionButton buttonTy
 + (void)showDeleteMyPlaceAlertWithBlock:(RPCustomAlertActionButtonBlock)block;
 
 + (void)showCreateMessageAlertWithRecepient:(NSString*)recepient andBlock:(RPCustomAlertActionButtonBlock)block;
-+ (void)showCreateGiftMessageAlertWithRecepient:(NSString*)recepient redeemTitle:(NSString*)redeemTitle andBlock:(RPCustomAlertActionButtonBlock)block;
++ (void)showCreateGiftMessageAlertWithRecepient:(NSString*)recepient rewardTitle:(NSString*)rewardTitle andBlock:(RPCustomAlertActionButtonBlock)block;
 
 
 @end
