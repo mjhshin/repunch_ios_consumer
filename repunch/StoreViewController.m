@@ -562,23 +562,9 @@
 
 - (IBAction)feedbackButtonAction:(id)sender
 {
-<<<<<<< HEAD
-    /*
-	ComposeMessageViewController *composeVC = [[ComposeMessageViewController alloc] init];
-	composeVC.messageType = @"feedback"; //TODO: make this enum
-	composeVC.storeId = self.storeId;
-	
-	UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:composeVC];
-	[RepunchUtils setupNavigationController:navController];
-	
-	[self presentViewController:navController animated:YES completion:nil];
-     */
-
-    [RPCustomAlertController alertForPostWithRecepient:@"Some Title" andBlock:^(RPCustomAlertActionButton buttonType, id anObject){
-=======
     [RPCustomAlertController showCreateMessageAlertWithTitle:@"Some Title"
 													andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
->>>>>>> FETCH_HEAD
+
         if (buttonType == SendButton) {
             NSLog(@"%@", anObject);
         }

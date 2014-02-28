@@ -84,17 +84,7 @@
     [alert showAsAction];
 }
 
-<<<<<<< HEAD
-+ (void)alertForPostWithRecepient:(NSString*)recepient andBlock:(RPCustomAlertActionButtonBlock)block
-{
 
-    RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"PostAlert" ];
-    alert.alertBlock  = block;
-    alert.titleLabel.text = recepient;
-    alert.postTextView.delegate = alert;
-
-    [alert showAlert];
-}
 
 + (void)alertForGiftPostWithRecepient:(NSString*)recepient redeemTitle:(NSString*)redeemTitle andBlock:(RPCustomAlertActionButtonBlock)block
 {
@@ -109,10 +99,7 @@
 }
 
 
-+ (void)alertForDeletingMessageWithBlock:(RPCustomAlertActionButtonBlock)block
-=======
 + (void)showDeleteMessageAlertWithBlock:(RPCustomAlertActionButtonBlock)block
->>>>>>> FETCH_HEAD
 {
 
     RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"DeleteMessageAlert" ];

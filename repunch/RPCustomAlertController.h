@@ -26,18 +26,13 @@ typedef void(^RPCustomAlertActionButtonBlock)(RPCustomAlertActionButton buttonTy
 						 punches:(NSInteger)punches
 						andBlock:(RPCustomAlertActionButtonBlock)block;
 
-<<<<<<< HEAD
-+ (void)alertForDeletingMessageWithBlock:(RPCustomAlertActionButtonBlock)block;
-+ (void)alertForDeletingPlacesWithBlock:(RPCustomAlertActionButtonBlock)block;
 
-+ (void)alertForPostWithRecepient:(NSString*)title andBlock:(RPCustomAlertActionButtonBlock)block;
 
 + (void)alertForGiftPostWithRecepient:(NSString*)recepient redeemTitle:(NSString*)redeemTitle andBlock:(RPCustomAlertActionButtonBlock)block;
 
-=======
+
 + (void)showDeleteMessageAlertWithBlock:(RPCustomAlertActionButtonBlock)block;
 + (void)showDeleteMyPlaceAlertWithBlock:(RPCustomAlertActionButtonBlock)block;
->>>>>>> FETCH_HEAD
 
 + (void)showCreateMessageAlertWithTitle:(NSString*)title andBlock:(RPCustomAlertActionButtonBlock)block;
 
