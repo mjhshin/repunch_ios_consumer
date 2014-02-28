@@ -58,7 +58,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="0.95000000000000007" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <color key="tintColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="akR-11-2ZS" secondAttribute="trailing" constant="20" symbolic="YES" id="FQG-RL-Eoa"/>
@@ -551,7 +551,7 @@ You will lose all your punches!</string>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="0.95000000000000007" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <color key="tintColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="bzF-Y3-ITd" firstAttribute="top" secondItem="qkS-BD-mOK" secondAttribute="bottom" constant="15" id="C5q-Tw-Z50"/>
@@ -692,7 +692,7 @@ You will lose all your punches!</string>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="0.90000000000000002" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="0.95000000000000007" colorSpace="calibratedWhite"/>
                         <color key="tintColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="59m-PW-C0k" secondAttribute="trailing" constant="10" id="0Vh-Hp-ITW"/>
@@ -719,10 +719,11 @@ You will lose all your punches!</string>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="closeButton" destination="EyO-Id-Bmv" id="rIH-bD-JQx"/>
+                        <outlet property="label1" destination="HA0-Pv-HX6" id="viG-bb-CPi"/>
                         <outlet property="postCharCount" destination="ynt-Oy-Cfw" id="ogU-Oj-rq1"/>
                         <outlet property="postTextView" destination="RZz-aG-Haw" id="xU4-Ll-JjC"/>
                         <outlet property="sendButton" destination="tgf-hV-tD5" id="0dA-xY-8Tr"/>
-                        <outlet property="titleLabel" destination="HA0-Pv-HX6" id="s4A-nc-8kb"/>
+                        <outlet property="titleLabel" destination="riP-46-mLY" id="IhW-KN-X6Q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f2B-Uc-cpK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -865,7 +866,7 @@ You will lose all your punches!</string>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="0.90000000000000002" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="0.95000000000000007" colorSpace="calibratedWhite"/>
                         <color key="tintColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="vAn-R9-67X" firstAttribute="leading" secondItem="1dq-1R-JiQ" secondAttribute="trailing" constant="8" symbolic="YES" id="4Xv-Xj-3e8"/>
@@ -902,11 +903,12 @@ You will lose all your punches!</string>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="closeButton" destination="gIz-ze-Lj8" id="mgQ-oo-Dz6"/>
-                        <outlet property="label1" destination="6ov-pF-gXD" id="iiO-Da-i4Q"/>
+                        <outlet property="label1" destination="vAn-R9-67X" id="usJ-f8-tP9"/>
+                        <outlet property="label2" destination="6ov-pF-gXD" id="wJg-5o-MXL"/>
                         <outlet property="postCharCount" destination="lkv-ii-ylf" id="Sod-gB-cwX"/>
                         <outlet property="postTextView" destination="mHG-Na-WEX" id="zlR-8Q-Hwk"/>
                         <outlet property="sendButton" destination="qEf-S2-YBE" id="uv6-tb-VGr"/>
-                        <outlet property="titleLabel" destination="vAn-R9-67X" id="a5g-ah-D61"/>
+                        <outlet property="titleLabel" destination="w21-Hr-jgF" id="dHv-mJ-Qkm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="57J-cD-nNE" userLabel="First Responder" sceneMemberID="firstResponder"/>

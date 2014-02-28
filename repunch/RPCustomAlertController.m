@@ -107,7 +107,7 @@
     RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"PostAlert" ];
 
     alert.alertBlock  = block;
-    alert.titleLabel.text = recepient;
+    alert.label1.text = recepient;
     alert.postTextView.delegate = alert;
     [alert.postTextView flashScrollIndicators];
     [alert.postTextView becomeFirstResponder];
@@ -125,13 +125,11 @@
 
     alert.alertBlock  = block;
     alert.sendButton.enabled = NO;
-    alert.titleLabel.text = recepient;
-    alert.label1.text = rewardTitle;
+    alert.label1.text = recepient;
+    alert.label2.text = rewardTitle;
     alert.postTextView.delegate = alert;
     [alert.postTextView flashScrollIndicators];
     [alert.postTextView becomeFirstResponder];
-
-
 
     [alert showAlert];
 }

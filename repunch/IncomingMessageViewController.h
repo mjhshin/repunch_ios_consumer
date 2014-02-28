@@ -21,7 +21,7 @@
 - (void)removeMessage:(IncomingMessageViewController *)controller forMsgStatus:(RPMessageStatus *)msgStatus;
 @end
 
-@interface IncomingMessageViewController : UIViewController <ComposeMessageDelegate>
+@interface IncomingMessageViewController : UIViewController
 
 @property (nonatomic, weak) id <IncomingMessageVCDelegate> delegate;
 @property (strong, nonatomic) NSString *messageStatusId;

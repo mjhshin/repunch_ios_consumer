@@ -403,18 +403,43 @@
 		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
-	
-	ComposeMessageViewController *composeVC = [[ComposeMessageViewController alloc] init];
-	composeVC.delegate = self;
-	composeVC.messageType = @"gift_reply";
-	composeVC.storeId = message.store_id;
-	composeVC.recepientName = message.sender_name;
-	composeVC.giftReplyMessageId = message.objectId;
-	composeVC.giftMessageStatusId = self.messageStatusId;
-	
-	UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:composeVC];
-	[RepunchUtils setupNavigationController:navController];
-	[self presentViewController:navController animated:YES completion:nil];
+
+
+
+    [RPCustomAlertController showCreateGiftMessageAlertWithRecepient:message.sender_name rewardTitle:message.gift_title andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
+
+        if (buttonType == SendButton) {
+
+
+            NSDictionary *inputsArgs = @{@"message_id": message.objectId,
+                                         @"sender_name": patron.full_name,
+                                         @"body": anObject};
+
+            [PFCloud callFunctionInBackground:@"reply_to_gift" withParameters:inputsArgs  block:^(RPMessage *reply, NSError *error) {
+
+                if (!error) {
+
+                    [RepunchUtils showDialogWithTitle:@"Your reply has been sent!" withMessage:nil];
+                    RPMessageStatus *newMessageStatus = [sharedData getMessage:self.messageStatusId];
+                    newMessageStatus.Message.Reply = reply;
+
+                    containsReply = !IS_NIL(message.Reply);
+
+                    [self.replyButton hideButton];
+                    [self setupMessage];
+                    [self.delegate removeMessage:self forMsgStatus:nil];
+
+                    NSLog(@"send_gift result: %@", reply);
+                }
+                else {
+                    [RepunchUtils showDialogWithTitle:@"Send Failed"
+                                          withMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
+                    NSLog(@"send_gift error: %@", error);
+                }
+            }];
+        }
+        
+    }];
 }
 
 - (void)deleteButtonAction
@@ -435,12 +460,5 @@
 
 }
 
-- (void)giftReplySent:(ComposeMessageViewController *)controller
-{
-	containsReply = !IS_NIL(message.Reply);
-	[self.replyButton hideButton];
-	[self setupMessage];
-	[self.delegate removeMessage:self forMsgStatus:nil];
-}
 
 @end
