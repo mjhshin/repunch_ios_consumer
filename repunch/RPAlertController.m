@@ -61,6 +61,7 @@ static NSMutableArray *actionStack;
 - (void)showAlert
 {
     self.isAction = NO;
+
     [RPAlertController pushAlert:self];
 }
 
@@ -94,7 +95,7 @@ static NSMutableArray *actionStack;
         }
 
         [RPAlertController addShadowToAlert:alert];
-        [alertStack addObject:alert];
+
     }
     else if (![actionStack containsObject:alert] && alert.isAction) {
 
@@ -126,32 +127,40 @@ static NSMutableArray *actionStack;
 
     [alertWindow makeKeyAndVisible];
 
-    if ((alertStack.count > 1 && !alert.isAction) || (actionStack.count > 1 && alert.isAction)) {
+    if (actionStack.count > 1 && alert.isAction) {
         return;
     }
 
     RPAlertController *action = [actionStack firstObject];
+    RPAlertController *lastAlert = [alertStack lastObject];
 
-    [UIView animateWithDuration:ANIMATION_DURATION
-					 animations:^{
-						 if (!alert.isAction) {
-							 [RPAlertController hideAlert:action isDown:YES];
-						 }
-					 }
-					 completion:^(BOOL finished) {
-						 [action removeFromParentViewController];
-						 [action.view removeFromSuperview];
-						 
-						 [alertWindow.rootViewController addChildViewController:alert];
-						 [alertWindow.rootViewController.view addSubview:alert.view];
-						 
-						 [RPAlertController hideAlert:alert isDown:YES];
-						 
-						 [UIAlertView animateWithDuration:ANIMATION_DURATION
-											   animations:^{
-												   [RPAlertController centerView:alert];
-											   }];
-					 }];
+    if (!alert.isAction) {
+        [alertStack addObject:alert];
+    }
+
+
+    [UIView animateWithDuration:ANIMATION_DURATION  animations:^{
+        if (!alert.isAction) {
+            [RPAlertController hideAlert:action isDown:YES];
+        }
+
+    } completion:^(BOOL finished) {
+
+        [alertWindow.rootViewController addChildViewController:alert];
+        [alertWindow.rootViewController.view addSubview:alert.view];
+
+        [RPAlertController hideAlert:alert isDown:YES];
+
+        if ([alert.firstResponder respondsToSelector:@selector(becomeFirstResponder)]) {
+            [alert.firstResponder becomeFirstResponder];
+        };
+
+        [UIAlertView animateWithDuration:ANIMATION_DURATION animations:^{
+            [RPAlertController centerView:alert];
+            [RPAlertController hideAlert:lastAlert isDown:NO];
+
+        }];
+    }];
 }
 
 + (void)popAlert:(RPAlertController*)toPop
@@ -164,9 +173,9 @@ static NSMutableArray *actionStack;
     }
 
 
-    RPAlertController *toDisplay = (alertStack.count > 0) ? [alertStack firstObject] : [actionStack firstObject];
+    RPAlertController *toDisplay = ([alertStack lastObject]) ? [alertStack lastObject] : [actionStack firstObject];
 
-    if (toDisplay) {
+    if (toDisplay.isAction) {
         [alertWindow.rootViewController addChildViewController: toDisplay];
         [alertWindow.rootViewController.view addSubview:toDisplay.view];
         [RPAlertController hideAlert:toDisplay isDown:YES];
@@ -174,8 +183,8 @@ static NSMutableArray *actionStack;
 
     [UIView animateWithDuration:ANIMATION_DURATION animations:^{
 
-        [RPAlertController hideAlert:toPop isDown:toPop.isAction];
-		
+        [RPAlertController hideAlert:toPop isDown:YES];
+
         if (!toPop.isAction) {
             // animate when displaying an alert, otherwise complete animation then animate
             [RPAlertController centerView:toDisplay];

@@ -10,6 +10,8 @@
 
 @interface RPAlertController : UIViewController
 
+@property id firstResponder;
+
 - (void)showAlert;
 - (void)showAsAction;
 - (void)hideAlert;

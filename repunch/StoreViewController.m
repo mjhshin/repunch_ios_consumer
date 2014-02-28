@@ -552,7 +552,8 @@
 		[RepunchUtils showDialogWithTitle:@"Sorry, you can only send feedback to stores where you have been punched." withMessage:nil];
 		return;
 	}
-	
+
+
     [RPCustomAlertController showCreateMessageAlertWithRecepient:store.store_name andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
 
         if (buttonType == SendButton) {
@@ -578,7 +579,25 @@
                 }
             }];
         }
+
     }];
+
+
+    [RPCustomAlertController showDefaultAlertWithTitle:@"1" andMessage:nil];
+    [RPCustomAlertController showDefaultAlertWithTitle:@"2" andMessage:nil];
+    [RPCustomAlertController showDefaultAlertWithTitle:@"3" andMessage:nil];
+    [RPCustomAlertController showDefaultAlertWithTitle:@"4" andMessage:nil];
+    [RPCustomAlertController showDefaultAlertWithTitle:@"5" andMessage:nil];
+
+
+    [RPCustomAlertController showDefaultAlertWithTitle:@"1" andMessage:nil];
+    [RPCustomAlertController showDefaultAlertWithTitle:@"2" andMessage:nil];
+    [RPCustomAlertController showDefaultAlertWithTitle:@"3" andMessage:nil];
+    [RPCustomAlertController showDefaultAlertWithTitle:@"4" andMessage:nil];
+    [RPCustomAlertController showDefaultAlertWithTitle:@"5" andMessage:nil];
+
+
+
 
 
 /*

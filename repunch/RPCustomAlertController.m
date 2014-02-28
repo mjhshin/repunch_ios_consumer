@@ -82,10 +82,6 @@
 }
 
 
-
-
-
-
 + (void)showDeleteMessageAlertWithBlock:(RPCustomAlertActionButtonBlock)block
 {
     RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"DeleteMessageAlert" ];
@@ -109,8 +105,8 @@
     alert.alertBlock  = block;
     alert.label1.text = recepient;
     alert.postTextView.delegate = alert;
-    [alert.postTextView flashScrollIndicators];
-    [alert.postTextView becomeFirstResponder];
+    alert.firstResponder = alert.postTextView;
+
     alert.sendButton.enabled = NO;
 
 
@@ -128,8 +124,8 @@
     alert.label1.text = recepient;
     alert.label2.text = rewardTitle;
     alert.postTextView.delegate = alert;
-    [alert.postTextView flashScrollIndicators];
-    [alert.postTextView becomeFirstResponder];
+    alert.firstResponder = alert.postTextView;
+
 
     [alert showAlert];
 }
