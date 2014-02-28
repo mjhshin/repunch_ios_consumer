@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="uYQ-bG-ZG8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="LdT-hG-yr2">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
@@ -87,6 +86,118 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="awt-Qz-0tn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="668" y="70"/>
+        </scene>
+        <!--Custom Alert Controller - Decision Alert-->
+        <scene sceneID="s89-Vw-ZJZ">
+            <objects>
+                <viewController storyboardIdentifier="DecisionAlert" title="Decision Alert" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TgM-5F-YcR" customClass="RPCustomAlertController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FRe-gW-CUO"/>
+                        <viewControllerLayoutGuide type="bottom" id="hDv-77-JhF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dgZ-2D-Lwr">
+                        <rect key="frame" x="0.0" y="0.0" width="270" height="140"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="230" translatesAutoresizingMaskIntoConstraints="NO" id="qHR-Gq-HNQ" userLabel="TitleLabel">
+                                <rect key="frame" x="20" y="15" width="230" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
+                                <color key="textColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="230" translatesAutoresizingMaskIntoConstraints="NO" id="dv6-fH-a6I" userLabel="MessageLabel">
+                                <rect key="frame" x="20" y="54" width="230" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oah-6c-tT8" userLabel="HorizontalDivider">
+                                <rect key="frame" x="0.0" y="90" width="270" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.86838503649999998" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="U40-Me-kCs"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cZV-wh-xtq" userLabel="NoButton">
+                                <rect key="frame" x="0.0" y="91" width="135" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="f2e-Vk-NvG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
+                                <state key="normal" title="No">
+                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" backgroundImage="orange_highlighted.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="close:" destination="uYQ-bG-ZG8" eventType="touchUpInside" id="oKj-jM-es5"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kp1-tW-kev" userLabel="YesButton">
+                                <rect key="frame" x="135" y="91" width="135" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="oih-zU-lJ1"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
+                                <state key="normal" title="Yes">
+                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" backgroundImage="orange_highlighted.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="close:" destination="uYQ-bG-ZG8" eventType="touchUpInside" id="PAn-b7-7Fq"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oLJ-FH-0zT" userLabel="VerticalDivider">
+                                <rect key="frame" x="135" y="91" width="1" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.86838503649999998" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="1" id="8ta-zG-0mb"/>
+                                    <constraint firstAttribute="height" constant="50" id="vPK-pc-HsW"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="qHR-Gq-HNQ" secondAttribute="trailing" constant="20" symbolic="YES" id="1UD-1E-qJg"/>
+                            <constraint firstItem="oLJ-FH-0zT" firstAttribute="leading" secondItem="cZV-wh-xtq" secondAttribute="trailing" id="7FT-1x-oPD"/>
+                            <constraint firstItem="cZV-wh-xtq" firstAttribute="leading" secondItem="dgZ-2D-Lwr" secondAttribute="leading" id="7gv-4v-SCk"/>
+                            <constraint firstAttribute="trailing" secondItem="kp1-tW-kev" secondAttribute="trailing" id="Bea-Oy-ikH"/>
+                            <constraint firstItem="qHR-Gq-HNQ" firstAttribute="top" secondItem="dgZ-2D-Lwr" secondAttribute="top" constant="15" id="CcX-kS-oHd"/>
+                            <constraint firstItem="qHR-Gq-HNQ" firstAttribute="leading" secondItem="dgZ-2D-Lwr" secondAttribute="leading" constant="20" symbolic="YES" id="DSn-L4-gX5"/>
+                            <constraint firstItem="kp1-tW-kev" firstAttribute="top" secondItem="oah-6c-tT8" secondAttribute="bottom" id="Evn-MD-9iz"/>
+                            <constraint firstItem="cZV-wh-xtq" firstAttribute="top" secondItem="oah-6c-tT8" secondAttribute="bottom" id="HEb-tp-c72"/>
+                            <constraint firstAttribute="trailing" secondItem="oah-6c-tT8" secondAttribute="trailing" id="Jzw-b6-1fG"/>
+                            <constraint firstAttribute="trailing" secondItem="dv6-fH-a6I" secondAttribute="trailing" constant="20" symbolic="YES" id="Kz5-Ls-Dbm"/>
+                            <constraint firstItem="oah-6c-tT8" firstAttribute="top" secondItem="dv6-fH-a6I" secondAttribute="bottom" constant="15" id="Ltb-hX-SKV"/>
+                            <constraint firstItem="dv6-fH-a6I" firstAttribute="leading" secondItem="dgZ-2D-Lwr" secondAttribute="leading" constant="20" symbolic="YES" id="NhF-Pj-7g6"/>
+                            <constraint firstItem="kp1-tW-kev" firstAttribute="leading" secondItem="oLJ-FH-0zT" secondAttribute="trailing" id="Rrn-XJ-sCH"/>
+                            <constraint firstItem="oLJ-FH-0zT" firstAttribute="top" secondItem="oah-6c-tT8" secondAttribute="bottom" id="ZTG-6h-7Em"/>
+                            <constraint firstItem="dv6-fH-a6I" firstAttribute="top" secondItem="qHR-Gq-HNQ" secondAttribute="bottom" constant="15" id="a3O-lA-hMN"/>
+                            <constraint firstItem="oah-6c-tT8" firstAttribute="leading" secondItem="dgZ-2D-Lwr" secondAttribute="leading" id="k1b-tq-97b"/>
+                            <constraint firstAttribute="centerX" secondItem="oLJ-FH-0zT" secondAttribute="centerX" id="tPa-U6-6IH"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="closeButton" destination="cZV-wh-xtq" id="EyI-RW-V0c"/>
+                        <outlet property="confirmButton" destination="kp1-tW-kev" id="PzL-mZ-kfy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gnx-CN-8eP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1070" y="70"/>
         </scene>
         <!--Custom Alert Controller - Delete Message Dialog-->
         <scene sceneID="AMd-QG-Llx">
@@ -196,7 +307,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VOQ-Of-PoE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="275" y="371"/>
+            <point key="canvasLocation" x="275" y="411"/>
         </scene>
         <!--Custom Alert Controller - Delete Store Dialog-->
         <scene sceneID="dsM-YV-PON">
@@ -315,7 +426,7 @@ You will lose all your punches!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pl0-mE-9fy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="663" y="416"/>
+            <point key="canvasLocation" x="663" y="381"/>
         </scene>
         <!--Custom Alert Controller - Redeem Dialog-->
         <scene sceneID="NRg-Rm-lUt">
@@ -499,7 +610,7 @@ You will lose all your punches!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sX4-jQ-XnI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1071" y="70"/>
+            <point key="canvasLocation" x="1065" y="381"/>
         </scene>
         <!--Custom Alert Controller - Network Error Dialog-->
         <scene sceneID="MA5-8e-7XV">
@@ -728,7 +839,7 @@ You will lose all your punches!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f2B-Uc-cpK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1076" y="451"/>
+            <point key="canvasLocation" x="265" y="751"/>
         </scene>
         <!--Custom Alert Controller - Gift Dialog-->
         <scene sceneID="yVE-aY-Wws">
@@ -913,7 +1024,7 @@ You will lose all your punches!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="57J-cD-nNE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1411" y="451"/>
+            <point key="canvasLocation" x="653" y="751"/>
         </scene>
     </scenes>
     <resources>

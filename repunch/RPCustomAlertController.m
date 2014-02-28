@@ -19,9 +19,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *giftButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
+@property (weak, nonatomic) IBOutlet UIButton *confirmButton;
 @property (weak, nonatomic) IBOutlet UITextView *postTextView;
 @property (weak, nonatomic) IBOutlet UILabel *postCharCount;
-
 
 @property (strong, nonatomic) RPCustomAlertActionButtonBlock alertBlock;
 
@@ -46,13 +46,13 @@
 + (void)showDefaultAlertWithTitle:(NSString*)title andMessage:(NSString*)message
 {
     RPCustomAlertController * alert = [RPCustomAlertController alertFromStoryboard:@"MessageAlert"];
-    alert.titleLabel.text = NSLocalizedString(title, nil) ;
+    alert.titleLabel.text = NSLocalizedString(title, nil);
     alert.label1.text = NSLocalizedString(message, nil);
 
     CGRect frame = [RPCustomAlertController frameForViewWithInitialFrame:alert.view.frame
-                                                                  withDynamicLabels:@[alert.titleLabel, alert.label1]
-                                                            andInitialHights:@[@(CGRectGetHeight(alert.titleLabel.frame)),
-																			   @(CGRectGetHeight(alert.label1.frame))]];
+													   withDynamicLabels:@[alert.titleLabel, alert.label1]
+														andInitialHights:@[@(CGRectGetHeight(alert.titleLabel.frame)),
+																		@(CGRectGetHeight(alert.label1.frame))]];
     alert.view.frame = frame;
 
     [alert showAlert];
@@ -72,7 +72,7 @@
 						 punches:(NSInteger)punches
 						andBlock:(RPCustomAlertActionButtonBlock)block
 {
-    RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"RedeemAlert" ];
+    RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"RedeemAlert"];
     alert.titleLabel.text = title ;
 
     alert.label2.text = [NSString stringWithFormat:@"%i %@", punches , punches == 1 ? @"Punch" : @"Punches"];
@@ -81,10 +81,30 @@
     [alert showAsAction];
 }
 
+<<<<<<< HEAD
+=======
++ (void)showDecisionAlertWithTitle:(NSString*)title
+						andMessage:(NSString*)message
+					   andBlock:(RPCustomAlertActionButtonBlock)block
+{
+	RPCustomAlertController * alert = [RPCustomAlertController alertFromStoryboard:@"DecisionAlert"];
+    alert.titleLabel.text = NSLocalizedString(title, nil);
+    alert.label1.text = NSLocalizedString(message, nil);
+	
+    CGRect frame = [RPCustomAlertController frameForViewWithInitialFrame:alert.view.frame
+													   withDynamicLabels:@[alert.titleLabel, alert.label1]
+														andInitialHights:@[@(CGRectGetHeight(alert.titleLabel.frame)),
+																		   @(CGRectGetHeight(alert.label1.frame))]];
+    alert.view.frame = frame;
+	alert.alertBlock = block;
+	
+	[alert showAlert];
+}
+>>>>>>> FETCH_HEAD
 
 + (void)showDeleteMessageAlertWithBlock:(RPCustomAlertActionButtonBlock)block
 {
-    RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"DeleteMessageAlert" ];
+    RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"DeleteMessageAlert"];
     alert.alertBlock  = block;
 
     [alert showAsAction];
@@ -92,7 +112,7 @@
 
 + (void)showDeleteMyPlaceAlertWithBlock:(RPCustomAlertActionButtonBlock)block
 {
-    RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"DeleteStoreAlert" ];
+    RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"DeleteStoreAlert"];
     alert.alertBlock = block;
 	
     [alert showAsAction];
@@ -100,7 +120,7 @@
 
 + (void)showCreateMessageAlertWithRecepient:(NSString*)recepient andBlock:(RPCustomAlertActionButtonBlock)block;
 {
-    RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"PostAlert" ];
+    RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"PostAlert"];
 
     alert.alertBlock  = block;
     alert.label1.text = recepient;
@@ -109,15 +129,14 @@
 
     alert.sendButton.enabled = NO;
 
-
-
     [alert showAlert];
 }
 
-+ (void)showCreateGiftMessageAlertWithRecepient:(NSString*)recepient rewardTitle:(NSString*)rewardTitle andBlock:(RPCustomAlertActionButtonBlock)block;
++ (void)showCreateGiftMessageAlertWithRecepient:(NSString*)recepient
+									rewardTitle:(NSString*)rewardTitle
+									   andBlock:(RPCustomAlertActionButtonBlock)block;
 {
-
-    RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"GiftPostAlert" ];
+    RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"GiftPostAlert"];
 
     alert.alertBlock  = block;
     alert.sendButton.enabled = NO;
@@ -169,7 +188,7 @@
     return alert;
 }
 
-- (IBAction)close:(UIButton*)sender
+- (IBAction)close:(UIButton *)sender
 {
     [self hideAlert];
 
@@ -179,13 +198,13 @@
     if (sender == self.redeemButton) {
         button = RedeemButton;
     }
-    else if (self.giftButton == sender){
+    else if (self.giftButton == sender) {
         button = GiftButton;
     }
-    else if (self.deleteButton == sender ){
+    else if (self.deleteButton == sender) {
         button = DeleteButton;
     }
-    else if (self.sendButton == sender ){
+    else if (self.sendButton == sender) {
         button = SendButton;
         anObject = self.postTextView.text;
     }
