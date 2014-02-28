@@ -189,31 +189,35 @@
 
 - (IBAction)close:(UIButton *)sender
 {
-    [self hideAlert];
+    [self hideAlertWithBlock:^{
+        
+        RPCustomAlertActionButton button = NoneButton;
+        id anObject = nil;
 
-    RPCustomAlertActionButton button = NoneButton;
-    id anObject = nil;
+        if (sender == self.redeemButton) {
+            button = RedeemButton;
+        }
+        else if (self.giftButton == sender) {
+            button = GiftButton;
+        }
+        else if (self.deleteButton == sender) {
+            button = DeleteButton;
+        }
+        else if (self.sendButton == sender) {
+            button = SendButton;
+            anObject = self.postTextView.text;
+        }
+        else if (self.confirmButton == sender) {
+            button = ConfirmButton;
+        }
+        
+        if (self.alertBlock) {
+            self.alertBlock(button, anObject);
+        }
 
-    if (sender == self.redeemButton) {
-        button = RedeemButton;
-    }
-    else if (self.giftButton == sender) {
-        button = GiftButton;
-    }
-    else if (self.deleteButton == sender) {
-        button = DeleteButton;
-    }
-    else if (self.sendButton == sender) {
-        button = SendButton;
-        anObject = self.postTextView.text;
-    }
-    else if (self.confirmButton == sender) {
-        button = ConfirmButton;
-    }
+    }];
 
-    if (self.alertBlock) {
-        self.alertBlock(button, anObject);
-    }
+
 }
 
 + (CGRect)frameForViewWithInitialFrame:(CGRect)viewInitialFrame

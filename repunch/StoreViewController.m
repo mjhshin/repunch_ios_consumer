@@ -582,35 +582,6 @@
 
     }];
 
-
-    [RPCustomAlertController showDefaultAlertWithTitle:@"1" andMessage:nil];
-    [RPCustomAlertController showDefaultAlertWithTitle:@"2" andMessage:nil];
-    [RPCustomAlertController showDefaultAlertWithTitle:@"3" andMessage:nil];
-    [RPCustomAlertController showDefaultAlertWithTitle:@"4" andMessage:nil];
-    [RPCustomAlertController showDefaultAlertWithTitle:@"5" andMessage:nil];
-
-
-    [RPCustomAlertController showDefaultAlertWithTitle:@"1" andMessage:nil];
-    [RPCustomAlertController showDefaultAlertWithTitle:@"2" andMessage:nil];
-    [RPCustomAlertController showDefaultAlertWithTitle:@"3" andMessage:nil];
-    [RPCustomAlertController showDefaultAlertWithTitle:@"4" andMessage:nil];
-    [RPCustomAlertController showDefaultAlertWithTitle:@"5" andMessage:nil];
-
-
-
-
-
-/*
-    // Demo For Gift
-    [RPCustomAlertController showCreateGiftMessageAlertWithRecepient:@"Sime Title" rewardTitle:@"Some Reward" andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
-
-        if (buttonType == SendButton) {
-            NSLog(@"%@", anObject);
-        }
-    }];
- */
-
-
 }
 
 - (IBAction)saveStoreButtonAction:(id)sender

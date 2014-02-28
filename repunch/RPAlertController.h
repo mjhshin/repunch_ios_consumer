@@ -14,6 +14,6 @@
 
 - (void)showAlert;
 - (void)showAsAction;
-- (void)hideAlert;
+- (void)hideAlertWithBlock:(void (^) (void))block;
 
 @end

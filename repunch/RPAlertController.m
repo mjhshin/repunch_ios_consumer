@@ -65,9 +65,9 @@ static NSMutableArray *actionStack;
     [RPAlertController pushAlert:self];
 }
 
-- (void)hideAlert
+- (void)hideAlertWithBlock:(void (^) (void))block
 {
-    [RPAlertController popAlert:self];
+    [RPAlertController popAlert:self withBlock:block];
 }
 
 - (void)showAsAction
@@ -127,7 +127,7 @@ static NSMutableArray *actionStack;
 
     [alertWindow makeKeyAndVisible];
 
-    if (actionStack.count > 1 && alert.isAction) {
+    if (alert.isAction && (actionStack.count > 1 || alertStack.count > 1) ) {
         return;
     }
 
@@ -146,6 +146,7 @@ static NSMutableArray *actionStack;
 
     } completion:^(BOOL finished) {
 
+
         [alertWindow.rootViewController addChildViewController:alert];
         [alertWindow.rootViewController.view addSubview:alert.view];
 
@@ -163,7 +164,7 @@ static NSMutableArray *actionStack;
     }];
 }
 
-+ (void)popAlert:(RPAlertController*)toPop
++ (void)popAlert:(RPAlertController*)toPop withBlock:(void (^) (void))block
 {
     if (toPop.isAction) {
         [actionStack removeObject:toPop];
@@ -197,13 +198,17 @@ static NSMutableArray *actionStack;
             }
 
         } completion:^(BOOL finished) {
+
 			[toPop removeFromParentViewController];
             [toPop.view removeFromSuperview];
             [toPop.view endEditing:YES];
 
-
-            // Remove ShadowView
             toPop.view = [[toPop.view subviews] firstObject];
+            if (block) {
+                block();
+
+            }
+
 
             if (alertStack.count < 1 && actionStack.count < 1) {
                 [[[[UIApplication sharedApplication] delegate] window] makeKeyAndVisible];
