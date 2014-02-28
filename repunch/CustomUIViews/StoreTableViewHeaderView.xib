@@ -158,11 +158,11 @@
                                 <action selector="mapButtonAction:" destination="-1" eventType="touchUpInside" id="C5B-cP-obq"/>
                             </connections>
                         </button>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MVM-0k-72i" userLabel="MapButtonLabel">
-                            <rect key="frame" x="135" y="137" width="50" height="16"/>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Directions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MVM-0k-72i" userLabel="MapButtonLabel">
+                            <rect key="frame" x="130" y="137" width="60" height="16"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="50" id="jEl-tl-NrQ"/>
+                                <constraint firstAttribute="width" constant="60" id="jEl-tl-NrQ"/>
                                 <constraint firstAttribute="height" constant="16" id="z8o-b8-Rya"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="11"/>

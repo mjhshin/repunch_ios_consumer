@@ -246,7 +246,8 @@
 		punchCount = 0;
 	}
 	
-	[self setStoreButtons];
+	self.navigationItem.rightBarButtonItem = patronStoreExists ? deleteButton : addButton;
+	
     [self.tableView reloadData];
 }
 
@@ -305,22 +306,6 @@
         self.storeHours.hidden = YES;
         self.storeHoursOpen.hidden = YES;
     }
-}
-
-- (void)setStoreButtons
-{
-	if(!patronStoreExists) {
-		self.navigationItem.rightBarButtonItem = addButton;
-		
-		self.feedbackButton.enabled = NO;
-	}
-	else {
-		self.navigationItem.rightBarButtonItem = deleteButton;
-		
-		if(patronStore.all_time_punches > 0) {
-			self.feedbackButton.enabled = YES;
-		}
-	}
 }
 
 - (void)setOpaqueNavigationBar
@@ -563,6 +548,11 @@
 
 - (IBAction)feedbackButtonAction:(id)sender
 {
+	if(!patronStoreExists || patronStore.all_time_punches == 0) {
+		[RepunchUtils showDialogWithTitle:@"Sorry, you can only send feedback to stores where you have been punched." withMessage:nil];
+		return;
+	}
+	
     [RPCustomAlertController showCreateMessageAlertWithRecepient:store.store_name andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
 
         if (buttonType == SendButton) {
