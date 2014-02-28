@@ -111,6 +111,8 @@
     alert.postTextView.delegate = alert;
     [alert.postTextView flashScrollIndicators];
     [alert.postTextView becomeFirstResponder];
+    alert.sendButton.enabled = NO;
+
 
 
     [alert showAlert];
@@ -122,6 +124,7 @@
     RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"GiftPostAlert" ];
 
     alert.alertBlock  = block;
+    alert.sendButton.enabled = NO;
     alert.titleLabel.text = recepient;
     alert.label1.text = rewardTitle;
     alert.postTextView.delegate = alert;
@@ -244,6 +247,14 @@
 - (void)textViewDidChangeSelection:(UITextView *)textView
 {
     self.postCharCount.text = [@(150 - self.postTextView.text.length) stringValue];
+
+    if (self.postTextView.text.length > 0) {
+        self.sendButton.enabled = YES;
+    }
+    else{
+        self.sendButton.enabled = NO;
+
+    }
 }
 
 @end

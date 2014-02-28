@@ -753,7 +753,7 @@
 		return;
 	}
 	
-	if( [PFFacebookUtils isLinkedWithUser:[RPUser currentUser]] )
+	if( ![PFFacebookUtils isLinkedWithUser:[RPUser currentUser]] )
 	{
 		[RepunchUtils showDialogWithTitle:@"It's better together"
 							  withMessage:@"Log in with Facebook to send gifts to your friends"];
