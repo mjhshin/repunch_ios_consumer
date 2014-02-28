@@ -571,15 +571,16 @@
     }];
 
 
+/*
+    // Demo For Gift
+    [RPCustomAlertController showCreateGiftMessageAlertWithRecepient:@"Sime Title" rewardTitle:@"Some Reward" andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
 
-    /*  Demo For Gift
-     [RPCustomAlertController showCreateGiftMessageAlertWithRecepient:@"Sime Title" rewardTitle:@"Some Reward" andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
+        if (buttonType == SendButton) {
+            NSLog(@"%@", anObject);
+        }
+    }];
+ */
 
-     if (buttonType == SendButton) {
-     NSLog(@"%@", anObject);
-     }
-     }];
-     */
 
 }
 

@@ -221,13 +221,27 @@ static NSMutableArray *actionStack;
     }
 
     alertFrame.origin.x = (CGRectGetWidth(windowFrame) - CGRectGetWidth(alertFrame))/2 ;
+
     if (alert.isAction) {
         alertFrame.origin.y = CGRectGetHeight(windowFrame) - CGRectGetHeight(alertFrame);
     }
     else {
         alertFrame.origin.y = (CGRectGetHeight(windowFrame) - CGRectGetHeight(alertFrame))/2 ;
     }
-    alertFrame.origin.y -= CGRectGetHeight(alert.keyboardFrame) /2;
+
+    CGFloat keyboardHeight = CGRectGetHeight(alert.keyboardFrame);
+    alertFrame.origin.y -= keyboardHeight /2;
+
+    if (alertFrame.origin.y < 22) {
+        alertFrame.origin.y = 22;
+    }
+
+    CGFloat maxSize =  windowFrame.size.height - keyboardHeight - 44;
+
+    if (alertFrame.size.height > maxSize) {
+        alertFrame.size.height  = maxSize;
+    }
+
     alert.view.frame = alertFrame;
 }
 

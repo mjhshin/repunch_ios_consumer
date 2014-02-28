@@ -7,9 +7,6 @@
 //
 
 #import "RPCustomAlertController.h"
-//#import "RPRedeem+RedeemAddOn.h"
-//#import "RPVCSceneManager.h"
-//#import "Macros.h"
 #import "RepunchUtils.h"
 
 @interface RPCustomAlertController () <UITextViewDelegate>
@@ -91,7 +88,6 @@
 
 + (void)showDeleteMessageAlertWithBlock:(RPCustomAlertActionButtonBlock)block
 {
-
     RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"DeleteMessageAlert" ];
     alert.alertBlock  = block;
 
@@ -109,10 +105,12 @@
 + (void)showCreateMessageAlertWithRecepient:(NSString*)recepient andBlock:(RPCustomAlertActionButtonBlock)block;
 {
     RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"PostAlert" ];
+
     alert.alertBlock  = block;
     alert.titleLabel.text = recepient;
     alert.postTextView.delegate = alert;
     [alert.postTextView flashScrollIndicators];
+    [alert.postTextView becomeFirstResponder];
 
 
     [alert showAlert];
@@ -122,11 +120,15 @@
 {
 
     RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"GiftPostAlert" ];
+
     alert.alertBlock  = block;
     alert.titleLabel.text = recepient;
     alert.label1.text = rewardTitle;
     alert.postTextView.delegate = alert;
     [alert.postTextView flashScrollIndicators];
+    [alert.postTextView becomeFirstResponder];
+
+
 
     [alert showAlert];
 }
