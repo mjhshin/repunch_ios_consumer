@@ -27,7 +27,10 @@ typedef void(^RPCustomAlertActionButtonBlock)(RPCustomAlertActionButton buttonTy
 + (void)alertForDeletingMessageWithBlock:(RPCustomAlertActionButtonBlock)block;
 + (void)alertForDeletingPlacesWithBlock:(RPCustomAlertActionButtonBlock)block;
 
-+ (void)alertForPostWithTitle:(NSString*)title andBlock:(RPCustomAlertActionButtonBlock)block;
++ (void)alertForPostWithRecepient:(NSString*)title andBlock:(RPCustomAlertActionButtonBlock)block;
+
++ (void)alertForGiftPostWithRecepient:(NSString*)recepient redeemTitle:(NSString*)redeemTitle andBlock:(RPCustomAlertActionButtonBlock)block;
+
 
 
 @end

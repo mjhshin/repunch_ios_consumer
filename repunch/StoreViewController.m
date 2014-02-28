@@ -577,7 +577,7 @@
 	[self presentViewController:navController animated:YES completion:nil];
      */
 
-    [RPCustomAlertController alertForPostWithTitle:@"Some Title" andBlock:^(RPCustomAlertActionButton buttonType, id anObject){
+    [RPCustomAlertController alertForPostWithRecepient:@"Some Title" andBlock:^(RPCustomAlertActionButton buttonType, id anObject){
         if (buttonType == SendButton) {
             NSLog(@"%@", anObject);
         }
