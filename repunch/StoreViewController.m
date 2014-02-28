@@ -562,7 +562,7 @@
 
 - (IBAction)feedbackButtonAction:(id)sender
 {
-    [RPCustomAlertController showCreateMessageAlertWithRecepient:self.storeName.text andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
+    [RPCustomAlertController showCreateMessageAlertWithRecepient:store.store_name andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
 
         if (buttonType == SendButton) {
             NSLog(@"%@", anObject);
@@ -578,7 +578,7 @@
             [PFCloud callFunctionInBackground:@"send_feedback" withParameters:inputsArgs block:^(NSString *result, NSError *error){
 
                 if (!error) {
-                    [RepunchUtils showDialogWithTitle:@"Thanks for your feedback!" withMessage:nil];
+                    [RepunchUtils showDialogWithTitle:store.store_name withMessage:@"Thanks for your feedback!"];
                     NSLog(@"send_feedback result: %@", result);
                 }
                 else {
