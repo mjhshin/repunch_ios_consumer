@@ -791,6 +791,14 @@
 
 - (void)onFriendSelected:(FacebookFriendsViewController *)controller forFriendId:(NSString *)friendId withName:(NSString *)name
 {
+    [RPCustomAlertController showCreateGiftMessageAlertWithRecepient:name rewardTitle:selectedReward[@"reward_name"] andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
+
+        if (buttonType == SendButton) {
+            [self sendGiftToFriend:friendId andMessage:anObject];
+        }
+    }];
+
+    /*
 	ComposeMessageViewController *composeVC = [[ComposeMessageViewController alloc] init];
 	composeVC.messageType = @"gift";
 	composeVC.storeId = self.storeId;
@@ -804,6 +812,52 @@
 	[RepunchUtils setupNavigationController:composeNavController];
 	
 	[self presentViewController:composeNavController animated:YES completion:nil];
+     */
+}
+
+
+
+- (void)sendGiftToFriend:(NSString*)friendId andMessage:(NSString*)body
+{
+
+    NSNumber *punches = @([selectedReward[@"punches"] intValue]);
+
+	NSDictionary *inputsArgs = @{@"patron_id"        : patron.objectId,
+                                 @"patron_store_id"  : patronStore.objectId,
+                                 @"store_id"         : store.objectId,
+                                 @"sender_name"      : patron.full_name,
+                                 @"subject"          : @"Gift",
+                                 @"body"             : body,
+                                 @"recepient_id"     : friendId,
+                                 @"gift_title"       : selectedReward[@"reward_name"],
+                                 @"gift_description" : selectedReward[@"description"],
+                                 @"gift_punches"     : punches};
+
+
+	[PFCloud callFunctionInBackground:@"send_gift" withParameters:inputsArgs block:^(NSString *result, NSError *error) {
+
+        if (!error) {
+
+            if([result isEqualToString:@"insufficient"]) {
+                [RepunchUtils showDialogWithTitle:@"Sorry, not enough punches" withMessage:nil];
+            }
+
+            else {
+                NSInteger newPunchCount = patronStore.punch_count - punches.intValue;
+                [sharedData updatePatronStore:patronStore.objectId withPunches:newPunchCount];
+
+                [RepunchUtils showDialogWithTitle:@"Your gift has been sent!" withMessage:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"Punch" object:self];
+            }
+            NSLog(@"send_gift result: %@", result);
+        }
+        else {
+            [RepunchUtils showDialogWithTitle:@"Send Failed"
+                                  withMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
+
+            NSLog(@"send_gift error: %@", error);
+        }
+    }];
 }
 
 @end
