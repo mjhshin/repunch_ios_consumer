@@ -81,8 +81,7 @@
     [alert showAsAction];
 }
 
-<<<<<<< HEAD
-=======
+
 + (void)showDecisionAlertWithTitle:(NSString*)title
 						andMessage:(NSString*)message
 					   andBlock:(RPCustomAlertActionButtonBlock)block
@@ -100,7 +99,7 @@
 	
 	[alert showAlert];
 }
->>>>>>> FETCH_HEAD
+
 
 + (void)showDeleteMessageAlertWithBlock:(RPCustomAlertActionButtonBlock)block
 {
@@ -207,6 +206,9 @@
     else if (self.sendButton == sender) {
         button = SendButton;
         anObject = self.postTextView.text;
+    }
+    else if (self.confirmButton == sender) {
+        button = ConfirmButton;
     }
 
     if (self.alertBlock) {
