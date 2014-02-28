@@ -8,6 +8,8 @@
 #import "SearchViewController.h"
 #import "RPButton.h"
 
+#define PAGINATE_COUNT 15
+
 @implementation SearchViewController
 {
 	CLLocationManager *locationManager;
@@ -208,12 +210,12 @@
 	[storeQuery includeKey:@"Store.store_locations"];
     //[storeQuery includeKey:@"Store.active" equalTo:[NSNumber numberWithBool:YES]];
 	//[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation];
-	[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation withinMiles:50];
-	[storeQuery setLimit:20];
+	[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation withinMiles:30];
+	[storeQuery setLimit:PAGINATE_COUNT];
 	
 	if(paginate == YES) {
 		++paginateCount;
-		[storeQuery setSkip:paginateCount*20];
+		[storeQuery setSkip:paginateCount*PAGINATE_COUNT];
 		
 		[self.tableView setPaginationFooter];
 	}
@@ -246,7 +248,8 @@
 				 }
 			 }
 			 
-			 if(paginate != NO && results.count == 0) {
+			 //if(paginate != NO && results.count == 0) {
+			 if(paginateCount >= 1) {
 				paginateReachEnd = YES;
 			 }
 			 

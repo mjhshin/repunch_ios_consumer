@@ -81,19 +81,7 @@
 {
 	[manager stopUpdatingLocation];
 	
-	switch([error code])
-	{
-		case kCLErrorDenied:
-		{
-			[RepunchUtils showCustomDropdownView:self.view withMessage:@"Location Services disabled"];
-			break;
-		}
-		default:
-		{
-			[RepunchUtils showCustomDropdownView:self.view withMessage:@"Failed to get location"];
-			break;
-		}
-	}
+	[self reloadTableView];
 }
 
 #pragma mark - Table view data source
@@ -120,7 +108,6 @@
     
 	cell.locationTitle.text = storeLocation.street;
 	cell.locationSubtitle.text = [NSString stringWithFormat:@"%@, %@", storeLocation.city, storeLocation.state];
-	//cell.locationHours;
 	
 	if(userLocation != nil) {
 		float distanceToStore = [userLocation distanceInMilesTo:storeLocation.coordinates];

@@ -141,8 +141,8 @@
                                     <nil key="highlightedColor"/>
                                     <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </label>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="12:30 AM - 12:30 PM" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="150" translatesAutoresizingMaskIntoConstraints="NO" id="zDH-tG-KWX" userLabel="HoursLabel">
-                                    <rect key="frame" x="174" y="40" width="150" height="21"/>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="12:30 AM - 12:30 PM" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="150" translatesAutoresizingMaskIntoConstraints="NO" id="zDH-tG-KWX" userLabel="HoursLabel">
+                                    <rect key="frame" x="155" y="40" width="150" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="150" id="hN8-Vj-1RQ"/>
@@ -160,9 +160,9 @@
                                 <constraint firstItem="hLy-oW-oZC" firstAttribute="leading" secondItem="57E-wy-leP" secondAttribute="trailing" constant="15" id="PDa-gH-b1Q"/>
                                 <constraint firstItem="hLy-oW-oZC" firstAttribute="top" secondItem="57E-wy-leP" secondAttribute="top" id="PiP-Yj-4gc"/>
                                 <constraint firstItem="ipI-wb-lES" firstAttribute="leading" secondItem="hLy-oW-oZC" secondAttribute="leading" id="XcQ-bn-HYi"/>
+                                <constraint firstAttribute="trailing" secondItem="zDH-tG-KWX" secondAttribute="trailing" constant="15" id="oCj-0d-tdY"/>
                                 <constraint firstAttribute="bottom" secondItem="zDH-tG-KWX" secondAttribute="bottom" constant="15" id="oRt-Wa-aRU"/>
                                 <constraint firstItem="57E-wy-leP" firstAttribute="leading" secondItem="WMQ-YV-GW0" secondAttribute="leading" constant="15" id="oTe-Rk-QLP"/>
-                                <constraint firstItem="zDH-tG-KWX" firstAttribute="leading" secondItem="ipI-wb-lES" secondAttribute="trailing" constant="28" id="otj-NY-AFX"/>
                                 <constraint firstItem="57E-wy-leP" firstAttribute="top" secondItem="WMQ-YV-GW0" secondAttribute="top" constant="15" id="tM3-bC-sej"/>
                             </constraints>
                         </view>
@@ -297,7 +297,7 @@
         <image name="circular_exit_button.png" width="32" height="32"/>
         <image name="location_call_icon.png" width="36" height="36"/>
         <image name="location_hours_icon.png" width="36" height="36"/>
-        <image name="location_map_icon.png" width="36" height="36"/>
+        <image name="location_map_icon.png" width="32" height="32"/>
         <image name="location_others_icon.png" width="36" height="36"/>
         <image name="orange_highlighted.png" width="256" height="32"/>
     </resources>

@@ -444,7 +444,7 @@
 	if(!patronStoreExists) {
 		[cell setPatronStoreNotAdded];
 	}
-	else if(punchCount >= rewardPunches){
+	else if(punchCount >= rewardPunches) {
 		[cell setRewardUnlocked];
 	}
 	else {
@@ -471,9 +471,9 @@
 
     __weak typeof (self) weakSelf = self;
 
-	if (punchCount >= rewardPunches) {
-
-        [RPCustomAlertController alertForRedeemWithTitle:rewardName punches:rewardPunches andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
+        [RPCustomAlertController showRedeemAlertWithTitle:rewardName
+												  punches:rewardPunches
+												 andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
 
             if (buttonType == RedeemButton) {
                 if( ![RepunchUtils isConnectionAvailable] ) {
@@ -517,17 +517,13 @@
             }
             
         }];
-        
-	}
-	else {
-        [RPCustomAlertController alertWithTitle:rewardName andMessage:reward[@"reward_name"]];
-	}
 }
 
 - (IBAction)callButtonAction:(id)sender
 {
-	NSString *urlString = [@"tel://" stringByAppendingString:storeLocation.phone_number];
+	NSString *urlString = [@"telprompt://" stringByAppendingString:storeLocation.phone_number]; //TODO: must remove parantheses for URL to work!!
 	NSURL *url = [NSURL URLWithString:urlString];
+	//NSURL *url = [NSURL URLWithString:@"telprompt://123-456-7890"];
 
 	if( [[UIApplication sharedApplication] canOpenURL:url] ) {
 		[[UIApplication sharedApplication] openURL:url];
@@ -549,7 +545,7 @@
                                                        addressDictionary:nil];
 		
         MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
-        mapItem.name = storeLocation.Store.store_name;
+        mapItem.name = store.store_name;
         
         // Set the directions mode to "Driving"
         NSDictionary *launchOptions = @{MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving};
@@ -566,6 +562,7 @@
 
 - (IBAction)feedbackButtonAction:(id)sender
 {
+<<<<<<< HEAD
     /*
 	ComposeMessageViewController *composeVC = [[ComposeMessageViewController alloc] init];
 	composeVC.messageType = @"feedback"; //TODO: make this enum
@@ -578,6 +575,10 @@
      */
 
     [RPCustomAlertController alertForPostWithRecepient:@"Some Title" andBlock:^(RPCustomAlertActionButton buttonType, id anObject){
+=======
+    [RPCustomAlertController showCreateMessageAlertWithTitle:@"Some Title"
+													andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
+>>>>>>> FETCH_HEAD
         if (buttonType == SendButton) {
             NSLog(@"%@", anObject);
         }
@@ -624,8 +625,8 @@
 	
 	[PFCloud callFunctionInBackground: @"add_patronstore"
 					   withParameters:inputArgs
-								block:^(RPPatronStore *result, NSError *error)
-	{
+								block:^(RPPatronStore *result, NSError *error) {
+									
 		self.saveStoreButton.enabled = YES;
 		addButton.enabled = YES;
 		
@@ -647,16 +648,13 @@
 
 - (void)showDeleteStoreDialog
 {
-
     __weak typeof(self) weakSelf = self;
-    [RPCustomAlertController alertForDeletingPlacesWithBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
+    [RPCustomAlertController showDeleteMyPlaceAlertWithBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
 
         if (buttonType == DeleteButton) {
             [weakSelf deleteStore];
         }
     }];
-
-
 }
 
 - (void)deleteStore
@@ -676,12 +674,10 @@
 	
 	[PFCloud callFunctionInBackground: @"delete_patronstore"
 					   withParameters:inputArgs
-								block:^(NSString *result, NSError *error)
-	 {
+								block:^(NSString *result, NSError *error) {
 		 deleteButton.enabled = YES;
 		 
-		 if(!error)
-		 {
+		 if(!error) {
 			 [sharedData deletePatronStore:self.storeId];
 			 [self checkPatronStore];
 			 [self.tableView reloadData];
@@ -689,8 +685,7 @@
 			 NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:self.storeId, @"store_id", nil];
 			 [[NSNotificationCenter defaultCenter] postNotificationName:@"AddOrRemoveStore" object:self userInfo:args];
 		 }
-		 else
-		 {
+		 else {
 			 NSLog(@"delete_patronStore error: %@", error);
 			 [RepunchUtils showConnectionErrorDialog];
 		 }

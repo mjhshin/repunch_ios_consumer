@@ -48,12 +48,12 @@
 
 + (void)showDialogWithTitle:(NSString *)title withMessage:(NSString *)message
 {
-    [RPCustomAlertController alertWithTitle:title andMessage:message];
+    [RPCustomAlertController showDefaultAlertWithTitle:title andMessage:message];
 }
 
 + (void)showPunchCode:(NSString *)punchCode
 {
-    [RPCustomAlertController alertWithTitle:@"Your Punch Code" andMessage:punchCode];
+    [RPCustomAlertController showDefaultAlertWithTitle:@"Your Punch Code" andMessage:punchCode];
 }
 
 + (void)showNavigationBarDropdownView:(UIView *)parentView withMessage:(NSString *)message

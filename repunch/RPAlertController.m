@@ -10,8 +10,8 @@
 
 #define ANIMATION_DURATION 0.3
 
-static const UIWindowLevel UIWindowLevelORAlert = 1999.0;  // don't overlap system's alert
-static const UIWindowLevel UIWindowLevelORAlertBackground = 1998.0; // below the alert window
+//static const UIWindowLevel UIWindowLevelORAlert = 1999.0;  // don't overlap system's alert
+//static const UIWindowLevel UIWindowLevelORAlertBackground = 1998.0; // below the alert window
 
 static UIWindow *alertWindow;
 static NSMutableArray *alertStack;
@@ -24,7 +24,6 @@ static NSMutableArray *actionStack;
 
 @implementation RPAlertController
 
-
 - (void)viewDidLoad
 {
     self.keyboardFrame = CGRectZero;
@@ -33,10 +32,12 @@ static NSMutableArray *actionStack;
     [center addObserver:self selector:@selector(didHidekeyboard:) name:UIKeyboardWillHideNotification object:nil];
 }
 
--(void)dealloc
+/*
+- (void)dealloc
 {
     NSLog(@"Dealloc Alert");
 }
+*/
 
 - (void)didShowKeyboard:(NSNotification*)notification
 {
@@ -57,7 +58,6 @@ static NSMutableArray *actionStack;
     }];
 }
 
-
 - (void)showAlert
 {
     self.isAction = NO;
@@ -75,7 +75,6 @@ static NSMutableArray *actionStack;
     [RPAlertController pushAlert:self];
 }
 
-
 - (NSUInteger)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskAll;
@@ -85,8 +84,6 @@ static NSMutableArray *actionStack;
 {
     [RPAlertController centerView:self];
 }
-
-
 
 + (void)pushAlert:(RPAlertController*)alert
 {
@@ -99,7 +96,7 @@ static NSMutableArray *actionStack;
         [RPAlertController addShadowToAlert:alert];
         [alertStack addObject:alert];
     }
-    else if (![actionStack containsObject:alert] && alert.isAction){
+    else if (![actionStack containsObject:alert] && alert.isAction) {
 
         if (!actionStack) {
             actionStack = [NSMutableArray array];
@@ -135,45 +132,42 @@ static NSMutableArray *actionStack;
 
     RPAlertController *action = [actionStack firstObject];
 
-    [UIView animateWithDuration:ANIMATION_DURATION animations:^{
-        if (!alert.isAction) {
-            [RPAlertController hideAlert:action isDown:YES];
-        }
-    } completion:^(BOOL finished) {
-
-        [action removeFromParentViewController];
-        [action.view removeFromSuperview];
-
-        [alertWindow.rootViewController addChildViewController:alert];
-        [alertWindow.rootViewController.view addSubview:alert.view];
-
-        [RPAlertController hideAlert:alert isDown:YES];
-
-        [UIAlertView animateWithDuration:ANIMATION_DURATION animations:^{
-            [RPAlertController centerView:alert];
-        }];
-
-    }];
+    [UIView animateWithDuration:ANIMATION_DURATION
+					 animations:^{
+						 if (!alert.isAction) {
+							 [RPAlertController hideAlert:action isDown:YES];
+						 }
+					 }
+					 completion:^(BOOL finished) {
+						 [action removeFromParentViewController];
+						 [action.view removeFromSuperview];
+						 
+						 [alertWindow.rootViewController addChildViewController:alert];
+						 [alertWindow.rootViewController.view addSubview:alert.view];
+						 
+						 [RPAlertController hideAlert:alert isDown:YES];
+						 
+						 [UIAlertView animateWithDuration:ANIMATION_DURATION
+											   animations:^{
+												   [RPAlertController centerView:alert];
+											   }];
+					 }];
 }
-
-
 
 + (void)popAlert:(RPAlertController*)toPop
 {
-
     if (toPop.isAction) {
         [actionStack removeObject:toPop];
     }
-    else{
+    else {
         [alertStack removeObject:toPop];
     }
 
     [toPop.view endEditing:YES];
 
-    RPAlertController *toDisplay = alertStack.count > 0 ? [alertStack firstObject] : [actionStack firstObject];
+    RPAlertController *toDisplay = (alertStack.count > 0) ? [alertStack firstObject] : [actionStack firstObject];
 
     if (toDisplay) {
-
         [alertWindow.rootViewController addChildViewController: toDisplay];
         [alertWindow.rootViewController.view addSubview:toDisplay.view];
         [RPAlertController hideAlert:toDisplay isDown:YES];
@@ -182,12 +176,12 @@ static NSMutableArray *actionStack;
     [UIView animateWithDuration:ANIMATION_DURATION animations:^{
 
         [RPAlertController hideAlert:toPop isDown:toPop.isAction];
+		
         if (!toPop.isAction) {
             // animate when displaying an alert, otherwise complete animation then animate
             [RPAlertController centerView:toDisplay];
         }
-
-    } completion:^(BOOL finished) {
+	} completion:^(BOOL finished) {
 
         [UIView animateWithDuration:ANIMATION_DURATION animations:^{
             if (toPop.isAction) {
@@ -195,13 +189,13 @@ static NSMutableArray *actionStack;
             }
 
         } completion:^(BOOL finished) {
-
-            [toPop removeFromParentViewController];
+			[toPop removeFromParentViewController];
             [toPop.view removeFromSuperview];
+			
             // Remove ShadowView
             toPop.view = [[toPop.view subviews] firstObject];
 
-            if (alertStack.count < 1 && actionStack.count < 1){
+            if (alertStack.count < 1 && actionStack.count < 1) {
                 [[[[UIApplication sharedApplication] delegate] window] makeKeyAndVisible];
                 [alertWindow resignKeyWindow];
                 [alertWindow removeFromSuperview];
@@ -209,11 +203,9 @@ static NSMutableArray *actionStack;
                 alertWindow = nil;
                 actionStack = nil;
             }
-
         }];
     }];
 }
-
 
 + (void)centerView:(RPAlertController*)alert
 {
@@ -221,7 +213,7 @@ static NSMutableArray *actionStack;
     CGRect windowFrame = alertWindow.frame;
 
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication]statusBarOrientation];
-    if (UIInterfaceOrientationIsLandscape(orientation)){
+    if (UIInterfaceOrientationIsLandscape(orientation)) {
         CGFloat temp = windowFrame.size.height;
         windowFrame.size.height = windowFrame.size.width;
         windowFrame.size.width = temp;
@@ -231,14 +223,12 @@ static NSMutableArray *actionStack;
     if (alert.isAction) {
         alertFrame.origin.y = CGRectGetHeight(windowFrame) - CGRectGetHeight(alertFrame);
     }
-    else{
+    else {
         alertFrame.origin.y = (CGRectGetHeight(windowFrame) - CGRectGetHeight(alertFrame))/2 ;
     }
     alertFrame.origin.y -= CGRectGetHeight(alert.keyboardFrame) /2;
     alert.view.frame = alertFrame;
-
 }
-
 
 + (void)hideAlert:(RPAlertController*)alert isDown:(BOOL)isDown
 {
@@ -275,13 +265,11 @@ static NSMutableArray *actionStack;
     shadowView.layer.shadowOffset = CGSizeZero;
     shadowView.layer.shadowRadius = 5;
     shadowView.layer.cornerRadius = 10;
-    
     shadowView.layer.shadowOpacity = 0.4;
     
     [shadowView addSubview:alert.view];
     
     alert.view = shadowView;
 }
-
 
 @end
