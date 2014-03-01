@@ -427,12 +427,12 @@
                     [self setupMessage];
                     [self.delegate removeMessage:self forMsgStatus:nil];
 
-                    NSLog(@"send_gift result: %@", reply);
+                    //NSLog(@"send_gift result: %@", reply);
                 }
                 else {
                     [RepunchUtils showDialogWithTitle:@"Send Failed"
                                           withMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
-                    NSLog(@"send_gift error: %@", error);
+                    //NSLog(@"send_gift error: %@", error);
                 }
             }];
         }

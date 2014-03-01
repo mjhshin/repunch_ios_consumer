@@ -11,7 +11,7 @@
 
 @interface RPMessageStatus : PFObject <PFSubclassing>
 
-@property (strong, atomic, readonly) RPMessage *Message;
+@property (strong, atomic) RPMessage *Message;
 @property (strong, atomic) NSString *redeem_available;
 @property (assign, atomic) BOOL is_read;
 
