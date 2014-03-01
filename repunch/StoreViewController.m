@@ -446,14 +446,9 @@
 	
 	id reward = store.rewards[indexPath.row];
 	selectedReward = reward;
-
-	NSInteger rewardPunches = [reward[@"punches"] integerValue];
-	NSInteger rewardId = [reward[@"reward_id"] integerValue];
-	NSString *rewardPunchesString = [NSString stringWithFormat:@"%i", rewardPunches];
-	NSString *rewardIdString = [NSString stringWithFormat:@"%i", rewardId];
-	NSString *rewardName = reward[@"reward_name"];
 	
-	//NSString *punches = [NSString stringWithFormat:(rewardPunches == 1 ? @"%i Punch" :  @"%i Punches"), rewardPunches];
+	NSString *rewardName = reward[@"reward_name"];
+	NSInteger rewardPunches = [reward[@"punches"] integerValue];
 
     __weak typeof (self) weakSelf = self;
 
@@ -462,47 +457,58 @@
 												 andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
 
             if (buttonType == RedeemButton) {
-                if( ![RepunchUtils isConnectionAvailable] ) {
-                    [RepunchUtils showDefaultDropdownView:weakSelf.view];
-                    return;
-                }
-
-                NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                   patron.objectId,			@"patron_id",
-                                                   store.objectId,				@"store_id",
-                                                   patronStore.objectId,		@"patron_store_id",
-                                                   rewardName,					@"title",
-                                                   rewardIdString,				@"reward_id",
-                                                   rewardPunchesString,		@"num_punches",
-                                                   patron.full_name,			@"name",
-                                                   nil];
-
-                [PFCloud callFunctionInBackground:@"request_redeem" withParameters:functionArguments block:^(NSString *success, NSError *error) {
-
-                    if (!error) {
-                        if ([success isEqualToString:@"pending"]) {
-                            NSLog(@"function call is: %@", success);
-                            [RepunchUtils showDialogWithTitle:@"Pending"
-                                                  withMessage:@"You can only request one reward at a time. Please wait for your reward to be approved."];
-                        }
-                        else {
-                            NSLog(@"function call is: %@", success);
-                            [RepunchUtils showDialogWithTitle:@"Waiting for confirmation"
-                                                  withMessage:@"Please wait for your reward to be approved"];
-                        }
-                    }
-                    else {
-                        NSLog(@"error occurred: %@", error);
-                        [RepunchUtils showConnectionErrorDialog];
-                    }
-                }];
-                
+				[weakSelf redeemReward:reward];
             }
             else if (buttonType == GiftButton) {
                 [weakSelf gift];
             }
-            
         }];
+}
+
+- (void)redeemReward:(id)reward
+{
+	if( ![RepunchUtils isConnectionAvailable] ) {
+		[RepunchUtils showDefaultDropdownView:self.view];
+		return;
+	}
+	
+	NSInteger rewardPunches = [reward[@"punches"] integerValue];
+	NSInteger rewardId = [reward[@"reward_id"] integerValue];
+	NSString *rewardPunchesString = [NSString stringWithFormat:@"%i", rewardPunches];
+	NSString *rewardIdString = [NSString stringWithFormat:@"%i", rewardId];
+	NSString *rewardName = reward[@"reward_name"];
+	
+	NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:
+									   patron.objectId,			@"patron_id",
+									   store.objectId,			@"store_id",
+									   patronStore.objectId,	@"patron_store_id",
+									   rewardName,				@"title",
+									   rewardIdString,			@"reward_id",
+									   rewardPunchesString,		@"num_punches",
+									   patron.full_name,		@"name",
+									   nil];
+	
+	[PFCloud callFunctionInBackground:@"request_redeem"
+					   withParameters:functionArguments
+								block:^(NSString *success, NSError *error) {
+									
+									if (!error) {
+										if ([success isEqualToString:@"pending"]) {
+											NSLog(@"function call is: %@", success);
+											[RepunchUtils showDialogWithTitle:@"Pending"
+																  withMessage:@"You can only request one reward at a time. Please wait for your reward to be approved."];
+										}
+										else {
+											NSLog(@"function call is: %@", success);
+											[RepunchUtils showDialogWithTitle:@"Waiting for confirmation"
+																  withMessage:@"Please wait for your reward to be approved"];
+										}
+									}
+									else {
+										NSLog(@"error occurred: %@", error);
+										[RepunchUtils showConnectionErrorDialog];
+									}
+								}];
 }
 
 - (IBAction)callButtonAction:(id)sender
@@ -769,12 +775,16 @@
 	}
 }
 
-- (void)onFriendSelected:(FacebookFriendsViewController *)controller forFriendId:(NSString *)friendId withName:(NSString *)name
+- (void)onFriendSelected:(FacebookFriendsViewController *)controller
+			 forFriendId:(NSString *)friendId
+				withName:(NSString *)name
 {
-    [RPCustomAlertController showCreateGiftMessageAlertWithRecepient:name rewardTitle:selectedReward[@"reward_name"] andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
+    [RPCustomAlertController showCreateGiftMessageAlertWithRecepient:name
+														 rewardTitle:selectedReward[@"reward_name"]
+															andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
 
         if (buttonType == SendButton) {
-            NSNumber *punches = @([selectedReward[@"punches"] intValue]);
+            NSNumber *punches = [NSNumber numberWithInt:[selectedReward[@"punches"] intValue]];
 
             NSDictionary *inputsArgs = @{@"patron_id"        : patron.objectId,
                                          @"patron_store_id"  : patronStore.objectId,
@@ -787,29 +797,26 @@
                                          @"gift_description" : selectedReward[@"description"],
                                          @"gift_punches"     : punches};
 
-
-            [PFCloud callFunctionInBackground:@"send_gift" withParameters:inputsArgs block:^(NSString *result, NSError *error) {
+            [PFCloud callFunctionInBackground:@"send_gift"
+							   withParameters:inputsArgs
+										block:^(NSString *result, NSError *error) {
 
                 if (!error) {
 
                     if([result isEqualToString:@"insufficient"]) {
                         [RepunchUtils showDialogWithTitle:@"Sorry, not enough punches" withMessage:nil];
                     }
-
                     else {
                         NSInteger newPunchCount = patronStore.punch_count - punches.intValue;
-                        [sharedData updatePatronStore:patronStore.objectId withPunches:newPunchCount];
+                        [sharedData updatePatronStore:self.storeId withPunches:newPunchCount];
 
                         [RepunchUtils showDialogWithTitle:@"Your gift has been sent!" withMessage:nil];
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"Punch" object:self];
                     }
-                    NSLog(@"send_gift result: %@", result);
                 }
                 else {
                     [RepunchUtils showDialogWithTitle:@"Send Failed"
                                           withMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
-                    
-                    NSLog(@"send_gift error: %@", error);
                 }
             }];
         }

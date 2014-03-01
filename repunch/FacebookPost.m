@@ -7,6 +7,7 @@
 //
 
 #import "FacebookPost.h"
+#import "RPCustomAlertController.h"
 
 @implementation FacebookPost
 
@@ -22,34 +23,25 @@
 	NSString *message = [NSString stringWithFormat:
 						 @"Share this on Facebook to receive %i extra punches?", store.punches_facebook];
 	
-	SIAlertView *alert = [[SIAlertView alloc] initWithTitle:title andMessage:message];
-	
-	[alert addButtonWithTitle:@"No"
-						 type:SIAlertViewButtonTypeDefault
-					  handler:^(SIAlertView *alert) {
-						  
-		[self callCloudCode:NO
-			withPatronStore:patronStore
-				withPunches:store.punches_facebook
-			withRewardTitle:rewardTitle];
-						  
-		[alert dismissAnimated:YES];
-	}];
-	
-	
-	[alert addButtonWithTitle:@"Yes"
-						 type:SIAlertViewButtonTypeDefault
-					  handler:^(SIAlertView *alert) {
-						  
-		[self callCloudCode:YES
-			withPatronStore:patronStore
-				withPunches:store.punches_facebook
-			withRewardTitle:rewardTitle];
-						  
-		[alert dismissAnimated:YES];
-	}];
-	
-	[alert show];
+	[RPCustomAlertController showDecisionAlertWithTitle:title
+											 andMessage:message
+											   andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
+												   
+												   if (buttonType == ConfirmButton) {
+													   
+													   [self callCloudCode:YES
+														   withPatronStore:patronStore
+															   withPunches:store.punches_facebook
+														   withRewardTitle:rewardTitle];
+												   
+												   }
+												   else {
+													   [self callCloudCode:NO
+														   withPatronStore:patronStore
+															   withPunches:store.punches_facebook
+														   withRewardTitle:rewardTitle];
+												   }
+											   }];
 }
 
 + (void) callCloudCode:(BOOL)accept

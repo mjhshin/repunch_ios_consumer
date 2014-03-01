@@ -21,8 +21,8 @@ typedef void(^RPCustomAlertActionButtonBlock)(RPCustomAlertActionButton buttonTy
 + (void)showDefaultAlertWithTitle:(NSString*)title andMessage:(NSString*)message;
 
 + (void)showDecisionAlertWithTitle:(NSString*)title
-					   andMessage:(NSString*)message
-					  andBlock:(RPCustomAlertActionButtonBlock)block;
+						andMessage:(NSString*)message
+						  andBlock:(RPCustomAlertActionButtonBlock)block;
 
 + (void)showNetworkErrorAlert;
 
@@ -40,6 +40,5 @@ typedef void(^RPCustomAlertActionButtonBlock)(RPCustomAlertActionButton buttonTy
 + (void)showCreateGiftMessageAlertWithRecepient:(NSString*)recepient
 									rewardTitle:(NSString*)rewardTitle
 									   andBlock:(RPCustomAlertActionButtonBlock)block;
-
 
 @end

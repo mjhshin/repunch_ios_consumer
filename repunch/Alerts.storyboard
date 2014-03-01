@@ -90,7 +90,7 @@
         <!--Custom Alert Controller - Decision Alert-->
         <scene sceneID="s89-Vw-ZJZ">
             <objects>
-                <viewController storyboardIdentifier="DecisionAlert" title="Decision Alert" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TgM-5F-YcR" customClass="RPCustomAlertController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DecisionAlert" autoresizesArchivedViewToFullSize="NO" title="Decision Alert" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TgM-5F-YcR" customClass="RPCustomAlertController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="FRe-gW-CUO"/>
                         <viewControllerLayoutGuide type="bottom" id="hDv-77-JhF"/>
@@ -136,7 +136,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="close:" destination="uYQ-bG-ZG8" eventType="touchUpInside" id="oKj-jM-es5"/>
+                                    <action selector="close:" destination="TgM-5F-YcR" eventType="touchUpInside" id="PBb-op-8nr"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kp1-tW-kev" userLabel="YesButton">
@@ -154,7 +154,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="close:" destination="uYQ-bG-ZG8" eventType="touchUpInside" id="PAn-b7-7Fq"/>
+                                    <action selector="close:" destination="TgM-5F-YcR" eventType="touchUpInside" id="rvz-RS-khL"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oLJ-FH-0zT" userLabel="VerticalDivider">
@@ -193,6 +193,8 @@
                     <connections>
                         <outlet property="closeButton" destination="cZV-wh-xtq" id="EyI-RW-V0c"/>
                         <outlet property="confirmButton" destination="kp1-tW-kev" id="PzL-mZ-kfy"/>
+                        <outlet property="label1" destination="dv6-fH-a6I" id="WGG-sm-ZEq"/>
+                        <outlet property="titleLabel" destination="qHR-Gq-HNQ" id="1Fn-WL-AbP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gnx-CN-8eP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -790,7 +792,7 @@ You will lose all your punches!</string>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no"/>
                             </textView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="150" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ynt-Oy-Cfw" userLabel="CharCount">
                                 <rect key="frame" x="269" y="190" width="21" height="20"/>
@@ -941,7 +943,7 @@ You will lose all your punches!</string>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no"/>
                             </textView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="150" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lkv-ii-ylf" userLabel="CharCount">
                                 <rect key="frame" x="269" y="191" width="21" height="20"/>

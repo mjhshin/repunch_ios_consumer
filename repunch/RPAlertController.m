@@ -10,9 +10,6 @@
 
 #define ANIMATION_DURATION 0.3
 
-//static const UIWindowLevel UIWindowLevelORAlert = 1999.0;  // don't overlap system's alert
-//static const UIWindowLevel UIWindowLevelORAlertBackground = 1998.0; // below the alert window
-
 static UIWindow *alertWindow;
 static NSMutableArray *alertStack;
 static NSMutableArray *actionStack;
@@ -31,13 +28,6 @@ static NSMutableArray *actionStack;
     [center addObserver:self selector:@selector(didShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [center addObserver:self selector:@selector(didHidekeyboard:) name:UIKeyboardWillHideNotification object:nil];
 }
-
-/*
-- (void)dealloc
-{
-    NSLog(@"Dealloc Alert");
-}
-*/
 
 - (void)didShowKeyboard:(NSNotification*)notification
 {
@@ -138,14 +128,12 @@ static NSMutableArray *actionStack;
         [alertStack addObject:alert];
     }
 
-
     [UIView animateWithDuration:ANIMATION_DURATION  animations:^{
         if (!alert.isAction) {
             [RPAlertController hideAlert:action isDown:YES];
         }
 
     } completion:^(BOOL finished) {
-
 
         [alertWindow.rootViewController addChildViewController:alert];
         [alertWindow.rootViewController.view addSubview:alert.view];
@@ -208,7 +196,6 @@ static NSMutableArray *actionStack;
                 block();
 
             }
-
 
             if (alertStack.count < 1 && actionStack.count < 1) {
                 [[[[UIApplication sharedApplication] delegate] window] makeKeyAndVisible];

@@ -124,7 +124,7 @@
     alert.alertBlock  = block;
     alert.label1.text = recepient;
     alert.postTextView.delegate = alert;
-    alert.firstResponder = alert.postTextView;
+	[alert.postTextView becomeFirstResponder];
 
     alert.sendButton.enabled = NO;
 
@@ -142,8 +142,7 @@
     alert.label1.text = recepient;
     alert.label2.text = rewardTitle;
     alert.postTextView.delegate = alert;
-    alert.firstResponder = alert.postTextView;
-
+	[alert.postTextView becomeFirstResponder];
 
     [alert showAlert];
 }
@@ -194,7 +193,7 @@
         RPCustomAlertActionButton button = NoneButton;
         id anObject = nil;
 
-        if (sender == self.redeemButton) {
+        if (self.redeemButton == sender) {
             button = RedeemButton;
         }
         else if (self.giftButton == sender) {
