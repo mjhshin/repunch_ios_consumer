@@ -158,8 +158,9 @@
 	self.mapView.scrollEnabled = YES;
 	
 	self.expandedMapExitButton.hidden = NO;
-	self.expandedMapDirectionsButton.hidden = NO;
 	self.expandedMapStatusBar.hidden = NO;
+	
+	[self.expandedMapDirectionsButton showButton];
 }
 
 - (void)shrinkMapView
@@ -172,8 +173,9 @@
 	self.mapView.scrollEnabled = NO;
 	
 	self.expandedMapExitButton.hidden = YES;
-	self.expandedMapDirectionsButton.hidden = YES;
 	self.expandedMapStatusBar.hidden = YES;
+	
+	self.expandedMapDirectionsButton.hidden = YES; //[erhaps move to slide animation for hiding button also
 }
 
 - (void)getDirections

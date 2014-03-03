@@ -13,6 +13,7 @@
 #import "RPStore.h"
 #import "DataManager.h"
 #import "RepunchUtils.h"
+#import "RPPopupButton.h"
 
 @interface LocationDetailsViewController : UIViewController <MKMapViewDelegate, UIGestureRecognizerDelegate>
 
@@ -26,7 +27,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *callButton;
 @property (weak, nonatomic) IBOutlet UIButton *otherLocationsButton;
 @property (weak, nonatomic) IBOutlet UIButton *expandedMapExitButton;
-@property (weak, nonatomic) IBOutlet UIButton *expandedMapDirectionsButton;
+@property (weak, nonatomic) IBOutlet RPPopupButton *expandedMapDirectionsButton;
 @property (weak, nonatomic) IBOutlet UIView *expandedMapStatusBar;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapGestureRecognizer;
 @property (weak, nonatomic) IBOutlet UIView *bottomDivider;

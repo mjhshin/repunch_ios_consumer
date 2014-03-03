@@ -229,12 +229,20 @@
                         <constraint firstAttribute="trailing" secondItem="bJT-sv-bv6" secondAttribute="trailing" id="yCA-Wf-17Y"/>
                     </constraints>
                 </scrollView>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i4X-fA-F7L" userLabel="MapStatusBar">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="r31-3B-xFf"/>
+                    </constraints>
+                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QOW-CR-vrV" userLabel="MapExitButton">
-                    <rect key="frame" x="10" y="32" width="32" height="32"/>
+                    <rect key="frame" x="10" y="30" width="36" height="36"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="32" id="1hm-Ks-Ord"/>
-                        <constraint firstAttribute="height" constant="32" id="71q-mJ-j99"/>
+                        <constraint firstAttribute="width" constant="36" id="1hm-Ks-Ord"/>
+                        <constraint firstAttribute="height" constant="36" id="71q-mJ-j99"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <state key="normal" image="circular_exit_button.png"/>
@@ -242,7 +250,7 @@
                         <action selector="bigMapExitButtonAction:" destination="-1" eventType="touchUpInside" id="ReX-CD-m4O"/>
                     </connections>
                 </button>
-                <button hidden="YES" opaque="NO" alpha="0.74999999999999978" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mng-jn-pkq" userLabel="MapDirectionsButton" customClass="RPPopupButton">
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mng-jn-pkq" userLabel="MapDirectionsButton" customClass="RPPopupButton">
                     <rect key="frame" x="0.0" y="707" width="320" height="48"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
@@ -260,14 +268,6 @@
                         <action selector="bigMapDirectionsButtonAction:" destination="-1" eventType="touchUpInside" id="Ts0-gx-2Ln"/>
                     </connections>
                 </button>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i4X-fA-F7L" userLabel="MapStatusBar">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="20" id="r31-3B-xFf"/>
-                    </constraints>
-                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
@@ -276,13 +276,13 @@
                 <constraint firstItem="QOW-CR-vrV" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="10" id="6rA-oh-g7E"/>
                 <constraint firstItem="i4X-fA-F7L" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="FCE-oW-xfe"/>
                 <constraint firstAttribute="bottom" secondItem="aM2-vq-0Lv" secondAttribute="bottom" id="VvU-Hy-6dx"/>
+                <constraint firstItem="QOW-CR-vrV" firstAttribute="top" secondItem="i4X-fA-F7L" secondAttribute="bottom" constant="10" id="XTJ-Cr-tsj"/>
                 <constraint firstAttribute="trailing" secondItem="aM2-vq-0Lv" secondAttribute="trailing" id="Xiu-A5-2iR"/>
                 <constraint firstItem="Mng-jn-pkq" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="d0O-kZ-Fna"/>
                 <constraint firstAttribute="trailing" secondItem="Mng-jn-pkq" secondAttribute="trailing" id="gRL-8s-NUe"/>
                 <constraint firstItem="aM2-vq-0Lv" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="hTl-5v-cB3"/>
                 <constraint firstAttribute="bottom" secondItem="Mng-jn-pkq" secondAttribute="bottom" id="kzQ-gD-Y2L"/>
                 <constraint firstItem="aM2-vq-0Lv" firstAttribute="top" secondItem="1" secondAttribute="top" id="nCE-CQ-mga"/>
-                <constraint firstItem="QOW-CR-vrV" firstAttribute="top" secondItem="1" secondAttribute="top" constant="32" id="skK-IH-Nqb"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -297,7 +297,7 @@
         <image name="circular_exit_button.png" width="32" height="32"/>
         <image name="location_call_icon.png" width="36" height="36"/>
         <image name="location_hours_icon.png" width="36" height="36"/>
-        <image name="location_map_icon.png" width="32" height="32"/>
+        <image name="location_map_icon.png" width="36" height="36"/>
         <image name="location_others_icon.png" width="36" height="36"/>
         <image name="orange_highlighted.png" width="256" height="32"/>
     </resources>

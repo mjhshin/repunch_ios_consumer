@@ -39,7 +39,7 @@
 	self.contentView.backgroundColor = [UIColor groupTableViewBackgroundColor];
 	self.senderName.font = [RepunchUtils repunchFontWithSize:17 isBold:NO];
 	self.dateSent.font = [RepunchUtils repunchFontWithSize:14 isBold:NO];
-	self.dateSent.textColor = [UIColor darkGrayColor];
+	self.dateSent.textColor = [UIColor darkTextColor];
 }
 
 - (void)setMessageUnread

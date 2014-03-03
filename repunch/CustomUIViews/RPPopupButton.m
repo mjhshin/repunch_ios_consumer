@@ -8,8 +8,8 @@
 
 #import "RPPopupButton.h"
 
-#define ANIMATION_DELAY 0.3
-#define ANIMATION_DURATION 0.3
+#define ANIMATION_DELAY 0.15
+#define ANIMATION_DURATION 0.2
 
 @implementation RPPopupButton
 
@@ -24,11 +24,6 @@
 
 - (void)initButton
 {
-	// Slide off the screen
-	CGRect startRect = self.frame;
-	startRect.origin.y += startRect.size.height;
-	self.frame = startRect;
-	
 	self.enabled = NO;
 	self.hidden = YES;
 	
@@ -40,6 +35,10 @@
 
 - (void)showButton // Slide onto screen
 {
+	CGRect startRect = self.frame;
+	startRect.origin.y += startRect.size.height;
+	self.frame = startRect;
+	
 	self.hidden = NO;
 	
 	[UIView animateWithDuration:ANIMATION_DURATION
