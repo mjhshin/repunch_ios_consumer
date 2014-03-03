@@ -513,9 +513,12 @@
 
 - (IBAction)callButtonAction:(id)sender
 {
-	NSString *urlString = [@"telprompt://" stringByAppendingString:storeLocation.phone_number]; //TODO: must remove parantheses for URL to work!!
+    NSCharacterSet* numericSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet];
+
+    NSString *number = [[storeLocation.phone_number componentsSeparatedByCharactersInSet:numericSet] componentsJoinedByString:@""];
+
+	NSString *urlString = [@"telprompt://" stringByAppendingString:number];
 	NSURL *url = [NSURL URLWithString:urlString];
-	//NSURL *url = [NSURL URLWithString:@"telprompt://123-456-7890"];
 
 	if( [[UIApplication sharedApplication] canOpenURL:url] ) {
 		[[UIApplication sharedApplication] openURL:url];
