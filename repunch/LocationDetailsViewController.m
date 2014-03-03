@@ -218,8 +218,11 @@
 }
 
 - (IBAction)callButtonAction:(id)sender
-{	
-	NSString *urlString = [@"tel://" stringByAppendingString:storeLocation.phone_number];
+{
+    NSCharacterSet* numericSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet];
+    NSString *number = [[storeLocation.phone_number componentsSeparatedByCharactersInSet:numericSet] componentsJoinedByString:@""];
+    
+	NSString *urlString = [@"tel://" stringByAppendingString:number];
 	NSURL *url = [NSURL URLWithString:urlString];
 	
 	if( [[UIApplication sharedApplication] canOpenURL:url] ) {
