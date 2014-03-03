@@ -58,6 +58,14 @@
     [alert showAlert];
 }
 
++ (void)showPunchCodeAlertWithCode:(NSString*)punchCode
+{
+    RPCustomAlertController * alert = [RPCustomAlertController alertFromStoryboard:@"PunchCodeAlert"];
+    alert.label1.text = punchCode;
+	
+    [alert showAlert];
+}
+
 + (void)showNetworkErrorAlert
 {
     static RPCustomAlertController * alert =  nil;

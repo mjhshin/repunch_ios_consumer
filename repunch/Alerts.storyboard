@@ -614,6 +614,87 @@ You will lose all your punches!</string>
             </objects>
             <point key="canvasLocation" x="1065" y="381"/>
         </scene>
+        <!--Custom Alert Controller - Punch Code Dialog-->
+        <scene sceneID="Rod-vw-kRW">
+            <objects>
+                <viewController storyboardIdentifier="PunchCodeAlert" autoresizesArchivedViewToFullSize="NO" title="Punch Code Dialog" id="j0J-4N-g2p" customClass="RPCustomAlertController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ik6-fz-fcM"/>
+                        <viewControllerLayoutGuide type="bottom" id="0FD-dn-f5M"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Hc5-ka-hKE">
+                        <rect key="frame" x="0.0" y="0.0" width="270" height="160"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Your Punch Code" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="230" translatesAutoresizingMaskIntoConstraints="NO" id="hYb-16-ITQ" userLabel="TitleLabel">
+                                <rect key="frame" x="20" y="15" width="230" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
+                                <color key="textColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="12345" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="230" translatesAutoresizingMaskIntoConstraints="NO" id="E8F-8J-9TB" userLabel="MessageLabel">
+                                <rect key="frame" x="20" y="54" width="230" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="32"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NvB-gK-40n" userLabel="HorizontalDivider">
+                                <rect key="frame" x="0.0" y="113" width="270" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.86838503649999998" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="7eS-xj-Ski"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YKU-hz-SVX" userLabel="OkayButton">
+                                <rect key="frame" x="0.0" y="114" width="270" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="cHo-FD-95r"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
+                                <state key="normal" title="OK">
+                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" backgroundImage="orange_highlighted.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="close:" destination="j0J-4N-g2p" eventType="touchUpInside" id="JuI-sl-jku"/>
+                                    <action selector="close:" destination="uYQ-bG-ZG8" eventType="touchUpInside" id="q2n-i3-beT"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="E8F-8J-9TB" secondAttribute="trailing" constant="20" symbolic="YES" id="Dlq-Hw-PRw"/>
+                            <constraint firstItem="NvB-gK-40n" firstAttribute="top" secondItem="E8F-8J-9TB" secondAttribute="bottom" constant="15" id="FoK-fj-IJr"/>
+                            <constraint firstAttribute="trailing" secondItem="hYb-16-ITQ" secondAttribute="trailing" constant="20" symbolic="YES" id="JBB-Ec-kcZ"/>
+                            <constraint firstItem="E8F-8J-9TB" firstAttribute="top" secondItem="hYb-16-ITQ" secondAttribute="bottom" constant="15" id="QxU-3u-hfT"/>
+                            <constraint firstItem="YKU-hz-SVX" firstAttribute="leading" secondItem="Hc5-ka-hKE" secondAttribute="leading" id="SWj-Hp-oCa"/>
+                            <constraint firstItem="E8F-8J-9TB" firstAttribute="leading" secondItem="Hc5-ka-hKE" secondAttribute="leading" constant="20" symbolic="YES" id="XKv-jL-Nxc"/>
+                            <constraint firstItem="hYb-16-ITQ" firstAttribute="leading" secondItem="Hc5-ka-hKE" secondAttribute="leading" constant="20" symbolic="YES" id="ash-ID-2vf"/>
+                            <constraint firstItem="NvB-gK-40n" firstAttribute="leading" secondItem="Hc5-ka-hKE" secondAttribute="leading" id="dbK-yX-9Bh"/>
+                            <constraint firstItem="YKU-hz-SVX" firstAttribute="top" secondItem="NvB-gK-40n" secondAttribute="bottom" id="r8K-XZ-ca4"/>
+                            <constraint firstItem="hYb-16-ITQ" firstAttribute="top" secondItem="Hc5-ka-hKE" secondAttribute="top" constant="15" id="ue6-Qr-Hdk"/>
+                            <constraint firstAttribute="trailing" secondItem="NvB-gK-40n" secondAttribute="trailing" id="yMm-vr-cFB"/>
+                            <constraint firstAttribute="trailing" secondItem="YKU-hz-SVX" secondAttribute="trailing" id="yl2-Ll-s2u"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="closeButton" destination="YKU-hz-SVX" id="qjS-G2-mIf"/>
+                        <outlet property="label1" destination="E8F-8J-9TB" id="6Rc-P2-zF5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pdw-K4-FnD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1070" y="751"/>
+        </scene>
         <!--Custom Alert Controller - Network Error Dialog-->
         <scene sceneID="MA5-8e-7XV">
             <objects>

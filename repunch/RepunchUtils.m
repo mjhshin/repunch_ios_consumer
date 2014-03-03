@@ -53,7 +53,7 @@
 
 + (void)showPunchCode:(NSString *)punchCode
 {
-    [RPCustomAlertController showDefaultAlertWithTitle:@"Your Punch Code" andMessage:punchCode];
+    [RPCustomAlertController showPunchCodeAlertWithCode:punchCode];
 }
 
 + (void)showNavigationBarDropdownView:(UIView *)parentView withMessage:(NSString *)message
@@ -137,10 +137,10 @@
 + (CAGradientLayer *)blackGradient
 {
 	
-    UIColor *darkBlack = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.4];
-    UIColor *lightBlack = [UIColor colorWithRed:0.0  green:0.0 blue:0.0 alpha:0.0];
+    UIColor *lightBlack = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
+    UIColor *darkBlack = [UIColor colorWithRed:0.0  green:0.0 blue:0.0 alpha:0.0];
 	
-    NSArray *colors = [NSArray arrayWithObjects:(id)lightBlack.CGColor, darkBlack.CGColor, nil];
+    NSArray *colors = [NSArray arrayWithObjects:(id)darkBlack.CGColor, lightBlack.CGColor, nil];
 	
     CAGradientLayer *gradientLayer = [CAGradientLayer layer];
     gradientLayer.colors = colors;

@@ -20,6 +20,8 @@ typedef void(^RPCustomAlertActionButtonBlock)(RPCustomAlertActionButton buttonTy
 
 + (void)showDefaultAlertWithTitle:(NSString*)title andMessage:(NSString*)message;
 
++ (void)showPunchCodeAlertWithCode:(NSString*)punchCode;
+
 + (void)showDecisionAlertWithTitle:(NSString*)title
 						andMessage:(NSString*)message
 						  andBlock:(RPCustomAlertActionButtonBlock)block;
