@@ -207,4 +207,20 @@
     return newImage;
 }
 
++ (void)callPhoneNumber:(NSString *)phoneNumber
+{
+	NSCharacterSet* numericSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet];
+    NSString *number = [[phoneNumber componentsSeparatedByCharactersInSet:numericSet] componentsJoinedByString:@""];
+    
+	NSString *urlString = [@"tel://" stringByAppendingString:number];
+	NSURL *url = [NSURL URLWithString:urlString];
+	
+	if( [[UIApplication sharedApplication] canOpenURL:url] ) {
+		[[UIApplication sharedApplication] openURL:url];
+	}
+	else {
+		[RepunchUtils showDialogWithTitle:@"This device does not support phone calls" withMessage:nil];
+	}
+}
+
 @end

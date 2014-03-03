@@ -513,19 +513,7 @@
 
 - (IBAction)callButtonAction:(id)sender
 {
-    NSCharacterSet* numericSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet];
-
-    NSString *number = [[storeLocation.phone_number componentsSeparatedByCharactersInSet:numericSet] componentsJoinedByString:@""];
-
-	NSString *urlString = [@"telprompt://" stringByAppendingString:number];
-	NSURL *url = [NSURL URLWithString:urlString];
-
-	if( [[UIApplication sharedApplication] canOpenURL:url] ) {
-		[[UIApplication sharedApplication] openURL:url];
-	}
-	else {
-		[RepunchUtils showDialogWithTitle:@"This device does not support phone calls" withMessage:nil];
-	}
+    [RepunchUtils callPhoneNumber:storeLocation.phone_number];
 }
 
 - (IBAction)mapButtonAction:(id)sender

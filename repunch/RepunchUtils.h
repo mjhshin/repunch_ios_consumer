@@ -33,4 +33,6 @@
 
 + (UIImage *)imageScaledForThumbnail:(UIImage *)image;
 
++ (void)callPhoneNumber:(NSString *)phoneNumber;
+
 @end
