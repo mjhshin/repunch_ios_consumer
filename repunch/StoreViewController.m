@@ -745,16 +745,9 @@
         [query includeKey:@"Store.store_locations"];
 		[query includeKey:@"FacebookPost"];
 		[query getObjectInBackgroundWithId:patronStore.objectId block:^(PFObject *result, NSError *error) {
-<<<<<<< HEAD
 
-
-
-			 if(!error)
-			 {
-=======
 			
 			 if(!error) {
->>>>>>> FETCH_HEAD
 				 patronStore = (RPPatronStore *)result;
 				 store = patronStore.Store;
 				 [sharedData addPatronStore:patronStore forKey:self.storeId];
@@ -775,17 +768,10 @@
 	else
 	{
 		PFQuery *query = [RPStore query];
-<<<<<<< HEAD
-		[query getObjectInBackgroundWithId:self.storeId block:^(PFObject *result, NSError *error)
-		{
 
-			 if(!error)
-			 {
-=======
 		[query getObjectInBackgroundWithId:self.storeId block:^(PFObject *result, NSError *error) {
 			 
 			if(!error) {
->>>>>>> FETCH_HEAD
 				 store = (RPStore *)result;
 				 [sharedData addStore:store];
 				 [self setStoreInformation];
