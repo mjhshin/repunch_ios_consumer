@@ -12,6 +12,8 @@
 		202F1DFC18523DC500495BDF /* RPStoreHours.m in Sources */ = {isa = PBXBuildFile; fileRef = 202F1DF718523DC500495BDF /* RPStoreHours.m */; };
 		204D4FB218B6C508001B9560 /* IncomingMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 204D4FB018B6C508001B9560 /* IncomingMessageViewController.xib */; };
 		207AA96A181195C300E73B2E /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2027286D181031E4004BD1A6 /* Parse.framework */; };
+		2099187A18C65290002B6C7E /* RPSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 2099187718C65290002B6C7E /* RPSpinner.m */; };
+		2099187B18C65290002B6C7E /* RPReloadControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 2099187918C65290002B6C7E /* RPReloadControl.m */; };
 		20E8609B18BBB686007DB153 /* RPAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20E8609818BBB686007DB153 /* RPAlertController.m */; };
 		20E8609C18BBB686007DB153 /* RPCustomAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20E8609A18BBB686007DB153 /* RPCustomAlertController.m */; };
 		20E860A518BBBD25007DB153 /* Alerts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20E860A418BBBD25007DB153 /* Alerts.storyboard */; };
@@ -222,6 +224,10 @@
 		202F1DF618523DC500495BDF /* RPStoreHours.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPStoreHours.h; sourceTree = "<group>"; };
 		202F1DF718523DC500495BDF /* RPStoreHours.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPStoreHours.m; sourceTree = "<group>"; };
 		204D4FB018B6C508001B9560 /* IncomingMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IncomingMessageViewController.xib; path = repunch/IncomingMessageViewController.xib; sourceTree = SOURCE_ROOT; };
+		2099187618C65290002B6C7E /* RPSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPSpinner.h; sourceTree = "<group>"; };
+		2099187718C65290002B6C7E /* RPSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPSpinner.m; sourceTree = "<group>"; };
+		2099187818C65290002B6C7E /* RPReloadControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPReloadControl.h; sourceTree = "<group>"; };
+		2099187918C65290002B6C7E /* RPReloadControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPReloadControl.m; sourceTree = "<group>"; };
 		20E8609718BBB686007DB153 /* RPAlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPAlertController.h; sourceTree = "<group>"; };
 		20E8609818BBB686007DB153 /* RPAlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPAlertController.m; sourceTree = "<group>"; };
 		20E8609918BBB686007DB153 /* RPCustomAlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPCustomAlertController.h; sourceTree = "<group>"; };
@@ -535,6 +541,17 @@
 			name = Parse;
 			sourceTree = "<group>";
 		};
+		2099187518C6523F002B6C7E /* Custom Indicator */ = {
+			isa = PBXGroup;
+			children = (
+				2099187618C65290002B6C7E /* RPSpinner.h */,
+				2099187718C65290002B6C7E /* RPSpinner.m */,
+				2099187818C65290002B6C7E /* RPReloadControl.h */,
+				2099187918C65290002B6C7E /* RPReloadControl.m */,
+			);
+			name = "Custom Indicator";
+			sourceTree = "<group>";
+		};
 		20E8609618BBB5E6007DB153 /* Alert */ = {
 			isa = PBXGroup;
 			children = (
@@ -599,6 +616,7 @@
 		EE04ABCF181AF26800DDA5D0 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				2099187518C6523F002B6C7E /* Custom Indicator */,
 				20E8609618BBB5E6007DB153 /* Alert */,
 				EE8D702F18BBB15A00ADE0DB /* Inbox */,
 				EE8D702E18BBB14400ADE0DB /* FacebookFriends */,
@@ -1201,6 +1219,7 @@
 				EE93163918AACA5F00ECEABF /* RPFacebookPost.m in Sources */,
 				EE04ABD8181EFAC100DDA5D0 /* ParseManager.m in Sources */,
 				EE93163318AAC51000ECEABF /* RPMessageStatus.m in Sources */,
+				2099187B18C65290002B6C7E /* RPReloadControl.m in Sources */,
 				EE9D4C7E17A83F4B005E0CC5 /* InboxViewController.m in Sources */,
 				EE9D4C8017A83F4B005E0CC5 /* LandingViewController.m in Sources */,
 				EE9D4C8217A83F4B005E0CC5 /* IncomingMessageViewController.m in Sources */,
@@ -1232,6 +1251,7 @@
 				EEE4D27218A5AE5F00A5EC25 /* RPPatronStore.m in Sources */,
 				EEA181B717CC499C00553336 /* RepunchUtils.m in Sources */,
 				202F1DFB18523DC500495BDF /* RPStore.m in Sources */,
+				2099187A18C65290002B6C7E /* RPSpinner.m in Sources */,
 				EEB75A9218722D0800AA4F89 /* LocationDetailsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

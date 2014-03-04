@@ -9,8 +9,13 @@
 #import "LocationsViewController.h"
 #import "LocationDetailsViewController.h"
 #import "RPStore.h"
+#import "RPReloadControl.h"
 
 #import "RPCustomAlertController.h"
+
+@interface StoreViewController ()
+@property (strong, nonatomic) RPReloadControl *reloadControl;
+@end
 
 @implementation StoreViewController
 {
@@ -61,6 +66,7 @@
 	sharedData = [DataManager getSharedInstance];
 	patron = [sharedData patron];
 	store = [sharedData getStore:self.storeId];
+    
 	
 	if(self.storeLocationId != nil) {
 		storeLocation = [sharedData getStoreLocation:self.storeLocationId];
@@ -86,10 +92,21 @@
 	
 	self.tableView.dataSource = self;
     self.tableView.delegate = self;
-	
+
+
 	[self setStoreInformation];
 	[self setupTableViewHeader];
 	[self checkPatronStore];
+
+
+    self.reloadControl = [[RPReloadControl alloc] initWithTableView:self.tableView andImagedNamed:@"app_icon_29x29.png" isStore:YES];
+
+    __weak typeof (self)weakSelf = self;
+
+    self.reloadControl.handler = ^(){
+        [weakSelf.reloadControl endRefreshing];
+    };
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -698,6 +715,7 @@
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
 		[RepunchUtils showDefaultDropdownView:self.view];
+
 		return;
 	}
 	
@@ -708,7 +726,9 @@
         [query includeKey:@"Store.store_locations"];
 		[query includeKey:@"FacebookPost"];
 		[query getObjectInBackgroundWithId:patronStore.objectId block:^(PFObject *result, NSError *error) {
-			
+
+
+
 			 if(!error)
 			 {
 				 patronStore = (RPPatronStore *)result;
@@ -734,6 +754,7 @@
 		PFQuery *query = [RPStore query];
 		[query getObjectInBackgroundWithId:self.storeId block:^(PFObject *result, NSError *error)
 		{
+
 			 if(!error)
 			 {
 				 store = (RPStore *)result;
