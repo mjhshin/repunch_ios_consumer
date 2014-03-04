@@ -20,7 +20,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *redeemButton;
 @property (weak, nonatomic) IBOutlet UIButton *giftButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
-@property (weak, nonatomic) IBOutlet UIButton *sendButton;
 @property (weak, nonatomic) IBOutlet UIButton *confirmButton;
 @property (weak, nonatomic) IBOutlet UITextView *postTextView;
 @property (weak, nonatomic) IBOutlet UILabel *postCharCount;
@@ -78,7 +77,7 @@
     [alert showAlert];
 }
 
-+ (void)showRedeemAlertWithTitle:(NSString*)title
++ (void) showRedeemAlertWithTitle:(NSString*)title
 						 punches:(NSInteger)punches
 						andBlock:(RPCustomAlertActionButtonBlock)block
 {
@@ -198,34 +197,36 @@
 
 - (IBAction)close:(UIButton *)sender
 {
-    [self hideAlertWithBlock:^{
-        
-        RPCustomAlertActionButton button = NoneButton;
-        id anObject = nil;
-
-        if (self.redeemButton == sender) {
-            button = RedeemButton;
-        }
-        else if (self.giftButton == sender) {
-            button = GiftButton;
-        }
-        else if (self.deleteButton == sender) {
-            button = DeleteButton;
-        }
-        else if (self.sendButton == sender) {
-            button = SendButton;
-            anObject = self.postTextView.text;
-        }
-        else if (self.confirmButton == sender) {
-            button = ConfirmButton;
-        }
-        
-        if (self.alertBlock) {
-            self.alertBlock(button, anObject);
-        }
-
-    }];
+    [self hideAlertWithBlock:nil];
 }
+
+- (IBAction)actionButton:(UIButton *)sender
+{
+    RPCustomAlertActionButton button = NoneButton;
+    id anObject = nil;
+
+    if (self.redeemButton == sender) {
+        button = RedeemButton;
+    }
+    else if (self.giftButton == sender) {
+        button = GiftButton;
+    }
+    else if (self.deleteButton == sender) {
+        button = DeleteButton;
+    }
+    else if (self.sendButton == sender) {
+        button = SendButton;
+        anObject = self.postTextView.text;
+    }
+    else if (self.confirmButton == sender) {
+        button = ConfirmButton;
+    }
+
+    if (self.alertBlock) {
+        self.alertBlock(self, button, anObject);
+    }
+}
+
 
 + (CGRect)frameForViewWithInitialFrame:(CGRect)viewInitialFrame
 					 withDynamicLabels:(NSArray*)labels

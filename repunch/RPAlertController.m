@@ -123,6 +123,7 @@ static NSMutableArray *actionStack;
 
     RPAlertController *action = [actionStack firstObject];
     RPAlertController *lastAlert = [alertStack lastObject];
+    [lastAlert.view endEditing:YES];
 
     if (!alert.isAction) {
         [alertStack addObject:alert];
@@ -181,6 +182,7 @@ static NSMutableArray *actionStack;
 	} completion:^(BOOL finished) {
 
         [UIView animateWithDuration:ANIMATION_DURATION animations:^{
+
             if (toPop.isAction) {
                 [RPAlertController centerView:toDisplay];
             }
@@ -190,6 +192,7 @@ static NSMutableArray *actionStack;
 			[toPop removeFromParentViewController];
             [toPop.view removeFromSuperview];
             [toPop.view endEditing:YES];
+            [toDisplay.firstResponder becomeFirstResponder];
 
             toPop.view = [[toPop.view subviews] firstObject];
             if (block) {
@@ -269,6 +272,10 @@ static NSMutableArray *actionStack;
     }
     alert.view.frame = alertFrame;
 }
+
+
+
+
 
 + (void) addShadowToAlert:(RPAlertController*)alert
 {

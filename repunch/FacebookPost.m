@@ -23,25 +23,25 @@
 	NSString *message = [NSString stringWithFormat:
 						 @"Share this on Facebook to receive %i extra punches?", store.punches_facebook];
 	
-	[RPCustomAlertController showDecisionAlertWithTitle:title
-											 andMessage:message
-											   andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
-												   
-												   if (buttonType == ConfirmButton) {
-													   
-													   [self callCloudCode:YES
-														   withPatronStore:patronStore
-															   withPunches:store.punches_facebook
-														   withRewardTitle:rewardTitle];
-												   
-												   }
-												   else {
-													   [self callCloudCode:NO
-														   withPatronStore:patronStore
-															   withPunches:store.punches_facebook
-														   withRewardTitle:rewardTitle];
-												   }
-											   }];
+	[RPCustomAlertController showDecisionAlertWithTitle:title andMessage:message andBlock:^(RPCustomAlertController *alert, RPCustomAlertActionButton buttonType, id anObject) {
+
+        [alert hideAlertWithBlock:^{
+            if (buttonType == ConfirmButton) {
+
+                [self callCloudCode:YES
+                    withPatronStore:patronStore
+                        withPunches:store.punches_facebook
+                    withRewardTitle:rewardTitle];
+
+            }
+            else {
+                [self callCloudCode:NO
+                    withPatronStore:patronStore
+                        withPunches:store.punches_facebook
+                    withRewardTitle:rewardTitle];
+            }
+        }];
+    }];
 }
 
 + (void) callCloudCode:(BOOL)accept

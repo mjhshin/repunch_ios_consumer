@@ -452,16 +452,16 @@
 
     __weak typeof (self) weakSelf = self;
 
-        [RPCustomAlertController showRedeemAlertWithTitle:rewardName
-												  punches:rewardPunches
-												 andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
+        [RPCustomAlertController showRedeemAlertWithTitle:rewardName punches:rewardPunches andBlock:^(RPCustomAlertController *alert, RPCustomAlertActionButton buttonType, id anObject) {
 
-            if (buttonType == RedeemButton) {
-				[weakSelf redeemReward:reward];
-            }
-            else if (buttonType == GiftButton) {
-                [weakSelf gift];
-            }
+            [alert hideAlertWithBlock:^{
+                if (buttonType == RedeemButton) {
+                    [weakSelf redeemReward:reward];
+                }
+                else if (buttonType == GiftButton) {
+                    [weakSelf gift];
+                }
+            }];
         }];
 }
 
@@ -550,33 +550,37 @@
 		return;
 	}
 
-
-    [RPCustomAlertController showCreateMessageAlertWithRecepient:store.store_name andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
+    [RPCustomAlertController showCreateMessageAlertWithRecepient:store.store_name andBlock:^(RPCustomAlertController *alert, RPCustomAlertActionButton buttonType, id anObject) {
 
         if (buttonType == SendButton) {
-            NSLog(@"%@", anObject);
 
+            [alert.spinner startAnimating];
+            alert.sendButton.hidden = YES;
 
-            NSDictionary *inputsArgs = @{@"patron_id": patron.objectId,
-                                        @"store_id": store.objectId,
-                                        @"body": anObject,
-                                        @"sender_name": patron.full_name,
-                                        @"subject": @"Feedback"};
-
+                NSDictionary *inputsArgs = @{@"patron_id": patron.objectId,
+                                             @"store_id": store.objectId,
+                                             @"body": anObject,
+                                             @"sender_name": patron.full_name,
+                                             @"subject": @"Feedback"};
 
             [PFCloud callFunctionInBackground:@"send_feedback" withParameters:inputsArgs block:^(NSString *result, NSError *error){
 
-                if (!error) {
-                    [RepunchUtils showDialogWithTitle:store.store_name withMessage:@"Thanks for your feedback!"];
-                    NSLog(@"send_feedback result: %@", result);
-                }
-                else {
-                    [RepunchUtils showDialogWithTitle:@"Send Failed" withMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
-                    NSLog(@"send_feedback error: %@", error);
-                }
+                [alert.spinner startAnimating];
+                alert.sendButton.hidden = NO;
+
+                [alert hideAlertWithBlock:^{
+                    if (!error) {
+                        [RepunchUtils showDialogWithTitle:store.store_name withMessage:@"Thanks for your feedback!"];
+                        NSLog(@"send_feedback result: %@", result);
+                    }
+                    else {
+                        [RepunchUtils showDialogWithTitle:@"Send Failed" withMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
+                        NSLog(@"send_feedback error: %@", error);
+                    }
+                }];
+
             }];
         }
-
     }];
 
 }
@@ -644,10 +648,13 @@
 - (void)showDeleteStoreDialog
 {
     __weak typeof(self) weakSelf = self;
-    [RPCustomAlertController showDeleteMyPlaceAlertWithBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
+    [RPCustomAlertController showDeleteMyPlaceAlertWithBlock:^(RPAlertController* alert, RPCustomAlertActionButton buttonType, id anObject) {
 
         if (buttonType == DeleteButton) {
-            [weakSelf deleteStore];
+            [alert hideAlertWithBlock:^{
+                [weakSelf deleteStore];
+
+            }];
         }
     }];
 }
@@ -770,11 +777,12 @@
 			 forFriendId:(NSString *)friendId
 				withName:(NSString *)name
 {
-    [RPCustomAlertController showCreateGiftMessageAlertWithRecepient:name
-														 rewardTitle:selectedReward[@"reward_name"]
-															andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
+    [RPCustomAlertController showCreateGiftMessageAlertWithRecepient:name rewardTitle:selectedReward[@"reward_name"] andBlock:^(RPCustomAlertController *alert, RPCustomAlertActionButton buttonType, id anObject) {
 
         if (buttonType == SendButton) {
+            [alert.spinner startAnimating];
+            alert.sendButton.hidden = YES;
+
             NSNumber *punches = [NSNumber numberWithInt:[selectedReward[@"punches"] intValue]];
 
             NSDictionary *inputsArgs = @{@"patron_id"        : patron.objectId,
@@ -788,27 +796,32 @@
                                          @"gift_description" : selectedReward[@"description"],
                                          @"gift_punches"     : punches};
 
-            [PFCloud callFunctionInBackground:@"send_gift"
-							   withParameters:inputsArgs
-										block:^(NSString *result, NSError *error) {
+            [PFCloud callFunctionInBackground:@"send_gift"  withParameters:inputsArgs block:^(NSString *result, NSError *error) {
 
-                if (!error) {
+                [alert.spinner stopAnimating];
+                alert.sendButton.hidden = NO;
 
-                    if([result isEqualToString:@"insufficient"]) {
-                        [RepunchUtils showDialogWithTitle:@"Sorry, not enough punches" withMessage:nil];
+
+                [alert hideAlertWithBlock:^{
+                    if (!error) {
+
+                        if([result isEqualToString:@"insufficient"]) {
+                            [RepunchUtils showDialogWithTitle:@"Sorry, not enough punches" withMessage:nil];
+                        }
+                        else {
+                            NSInteger newPunchCount = patronStore.punch_count - punches.intValue;
+                            [sharedData updatePatronStore:self.storeId withPunches:newPunchCount];
+
+                            [RepunchUtils showDialogWithTitle:@"Your gift has been sent!" withMessage:nil];
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"Punch" object:self];
+                        }
                     }
                     else {
-                        NSInteger newPunchCount = patronStore.punch_count - punches.intValue;
-                        [sharedData updatePatronStore:self.storeId withPunches:newPunchCount];
-
-                        [RepunchUtils showDialogWithTitle:@"Your gift has been sent!" withMessage:nil];
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"Punch" object:self];
+                        [RepunchUtils showDialogWithTitle:@"Send Failed"
+                                              withMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
                     }
-                }
-                else {
-                    [RepunchUtils showDialogWithTitle:@"Send Failed"
-                                          withMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
-                }
+                }];
+                
             }];
         }
     }];

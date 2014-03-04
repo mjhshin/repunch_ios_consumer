@@ -154,7 +154,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="close:" destination="TgM-5F-YcR" eventType="touchUpInside" id="rvz-RS-khL"/>
+                                    <action selector="actionButton:" destination="TgM-5F-YcR" eventType="touchUpInside" id="RQ9-Us-YGU"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oLJ-FH-0zT" userLabel="VerticalDivider">
@@ -259,7 +259,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="close:" destination="piL-fp-EGp" eventType="touchUpInside" id="bpc-ZW-aLH"/>
+                                    <action selector="actionButton:" destination="piL-fp-EGp" eventType="touchUpInside" id="gTa-N4-Zma"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aAE-qx-ezK" userLabel="CancelButton">
@@ -369,7 +369,7 @@ You will lose all your punches!</string>
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="close:" destination="FM8-3G-Vn1" eventType="touchUpInside" id="yb4-Ws-LH2"/>
+                                    <action selector="actionButton:" destination="FM8-3G-Vn1" eventType="touchUpInside" id="qRI-se-oru"/>
                                 </connections>
                             </button>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FUh-7r-k8H" userLabel="HorizontalDivider">
@@ -521,7 +521,7 @@ You will lose all your punches!</string>
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="close:" destination="l1j-QX-BTh" eventType="touchUpInside" id="dMS-R6-ndP"/>
+                                    <action selector="actionButton:" destination="l1j-QX-BTh" eventType="touchUpInside" id="8DE-H4-YZM"/>
                                 </connections>
                             </button>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bUh-Ca-zuc" userLabel="HorizontalDivider2">
@@ -548,7 +548,7 @@ You will lose all your punches!</string>
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="close:" destination="l1j-QX-BTh" eventType="touchUpInside" id="OAj-e8-k4I"/>
+                                    <action selector="actionButton:" destination="l1j-QX-BTh" eventType="touchUpInside" id="G6w-pq-bIe"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fm5-50-bxF" userLabel="CancelButton">
@@ -664,7 +664,6 @@ You will lose all your punches!</string>
                                 </state>
                                 <connections>
                                     <action selector="close:" destination="j0J-4N-g2p" eventType="touchUpInside" id="JuI-sl-jku"/>
-                                    <action selector="close:" destination="uYQ-bG-ZG8" eventType="touchUpInside" id="q2n-i3-beT"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -808,7 +807,7 @@ You will lose all your punches!</string>
                                             <color key="titleColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="close:" destination="LdT-hG-yr2" eventType="touchUpInside" id="qXY-qm-fMp"/>
+                                            <action selector="actionButton:" destination="LdT-hG-yr2" eventType="touchUpInside" id="mlR-4D-6PI"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EyO-Id-Bmv" userLabel="ExitButton">
@@ -833,14 +832,21 @@ You will lose all your punches!</string>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="FUk-Nz-MoF">
+                                        <rect key="frame" x="262" y="12" width="20" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="centerY" secondItem="tgf-hV-tD5" secondAttribute="centerY" id="2BY-Yq-uGu"/>
+                                    <constraint firstItem="tgf-hV-tD5" firstAttribute="centerY" secondItem="FUk-Nz-MoF" secondAttribute="centerY" id="9ke-ad-gyg"/>
                                     <constraint firstAttribute="centerY" secondItem="EyO-Id-Bmv" secondAttribute="centerY" id="KHI-Tk-X36"/>
                                     <constraint firstAttribute="height" constant="44" id="NLt-aa-Tht"/>
                                     <constraint firstAttribute="centerY" secondItem="riP-46-mLY" secondAttribute="centerY" id="Nyv-EC-AT1"/>
                                     <constraint firstAttribute="centerX" secondItem="riP-46-mLY" secondAttribute="centerX" id="Xyw-fP-DUe"/>
+                                    <constraint firstItem="tgf-hV-tD5" firstAttribute="centerX" secondItem="FUk-Nz-MoF" secondAttribute="centerX" id="eeU-e6-bR7"/>
                                     <constraint firstItem="EyO-Id-Bmv" firstAttribute="leading" secondItem="1pz-0D-hk5" secondAttribute="leading" constant="8" id="gaU-Kj-Esg"/>
                                     <constraint firstAttribute="trailing" secondItem="tgf-hV-tD5" secondAttribute="trailing" constant="8" id="mm9-uf-ho1"/>
                                 </constraints>
@@ -917,6 +923,7 @@ You will lose all your punches!</string>
                         <outlet property="postCharCount" destination="ynt-Oy-Cfw" id="ogU-Oj-rq1"/>
                         <outlet property="postTextView" destination="RZz-aG-Haw" id="xU4-Ll-JjC"/>
                         <outlet property="sendButton" destination="tgf-hV-tD5" id="0dA-xY-8Tr"/>
+                        <outlet property="spinner" destination="FUk-Nz-MoF" id="kFC-Ak-LgJ"/>
                         <outlet property="titleLabel" destination="riP-46-mLY" id="IhW-KN-X6Q"/>
                     </connections>
                 </viewController>
@@ -959,7 +966,7 @@ You will lose all your punches!</string>
                                             <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="close:" destination="Q7z-kX-hZk" eventType="touchUpInside" id="Xxc-By-8Sz"/>
+                                            <action selector="actionButton:" destination="Q7z-kX-hZk" eventType="touchUpInside" id="aCX-VS-lXq"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gIz-ze-Lj8" userLabel="ExitButton">
@@ -984,10 +991,17 @@ You will lose all your punches!</string>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="xBY-l6-1kh">
+                                        <rect key="frame" x="262" y="12" width="20" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="gIz-ze-Lj8" firstAttribute="leading" secondItem="Aee-yg-3BK" secondAttribute="leading" constant="8" id="03r-FZ-Kij"/>
+                                    <constraint firstItem="qEf-S2-YBE" firstAttribute="centerX" secondItem="xBY-l6-1kh" secondAttribute="centerX" id="J45-1i-cI0"/>
+                                    <constraint firstItem="qEf-S2-YBE" firstAttribute="centerY" secondItem="xBY-l6-1kh" secondAttribute="centerY" id="cGB-t8-nZo"/>
                                     <constraint firstAttribute="centerY" secondItem="gIz-ze-Lj8" secondAttribute="centerY" id="cPj-xQ-cQ4"/>
                                     <constraint firstAttribute="centerX" secondItem="w21-Hr-jgF" secondAttribute="centerX" id="dAH-nt-eJa"/>
                                     <constraint firstAttribute="height" constant="44" id="kMk-eH-3n9"/>
@@ -1019,15 +1033,15 @@ You will lose all your punches!</string>
                                     <constraint firstAttribute="height" constant="1" id="dxN-zV-Yeb"/>
                                 </constraints>
                             </view>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mHG-Na-WEX">
-                                <rect key="frame" x="10" y="94" width="280" height="89"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mHG-Na-WEX">
+                                <rect key="frame" x="10" y="94" width="280" height="92"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no"/>
                             </textView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="255" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lkv-ii-ylf" userLabel="CharCount">
-                                <rect key="frame" x="269" y="191" width="21" height="20"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="255" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lkv-ii-ylf" userLabel="CharCount">
+                                <rect key="frame" x="269" y="194" width="21" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="kfz-iP-Emd"/>
@@ -1036,8 +1050,8 @@ You will lose all your punches!</string>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5pB-vK-YKw" userLabel="Divider1">
-                                <rect key="frame" x="0.0" y="219" width="300" height="1"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5pB-vK-YKw" userLabel="Divider1">
+                                <rect key="frame" x="0.0" y="222" width="300" height="1"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.86838503649999998" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -1069,7 +1083,7 @@ You will lose all your punches!</string>
                             <constraint firstItem="1dq-1R-JiQ" firstAttribute="leading" secondItem="2Te-Cv-Wns" secondAttribute="leading" constant="10" id="IDJ-qd-HME"/>
                             <constraint firstAttribute="trailing" secondItem="6ov-pF-gXD" secondAttribute="trailing" constant="15" id="IyN-YQ-6oe"/>
                             <constraint firstAttribute="trailing" secondItem="5pB-vK-YKw" secondAttribute="trailing" id="Ufd-zy-fKR"/>
-                            <constraint firstItem="6ov-pF-gXD" firstAttribute="top" relation="greaterThanOrEqual" secondItem="5pB-vK-YKw" secondAttribute="bottom" constant="5" id="Urx-Yt-UmH"/>
+                            <constraint firstItem="6ov-pF-gXD" firstAttribute="top" secondItem="5pB-vK-YKw" secondAttribute="bottom" constant="5" id="Urx-Yt-UmH"/>
                             <constraint firstAttribute="trailing" secondItem="mHG-Na-WEX" secondAttribute="trailing" constant="10" id="UwE-go-W1u"/>
                             <constraint firstItem="5Ix-ff-1jb" firstAttribute="leading" secondItem="2Te-Cv-Wns" secondAttribute="leading" constant="10" id="W2J-0y-9bH"/>
                             <constraint firstItem="6ov-pF-gXD" firstAttribute="leading" secondItem="Nzz-2h-39X" secondAttribute="trailing" constant="15" id="Wh5-AT-jqi"/>
@@ -1101,6 +1115,7 @@ You will lose all your punches!</string>
                         <outlet property="postCharCount" destination="lkv-ii-ylf" id="Sod-gB-cwX"/>
                         <outlet property="postTextView" destination="mHG-Na-WEX" id="zlR-8Q-Hwk"/>
                         <outlet property="sendButton" destination="qEf-S2-YBE" id="uv6-tb-VGr"/>
+                        <outlet property="spinner" destination="xBY-l6-1kh" id="NYr-oy-bQW"/>
                         <outlet property="titleLabel" destination="w21-Hr-jgF" id="dHv-mJ-Qkm"/>
                     </connections>
                 </viewController>

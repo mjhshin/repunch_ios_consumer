@@ -404,10 +404,13 @@
 		return;
 	}
 
-    [RPCustomAlertController showCreateGiftMessageAlertWithRecepient:message.sender_name
-														 rewardTitle:message.gift_title
-															andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
+    // If alert button was close then it will close automatically, if not then send message then close, then execute code
 
+    [RPCustomAlertController showCreateGiftMessageAlertWithRecepient:message.sender_name rewardTitle:message.gift_title andBlock:^(RPCustomAlertController *alert ,RPCustomAlertActionButton buttonType, id anObject) {
+
+
+        alert.sendButton.hidden = YES;
+        [alert.spinner startAnimating];
         if (buttonType == SendButton) {
 
 
@@ -415,33 +418,37 @@
                                          @"sender_name": patron.full_name,
                                          @"body": anObject};
 
-            [PFCloud callFunctionInBackground:@"reply_to_gift"
-							   withParameters:inputsArgs
-										block:^(RPMessage *reply, NSError *error) {
+            [PFCloud callFunctionInBackground:@"reply_to_gift" withParameters:inputsArgs block:^(RPMessage *reply, NSError *error) {
 
-                if (!error) {
+                alert.sendButton.hidden = NO;
+                [alert.spinner stopAnimating];
 
-                    [RepunchUtils showDialogWithTitle:@"Your reply has been sent!" withMessage:nil];
-                    RPMessageStatus *newMessageStatus = [sharedData getMessage:self.messageStatusId];
-                    newMessageStatus.Message.Reply = reply;
+                [alert hideAlertWithBlock:^{
 
-                    containsReply = !IS_NIL(message.Reply);
+                    if (!error) {
 
-                    [self.replyButton hideButton];
-                    [self setupMessage];
-                    [self.delegate removeMessage:self forMsgStatus:nil];
+                        [RepunchUtils showDialogWithTitle:@"Your reply has been sent!" withMessage:nil];
+                        RPMessageStatus *newMessageStatus = [sharedData getMessage:self.messageStatusId];
+                        newMessageStatus.Message.Reply = reply;
 
-                    //NSLog(@"send_gift result: %@", reply);
-                }
-                else {
-                    [RepunchUtils showDialogWithTitle:@"Send Failed"
-                                          withMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
-                    //NSLog(@"send_gift error: %@", error);
-                }
+                        containsReply = !IS_NIL(message.Reply);
+
+                        [self.replyButton hideButton];
+                        [self setupMessage];
+                        [self.delegate removeMessage:self forMsgStatus:nil];
+
+                        //NSLog(@"send_gift result: %@", reply);
+                    }
+                    else {
+                        [RepunchUtils showDialogWithTitle:@"Send Failed"
+                                              withMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
+                        //NSLog(@"send_gift error: %@", error);
+                    }
+                }];
+
             }];
         }
-        
-    }];
+      }];
 }
 
 - (void)deleteButtonAction
@@ -451,15 +458,17 @@
 		return;
 	}
 
-    [RPCustomAlertController showDeleteMessageAlertWithBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
+    [RPCustomAlertController showDeleteMessageAlertWithBlock:^(RPCustomAlertController *alert, RPCustomAlertActionButton  buttonType, id anObject) {
 
         if (buttonType == DeleteButton) {
-            [sharedData removeMessage:self.messageStatusId];
-            [self.delegate removeMessage:self forMsgStatus:messageStatus];
-            [self.navigationController popViewControllerAnimated:NO];
+
+            [alert hideAlertWithBlock:^{
+                [sharedData removeMessage:self.messageStatusId];
+                [self.delegate removeMessage:self forMsgStatus:messageStatus];
+                [self.navigationController popViewControllerAnimated:NO];
+            }];
         }
     }];
-
 }
 
 
