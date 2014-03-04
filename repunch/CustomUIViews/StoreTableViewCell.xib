@@ -98,6 +98,7 @@
                         </constraints>
                     </view>
                 </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="yxh-fe-TVS" secondAttribute="trailing" constant="20" id="J50-EO-mow"/>
                     <constraint firstAttribute="bottom" secondItem="yxh-fe-TVS" secondAttribute="bottom" id="jx8-9w-pdd"/>

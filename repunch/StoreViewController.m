@@ -792,7 +792,9 @@
 			 forFriendId:(NSString *)friendId
 				withName:(NSString *)name
 {
-    [RPCustomAlertController showCreateGiftMessageAlertWithRecepient:name rewardTitle:selectedReward[@"reward_name"] andBlock:^(RPCustomAlertController *alert, RPCustomAlertActionButton buttonType, id anObject) {
+    [RPCustomAlertController showCreateGiftMessageAlertWithRecepient:name
+														 rewardTitle:selectedReward[@"reward_name"]
+															andBlock:^(RPCustomAlertController *alert, RPCustomAlertActionButton buttonType, id anObject) {
 
         if (buttonType == SendButton) {
             [alert.spinner startAnimating];
@@ -804,7 +806,6 @@
                                          @"patron_store_id"  : patronStore.objectId,
                                          @"store_id"         : store.objectId,
                                          @"sender_name"      : patron.full_name,
-                                         @"subject"          : @"Gift",
                                          @"body"             : anObject,
                                          @"recepient_id"     : friendId,
                                          @"gift_title"       : selectedReward[@"reward_name"],
