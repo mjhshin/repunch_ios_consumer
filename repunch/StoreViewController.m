@@ -566,11 +566,10 @@
             [alert.spinner startAnimating];
             alert.sendButton.hidden = YES;
 
-                NSDictionary *inputsArgs = @{@"patron_id": patron.objectId,
-                                             @"store_id": store.objectId,
-                                             @"body": anObject,
-                                             @"sender_name": patron.full_name,
-                                             @"subject": @"Feedback"};
+			NSDictionary *inputsArgs = @{@"patron_id"	: patron.objectId,
+										 @"store_id"	: store.objectId,
+										 @"body"		: anObject,
+										 @"sender_name"	: patron.full_name};
 
             [PFCloud callFunctionInBackground:@"send_feedback"
 							   withParameters:inputsArgs
