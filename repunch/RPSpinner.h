@@ -14,10 +14,8 @@
 @property (nonatomic) BOOL hideWhenFinish;
 @property (nonatomic, readonly) BOOL isAnimating;
 
-
 - (void)startAnimating;
 - (void)stopAnimating;
-
 
 - (void)setImageNamed:(NSString*)imageName;
 

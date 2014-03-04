@@ -7,7 +7,6 @@
 
 #import "StoreTableViewCell.h"
 #import "AppDelegate.h"
-#import "ComposeMessageViewController.h"
 #import "FacebookFriendsViewController.h"
 #import "DataManager.h"
 #import <FacebookSDK/FacebookSDK.h>

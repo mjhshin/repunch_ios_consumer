@@ -100,7 +100,6 @@
                                                                        views:views]];
     }
 
-
     self.imageView.image = [UIImage imageNamed:imageName];
 }
 
@@ -108,7 +107,6 @@
 {
     CALayer *layer = self.imageView.layer;
     layer.transform =  CATransform3DRotate(CATransform3DIdentity, DegreesToRadians(degrees), 0.0f, 0.0f, 1.0f);
-
 }
 
 @end

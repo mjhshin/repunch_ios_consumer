@@ -7,6 +7,8 @@
 //
 
 #import "FacebookFriendsViewController.h"
+#import "RepunchUtils.h"
+#import "RPPatron.h"
 
 @implementation FacebookFriendsViewController
 

@@ -18,15 +18,14 @@ typedef enum  {
 } PullState;
 
 
-static const CGFloat kDistanFromTop = 65;
+static const CGFloat kDistanFromTop = 64;
 
 @interface RPReloadControl ()
 
+@property (weak,   nonatomic) UITableView *tableView;
 @property (strong, nonatomic) RPSpinner *spinner;
 @property (assign, nonatomic) PullState state;
-@property (weak,   nonatomic) UITableView *tableView;
 @property (assign, nonatomic) BOOL fixForStoreController;
-
 
 @end
 
@@ -35,9 +34,8 @@ static const CGFloat kDistanFromTop = 65;
 
 #pragma mark - Init
 
-- (instancetype)initWithTableView:(UITableView*)tableView andImagedNamed:(NSString*)imageName isStore:(BOOL)isStore
+- (instancetype)initWithTableView:(UITableView*)tableView andImageNamed:(NSString*)imageName isStore:(BOOL)isStore
 {
-
     if (isStore) {
         self.fixForStoreController = YES;
     }
@@ -69,27 +67,26 @@ static const CGFloat kDistanFromTop = 65;
                                                                  metrics:nil
                                                                    views:views]];
 
-    [self addConstraint: [NSLayoutConstraint
-                          constraintWithItem:self.spinner
-                          attribute:NSLayoutAttributeCenterX
-                          relatedBy:0
-                          toItem:self
-                          attribute:NSLayoutAttributeCenterX
-                          multiplier:1
-                          constant:0]];
-    
+    [self addConstraint: [NSLayoutConstraint constraintWithItem:self.spinner
+													  attribute:NSLayoutAttributeCenterX
+													  relatedBy:0
+														 toItem:self
+													  attribute:NSLayoutAttributeCenterX
+													 multiplier:1
+													   constant:0]];
     return self;
 }
 
 
-- (instancetype)initWithTableView:(UITableView*)tableView andImagedNamed:(NSString*)imageName;
+- (instancetype)initWithTableView:(UITableView*)tableView andImageNamed:(NSString*)imageName;
 {
-    return [self initWithTableView:tableView andImagedNamed:imageName isStore:NO];
+    return [self initWithTableView:tableView andImageNamed:imageName isStore:NO];
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview
 {
     [super willMoveToSuperview:newSuperview];
+	
     if (!newSuperview) {
         [self.tableView removeObserver:self forKeyPath:@"contentOffset"];
         self.tableView = nil;
@@ -107,7 +104,6 @@ static const CGFloat kDistanFromTop = 65;
 
 - (void)setState:(PullState)state
 {
-
     if (state != _state) {
 
         _state = state;
@@ -129,7 +125,6 @@ static const CGFloat kDistanFromTop = 65;
 
 - (void)setPullingAnimationWithCurrentGap:(CGFloat)topGap
 {
-
     if (topGap >= 5 && self.state == RefreshStateNormal) {
         CGFloat completedAngle =  (topGap -15) / ( MAX_SCROLL_GAP -15) * 100;
 
@@ -144,7 +139,6 @@ static const CGFloat kDistanFromTop = 65;
         self.spinner.alpha = (topGap  < 1) ? 0 : 1;
 
     }
-
 }
 
 - (BOOL)isRefreshing
@@ -170,7 +164,6 @@ static const CGFloat kDistanFromTop = 65;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-
     if ([keyPath isEqualToString:@"contentOffset"] ) {
         CGFloat dis = self.fixForStoreController ? 0 : kDistanFromTop;
 

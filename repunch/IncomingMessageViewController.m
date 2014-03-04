@@ -9,6 +9,7 @@
 #import "OfferBorderView.h"
 #import "GiftBorderView.h"
 #import "RPCustomAlertController.h"
+#import "RepunchUtils.h"
 
 @implementation IncomingMessageViewController
 {
@@ -428,9 +429,9 @@
         if (buttonType == SendButton) {
 
 
-            NSDictionary *inputsArgs = @{@"message_id": message.objectId,
-                                         @"sender_name": patron.full_name,
-                                         @"body": anObject};
+            NSDictionary *inputsArgs = @{@"message_id"	: message.objectId,
+                                         @"sender_name"	: patron.full_name,
+                                         @"body"		: anObject};
 
             [PFCloud callFunctionInBackground:@"reply_to_gift"
 							   withParameters:inputsArgs

@@ -38,7 +38,8 @@
 - (RPPatronStore *)getPatronStore:(NSString *)storeId;
 - (void)addPatronStore:(RPPatronStore *)patronStore forKey:(NSString *)storeId;
 - (void)deletePatronStore:(NSString *)storeId;
-- (void)updatePatronStore:(NSString *)storeId withPunches:(NSInteger)punches;
+- (void)updatePatronStorePunchCount:(NSString *)storeId withPunches:(NSInteger)punches;
+//- (void)updatePatronStoreAllTimePunchCount:(NSString *)storeId withPunches:(NSInteger)punches;
 
 // Assumptions:
 // StoreLocation->Store will always be null

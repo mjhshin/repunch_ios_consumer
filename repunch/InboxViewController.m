@@ -9,7 +9,7 @@
 #import "RPReloadControl.h"
 
 @interface InboxViewController ()
-@property (strong, nonatomic) RPReloadControl *reloadControl;
+//@property (strong, nonatomic) RPReloadControl *reloadControl;
 @end
 
 @implementation InboxViewController
@@ -39,21 +39,20 @@
     self.tableView.dataSource = self;
 
 
-    self.reloadControl = [[RPReloadControl alloc] initWithTableView:self.tableView andImagedNamed:@"app_icon_29x29.png"];
+    //self.reloadControl = [[RPReloadControl alloc] initWithTableView:self.tableView
+	//												  andImageNamed:@"app_icon_29x29.png"];
 
-    __weak typeof (self)weakSelf = self;
+    //__weak typeof (self)weakSelf = self;
 
-    self.reloadControl.handler = ^(){
-        [weakSelf loadInbox:NO];
-    };
+    //self.reloadControl.handler = ^(){
+    //    [weakSelf loadInbox:NO];
+    //};
 
 
 	alertBadgeCount = 0;
 	paginateCount = 0;
 	loadInProgress = NO;
 	paginateReachEnd = NO;
-
-
 
 	[self registerForNotifications];
 	[self setupNavigationBar];
@@ -136,7 +135,7 @@
 - (void)loadInbox:(BOOL)paginate
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
-		[self.reloadControl endRefreshing];
+		//[self.reloadControl endRefreshing];
 		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
@@ -168,7 +167,7 @@
 		else {
 			self.activityIndicatorView.hidden = YES;
 			[self.activityIndicator stopAnimating];
-            [self.reloadControl endRefreshing];
+            //[self.reloadControl endRefreshing];
 		}
 		
         if(!error) {

@@ -14,7 +14,7 @@
 #import "RPCustomAlertController.h"
 
 @interface StoreViewController ()
-@property (strong, nonatomic) RPReloadControl *reloadControl;
+//@property (strong, nonatomic) RPReloadControl *reloadControl;
 @end
 
 @implementation StoreViewController
@@ -103,15 +103,17 @@
 	[self setupTableViewHeader];
 	[self checkPatronStore];
 
-
-    self.reloadControl = [[RPReloadControl alloc] initWithTableView:self.tableView andImagedNamed:@"app_icon_29x29.png" isStore:YES];
+/*
+    self.reloadControl = [[RPReloadControl alloc] initWithTableView:self.tableView
+													  andImageNamed:@"app_icon_29x29.png"
+															isStore:YES];
 
     __weak typeof (self)weakSelf = self;
 
     self.reloadControl.handler = ^(){
-        [weakSelf.reloadControl endRefreshing];
+        [weakSelf refreshPatronStore];
     };
-
+*/
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -570,10 +572,11 @@
 
 - (IBAction)feedbackButtonAction:(id)sender
 {
-	if(!patronStoreExists || patronStore.all_time_punches == 0) {
-		[RepunchUtils showDialogWithTitle:@"Sorry, you can only send feedback to stores where you have been punched." withMessage:nil];
-		return;
-	}
+	//if(!patronStoreExists || patronStore.all_time_punches == 0) {
+	//	[RepunchUtils showDialogWithTitle:@"Sorry, you can only send feedback to stores where you have been punched."
+	//						  withMessage:nil];
+	//	return;
+	//}
 
     [RPCustomAlertController showCreateMessageAlertWithRecepient:store.store_name
 														andBlock:^(RPCustomAlertController *alert, RPCustomAlertActionButton buttonType, id anObject) {
@@ -730,11 +733,11 @@
 	 }];
 }
 
-- (void)refreshPatronStoreObject
+- (void)refreshPatronStore
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
 		[RepunchUtils showDefaultDropdownView:self.view];
-
+		//[self.reloadControl endRefreshing];
 		return;
 	}
 	
@@ -746,6 +749,7 @@
 		[query includeKey:@"FacebookPost"];
 		[query getObjectInBackgroundWithId:patronStore.objectId block:^(PFObject *result, NSError *error) {
 
+			//[self.reloadControl endRefreshing];
 			
 			 if(!error) {
 				 patronStore = (RPPatronStore *)result;
@@ -771,6 +775,8 @@
 
 		[query getObjectInBackgroundWithId:self.storeId block:^(PFObject *result, NSError *error) {
 			 
+			//[self.reloadControl endRefreshing];
+			
 			if(!error) {
 				 store = (RPStore *)result;
 				 [sharedData addStore:store];

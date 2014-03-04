@@ -138,7 +138,6 @@
 		EE93169518B29FD400ECEABF /* store_save_background.png in Resources */ = {isa = PBXBuildFile; fileRef = EE93169318B29FD400ECEABF /* store_save_background.png */; };
 		EE9D4C6617A83F4B005E0CC5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B6E17A83F4A005E0CC5 /* main.m */; };
 		EE9D4C6717A83F4B005E0CC5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B7217A83F4A005E0CC5 /* AppDelegate.m */; };
-		EE9D4C6817A83F4B005E0CC5 /* ComposeMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B7417A83F4A005E0CC5 /* ComposeMessageViewController.m */; };
 		EE9D4C7517A83F4B005E0CC5 /* InboxTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B8E17A83F4A005E0CC5 /* InboxTableViewCell.m */; };
 		EE9D4C7617A83F4B005E0CC5 /* InboxTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4B8F17A83F4A005E0CC5 /* InboxTableViewCell.xib */; };
 		EE9D4C7717A83F4B005E0CC5 /* StoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4B9117A83F4A005E0CC5 /* StoreTableViewCell.m */; };
@@ -374,8 +373,6 @@
 		EE9D4B6E17A83F4A005E0CC5 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EE9D4B7117A83F4A005E0CC5 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EE9D4B7217A83F4A005E0CC5 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		EE9D4B7317A83F4A005E0CC5 /* ComposeMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComposeMessageViewController.h; sourceTree = "<group>"; };
-		EE9D4B7417A83F4A005E0CC5 /* ComposeMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComposeMessageViewController.m; sourceTree = "<group>"; };
 		EE9D4B8D17A83F4A005E0CC5 /* InboxTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InboxTableViewCell.h; path = CustomUIViews/InboxTableViewCell.h; sourceTree = "<group>"; };
 		EE9D4B8E17A83F4A005E0CC5 /* InboxTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InboxTableViewCell.m; path = CustomUIViews/InboxTableViewCell.m; sourceTree = "<group>"; };
 		EE9D4B8F17A83F4A005E0CC5 /* InboxTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InboxTableViewCell.xib; path = CustomUIViews/InboxTableViewCell.xib; sourceTree = "<group>"; };
@@ -541,7 +538,7 @@
 			name = Parse;
 			sourceTree = "<group>";
 		};
-		2099187518C6523F002B6C7E /* Custom Indicator */ = {
+		2099187518C6523F002B6C7E /* ActivityIndicator */ = {
 			isa = PBXGroup;
 			children = (
 				2099187618C65290002B6C7E /* RPSpinner.h */,
@@ -549,7 +546,8 @@
 				2099187818C65290002B6C7E /* RPReloadControl.h */,
 				2099187918C65290002B6C7E /* RPReloadControl.m */,
 			);
-			name = "Custom Indicator";
+			name = ActivityIndicator;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		20E8609618BBB5E6007DB153 /* Alert */ = {
@@ -562,6 +560,7 @@
 				20E860A418BBBD25007DB153 /* Alerts.storyboard */,
 			);
 			name = Alert;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		7996B35017820A9700CCAFED = {
@@ -616,8 +615,6 @@
 		EE04ABCF181AF26800DDA5D0 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				2099187518C6523F002B6C7E /* Custom Indicator */,
-				20E8609618BBB5E6007DB153 /* Alert */,
 				EE8D702F18BBB15A00ADE0DB /* Inbox */,
 				EE8D702E18BBB14400ADE0DB /* FacebookFriends */,
 				EE8D702D18BBB13800ADE0DB /* LocationDetails */,
@@ -627,8 +624,6 @@
 				EE8D702918BBB11500ADE0DB /* Search */,
 				EE8D702818BBB10D00ADE0DB /* MyPlaces */,
 				EEE4D2321899654C00A5EC25 /* Message */,
-				EE9D4B7317A83F4A005E0CC5 /* ComposeMessageViewController.h */,
-				EE9D4B7417A83F4A005E0CC5 /* ComposeMessageViewController.m */,
 				EEFBA1711810A6BE00783F05 /* Welcome */,
 			);
 			name = ViewControllers;
@@ -773,6 +768,8 @@
 		EE9D4B8717A83F4A005E0CC5 /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
+				2099187518C6523F002B6C7E /* ActivityIndicator */,
+				20E8609618BBB5E6007DB153 /* Alert */,
 				EEE4D26A18A30C9C00A5EC25 /* RPNavigationController.h */,
 				EEE4D26B18A30C9C00A5EC25 /* RPNavigationController.m */,
 				EE93162B18AA9A7100ECEABF /* RPTableView.h */,
@@ -1201,7 +1198,6 @@
 			files = (
 				EE9D4C6617A83F4B005E0CC5 /* main.m in Sources */,
 				EE9D4C6717A83F4B005E0CC5 /* AppDelegate.m in Sources */,
-				EE9D4C6817A83F4B005E0CC5 /* ComposeMessageViewController.m in Sources */,
 				EE93163C18AC090600ECEABF /* RPInstallation.m in Sources */,
 				EE255EA418BD38C800A6E15E /* RPPopupButton.m in Sources */,
 				EE9D4C7517A83F4B005E0CC5 /* InboxTableViewCell.m in Sources */,

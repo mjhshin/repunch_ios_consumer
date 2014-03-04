@@ -69,6 +69,15 @@ static DataManager *sharedDataManager = nil;    // static instance variable
 												 forKey:@"punch_count"];
 }
 
+/*
+- (void)updatePatronStoreAllTimePunchCount:(NSString *)storeId withPunches:(NSInteger)punches
+{
+	RPPatronStore *patronStore = [self.patronStores objectForKey:storeId];
+	
+	//if(patronStore.all
+}
+*/
+
 // Store methods
 - (void)addStore:(RPStore *)store
 {
