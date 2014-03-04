@@ -28,8 +28,10 @@
 	BOOL navigationBarIsOpaque;
     NSInteger punchCount;
 	id selectedReward;
-	UIBarButtonItem *deleteButton;
-	UIBarButtonItem *addButton;
+	UIBarButtonItem *deleteBarButton;
+	UIBarButtonItem *addBarButton;
+	UIBarButtonItem *spinnerBarButton;
+	UIActivityIndicatorView *barSpinner;
     NSMutableArray *timers;
 	CGFloat transitionScrollOffset;
 	CGFloat lastContentOffset;
@@ -80,15 +82,18 @@
 	[[NSBundle mainBundle] loadNibNamed:@"StoreSectionHeaderView" owner:self options:nil];
 	[[NSBundle mainBundle] loadNibNamed:@"StoreSectionHeaderViewAdd" owner:self options:nil];
 	
-	deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_delete"]
+	deleteBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_delete"]
 													style:UIBarButtonItemStyleBordered
 												   target:self
 												   action:@selector(showDeleteStoreDialog)];
 	
-	addButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_add_store"]
+	addBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_add_store"]
 													style:UIBarButtonItemStylePlain
 												   target:self
 												   action:@selector(addStore)];
+	
+	barSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+	spinnerBarButton = [[UIBarButtonItem alloc] initWithCustomView:barSpinner];
 	
 	self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -263,7 +268,7 @@
 		punchCount = 0;
 	}
 	
-	self.navigationItem.rightBarButtonItem = patronStoreExists ? deleteButton : addButton;
+	self.navigationItem.rightBarButtonItem = patronStoreExists ? deleteBarButton : addBarButton;
 	
     [self.tableView reloadData];
 }
@@ -271,58 +276,59 @@
 #pragma mark - Store Hours & header size fixer
 - (void)setStoreHours
 {
-    RPStoreHours *hours = storeLocation.hoursManager;
-    
-    if (hours.isOpenAlways) {
-        self.storeHours.hidden = NO;
-        self.storeHoursOpen.hidden = NO;
-        
-        self.storeHoursOpen.text = NSLocalizedString(@"Open", nil);
-        self.storeHoursOpen.textColor = [UIColor colorWithRed:0.0 green:(204/255.0) blue:0.0 alpha:1.0];
-        self.storeHours.text = @"Open 24/7";
-    }
-    else if(hours) {
-        self.storeHours.hidden = NO;
-        self.storeHoursOpen.hidden = NO;
-        self.storeHours.text = @"";
-        
-        NSArray *repunchDates = [hours hoursForToday];
-        
-        NSDateFormatter *outFormat = [[NSDateFormatter alloc] init];
-        outFormat.dateFormat = @"h:mm a";
-        
-        NSMutableString *fullString = [[NSMutableString alloc] initWithString:@"Hours Today:"];
-        
-        for (NSDictionary *hours in repunchDates) {
-            
-            NSDate *open = hours[kOpenTime];
-            NSDate *close = hours[kCloseTime];
-            
-            NSString *openString = [outFormat stringFromDate:open];
-            NSString *closeString = [outFormat stringFromDate:close];
-            
-            [fullString appendString:[NSString stringWithFormat:@" %@ - %@,", openString, closeString]];
-        }
-		[fullString deleteCharactersInRange:NSMakeRange(fullString.length-1, 1)]; //remove final comma
-        
-        self.storeHours.text = [fullString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        
-        // Set Indicator
-        if(hours.isOpenNow) {
-            self.storeHoursOpen.text = NSLocalizedString(@"Open", nil);
-            self.storeHoursOpen.textColor = [UIColor colorWithRed:0.0 green:(204/255.0) blue:0.0 alpha:1.0];
-        }
-        else {
-            self.storeHoursOpen.text = NSLocalizedString(@"Closed", nil);
-            self.storeHoursOpen.textColor = [UIColor colorWithRed:(224/255.0) green:0.0 blue:0.0 alpha:1.0];
-        }
-    }
-    else {
-        // If no hours are set
+	if(storeLocation.hours.count == 0) {
         self.storeHours.text = @"";
         self.storeHours.hidden = YES;
         self.storeHoursOpen.hidden = YES;
-    }
+	}
+	else {
+		RPStoreHours *hours = storeLocation.hoursManager;
+		
+		if (hours.isOpenAlways) {
+			self.storeHours.hidden = NO;
+			self.storeHoursOpen.hidden = NO;
+			
+			self.storeHoursOpen.text = NSLocalizedString(@"Open", nil);
+			self.storeHoursOpen.textColor = [UIColor colorWithRed:0.0 green:(204/255.0) blue:0.0 alpha:1.0];
+			self.storeHours.text = @"Open 24/7";
+		}
+		else if(hours) {
+			self.storeHours.hidden = NO;
+			self.storeHoursOpen.hidden = NO;
+			self.storeHours.text = @"";
+			
+			NSArray *repunchDates = [hours hoursForToday];
+			
+			NSDateFormatter *outFormat = [[NSDateFormatter alloc] init];
+			outFormat.dateFormat = @"h:mm a";
+			
+			NSMutableString *fullString = [[NSMutableString alloc] initWithString:@"Hours Today:"];
+			
+			for (NSDictionary *hours in repunchDates) {
+				
+				NSDate *open = hours[kOpenTime];
+				NSDate *close = hours[kCloseTime];
+				
+				NSString *openString = [outFormat stringFromDate:open];
+				NSString *closeString = [outFormat stringFromDate:close];
+				
+				[fullString appendString:[NSString stringWithFormat:@" %@ - %@,", openString, closeString]];
+			}
+			[fullString deleteCharactersInRange:NSMakeRange(fullString.length-1, 1)]; //remove final comma
+			
+			self.storeHours.text = [fullString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+			
+			// Set Indicator
+			if(hours.isOpenNow) {
+				self.storeHoursOpen.text = NSLocalizedString(@"Open", nil);
+				self.storeHoursOpen.textColor = [UIColor colorWithRed:0.0 green:(204/255.0) blue:0.0 alpha:1.0];
+			}
+			else {
+				self.storeHoursOpen.text = NSLocalizedString(@"Closed", nil);
+				self.storeHoursOpen.textColor = [UIColor colorWithRed:(224/255.0) green:0.0 blue:0.0 alpha:1.0];
+			}
+		}
+	}
 }
 
 - (void)setOpaqueNavigationBar
@@ -468,8 +474,10 @@
 	NSInteger rewardPunches = [reward[@"punches"] integerValue];
 
     __weak typeof (self) weakSelf = self;
-
-        [RPCustomAlertController showRedeemAlertWithTitle:rewardName punches:rewardPunches andBlock:^(RPCustomAlertController *alert, RPCustomAlertActionButton buttonType, id anObject) {
+	
+	[RPCustomAlertController showRedeemAlertWithTitle:rewardName
+											  punches:rewardPunches
+											 andBlock:^(RPCustomAlertController *alert, RPCustomAlertActionButton buttonType, id anObject) {
 
             [alert hideAlertWithBlock:^{
                 if (buttonType == RedeemButton) {
@@ -567,31 +575,35 @@
 		return;
 	}
 
-    [RPCustomAlertController showCreateMessageAlertWithRecepient:store.store_name andBlock:^(RPCustomAlertController *alert, RPCustomAlertActionButton buttonType, id anObject) {
+    [RPCustomAlertController showCreateMessageAlertWithRecepient:store.store_name
+														andBlock:^(RPCustomAlertController *alert, RPCustomAlertActionButton buttonType, id anObject) {
 
         if (buttonType == SendButton) {
 
             [alert.spinner startAnimating];
             alert.sendButton.hidden = YES;
 
-                NSDictionary *inputsArgs = @{@"patron_id": patron.objectId,
-                                             @"store_id": store.objectId,
-                                             @"body": anObject,
-                                             @"sender_name": patron.full_name,
-                                             @"subject": @"Feedback"};
+			NSDictionary *inputsArgs = @{@"patron_id"	: patron.objectId,
+										 @"store_id"	: store.objectId,
+										 @"body"		: anObject,
+										 @"sender_name"	: patron.full_name};
 
-            [PFCloud callFunctionInBackground:@"send_feedback" withParameters:inputsArgs block:^(NSString *result, NSError *error){
+            [PFCloud callFunctionInBackground:@"send_feedback"
+							   withParameters:inputsArgs
+										block:^(NSString *result, NSError *error){
 
                 [alert.spinner startAnimating];
                 alert.sendButton.hidden = NO;
 
                 [alert hideAlertWithBlock:^{
                     if (!error) {
-                        [RepunchUtils showDialogWithTitle:store.store_name withMessage:@"Thanks for your feedback!"];
+                        [RepunchUtils showDialogWithTitle:store.store_name
+											  withMessage:@"Thanks for your feedback!"];
                         NSLog(@"send_feedback result: %@", result);
                     }
                     else {
-                        [RepunchUtils showDialogWithTitle:@"Send Failed" withMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
+                        [RepunchUtils showDialogWithTitle:@"Send Failed"
+											  withMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
                         NSLog(@"send_feedback error: %@", error);
                     }
                 }];
@@ -632,31 +644,32 @@
 	}
 
 	self.saveStoreButton.enabled = NO;
-	addButton.enabled = NO;
+	self.navigationItem.rightBarButtonItem = spinnerBarButton;
+	[barSpinner startAnimating];
 	
 	NSDictionary *inputArgs = [NSDictionary dictionaryWithObjectsAndKeys:
 									patron.objectId,		@"patron_id",
 									store.objectId,			@"store_id",
 									nil];
 	
+	__weak typeof(self) weakSelf = self;
 	[PFCloud callFunctionInBackground: @"add_patronstore"
 					   withParameters:inputArgs
 								block:^(RPPatronStore *result, NSError *error) {
 									
-		self.saveStoreButton.enabled = YES;
-		addButton.enabled = YES;
+		weakSelf.saveStoreButton.enabled = YES;
+		[barSpinner stopAnimating];
 		
-		if(!error)
-		{
-			[sharedData addPatronStore:result forKey:self.storeId];
+		if(!error) {
+			[sharedData addPatronStore:result forKey:weakSelf.storeId];
 			[self checkPatronStore];
 			
-			NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:self.storeId, @"store_id", nil];
-			[[NSNotificationCenter defaultCenter] postNotificationName:@"AddOrRemoveStore" object:self userInfo:args];
+			NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:weakSelf.storeId, @"store_id", nil];
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"AddOrRemoveStore" object:weakSelf userInfo:args];
 		}
-		else
-		{
+		else {
 			NSLog(@"add_patronStore error: %@", error);
+			weakSelf.navigationItem.rightBarButtonItem = addBarButton;
 			[RepunchUtils showConnectionErrorDialog];
 		}
 	}];
@@ -665,6 +678,7 @@
 - (void)showDeleteStoreDialog
 {
     __weak typeof(self) weakSelf = self;
+	
     [RPCustomAlertController showDeleteMyPlaceAlertWithBlock:^(RPAlertController* alert, RPCustomAlertActionButton buttonType, id anObject) {
 
         if (buttonType == DeleteButton) {
@@ -683,7 +697,8 @@
 		return;
 	}
 	
-	deleteButton.enabled = NO;
+	self.navigationItem.rightBarButtonItem = spinnerBarButton;
+	[barSpinner startAnimating];
 	
 	NSDictionary *inputArgs = [NSDictionary dictionaryWithObjectsAndKeys:
 							   patronStore.objectId,	@"patron_store_id",
@@ -691,21 +706,25 @@
 							   store.objectId,			@"store_id",
 							   nil];
 	
+	__weak typeof(self) weakSelf = self;
+	
 	[PFCloud callFunctionInBackground: @"delete_patronstore"
 					   withParameters:inputArgs
 								block:^(NSString *result, NSError *error) {
-		 deleteButton.enabled = YES;
+									
+		[barSpinner stopAnimating];
 		 
 		 if(!error) {
 			 [sharedData deletePatronStore:self.storeId];
-			 [self checkPatronStore];
-			 [self.tableView reloadData];
+			 [weakSelf checkPatronStore];
+			 [weakSelf.tableView reloadData];
          
-			 NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:self.storeId, @"store_id", nil];
-			 [[NSNotificationCenter defaultCenter] postNotificationName:@"AddOrRemoveStore" object:self userInfo:args];
+			 NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:weakSelf.storeId, @"store_id", nil];
+			 [[NSNotificationCenter defaultCenter] postNotificationName:@"AddOrRemoveStore" object:weakSelf userInfo:args];
 		 }
 		 else {
 			 NSLog(@"delete_patronStore error: %@", error);
+			 weakSelf.navigationItem.rightBarButtonItem = deleteBarButton;
 			 [RepunchUtils showConnectionErrorDialog];
 		 }
 	 }];
@@ -726,11 +745,16 @@
         [query includeKey:@"Store.store_locations"];
 		[query includeKey:@"FacebookPost"];
 		[query getObjectInBackgroundWithId:patronStore.objectId block:^(PFObject *result, NSError *error) {
+<<<<<<< HEAD
 
 
 
 			 if(!error)
 			 {
+=======
+			
+			 if(!error) {
+>>>>>>> FETCH_HEAD
 				 patronStore = (RPPatronStore *)result;
 				 store = patronStore.Store;
 				 [sharedData addPatronStore:patronStore forKey:self.storeId];
@@ -742,8 +766,7 @@
 				 
 				 [[NSNotificationCenter defaultCenter] postNotificationName:@"AddOrRemoveStore" object:self userInfo:nil];
 			 }
-			 else
-			 {
+			 else {
 				 NSLog(@"error fetching PatronStore: %@", error);
 				 [RepunchUtils showConnectionErrorDialog];
 			 }
@@ -752,18 +775,23 @@
 	else
 	{
 		PFQuery *query = [RPStore query];
+<<<<<<< HEAD
 		[query getObjectInBackgroundWithId:self.storeId block:^(PFObject *result, NSError *error)
 		{
 
 			 if(!error)
 			 {
+=======
+		[query getObjectInBackgroundWithId:self.storeId block:^(PFObject *result, NSError *error) {
+			 
+			if(!error) {
+>>>>>>> FETCH_HEAD
 				 store = (RPStore *)result;
 				 [sharedData addStore:store];
 				 [self setStoreInformation];
 				 [self setupTableViewHeader];
 			 }
-			 else
-			 {
+			 else {
 				 NSLog(@"error fetching Store: %@", error);
 				 [RepunchUtils showConnectionErrorDialog];
 			 }
@@ -778,8 +806,7 @@
 		return;
 	}
 	
-	if( ![PFFacebookUtils isLinkedWithUser:[RPUser currentUser]] )
-	{
+	if( ![PFFacebookUtils isLinkedWithUser:[RPUser currentUser]] ) {
 		[RepunchUtils showDialogWithTitle:@"It's better together"
 							  withMessage:@"Log in with Facebook to send gifts to your friends"];
 	}
@@ -798,7 +825,9 @@
 			 forFriendId:(NSString *)friendId
 				withName:(NSString *)name
 {
-    [RPCustomAlertController showCreateGiftMessageAlertWithRecepient:name rewardTitle:selectedReward[@"reward_name"] andBlock:^(RPCustomAlertController *alert, RPCustomAlertActionButton buttonType, id anObject) {
+    [RPCustomAlertController showCreateGiftMessageAlertWithRecepient:name
+														 rewardTitle:selectedReward[@"reward_name"]
+															andBlock:^(RPCustomAlertController *alert, RPCustomAlertActionButton buttonType, id anObject) {
 
         if (buttonType == SendButton) {
             [alert.spinner startAnimating];
@@ -810,18 +839,18 @@
                                          @"patron_store_id"  : patronStore.objectId,
                                          @"store_id"         : store.objectId,
                                          @"sender_name"      : patron.full_name,
-                                         @"subject"          : @"Gift",
                                          @"body"             : anObject,
                                          @"recepient_id"     : friendId,
                                          @"gift_title"       : selectedReward[@"reward_name"],
                                          @"gift_description" : selectedReward[@"description"],
                                          @"gift_punches"     : punches};
 
-            [PFCloud callFunctionInBackground:@"send_gift"  withParameters:inputsArgs block:^(NSString *result, NSError *error) {
+            [PFCloud callFunctionInBackground:@"send_gift"
+							   withParameters:inputsArgs
+										block:^(NSString *result, NSError *error) {
 
                 [alert.spinner stopAnimating];
                 alert.sendButton.hidden = NO;
-
 
                 [alert hideAlertWithBlock:^{
                     if (!error) {

@@ -402,6 +402,9 @@
 	if(messageStatus != nil) {
 		[self removeMessage:messageStatus];
 	}
+	else {
+		[self sortMessagesByDate];
+	}
     [self refreshTableView];
 }
 
@@ -509,6 +512,17 @@
 	RPInstallation *installation = [RPInstallation currentInstallation];
 	installation.badge = alertBadgeCount;
 	[installation saveEventually];
+}
+
+- (void)sortMessagesByDate
+{
+	[self.messagesArray sortUsingComparator:^NSComparisonResult(RPMessageStatus *msg1, RPMessageStatus *msg2) {
+		
+		NSDate *date1 = IS_NIL(msg1.Message.Reply) ? msg1.Message.createdAt : msg1.Message.Reply.createdAt;
+		NSDate *date2 = IS_NIL(msg2.Message.Reply) ? msg2.Message.createdAt : msg2.Message.Reply.createdAt;
+		
+		return [date2 compare:date1];
+	 }];
 }
 
 - (void)openSettings

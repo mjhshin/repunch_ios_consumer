@@ -803,9 +803,6 @@ You will lose all your punches!</string>
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <state key="disabled">
-                                            <color key="titleColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
                                         <connections>
                                             <action selector="actionButton:" destination="LdT-hG-yr2" eventType="touchUpInside" id="mlR-4D-6PI"/>
                                         </connections>
@@ -959,9 +956,6 @@ You will lose all your punches!</string>
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <state key="disabled">
-                                            <color key="titleColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
                                         <state key="highlighted">
                                             <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
@@ -1034,14 +1028,14 @@ You will lose all your punches!</string>
                                 </constraints>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mHG-Na-WEX">
-                                <rect key="frame" x="10" y="94" width="280" height="92"/>
+                                <rect key="frame" x="10" y="94" width="280" height="89"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no"/>
                             </textView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="255" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lkv-ii-ylf" userLabel="CharCount">
-                                <rect key="frame" x="269" y="194" width="21" height="20"/>
+                                <rect key="frame" x="269" y="191" width="21" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="kfz-iP-Emd"/>
@@ -1051,7 +1045,7 @@ You will lose all your punches!</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5pB-vK-YKw" userLabel="Divider1">
-                                <rect key="frame" x="0.0" y="222" width="300" height="1"/>
+                                <rect key="frame" x="0.0" y="219" width="300" height="1"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.86838503649999998" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -1066,9 +1060,12 @@ You will lose all your punches!</string>
                                     <constraint firstAttribute="height" constant="32" id="ruM-nX-sxP"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reward Title with Max Title Lengthhhhhhh" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" preferredMaxLayoutWidth="218" translatesAutoresizingMaskIntoConstraints="NO" id="6ov-pF-gXD" userLabel="GiftTitle">
-                                <rect key="frame" x="67" y="228" width="218" height="44"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Reward Title " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" preferredMaxLayoutWidth="218" translatesAutoresizingMaskIntoConstraints="NO" id="6ov-pF-gXD" userLabel="GiftTitle">
+                                <rect key="frame" x="67" y="225" width="218" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="pRu-J4-1e2"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -1091,7 +1088,7 @@ You will lose all your punches!</string>
                             <constraint firstAttribute="trailing" secondItem="Aee-yg-3BK" secondAttribute="trailing" id="XJm-0B-r2G"/>
                             <constraint firstItem="5Ix-ff-1jb" firstAttribute="top" secondItem="vAn-R9-67X" secondAttribute="bottom" constant="10" id="YKH-y2-GEA"/>
                             <constraint firstAttribute="trailing" secondItem="lkv-ii-ylf" secondAttribute="trailing" constant="10" id="cCc-gX-9cN"/>
-                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="6ov-pF-gXD" secondAttribute="bottom" constant="5" id="gol-vM-awi"/>
+                            <constraint firstAttribute="bottom" secondItem="6ov-pF-gXD" secondAttribute="bottom" constant="5" id="gol-vM-awi"/>
                             <constraint firstItem="Aee-yg-3BK" firstAttribute="top" secondItem="2Te-Cv-Wns" secondAttribute="top" constant="-1" id="hRo-zC-qA0"/>
                             <constraint firstItem="Nzz-2h-39X" firstAttribute="leading" secondItem="2Te-Cv-Wns" secondAttribute="leading" constant="20" symbolic="YES" id="jkY-jy-Fkb"/>
                             <constraint firstAttribute="bottom" secondItem="Nzz-2h-39X" secondAttribute="bottom" constant="14" id="kNl-Xk-RL3"/>

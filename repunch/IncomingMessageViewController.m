@@ -20,6 +20,7 @@
 	NSTimer *timer;
 	BOOL containsReply;
 	UIActivityIndicatorView *attachmentSpinner;
+	NSLayoutConstraint *bottomConstraint;
 }
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
@@ -33,11 +34,6 @@
 	
 	sharedData = [DataManager getSharedInstance];
 	patron = sharedData.patron;
-	messageStatus = [sharedData getMessage:self.messageStatusId];
-	message = messageStatus.Message;
-	messageType = message.message_type;
-	
-	containsReply = ( !IS_NIL(message.Reply) );
 	
 	UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_delete"]
 																	 style:UIBarButtonItemStylePlain
@@ -45,6 +41,7 @@
 																	action:@selector(deleteButtonAction)];
 	self.navigationItem.rightBarButtonItem = deleteButton;
 	
+	[self loadMessage];
 	[self setupMessage];
 }
 
@@ -72,6 +69,14 @@
 	}
 }
 
+- (void)loadMessage
+{
+	messageStatus = [sharedData getMessage:self.messageStatusId];
+	message = messageStatus.Message;
+	messageType = message.message_type;
+	
+	containsReply = ( !IS_NIL(message.Reply) );
+}
 
 - (void)setupMessage
 {
@@ -99,19 +104,7 @@
 		self.attachmentView.hidden = YES;
 	}
 	
-	if(containsReply) {
-		self.replySender.text = message.Reply.sender_name;
-		self.replySendDate.text = [self formattedDateString:message.Reply.createdAt];
-		self.replyBody.text = message.Reply.body;
-		
-		[self.replyView setNeedsLayout];
-		[self.replyView layoutIfNeeded];
-	}
-	else {
-		self.replyView.hidden = YES;
-	}
-	
-	[self adjustConstraints];
+	[self setupReply];
 }
 
 - (void)setupOffer
@@ -171,13 +164,6 @@
 		}];
 	}
 	
-	// Show reply button if there is no reply
-	if(containsReply) {
-		self.replyButton.hidden = YES;
-	} else {
-		[self.replyButton showButton];
-	}
-	
 	// Disable redeem button if pending or already redeemed
 	if([messageStatus.redeem_available isEqualToString:@"yes"]) {
 		[self.redeemButton setEnabled];
@@ -207,6 +193,29 @@
 	[self.attachmentView sendSubviewToBack:background]; //needs to be behind redeem button
 }
 
+- (void)setupReply
+{
+	if(containsReply) {
+		self.replyView.hidden = NO;
+		
+		self.replySender.text = message.Reply.sender_name;
+		self.replySendDate.text = [self formattedDateString:message.Reply.createdAt];
+		self.replyBody.text = message.Reply.body;
+	}
+	else {
+		self.replyView.hidden = YES;
+	}
+	
+	// Show reply button if there is no reply
+	if(!containsReply && [messageType isEqualToString:@"gift"]) {
+		[self.replyButton showButton];
+	} else {
+		self.replyButton.hidden = YES;
+	}
+	
+	[self adjustConstraints];
+}
+
 - (void)adjustConstraints
 {
 	if([messageType isEqualToString:@"offer"] || [messageType isEqualToString:@"gift"]) {
@@ -222,42 +231,47 @@
 			CGRect messageFrame = self.messageView.frame;
 			self.replyViewSuperviewVerticalSpace.constant = messageFrame.origin.y + messageFrame.size.height;
 		}
+		
+		//[self.replyView setNeedsLayout];
+		//[self.replyView layoutIfNeeded];
 	}
 	
 	[self.scrollView setNeedsLayout];
 	[self.scrollView layoutIfNeeded];
 	
-	NSLayoutConstraint *constraint;
+	if(bottomConstraint != nil) { //if need to reset view on reply to gift
+		[self.scrollView removeConstraint:bottomConstraint];
+	}
 	
 	if(containsReply) {
-		constraint = [NSLayoutConstraint constraintWithItem:self.scrollView
-												  attribute:NSLayoutAttributeBottom
-												  relatedBy:NSLayoutRelationEqual
-													 toItem:self.replyView
-												  attribute:NSLayoutAttributeBottom
-												 multiplier:1
-												   constant:30];
+		bottomConstraint = [NSLayoutConstraint constraintWithItem:self.scrollView
+														attribute:NSLayoutAttributeBottom
+														relatedBy:NSLayoutRelationEqual
+														   toItem:self.replyView
+														attribute:NSLayoutAttributeBottom
+													   multiplier:1
+														 constant:30];
 	}
 	else if([messageType isEqualToString:@"offer"] || [messageType isEqualToString:@"gift"]){
-		constraint = [NSLayoutConstraint constraintWithItem:self.scrollView
-												  attribute:NSLayoutAttributeBottom
-												  relatedBy:NSLayoutRelationEqual
-													 toItem:self.attachmentView
-												  attribute:NSLayoutAttributeBottom
-												 multiplier:1
-												   constant:70];
+		bottomConstraint = [NSLayoutConstraint constraintWithItem:self.scrollView
+														attribute:NSLayoutAttributeBottom
+														relatedBy:NSLayoutRelationEqual
+														   toItem:self.attachmentView
+														attribute:NSLayoutAttributeBottom
+													   multiplier:1
+														 constant:70];
 	}
 	else {
-		constraint = [NSLayoutConstraint constraintWithItem:self.scrollView
-												  attribute:NSLayoutAttributeBottom
-												  relatedBy:NSLayoutRelationEqual
-													 toItem:self.messageView
-												  attribute:NSLayoutAttributeBottom
-												 multiplier:1
-												   constant:30];
+		bottomConstraint = [NSLayoutConstraint constraintWithItem:self.scrollView
+														attribute:NSLayoutAttributeBottom
+														relatedBy:NSLayoutRelationEqual
+														   toItem:self.messageView
+														attribute:NSLayoutAttributeBottom
+													   multiplier:1
+														 constant:30];
 	}
 	
-	[self.scrollView addConstraint:constraint];
+	[self.scrollView addConstraint:bottomConstraint];
 	
 	[self.scrollView setNeedsLayout];
 	[self.scrollView layoutIfNeeded];
@@ -418,7 +432,9 @@
                                          @"sender_name": patron.full_name,
                                          @"body": anObject};
 
-            [PFCloud callFunctionInBackground:@"reply_to_gift" withParameters:inputsArgs block:^(RPMessage *reply, NSError *error) {
+            [PFCloud callFunctionInBackground:@"reply_to_gift"
+							   withParameters:inputsArgs
+										block:^(RPMessage *reply, NSError *error) {
 
                 alert.sendButton.hidden = NO;
                 [alert.spinner stopAnimating];
@@ -428,13 +444,10 @@
                     if (!error) {
 
                         [RepunchUtils showDialogWithTitle:@"Your reply has been sent!" withMessage:nil];
-                        RPMessageStatus *newMessageStatus = [sharedData getMessage:self.messageStatusId];
-                        newMessageStatus.Message.Reply = reply;
-
-                        containsReply = !IS_NIL(message.Reply);
-
-                        [self.replyButton hideButton];
-                        [self setupMessage];
+                        messageStatus.Message.Reply = reply;
+						
+						[self loadMessage];
+						[self setupReply];
                         [self.delegate removeMessage:self forMsgStatus:nil];
 
                         //NSLog(@"send_gift result: %@", reply);

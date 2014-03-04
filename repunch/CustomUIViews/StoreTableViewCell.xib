@@ -47,7 +47,7 @@
                                     <constraint firstItem="21" firstAttribute="leading" secondItem="NDA-YO-fDP" secondAttribute="leading" id="tOC-EM-Xcr"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="locked_icon_no_circle.png" translatesAutoresizingMaskIntoConstraints="NO" id="arS-af-3KV" userLabel="RewardStatusImageView">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="reward_locked.png" translatesAutoresizingMaskIntoConstraints="NO" id="arS-af-3KV" userLabel="RewardStatusImageView">
                                 <rect key="frame" x="258" y="6" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
@@ -98,6 +98,7 @@
                         </constraints>
                     </view>
                 </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="yxh-fe-TVS" secondAttribute="trailing" constant="20" id="J50-EO-mow"/>
                     <constraint firstAttribute="bottom" secondItem="yxh-fe-TVS" secondAttribute="bottom" id="jx8-9w-pdd"/>
@@ -118,6 +119,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="locked_icon_no_circle.png" width="32" height="32"/>
+        <image name="reward_locked.png" width="32" height="32"/>
     </resources>
 </document>
