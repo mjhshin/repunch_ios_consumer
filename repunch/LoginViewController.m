@@ -37,7 +37,7 @@
 
 - (void) animateTextField: (UITextField*)textField shiftScreenUp:(BOOL)up
 {
-    const int movementDistance = 100; // tweak as needed
+    const int movementDistance = 135; // tweak as needed
     const float movementDuration = 0.3f; // tweak as needed
 	
     int movement = (up ? -movementDistance : movementDistance);
@@ -74,11 +74,11 @@
 		return;
 	}
 	else if(email.length == 0) {
-		[RepunchUtils showDialogWithTitle:@"Empty Field" withMessage:@"Please enter your email"];
+		[RepunchUtils showDialogWithTitle:@"Please enter your email" withMessage:nil];
 		return;
 	}
 	else if(password.length == 0) {
-		[RepunchUtils showDialogWithTitle:@"Empty Field" withMessage:@"Please enter your password"];
+		[RepunchUtils showDialogWithTitle:@"Please enter your password" withMessage:nil];
 		return;
 	}
 	

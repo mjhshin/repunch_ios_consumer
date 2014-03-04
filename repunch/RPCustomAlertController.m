@@ -9,6 +9,8 @@
 #import "RPCustomAlertController.h"
 #import "RepunchUtils.h"
 
+#define MAX_BODY_LENGTH 255
+
 @interface RPCustomAlertController () <UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -128,7 +130,7 @@
 + (void)showCreateMessageAlertWithRecepient:(NSString*)recepient andBlock:(RPCustomAlertActionButtonBlock)block;
 {
     RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"PostAlert"];
-
+	
     alert.alertBlock  = block;
     alert.label1.text = recepient;
     alert.postTextView.delegate = alert;
@@ -223,8 +225,6 @@
         }
 
     }];
-
-
 }
 
 + (CGRect)frameForViewWithInitialFrame:(CGRect)viewInitialFrame
@@ -267,12 +267,12 @@
     NSMutableString *string = [textView.text mutableCopy];
     [string replaceCharactersInRange:range withString:text];
 
-    return  string.length <= 150;
+    return  string.length <= MAX_BODY_LENGTH;
 }
 
 - (void)textViewDidChangeSelection:(UITextView *)textView
 {
-    self.postCharCount.text = [@(150 - self.postTextView.text.length) stringValue];
+    self.postCharCount.text = [@(MAX_BODY_LENGTH - self.postTextView.text.length) stringValue];
 
     if (self.postTextView.text.length > 0) {
         self.sendButton.enabled = YES;

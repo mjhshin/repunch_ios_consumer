@@ -131,7 +131,7 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     int movementDistance = textField.frame.origin.y;	
-    [self.scrollView setContentOffset:CGPointMake(0, movementDistance - 25) animated:YES];
+    [self.scrollView setContentOffset:CGPointMake(0, movementDistance - 72) animated:YES];
 }
 
 - (void)dismissKeyboard
@@ -174,32 +174,32 @@
 {
     if(_emailInput.text.length == 0 || _passwordInput.text.length == 0 ||
 		_firstNameInput.text.length == 0 || _lastNameInput.text.length == 0 || _ageInput.text.length == 0) {
-		[RepunchUtils showDialogWithTitle:@"Empty Field"
-							  withMessage:@"Please fill in all fields"];
+		[RepunchUtils showDialogWithTitle:@"Please fill in all fields"
+							  withMessage:nil];
         return NO;
     }
 	
 	if(_genderSelector.selectedSegmentIndex == UISegmentedControlNoSegment) {
-		[RepunchUtils showDialogWithTitle:@"Empty Filed"
-							  withMessage:@"Please specify your gender"];
+		[RepunchUtils showDialogWithTitle:@"Please specify your gender"
+							  withMessage:nil];
 		return NO;
 	}
     
     if( _passwordInput.text.length < 6 ) {
-		[RepunchUtils showDialogWithTitle:@"Registration Failed"
-							  withMessage:@"Passwords must be at least 6 characters"];
+		[RepunchUtils showDialogWithTitle:@"Passwords must be at least 6 characters"
+							  withMessage:nil];
 		return NO;
 	}
 	
 	if( [_ageInput.text intValue] < 13 ) {
-		[RepunchUtils showDialogWithTitle:@"Registration Failed"
-							  withMessage:@"Sorry, but you must be at least 13 years old to sign up"];
+		[RepunchUtils showDialogWithTitle:@"Sorry, but you must be at least 13 years old to sign up"
+							  withMessage:nil];
 		return NO;
 	}
 	
 	if( [_ageInput.text intValue] > 125 ) {
-		[RepunchUtils showDialogWithTitle:@"Field Validation"
-							  withMessage:@"Please enter your real age"];
+		[RepunchUtils showDialogWithTitle:@"Please enter your real age"
+							  withMessage:nil];
 		return NO;
 	}
     

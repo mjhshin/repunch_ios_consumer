@@ -404,7 +404,9 @@
 		return;
 	}
 
-    [RPCustomAlertController showCreateGiftMessageAlertWithRecepient:message.sender_name rewardTitle:message.gift_title andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
+    [RPCustomAlertController showCreateGiftMessageAlertWithRecepient:message.sender_name
+														 rewardTitle:message.gift_title
+															andBlock:^(RPCustomAlertActionButton buttonType, id anObject) {
 
         if (buttonType == SendButton) {
 
@@ -413,7 +415,9 @@
                                          @"sender_name": patron.full_name,
                                          @"body": anObject};
 
-            [PFCloud callFunctionInBackground:@"reply_to_gift" withParameters:inputsArgs  block:^(RPMessage *reply, NSError *error) {
+            [PFCloud callFunctionInBackground:@"reply_to_gift"
+							   withParameters:inputsArgs
+										block:^(RPMessage *reply, NSError *error) {
 
                 if (!error) {
 

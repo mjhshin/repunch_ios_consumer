@@ -5,7 +5,6 @@
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
-#import "SIAlertView.h"
 #import "StoreTableViewCell.h"
 #import "AppDelegate.h"
 #import "ComposeMessageViewController.h"

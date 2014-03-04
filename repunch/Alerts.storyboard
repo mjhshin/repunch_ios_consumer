@@ -875,7 +875,7 @@ You will lose all your punches!</string>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no"/>
                             </textView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="150" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ynt-Oy-Cfw" userLabel="CharCount">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="255" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ynt-Oy-Cfw" userLabel="CharCount">
                                 <rect key="frame" x="269" y="190" width="21" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
@@ -1019,14 +1019,14 @@ You will lose all your punches!</string>
                                     <constraint firstAttribute="height" constant="1" id="dxN-zV-Yeb"/>
                                 </constraints>
                             </view>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mHG-Na-WEX">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mHG-Na-WEX">
                                 <rect key="frame" x="10" y="94" width="280" height="89"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no"/>
                             </textView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="150" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lkv-ii-ylf" userLabel="CharCount">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="255" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lkv-ii-ylf" userLabel="CharCount">
                                 <rect key="frame" x="269" y="191" width="21" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
@@ -1036,10 +1036,10 @@ You will lose all your punches!</string>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5pB-vK-YKw" userLabel="Divider1">
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5pB-vK-YKw" userLabel="Divider1">
                                 <rect key="frame" x="0.0" y="219" width="300" height="1"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.86838503649999998" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="aeF-7K-4rB"/>
                                 </constraints>
@@ -1081,7 +1081,6 @@ You will lose all your punches!</string>
                             <constraint firstItem="Aee-yg-3BK" firstAttribute="top" secondItem="2Te-Cv-Wns" secondAttribute="top" constant="-1" id="hRo-zC-qA0"/>
                             <constraint firstItem="Nzz-2h-39X" firstAttribute="leading" secondItem="2Te-Cv-Wns" secondAttribute="leading" constant="20" symbolic="YES" id="jkY-jy-Fkb"/>
                             <constraint firstAttribute="bottom" secondItem="Nzz-2h-39X" secondAttribute="bottom" constant="14" id="kNl-Xk-RL3"/>
-                            <constraint firstItem="Nzz-2h-39X" firstAttribute="top" secondItem="5pB-vK-YKw" secondAttribute="bottom" constant="14" id="olw-II-yK0"/>
                             <constraint firstAttribute="trailing" secondItem="vAn-R9-67X" secondAttribute="trailing" constant="20" symbolic="YES" id="ot6-z1-e7n"/>
                             <constraint firstItem="5pB-vK-YKw" firstAttribute="leading" secondItem="2Te-Cv-Wns" secondAttribute="leading" id="ozf-GR-9rn"/>
                             <constraint firstItem="mHG-Na-WEX" firstAttribute="top" secondItem="5Ix-ff-1jb" secondAttribute="bottom" constant="8" symbolic="YES" id="rGE-z2-rti"/>

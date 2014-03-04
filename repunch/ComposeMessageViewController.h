@@ -6,7 +6,6 @@
 //
 
 #import "DataManager.h"
-#import "SIAlertView.h"
 #include <Parse/Parse.h>
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>

@@ -9,7 +9,6 @@
 #import "RedeemHandler.h"
 #import <Foundation/Foundation.h>
 #import "DataManager.h"
-#import "SIAlertView.h"
 #import "FacebookPost.h"
 #import "RPConstants.h"
 #import "RepunchUtils.h"

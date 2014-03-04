@@ -60,8 +60,6 @@
 		EE17EE0E17FA34EE0053C36C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE17EE0D17FA34EE0053C36C /* Crashlytics.framework */; };
 		EE255EA418BD38C800A6E15E /* RPPopupButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EE255EA318BD38C800A6E15E /* RPPopupButton.m */; };
 		EE28DAE017AC447E00E4C460 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE28DADF17AC447E00E4C460 /* DataManager.m */; };
-		EE2AFE7C1819B3420046CF74 /* SIAlertView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EE2AFE791819B3420046CF74 /* SIAlertView.bundle */; };
-		EE2AFE7D1819B3420046CF74 /* SIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE2AFE7B1819B3420046CF74 /* SIAlertView.m */; };
 		EE398B361885E5D6005BEDFE /* black_alpha_gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = EE398B351885E5D6005BEDFE /* black_alpha_gradient.png */; };
 		EE398B381885F98E005BEDFE /* orange_gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = EE398B371885F98E005BEDFE /* orange_gradient.png */; };
 		EE398B3F18908A00005BEDFE /* location_hours_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EE398B3D18908A00005BEDFE /* location_hours_icon.png */; };
@@ -281,9 +279,6 @@
 		EE255EA318BD38C800A6E15E /* RPPopupButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RPPopupButton.m; path = repunch/CustomUIViews/RPPopupButton.m; sourceTree = SOURCE_ROOT; };
 		EE28DADE17AC447E00E4C460 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		EE28DADF17AC447E00E4C460 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
-		EE2AFE791819B3420046CF74 /* SIAlertView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SIAlertView.bundle; sourceTree = "<group>"; };
-		EE2AFE7A1819B3420046CF74 /* SIAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIAlertView.h; sourceTree = "<group>"; };
-		EE2AFE7B1819B3420046CF74 /* SIAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIAlertView.m; sourceTree = "<group>"; };
 		EE398B351885E5D6005BEDFE /* black_alpha_gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = black_alpha_gradient.png; sourceTree = "<group>"; };
 		EE398B371885F98E005BEDFE /* orange_gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orange_gradient.png; sourceTree = "<group>"; };
 		EE398B3D18908A00005BEDFE /* location_hours_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = location_hours_icon.png; sourceTree = "<group>"; };
@@ -750,7 +745,6 @@
 				EE9D4B8717A83F4A005E0CC5 /* CustomUI */,
 				EEFBA1721810A6EB00783F05 /* Facebook */,
 				EE3F36D517B5865800D28FC9 /* Push */,
-				EE9D4E4D17A846B1005E0CC5 /* SIAlertView */,
 				EE9D4BC617A83F4A005E0CC5 /* ThirdPartyViews */,
 				EEFBA1731810A70F00783F05 /* Utilities */,
 				EE04ABCF181AF26800DDA5D0 /* ViewControllers */,
@@ -787,16 +781,6 @@
 				EE9D4BCC17A83F4A005E0CC5 /* NSDate+whenString.m */,
 			);
 			path = ThirdPartyViews;
-			sourceTree = "<group>";
-		};
-		EE9D4E4D17A846B1005E0CC5 /* SIAlertView */ = {
-			isa = PBXGroup;
-			children = (
-				EE2AFE791819B3420046CF74 /* SIAlertView.bundle */,
-				EE2AFE7A1819B3420046CF74 /* SIAlertView.h */,
-				EE2AFE7B1819B3420046CF74 /* SIAlertView.m */,
-			);
-			path = SIAlertView;
 			sourceTree = "<group>";
 		};
 		EE9D4E7517A84ABB005E0CC5 /* Resources */ = {
@@ -1096,7 +1080,6 @@
 				EEE4D24D1899AD8700A5EC25 /* forward_button.png in Resources */,
 				EEB75A9B187F5CAA00AA4F89 /* Images.xcassets in Resources */,
 				EE93169518B29FD400ECEABF /* store_save_background.png in Resources */,
-				EE2AFE7C1819B3420046CF74 /* SIAlertView.bundle in Resources */,
 				EEB75AA41884B2FD00AA4F89 /* nav_back.png in Resources */,
 				EE398B4F1891D21A005BEDFE /* circular_exit_button.png in Resources */,
 				EE9D4F3717A84ABB005E0CC5 /* login-button-small-pressed.png in Resources */,
@@ -1247,7 +1230,6 @@
 				EEA181AC17C6FD9B00553336 /* FacebookFriendsViewController.m in Sources */,
 				EE93163018AAA24300ECEABF /* RPButton.m in Sources */,
 				EEE4D27218A5AE5F00A5EC25 /* RPPatronStore.m in Sources */,
-				EE2AFE7D1819B3420046CF74 /* SIAlertView.m in Sources */,
 				EEA181B717CC499C00553336 /* RepunchUtils.m in Sources */,
 				202F1DFB18523DC500495BDF /* RPStore.m in Sources */,
 				EEB75A9218722D0800AA4F89 /* LocationDetailsViewController.m in Sources */,

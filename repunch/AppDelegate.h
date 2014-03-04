@@ -11,7 +11,6 @@
 #import "LandingViewController.h"
 #import <Parse/Parse.h>
 #import <FacebookSDK/FacebookSDK.h>
-#import "SIAlertView.h"
 #import "DataManager.h"
 #import <UIKit/UIKit.h>
 #import "PunchHandler.h"

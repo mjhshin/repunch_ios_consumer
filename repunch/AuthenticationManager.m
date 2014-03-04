@@ -26,7 +26,7 @@
     [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
             NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-										newUser.objectId,					@"user_id",
+										//newUser.objectId,					@"user_id",
 										email,								@"email",
 										firstName,							@"first_name",
 										lastName,							@"last_name",
@@ -107,7 +107,7 @@ withCompletionHandler:(AuthenticationManagerHandler)handler;
 			 }
 			 
 			 NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-										 currentUser.objectId,	@"user_id",
+										 //currentUser.objectId,	@"user_id",
 										 email,					@"email",
 										 gender,				@"gender",
 										 birthday,				@"birthday",
