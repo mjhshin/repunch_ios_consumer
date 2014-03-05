@@ -10,11 +10,32 @@
 #define DegreesToRadians(x) ((x) * M_PI / 180.0)
 
 @interface RPSpinner ()
-@property (nonatomic, strong)UIImageView *imageView;
-
+@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) NSMutableArray *keyFrames;
+@property (nonatomic, strong) UIImage *rotationImage;
 @end
 
 @implementation RPSpinner
+
+
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        static const NSUInteger numberOfFrames = 10;
+
+        self.keyFrames = [NSMutableArray arrayWithCapacity:numberOfFrames];
+
+        for (NSInteger i = 1; i <= numberOfFrames; i++) {
+            NSString *imageName = [NSString stringWithFormat:@"RefreshImage_%i.tiff", i];
+            [self.keyFrames addObject:[UIImage imageNamed:imageName]];
+        }
+
+        self.rotationImage = [UIImage imageNamed:@"RefreshRotatingImage.png"];
+        [self setImageNamed:self.rotationImage];
+    }
+    return self;
+}
 
 - (void)startAnimating
 {
@@ -23,17 +44,14 @@
     }
     _isAnimating = YES;
 
+    self.imageView.image = self.rotationImage;
     self.hidden = NO;
-
     
     CABasicAnimation* rotationAnimation;
     rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
 
-    CGFloat start = self.fillingPercent / 100 * 360;
-    CGFloat end = start + 360;
-
-    rotationAnimation.fromValue =  @(DegreesToRadians(start));
-    rotationAnimation.toValue = @(DegreesToRadians(end));
+    rotationAnimation.fromValue =  @(DegreesToRadians(0));
+    rotationAnimation.toValue = @(DegreesToRadians(360));
     rotationAnimation.duration = 1;
     rotationAnimation.cumulative = YES;
     rotationAnimation.repeatCount = HUGE_VALF;
@@ -48,7 +66,6 @@
     if (!self.isAnimating) {
         return;
     }
-    
     _isAnimating = NO;
 
     [self.imageView.layer removeAnimationForKey:@"rotationAnimation"];
@@ -63,9 +80,10 @@
     self.hidden = NO;
     _fillingPercent = fillingPercent;
 
-    CGFloat angle = fillingPercent / 100 * 360;
+    NSInteger index = (fillingPercent / 100) * (self.keyFrames.count -1);
 
-    [self rotateWithAngle:angle];
+    UIImage *image = self.keyFrames[index];
+    self.imageView.image = image ;
 
 }
 
@@ -78,7 +96,7 @@
     }
 }
 
-- (void)setImageNamed:(NSString *)imageName
+- (void)setImageNamed:(UIImage *)image
 {
     if (!self.imageView) {
 
@@ -100,13 +118,8 @@
                                                                        views:views]];
     }
 
-    self.imageView.image = [UIImage imageNamed:imageName];
+    self.imageView.image = image;
 }
 
-- (void)rotateWithAngle:(CGFloat)degrees
-{
-    CALayer *layer = self.imageView.layer;
-    layer.transform =  CATransform3DRotate(CATransform3DIdentity, DegreesToRadians(degrees), 0.0f, 0.0f, 1.0f);
-}
 
 @end

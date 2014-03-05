@@ -15,11 +15,9 @@ typedef void(^ReloadHandler)();
 @property (copy) ReloadHandler handler;
 @property (atomic, readonly) BOOL isRefreshing;
 
-- (instancetype)initWithTableView:(UITableView*)tableView
-				   andImageNamed:(NSString*)imageName;
+- (instancetype)initWithTableView:(UITableView*)tableView;
 
 - (instancetype)initWithTableView:(UITableView*)tableView
-				   andImageNamed:(NSString*)imageName
 						  isStore:(BOOL)isStore;
 
 - (void)beginRefreshing;

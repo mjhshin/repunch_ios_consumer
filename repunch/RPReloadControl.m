@@ -18,7 +18,7 @@ typedef enum  {
 } PullState;
 
 
-static const CGFloat kDistanFromTop = 64;
+static const CGFloat kDistanFromTop = 70;
 
 @interface RPReloadControl ()
 
@@ -34,7 +34,7 @@ static const CGFloat kDistanFromTop = 64;
 
 #pragma mark - Init
 
-- (instancetype)initWithTableView:(UITableView*)tableView andImageNamed:(NSString*)imageName isStore:(BOOL)isStore
+- (instancetype)initWithTableView:(UITableView*)tableView isStore:(BOOL)isStore
 {
     if (isStore) {
         self.fixForStoreController = YES;
@@ -51,7 +51,6 @@ static const CGFloat kDistanFromTop = 64;
     self.frame = tableView.frame;
     self.spinner = [[RPSpinner alloc] initWithFrame:CGRectMake(0, 0, 34, 34)];
 
-    [self.spinner setImageNamed:imageName];
     self.spinner.hideWhenFinish = YES;
 
     self.spinner.translatesAutoresizingMaskIntoConstraints = NO;
@@ -78,9 +77,9 @@ static const CGFloat kDistanFromTop = 64;
 }
 
 
-- (instancetype)initWithTableView:(UITableView*)tableView andImageNamed:(NSString*)imageName;
+- (instancetype)initWithTableView:(UITableView*)tableView
 {
-    return [self initWithTableView:tableView andImageNamed:imageName isStore:NO];
+    return [self initWithTableView:tableView isStore:NO];
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview
@@ -125,7 +124,7 @@ static const CGFloat kDistanFromTop = 64;
 
 - (void)setPullingAnimationWithCurrentGap:(CGFloat)topGap
 {
-    if (topGap >= 5 && self.state == RefreshStateNormal) {
+    if (topGap >= 10 && self.state == RefreshStateNormal) {
         CGFloat completedAngle =  (topGap -15) / ( MAX_SCROLL_GAP -15) * 100;
 
         if (completedAngle <= 100 && completedAngle >= 0) {
@@ -199,7 +198,7 @@ static const CGFloat kDistanFromTop = 64;
     CGFloat dis = self.fixForStoreController ? 0 : kDistanFromTop;
     [UIView animateWithDuration:0.3 delay:0.4 options: 0 animations:^{
         self.spinner.alpha = 1;
-        self.tableView.contentInset = UIEdgeInsetsMake(self.spinner.bounds.size.height * 1.2 + dis, 0.0f, 0.0f, 0.0f);
+        self.tableView.contentInset = UIEdgeInsetsMake(self.spinner.bounds.size.height * 1.6 + dis, 0.0f, 0.0f, 0.0f);
         [self.spinner startAnimating];
 
     } completion:^(BOOL finished) {

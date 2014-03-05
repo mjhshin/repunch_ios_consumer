@@ -17,6 +17,4 @@
 - (void)startAnimating;
 - (void)stopAnimating;
 
-- (void)setImageNamed:(NSString*)imageName;
-
 @end

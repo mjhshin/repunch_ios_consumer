@@ -9,7 +9,7 @@
 #import "RPReloadControl.h"
 
 @interface MyPlacesViewController ()
-//@property (strong, nonatomic) RPReloadControl *reloadControl;
+@property (strong, nonatomic) RPReloadControl *reloadControl;
 
 @end
 
@@ -32,16 +32,15 @@
 	self.tableView.dataSource = self;
 	self.tableView.delegate = self;
 
-	/*
-    self.reloadControl = [[RPReloadControl alloc] initWithTableView:self.tableView
-													  andImageNamed:@"app_icon_29x29.png"];
+	
+    self.reloadControl = [[RPReloadControl alloc] initWithTableView:self.tableView];
 
     __weak typeof (self)weakSelf = self;
 
     self.reloadControl.handler = ^(){
         [weakSelf loadMyPlaces];
     };
-	 */
+
 	
 	[self registerForNotifications];
 	[self setupNavigationBar];
@@ -159,7 +158,7 @@
 - (void)loadMyPlaces
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
-		//[self.reloadControl endRefreshing];
+		[self.reloadControl endRefreshing];
 		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
@@ -181,7 +180,7 @@
     {
 		[weakSelf.activityIndicatorView setHidden:YES];
 		[weakSelf.activityIndicator stopAnimating];
-		//[weakSelf.reloadControl endRefreshing];
+		[weakSelf.reloadControl endRefreshing];
 		
         if (!error)
         {
