@@ -23,8 +23,9 @@
 	NSString *message = [NSString stringWithFormat:
 						 @"Share this on Facebook to receive %i extra punches?", store.punches_facebook];
 	
-	[RPCustomAlertController showDecisionAlertWithTitle:title andMessage:message andBlock:^(RPCustomAlertController *alert, RPCustomAlertActionButton buttonType, id anObject) {
-
+	[RPCustomAlertController showDecisionAlertWithTitle:title
+											 andMessage:message
+											   andBlock:^(RPCustomAlertController *alert, RPCustomAlertActionButton buttonType, id anObject) {
         [alert hideAlertWithBlock:^{
             if (buttonType == ConfirmButton) {
 
@@ -34,7 +35,7 @@
                     withRewardTitle:rewardTitle];
 
             }
-            else {
+            else if (buttonType == DenyButton) {
                 [self callCloudCode:NO
                     withPatronStore:patronStore
                         withPunches:store.punches_facebook
@@ -60,28 +61,24 @@
 	
 	[PFCloud callFunctionInBackground: @"post_to_facebook"
 					   withParameters:inputArgs
-								block:^(NSString *result, NSError *error)
-	{
+								block:^(NSString *result, NSError *error) {
 		[RepunchUtils clearNotificationCenter];
 		
-		if(!error)
-		{
-			[patronStore setObject:[NSNull null] forKey:@"FacebookPost"];
+		if(!error) {
+			patronStore.FacebookPost = nil;//[NSNull null];
 			
-			if(accept)
-			{
+			if(accept) {
 				[patronStore incrementKey:@"punch_count" byAmount:[NSNumber numberWithInteger:punches]];
 				[[NSNotificationCenter defaultCenter] postNotificationName:@"FacebookPost" object:self];
 				
 				[RepunchUtils showDialogWithTitle:@"Successfully posted to Facebook" withMessage:nil];
 			}
 		}
-		else if([[error userInfo][@"error"] isEqualToString:@"NULL_FACEBOOK_POST"])
-		{
+		else if([[error userInfo][@"error"] isEqualToString:@"NULL_FACEBOOK_POST"]) {
+			patronStore.FacebookPost = nil;//[NSNull null];
 			[RepunchUtils showDialogWithTitle:@"You've already shared this redeem on Facebook" withMessage:nil];
 		}
-		else
-		{
+		else {
 			NSLog(@"facebook_post error: %@", error);
 			[RepunchUtils showDialogWithTitle:@"Sorry, something went wrong" withMessage:nil];
 		}

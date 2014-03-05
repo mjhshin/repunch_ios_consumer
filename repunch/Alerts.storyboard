@@ -136,7 +136,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="close:" destination="TgM-5F-YcR" eventType="touchUpInside" id="PBb-op-8nr"/>
+                                    <action selector="actionButton:" destination="TgM-5F-YcR" eventType="touchUpInside" id="C6n-gT-8Op"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kp1-tW-kev" userLabel="YesButton">
@@ -191,8 +191,8 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
-                        <outlet property="closeButton" destination="cZV-wh-xtq" id="EyI-RW-V0c"/>
                         <outlet property="confirmButton" destination="kp1-tW-kev" id="PzL-mZ-kfy"/>
+                        <outlet property="denyButton" destination="cZV-wh-xtq" id="wtb-0t-bJB"/>
                         <outlet property="label1" destination="dv6-fH-a6I" id="WGG-sm-ZEq"/>
                         <outlet property="titleLabel" destination="qHR-Gq-HNQ" id="1Fn-WL-AbP"/>
                     </connections>

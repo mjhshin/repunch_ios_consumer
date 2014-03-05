@@ -18,7 +18,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
 	
-	BOOL isProduction = NO; // DON'T FORGET TO SET!!!!
+	BOOL isProduction = YES; // DON'T FORGET TO SET!!!!
 	
 	if(isProduction) {	// PRODUCTION KEY
 		[Parse setApplicationId:@"m0EdwpRYlJwttZLZ5PUk7y13TWCnvSScdn8tfVoh"
@@ -109,34 +109,28 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 	
 	NSString *pushType = userInfo[@"type"];
 	
-	if( [pushType isEqualToString:@"punch"] )
-	{
-		NSLog(@"Push received: punch");
+	if( [pushType isEqualToString:@"punch"] ) {
+		//NSLog(@"Push received: punch");
 		[PunchHandler handlePush:userInfo withFetchCompletionHandler:completionHandler];
 	}
-	else if( [pushType isEqualToString:@"redeem"] )
-	{
-		NSLog(@"Push received: redeem");
+	else if( [pushType isEqualToString:@"redeem"] ) {
+		//NSLog(@"Push received: redeem");
 		[RedeemHandler handlePush:userInfo withFetchCompletionHandler:completionHandler];
 	}
-	else if( [pushType isEqualToString:@"redeem_offer_gift"] )
-	{
-		NSLog(@"Push received: redeem offer/gift");
+	else if( [pushType isEqualToString:@"redeem_offer_gift"] ) {
+		//NSLog(@"Push received: redeem offer/gift");
 		[RedeemHandler handleOfferGiftPush:userInfo withFetchCompletionHandler:completionHandler];
 	}
-    else if( [pushType isEqualToString:@"message"] )
-	{
-		NSLog(@"Push received: message");
+    else if( [pushType isEqualToString:@"message"] ) {
+		//NSLog(@"Push received: message");
         [MessageHandler handlePush:userInfo withFetchCompletionHandler:completionHandler];
 	}
-    else if( [pushType isEqualToString:@"gift"] )
-	{
-		NSLog(@"Push received: gift");
+    else if( [pushType isEqualToString:@"gift"] ) {
+		//NSLog(@"Push received: gift");
 		[MessageHandler handleGiftPush:userInfo forReply:NO withFetchCompletionHandler:completionHandler];
 	}
-    else if( [pushType isEqualToString:@"gift_reply"] )
-	{
-		NSLog(@"Push received: gift_reply");
+    else if( [pushType isEqualToString:@"gift_reply"] ) {
+		//NSLog(@"Push received: gift_reply");
 		[MessageHandler handleGiftPush:userInfo forReply:YES withFetchCompletionHandler:completionHandler];
 	}
 }

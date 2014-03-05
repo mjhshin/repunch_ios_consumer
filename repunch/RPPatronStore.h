@@ -19,7 +19,7 @@
 
 @property (strong, readonly, atomic) RPPatron *Patron;
 @property (strong, readonly, atomic) RPStore *Store;
-@property (strong, readonly, atomic) RPFacebookPost *FacebookPost;
+@property (strong, atomic) RPFacebookPost *FacebookPost;
 
 + (NSString *)parseClassName;
 

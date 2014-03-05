@@ -361,7 +361,7 @@
 
 - (void)receiveRefreshNotification:(NSNotification *)notification
 {
-	NSLog(@"received notificationcenter notification");
+	//NSLog(@"received notificationcenter notification");
 	NSString *storeId = notification.userInfo[@"store_id"];
 	
 	if(storeId != nil) {

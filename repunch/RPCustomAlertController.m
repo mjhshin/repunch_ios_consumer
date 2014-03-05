@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *giftButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (weak, nonatomic) IBOutlet UIButton *confirmButton;
+@property (weak, nonatomic) IBOutlet UIButton *denyButton;
 @property (weak, nonatomic) IBOutlet UITextView *postTextView;
 @property (weak, nonatomic) IBOutlet UILabel *postCharCount;
 
@@ -162,7 +163,6 @@
     alert.titleLabel.layer.cornerRadius = 5;
     alert.closeButton.layer.cornerRadius = 5;
 
-
     UIView *header = nil;
 
     for (UIView *view in alert.view.subviews) {
@@ -220,6 +220,9 @@
     }
     else if (self.confirmButton == sender) {
         button = ConfirmButton;
+    }
+	else if (self.denyButton == sender) {
+        button = DenyButton;
     }
 
     if (self.alertBlock) {

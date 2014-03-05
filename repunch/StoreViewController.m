@@ -68,7 +68,6 @@
 	sharedData = [DataManager getSharedInstance];
 	patron = [sharedData patron];
 	store = [sharedData getStore:self.storeId];
-    
 	
 	if(self.storeLocationId != nil) {
 		storeLocation = [sharedData getStoreLocation:self.storeLocationId];
@@ -261,8 +260,7 @@
 		punchCount = patronStore.punch_count;
 		
 		RPFacebookPost *facebookPost = patronStore.FacebookPost;
-		if( !IS_NIL(facebookPost) )
-		{
+		if( !IS_NIL(facebookPost) ) {
 			[FacebookPost presentDialog:self.storeId withRewardTitle:facebookPost.reward];
 		}
 	}

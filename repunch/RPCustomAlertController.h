@@ -12,7 +12,7 @@
 @class RPCustomAlertController;
 
 typedef NS_ENUM(NSUInteger, RPCustomAlertActionButton) {
-    NoneButton, RedeemButton, GiftButton, DeleteButton, SendButton, ConfirmButton
+    NoneButton, RedeemButton, GiftButton, DeleteButton, SendButton, ConfirmButton, DenyButton
 };
 
 typedef void(^RPCustomAlertActionButtonBlock)(RPCustomAlertController *alert, RPCustomAlertActionButton buttonType, id anObject);
