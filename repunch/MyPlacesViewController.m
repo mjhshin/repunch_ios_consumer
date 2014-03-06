@@ -14,6 +14,12 @@
 @end
 
 @implementation MyPlacesViewController
+{
+	DataManager *sharedData;
+	RPPatron *patron;
+	NSMutableArray *storeIdArray;
+	NSMutableDictionary *imageDownloadsInProgress;
+}
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
 {
@@ -24,31 +30,17 @@
 {
     [super viewDidLoad];
 	
-	self.sharedData = [DataManager getSharedInstance];
-	self.patron = [self.sharedData patron];
-	self.storeIdArray = [NSMutableArray array];
-    self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
-	
-	self.tableView.dataSource = self;
-	self.tableView.delegate = self;
-
-	
-    self.reloadControl = [[RPReloadControl alloc] initWithTableView:self.tableView];
-
-    __weak typeof (self)weakSelf = self;
-
-    self.reloadControl.handler = ^(){
-        [weakSelf loadMyPlaces];
-    };
-
+	sharedData = [DataManager getSharedInstance];
+	patron = [sharedData patron];
+	storeIdArray = [NSMutableArray array];
+    imageDownloadsInProgress = [NSMutableDictionary dictionary];
 	
 	[self registerForNotifications];
 	[self setupNavigationBar];
 	[self loadMyPlaces];
-
 }
 
--(void)viewDidAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
     [self showHelpViews];
 }
@@ -59,10 +51,10 @@
 	NSLog(@"My Places didReceiveMemoryWarning");
     
     // terminate all pending image downloads
-    NSArray *allDownloads = [self.imageDownloadsInProgress allValues];
+    NSArray *allDownloads = [imageDownloadsInProgress allValues];
     [allDownloads makeObjectsPerformSelector:@selector(cancelImageDownload)];
     
-    [self.imageDownloadsInProgress removeAllObjects];
+    [imageDownloadsInProgress removeAllObjects];
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -77,7 +69,7 @@
 		
 		NSString *message = [NSString stringWithFormat:
 							 @"Your Punch Code is %@\n\nYou can always click on the Repunch logo if you forget.",
-							 self.patron.punch_code];
+							 patron.punch_code];
 		
 		[RepunchUtils showDialogWithTitle:@"Hello!"
 							  withMessage:message];
@@ -121,9 +113,9 @@
 	__weak typeof(self) weakSelf = self;
 	Reachability* reach = [Reachability reachabilityWithHostname:@"www.google.com"];
 	
-	reach.reachableBlock = ^(Reachability*reach)
+	reach.reachableBlock = ^(Reachability *reach)
 	{
-		if(weakSelf.storeIdArray.count == 0) {
+		if(storeIdArray.count == 0) {
 			[weakSelf loadMyPlaces];
 		}
 		else {
@@ -163,36 +155,36 @@
 		return;
 	}
 	
-	if(self.storeIdArray.count == 0) {
+	if(storeIdArray.count == 0) {
 		self.activityIndicatorView.hidden = NO;
 		[self.activityIndicator startAnimating];
 	}
 	self.emptyMyPlacesLabel.hidden = YES;
 	
-    PFRelation *patronStoreRelation = [self.patron relationforKey:@"PatronStores"];
+    PFRelation *patronStoreRelation = [patron relationforKey:@"PatronStores"];
     PFQuery *patronStoreQuery = [patronStoreRelation query];
     [patronStoreQuery includeKey:@"Store.store_locations"];
 	[patronStoreQuery includeKey:@"FacebookPost"];
 	//[patronStoreQuery setLimit:20];
 
     __weak typeof(self) weakSelf = self;
-    [patronStoreQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
-    {
+    [patronStoreQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+		
 		[weakSelf.activityIndicatorView setHidden:YES];
 		[weakSelf.activityIndicator stopAnimating];
 		[weakSelf.reloadControl endRefreshing];
 		
         if (!error)
         {
-			[weakSelf.storeIdArray removeAllObjects];
+			[storeIdArray removeAllObjects];
 			
 			if(results.count > 0)
 			{
 				for (RPPatronStore *patronStore in results)
 				{
-					[weakSelf.sharedData addPatronStore:patronStore forKey:patronStore.Store.objectId];
-					[weakSelf.sharedData addStore:patronStore.Store];
-					[weakSelf.storeIdArray addObject:patronStore.Store.objectId];
+					[sharedData addPatronStore:patronStore forKey:patronStore.Store.objectId];
+					[sharedData addStore:patronStore.Store];
+					[storeIdArray addObject:patronStore.Store.objectId];
 				}
 			}
 			
@@ -215,10 +207,10 @@
 
 - (void)sortStoreObjectIdsByPunches
 {
-	[self.storeIdArray sortUsingComparator:^NSComparisonResult(NSString *objectId1, NSString *objectId2)
-    {
-		RPPatronStore* patronStore1 = [self.sharedData getPatronStore:objectId1];
-		RPPatronStore* patronStore2 = [self.sharedData getPatronStore:objectId2];
+	[storeIdArray sortUsingComparator:^NSComparisonResult(NSString *objectId1, NSString *objectId2) {
+		
+		RPPatronStore* patronStore1 = [sharedData getPatronStore:objectId1];
+		RPPatronStore* patronStore2 = [sharedData getPatronStore:objectId2];
 		
 		NSNumber *punchCount1 = [NSNumber numberWithInteger:patronStore1.punch_count];
 		NSNumber *punchCount2 = [NSNumber numberWithInteger:patronStore2.punch_count];
@@ -246,7 +238,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.storeIdArray count];
+    return storeIdArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -257,9 +249,9 @@
         cell = [MyPlacesTableViewCell cell];
     }
 	
-	NSString *storeId = self.storeIdArray[indexPath.row];
-	RPPatronStore *patronStore = [self.sharedData getPatronStore:storeId];
-	RPStore *store = [self.sharedData getStore:storeId];
+	NSString *storeId = storeIdArray[indexPath.row];
+	RPPatronStore *patronStore = [sharedData getPatronStore:storeId];
+	RPStore *store = [sharedData getStore:storeId];
 	
 	cell.storeName.text = store.store_name;
 	cell.numPunches.text = [NSString stringWithFormat:(patronStore.punch_count == 1) ?
@@ -287,7 +279,7 @@
 		//{
 		if( !IS_NIL(store.thumbnail_image) )
         {
-            UIImage *storeImage = [self.sharedData getThumbnailImage:storeId];
+            UIImage *storeImage = [sharedData getThumbnailImage:storeId];
 			if(storeImage == nil)
 			{
 				cell.storeImage.image = [UIImage imageNamed:@"placeholder_thumbnail_image"];
@@ -309,9 +301,8 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
-	NSString *storeId = self.storeIdArray[indexPath.row];
-    StoreViewController *storeVC = [[StoreViewController alloc]init];
-    storeVC.storeId = storeId;
+	StoreViewController *storeVC = [[StoreViewController alloc]init];
+    storeVC.storeId = storeIdArray[indexPath.row];
 	storeVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:storeVC animated:YES];
 }
@@ -327,21 +318,22 @@
 		return;
 	}
 	
-    PFFile *existingImageFile = self.imageDownloadsInProgress[indexPath];
+    PFFile *existingImageFile = imageDownloadsInProgress[indexPath];
 	
     if (existingImageFile == nil) {
-        [self.imageDownloadsInProgress setObject:imageFile forKey:indexPath];
+        [imageDownloadsInProgress setObject:imageFile forKey:indexPath];
         
         [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+			
             if (!error) {
-				[self.imageDownloadsInProgress removeObjectForKey:indexPath]; // Remove the PFFile from the in-progress list
+				[imageDownloadsInProgress removeObjectForKey:indexPath]; // Remove the PFFile from the in-progress list
 				
 				UIImage *storeImage = [UIImage imageWithData:data];
 				if(storeImage) {
 					MyPlacesTableViewCell *cell = (MyPlacesTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
 					//cell.storeImage.image = storeImage;
 					[cell.storeImage setImageWithAnimation:storeImage];
-					[self.sharedData addThumbnailImage:storeImage forKey:storeId];
+					[sharedData addThumbnailImage:storeImage forKey:storeId];
 				}
             }
             else {
@@ -353,7 +345,7 @@
 
 - (void)cancelImageDownload
 {
-    for(PFFile *imageFile in self.imageDownloadsInProgress) {
+    for(PFFile *imageFile in imageDownloadsInProgress) {
         [imageFile cancel];
     }
 }
@@ -364,14 +356,14 @@
 	NSString *storeId = notification.userInfo[@"store_id"];
 	
 	if(storeId != nil) {
-		NSUInteger index = [self.storeIdArray indexOfObject:storeId];
+		NSUInteger index = [storeIdArray indexOfObject:storeId];
 		
 		if(index == NSNotFound) {
 			NSLog(@"storeId not found, adding it");
-			[self.storeIdArray addObject:storeId];
+			[storeIdArray addObject:storeId];
 		} else {
 			NSLog(@"storeId found, removing it");
-			[self.storeIdArray removeObjectAtIndex:index];
+			[storeIdArray removeObjectAtIndex:index];
 		}
 	}
 	
@@ -380,7 +372,7 @@
 
 - (void)refreshTableView
 {
-	if(self.storeIdArray.count > 0) {
+	if(storeIdArray.count > 0) {
 		[self.emptyMyPlacesLabel setHidden:YES];
 	}
 	else {
@@ -431,7 +423,7 @@
 
 - (void)showPunchCode
 {
-	[RepunchUtils showPunchCode:self.patron.punch_code];
+	[RepunchUtils showPunchCode:patron.punch_code];
 }
 
 - (void)openSettings

@@ -21,8 +21,8 @@
 
 + (void)showConnectionErrorDialog
 {
-	[RPCustomAlertController showDefaultAlertWithTitle:@"Error"
-											andMessage:@"There was a problem connecting to Repunch. Please check your connection and try again."];
+	[RPCustomAlertController showDefaultAlertWithTitle:@"No Internet Connection"
+											andMessage:@"Please check your connection and try again."];
 }
 
 + (void)showCustomDropdownView:(UIView *)parentView withMessage:(NSString *)message
@@ -47,7 +47,6 @@
 
 + (void)showNavigationBarDropdownView:(UIView *)parentView withMessage:(NSString *)message
 {
-    
 	UILabel *dropdownLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
 	
 	if(message == nil) {
@@ -64,7 +63,7 @@
 	[parentView addSubview:dropdownLabel];
 	
 	CGRect rect = dropdownLabel.frame;
-    rect.origin.y = -40;
+    rect.origin.y = 0;
 	dropdownLabel.frame = rect;
 
 	// Fade out the view right away
@@ -73,7 +72,7 @@
 						options: UIViewAnimationOptionCurveEaseOut
 					 animations:^{
 						 CGRect rect2 = dropdownLabel.frame;
-						 rect2.origin.y = 0;
+						 rect2.origin.y = 64;
 						 dropdownLabel.frame = rect2;
 					 }
 					 completion:^(BOOL finished) {
@@ -83,7 +82,7 @@
 											 options:UIViewAnimationOptionCurveEaseOut
 										  animations:^{
 											  CGRect rect3 = dropdownLabel.frame;
-											  rect3.origin.y = -40;
+											  rect3.origin.y = 0;
 											  dropdownLabel.frame = rect3;
 										  }
 										  completion:^(BOOL finished) {

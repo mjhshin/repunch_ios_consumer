@@ -14,15 +14,9 @@
 #import "RPConstants.h"
 #include "RPStoreLocation.h"
 
-@interface SearchViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
-
-@property (nonatomic, strong) DataManager* sharedData;
-@property (nonatomic, strong) PFObject* patron;
-@property (nonatomic, strong) NSMutableArray *storeLocationIdArray;
-@property (nonatomic, strong) NSMutableDictionary *imageDownloadsInProgress;
+@interface SearchViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet RPTableView *tableView;
-
 @property (weak, nonatomic) IBOutlet UIView *activityIndicatorView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *emptyResultsLabel;

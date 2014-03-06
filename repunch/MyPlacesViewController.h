@@ -25,9 +25,4 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *emptyMyPlacesLabel;
 
-@property (nonatomic, strong) DataManager *sharedData;
-@property (nonatomic, strong) RPPatron *patron;
-@property (nonatomic, strong) NSMutableArray *storeIdArray;
-@property (nonatomic, strong) NSMutableDictionary *imageDownloadsInProgress;
-
 @end

@@ -12,12 +12,13 @@
 #import "RPStoreLocation.h"
 #import "RepunchUtils.h"
 #import "DataManager.h"
+#import "LocationManager.h"
 
 @implementation LocationsViewController
 {
 	RPStore *store;
-	CLLocationManager *locationManager;
 	PFGeoPoint *userLocation;
+	NSMutableArray *locationsArray;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -25,7 +26,6 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-		self.navigationItem.title = @"Locations";
     }
     return self;
 }
@@ -36,52 +36,25 @@
 	
 	store = [[DataManager getSharedInstance] getStore:self.storeId];
 	
-	locationManager = [[CLLocationManager alloc] init];
-	locationManager.delegate = self;
-	locationManager.distanceFilter = kCLDistanceFilterNone; //filter out negligible changes in location (disabled for now)
-	locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+	self.navigationItem.title = @"Locations";
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
-	[super viewWillAppear:animated];
-	[locationManager startUpdatingLocation];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-	[super viewWillDisappear:animated];
-	[locationManager startUpdatingLocation];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
-#pragma mark - Location Manager Delegate
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
-	CLLocation* location = [locations lastObject];
-	NSDate* eventDate = location.timestamp;
-	NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
+	[super viewDidAppear:animated];
 	
-    if(userLocation == nil || abs(howRecent) > 60) //if result is older than 1 minute
-	{
-		NSLog(@"latitude %+.6f, longitude %+.6f\n",
-			  location.coordinate.latitude, location.coordinate.longitude);
-		userLocation = [PFGeoPoint geoPointWithLocation:location];
-		
-		[self reloadTableView];
-	}
+	[[LocationManager getSharedInstance] startUpdatingLocationWithBlock:
+	 ^(CLLocationManager *manager, CLLocation *location, NSError *error) {
+		 
+		 userLocation = [PFGeoPoint geoPointWithLocation:location];
+		 [self reloadTableView];
+	 }];
 }
 
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+- (void)viewDidDisappear:(BOOL)animated
 {
-	[manager stopUpdatingLocation];
-	
-	[self reloadTableView];
+	[super viewDidDisappear:animated];
+	[[LocationManager getSharedInstance] stopUpdatingLocation];
 }
 
 #pragma mark - Table view data source
@@ -93,7 +66,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return self.locationsArray.count;
+	return locationsArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -104,7 +77,7 @@
         cell = [LocationsTableViewCell cell];
     }
 	
-	RPStoreLocation *storeLocation = self.locationsArray[indexPath.row];
+	RPStoreLocation *storeLocation = locationsArray[indexPath.row];
     
 	cell.locationTitle.text = storeLocation.street;
 	cell.locationSubtitle.text = [NSString stringWithFormat:@"%@, %@", storeLocation.city, storeLocation.state];
@@ -128,13 +101,13 @@
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
     LocationDetailsViewController *locationDetailsVC = [[LocationDetailsViewController alloc] init];
-    locationDetailsVC.storeLocationId = [self.locationsArray[indexPath.row] objectId];
+    locationDetailsVC.storeLocationId = [locationsArray[indexPath.row] objectId];
     [self.navigationController pushViewController:locationDetailsVC animated:YES];
 }
 
 - (void)reloadTableView
 {
-	self.locationsArray = [NSMutableArray arrayWithArray:store.store_locations];//[self.store.store_locations mutableCopy];
+	locationsArray = [store.store_locations mutableCopy];
 	[self sortLocationsByDistance];
 	[self.tableView reloadData];
 }
@@ -145,8 +118,8 @@
 		return;
 	}
 	
-	[self.locationsArray sortUsingComparator:^NSComparisonResult(RPStoreLocation *location1, RPStoreLocation *location2)
-	 {
+	[locationsArray sortUsingComparator:^NSComparisonResult(RPStoreLocation *location1, RPStoreLocation *location2) {
+		
 		 double distance1 = [userLocation distanceInMilesTo:location1.coordinates];
 		 double distance2 = [userLocation distanceInMilesTo:location2.coordinates];
 		 

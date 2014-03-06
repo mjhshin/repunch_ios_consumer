@@ -320,44 +320,32 @@
                         <viewControllerLayoutGuide type="bottom" id="4Nj-PV-7YP"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="sBg-cE-xLl">
-                        <rect key="frame" x="0.0" y="0.0" width="280" height="220"/>
+                        <rect key="frame" x="0.0" y="0.0" width="280" height="162"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" restorationIdentifier="HeaderLabel" translatesAutoresizingMaskIntoConstraints="NO" id="RGN-oq-lyL" userLabel="MessageView">
-                                <rect key="frame" x="0.0" y="0.0" width="280" height="100"/>
+                                <rect key="frame" x="0.0" y="0.0" width="280" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="Remove from My Places?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="264" translatesAutoresizingMaskIntoConstraints="NO" id="tpZ-YU-ba1" userLabel="TitleLabel">
-                                        <rect key="frame" x="8" y="8" width="264" height="41"/>
+                                        <rect key="frame" x="8" y="0.0" width="264" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
-                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="751" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="260" translatesAutoresizingMaskIntoConstraints="NO" id="Vdx-Ab-YWy" userLabel="MessageLabel">
-                                        <rect key="frame" x="10" y="49" width="260" height="41"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <string key="text">WARNING:
-You will lose all your punches!</string>
-                                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="Vdx-Ab-YWy" secondAttribute="bottom" constant="10" id="0FN-UU-TDn"/>
-                                    <constraint firstAttribute="trailing" secondItem="Vdx-Ab-YWy" secondAttribute="trailing" constant="10" id="2DX-nS-lZg"/>
                                     <constraint firstAttribute="trailing" secondItem="tpZ-YU-ba1" secondAttribute="trailing" constant="8" id="FcQ-Cj-CKm"/>
-                                    <constraint firstItem="Vdx-Ab-YWy" firstAttribute="leading" secondItem="RGN-oq-lyL" secondAttribute="leading" constant="10" id="eaR-AX-Hs0"/>
-                                    <constraint firstItem="Vdx-Ab-YWy" firstAttribute="top" secondItem="tpZ-YU-ba1" secondAttribute="bottom" id="iuy-l4-sGi"/>
+                                    <constraint firstAttribute="bottom" secondItem="tpZ-YU-ba1" secondAttribute="bottom" id="Rn0-he-83j"/>
                                     <constraint firstItem="tpZ-YU-ba1" firstAttribute="leading" secondItem="RGN-oq-lyL" secondAttribute="leading" constant="8" id="kry-Mz-CK9"/>
-                                    <constraint firstItem="tpZ-YU-ba1" firstAttribute="top" secondItem="RGN-oq-lyL" secondAttribute="top" constant="8" id="vdz-2A-20A"/>
-                                    <constraint firstAttribute="height" constant="100" id="xbV-og-1Sm"/>
+                                    <constraint firstItem="tpZ-YU-ba1" firstAttribute="top" secondItem="RGN-oq-lyL" secondAttribute="top" id="vdz-2A-20A"/>
+                                    <constraint firstAttribute="height" constant="50" id="xbV-og-1Sm"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YRA-Jw-UwQ" userLabel="DeleteButton">
-                                <rect key="frame" x="0.0" y="101" width="280" height="54"/>
+                                <rect key="frame" x="0.0" y="51" width="280" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="0.90000000000000002" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
@@ -373,7 +361,7 @@ You will lose all your punches!</string>
                                 </connections>
                             </button>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FUh-7r-k8H" userLabel="HorizontalDivider">
-                                <rect key="frame" x="0.0" y="100" width="280" height="1"/>
+                                <rect key="frame" x="0.0" y="50" width="280" height="1"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.86838503649999998" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -382,7 +370,7 @@ You will lose all your punches!</string>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aLw-Y8-Xh5" userLabel="CancelButton">
-                                <rect key="frame" x="0.0" y="163" width="280" height="54"/>
+                                <rect key="frame" x="0.0" y="109" width="280" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
@@ -428,7 +416,7 @@ You will lose all your punches!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pl0-mE-9fy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="663" y="381"/>
+            <point key="canvasLocation" x="658" y="411"/>
         </scene>
         <!--Custom Alert Controller - Redeem Dialog-->
         <scene sceneID="NRg-Rm-lUt">

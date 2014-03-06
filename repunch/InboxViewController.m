@@ -92,7 +92,7 @@
 	__weak typeof(self) weakSelf = self;
 	Reachability* reach = [Reachability reachabilityWithHostname:@"www.google.com"];
 	
-	reach.reachableBlock = ^(Reachability*reach) {
+	reach.reachableBlock = ^(Reachability *reach) {
 		if(weakSelf.messagesArray.count == 0) {
 			[weakSelf loadInbox:NO];
 		}

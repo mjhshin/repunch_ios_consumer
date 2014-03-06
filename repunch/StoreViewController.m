@@ -493,7 +493,7 @@
 - (void)redeemReward:(id)reward
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
-		[RepunchUtils showDefaultDropdownView:self.view];
+		[RepunchUtils showConnectionErrorDialog];
 		return;
 	}
 	
@@ -570,6 +570,11 @@
 
 - (IBAction)feedbackButtonAction:(id)sender
 {
+	if( ![RepunchUtils isConnectionAvailable] ) {
+		[RepunchUtils showConnectionErrorDialog];
+		return;
+	}
+	
 	//if(!patronStoreExists || patronStore.all_time_punches == 0) {
 	//	[RepunchUtils showDialogWithTitle:@"Sorry, you can only send feedback to stores where you have been punched."
 	//						  withMessage:nil];
@@ -640,7 +645,7 @@
 - (void)addStore
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
-		[RepunchUtils showDefaultDropdownView:self.view];
+		[RepunchUtils showConnectionErrorDialog];
 		return;
 	}
 
@@ -694,7 +699,7 @@
 - (void)deleteStore
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
-		[RepunchUtils showDefaultDropdownView:self.view];
+		[RepunchUtils showConnectionErrorDialog];
 		return;
 	}
 	
@@ -734,7 +739,7 @@
 - (void)refreshPatronStore
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
-		[RepunchUtils showDefaultDropdownView:self.view];
+		[RepunchUtils showConnectionErrorDialog];
 		//[self.reloadControl endRefreshing];
 		return;
 	}
@@ -792,7 +797,7 @@
 - (void)gift
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
-		[RepunchUtils showDefaultDropdownView:self.view];
+		[RepunchUtils showConnectionErrorDialog];
 		return;
 	}
 	

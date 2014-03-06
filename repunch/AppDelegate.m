@@ -16,7 +16,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
 	
 	BOOL isProduction = NO; // DON'T FORGET TO SET!!!!
 	
@@ -181,9 +180,14 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
 	UIViewController *blankVC = [[UIViewController alloc] init];
 	UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-	[blankVC.view setBackgroundColor:[UIColor blackColor]];
+	blankVC.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"LaunchImageSpinner"]];
 	[blankVC.view addSubview:spinner];
 	spinner.center = blankVC.view.center;
+	
+	CGRect frame = spinner.frame;
+	frame.origin.y = blankVC.view.frame.size.height * 2/3 - 32.0f;
+	spinner.frame = frame;
+	
 	[spinner startAnimating];
 	self.window.rootViewController = blankVC;
     [self.window makeKeyAndVisible];

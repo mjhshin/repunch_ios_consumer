@@ -10,7 +10,9 @@
 #import "RepunchUtils.h"
 #import "RPPatron.h"
 
-@implementation FacebookFriendsViewController
+@implementation FacebookFriendsViewController {
+	NSMutableDictionary *friendDictionary;
+}
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
 {
@@ -21,7 +23,7 @@
 {
     [super viewDidLoad];
 	
-	self.friendDictionary = [NSMutableDictionary dictionary];
+	friendDictionary = [NSMutableDictionary dictionary];
 	
 	self.navigationItem.title = @"Choose A Friend";
 
@@ -77,7 +79,7 @@
 				{
 					for(RPPatron *patron in results)
 					{
-						[self.friendDictionary setObject:patron.objectId forKey:patron.facebook_id];
+						[friendDictionary setObject:patron.objectId forKey:patron.facebook_id];
 					}
 					[self loadData];
 					self.spinner.hidden = YES;
@@ -111,7 +113,8 @@
 	NSLog(@"Error during data fetch.");
 	self.spinnerView.hidden = YES;
 	[self.mySpinner stopAnimating];
-	[RepunchUtils showDefaultDropdownView:self.view];}
+	[RepunchUtils showDefaultDropdownView:self.view];
+}
 
 // Event: Data loaded
 - (void)friendPickerViewControllerDataDidChange:(FBFriendPickerViewController *)friendPicker
@@ -125,7 +128,7 @@
 - (BOOL)friendPickerViewController:(FBFriendPickerViewController *)friendPicker
                  shouldIncludeUser:(id <FBGraphUser>)user
 {
-    return self.friendDictionary[user.id] ? YES : NO;
+    return friendDictionary[user.id] ? YES : NO;
 }
 
 // Event: Selection changed
@@ -133,7 +136,7 @@
 {
 	
 	NSDictionary<FBGraphUser> *selection = friendPicker.selection[0];
-	NSString *recepientId = self.friendDictionary[selection.id];
+	NSString *recepientId = friendDictionary[selection.id];
 
 	[self dismissViewControllerAnimated:NO
                              completion:^{
