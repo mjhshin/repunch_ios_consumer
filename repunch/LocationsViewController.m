@@ -46,6 +46,8 @@
 	[[LocationManager getSharedInstance] startUpdatingLocationWithBlock:
 	 ^(CLLocationManager *manager, CLLocation *location, NSError *error) {
 		 
+		 [[LocationManager getSharedInstance] stopUpdatingLocation];
+		 
 		 userLocation = [PFGeoPoint geoPointWithLocation:location];
 		 [self reloadTableView];
 	 }];
@@ -83,8 +85,8 @@
 	cell.locationSubtitle.text = [NSString stringWithFormat:@"%@, %@", storeLocation.city, storeLocation.state];
 	
 	if(userLocation != nil) {
-		float distanceToStore = [userLocation distanceInMilesTo:storeLocation.coordinates];
-		cell.locationDistance.text = [NSString stringWithFormat:@"%.2f mi", distanceToStore];
+		double distanceToStore = [userLocation distanceInMilesTo:storeLocation.coordinates];
+		cell.locationDistance.text = [RepunchUtils formattedDistance:distanceToStore];
 		cell.locationDistance.hidden = NO;
 	}
 	else {

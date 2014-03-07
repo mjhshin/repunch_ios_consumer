@@ -6,12 +6,7 @@
 //
 
 #import "MyPlacesViewController.h"
-#import "RPReloadControl.h"
-
-@interface MyPlacesViewController ()
-@property (strong, nonatomic) RPReloadControl *reloadControl;
-
-@end
+#import "RPActivityIndicatorView.h"
 
 @implementation MyPlacesViewController
 {
@@ -38,6 +33,11 @@
 	[self registerForNotifications];
 	[self setupNavigationBar];
 	[self loadMyPlaces];
+
+	__weak typeof(self) weakSelf = self;
+	[self.tableView addPullToRefreshActionHandler:^{
+		[weakSelf loadMyPlaces];
+	}];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -150,7 +150,11 @@
 - (void)loadMyPlaces
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
+<<<<<<< HEAD
 		[self.reloadControl endRefreshing];
+=======
+		[self.tableView stopRefreshAnimation];
+>>>>>>> pull to refresh done
 		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
@@ -172,7 +176,11 @@
 		
 		[weakSelf.activityIndicatorView setHidden:YES];
 		[weakSelf.activityIndicator stopAnimating];
+<<<<<<< HEAD
 		[weakSelf.reloadControl endRefreshing];
+=======
+		[self.tableView stopRefreshAnimation];
+>>>>>>> pull to refresh done
 		
         if (!error)
         {

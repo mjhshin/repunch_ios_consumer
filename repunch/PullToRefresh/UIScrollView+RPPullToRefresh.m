@@ -1,55 +1,18 @@
 //
-//  RPTableView.m
+//  UIScrollView+RPPulltoRefresh.m
 //  RepunchConsumer
 //
-//  Created by Michael Shin on 2/11/14.
+//  Created by Michael Shin on 2/5/14.
 //  Copyright (c) 2014 Repunch. All rights reserved.
 //
 
-#import "RPTableView.h"
+#import "UIScrollView+RPPullToRefresh.h"
 #import <objc/runtime.h>
+
 static char UIScrollViewPullToRefreshView;
 
-@implementation RPTableView
+@implementation UIScrollView (RPActivityIndicatorView)
 @dynamic pullToRefreshView, showPullToRefresh;
-
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-	if(self = [super initWithCoder:aDecoder]) {
-		[self initFooters];
-		[self setDefaultFooter];
-	}
-	
-	return self;
-}
-
-- (void)initFooters
-{
-	// default footer
-	self.defaultFooter = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 50)];
-	self.defaultFooter.backgroundColor = [UIColor whiteColor];
-	
-	// pagination footer
-	self.paginationFooter = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 50)];
-	self.paginationFooter.backgroundColor = [UIColor whiteColor];
-	
-	UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-	spinner.frame = self.paginationFooter.bounds;
-	[spinner startAnimating];
-	
-	[self.paginationFooter addSubview:spinner];
-}
-
-- (void)setDefaultFooter
-{
-	self.tableFooterView = self.defaultFooter;
-}
-
-- (void)setPaginationFooter
-{
-	self.tableFooterView = self.paginationFooter;
-}
-
 
 - (void)addPullToRefreshActionHandler:(actionHandler)handler
 {
@@ -60,7 +23,7 @@ static char UIScrollViewPullToRefreshView;
         view.scrollView = self;
         view.frame = CGRectMake((self.bounds.size.width - view.bounds.size.width)/2,
                                 -view.bounds.size.height, view.bounds.size.width, view.bounds.size.height);
-        view.originalTopInset = 64.0f;//self.contentInset.top;
+        view.originalTopInset = self.contentInset.top;
         [self addSubview:view];
         [self sendSubviewToBack:view];
         self.pullToRefreshView = view;
@@ -77,6 +40,7 @@ static char UIScrollViewPullToRefreshView;
 {
     [self.pullToRefreshView stopIndicatorAnimation];
 }
+
 
 #pragma mark - property
 

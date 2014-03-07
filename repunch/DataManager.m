@@ -9,11 +9,11 @@
 
 @implementation DataManager
 
+static DataManager *sharedDataManager = nil;    // static instance variable
+
 + (DataManager *)getSharedInstance
 {
     static dispatch_once_t onceToken;
-	static DataManager *sharedDataManager = nil;    // static instance variable
-	
     dispatch_once(&onceToken, ^{
         sharedDataManager = [[DataManager alloc] init];
     });

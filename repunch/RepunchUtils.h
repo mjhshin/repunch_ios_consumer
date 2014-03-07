@@ -23,7 +23,9 @@
 
 + (UIColor *)repunchOrangeColor;
 + (UIColor *)lightRepunchOrangeColor;
++ (UIColor *)darkRepunchOrangeColor;
 + (UIColor *)repunchOrangeHighlightedColor;
+
 + (UIFont *)repunchFontWithSize:(NSUInteger)fontSize isBold:(BOOL)isBold;
 
 + (CAGradientLayer *)blackGradient;
@@ -34,5 +36,7 @@
 + (UIImage *)imageScaledForThumbnail:(UIImage *)image;
 
 + (void)callPhoneNumber:(NSString *)phoneNumber;
+
++ (NSString *)formattedDistance:(double)distance;
 
 @end

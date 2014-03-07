@@ -101,6 +101,9 @@
 		EE5378CE17B2FEA9002D8B18 /* map_button.png in Resources */ = {isa = PBXBuildFile; fileRef = EE5378C817B2FEA9002D8B18 /* map_button.png */; };
 		EE5F947417FB5471006E6F67 /* AuthenticationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5F947317FB5471006E6F67 /* AuthenticationManager.m */; };
 		EE6394C418C7E04100A9A474 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6394C318C7E04100A9A474 /* LocationManager.m */; };
+		EE67745118CA6E04006CDE23 /* RPActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE67744E18CA6E04006CDE23 /* RPActivityIndicatorView.m */; };
+		EE67745718CA725B006CDE23 /* UIScrollView+RPPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = EE67745618CA725B006CDE23 /* UIScrollView+RPPullToRefresh.m */; };
+		EE67745918CA7AB8006CDE23 /* star_refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE67745818CA7AB8006CDE23 /* star_refresh@2x.png */; };
 		EE6A5ACB1857C68400D6B6AF /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE6A5ACA1857C68400D6B6AF /* FacebookSDK.framework */; };
 		EE79DF7E17BD702500E92DE5 /* nav_exit.png in Resources */ = {isa = PBXBuildFile; fileRef = EE79DF7617BD702500E92DE5 /* nav_exit.png */; };
 		EE79DF7F17BD702500E92DE5 /* nav_exit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE79DF7717BD702500E92DE5 /* nav_exit@2x.png */; };
@@ -339,6 +342,11 @@
 		EE5F947317FB5471006E6F67 /* AuthenticationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationManager.m; sourceTree = "<group>"; };
 		EE6394C218C7E04100A9A474 /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationManager.h; path = repunch/LocationManager.h; sourceTree = SOURCE_ROOT; };
 		EE6394C318C7E04100A9A474 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationManager.m; path = repunch/LocationManager.m; sourceTree = SOURCE_ROOT; };
+		EE67744D18CA6E04006CDE23 /* RPActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPActivityIndicatorView.h; sourceTree = "<group>"; };
+		EE67744E18CA6E04006CDE23 /* RPActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPActivityIndicatorView.m; sourceTree = "<group>"; };
+		EE67745518CA725B006CDE23 /* UIScrollView+RPPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+RPPullToRefresh.h"; sourceTree = "<group>"; };
+		EE67745618CA725B006CDE23 /* UIScrollView+RPPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+RPPullToRefresh.m"; sourceTree = "<group>"; };
+		EE67745818CA7AB8006CDE23 /* star_refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star_refresh@2x.png"; sourceTree = "<group>"; };
 		EE6A5ACA1857C68400D6B6AF /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		EE79DF7617BD702500E92DE5 /* nav_exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_exit.png; sourceTree = "<group>"; };
 		EE79DF7717BD702500E92DE5 /* nav_exit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_exit@2x.png"; sourceTree = "<group>"; };
@@ -683,6 +691,18 @@
 			name = Push;
 			sourceTree = "<group>";
 		};
+		EE67744918CA6E04006CDE23 /* PullToRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				EE67745518CA725B006CDE23 /* UIScrollView+RPPullToRefresh.h */,
+				EE67745618CA725B006CDE23 /* UIScrollView+RPPullToRefresh.m */,
+				EE67744D18CA6E04006CDE23 /* RPActivityIndicatorView.h */,
+				EE67744E18CA6E04006CDE23 /* RPActivityIndicatorView.m */,
+			);
+			name = PullToRefresh;
+			path = repunch/PullToRefresh;
+			sourceTree = SOURCE_ROOT;
+		};
 		EE8D702818BBB10D00ADE0DB /* MyPlaces */ = {
 			isa = PBXGroup;
 			children = (
@@ -793,6 +813,7 @@
 		EE9D4B7017A83F4A005E0CC5 /* Repunch */ = {
 			isa = PBXGroup;
 			children = (
+				EE67744918CA6E04006CDE23 /* PullToRefresh */,
 				EE9D4B7117A83F4A005E0CC5 /* AppDelegate.h */,
 				EE9D4B7217A83F4A005E0CC5 /* AppDelegate.m */,
 				202F1DFE18523DCC00495BDF /* Parse */,
@@ -909,6 +930,7 @@
 				EEB75AA21884B2FD00AA4F89 /* nav_back.png */,
 				EEB75AA31884B2FD00AA4F89 /* nav_back@2x.png */,
 				EE93165218AC27D200ECEABF /* nav_delete.png */,
+				EE67745818CA7AB8006CDE23 /* star_refresh@2x.png */,
 				EE93165318AC27D200ECEABF /* nav_delete@2x.png */,
 				EE79DF7617BD702500E92DE5 /* nav_exit.png */,
 				EE79DF7717BD702500E92DE5 /* nav_exit@2x.png */,
@@ -1104,6 +1126,7 @@
 				EE93168C18B29AF700ECEABF /* store_save_icon.png in Resources */,
 				EE031C0318B3DE8B0027E79F /* message_recepient_icon.png in Resources */,
 				EE9D4C9017A83F4B005E0CC5 /* RegisterViewController.xib in Resources */,
+				EE67745918CA7AB8006CDE23 /* star_refresh@2x.png in Resources */,
 				EE9D4C9717A83F4B005E0CC5 /* LoginViewController.xib in Resources */,
 				EE93164518AC1ED400ECEABF /* reward_locked.png in Resources */,
 				EE9D4EE817A84ABB005E0CC5 /* nav_send.png in Resources */,
@@ -1271,6 +1294,7 @@
 				EE93162D18AA9A7100ECEABF /* RPTableView.m in Sources */,
 				EE9D4C8717A83F4B005E0CC5 /* StoreViewController.m in Sources */,
 				EE5F947417FB5471006E6F67 /* AuthenticationManager.m in Sources */,
+				EE67745718CA725B006CDE23 /* UIScrollView+RPPullToRefresh.m in Sources */,
 				EE9D4C8917A83F4B005E0CC5 /* SearchViewController.m in Sources */,
 				EE9D4C8B17A83F4B005E0CC5 /* MyPlacesViewController.m in Sources */,
 				20E8609B18BBB686007DB153 /* RPAlertController.m in Sources */,
@@ -1291,6 +1315,7 @@
 				EE3F36D817B586ED00D28FC9 /* RedeemHandler.m in Sources */,
 				EEE19F3518621A5B0084C63B /* LocationsViewController.m in Sources */,
 				EE460EC317BB5C7A00AC3588 /* MessageHandler.m in Sources */,
+				EE67745118CA6E04006CDE23 /* RPActivityIndicatorView.m in Sources */,
 				EEA181A317C5894B00553336 /* FacebookPost.m in Sources */,
 				EEA181AC17C6FD9B00553336 /* FacebookFriendsViewController.m in Sources */,
 				EE93163018AAA24300ECEABF /* RPButton.m in Sources */,

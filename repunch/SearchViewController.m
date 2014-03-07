@@ -8,6 +8,7 @@
 #import "SearchViewController.h"
 #import "RPButton.h"
 #import "LocationManager.h"
+#import "RPActivityIndicatorView.h"
 
 #define PAGINATE_COUNT 15
 
@@ -47,6 +48,11 @@
 	paginateReachEnd = NO;
 	loadInProgress = NO;
 	searchResultsLoaded = NO;
+	
+	__weak typeof(self) weakSelf = self;
+	[self.tableView addPullToRefreshActionHandler:^{
+		[weakSelf performSearch:NO];
+	}];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -113,7 +119,7 @@
 	
 	reach.reachableBlock = ^(Reachability *reach) {
 		if(storeLocationIdArray.count == 0) {
-			[weakSelf startUpdatingLocationForSearch];
+			//[weakSelf startUpdatingLocationForSearch];
 		}
 		else {
 			[weakSelf refreshTableView];
@@ -129,6 +135,8 @@
 	 ^(CLLocationManager *manager, CLLocation *location, NSError *error) {
 		 
 		 if(!error) {
+			 [[LocationManager getSharedInstance] stopUpdatingLocation];
+			 
 			 self.locationServicesLabel.hidden = YES;
 			 userLocation = [PFGeoPoint geoPointWithLocation:location];
 			 [self performSearch:NO];
@@ -161,6 +169,11 @@
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
 		[RepunchUtils showDefaultDropdownView:self.view];
+		[self.tableView stopRefreshAnimation];
+		return;
+	}
+	
+	if(userLocation == nil) {
 		return;
 	}
 	
@@ -185,11 +198,13 @@
 	}
 	
     [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+		
 		if(paginate == NO) {
-			 [self.activityIndicatorView setHidden:YES];
-			 [self.activityIndicator stopAnimating];
-			 [storeLocationIdArray removeAllObjects];
-		 }
+			[self.tableView stopRefreshAnimation];
+			[self.activityIndicatorView setHidden:YES];
+			[self.activityIndicator stopAnimating];
+			[storeLocationIdArray removeAllObjects];
+		}
 		else {
 			[self.tableView setDefaultFooter];
 		}
@@ -253,12 +268,7 @@
 
 	// Set distance to store
 	double distanceToStore = [userLocation distanceInMilesTo:storeLocation.coordinates];
-	if(distanceToStore < 0.1) {
-		cell.distance.text = [NSString stringWithFormat:@"%.0f ft", distanceToStore*5280];
-	}
-	else {
-		cell.distance.text = [NSString stringWithFormat:@"%.1f mi", distanceToStore];
-	}
+	cell.distance.text = [RepunchUtils formattedDistance:distanceToStore];
 	
 	// Set address
 	NSString *street = storeLocation.street;

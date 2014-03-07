@@ -6,7 +6,7 @@
 //
 
 #import "InboxViewController.h"
-#import "RPReloadControl.h"
+#import "RPActivityIndicatorView.h"
 
 @interface InboxViewController ()
 //@property (strong, nonatomic) RPReloadControl *reloadControl;
@@ -18,7 +18,6 @@
 	BOOL loadInProgress;
 	int paginateCount;
 	BOOL paginateReachEnd;
-	UIActivityIndicatorView *paginateSpinner;
 	UISegmentedControl *segmentedControl;
 }
 
@@ -57,6 +56,11 @@
 	[self registerForNotifications];
 	[self setupNavigationBar];
     [self loadInbox:NO];
+	
+	__weak typeof(self) weakSelf = self;
+	[self.tableView addPullToRefreshActionHandler:^{
+		[weakSelf loadInbox:NO];
+	}];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -135,7 +139,7 @@
 - (void)loadInbox:(BOOL)paginate
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
-		//[self.reloadControl endRefreshing];
+		[self.tableView stopRefreshAnimation];
 		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
@@ -167,7 +171,7 @@
 		else {
 			self.activityIndicatorView.hidden = YES;
 			[self.activityIndicator stopAnimating];
-            //[self.reloadControl endRefreshing];
+            [self.tableView stopRefreshAnimation];
 		}
 		
         if(!error) {

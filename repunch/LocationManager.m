@@ -8,6 +8,7 @@
 #import "LocationManager.h"
 
 #define DISTANCE_FILTER 5.0
+#define RECENT_INTERVAL 10.0
 #define TIMEOUT_INTERVAL 10.0
 
 @interface LocationManager() <CLLocationManagerDelegate> {
@@ -16,16 +17,17 @@
 }
 
 @property (strong, nonatomic, readonly) CLLocationManager *locationManager;
-@property (strong, nonatomic) LocationManagerLocationUpdateBlock locationBlock;
+@property (copy, nonatomic) LocationManagerLocationUpdateBlock locationBlock;
 
 @end
 
 @implementation LocationManager
 
+static LocationManager *sharedLocationManager = nil;    // static instance variable
+
 + (LocationManager *)getSharedInstance
 {
     static dispatch_once_t onceToken;
-	static LocationManager *sharedLocationManager = nil;    // static instance variable
 	
     dispatch_once(&onceToken, ^{
         sharedLocationManager = [[LocationManager alloc] init];
@@ -33,8 +35,9 @@
     return sharedLocationManager;
 }
 
-- (id) init
+- (id)init
 {
+	NSLog(@"LM alloc");
 	if (self = [super init])
 	{
         _locationManager = [CLLocationManager new];
@@ -44,6 +47,11 @@
 	}
 	
 	return self;
+}
+
+- (void)dealloc
+{
+	NSLog(@"LM dealloc");
 }
 
 + (BOOL)locationServicesEnabled
@@ -61,8 +69,8 @@
 	self.locationBlock = block;
 	
 	timeoutTimer = [NSTimer timerWithTimeInterval:TIMEOUT_INTERVAL
-										   target:_locationManager
-										 selector:@selector(stopUpdatingLocation)
+										   target:self
+										 selector:@selector(locationUpdateTimeout)
 										 userInfo:nil
 										  repeats:NO];
 	
@@ -74,20 +82,19 @@
 	[_locationManager stopUpdatingLocation];
 	
 	if(timeoutTimer != nil) {
-		[timeoutTimer invalidate];
+		if([timeoutTimer isValid]) {
+			[timeoutTimer invalidate];
+		}
+		timeoutTimer = nil;
 	}
 }
 
-/*
 - (void)locationUpdateTimeout
 {
-	[locationManager stopUpdatingLocation];
+	[self stopUpdatingLocation];
 	
-	if(timeoutTimer != nil) {
-		[timeoutTimer invalidate];
-	}
+	//TODO: create timeout error and send back to block
 }
-*/
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
@@ -95,7 +102,10 @@
 	NSDate* eventDate = newLocation.timestamp;
 	NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
 	
-	if(howRecent > 8.0) {
+	NSLog(@"LM didUpdateLocations: lat: %f, lng: %f, timestamp: %@", newLocation.coordinate.latitude, newLocation.coordinate.longitude, eventDate);
+	
+	if(abs(howRecent) > RECENT_INTERVAL) {
+		NSLog(@"LocationManager didUpdateToLocation with timestamp %@ which is too old to use.", newLocation.timestamp);
 		return;
 	}
 	

@@ -147,6 +147,11 @@
 	return [UIColor colorWithRed:(246/255.0) green:(146/255.0) blue:(29/255.0) alpha:1.0];
 }
 
++ (UIColor *)darkRepunchOrangeColor
+{
+	return [UIColor colorWithRed:(220/255.0) green:(120/255.0) blue:(20/255.0) alpha:1.0];
+}
+
 + (UIColor *)repunchOrangeHighlightedColor
 {
 	return [UIColor colorWithRed:(240/255.0) green:(140/255.0) blue:(19/255.0) alpha:0.5];
@@ -208,6 +213,16 @@
 	}
 	else {
 		[RepunchUtils showDialogWithTitle:@"This device does not support phone calls" withMessage:nil];
+	}
+}
+
++ (NSString *)formattedDistance:(double)distance
+{
+	if(distance < 0.1) {
+		return [NSString stringWithFormat:@"%.0f ft", distance*5280];
+	}
+	else {
+		return [NSString stringWithFormat:@"%.1f mi", distance];
 	}
 }
 
