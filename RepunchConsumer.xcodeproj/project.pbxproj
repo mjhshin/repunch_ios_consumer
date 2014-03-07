@@ -12,20 +12,6 @@
 		202F1DFC18523DC500495BDF /* RPStoreHours.m in Sources */ = {isa = PBXBuildFile; fileRef = 202F1DF718523DC500495BDF /* RPStoreHours.m */; };
 		204D4FB218B6C508001B9560 /* IncomingMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 204D4FB018B6C508001B9560 /* IncomingMessageViewController.xib */; };
 		207AA96A181195C300E73B2E /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2027286D181031E4004BD1A6 /* Parse.framework */; };
-		2099187A18C65290002B6C7E /* RPSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 2099187718C65290002B6C7E /* RPSpinner.m */; };
-		2099187B18C65290002B6C7E /* RPReloadControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 2099187918C65290002B6C7E /* RPReloadControl.m */; };
-		2099188718C79F43002B6C7E /* RefreshImage_1.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 2099187C18C79F43002B6C7E /* RefreshImage_1.tiff */; };
-		2099188818C79F43002B6C7E /* RefreshImage_2.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 2099187D18C79F43002B6C7E /* RefreshImage_2.tiff */; };
-		2099188918C79F43002B6C7E /* RefreshImage_3.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 2099187E18C79F43002B6C7E /* RefreshImage_3.tiff */; };
-		2099188A18C79F43002B6C7E /* RefreshImage_4.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 2099187F18C79F43002B6C7E /* RefreshImage_4.tiff */; };
-		2099188B18C79F43002B6C7E /* RefreshImage_5.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 2099188018C79F43002B6C7E /* RefreshImage_5.tiff */; };
-		2099188C18C79F43002B6C7E /* RefreshImage_6.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 2099188118C79F43002B6C7E /* RefreshImage_6.tiff */; };
-		2099188D18C79F43002B6C7E /* RefreshImage_7.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 2099188218C79F43002B6C7E /* RefreshImage_7.tiff */; };
-		2099188E18C79F43002B6C7E /* RefreshImage_8.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 2099188318C79F43002B6C7E /* RefreshImage_8.tiff */; };
-		2099188F18C79F43002B6C7E /* RefreshImage_9.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 2099188418C79F43002B6C7E /* RefreshImage_9.tiff */; };
-		2099189018C79F43002B6C7E /* RefreshImage_10.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 2099188518C79F43002B6C7E /* RefreshImage_10.tiff */; };
-		2099189118C79F43002B6C7E /* RefreshImage_11.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 2099188618C79F43002B6C7E /* RefreshImage_11.tiff */; };
-		2099189418C79FA5002B6C7E /* RefreshRotatingImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 2099189318C79FA5002B6C7E /* RefreshRotatingImage.png */; };
 		20E8609B18BBB686007DB153 /* RPAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20E8609818BBB686007DB153 /* RPAlertController.m */; };
 		20E8609C18BBB686007DB153 /* RPCustomAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20E8609A18BBB686007DB153 /* RPCustomAlertController.m */; };
 		20E860A518BBBD25007DB153 /* Alerts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20E860A418BBBD25007DB153 /* Alerts.storyboard */; };
@@ -236,22 +222,6 @@
 		202F1DF618523DC500495BDF /* RPStoreHours.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPStoreHours.h; sourceTree = "<group>"; };
 		202F1DF718523DC500495BDF /* RPStoreHours.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPStoreHours.m; sourceTree = "<group>"; };
 		204D4FB018B6C508001B9560 /* IncomingMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IncomingMessageViewController.xib; path = repunch/IncomingMessageViewController.xib; sourceTree = SOURCE_ROOT; };
-		2099187618C65290002B6C7E /* RPSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPSpinner.h; sourceTree = "<group>"; };
-		2099187718C65290002B6C7E /* RPSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPSpinner.m; sourceTree = "<group>"; };
-		2099187818C65290002B6C7E /* RPReloadControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPReloadControl.h; sourceTree = "<group>"; };
-		2099187918C65290002B6C7E /* RPReloadControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPReloadControl.m; sourceTree = "<group>"; };
-		2099187C18C79F43002B6C7E /* RefreshImage_1.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = RefreshImage_1.tiff; sourceTree = "<group>"; };
-		2099187D18C79F43002B6C7E /* RefreshImage_2.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = RefreshImage_2.tiff; sourceTree = "<group>"; };
-		2099187E18C79F43002B6C7E /* RefreshImage_3.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = RefreshImage_3.tiff; sourceTree = "<group>"; };
-		2099187F18C79F43002B6C7E /* RefreshImage_4.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = RefreshImage_4.tiff; sourceTree = "<group>"; };
-		2099188018C79F43002B6C7E /* RefreshImage_5.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = RefreshImage_5.tiff; sourceTree = "<group>"; };
-		2099188118C79F43002B6C7E /* RefreshImage_6.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = RefreshImage_6.tiff; sourceTree = "<group>"; };
-		2099188218C79F43002B6C7E /* RefreshImage_7.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = RefreshImage_7.tiff; sourceTree = "<group>"; };
-		2099188318C79F43002B6C7E /* RefreshImage_8.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = RefreshImage_8.tiff; sourceTree = "<group>"; };
-		2099188418C79F43002B6C7E /* RefreshImage_9.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = RefreshImage_9.tiff; sourceTree = "<group>"; };
-		2099188518C79F43002B6C7E /* RefreshImage_10.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = RefreshImage_10.tiff; sourceTree = "<group>"; };
-		2099188618C79F43002B6C7E /* RefreshImage_11.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = RefreshImage_11.tiff; sourceTree = "<group>"; };
-		2099189318C79FA5002B6C7E /* RefreshRotatingImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RefreshRotatingImage.png; sourceTree = "<group>"; };
 		20E8609718BBB686007DB153 /* RPAlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPAlertController.h; sourceTree = "<group>"; };
 		20E8609818BBB686007DB153 /* RPAlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPAlertController.m; sourceTree = "<group>"; };
 		20E8609918BBB686007DB153 /* RPCustomAlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPCustomAlertController.h; sourceTree = "<group>"; };
@@ -567,38 +537,6 @@
 			name = Parse;
 			sourceTree = "<group>";
 		};
-		2099187518C6523F002B6C7E /* ActivityIndicator */ = {
-			isa = PBXGroup;
-			children = (
-				2099189218C79F48002B6C7E /* Refresh Images */,
-				2099187618C65290002B6C7E /* RPSpinner.h */,
-				2099187718C65290002B6C7E /* RPSpinner.m */,
-				2099187818C65290002B6C7E /* RPReloadControl.h */,
-				2099187918C65290002B6C7E /* RPReloadControl.m */,
-			);
-			name = ActivityIndicator;
-			path = ..;
-			sourceTree = "<group>";
-		};
-		2099189218C79F48002B6C7E /* Refresh Images */ = {
-			isa = PBXGroup;
-			children = (
-				2099189318C79FA5002B6C7E /* RefreshRotatingImage.png */,
-				2099187C18C79F43002B6C7E /* RefreshImage_1.tiff */,
-				2099187D18C79F43002B6C7E /* RefreshImage_2.tiff */,
-				2099187E18C79F43002B6C7E /* RefreshImage_3.tiff */,
-				2099187F18C79F43002B6C7E /* RefreshImage_4.tiff */,
-				2099188018C79F43002B6C7E /* RefreshImage_5.tiff */,
-				2099188118C79F43002B6C7E /* RefreshImage_6.tiff */,
-				2099188218C79F43002B6C7E /* RefreshImage_7.tiff */,
-				2099188318C79F43002B6C7E /* RefreshImage_8.tiff */,
-				2099188418C79F43002B6C7E /* RefreshImage_9.tiff */,
-				2099188518C79F43002B6C7E /* RefreshImage_10.tiff */,
-				2099188618C79F43002B6C7E /* RefreshImage_11.tiff */,
-			);
-			name = "Refresh Images";
-			sourceTree = "<group>";
-		};
 		20E8609618BBB5E6007DB153 /* Alert */ = {
 			isa = PBXGroup;
 			children = (
@@ -830,7 +768,6 @@
 		EE9D4B8717A83F4A005E0CC5 /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
-				2099187518C6523F002B6C7E /* ActivityIndicator */,
 				20E8609618BBB5E6007DB153 /* Alert */,
 				EEE4D26A18A30C9C00A5EC25 /* RPNavigationController.h */,
 				EEE4D26B18A30C9C00A5EC25 /* RPNavigationController.m */,
@@ -1120,7 +1057,6 @@
 				EEE19F3618621A5B0084C63B /* LocationsViewController.xib in Resources */,
 				EEE4D26418A06CCE00A5EC25 /* checkmark_icon.png in Resources */,
 				EE93168618B2899F00ECEABF /* nav_repunch_logo.png in Resources */,
-				2099189418C79FA5002B6C7E /* RefreshRotatingImage.png in Resources */,
 				EE9D4C8C17A83F4B005E0CC5 /* MyPlacesViewController.xib in Resources */,
 				EE93167B18AD87E500ECEABF /* placeholder_cover_image@2x.png in Resources */,
 				EE93168C18B29AF700ECEABF /* store_save_icon.png in Resources */,
@@ -1149,8 +1085,6 @@
 				EE93166C18AD552500ECEABF /* message_type_offer_orange@2x.png in Resources */,
 				EE93169418B29FD400ECEABF /* store_save_background_highlighted.png in Resources */,
 				EEE4D254189AD49900A5EC25 /* star@2x.png in Resources */,
-				2099189118C79F43002B6C7E /* RefreshImage_11.tiff in Resources */,
-				2099188B18C79F43002B6C7E /* RefreshImage_5.tiff in Resources */,
 				EE5250B618B2AF7C00AC7E6B /* store_save_icon_white.png in Resources */,
 				EEE4D26118A06B3200A5EC25 /* checkmark_icon@2x.png in Resources */,
 				EE92C01F17E7D0F900532CBE /* call_button@2x.png in Resources */,
@@ -1160,12 +1094,10 @@
 				EEB75A9B187F5CAA00AA4F89 /* Images.xcassets in Resources */,
 				EE93169518B29FD400ECEABF /* store_save_background.png in Resources */,
 				EEB75AA41884B2FD00AA4F89 /* nav_back.png in Resources */,
-				2099188818C79F43002B6C7E /* RefreshImage_2.tiff in Resources */,
 				EE398B4F1891D21A005BEDFE /* circular_exit_button.png in Resources */,
 				EE9D4F3717A84ABB005E0CC5 /* login-button-small-pressed.png in Resources */,
 				EE93166B18AD552500ECEABF /* message_type_offer.png in Resources */,
 				EE9D4F3817A84ABB005E0CC5 /* login-button-small-pressed@2x.png in Resources */,
-				2099188918C79F43002B6C7E /* RefreshImage_3.tiff in Resources */,
 				EE031C2418B66EDC0027E79F /* redeem_icon_white.png in Resources */,
 				EE9D4F3917A84ABB005E0CC5 /* login-button-small.png in Resources */,
 				EE9D4F3A17A84ABB005E0CC5 /* login-button-small@2x.png in Resources */,
@@ -1186,24 +1118,20 @@
 				EE5378CE17B2FEA9002D8B18 /* map_button.png in Resources */,
 				EE5250B718B2AF7C00AC7E6B /* store_save_icon_white@2x.png in Resources */,
 				EE04ABE4182872BB00DDA5D0 /* orange_gradient_button.png in Resources */,
-				2099188C18C79F43002B6C7E /* RefreshImage_6.tiff in Resources */,
 				EE5250BB18B2BCD000AC7E6B /* location_others_icon@2x.png in Resources */,
 				EE92C02117E7D0F900532CBE /* map_button@2x.png in Resources */,
 				EE065D7518C1251A00332F45 /* message_send_feedback_icon.png in Resources */,
 				EE93168318B287D500ECEABF /* tab_inbox@2x.png in Resources */,
 				EE06E66317E7525000073AAF /* app_icon_120x120.png in Resources */,
 				EE93168218B287D500ECEABF /* tab_inbox.png in Resources */,
-				2099188A18C79F43002B6C7E /* RefreshImage_4.tiff in Resources */,
 				EE93167A18AD87E500ECEABF /* placeholder_cover_image.png in Resources */,
 				EE79DF7E17BD702500E92DE5 /* nav_exit.png in Resources */,
 				EEB8A44E17EA61140020E2EE /* SettingsViewController.xib in Resources */,
 				EE031C0418B3DE8B0027E79F /* message_recepient_icon@2x.png in Resources */,
-				2099188E18C79F43002B6C7E /* RefreshImage_8.tiff in Resources */,
 				EE79DF7F17BD702500E92DE5 /* nav_exit@2x.png in Resources */,
 				EEB75AA51884B2FD00AA4F89 /* nav_back@2x.png in Resources */,
 				EE93166E18AD552500ECEABF /* message_type_gift@2x.png in Resources */,
 				EE93168918B28E0B00ECEABF /* StoreSectionHeaderViewAdd.xib in Resources */,
-				2099188718C79F43002B6C7E /* RefreshImage_1.tiff in Resources */,
 				EEE4D2351899682200A5EC25 /* gift_box.png in Resources */,
 				EE398B511891D780005BEDFE /* circular_exit_button@2x.png in Resources */,
 				EEB75A9D188457EE00AA4F89 /* StoreSectionHeaderView.xib in Resources */,
@@ -1212,7 +1140,6 @@
 				EE79DF8017BD702500E92DE5 /* nav_search.png in Resources */,
 				EE79DF8117BD702500E92DE5 /* nav_search@2x.png in Resources */,
 				EE398B361885E5D6005BEDFE /* black_alpha_gradient.png in Resources */,
-				2099189018C79F43002B6C7E /* RefreshImage_10.tiff in Resources */,
 				EE79DF8217BD702500E92DE5 /* nav_settings.png in Resources */,
 				EE79DF8317BD702500E92DE5 /* nav_settings@2x.png in Resources */,
 				EE031C1918B66B470027E79F /* redeem_icon.png in Resources */,
@@ -1222,7 +1149,6 @@
 				EEA181AD17C6FD9B00553336 /* FacebookFriendsViewController.xib in Resources */,
 				EEE4D22E18985E6D00A5EC25 /* scissors.png in Resources */,
 				EE93165918AC32A800ECEABF /* tab_my_places@2x.png in Resources */,
-				2099188F18C79F43002B6C7E /* RefreshImage_9.tiff in Resources */,
 				EE031C2618B66EDC0027E79F /* redeem_icon_white@2x.png in Resources */,
 				EEA181B017C95D1D00553336 /* nav_reply.png in Resources */,
 				204D4FB218B6C508001B9560 /* IncomingMessageViewController.xib in Resources */,
@@ -1230,7 +1156,6 @@
 				EE031C1A18B66B470027E79F /* redeem_icon@2x.png in Resources */,
 				EE06E66117E7525000073AAF /* app_icon_80x80.png in Resources */,
 				EEA181C217CD20D300553336 /* map_button_highlighted.png in Resources */,
-				2099188D18C79F43002B6C7E /* RefreshImage_7.tiff in Resources */,
 				EEA181C317CD20D300553336 /* map_button_highlighted@2x.png in Resources */,
 				EE93168718B2899F00ECEABF /* nav_repunch_logo@2x.png in Resources */,
 				EE031C1E18B66C8A0027E79F /* redeem_gift_icon@2x.png in Resources */,
@@ -1287,7 +1212,6 @@
 				EE93163918AACA5F00ECEABF /* RPFacebookPost.m in Sources */,
 				EE04ABD8181EFAC100DDA5D0 /* ParseManager.m in Sources */,
 				EE93163318AAC51000ECEABF /* RPMessageStatus.m in Sources */,
-				2099187B18C65290002B6C7E /* RPReloadControl.m in Sources */,
 				EE9D4C7E17A83F4B005E0CC5 /* InboxViewController.m in Sources */,
 				EE9D4C8017A83F4B005E0CC5 /* LandingViewController.m in Sources */,
 				EE9D4C8217A83F4B005E0CC5 /* IncomingMessageViewController.m in Sources */,
@@ -1322,7 +1246,6 @@
 				EEE4D27218A5AE5F00A5EC25 /* RPPatronStore.m in Sources */,
 				EEA181B717CC499C00553336 /* RepunchUtils.m in Sources */,
 				202F1DFB18523DC500495BDF /* RPStore.m in Sources */,
-				2099187A18C65290002B6C7E /* RPSpinner.m in Sources */,
 				EEB75A9218722D0800AA4F89 /* LocationDetailsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
