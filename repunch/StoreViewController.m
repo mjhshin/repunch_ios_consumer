@@ -9,7 +9,6 @@
 #import "LocationsViewController.h"
 #import "LocationDetailsViewController.h"
 #import "RPStore.h"
-#import "RPReloadControl.h"
 
 #import "RPCustomAlertController.h"
 
