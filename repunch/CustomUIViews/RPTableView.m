@@ -8,10 +8,12 @@
 
 #import "RPTableView.h"
 #import <objc/runtime.h>
-static char UIScrollViewPullToRefreshView;
+
+static char RPTableViewPullToRefreshView;
 
 @implementation RPTableView
 @dynamic pullToRefreshView, showPullToRefresh;
+
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -50,14 +52,13 @@ static char UIScrollViewPullToRefreshView;
 	self.tableFooterView = self.paginationFooter;
 }
 
-
-- (void)addPullToRefreshActionHandler:(actionHandler)handler
+- (void)addPullToRefreshActionHandler:(RefreshHandler)handler
 {
     if(self.pullToRefreshView == nil)
     {
-        RPActivityIndicatorView *view = [[RPActivityIndicatorView alloc] init];
+        RPPullToRefreshView *view = [[RPPullToRefreshView alloc] init];
         view.pullToRefreshHandler = handler;
-        view.scrollView = self;
+        view.tableView = self;
         view.frame = CGRectMake((self.bounds.size.width - view.bounds.size.width)/2,
                                 -view.bounds.size.height, view.bounds.size.width, view.bounds.size.height);
         view.originalTopInset = 64.0f;//self.contentInset.top;
@@ -66,6 +67,12 @@ static char UIScrollViewPullToRefreshView;
         self.pullToRefreshView = view;
         self.showPullToRefresh = YES;
     }
+}
+
+- (void)addPullToRefreshActionHandlerForStore:(RefreshHandler)handler
+{
+	[self addPullToRefreshActionHandler:handler];
+	[self.pullToRefreshView styleForStore];
 }
 
 - (void)triggerPullToRefresh
@@ -80,16 +87,16 @@ static char UIScrollViewPullToRefreshView;
 
 #pragma mark - property
 
-- (void)setPullToRefreshView:(RPActivityIndicatorView *)pullToRefreshView
+- (void)setPullToRefreshView:(RPPullToRefreshView *)pullToRefreshView
 {
-    [self willChangeValueForKey:@"UzysRadialProgressActivityIndicator"];
-    objc_setAssociatedObject(self, &UIScrollViewPullToRefreshView, pullToRefreshView, OBJC_ASSOCIATION_ASSIGN);
-    [self didChangeValueForKey:@"UzysRadialProgressActivityIndicator"];
+    [self willChangeValueForKey:@"RPPullToRefreshView"];
+    objc_setAssociatedObject(self, &RPTableViewPullToRefreshView, pullToRefreshView, OBJC_ASSOCIATION_ASSIGN);
+    [self didChangeValueForKey:@"RPPullToRefreshView"];
 }
 
-- (RPActivityIndicatorView *)pullToRefreshView
+- (RPPullToRefreshView *)pullToRefreshView
 {
-    return objc_getAssociatedObject(self, &UIScrollViewPullToRefreshView);
+    return objc_getAssociatedObject(self, &RPTableViewPullToRefreshView);
 }
 
 - (void)setShowPullToRefresh:(BOOL)showPullToRefresh

@@ -8,9 +8,9 @@
 #import "SearchViewController.h"
 #import "RPButton.h"
 #import "LocationManager.h"
-#import "RPActivityIndicatorView.h"
+#import "RPPullToRefreshView.h"
 
-#define PAGINATE_COUNT 15
+#define PAGINATE_INCREMENT 15
 
 @implementation SearchViewController
 {
@@ -64,7 +64,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-	
 	[self startUpdatingLocationForSearch];
 }
 
@@ -119,7 +118,7 @@
 	
 	reach.reachableBlock = ^(Reachability *reach) {
 		if(storeLocationIdArray.count == 0) {
-			//[weakSelf startUpdatingLocationForSearch];
+			[weakSelf performSearch:NO];
 		}
 		else {
 			[weakSelf refreshTableView];
@@ -173,7 +172,7 @@
 		return;
 	}
 	
-	if(userLocation == nil) {
+	if(userLocation == nil || loadInProgress) {
 		return;
 	}
 	
@@ -184,11 +183,11 @@
     //[storeQuery includeKey:@"Store.active" equalTo:[NSNumber numberWithBool:YES]];
 	//[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation];
 	[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation withinMiles:30];
-	[storeQuery setLimit:PAGINATE_COUNT];
+	[storeQuery setLimit:PAGINATE_INCREMENT];
 	
 	if(paginate == YES) {
 		++paginateCount;
-		[storeQuery setSkip:paginateCount*PAGINATE_COUNT];
+		[storeQuery setSkip:paginateCount*PAGINATE_INCREMENT];
 		
 		[self.tableView setPaginationFooter];
 	}
@@ -352,10 +351,9 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     float scrollLocation = MIN(scrollView.contentSize.height, scrollView.bounds.size.height) + scrollView.contentOffset.y - scrollView.contentInset.bottom;
-    float scrollHeight = MAX(scrollView.contentSize.height, scrollView.bounds.size.height);
+    float scrollHeight = MAX(scrollView.contentSize.height, scrollView.bounds.size.height) - 20;
 	
-    if(scrollLocation >= scrollHeight + 5 && !loadInProgress && !paginateReachEnd)
-	{
+    if(scrollLocation >= scrollHeight && !loadInProgress && !paginateReachEnd) {
 		[self performSearch:YES];
     }
 }

@@ -24,10 +24,4 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *emptyInboxLabel;
 
-@property (nonatomic, strong) DataManager *sharedData;
-@property (nonatomic, strong) RPPatron *patron;
-@property (nonatomic, strong) NSMutableArray *messagesArray;
-@property (nonatomic, strong) NSMutableArray *offersArray;
-@property (nonatomic, strong) NSMutableArray *giftsArray;
-
 @end

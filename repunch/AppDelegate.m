@@ -9,7 +9,7 @@
 
 @implementation AppDelegate
 {
-	DataManager* sharedData;
+	DataManager* dataManager;
 	PFQuery *patronQuery;
 }
 
@@ -17,7 +17,7 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-	BOOL isProduction = NO; // DON'T FORGET TO SET!!!!
+	BOOL isProduction = YES; // DON'T FORGET TO SET!!!!
 	
 	if(isProduction) {	// PRODUCTION KEY
 		[Parse setApplicationId:@"m0EdwpRYlJwttZLZ5PUk7y13TWCnvSScdn8tfVoh"
@@ -50,7 +50,7 @@
 													UIRemoteNotificationTypeAlert |
 													UIRemoteNotificationTypeSound];
 	[RepunchUtils configureAppearance];
-	sharedData = [DataManager getSharedInstance];
+	dataManager = [DataManager getSharedInstance];
 	[self checkLoginState];
 	
     return YES;
@@ -157,7 +157,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 			[patronQuery getObjectInBackgroundWithId:patron.objectId block:^(PFObject *patron, NSError *error) {
 				
 				 if (!error) {
-					 [sharedData setPatron:(RPPatron *)patron];
+					 [dataManager setPatron:(RPPatron *)patron];
 					 [self presentTabBarController];
 				 
 					 //TODO: check installation's punch_code and patron_id
@@ -179,16 +179,14 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 - (void)presentIndeterminateStateView
 {
 	UIViewController *blankVC = [[UIViewController alloc] init];
-	UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 	blankVC.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"LaunchImageSpinner"]];
+	
+	UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]
+										initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+	spinner.center = CGPointMake(CGRectGetMidX(blankVC.view.frame), blankVC.view.frame.size.height * 2/3 - 32.0f);
 	[blankVC.view addSubview:spinner];
-	spinner.center = blankVC.view.center;
-	
-	CGRect frame = spinner.frame;
-	frame.origin.y = blankVC.view.frame.size.height * 2/3 - 32.0f;
-	spinner.frame = frame;
-	
 	[spinner startAnimating];
+	
 	self.window.rootViewController = blankVC;
     [self.window makeKeyAndVisible];
 }
@@ -237,7 +235,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 
 - (void)logout
 {
-	[sharedData clearData];
+	[dataManager clearData];
     [RPUser logOut];
 	[self presentLandingViews];
 }

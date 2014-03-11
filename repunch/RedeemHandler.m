@@ -18,20 +18,20 @@
 + (void) handlePush:(NSDictionary *)userInfo
 withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-	DataManager *sharedData = [DataManager getSharedInstance];
+	DataManager *dataManager = [DataManager getSharedInstance];
 	
 	NSString *storeId = userInfo[@"store_id"];
 	NSString *rewardTitle = userInfo[@"reward_title"];
 	NSInteger totalPunches = [userInfo[@"total_punches"] integerValue];
 	NSString *alert = userInfo[@"aps"][@"alert"];
 	
-	RPStore *store = [sharedData getStore:storeId];
-	RPPatronStore *patronStore = [sharedData getPatronStore:storeId];
+	RPStore *store = [dataManager getStore:storeId];
+	RPPatronStore *patronStore = [dataManager getPatronStore:storeId];
 	
 	if(store != nil && patronStore != nil)
 	{
 		if(totalPunches < patronStore.punch_count) {
-			[sharedData updatePatronStore:storeId withPunches:totalPunches];
+			[dataManager updatePatronStore:storeId withPunches:totalPunches];
 		}
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"Redeem" object:self];
@@ -56,12 +56,12 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 + (void) handleOfferGiftPush:(NSDictionary *)userInfo
   withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-	DataManager *sharedData = [DataManager getSharedInstance];
+	DataManager *dataManager = [DataManager getSharedInstance];
 	
 	NSString *msgStatusId = userInfo[@"message_status_id"];
 	NSString *alert = userInfo[@"aps"][@"alert"];
 	
-	RPMessageStatus *messageStatus = [sharedData getMessage:msgStatusId];
+	RPMessageStatus *messageStatus = [dataManager getMessage:msgStatusId];
 	[messageStatus setObject:@"no" forKey:@"redeem_available"];
 	
 	[RepunchUtils showDialogWithTitle:@"Success!" withMessage:alert];

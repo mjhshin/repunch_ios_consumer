@@ -6,6 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RPMessage.h"
 
 @interface InboxTableViewCell : UITableViewCell
 
@@ -14,7 +15,7 @@
 
 - (void)setMessageRead;
 - (void)setMessageUnread;
-- (void)setMessageTypeIcon:(NSString *)messageType forReadMessage:(BOOL)isRead;
+- (void)setMessageTypeIcon:(RPMessageType)messageType forReadMessage:(BOOL)isRead;
 
 @property (weak, nonatomic) IBOutlet UILabel *senderName;
 @property (weak, nonatomic) IBOutlet UILabel *messagePreview;

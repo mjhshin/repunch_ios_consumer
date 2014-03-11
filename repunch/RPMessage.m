@@ -29,4 +29,20 @@
     return @"Message";
 }
 
+- (RPMessageType)type
+{
+	if([self.message_type isEqualToString:kMessageTypeOffer]) {
+		return RPMessageTypeOffer;
+	}
+	else if([self.message_type isEqualToString:kMessageTypeFeedback]) {
+		return RPMessageTypeFeedback;
+	}
+	else if([self.message_type isEqualToString:kMessageTypeGift]) {
+		return RPMessageTypeGift;
+	}
+	else {
+		return RPMessageTypeBasic;
+	}
+}
+
 @end

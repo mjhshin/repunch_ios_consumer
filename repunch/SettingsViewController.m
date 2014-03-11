@@ -11,7 +11,7 @@
 
 @implementation SettingsViewController
 {
-	DataManager *sharedData;
+	DataManager *dataManager;
 	UIActivityIndicatorView *activityIndicator;
 }
 
@@ -32,7 +32,7 @@
 																				action:@selector(closeView:)];
 	self.navigationItem.leftBarButtonItem = exitButton;
 	
-	sharedData = [DataManager getSharedInstance];
+	dataManager = [DataManager getSharedInstance];
 
 	self.tableView.delegate = self;
 	self.tableView.dataSource = self;
@@ -153,7 +153,7 @@
 			cell.detailTextLabel.highlightedTextColor = [UIColor whiteColor];
 		}
 		
-		RPPatron* patron = [sharedData patron];
+		RPPatron* patron = [dataManager patron];
 		
 		if(indexPath.row == 0) {
 			cell.textLabel.text = patron.punch_code;

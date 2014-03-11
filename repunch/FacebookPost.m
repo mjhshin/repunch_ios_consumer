@@ -15,9 +15,9 @@
 {
 	//TODO: handle case when facebook permission changes
 	
-	DataManager *sharedData = [DataManager getSharedInstance];
-	RPStore *store = [sharedData getStore:storeId];
-	RPPatronStore *patronStore = [sharedData getPatronStore:storeId];
+	DataManager *dataManager = [DataManager getSharedInstance];
+	RPStore *store = [dataManager getStore:storeId];
+	RPPatronStore *patronStore = [dataManager getPatronStore:storeId];
 	
 	NSString *title = [NSString stringWithFormat:@"Redeemed '%@'", rewardTitle];
 	NSString *message = [NSString stringWithFormat:

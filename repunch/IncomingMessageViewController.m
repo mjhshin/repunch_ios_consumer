@@ -13,8 +13,7 @@
 
 @implementation IncomingMessageViewController
 {
-	DataManager *sharedData;
-	NSString *messageType;
+	DataManager *dataManager;
 	RPMessageStatus *messageStatus;
 	RPMessage *message;
 	RPPatron *patron;
@@ -33,8 +32,8 @@
 {
     [super viewDidLoad];
 	
-	sharedData = [DataManager getSharedInstance];
-	patron = sharedData.patron;
+	dataManager = [DataManager getSharedInstance];
+	patron = dataManager.patron;
 	
 	UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_delete"]
 																	 style:UIBarButtonItemStylePlain
@@ -50,7 +49,8 @@
 {
 	[super viewWillAppear:animated];
 	
-    if( [messageType isEqualToString:@"offer"] ) {
+    if( message.type == RPMessageTypeOffer )
+	{
         timer = [NSTimer scheduledTimerWithTimeInterval:1.0f
                                                  target:self
                                                selector:@selector(updateTimer)
@@ -72,9 +72,8 @@
 
 - (void)loadMessage
 {
-	messageStatus = [sharedData getMessage:self.messageStatusId];
+	messageStatus = [dataManager getMessage:self.messageStatusId];
 	message = messageStatus.Message;
-	messageType = message.message_type;
 	
 	containsReply = ( !IS_NIL(message.Reply) );
 }
@@ -92,11 +91,11 @@
 	[self.messageView setNeedsLayout];
 	[self.messageView layoutIfNeeded];
 	
-	if ([messageType isEqualToString:@"offer"]) {
+	if (message.type == RPMessageTypeOffer) {
 		self.navigationItem.title = @"Offer";
 		[self setupOffer];
     }
-    else if ([messageType isEqualToString:@"gift"]) {
+    else if (message.type == RPMessageTypeGift) {
 		self.navigationItem.title = @"Gift";
         [self setupGift];
     }
@@ -138,7 +137,7 @@
 	self.attachmentDescription.text = message.gift_description;
 	self.attachmentDescription.font = [RepunchUtils repunchFontWithSize:17 isBold:NO];
 	
-	RPStore *store = [sharedData getStore:message.store_id];
+	RPStore *store = [dataManager getStore:message.store_id];
  
 	if(store) {
 		self.attachmentTitle.text = store.store_name;
@@ -156,7 +155,7 @@
 			if(result) {
 				RPStore *resultStore = (RPStore *)result;
 				[attachmentSpinner stopAnimating];
-				[sharedData addStore:resultStore];
+				[dataManager addStore:resultStore];
 				self.attachmentTitle.text = resultStore.store_name;
 			}
 			else {
@@ -208,7 +207,7 @@
 	}
 	
 	// Show reply button if there is no reply
-	if(!containsReply && [messageType isEqualToString:@"gift"]) {
+	if(!containsReply && message.type == RPMessageTypeGift) {
 		[self.replyButton showButton];
 	} else {
 		self.replyButton.hidden = YES;
@@ -219,12 +218,12 @@
 
 - (void)adjustConstraints
 {
-	if([messageType isEqualToString:@"offer"] || [messageType isEqualToString:@"gift"]) {
+	if(message.type == RPMessageTypeOffer || message.type == RPMessageTypeGift) {
 		self.attachmentViewSuperviewVerticalSpace.constant = self.messageView.frame.size.height;
 	}
 	
 	if(containsReply) {
-		if([messageType isEqualToString:@"offer"] || [messageType isEqualToString:@"gift"]) {
+		if(message.type == RPMessageTypeOffer || message.type == RPMessageTypeGift) {
 			CGRect attachmentFrame = self.attachmentView.frame;
 			self.replyViewSuperviewVerticalSpace.constant = attachmentFrame.origin.y + attachmentFrame.size.height;
 		}
@@ -253,7 +252,7 @@
 													   multiplier:1
 														 constant:30];
 	}
-	else if([messageType isEqualToString:@"offer"] || [messageType isEqualToString:@"gift"]){
+	else if(message.type == RPMessageTypeOffer || message.type == RPMessageTypeGift) {
 		bottomConstraint = [NSLayoutConstraint constraintWithItem:self.scrollView
 														attribute:NSLayoutAttributeBottom
 														relatedBy:NSLayoutRelationEqual
@@ -354,20 +353,19 @@
 		return;
 	}
 	
-	if(timer == nil && ![messageType isEqualToString:@"gift"]) { //timer is nil when it expires.
+	if(timer == nil && message.type != RPMessageTypeGift) { //timer is nil when it expires.
 		return;
 	}
 	
 	if( [messageStatus.redeem_available isEqualToString:@"yes"] ) {
 		
-		NSString *patronStoreId = [[sharedData getPatronStore:message.store_id] objectId];
+		NSString *patronStoreId = [[dataManager getPatronStore:message.store_id] objectId];
 		
 		if(patronStoreId == nil) {
 			patronStoreId = (id)[NSNull null];
 		}
 		
-		NSString *rewardTitle = [messageType isEqualToString:@"offer"] ?
-		message.offer_title : message.gift_title;
+		NSString *rewardTitle = message.type == RPMessageTypeOffer ? message.offer_title : message.gift_title;
 		
 		NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
 									patron.objectId,				@"patron_id",
@@ -477,7 +475,7 @@
         if (buttonType == DeleteButton) {
 
             [alert hideAlertWithBlock:^{
-                [sharedData removeMessage:self.messageStatusId];
+                [dataManager removeMessage:self.messageStatusId];
                 [self.delegate removeMessage:self forMsgStatus:messageStatus];
                 [self.navigationController popViewControllerAnimated:NO];
             }];

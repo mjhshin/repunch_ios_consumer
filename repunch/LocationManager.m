@@ -37,7 +37,6 @@ static LocationManager *sharedLocationManager = nil;    // static instance varia
 
 - (id)init
 {
-	NSLog(@"LM alloc");
 	if (self = [super init])
 	{
         _locationManager = [CLLocationManager new];
@@ -102,10 +101,11 @@ static LocationManager *sharedLocationManager = nil;    // static instance varia
 	NSDate* eventDate = newLocation.timestamp;
 	NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
 	
-	NSLog(@"LM didUpdateLocations: lat: %f, lng: %f, timestamp: %@", newLocation.coordinate.latitude, newLocation.coordinate.longitude, eventDate);
+	//NSLog(@"LM didUpdateLocations: lat: %f, lng: %f, timestamp: %@",
+	//	  newLocation.coordinate.latitude, newLocation.coordinate.longitude, eventDate);
 	
 	if(abs(howRecent) > RECENT_INTERVAL) {
-		NSLog(@"LocationManager didUpdateToLocation with timestamp %@ which is too old to use.", newLocation.timestamp);
+		//NSLog(@"LocationManager didUpdateToLocation with timestamp %@ which is too old to use.", newLocation.timestamp);
 		return;
 	}
 	

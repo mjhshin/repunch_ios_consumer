@@ -8,6 +8,18 @@
 
 #import <Parse/Parse.h>
 
+#define kMessageTypeBasic @"basic"
+#define kMessageTypeOffer @"offer"
+#define kMessageTypeFeedback @"feedback"
+#define kMessageTypeGift @"gift"
+
+typedef NS_ENUM (NSUInteger, RPMessageType) {
+    RPMessageTypeBasic = 0,
+    RPMessageTypeOffer,
+    RPMessageTypeFeedback,
+    RPMessageTypeGift
+};
+
 @interface RPMessage : PFObject <PFSubclassing>
 
 @property (strong, atomic) RPMessage *Reply;
@@ -33,5 +45,7 @@
 //@property (assign, readonly, atomic) NSString *receiver_count;
 
 + (NSString *)parseClassName;
+
+@property (assign, atomic, readonly) RPMessageType type;
 
 @end

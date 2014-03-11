@@ -13,7 +13,7 @@
 + (void)handlePush:(NSDictionary *)pushPayload
 withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-	DataManager *sharedData = [DataManager getSharedInstance];
+	DataManager *dataManager = [DataManager getSharedInstance];
 	
     NSString *messageId = pushPayload[@"message_id"];
 	NSString *alert = pushPayload[@"aps"][@"alert"];
@@ -21,7 +21,7 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
     PFQuery *msgQuery = [RPMessage query];
     [msgQuery whereKey:@"objectId" equalTo:messageId];
     
-    PFRelation *relation = [[sharedData patron] relationforKey:@"ReceivedMessages"];
+    PFRelation *relation = [[dataManager patron] relationforKey:@"ReceivedMessages"];
     PFQuery *msgStatusQuery = [relation query];
     [msgStatusQuery includeKey:@"Message.Reply"];
     [msgStatusQuery whereKey:@"Message" matchesQuery:msgQuery];
@@ -32,7 +32,7 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 			completionHandler(UIBackgroundFetchResultFailed);
         }
         else {
-            [sharedData addMessage:(RPMessageStatus *)result];
+            [dataManager addMessage:(RPMessageStatus *)result];
             
             NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:result.objectId, @"message_status_id", nil];
             
@@ -51,7 +51,7 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 			  forReply:(BOOL)isReply
 withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-	DataManager *sharedData = [DataManager getSharedInstance];
+	DataManager *dataManager = [DataManager getSharedInstance];
 	
     NSString *messageStatusId = pushPayload[@"message_status_id"];
 	NSString *alert = pushPayload[@"aps"][@"alert"];
@@ -65,7 +65,7 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 			completionHandler(UIBackgroundFetchResultFailed);
 		}
 		else {
-			[sharedData addMessage:(RPMessageStatus *)result];
+			[dataManager addMessage:(RPMessageStatus *)result];
 			
 			NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:result.objectId, @"message_status_id", nil];
 			

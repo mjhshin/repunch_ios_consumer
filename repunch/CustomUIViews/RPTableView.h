@@ -7,20 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RPActivityIndicatorView.h"
+#import "RPPullToRefreshView.h"
 
 @interface RPTableView : UITableView
 
 @property (strong, nonatomic) UIView *defaultFooter;
 @property (strong, nonatomic) UIView *paginationFooter;
 
-@property (nonatomic,assign) BOOL showPullToRefresh;
-@property (nonatomic,strong,readonly) RPActivityIndicatorView *pullToRefreshView;
+@property (nonatomic, assign) BOOL showPullToRefresh;
+@property (nonatomic, strong, readonly) RPPullToRefreshView *pullToRefreshView;
 
 - (void)setDefaultFooter;
 - (void)setPaginationFooter;
 
-- (void)addPullToRefreshActionHandler:(actionHandler)handler;
+- (void)addPullToRefreshActionHandler:(RefreshHandler)handler;
+- (void)addPullToRefreshActionHandlerForStore:(RefreshHandler)handler;
+
 - (void)triggerPullToRefresh;
 - (void)stopRefreshAnimation;
 

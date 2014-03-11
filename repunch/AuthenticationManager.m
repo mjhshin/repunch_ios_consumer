@@ -129,8 +129,8 @@ withCompletionHandler:(AuthenticationManagerHandler)handler;
 					   withParameters:parameters
 								block:^(RPPatron* patron, NSError *error) {
 		 if (!error) {
-			 DataManager *sharedData = [DataManager getSharedInstance];
-			 [sharedData setPatron:patron];
+			 DataManager *dataManager = [DataManager getSharedInstance];
+			 [dataManager setPatron:patron];
 			 
 			 [AuthenticationManager setupInstallation:patron.objectId withPunchCode:patron.punch_code withCompletionHandler:handler];
 		 }
@@ -152,8 +152,8 @@ withCompletionHandler:(AuthenticationManagerHandler)handler;
 	[query getObjectInBackgroundWithId:patronId block:^(PFObject *result, NSError *error) {
 		 if(!error) {
 			 RPPatron *patron = (RPPatron *)result;
-			 DataManager *sharedData = [DataManager getSharedInstance];
-			 [sharedData setPatron:patron];
+			 DataManager *dataManager = [DataManager getSharedInstance];
+			 [dataManager setPatron:patron];
 			 
 			 //setup Installation
 			 [AuthenticationManager setupInstallation:patron.objectId withPunchCode:patron.punch_code withCompletionHandler:handler];

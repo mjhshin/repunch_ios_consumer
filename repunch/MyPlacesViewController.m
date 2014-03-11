@@ -6,14 +6,15 @@
 //
 
 #import "MyPlacesViewController.h"
-#import "RPActivityIndicatorView.h"
+#import "RPPullToRefreshView.h"
 
 @implementation MyPlacesViewController
 {
-	DataManager *sharedData;
+	DataManager *dataManager;
 	RPPatron *patron;
 	NSMutableArray *storeIdArray;
 	NSMutableDictionary *imageDownloadsInProgress;
+	BOOL loadInProgress;
 }
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
@@ -25,10 +26,11 @@
 {
     [super viewDidLoad];
 	
-	sharedData = [DataManager getSharedInstance];
-	patron = [sharedData patron];
+	dataManager = [DataManager getSharedInstance];
+	patron = [dataManager patron];
 	storeIdArray = [NSMutableArray array];
     imageDownloadsInProgress = [NSMutableDictionary dictionary];
+	loadInProgress = NO;
 	
 	[self registerForNotifications];
 	[self setupNavigationBar];
@@ -113,8 +115,7 @@
 	__weak typeof(self) weakSelf = self;
 	Reachability* reach = [Reachability reachabilityWithHostname:@"www.google.com"];
 	
-	reach.reachableBlock = ^(Reachability *reach)
-	{
+	reach.reachableBlock = ^(Reachability *reach) {
 		if(storeIdArray.count == 0) {
 			[weakSelf loadMyPlaces];
 		}
@@ -155,6 +156,12 @@
 		return;
 	}
 	
+	if(loadInProgress) {
+		return;
+	}
+	
+	loadInProgress = YES;
+	
 	if(storeIdArray.count == 0) {
 		self.activityIndicatorView.hidden = NO;
 		[self.activityIndicator startAnimating];
@@ -174,6 +181,8 @@
 		[weakSelf.activityIndicator stopAnimating];
 		[self.tableView stopRefreshAnimation];
 		
+		loadInProgress = NO;
+		
         if (!error)
         {
 			[storeIdArray removeAllObjects];
@@ -182,8 +191,8 @@
 			{
 				for (RPPatronStore *patronStore in results)
 				{
-					[sharedData addPatronStore:patronStore forKey:patronStore.Store.objectId];
-					[sharedData addStore:patronStore.Store];
+					[dataManager addPatronStore:patronStore forKey:patronStore.Store.objectId];
+					[dataManager addStore:patronStore.Store];
 					[storeIdArray addObject:patronStore.Store.objectId];
 				}
 			}
@@ -209,8 +218,8 @@
 {
 	[storeIdArray sortUsingComparator:^NSComparisonResult(NSString *objectId1, NSString *objectId2) {
 		
-		RPPatronStore* patronStore1 = [sharedData getPatronStore:objectId1];
-		RPPatronStore* patronStore2 = [sharedData getPatronStore:objectId2];
+		RPPatronStore* patronStore1 = [dataManager getPatronStore:objectId1];
+		RPPatronStore* patronStore2 = [dataManager getPatronStore:objectId2];
 		
 		NSNumber *punchCount1 = [NSNumber numberWithInteger:patronStore1.punch_count];
 		NSNumber *punchCount2 = [NSNumber numberWithInteger:patronStore2.punch_count];
@@ -250,8 +259,8 @@
     }
 	
 	NSString *storeId = storeIdArray[indexPath.row];
-	RPPatronStore *patronStore = [sharedData getPatronStore:storeId];
-	RPStore *store = [sharedData getStore:storeId];
+	RPPatronStore *patronStore = [dataManager getPatronStore:storeId];
+	RPStore *store = [dataManager getStore:storeId];
 	
 	cell.storeName.text = store.store_name;
 	cell.numPunches.text = [NSString stringWithFormat:(patronStore.punch_count == 1) ?
@@ -279,7 +288,7 @@
 		//{
 		if( !IS_NIL(store.thumbnail_image) )
         {
-            UIImage *storeImage = [sharedData getThumbnailImage:storeId];
+            UIImage *storeImage = [dataManager getThumbnailImage:storeId];
 			if(storeImage == nil)
 			{
 				cell.storeImage.image = [UIImage imageNamed:@"placeholder_thumbnail_image"];
@@ -333,7 +342,7 @@
 					MyPlacesTableViewCell *cell = (MyPlacesTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
 					//cell.storeImage.image = storeImage;
 					[cell.storeImage setImageWithAnimation:storeImage];
-					[sharedData addThumbnailImage:storeImage forKey:storeId];
+					[dataManager addThumbnailImage:storeImage forKey:storeId];
 				}
             }
             else {

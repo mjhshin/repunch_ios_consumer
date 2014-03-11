@@ -16,20 +16,20 @@
 
 + (void)handlePush:(NSDictionary *)userInfo withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-	DataManager *sharedData = [DataManager getSharedInstance];
+	DataManager *dataManager = [DataManager getSharedInstance];
 	
 	NSString *storeId = userInfo[@"store_id"];
 	NSString *patronStoreId = userInfo[@"patron_store_id"];
 	NSInteger totalPunches = [userInfo[@"total_punches"] integerValue];
 	NSString *alert = userInfo[@"aps"][@"alert"];
 	
-	RPStore *store = [sharedData getStore:storeId];
-	RPPatronStore *patronStore = [sharedData getPatronStore:storeId];
+	RPStore *store = [dataManager getStore:storeId];
+	RPPatronStore *patronStore = [dataManager getPatronStore:storeId];
 
 	if(store != nil && patronStore != nil)
 	{
 		if(totalPunches > patronStore.punch_count) {
-			[sharedData updatePatronStore:storeId withPunches:totalPunches];
+			[dataManager updatePatronStore:storeId withPunches:totalPunches];
 		}
 
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"Punch" object:self];
@@ -52,9 +52,9 @@
             else
             {
 				RPPatronStore *patronStore = (RPPatronStore *)result;
-                //NSLog(@"Received punch where PatronStore/Store not in sharedData: %@", result);
-                [sharedData addPatronStore:patronStore forKey:storeId];
-                [sharedData addStore:patronStore.Store];
+                //NSLog(@"Received punch where PatronStore/Store not in dataManager: %@", result);
+                [dataManager addPatronStore:patronStore forKey:storeId];
+                [dataManager addStore:patronStore.Store];
                 
                 NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:storeId, @"store_id", nil];
                 

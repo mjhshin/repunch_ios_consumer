@@ -6,7 +6,9 @@
 //
 
 #import "InboxViewController.h"
-#import "RPActivityIndicatorView.h"
+#import "RPPullToRefreshView.h"
+
+#define PAGINATE_INCREMENT 20
 
 @interface InboxViewController ()
 //@property (strong, nonatomic) RPReloadControl *reloadControl;
@@ -14,6 +16,12 @@
 
 @implementation InboxViewController
 {
+	DataManager *dataManager;
+	RPPatron *patron;
+	NSMutableArray *messagesArray;
+	NSMutableArray *offersArray;
+	NSMutableArray *giftsArray;
+	
 	NSInteger alertBadgeCount;
 	BOOL loadInProgress;
 	int paginateCount;
@@ -28,26 +36,14 @@
 
 - (void)viewDidLoad
 {
-	self.sharedData = [DataManager getSharedInstance];
-    self.patron = [self.sharedData patron];
-	self.messagesArray = [[NSMutableArray alloc] init];
-	self.offersArray = [[NSMutableArray alloc] init];
-	self.giftsArray = [[NSMutableArray alloc] init];
+	[super viewDidLoad];
 	
-	self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-
-
-    //self.reloadControl = [[RPReloadControl alloc] initWithTableView:self.tableView
-	//												  andImageNamed:@"app_icon_29x29.png"];
-
-    //__weak typeof (self)weakSelf = self;
-
-    //self.reloadControl.handler = ^(){
-    //    [weakSelf loadInbox:NO];
-    //};
-
-
+	dataManager = [DataManager getSharedInstance];
+    patron = [dataManager patron];
+	messagesArray = [[NSMutableArray alloc] init];
+	offersArray = [[NSMutableArray alloc] init];
+	giftsArray = [[NSMutableArray alloc] init];
+	
 	alertBadgeCount = 0;
 	paginateCount = 0;
 	loadInProgress = NO;
@@ -66,6 +62,12 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0); //workaround. top inset initially being set to 128
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -93,11 +95,10 @@
 												 name:UIApplicationWillEnterForegroundNotification
 											   object:nil];
 	
-	__weak typeof(self) weakSelf = self;
 	Reachability* reach = [Reachability reachabilityWithHostname:@"www.google.com"];
-	
+	__weak typeof(self) weakSelf = self;
 	reach.reachableBlock = ^(Reachability *reach) {
-		if(weakSelf.messagesArray.count == 0) {
+		if(messagesArray.count == 0) {
 			[weakSelf loadInbox:NO];
 		}
 		else {
@@ -144,21 +145,25 @@
 		return;
 	}
 	
+	if(loadInProgress) {
+		return;
+	}
+	
 	loadInProgress = YES;
 	
-    PFRelation *messagesRelation = [self.patron relationforKey:@"ReceivedMessages"];
+    PFRelation *messagesRelation = [patron relationforKey:@"ReceivedMessages"];
     PFQuery *messageQuery = [messagesRelation query];
     [messageQuery includeKey:@"Message.Reply"];
 	[messageQuery orderByDescending:@"createdAt"];
-	messageQuery.limit = 20;
+	messageQuery.limit = PAGINATE_INCREMENT;
 	
 	if(paginate == YES) {
 		++paginateCount;
-		messageQuery.skip = 20*paginateCount;
+		messageQuery.skip = paginateCount * PAGINATE_INCREMENT;
 		
 		[self.tableView setPaginationFooter];
 	}
-	else if(self.messagesArray.count == 0) {
+	else if(messagesArray.count == 0) {
 		self.activityIndicatorView.hidden = NO;
 		[self.activityIndicator startAnimating];
 		self.emptyInboxLabel.hidden = YES;
@@ -176,9 +181,9 @@
 		
         if(!error) {
             if (paginate != YES) {
-                [self.messagesArray removeAllObjects];
-				[self.offersArray removeAllObjects];
-				[self.giftsArray removeAllObjects];
+                [messagesArray removeAllObjects];
+				[offersArray removeAllObjects];
+				[giftsArray removeAllObjects];
 				
                 paginateReachEnd = NO;
 				paginateCount = 0;
@@ -186,15 +191,17 @@
             }
 
 			for(RPMessageStatus *messageStatus in results) {
-				[self.sharedData addMessage:messageStatus];
+				[dataManager addMessage:messageStatus];
 				[self addMessage:messageStatus fromPush:NO];
 			}
 
 			[self refreshTableView];
 			
-			if(paginate == YES && results.count < 20) {
+			if(paginate == YES && results.count < PAGINATE_INCREMENT) {
 				paginateReachEnd = YES;
 			}
+			
+			[self checkForOfferGiftPagination];
         }
 		else {
             [RepunchUtils showConnectionErrorDialog];
@@ -202,11 +209,6 @@
 		
 		loadInProgress = NO;
     }];
-}
-
-- (void)filterMessages
-{
-	[self refreshTableView];
 }
 
 - (void)refreshWhenBackgroundRefreshDisabled
@@ -227,14 +229,14 @@
 {
 	NSInteger filter = segmentedControl.selectedSegmentIndex;
 	
-	if(filter == 0) { // All Messages
-		return [self.messagesArray count];
+	if(filter == 0) {
+		return messagesArray.count;
 	}
-	else if(filter == 1) { // Offers
-		return [self.offersArray count];
+	else if(filter == 1) {
+		return offersArray.count;
 	}
-	else { // Gifts
-		return [self.giftsArray count];
+	else {
+		return giftsArray.count;
 	}
 }
 
@@ -250,14 +252,14 @@
 	
 	NSInteger filter = segmentedControl.selectedSegmentIndex;
 	
-	if(filter == 0) { // All Messages
-		messageStatus = self.messagesArray[indexPath.row];
+	if(filter == 0) {
+		messageStatus = messagesArray[indexPath.row];
 	}
-	else if(filter == 1) { // Offers
-		messageStatus = self.offersArray[indexPath.row];
+	else if(filter == 1) {
+		messageStatus = offersArray[indexPath.row];
 	}
-	else { // Gifts
-		messageStatus = self.giftsArray[indexPath.row];
+	else {
+		messageStatus = giftsArray[indexPath.row];
 	}
 
     RPMessage *message = messageStatus.Message;
@@ -267,17 +269,14 @@
 	cell.dateSent.text = IS_NIL(reply) ? [self formattedDateString:message.createdAt]
 										: [self formattedDateString:reply.createdAt];
 	
-	if( IS_NIL(message.subject) ) {
+	if(message.type == RPMessageTypeOffer || message.type == RPMessageTypeBasic) { // no reply possible here
+		cell.messagePreview.text = [NSString stringWithFormat:@"%@ - %@", message.subject, message.body];
+	}
+	else {
 		cell.messagePreview.text = IS_NIL(reply) ? message.body : reply.body;
 	}
-	else { //only offers will have subject
-		cell.messagePreview.text = IS_NIL(reply) ?
-			[NSString stringWithFormat:@"%@ - %@", message.subject, message.body] :
-			[NSString stringWithFormat:@"RE: %@ - %@", message.subject, reply.body];
-	}
 	
-    
-	[cell setMessageTypeIcon:message.message_type forReadMessage:messageStatus.is_read];
+	[cell setMessageTypeIcon:message.type forReadMessage:messageStatus.is_read];
 	
     if (messageStatus.is_read) {
 		[cell setMessageRead];
@@ -297,14 +296,14 @@
 	
 	NSInteger filter = segmentedControl.selectedSegmentIndex;
 	
-	if(filter == 0) { // All Messages
-		messageStatus = self.messagesArray[indexPath.row];
+	if(filter == 0) {
+		messageStatus = messagesArray[indexPath.row];
 	}
-	else if(filter == 1) { // Offers
-		messageStatus = self.offersArray[indexPath.row];
+	else if(filter == 1) {
+		messageStatus = offersArray[indexPath.row];
 	}
-	else { // Gifts
-		messageStatus = self.giftsArray[indexPath.row];
+	else {
+		messageStatus = giftsArray[indexPath.row];
 	}
 	
     messageVC.messageStatusId = messageStatus.objectId;
@@ -333,10 +332,11 @@
   
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    float scrollLocation = MIN(scrollView.contentSize.height, scrollView.bounds.size.height) + scrollView.contentOffset.y - scrollView.contentInset.bottom;
-    float scrollHeight = MAX(scrollView.contentSize.height, scrollView.bounds.size.height);
+	CGFloat scrollOffset = MIN(scrollView.contentSize.height, scrollView.bounds.size.height);
+    CGFloat scrollLocation = scrollOffset + scrollView.contentOffset.y - scrollView.contentInset.bottom;
+    CGFloat scrollHeight = MAX(scrollView.contentSize.height, scrollView.bounds.size.height) + 5;
 
-    if(scrollLocation >= scrollHeight + 5 && !loadInProgress && !paginateReachEnd)
+    if(scrollLocation >= scrollHeight && !loadInProgress && !paginateReachEnd)
 	{
 		[self loadInbox:YES];
     }
@@ -377,9 +377,9 @@
 - (void)addMessageFromPush:(NSNotification *)notification
 {
 	NSString *msgStatusId = notification.userInfo[@"message_status_id"];
-	RPMessageStatus *messageStatus = [self.sharedData getMessage:msgStatusId];
+	RPMessageStatus *messageStatus = [dataManager getMessage:msgStatusId];
 	
-	for(RPMessageStatus* messageStatus in self.messagesArray) //if this is a reply, replace the original message
+	for(RPMessageStatus* messageStatus in messagesArray) //if this is a reply, replace the original message
 	{
 		if( [messageStatus.objectId isEqualToString:msgStatusId] )
 		{
@@ -416,38 +416,38 @@
 	RPMessage *message = messageStatus.Message;
 	
 	if(isPush) {
-		[self.messagesArray insertObject:messageStatus atIndex:0];
+		[messagesArray insertObject:messageStatus atIndex:0];
 		
-		if ([message.message_type isEqualToString:@"offer"]) {
-			[self.offersArray insertObject:messageStatus atIndex:0];
+		if (message.type == RPMessageTypeOffer) {
+			[offersArray insertObject:messageStatus atIndex:0];
 		}
-		else if ([message.message_type isEqualToString:@"gift"]) {
-			[self.giftsArray insertObject:messageStatus atIndex:0];
+		else if (message.type == RPMessageTypeGift) {
+			[giftsArray insertObject:messageStatus atIndex:0];
 		}
 	}
 	else {
-		[self.messagesArray addObject:messageStatus];
+		[messagesArray addObject:messageStatus];
 		
-		if ([message.message_type isEqualToString:@"offer"]) {
-			[self.offersArray addObject:messageStatus];
+		if (message.type == RPMessageTypeOffer) {
+			[offersArray addObject:messageStatus];
 		}
-		else if ([message.message_type isEqualToString:@"gift"]) {
-			[self.giftsArray addObject:messageStatus];
+		else if (message.type == RPMessageTypeGift) {
+			[giftsArray addObject:messageStatus];
 		}
 	}
 }
 
 - (void)removeMessage:(RPMessageStatus *)messageStatus
 {
-	[self.messagesArray removeObject:messageStatus];
+	[messagesArray removeObject:messageStatus];
 	
 	RPMessage *message = messageStatus.Message;
 	
-	if ([message.message_type isEqualToString:@"offer"]) {
-		[self.offersArray removeObject:messageStatus];
+	if (message.type == RPMessageTypeOffer) {
+		[offersArray removeObject:messageStatus];
 	}
-	else if ([message.message_type isEqualToString:@"gift"]) {
-		[self.giftsArray removeObject:messageStatus];
+	else if (message.type == RPMessageTypeGift) {
+		[giftsArray removeObject:messageStatus];
 	}
 }
 
@@ -455,8 +455,8 @@
 {
 	NSInteger filter = segmentedControl.selectedSegmentIndex;
 	
-	if(filter == 0) { // All Messages
-		if(self.messagesArray.count > 0) {
+	if(filter == 0) {
+		if(messagesArray.count > 0) {
 			[self.emptyInboxLabel setHidden:YES];
 		}
 		else {
@@ -464,8 +464,8 @@
 			[self.emptyInboxLabel setHidden:NO];
 		}
 	}
-	else if(filter == 1) { // Offers
-		if(self.offersArray.count > 0) {
+	else if(filter == 1) {
+		if(offersArray.count > 0) {
 			[self.emptyInboxLabel setHidden:YES];
 		}
 		else {
@@ -473,8 +473,8 @@
 			[self.emptyInboxLabel setHidden:NO];
 		}
 	}
-	else { // Gifts
-		if(self.giftsArray.count > 0) {
+	else {
+		if(giftsArray.count > 0) {
 			[self.emptyInboxLabel setHidden:YES];
 		}
 		else {
@@ -486,18 +486,37 @@
 	[self.tableView reloadData];
 }
 
+- (void)filterMessages
+{
+	[self refreshTableView];
+	
+	[self checkForOfferGiftPagination];
+}
+
+- (void)checkForOfferGiftPagination
+{
+	if(!loadInProgress && !paginateReachEnd) {
+		if(segmentedControl.selectedSegmentIndex == 1 && offersArray.count < 5) { //offers
+			[self loadInbox:YES];
+		}
+		else if(segmentedControl.selectedSegmentIndex == 2 && giftsArray.count < 5) { // gifts
+			[self loadInbox:YES];
+		}
+	}
+}
+
 - (void)fetchBadgeCount
 {
-	PFRelation *messagesRelation = [self.patron relationforKey:@"ReceivedMessages"];
+	PFRelation *messagesRelation = [patron relationforKey:@"ReceivedMessages"];
     PFQuery *messageQuery = [messagesRelation query];
 	[messageQuery whereKey:@"is_read" equalTo:[NSNumber numberWithBool:NO]];
-	[messageQuery countObjectsInBackgroundWithBlock:^(int count, NSError *error)
-	{
+	[messageQuery countObjectsInBackgroundWithBlock:^(int count, NSError *error) {
+		
 		if (!error) {
 			alertBadgeCount = count;
 			[self updateBadgeCount];
 		} else {
-			// The request failed
+			// Hmmm. Oh well.
 		}
 	}];
 }
@@ -519,7 +538,7 @@
 
 - (void)sortMessagesByDate
 {
-	[self.messagesArray sortUsingComparator:^NSComparisonResult(RPMessageStatus *msg1, RPMessageStatus *msg2) {
+	[messagesArray sortUsingComparator:^NSComparisonResult(RPMessageStatus *msg1, RPMessageStatus *msg2) {
 		
 		NSDate *date1 = IS_NIL(msg1.Message.Reply) ? msg1.Message.createdAt : msg1.Message.Reply.createdAt;
 		NSDate *date2 = IS_NIL(msg2.Message.Reply) ? msg2.Message.createdAt : msg2.Message.Reply.createdAt;
@@ -548,7 +567,7 @@
 
 - (void)showPunchCode
 {
-	[RepunchUtils showPunchCode:self.patron.punch_code];
+	[RepunchUtils showPunchCode:patron.punch_code];
 }
 
 @end

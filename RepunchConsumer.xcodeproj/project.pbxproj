@@ -56,6 +56,10 @@
 		EE06E66117E7525000073AAF /* app_icon_80x80.png in Resources */ = {isa = PBXBuildFile; fileRef = EE06E65B17E7525000073AAF /* app_icon_80x80.png */; };
 		EE06E66217E7525000073AAF /* app_icon_114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = EE06E65C17E7525000073AAF /* app_icon_114x114.png */; };
 		EE06E66317E7525000073AAF /* app_icon_120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = EE06E65D17E7525000073AAF /* app_icon_120x120.png */; };
+		EE0FBE6718CF819100087DEF /* RPPullToRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE0FBE6618CF819100087DEF /* RPPullToRefreshView.m */; };
+		EE0FBE6A18CFB6BD00087DEF /* star_refresh_white.png in Resources */ = {isa = PBXBuildFile; fileRef = EE0FBE6818CFB6BD00087DEF /* star_refresh_white.png */; };
+		EE0FBE6B18CFB6BD00087DEF /* star_refresh_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE0FBE6918CFB6BD00087DEF /* star_refresh_white@2x.png */; };
+		EE0FBE6D18CFCF7300087DEF /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0FBE6C18CFCF7300087DEF /* FacebookSDK.framework */; };
 		EE17EE0E17FA34EE0053C36C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE17EE0D17FA34EE0053C36C /* Crashlytics.framework */; };
 		EE255EA418BD38C800A6E15E /* RPPopupButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EE255EA318BD38C800A6E15E /* RPPopupButton.m */; };
 		EE28DAE017AC447E00E4C460 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE28DADF17AC447E00E4C460 /* DataManager.m */; };
@@ -87,10 +91,7 @@
 		EE5378CE17B2FEA9002D8B18 /* map_button.png in Resources */ = {isa = PBXBuildFile; fileRef = EE5378C817B2FEA9002D8B18 /* map_button.png */; };
 		EE5F947417FB5471006E6F67 /* AuthenticationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5F947317FB5471006E6F67 /* AuthenticationManager.m */; };
 		EE6394C418C7E04100A9A474 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6394C318C7E04100A9A474 /* LocationManager.m */; };
-		EE67745118CA6E04006CDE23 /* RPActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE67744E18CA6E04006CDE23 /* RPActivityIndicatorView.m */; };
-		EE67745718CA725B006CDE23 /* UIScrollView+RPPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = EE67745618CA725B006CDE23 /* UIScrollView+RPPullToRefresh.m */; };
 		EE67745918CA7AB8006CDE23 /* star_refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE67745818CA7AB8006CDE23 /* star_refresh@2x.png */; };
-		EE6A5ACB1857C68400D6B6AF /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE6A5ACA1857C68400D6B6AF /* FacebookSDK.framework */; };
 		EE79DF7E17BD702500E92DE5 /* nav_exit.png in Resources */ = {isa = PBXBuildFile; fileRef = EE79DF7617BD702500E92DE5 /* nav_exit.png */; };
 		EE79DF7F17BD702500E92DE5 /* nav_exit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE79DF7717BD702500E92DE5 /* nav_exit@2x.png */; };
 		EE79DF8017BD702500E92DE5 /* nav_search.png in Resources */ = {isa = PBXBuildFile; fileRef = EE79DF7817BD702500E92DE5 /* nav_search.png */; };
@@ -273,6 +274,11 @@
 		EE06E65B17E7525000073AAF /* app_icon_80x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_80x80.png; sourceTree = "<group>"; };
 		EE06E65C17E7525000073AAF /* app_icon_114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_114x114.png; sourceTree = "<group>"; };
 		EE06E65D17E7525000073AAF /* app_icon_120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_120x120.png; sourceTree = "<group>"; };
+		EE0FBE6518CF819100087DEF /* RPPullToRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPPullToRefreshView.h; path = repunch/CustomUIViews/RPPullToRefreshView.h; sourceTree = SOURCE_ROOT; };
+		EE0FBE6618CF819100087DEF /* RPPullToRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RPPullToRefreshView.m; path = repunch/CustomUIViews/RPPullToRefreshView.m; sourceTree = SOURCE_ROOT; };
+		EE0FBE6818CFB6BD00087DEF /* star_refresh_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_refresh_white.png; sourceTree = "<group>"; };
+		EE0FBE6918CFB6BD00087DEF /* star_refresh_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star_refresh_white@2x.png"; sourceTree = "<group>"; };
+		EE0FBE6C18CFCF7300087DEF /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		EE17EE0D17FA34EE0053C36C /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
 		EE255EA218BD38C800A6E15E /* RPPopupButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPPopupButton.h; path = repunch/CustomUIViews/RPPopupButton.h; sourceTree = SOURCE_ROOT; };
 		EE255EA318BD38C800A6E15E /* RPPopupButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RPPopupButton.m; path = repunch/CustomUIViews/RPPopupButton.m; sourceTree = SOURCE_ROOT; };
@@ -312,12 +318,7 @@
 		EE5F947317FB5471006E6F67 /* AuthenticationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationManager.m; sourceTree = "<group>"; };
 		EE6394C218C7E04100A9A474 /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationManager.h; path = repunch/LocationManager.h; sourceTree = SOURCE_ROOT; };
 		EE6394C318C7E04100A9A474 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationManager.m; path = repunch/LocationManager.m; sourceTree = SOURCE_ROOT; };
-		EE67744D18CA6E04006CDE23 /* RPActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPActivityIndicatorView.h; sourceTree = "<group>"; };
-		EE67744E18CA6E04006CDE23 /* RPActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPActivityIndicatorView.m; sourceTree = "<group>"; };
-		EE67745518CA725B006CDE23 /* UIScrollView+RPPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+RPPullToRefresh.h"; sourceTree = "<group>"; };
-		EE67745618CA725B006CDE23 /* UIScrollView+RPPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+RPPullToRefresh.m"; sourceTree = "<group>"; };
 		EE67745818CA7AB8006CDE23 /* star_refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star_refresh@2x.png"; sourceTree = "<group>"; };
-		EE6A5ACA1857C68400D6B6AF /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		EE79DF7617BD702500E92DE5 /* nav_exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_exit.png; sourceTree = "<group>"; };
 		EE79DF7717BD702500E92DE5 /* nav_exit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_exit@2x.png"; sourceTree = "<group>"; };
 		EE79DF7817BD702500E92DE5 /* nav_search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_search.png; sourceTree = "<group>"; };
@@ -503,7 +504,7 @@
 				7996B35F17820A9700CCAFED /* Foundation.framework in Frameworks */,
 				7996B36117820A9700CCAFED /* CoreGraphics.framework in Frameworks */,
 				7996B36317820A9700CCAFED /* CoreData.framework in Frameworks */,
-				EE6A5ACB1857C68400D6B6AF /* FacebookSDK.framework in Frameworks */,
+				EE0FBE6D18CFCF7300087DEF /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -629,18 +630,6 @@
 			name = Push;
 			sourceTree = "<group>";
 		};
-		EE67744918CA6E04006CDE23 /* PullToRefresh */ = {
-			isa = PBXGroup;
-			children = (
-				EE67745518CA725B006CDE23 /* UIScrollView+RPPullToRefresh.h */,
-				EE67745618CA725B006CDE23 /* UIScrollView+RPPullToRefresh.m */,
-				EE67744D18CA6E04006CDE23 /* RPActivityIndicatorView.h */,
-				EE67744E18CA6E04006CDE23 /* RPActivityIndicatorView.m */,
-			);
-			name = PullToRefresh;
-			path = repunch/PullToRefresh;
-			sourceTree = SOURCE_ROOT;
-		};
 		EE8D702818BBB10D00ADE0DB /* MyPlaces */ = {
 			isa = PBXGroup;
 			children = (
@@ -742,7 +731,7 @@
 		EE9D4B1017A83F4A005E0CC5 /* External */ = {
 			isa = PBXGroup;
 			children = (
-				EE6A5ACA1857C68400D6B6AF /* FacebookSDK.framework */,
+				EE0FBE6C18CFCF7300087DEF /* FacebookSDK.framework */,
 				EE17EE0D17FA34EE0053C36C /* Crashlytics.framework */,
 			);
 			path = External;
@@ -751,7 +740,6 @@
 		EE9D4B7017A83F4A005E0CC5 /* Repunch */ = {
 			isa = PBXGroup;
 			children = (
-				EE67744918CA6E04006CDE23 /* PullToRefresh */,
 				EE9D4B7117A83F4A005E0CC5 /* AppDelegate.h */,
 				EE9D4B7217A83F4A005E0CC5 /* AppDelegate.m */,
 				202F1DFE18523DCC00495BDF /* Parse */,
@@ -773,6 +761,8 @@
 				EEE4D26B18A30C9C00A5EC25 /* RPNavigationController.m */,
 				EE93162B18AA9A7100ECEABF /* RPTableView.h */,
 				EE93162C18AA9A7100ECEABF /* RPTableView.m */,
+				EE0FBE6518CF819100087DEF /* RPPullToRefreshView.h */,
+				EE0FBE6618CF819100087DEF /* RPPullToRefreshView.m */,
 				EE255EA218BD38C800A6E15E /* RPPopupButton.h */,
 				EE255EA318BD38C800A6E15E /* RPPopupButton.m */,
 				EE93162E18AAA24300ECEABF /* RPButton.h */,
@@ -862,6 +852,8 @@
 				EE93167218AD569A00ECEABF /* message_type_offer@2x.png */,
 				EE93166618AD552500ECEABF /* message_type_offer_orange.png */,
 				EE93166518AD552500ECEABF /* message_type_offer_orange@2x.png */,
+				EE0FBE6818CFB6BD00087DEF /* star_refresh_white.png */,
+				EE0FBE6918CFB6BD00087DEF /* star_refresh_white@2x.png */,
 				EE93164618AC242A00ECEABF /* nav_add_store.png */,
 				EE93164718AC242A00ECEABF /* nav_add_store@2x.png */,
 				EEB75AA21884B2FD00AA4F89 /* nav_back.png */,
@@ -1043,6 +1035,7 @@
 				EEE777B117E7D2020023768B /* feedback_button@2x.png in Resources */,
 				EE398B4018908A00005BEDFE /* location_hours_icon@2x.png in Resources */,
 				EE398B4618908A31005BEDFE /* location_call_icon.png in Resources */,
+				EE0FBE6B18CFB6BD00087DEF /* star_refresh_white@2x.png in Resources */,
 				EEE4D251189AD39A00A5EC25 /* star.png in Resources */,
 				EE9D4C7617A83F4B005E0CC5 /* InboxTableViewCell.xib in Resources */,
 				EE9D4C7817A83F4B005E0CC5 /* StoreTableViewCell.xib in Resources */,
@@ -1103,6 +1096,7 @@
 				EE9D4F3A17A84ABB005E0CC5 /* login-button-small@2x.png in Resources */,
 				EE93165118AC278900ECEABF /* reward_locked@2x.png in Resources */,
 				EE398B4718908A31005BEDFE /* location_call_icon@2x.png in Resources */,
+				EE0FBE6A18CFB6BD00087DEF /* star_refresh_white.png in Resources */,
 				EEB75A9318722D0800AA4F89 /* LocationDetailsViewController.xib in Resources */,
 				EE9D4F4017A84ABB005E0CC5 /* repunch@2x.png in Resources */,
 				EE06E66017E7525000073AAF /* app_icon_58x58.png in Resources */,
@@ -1218,13 +1212,13 @@
 				EE93162D18AA9A7100ECEABF /* RPTableView.m in Sources */,
 				EE9D4C8717A83F4B005E0CC5 /* StoreViewController.m in Sources */,
 				EE5F947417FB5471006E6F67 /* AuthenticationManager.m in Sources */,
-				EE67745718CA725B006CDE23 /* UIScrollView+RPPullToRefresh.m in Sources */,
 				EE9D4C8917A83F4B005E0CC5 /* SearchViewController.m in Sources */,
 				EE9D4C8B17A83F4B005E0CC5 /* MyPlacesViewController.m in Sources */,
 				20E8609B18BBB686007DB153 /* RPAlertController.m in Sources */,
 				EE9D4C8F17A83F4B005E0CC5 /* RegisterViewController.m in Sources */,
 				EE6394C418C7E04100A9A474 /* LocationManager.m in Sources */,
 				EEE4D26C18A30C9C00A5EC25 /* RPNavigationController.m in Sources */,
+				EE0FBE6718CF819100087DEF /* RPPullToRefreshView.m in Sources */,
 				EE9D4C9617A83F4B005E0CC5 /* LoginViewController.m in Sources */,
 				EE9D4C9817A83F4B005E0CC5 /* MapPin.m in Sources */,
 				EEE4D26F18A5AA7F00A5EC25 /* RPPatron.m in Sources */,
@@ -1239,7 +1233,6 @@
 				EE3F36D817B586ED00D28FC9 /* RedeemHandler.m in Sources */,
 				EEE19F3518621A5B0084C63B /* LocationsViewController.m in Sources */,
 				EE460EC317BB5C7A00AC3588 /* MessageHandler.m in Sources */,
-				EE67745118CA6E04006CDE23 /* RPActivityIndicatorView.m in Sources */,
 				EEA181A317C5894B00553336 /* FacebookPost.m in Sources */,
 				EEA181AC17C6FD9B00553336 /* FacebookFriendsViewController.m in Sources */,
 				EE93163018AAA24300ECEABF /* RPButton.m in Sources */,

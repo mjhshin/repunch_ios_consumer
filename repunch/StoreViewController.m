@@ -18,7 +18,7 @@
 
 @implementation StoreViewController
 {
-	DataManager *sharedData;
+	DataManager *dataManager;
 	RPStore *store;
 	RPStoreLocation *storeLocation;
 	RPPatron *patron;
@@ -44,9 +44,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-	transitionScrollOffset = self.storeImage.frame.size.height - self.storeName.frame.size.height - 84.0f; //32 is half nav bar height
+	
 	self.automaticallyAdjustsScrollViewInsets = NO;
+	transitionScrollOffset = self.storeImage.frame.size.height - self.storeName.frame.size.height - 84.0f; //32 is half nav bar height
 	navigationBarIsOpaque = NO;
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
@@ -64,12 +64,12 @@
 												 name:@"FacebookPost"
 											   object:nil];
     
-	sharedData = [DataManager getSharedInstance];
-	patron = [sharedData patron];
-	store = [sharedData getStore:self.storeId];
+	dataManager = [DataManager getSharedInstance];
+	patron = [dataManager patron];
+	store = [dataManager getStore:self.storeId];
 	
 	if(self.storeLocationId != nil) {
-		storeLocation = [sharedData getStoreLocation:self.storeLocationId];
+		storeLocation = [dataManager getStoreLocation:self.storeLocationId];
 	}
 	else if(store.store_locations.count == 1) {
 		storeLocation = store.store_locations[0];
@@ -93,25 +93,21 @@
 	barSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
 	spinnerBarButton = [[UIBarButtonItem alloc] initWithCustomView:barSpinner];
 	
-	self.tableView.dataSource = self;
-    self.tableView.delegate = self;
-
-
+	CAGradientLayer *bgLayer = [RepunchUtils blackGradient];
+	bgLayer.frame = self.storeNameBackground.bounds;
+	[self.storeNameBackground.layer insertSublayer:bgLayer atIndex:0];
+    
+    [self.storeAddress setPreferredMaxLayoutWidth:self.storeAddress.frame.size.width];
+    [self.storeHours setPreferredMaxLayoutWidth:self.storeHours.frame.size.width];
+	
 	[self setStoreInformation];
 	[self setupTableViewHeader];
 	[self checkPatronStore];
-
-/*
-    self.reloadControl = [[RPReloadControl alloc] initWithTableView:self.tableView
-													  andImageNamed:@"app_icon_29x29.png"
-															isStore:YES];
-
-    __weak typeof (self)weakSelf = self;
-
-    self.reloadControl.handler = ^(){
-        [weakSelf refreshPatronStore];
-    };
-*/
+	
+	//__weak typeof(self) weakSelf = self;
+	//[self.tableView addPullToRefreshActionHandlerForStore:^{
+	//	[weakSelf refreshPatronStore];
+	//}];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -141,13 +137,6 @@
 {
 	self.storeName.text = store.store_name;
 	
-	CAGradientLayer *bgLayer = [RepunchUtils blackGradient];
-	bgLayer.frame = self.storeNameBackground.bounds;
-	[self.storeNameBackground.layer insertSublayer:bgLayer atIndex:0];
-    
-    [self.storeAddress setPreferredMaxLayoutWidth:260];
-    [self.storeHours setPreferredMaxLayoutWidth:230];
-	
 	if(self.storeLocationId != nil) {
 		self.chainFeedbackButton.hidden = YES;
 		self.storeAddress.text = storeLocation.formattedAddress;
@@ -168,7 +157,7 @@
 	if ( !IS_NIL(store.cover_image) ) {
 		self.storeImage.contentMode = UIViewContentModeScaleAspectFill;
 		
-		UIImage *coverImage = [sharedData getCoverImage:self.storeId];
+		UIImage *coverImage = [dataManager getCoverImage:self.storeId];
 		
 		if(coverImage != nil) {
 			self.storeImage.image = coverImage;
@@ -182,7 +171,7 @@
 					UIImage *downloadedImage = [UIImage imageWithData:data];
 					if(downloadedImage) {
 						[self.storeImage setImageWithAnimation:downloadedImage];
-						[sharedData addCoverImage:downloadedImage forKey:store.objectId];
+						[dataManager addCoverImage:downloadedImage forKey:store.objectId];
 					}
 				}
 				else {
@@ -194,7 +183,7 @@
 	else if( !IS_NIL(store.thumbnail_image) ) {
 		self.storeImage.contentMode = UIViewContentModeCenter;
 		
-		UIImage *thumbnailImage = [sharedData getThumbnailImage:self.storeId];
+		UIImage *thumbnailImage = [dataManager getThumbnailImage:self.storeId];
 		
 		if(thumbnailImage != nil) {
 			self.storeImage.image = [RepunchUtils imageScaledForThumbnail:thumbnailImage];
@@ -209,7 +198,7 @@
 					if(downloadedImage) {
 						UIImage *scaledImage = [RepunchUtils imageScaledForThumbnail:downloadedImage];
 						[self.storeImage setImageWithAnimation:scaledImage];
-						[sharedData addThumbnailImage:downloadedImage forKey:store.objectId];
+						[dataManager addThumbnailImage:downloadedImage forKey:store.objectId];
 					}
 				}
 				else {
@@ -252,7 +241,7 @@
 
 - (void)checkPatronStore
 {
-    patronStore = [sharedData getPatronStore:self.storeId];
+    patronStore = [dataManager getPatronStore:self.storeId];
     patronStoreExists = (patronStore != nil);
 	
 	if(patronStoreExists) {
@@ -666,7 +655,7 @@
 		[barSpinner stopAnimating];
 		
 		if(!error) {
-			[sharedData addPatronStore:result forKey:weakSelf.storeId];
+			[dataManager addPatronStore:result forKey:weakSelf.storeId];
 			[self checkPatronStore];
 			
 			NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:weakSelf.storeId, @"store_id", nil];
@@ -720,7 +709,7 @@
 		[barSpinner stopAnimating];
 		 
 		 if(!error) {
-			 [sharedData deletePatronStore:self.storeId];
+			 [dataManager deletePatronStore:self.storeId];
 			 [weakSelf checkPatronStore];
 			 [weakSelf.tableView reloadData];
          
@@ -739,7 +728,7 @@
 {
 	if( ![RepunchUtils isConnectionAvailable] ) {
 		[RepunchUtils showConnectionErrorDialog];
-		//[self.reloadControl endRefreshing];
+		[self.tableView stopRefreshAnimation];
 		return;
 	}
 	
@@ -751,13 +740,14 @@
 		[query includeKey:@"FacebookPost"];
 		[query getObjectInBackgroundWithId:patronStore.objectId block:^(PFObject *result, NSError *error) {
 
-			//[self.reloadControl endRefreshing];
+			[self.tableView stopRefreshAnimation];
+			self.tableView.contentInset = UIEdgeInsetsZero;
 			
 			 if(!error) {
 				 patronStore = (RPPatronStore *)result;
 				 store = patronStore.Store;
-				 [sharedData addPatronStore:patronStore forKey:self.storeId];
-				 [sharedData addStore:store];
+				 [dataManager addPatronStore:patronStore forKey:self.storeId];
+				 [dataManager addStore:store];
 				 
 				 [self setStoreInformation];
 				 [self setupTableViewHeader];
@@ -774,14 +764,14 @@
 	else
 	{
 		PFQuery *query = [RPStore query];
-
 		[query getObjectInBackgroundWithId:self.storeId block:^(PFObject *result, NSError *error) {
 			 
-			//[self.reloadControl endRefreshing];
+			[self.tableView stopRefreshAnimation];
+			self.tableView.contentInset = UIEdgeInsetsZero;
 			
 			if(!error) {
 				 store = (RPStore *)result;
-				 [sharedData addStore:store];
+				 [dataManager addStore:store];
 				 [self setStoreInformation];
 				 [self setupTableViewHeader];
 			 }
@@ -854,7 +844,7 @@
                         }
                         else {
                             NSInteger newPunchCount = patronStore.punch_count - punches.intValue;
-                            [sharedData updatePatronStore:self.storeId withPunches:newPunchCount];
+                            [dataManager updatePatronStore:self.storeId withPunches:newPunchCount];
 
                             [RepunchUtils showDialogWithTitle:@"Your gift has been sent!" withMessage:nil];
                             [[NSNotificationCenter defaultCenter] postNotificationName:@"Punch" object:self];
