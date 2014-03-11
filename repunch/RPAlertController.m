@@ -289,7 +289,8 @@ static NSMutableArray *actionStack;
     shadowView.layer.shadowRadius = 5;
     shadowView.layer.cornerRadius = 10;
     shadowView.layer.shadowOpacity = 0.4;
-    
+    shadowView.layer.shouldRasterize = YES;
+    shadowView.layer.rasterizationScale = 2;
     [shadowView addSubview:alert.view];
     
     alert.view = shadowView;
