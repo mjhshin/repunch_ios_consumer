@@ -209,8 +209,7 @@
 	}
 	else {
 		self.storeImage.contentMode = UIViewContentModeScaleAspectFill;
-		
-		//set placeholder cover image
+		self.storeImage.image = [UIImage imageNamed:@"placeholder_cover_image"];
 	}
 }
 
@@ -365,6 +364,8 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+	scrollView.scrollEnabled = !(scrollView.contentOffset.y > (scrollView.contentSize.height - scrollView.frame.size.height + 50.0f));
+	
 	CGFloat buffer = 5.0f;
 	
 	if(scrollView.contentOffset.y > transitionScrollOffset)
@@ -798,7 +799,7 @@
 		FacebookFriendsViewController *facebookFriendsVC = [[FacebookFriendsViewController alloc] init];
 		facebookFriendsVC.myDelegate = self;
 		
-		UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:facebookFriendsVC];
+		RPNavigationController *navController = [[RPNavigationController alloc] initWithRootViewController:facebookFriendsVC];
 		[RepunchUtils setupNavigationController:navController];
 		
 		[self presentViewController:navController animated:YES completion:nil];

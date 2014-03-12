@@ -438,7 +438,7 @@
 - (void)openSettings
 {
     SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
-	UINavigationController *searchNavController = [[UINavigationController alloc] initWithRootViewController:settingsVC];
+	RPNavigationController *searchNavController = [[RPNavigationController alloc] initWithRootViewController:settingsVC];
 	[RepunchUtils setupNavigationController:searchNavController];
     [self presentViewController:searchNavController animated:YES completion:nil];
 }
@@ -447,7 +447,7 @@
 {
     SearchViewController *searchVC = [[SearchViewController alloc] init];
 	searchVC.hidesBottomBarWhenPushed = YES;
-	UINavigationController *searchNavController = [[UINavigationController alloc] initWithRootViewController:searchVC];
+	RPNavigationController *searchNavController = [[RPNavigationController alloc] initWithRootViewController:searchVC];
 	[RepunchUtils setupNavigationController:searchNavController];
     [self presentViewController:searchNavController animated:YES completion:nil];
 }

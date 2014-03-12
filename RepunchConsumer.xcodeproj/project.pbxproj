@@ -60,6 +60,8 @@
 		EE0FBE6A18CFB6BD00087DEF /* star_refresh_white.png in Resources */ = {isa = PBXBuildFile; fileRef = EE0FBE6818CFB6BD00087DEF /* star_refresh_white.png */; };
 		EE0FBE6B18CFB6BD00087DEF /* star_refresh_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE0FBE6918CFB6BD00087DEF /* star_refresh_white@2x.png */; };
 		EE0FBE6D18CFCF7300087DEF /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0FBE6C18CFCF7300087DEF /* FacebookSDK.framework */; };
+		EE0FBE7718D1162B00087DEF /* nav_back.png in Resources */ = {isa = PBXBuildFile; fileRef = EE0FBE7518D1162B00087DEF /* nav_back.png */; };
+		EE0FBE7818D1162B00087DEF /* nav_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE0FBE7618D1162B00087DEF /* nav_back@2x.png */; };
 		EE17EE0E17FA34EE0053C36C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE17EE0D17FA34EE0053C36C /* Crashlytics.framework */; };
 		EE255EA418BD38C800A6E15E /* RPPopupButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EE255EA318BD38C800A6E15E /* RPPopupButton.m */; };
 		EE28DAE017AC447E00E4C460 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE28DADF17AC447E00E4C460 /* DataManager.m */; };
@@ -279,6 +281,8 @@
 		EE0FBE6818CFB6BD00087DEF /* star_refresh_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_refresh_white.png; sourceTree = "<group>"; };
 		EE0FBE6918CFB6BD00087DEF /* star_refresh_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star_refresh_white@2x.png"; sourceTree = "<group>"; };
 		EE0FBE6C18CFCF7300087DEF /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		EE0FBE7518D1162B00087DEF /* nav_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_back.png; sourceTree = "<group>"; };
+		EE0FBE7618D1162B00087DEF /* nav_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_back@2x.png"; sourceTree = "<group>"; };
 		EE17EE0D17FA34EE0053C36C /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
 		EE255EA218BD38C800A6E15E /* RPPopupButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPPopupButton.h; path = repunch/CustomUIViews/RPPopupButton.h; sourceTree = SOURCE_ROOT; };
 		EE255EA318BD38C800A6E15E /* RPPopupButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RPPopupButton.m; path = repunch/CustomUIViews/RPPopupButton.m; sourceTree = SOURCE_ROOT; };
@@ -874,6 +878,8 @@
 				EE9D4E7C17A84ABB005E0CC5 /* nav_send.png */,
 				EEE777B217E7ECEB0023768B /* nav_send@2x.png */,
 				EE79DF7A17BD702500E92DE5 /* nav_settings.png */,
+				EE0FBE7518D1162B00087DEF /* nav_back.png */,
+				EE0FBE7618D1162B00087DEF /* nav_back@2x.png */,
 				EE79DF7B17BD702500E92DE5 /* nav_settings@2x.png */,
 				EE398B371885F98E005BEDFE /* orange_gradient.png */,
 				EE04ABE1182872BB00DDA5D0 /* orange_gradient_button.png */,
@@ -1094,6 +1100,7 @@
 				EE031C2418B66EDC0027E79F /* redeem_icon_white.png in Resources */,
 				EE9D4F3917A84ABB005E0CC5 /* login-button-small.png in Resources */,
 				EE9D4F3A17A84ABB005E0CC5 /* login-button-small@2x.png in Resources */,
+				EE0FBE7718D1162B00087DEF /* nav_back.png in Resources */,
 				EE93165118AC278900ECEABF /* reward_locked@2x.png in Resources */,
 				EE398B4718908A31005BEDFE /* location_call_icon@2x.png in Resources */,
 				EE0FBE6A18CFB6BD00087DEF /* star_refresh_white.png in Resources */,
@@ -1145,6 +1152,7 @@
 				EE93165918AC32A800ECEABF /* tab_my_places@2x.png in Resources */,
 				EE031C2618B66EDC0027E79F /* redeem_icon_white@2x.png in Resources */,
 				EEA181B017C95D1D00553336 /* nav_reply.png in Resources */,
+				EE0FBE7818D1162B00087DEF /* nav_back@2x.png in Resources */,
 				204D4FB218B6C508001B9560 /* IncomingMessageViewController.xib in Resources */,
 				EEA181B117C95D1D00553336 /* nav_reply@2x.png in Resources */,
 				EE031C1A18B66B470027E79F /* redeem_icon@2x.png in Resources */,

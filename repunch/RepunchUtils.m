@@ -109,8 +109,8 @@
 	
 	[[UIActivityIndicatorView appearance] setTintColor:[self repunchOrangeColor]];
 	
-	//[[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"nav_back"]];
-	//[[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"nav_back"]];
+	[[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"nav_back"]];
+	[[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"nav_back"]];
 }
 
 + (void)setupNavigationController:(UINavigationController *)navController

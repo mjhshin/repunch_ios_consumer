@@ -37,7 +37,10 @@
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-	viewController.navigationItem.backBarButtonItem.possibleTitles = [NSSet setWithObjects:@"", nil];
+	viewController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@""
+																					   style:UIBarButtonItemStylePlain
+																					  target:nil
+																					  action:nil];
 	[super pushViewController:viewController animated:animated];
 }
 
