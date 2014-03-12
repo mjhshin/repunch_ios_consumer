@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StoreViewController">
             <connections>
+                <outlet property="overScrollCoverHeightConstraint" destination="Mwt-NL-6Av" id="RmW-WV-AIg"/>
                 <outlet property="storeImage" destination="HUW-So-tE3" id="14k-9h-gFP"/>
                 <outlet property="storeImageHeightConstraint" destination="HBU-Hx-Gqh" id="Kxc-HU-1Qt"/>
                 <outlet property="tableView" destination="v7c-TM-dOO" id="M8i-27-7u5"/>
@@ -34,15 +35,26 @@
                         <outlet property="delegate" destination="-1" id="vhm-cm-hXr"/>
                     </connections>
                 </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BfW-Nl-o87" userLabel="OverScrollCover">
+                    <rect key="frame" x="0.0" y="568" width="320" height="0.0"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" id="Mwt-NL-6Av"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="BfW-Nl-o87" secondAttribute="bottom" id="1nc-yH-rtJ"/>
                 <constraint firstAttribute="centerX" secondItem="HUW-So-tE3" secondAttribute="centerX" id="5sw-eR-G1B"/>
+                <constraint firstAttribute="trailing" secondItem="BfW-Nl-o87" secondAttribute="trailing" id="7jt-M3-1kE"/>
                 <constraint firstItem="v7c-TM-dOO" firstAttribute="top" secondItem="1" secondAttribute="top" id="BWg-ZA-KQC"/>
                 <constraint firstAttribute="trailing" secondItem="v7c-TM-dOO" secondAttribute="trailing" id="I3V-0m-ZUw"/>
                 <constraint firstItem="v7c-TM-dOO" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="OZk-C1-tPT"/>
                 <constraint firstAttribute="bottom" secondItem="v7c-TM-dOO" secondAttribute="bottom" id="PIq-0x-HOd"/>
                 <constraint firstItem="HUW-So-tE3" firstAttribute="top" secondItem="1" secondAttribute="top" id="gy9-W3-nkX"/>
+                <constraint firstItem="BfW-Nl-o87" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="kAc-lG-sCq"/>
                 <constraint firstAttribute="trailing" secondItem="HUW-So-tE3" secondAttribute="trailing" id="uoB-1G-tAr"/>
                 <constraint firstItem="HUW-So-tE3" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="vCb-qw-SEJ"/>
             </constraints>

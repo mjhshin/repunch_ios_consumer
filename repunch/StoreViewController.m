@@ -364,14 +364,18 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-	scrollView.scrollEnabled = !(scrollView.contentOffset.y > (scrollView.contentSize.height - scrollView.frame.size.height + 50.0f));
-	
 	CGFloat buffer = 5.0f;
 	
 	if(scrollView.contentOffset.y > transitionScrollOffset)
 	{
 		if(!navigationBarIsOpaque) {
 			[self setOpaqueNavigationBar];
+		}
+		
+		CGFloat overScrollY = scrollView.contentSize.height - scrollView.frame.size.height;
+		
+		if(scrollView.contentOffset.y >= overScrollY) {
+			self.overScrollCoverHeightConstraint.constant = scrollView.contentOffset.y - overScrollY;
 		}
 	}
 	else if(scrollView.contentOffset.y < transitionScrollOffset + buffer)
