@@ -19,6 +19,16 @@
 	return (status != NotReachable);
 }
 
++ (void)showDialogWithTitle:(NSString *)title withMessage:(NSString *)message
+{
+    [RPCustomAlertController showDefaultAlertWithTitle:title andMessage:message];
+}
+
++ (void)showPunchCode:(NSString *)punchCode
+{
+    [RPCustomAlertController showPunchCodeAlertWithCode:punchCode];
+}
+
 + (void)showConnectionErrorDialog
 {
 	[RPCustomAlertController showDefaultAlertWithTitle:@"No Internet Connection"
@@ -33,16 +43,6 @@
 + (void)showDefaultDropdownView:(UIView *)parentView
 {
 	[self showNavigationBarDropdownView:parentView withMessage:nil];
-}
-
-+ (void)showDialogWithTitle:(NSString *)title withMessage:(NSString *)message
-{
-    [RPCustomAlertController showDefaultAlertWithTitle:title andMessage:message];
-}
-
-+ (void)showPunchCode:(NSString *)punchCode
-{
-    [RPCustomAlertController showPunchCodeAlertWithCode:punchCode];
 }
 
 + (void)showNavigationBarDropdownView:(UIView *)parentView withMessage:(NSString *)message

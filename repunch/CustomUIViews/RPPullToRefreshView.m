@@ -187,7 +187,6 @@
 	UIEdgeInsets currentInsets = self.tableView.contentInset;
     currentInsets.top = self.originalTopInset;
     [self setScrollViewContentInset:currentInsets handler:handler];
-	self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
 }
 
 - (void)setScrollViewContentInset:(UIEdgeInsets)contentInset handler:(RefreshHandler)handler

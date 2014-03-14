@@ -23,6 +23,8 @@ static NSMutableArray *actionStack;
 
 - (void)viewDidLoad
 {
+	[super viewDidLoad];
+	
     self.keyboardFrame = CGRectZero;
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(didShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];

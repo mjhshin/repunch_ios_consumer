@@ -8,7 +8,7 @@
 #import <UIKit/UIKit.h>
 #import "RPTableView.h"
 #import "AppDelegate.h"
-#import "SearchViewController.h"
+#import "SearchTableViewController.h"
 #import "SettingsViewController.h"
 #import "IncomingMessageViewController.h"
 #import "InboxTableViewCell.h"

@@ -67,7 +67,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
-	self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0); //workaround. top inset initially being set to 128
+	self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 49, 0); //workaround. top inset initially being set to 128
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -327,17 +327,16 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 88;
+    return [InboxTableViewCell height];
 }
   
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-	CGFloat scrollOffset = MIN(scrollView.contentSize.height, scrollView.bounds.size.height);
-    CGFloat scrollLocation = scrollOffset + scrollView.contentOffset.y - scrollView.contentInset.bottom;
-    CGFloat scrollHeight = MAX(scrollView.contentSize.height, scrollView.bounds.size.height) + 5;
-
-    if(scrollLocation >= scrollHeight && !loadInProgress && !paginateReachEnd)
-	{
+	CGFloat adjustments = MIN(scrollView.contentSize.height, scrollView.bounds.size.height) - scrollView.contentInset.bottom;
+	CGFloat scrollLocation = scrollView.contentOffset.y + adjustments;
+	CGFloat overScrollPoint = MAX(scrollView.contentSize.height, scrollView.bounds.size.height) - 5.0;
+	
+	if(scrollLocation >= overScrollPoint && !loadInProgress && !paginateReachEnd) {
 		[self loadInbox:YES];
     }
 }
@@ -558,7 +557,7 @@
 
 - (void)openSearch
 {
-    SearchViewController *searchVC = [[SearchViewController alloc] init];
+    SearchTableViewController *searchVC = [[SearchTableViewController alloc] init];
 	searchVC.hidesBottomBarWhenPushed = YES;
 	RPNavigationController *searchNavController = [[RPNavigationController alloc] initWithRootViewController:searchVC];
 	[RepunchUtils setupNavigationController:searchNavController];

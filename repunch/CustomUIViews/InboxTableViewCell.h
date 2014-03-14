@@ -17,6 +17,8 @@
 - (void)setMessageUnread;
 - (void)setMessageTypeIcon:(RPMessageType)messageType forReadMessage:(BOOL)isRead;
 
++ (CGFloat)height;
+
 @property (weak, nonatomic) IBOutlet UILabel *senderName;
 @property (weak, nonatomic) IBOutlet UILabel *messagePreview;
 @property (weak, nonatomic) IBOutlet UILabel *dateSent;

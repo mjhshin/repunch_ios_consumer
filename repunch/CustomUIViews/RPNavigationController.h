@@ -12,4 +12,7 @@
 
 @property (strong, nonatomic) NSString *previousTitle;
 
+//- (void)displayConnectionError;
+//- (void)displayMessage:(NSString *)message;
+
 @end

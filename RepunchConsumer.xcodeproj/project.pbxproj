@@ -62,6 +62,9 @@
 		EE0FBE6D18CFCF7300087DEF /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0FBE6C18CFCF7300087DEF /* FacebookSDK.framework */; };
 		EE0FBE7718D1162B00087DEF /* nav_back.png in Resources */ = {isa = PBXBuildFile; fileRef = EE0FBE7518D1162B00087DEF /* nav_back.png */; };
 		EE0FBE7818D1162B00087DEF /* nav_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE0FBE7618D1162B00087DEF /* nav_back@2x.png */; };
+		EE0FBE8A18D280EB00087DEF /* SearchMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE0FBE8818D280EB00087DEF /* SearchMapViewController.m */; };
+		EE0FBE8B18D280EB00087DEF /* SearchMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE0FBE8918D280EB00087DEF /* SearchMapViewController.xib */; };
+		EE0FBE9318D3667500087DEF /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE0FBE9218D3667500087DEF /* SearchViewController.m */; };
 		EE17EE0E17FA34EE0053C36C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE17EE0D17FA34EE0053C36C /* Crashlytics.framework */; };
 		EE255EA418BD38C800A6E15E /* RPPopupButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EE255EA318BD38C800A6E15E /* RPPopupButton.m */; };
 		EE28DAE017AC447E00E4C460 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE28DADF17AC447E00E4C460 /* DataManager.m */; };
@@ -157,8 +160,8 @@
 		EE9D4C8217A83F4B005E0CC5 /* IncomingMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BA217A83F4A005E0CC5 /* IncomingMessageViewController.m */; };
 		EE9D4C8717A83F4B005E0CC5 /* StoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BAA17A83F4A005E0CC5 /* StoreViewController.m */; };
 		EE9D4C8817A83F4B005E0CC5 /* StoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BAB17A83F4A005E0CC5 /* StoreViewController.xib */; };
-		EE9D4C8917A83F4B005E0CC5 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BAD17A83F4A005E0CC5 /* SearchViewController.m */; };
-		EE9D4C8A17A83F4B005E0CC5 /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BAE17A83F4A005E0CC5 /* SearchViewController.xib */; };
+		EE9D4C8917A83F4B005E0CC5 /* SearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BAD17A83F4A005E0CC5 /* SearchTableViewController.m */; };
+		EE9D4C8A17A83F4B005E0CC5 /* SearchTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BAE17A83F4A005E0CC5 /* SearchTableViewController.xib */; };
 		EE9D4C8B17A83F4B005E0CC5 /* MyPlacesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BB017A83F4A005E0CC5 /* MyPlacesViewController.m */; };
 		EE9D4C8C17A83F4B005E0CC5 /* MyPlacesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BB117A83F4A005E0CC5 /* MyPlacesViewController.xib */; };
 		EE9D4C8F17A83F4B005E0CC5 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BB817A83F4A005E0CC5 /* RegisterViewController.m */; };
@@ -283,6 +286,11 @@
 		EE0FBE6C18CFCF7300087DEF /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		EE0FBE7518D1162B00087DEF /* nav_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_back.png; sourceTree = "<group>"; };
 		EE0FBE7618D1162B00087DEF /* nav_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_back@2x.png"; sourceTree = "<group>"; };
+		EE0FBE8718D280EB00087DEF /* SearchMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchMapViewController.h; path = repunch/SearchMapViewController.h; sourceTree = SOURCE_ROOT; };
+		EE0FBE8818D280EB00087DEF /* SearchMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchMapViewController.m; path = repunch/SearchMapViewController.m; sourceTree = SOURCE_ROOT; };
+		EE0FBE8918D280EB00087DEF /* SearchMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SearchMapViewController.xib; path = repunch/SearchMapViewController.xib; sourceTree = SOURCE_ROOT; };
+		EE0FBE9118D3667500087DEF /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchViewController.h; path = repunch/SearchViewController.h; sourceTree = SOURCE_ROOT; };
+		EE0FBE9218D3667500087DEF /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchViewController.m; path = repunch/SearchViewController.m; sourceTree = SOURCE_ROOT; };
 		EE17EE0D17FA34EE0053C36C /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
 		EE255EA218BD38C800A6E15E /* RPPopupButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPPopupButton.h; path = repunch/CustomUIViews/RPPopupButton.h; sourceTree = SOURCE_ROOT; };
 		EE255EA318BD38C800A6E15E /* RPPopupButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RPPopupButton.m; path = repunch/CustomUIViews/RPPopupButton.m; sourceTree = SOURCE_ROOT; };
@@ -402,9 +410,9 @@
 		EE9D4BA917A83F4A005E0CC5 /* StoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreViewController.h; sourceTree = "<group>"; };
 		EE9D4BAA17A83F4A005E0CC5 /* StoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreViewController.m; sourceTree = "<group>"; };
 		EE9D4BAB17A83F4A005E0CC5 /* StoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreViewController.xib; sourceTree = "<group>"; };
-		EE9D4BAC17A83F4A005E0CC5 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
-		EE9D4BAD17A83F4A005E0CC5 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
-		EE9D4BAE17A83F4A005E0CC5 /* SearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchViewController.xib; sourceTree = "<group>"; };
+		EE9D4BAC17A83F4A005E0CC5 /* SearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTableViewController.h; sourceTree = "<group>"; };
+		EE9D4BAD17A83F4A005E0CC5 /* SearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTableViewController.m; sourceTree = "<group>"; };
+		EE9D4BAE17A83F4A005E0CC5 /* SearchTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTableViewController.xib; sourceTree = "<group>"; };
 		EE9D4BAF17A83F4A005E0CC5 /* MyPlacesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPlacesViewController.h; sourceTree = "<group>"; };
 		EE9D4BB017A83F4A005E0CC5 /* MyPlacesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPlacesViewController.m; sourceTree = "<group>"; };
 		EE9D4BB117A83F4A005E0CC5 /* MyPlacesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPlacesViewController.xib; sourceTree = "<group>"; };
@@ -650,12 +658,17 @@
 		EE8D702918BBB11500ADE0DB /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				EE0FBE8718D280EB00087DEF /* SearchMapViewController.h */,
+				EE0FBE8818D280EB00087DEF /* SearchMapViewController.m */,
+				EE0FBE8918D280EB00087DEF /* SearchMapViewController.xib */,
 				EE9D4B9617A83F4A005E0CC5 /* SearchTableViewCell.h */,
 				EE9D4B9717A83F4A005E0CC5 /* SearchTableViewCell.m */,
 				EE9D4B9817A83F4A005E0CC5 /* SearchTableViewCell.xib */,
-				EE9D4BAC17A83F4A005E0CC5 /* SearchViewController.h */,
-				EE9D4BAD17A83F4A005E0CC5 /* SearchViewController.m */,
-				EE9D4BAE17A83F4A005E0CC5 /* SearchViewController.xib */,
+				EE9D4BAC17A83F4A005E0CC5 /* SearchTableViewController.h */,
+				EE9D4BAD17A83F4A005E0CC5 /* SearchTableViewController.m */,
+				EE9D4BAE17A83F4A005E0CC5 /* SearchTableViewController.xib */,
+				EE0FBE9118D3667500087DEF /* SearchViewController.h */,
+				EE0FBE9218D3667500087DEF /* SearchViewController.m */,
 			);
 			name = Search;
 			sourceTree = "<group>";
@@ -1052,7 +1065,7 @@
 				EE9D4C7F17A83F4B005E0CC5 /* InboxViewController.xib in Resources */,
 				EE9D4C8117A83F4B005E0CC5 /* LandingViewController.xib in Resources */,
 				EE9D4C8817A83F4B005E0CC5 /* StoreViewController.xib in Resources */,
-				EE9D4C8A17A83F4B005E0CC5 /* SearchViewController.xib in Resources */,
+				EE9D4C8A17A83F4B005E0CC5 /* SearchTableViewController.xib in Resources */,
 				EEE19F3618621A5B0084C63B /* LocationsViewController.xib in Resources */,
 				EEE4D26418A06CCE00A5EC25 /* checkmark_icon.png in Resources */,
 				EE93168618B2899F00ECEABF /* nav_repunch_logo.png in Resources */,
@@ -1093,6 +1106,7 @@
 				EEB75A9B187F5CAA00AA4F89 /* Images.xcassets in Resources */,
 				EE93169518B29FD400ECEABF /* store_save_background.png in Resources */,
 				EEB75AA41884B2FD00AA4F89 /* nav_back.png in Resources */,
+				EE0FBE8B18D280EB00087DEF /* SearchMapViewController.xib in Resources */,
 				EE398B4F1891D21A005BEDFE /* circular_exit_button.png in Resources */,
 				EE9D4F3717A84ABB005E0CC5 /* login-button-small-pressed.png in Resources */,
 				EE93166B18AD552500ECEABF /* message_type_offer.png in Resources */,
@@ -1208,6 +1222,7 @@
 				EE9D4C7917A83F4B005E0CC5 /* MyPlacesTableViewCell.m in Sources */,
 				EE93163618AAC51F00ECEABF /* RPMessage.m in Sources */,
 				EE9D4C7B17A83F4B005E0CC5 /* SearchTableViewCell.m in Sources */,
+				EE0FBE8A18D280EB00087DEF /* SearchMapViewController.m in Sources */,
 				EEE4D22A189834C800A5EC25 /* OfferBorderView.m in Sources */,
 				EE93163F18AC091800ECEABF /* RPUser.m in Sources */,
 				EE5250BE18B2D60C00AC7E6B /* RPImageView.m in Sources */,
@@ -1220,7 +1235,7 @@
 				EE93162D18AA9A7100ECEABF /* RPTableView.m in Sources */,
 				EE9D4C8717A83F4B005E0CC5 /* StoreViewController.m in Sources */,
 				EE5F947417FB5471006E6F67 /* AuthenticationManager.m in Sources */,
-				EE9D4C8917A83F4B005E0CC5 /* SearchViewController.m in Sources */,
+				EE9D4C8917A83F4B005E0CC5 /* SearchTableViewController.m in Sources */,
 				EE9D4C8B17A83F4B005E0CC5 /* MyPlacesViewController.m in Sources */,
 				20E8609B18BBB686007DB153 /* RPAlertController.m in Sources */,
 				EE9D4C8F17A83F4B005E0CC5 /* RegisterViewController.m in Sources */,
@@ -1246,6 +1261,7 @@
 				EE93163018AAA24300ECEABF /* RPButton.m in Sources */,
 				EEE4D27218A5AE5F00A5EC25 /* RPPatronStore.m in Sources */,
 				EEA181B717CC499C00553336 /* RepunchUtils.m in Sources */,
+				EE0FBE9318D3667500087DEF /* SearchViewController.m in Sources */,
 				202F1DFB18523DC500495BDF /* RPStore.m in Sources */,
 				EEB75A9218722D0800AA4F89 /* LocationDetailsViewController.m in Sources */,
 			);

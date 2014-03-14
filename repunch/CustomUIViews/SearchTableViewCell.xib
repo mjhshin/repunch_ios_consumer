@@ -58,8 +58,8 @@
                             <constraint firstAttribute="width" constant="100" id="7aF-Kj-eWT"/>
                             <constraint firstAttribute="height" constant="16" id="qP9-HV-Hku"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="12"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="star.png" translatesAutoresizingMaskIntoConstraints="NO" id="54" userLabel="PunchIconImageView">
@@ -71,13 +71,13 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="24859.8 mi" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="212" userLabel="DistanceLabel">
-                        <rect key="frame" x="246" y="81" width="64" height="16"/>
+                        <rect key="frame" x="240" y="81" width="70" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="Jq3-SJ-68y"/>
-                            <constraint firstAttribute="width" constant="64" id="rzh-lP-WA0"/>
+                            <constraint firstAttribute="width" constant="70" id="rzh-lP-WA0"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="12"/>
+                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="13"/>
                         <color key="textColor" red="0.92361582880000004" green="0.55974298280000001" blue="0.1052079196" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>

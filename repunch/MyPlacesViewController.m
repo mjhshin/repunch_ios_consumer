@@ -224,15 +224,13 @@
 		NSNumber *punchCount1 = [NSNumber numberWithInteger:patronStore1.punch_count];
 		NSNumber *punchCount2 = [NSNumber numberWithInteger:patronStore2.punch_count];
 		
-		if( [punchCount2 compare:punchCount1] == NSOrderedSame )
-		{
+		if( [punchCount2 compare:punchCount1] == NSOrderedSame ) {
 			NSNumber *allTimeCount1 = [NSNumber numberWithInteger:patronStore1.all_time_punches];
 			NSNumber *allTimeCount2 = [NSNumber numberWithInteger:patronStore2.all_time_punches];
 			
 			return [allTimeCount2 compare:allTimeCount1];
 		}
-		else
-		{
+		else {
 			return [punchCount2 compare:punchCount1];
 		}
 	}];
@@ -445,7 +443,7 @@
 
 - (void)openSearch
 {
-    SearchViewController *searchVC = [[SearchViewController alloc] init];
+    SearchTableViewController *searchVC = [[SearchTableViewController alloc] init];
 	searchVC.hidesBottomBarWhenPushed = YES;
 	RPNavigationController *searchNavController = [[RPNavigationController alloc] initWithRootViewController:searchVC];
 	[RepunchUtils setupNavigationController:searchNavController];
