@@ -23,7 +23,7 @@
 
 - (void)initButton
 {
-	self.layer.cornerRadius = 5;
+	self.layer.cornerRadius = 4;
 	self.clipsToBounds = YES;
 	
 	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];

@@ -187,7 +187,7 @@
 	imageLayer.frame = imageFrame;
 	imageLayer.contents = (id) image.CGImage;
 	
-	imageLayer.cornerRadius = 16;
+	imageLayer.cornerRadius = 12;
 	imageLayer.masksToBounds = YES;
 	
 	UIGraphicsBeginImageContext(CGSizeMake(imageWidth, imageHeight));

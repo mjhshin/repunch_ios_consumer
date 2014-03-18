@@ -8,7 +8,6 @@
 #import <UIKit/UIKit.h>
 #import "StoreViewController.h"
 #import "RPTableView.h"
-#import "SearchTableViewController.h"
 #import "SettingsViewController.h"
 #import "MyPlacesTableViewCell.h"
 #import "AppDelegate.h"

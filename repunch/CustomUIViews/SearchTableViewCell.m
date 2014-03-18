@@ -31,7 +31,7 @@
 	selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
 	customCell.selectedBackgroundView = selectedView;
 	
-	customCell.storeImage.layer.cornerRadius = 10.0;
+	customCell.storeImage.layer.cornerRadius = 8.0;
 	customCell.storeImage.layer.masksToBounds = YES;
 	
 	return customCell;

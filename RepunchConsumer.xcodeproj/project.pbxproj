@@ -65,6 +65,8 @@
 		EE0FBE8A18D280EB00087DEF /* SearchMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE0FBE8818D280EB00087DEF /* SearchMapViewController.m */; };
 		EE0FBE8B18D280EB00087DEF /* SearchMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE0FBE8918D280EB00087DEF /* SearchMapViewController.xib */; };
 		EE0FBE9318D3667500087DEF /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE0FBE9218D3667500087DEF /* SearchViewController.m */; };
+		EE0FBE9818D3AD4800087DEF /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE0FBE9718D3AD4800087DEF /* SearchViewController.xib */; };
+		EE0FBE9B18D7BF8400087DEF /* RPAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE0FBE9A18D7BF8300087DEF /* RPAnnotationView.m */; };
 		EE17EE0E17FA34EE0053C36C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE17EE0D17FA34EE0053C36C /* Crashlytics.framework */; };
 		EE255EA418BD38C800A6E15E /* RPPopupButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EE255EA318BD38C800A6E15E /* RPPopupButton.m */; };
 		EE28DAE017AC447E00E4C460 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE28DADF17AC447E00E4C460 /* DataManager.m */; };
@@ -168,7 +170,7 @@
 		EE9D4C9017A83F4B005E0CC5 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BB917A83F4A005E0CC5 /* RegisterViewController.xib */; };
 		EE9D4C9617A83F4B005E0CC5 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BC417A83F4A005E0CC5 /* LoginViewController.m */; };
 		EE9D4C9717A83F4B005E0CC5 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4BC517A83F4A005E0CC5 /* LoginViewController.xib */; };
-		EE9D4C9817A83F4B005E0CC5 /* MapPin.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BC817A83F4A005E0CC5 /* MapPin.m */; };
+		EE9D4C9817A83F4B005E0CC5 /* RPAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BC817A83F4A005E0CC5 /* RPAnnotation.m */; };
 		EE9D4C9917A83F4B005E0CC5 /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BCA17A83F4A005E0CC5 /* MKMapView+ZoomLevel.m */; };
 		EE9D4C9A17A83F4B005E0CC5 /* NSDate+whenString.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9D4BCC17A83F4A005E0CC5 /* NSDate+whenString.m */; };
 		EE9D4EE817A84ABB005E0CC5 /* nav_send.png in Resources */ = {isa = PBXBuildFile; fileRef = EE9D4E7C17A84ABB005E0CC5 /* nav_send.png */; };
@@ -291,6 +293,9 @@
 		EE0FBE8918D280EB00087DEF /* SearchMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SearchMapViewController.xib; path = repunch/SearchMapViewController.xib; sourceTree = SOURCE_ROOT; };
 		EE0FBE9118D3667500087DEF /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchViewController.h; path = repunch/SearchViewController.h; sourceTree = SOURCE_ROOT; };
 		EE0FBE9218D3667500087DEF /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchViewController.m; path = repunch/SearchViewController.m; sourceTree = SOURCE_ROOT; };
+		EE0FBE9718D3AD4800087DEF /* SearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SearchViewController.xib; path = repunch/SearchViewController.xib; sourceTree = SOURCE_ROOT; };
+		EE0FBE9918D7BF8300087DEF /* RPAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPAnnotationView.h; path = repunch/ThirdPartyViews/RPAnnotationView.h; sourceTree = SOURCE_ROOT; };
+		EE0FBE9A18D7BF8300087DEF /* RPAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RPAnnotationView.m; path = repunch/ThirdPartyViews/RPAnnotationView.m; sourceTree = SOURCE_ROOT; };
 		EE17EE0D17FA34EE0053C36C /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
 		EE255EA218BD38C800A6E15E /* RPPopupButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPPopupButton.h; path = repunch/CustomUIViews/RPPopupButton.h; sourceTree = SOURCE_ROOT; };
 		EE255EA318BD38C800A6E15E /* RPPopupButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RPPopupButton.m; path = repunch/CustomUIViews/RPPopupButton.m; sourceTree = SOURCE_ROOT; };
@@ -422,8 +427,8 @@
 		EE9D4BC317A83F4A005E0CC5 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		EE9D4BC417A83F4A005E0CC5 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		EE9D4BC517A83F4A005E0CC5 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
-		EE9D4BC717A83F4A005E0CC5 /* MapPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapPin.h; sourceTree = "<group>"; };
-		EE9D4BC817A83F4A005E0CC5 /* MapPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapPin.m; sourceTree = "<group>"; };
+		EE9D4BC717A83F4A005E0CC5 /* RPAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPAnnotation.h; sourceTree = "<group>"; };
+		EE9D4BC817A83F4A005E0CC5 /* RPAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPAnnotation.m; sourceTree = "<group>"; };
 		EE9D4BC917A83F4A005E0CC5 /* MKMapView+ZoomLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+ZoomLevel.h"; sourceTree = "<group>"; };
 		EE9D4BCA17A83F4A005E0CC5 /* MKMapView+ZoomLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+ZoomLevel.m"; sourceTree = "<group>"; };
 		EE9D4BCB17A83F4A005E0CC5 /* NSDate+whenString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+whenString.h"; sourceTree = "<group>"; };
@@ -669,6 +674,7 @@
 				EE9D4BAE17A83F4A005E0CC5 /* SearchTableViewController.xib */,
 				EE0FBE9118D3667500087DEF /* SearchViewController.h */,
 				EE0FBE9218D3667500087DEF /* SearchViewController.m */,
+				EE0FBE9718D3AD4800087DEF /* SearchViewController.xib */,
 			);
 			name = Search;
 			sourceTree = "<group>";
@@ -794,12 +800,14 @@
 		EE9D4BC617A83F4A005E0CC5 /* ThirdPartyViews */ = {
 			isa = PBXGroup;
 			children = (
-				EE9D4BC717A83F4A005E0CC5 /* MapPin.h */,
-				EE9D4BC817A83F4A005E0CC5 /* MapPin.m */,
+				EE9D4BC717A83F4A005E0CC5 /* RPAnnotation.h */,
+				EE9D4BC817A83F4A005E0CC5 /* RPAnnotation.m */,
 				EE9D4BC917A83F4A005E0CC5 /* MKMapView+ZoomLevel.h */,
 				EE9D4BCA17A83F4A005E0CC5 /* MKMapView+ZoomLevel.m */,
 				EE9D4BCB17A83F4A005E0CC5 /* NSDate+whenString.h */,
 				EE9D4BCC17A83F4A005E0CC5 /* NSDate+whenString.m */,
+				EE0FBE9918D7BF8300087DEF /* RPAnnotationView.h */,
+				EE0FBE9A18D7BF8300087DEF /* RPAnnotationView.m */,
 			);
 			path = ThirdPartyViews;
 			sourceTree = "<group>";
@@ -1162,6 +1170,7 @@
 				EEE777B317E7ECEB0023768B /* nav_send@2x.png in Resources */,
 				EE398B4A1891B08C005BEDFE /* orange_highlighted.png in Resources */,
 				EEA181AD17C6FD9B00553336 /* FacebookFriendsViewController.xib in Resources */,
+				EE0FBE9818D3AD4800087DEF /* SearchViewController.xib in Resources */,
 				EEE4D22E18985E6D00A5EC25 /* scissors.png in Resources */,
 				EE93165918AC32A800ECEABF /* tab_my_places@2x.png in Resources */,
 				EE031C2618B66EDC0027E79F /* redeem_icon_white@2x.png in Resources */,
@@ -1238,12 +1247,13 @@
 				EE9D4C8917A83F4B005E0CC5 /* SearchTableViewController.m in Sources */,
 				EE9D4C8B17A83F4B005E0CC5 /* MyPlacesViewController.m in Sources */,
 				20E8609B18BBB686007DB153 /* RPAlertController.m in Sources */,
+				EE0FBE9B18D7BF8400087DEF /* RPAnnotationView.m in Sources */,
 				EE9D4C8F17A83F4B005E0CC5 /* RegisterViewController.m in Sources */,
 				EE6394C418C7E04100A9A474 /* LocationManager.m in Sources */,
 				EEE4D26C18A30C9C00A5EC25 /* RPNavigationController.m in Sources */,
 				EE0FBE6718CF819100087DEF /* RPPullToRefreshView.m in Sources */,
 				EE9D4C9617A83F4B005E0CC5 /* LoginViewController.m in Sources */,
-				EE9D4C9817A83F4B005E0CC5 /* MapPin.m in Sources */,
+				EE9D4C9817A83F4B005E0CC5 /* RPAnnotation.m in Sources */,
 				EEE4D26F18A5AA7F00A5EC25 /* RPPatron.m in Sources */,
 				EE9D4C9917A83F4B005E0CC5 /* MKMapView+ZoomLevel.m in Sources */,
 				EE9D4C9A17A83F4B005E0CC5 /* NSDate+whenString.m in Sources */,

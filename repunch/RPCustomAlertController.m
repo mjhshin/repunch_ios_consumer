@@ -160,8 +160,8 @@
 + (instancetype)actionForIdentifier:(NSString*)name;
 {
     RPCustomAlertController * alert = [RPCustomAlertController alertFromStoryboard:name];
-    alert.titleLabel.layer.cornerRadius = 5;
-    alert.closeButton.layer.cornerRadius = 5;
+    alert.titleLabel.layer.cornerRadius = 4;
+    alert.closeButton.layer.cornerRadius = 4;
 
     UIView *header = nil;
 

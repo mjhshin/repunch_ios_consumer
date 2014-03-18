@@ -6,6 +6,7 @@
 //
 
 #import "MyPlacesViewController.h"
+#import "SearchViewController.h"
 #import "RPPullToRefreshView.h"
 
 @implementation MyPlacesViewController
@@ -443,7 +444,7 @@
 
 - (void)openSearch
 {
-    SearchTableViewController *searchVC = [[SearchTableViewController alloc] init];
+    SearchViewController *searchVC = [[SearchViewController alloc] init];
 	searchVC.hidesBottomBarWhenPushed = YES;
 	RPNavigationController *searchNavController = [[RPNavigationController alloc] initWithRootViewController:searchVC];
 	[RepunchUtils setupNavigationController:searchNavController];

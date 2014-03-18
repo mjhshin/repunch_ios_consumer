@@ -138,12 +138,14 @@
 							 animated:NO];
 	
 	
-    MapPin *placePin = [[MapPin alloc] initWithCoordinates:coordinates
-												 placeName:store.store_name
-											   description:storeLocation.street];
-	//placePin.can
+    RPAnnotation *pin = [[RPAnnotation alloc] initWithCoordinates:coordinates
+														placeName:store.store_name
+													  description:storeLocation.street
+												  storeLocationId:nil];
+	MKAnnotationView *annotationView = [self.mapView viewForAnnotation:pin];
+	annotationView.image = [UIImage imageNamed:@"star"];
     
-    [self.mapView addAnnotation:placePin];
+    [self.mapView addAnnotation:pin];
 }
 
 - (void)expandMapView //TODO: slide animation for these changes

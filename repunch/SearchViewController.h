@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SearchTableViewController.h"
+#import "SearchMapViewController.h"
 
-@interface SearchViewController : UIViewController
+@interface SearchViewController : UIViewController <SearchTableVCDelegate>
+
+@property (strong, nonatomic) SearchTableViewController *tableViewController;
+@property (strong, nonatomic) SearchMapViewController *mapViewController;
 
 @end

@@ -282,14 +282,14 @@ static NSMutableArray *actionStack;
 + (void) addShadowToAlert:(RPAlertController*)alert
 {
     if (!alert.isAction) {
-        alert.view.layer.cornerRadius = 10;
+        alert.view.layer.cornerRadius = 8;
         alert.view.layer.masksToBounds = YES;
     }
 
     UIView *shadowView = [[UIView alloc] initWithFrame:alert.view.frame];
     shadowView.layer.shadowOffset = CGSizeZero;
     shadowView.layer.shadowRadius = 5;
-    shadowView.layer.cornerRadius = 10;
+    shadowView.layer.cornerRadius = 8;
     shadowView.layer.shadowOpacity = 0.4;
     shadowView.layer.shouldRasterize = YES;
     shadowView.layer.rasterizationScale = 2;

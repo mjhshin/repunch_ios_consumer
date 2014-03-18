@@ -179,6 +179,8 @@
             [self.tableView stopRefreshAnimation];
 		}
 		
+		loadInProgress = NO;
+		
         if(!error) {
             if (paginate != YES) {
                 [messagesArray removeAllObjects];
@@ -206,8 +208,6 @@
 		else {
             [RepunchUtils showConnectionErrorDialog];
         }
-		
-		loadInProgress = NO;
     }];
 }
 
@@ -557,7 +557,7 @@
 
 - (void)openSearch
 {
-    SearchTableViewController *searchVC = [[SearchTableViewController alloc] init];
+    SearchViewController *searchVC = [[SearchViewController alloc] init];
 	searchVC.hidesBottomBarWhenPushed = YES;
 	RPNavigationController *searchNavController = [[RPNavigationController alloc] initWithRootViewController:searchVC];
 	[RepunchUtils setupNavigationController:searchNavController];

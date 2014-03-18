@@ -6,21 +6,11 @@
 //
 
 #import "SearchTableViewController.h"
-#import "LocationManager.h"
+#import "StoreViewController.h"
 #import "RPPullToRefreshView.h"
 
-#define PAGINATE_INCREMENT 15
-
-@implementation SearchTableViewController
-{
-	PFObject* patron;
-	NSMutableArray *storeLocationIdArray;
+@implementation SearchTableViewController {
 	NSMutableDictionary *imageDownloadsInProgress;
-	PFGeoPoint *userLocation;
-	BOOL searchResultsLoaded;
-	int paginateCount;
-	BOOL paginateReachEnd;
-	BOOL loadInProgress;
 }
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle
@@ -30,42 +20,15 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+	[super viewDidLoad];
 	
-	[self registerForNotifications];
-	[self setupNavigationBar];
-
-	patron = [[DataManager getSharedInstance] patron];
-	storeLocationIdArray = [NSMutableArray array];
-    imageDownloadsInProgress = [NSMutableDictionary dictionary];
-	
-	paginateCount = 0;
-	paginateReachEnd = NO;
-	loadInProgress = NO;
-	searchResultsLoaded = NO;
+	imageDownloadsInProgress = [NSMutableDictionary dictionary];
 	
 	__weak typeof(self) weakSelf = self;
 	[self.tableView addPullToRefreshActionHandler:^{
-		[weakSelf performSearch:NO];
+		[weakSelf refreshDataOnPagination:NO];
 	}];
-}
 
-- (void)viewWillAppear:(BOOL)animated
-{
-	[RepunchUtils setupNavigationController:self.navigationController];
-	[super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-	[self startUpdatingLocationForSearch];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-	[[LocationManager getSharedInstance] stopUpdatingLocation];
 }
 
 - (void)didReceiveMemoryWarning
@@ -75,162 +38,7 @@
 	// terminate all pending image downloads
     NSArray *allDownloads = [imageDownloadsInProgress allValues];
     [allDownloads makeObjectsPerformSelector:@selector(cancelImageDownload)];
-    
     [imageDownloadsInProgress removeAllObjects];
-	
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)setupNavigationBar
-{
-	self.navigationItem.title = @"Nearby Stores";
-	
-	UIBarButtonItem *exitButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
-																				target:self
-																				action:@selector(closeView)];
-	self.navigationItem.leftBarButtonItem = exitButton;
-}
-
-- (void)registerForNotifications
-{
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(refreshTableView)
-												 name:@"AddOrRemoveStore"
-											   object:nil];
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(refreshTableView)
-												 name:@"Punch"
-											   object:nil];
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(refreshTableView)
-												 name:@"Redeem"
-											   object:nil];
-	
-	__weak typeof(self) weakSelf = self;
-	Reachability* reach = [Reachability reachabilityWithHostname:@"www.google.com"];
-	
-	reach.reachableBlock = ^(Reachability *reach) {
-		if(storeLocationIdArray.count == 0) {
-			[weakSelf performSearch:NO];
-		}
-		else {
-			[weakSelf refreshTableView];
-		}
-	};
-	
-	[reach startNotifier];
-}
-
-- (void)startUpdatingLocationForSearch
-{
-	[[LocationManager getSharedInstance] startUpdatingLocationWithBlock:
-	 ^(CLLocationManager *manager, CLLocation *location, NSError *error) {
-		 
-		 if(!error) {
-			 [[LocationManager getSharedInstance] stopUpdatingLocation];
-			 
-			 self.locationServicesLabel.hidden = YES;
-			 userLocation = [PFGeoPoint geoPointWithLocation:location];
-			 [self performSearch:NO];
-		 }
-		 else {
-			 switch([error code])
-			 {
-				 case kCLErrorDenied:
-				 {
-					 [RepunchUtils showDialogWithTitle:@"Location Services disabled"
-										   withMessage:
-					  @"Location Services for Repunch can be enabled in\nSettings -> Privacy -> Location"];
-					 
-					 if(storeLocationIdArray.count == 0) {
-						 self.locationServicesLabel.hidden = NO;
-					 }
-					 break;
-				 }
-				 default:
-				 {
-					 [RepunchUtils showCustomDropdownView:self.view withMessage:@"Failed to get location"];
-					 break;
-				 }
-			 }
-		 }
-	 }];
-}
-
-- (void)performSearch:(BOOL)paginate
-{
-	if( ![RepunchUtils isConnectionAvailable] ) {
-		[RepunchUtils showDefaultDropdownView:self.view];
-		[self.tableView stopRefreshAnimation];
-		return;
-	}
-	
-	if(userLocation == nil || loadInProgress) {
-		return;
-	}
-	
-	loadInProgress = YES;
-	
-    PFQuery *storeQuery = [RPStoreLocation query];
-	[storeQuery includeKey:@"Store.store_locations"];
-    //[storeQuery includeKey:@"Store.active" equalTo:[NSNumber numberWithBool:YES]];
-	//[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation];
-	[storeQuery whereKey:@"coordinates" nearGeoPoint:userLocation withinMiles:30];
-	[storeQuery setLimit:PAGINATE_INCREMENT];
-	
-	if(paginate == YES) {
-		++paginateCount;
-		[storeQuery setSkip:paginateCount*PAGINATE_INCREMENT];
-		
-		[self.tableView setPaginationFooter];
-	}
-	else if(storeLocationIdArray.count == 0) {
-		[self.activityIndicatorView setHidden:NO];
-		[self.activityIndicator startAnimating];
-	}
-	
-    [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
-		
-		if(paginate == NO) {
-			[self.tableView stopRefreshAnimation];
-			[self.activityIndicatorView setHidden:YES];
-			[self.activityIndicator stopAnimating];
-			[storeLocationIdArray removeAllObjects];
-		}
-		else {
-			[self.tableView setDefaultFooter];
-		}
-		 
-		 if (!error) {
-			 if(paginate == NO) {
-				 searchResultsLoaded = YES;
-				 paginateCount = 0;
-				 paginateReachEnd = NO;
-			 }
-			
-			 for (RPStoreLocation *storeLocation in results) {
-				 if(storeLocation.Store.active) {
-					 [[DataManager getSharedInstance] addStore:storeLocation.Store];
-					 [storeLocationIdArray addObject:storeLocation.objectId];
-				 }
-			 }
-			 
-			 //if(paginate != NO && results.count == 0) {
-			 if(paginateCount >= 1) {
-				paginateReachEnd = YES;
-			 }
-			 
-			 [self refreshTableView];
-		 }
-		 else {
-			 NSLog(@"search view controller serror: %@", error);
-			 [RepunchUtils showConnectionErrorDialog];
-		 }
-		
-		loadInProgress = NO;
-	}];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -240,14 +48,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return storeLocationIdArray.count;
+	return self.storeLocationIdArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 106;
 }
- 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	SearchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[SearchTableViewCell reuseIdentifier]];
@@ -256,12 +64,12 @@
         cell = [SearchTableViewCell cell];
     }
 	
-	NSString *storeLocationId = storeLocationIdArray[indexPath.row];
+	NSString *storeLocationId = self.storeLocationIdArray[indexPath.row];
 	RPStoreLocation *storeLocation = [[DataManager getSharedInstance] getStoreLocation:storeLocationId];
 	RPStore *store = [[DataManager getSharedInstance] getStore:storeLocation.Store.objectId];
-
+	
 	// Set distance to store
-	double distanceToStore = [userLocation distanceInMilesTo:storeLocation.coordinates];
+	double distanceToStore = [self.userLocation distanceInMilesTo:storeLocation.coordinates];
 	cell.distance.text = [RepunchUtils formattedDistance:distanceToStore];
 	
 	// Set address
@@ -334,7 +142,7 @@
 {
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
-	NSString *storeLocationId = storeLocationIdArray[indexPath.row];
+	NSString *storeLocationId = self.storeLocationIdArray[indexPath.row];
 	RPStoreLocation *storeLocation = [[DataManager getSharedInstance] getStoreLocation:storeLocationId];
 	
 	StoreViewController *storeVC = [[StoreViewController alloc] init];
@@ -345,11 +153,12 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    float scrollLocation = MIN(scrollView.contentSize.height, scrollView.bounds.size.height) + scrollView.contentOffset.y - scrollView.contentInset.bottom;
-    float scrollHeight = MAX(scrollView.contentSize.height, scrollView.bounds.size.height) - 20;
+    CGFloat adjustments = MIN(scrollView.contentSize.height, scrollView.bounds.size.height) - scrollView.contentInset.bottom;
+	CGFloat scrollLocation = scrollView.contentOffset.y + adjustments;
+	CGFloat overScrollPoint = MAX(scrollView.contentSize.height, scrollView.bounds.size.height) - 20.0;
 	
-    if(scrollLocation >= scrollHeight && !loadInProgress && !paginateReachEnd) {
-		[self performSearch:YES];
+    if(scrollLocation >= overScrollPoint) {
+		[self refreshDataOnPagination:YES];
     }
 }
 
@@ -365,14 +174,14 @@
         [imageDownloadsInProgress setObject:imageFile forKey:indexPath];
         
         [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-			 
+			
 			if (!error) {
-				 SearchTableViewCell *cell = (SearchTableViewCell *) [self.tableView cellForRowAtIndexPath:indexPath];
-				 UIImage *storeImage = [UIImage imageWithData:data];
-				 //cell.storeImage.image = storeImage;
-				 [cell.storeImage setImageWithAnimation:storeImage];
-				 [imageDownloadsInProgress removeObjectForKey:indexPath]; // Remove the PFFile from the in-progress list
-				 [[DataManager getSharedInstance] addThumbnailImage:storeImage forKey:storeId];
+				SearchTableViewCell *cell = (SearchTableViewCell *) [self.tableView cellForRowAtIndexPath:indexPath];
+				UIImage *storeImage = [UIImage imageWithData:data];
+				//cell.storeImage.image = storeImage;
+				[cell.storeImage setImageWithAnimation:storeImage];
+				[imageDownloadsInProgress removeObjectForKey:indexPath]; // Remove the PFFile from the in-progress list
+				[[DataManager getSharedInstance] addThumbnailImage:storeImage forKey:storeId];
 			}
 			else {
 				NSLog(@"image download failed");
@@ -383,26 +192,51 @@
 
 - (void)cancelImageDownload
 {
-    for(PFFile *imageFile in imageDownloadsInProgress)
-    {
+    for(PFFile *imageFile in imageDownloadsInProgress) {
         [imageFile cancel];
     }
 }
 
-- (void)refreshTableView
+- (void)refreshDataOnPagination:(BOOL)paginate
 {
-	if(storeLocationIdArray.count > 0) {
-		[self.emptyResultsLabel setHidden:YES];
+	[self showRefreshViews:paginate];
+	[self.delegate refreshData:self forPaginate:paginate];
+}
+
+- (void)showRefreshViews:(BOOL)paginate
+{
+	if(paginate) {
+		[self.tableView setPaginationFooter];
+	}
+	else if(self.storeLocationIdArray.count == 0) {
+		self.activityIndicatorView.hidden = NO;
+		[self.activityIndicator startAnimating];
+	}
+}
+
+- (void)hideRefreshViews:(BOOL)paginate
+{
+	if(paginate) {
+		[self.tableView setDefaultFooter];
 	}
 	else {
-		[self.emptyResultsLabel setHidden:NO];
+		[self.tableView stopRefreshAnimation];
+		[self.activityIndicator stopAnimating];
+		self.activityIndicatorView.hidden = YES;
 	}
+}
+
+- (void)refreshTableView
+{
+	if(self.storeLocationIdArray.count > 0) {
+		self.emptyResultsLabel.hidden = YES;
+	}
+	else {
+		self.emptyResultsLabel.hidden = NO;
+	}
+	
 	[self.tableView reloadData];
 }
 
-- (void)closeView
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
 
 @end

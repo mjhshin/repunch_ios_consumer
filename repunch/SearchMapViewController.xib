@@ -16,18 +16,19 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="5ro-Al-ghp">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </mapView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="5ro-Al-ghp" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="8DV-fT-fSH"/>
-                <constraint firstItem="5ro-Al-ghp" firstAttribute="top" secondItem="1" secondAttribute="top" id="CdP-QY-1Ub"/>
+                <constraint firstItem="5ro-Al-ghp" firstAttribute="top" secondItem="1" secondAttribute="top" constant="64" id="CdP-QY-1Ub"/>
                 <constraint firstAttribute="trailing" secondItem="5ro-Al-ghp" secondAttribute="trailing" id="K4q-yY-ugE"/>
                 <constraint firstAttribute="bottom" secondItem="5ro-Al-ghp" secondAttribute="bottom" id="ZUn-4D-ADW"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
     </objects>

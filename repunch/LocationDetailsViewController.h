@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "RPStoreLocation.h"
 #import "MKMapView+ZoomLevel.h"
-#import "MapPin.h"
+#import "RPAnnotation.h"
 #import "RPStore.h"
 #import "DataManager.h"
 #import "RepunchUtils.h"

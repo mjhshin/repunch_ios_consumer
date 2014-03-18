@@ -80,8 +80,8 @@
 
 - (void)setupMessage
 {
-	if( !IS_NIL(message.subject) ) {
-		self.subject.text = [NSString stringWithFormat:(containsReply ? @"RE: %@" : @"%@"), message.subject];
+	if( message.type == RPMessageTypeOffer || message.type == RPMessageTypeBasic ) {
+		self.subject.text = message.subject;
 	}
 	
     self.sendDate.text = [self formattedDateString:message.createdAt];
