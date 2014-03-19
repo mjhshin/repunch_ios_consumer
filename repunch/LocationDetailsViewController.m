@@ -29,6 +29,8 @@
 {
     [super viewDidLoad];
 	
+	self.edgesForExtendedLayout = UIRectEdgeBottom;
+	
 	self.mapView.zoomEnabled = NO;
 	self.mapView.scrollEnabled = NO;
 	self.mapView.delegate = self;
@@ -139,7 +141,6 @@
 							zoomLevel:15
 							 animated:NO];
 	
-	
     RPAnnotation *pin = [[RPAnnotation alloc] initWithCoordinates:coordinates
 														placeName:store.store_name
 													  description:storeLocation.street
@@ -147,36 +148,50 @@
 	[self.mapView addAnnotation:pin];
 }
 
-- (void)expandMapView //TODO: slide animation for these changes
+- (void)expandMapView
 {
 	self.scrollView.contentOffset = CGPointZero;
 	
-	self.mapViewHeightConstraint.constant = [UIScreen mainScreen].bounds.size.height + 44.0f;
 	[self.navigationController setNavigationBarHidden:YES];
-	
-	self.tapGestureRecognizer.enabled = NO;
-	self.mapView.zoomEnabled = YES;
-	self.mapView.scrollEnabled = YES;
-	
-	self.expandedMapExitButton.hidden = NO;
 	self.expandedMapStatusBar.hidden = NO;
 	
-	[self.expandedMapDirectionsButton showButton];
+	[UIView animateWithDuration:0.3
+					 animations:^{
+						 self.mapViewHeightConstraint.constant = [UIScreen mainScreen].bounds.size.height + 44.0f;
+						 [self.view layoutIfNeeded];
+					 }
+					 completion:^(BOOL finished) {
+						 self.tapGestureRecognizer.enabled = NO;
+						 self.mapView.zoomEnabled = YES;
+						 self.mapView.scrollEnabled = YES;
+						 self.expandedMapExitButton.hidden = NO;
+						 [self.expandedMapDirectionsButton showButton];
+					 }];
 }
 
 - (void)shrinkMapView
 {
-	self.mapViewHeightConstraint.constant = 300.0f;
 	[self.navigationController setNavigationBarHidden:NO];
-	
-	self.tapGestureRecognizer.enabled = YES;
-	self.mapView.zoomEnabled = NO;
-	self.mapView.scrollEnabled = NO;
-	
-	self.expandedMapExitButton.hidden = YES;
 	self.expandedMapStatusBar.hidden = YES;
+	self.expandedMapExitButton.hidden = YES;
+	self.expandedMapDirectionsButton.hidden = YES;
 	
-	self.expandedMapDirectionsButton.hidden = YES; //perhaps move to slide animation for hiding button also
+	[UIView animateWithDuration:0.3
+					 animations:^{
+						 self.mapViewHeightConstraint.constant = 300.0f;
+						 [self.view layoutIfNeeded];
+					 }
+					 completion:^(BOOL finished) {
+						 self.tapGestureRecognizer.enabled = YES;
+						 self.mapView.zoomEnabled = NO;
+						 self.mapView.scrollEnabled = NO;
+						 
+						 self.scrollView.contentOffset = CGPointZero;
+						 
+						 [self.mapView setCenterCoordinate:coordinates
+												 zoomLevel:15
+												  animated:NO];
+					 }];
 }
 
 - (void)getDirections
