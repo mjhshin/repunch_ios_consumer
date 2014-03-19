@@ -415,7 +415,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
 	if(patronStoreExists) {
-		self.punchCountLabel.text = [NSString stringWithFormat:@"%i", punchCount];
+		self.punchCountLabel.text = [NSString stringWithFormat:@"%d", punchCount];
 		self.punchStaticLabel.text = (punchCount == 1) ? @"Punch": @"Punches";
 		
 		return self.sectionHeaderView;
@@ -440,7 +440,7 @@
     cell.rewardDescription.text = reward[@"description"];
 	
     NSInteger rewardPunches = [reward[@"punches"] integerValue];
-    cell.rewardPunches.text = [NSString stringWithFormat:@"%i", rewardPunches];
+    cell.rewardPunches.text = [NSString stringWithFormat:@"%d", rewardPunches];
 	cell.rewardPunchesStatic.text = (rewardPunches == 1) ? @"Punch" : @"Punches";
 	
 	if(!patronStoreExists) {
@@ -492,8 +492,8 @@
 	
 	NSInteger rewardPunches = [reward[@"punches"] integerValue];
 	NSInteger rewardId = [reward[@"reward_id"] integerValue];
-	NSString *rewardPunchesString = [NSString stringWithFormat:@"%i", rewardPunches];
-	NSString *rewardIdString = [NSString stringWithFormat:@"%i", rewardId];
+	NSString *rewardPunchesString = [NSString stringWithFormat:@"%d", rewardPunches];
+	NSString *rewardIdString = [NSString stringWithFormat:@"%d", rewardId];
 	NSString *rewardName = reward[@"reward_name"];
 	
 	NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:

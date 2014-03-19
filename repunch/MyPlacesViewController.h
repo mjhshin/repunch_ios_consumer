@@ -16,7 +16,7 @@
 #import "RPConstants.h"
 #import "Reachability.h"
 
-@interface MyPlacesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
+@interface MyPlacesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet RPTableView *tableView;
 

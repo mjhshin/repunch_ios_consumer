@@ -24,8 +24,8 @@
 	PFGeoPoint *userLocation;
 	BOOL searchResultsLoaded;
 	int paginateCount;
-	BOOL paginateReachEnd;
-	BOOL loadInProgress;
+	//BOOL paginateReachEnd;
+	//BOOL loadInProgress;
 	BOOL mapViewMode;
 	UIBarButtonItem *toggleButton;
 }
@@ -54,8 +54,8 @@
 	storeLocationIdArray = [NSMutableArray array];
 	
 	paginateCount = 0;
-	paginateReachEnd = NO;
-	loadInProgress = NO;
+	self.tableViewController.paginateReachEnd = NO;
+	self.tableViewController.loadInProgress = NO;
 	searchResultsLoaded = NO;
 	mapViewMode = NO;
 }
@@ -98,7 +98,6 @@
 													style:UIBarButtonItemStylePlain
 												   target:self
 												   action:@selector(toggleBetweenListAndMap)];
-	self.navigationItem.rightBarButtonItem = toggleButton;
 }
 
 - (void)registerForNotifications
@@ -146,7 +145,6 @@
 			 // ignore location changes smaller than 50 meters
 			 if(userLocation == nil || [userLocation distanceInKilometersTo:newLocation] >= 0.05) {
 				 userLocation = newLocation;
-				 [self.tableViewController showRefreshViews:NO];
 				 [self performSearch:NO];
 			 }
 		 }
@@ -182,12 +180,14 @@
 		return;
 	}
 	
-	if( userLocation == nil || loadInProgress || (paginate && paginateReachEnd) ) {
+	if(userLocation == nil) {
+		[RepunchUtils showCustomDropdownView:self.view withMessage:@"Failed to get location"];
 		[self.tableViewController hideRefreshViews:paginate];
 		return;
 	}
 	
-	loadInProgress = YES;
+	self.tableViewController.loadInProgress = YES;
+	[self.tableViewController showRefreshViews:paginate];
 	
     PFQuery *storeQuery = [RPStoreLocation query];
 	[storeQuery includeKey:@"Store.store_locations"];
@@ -212,7 +212,7 @@
 			if(paginate == NO) {
 				searchResultsLoaded = YES;
 				paginateCount = 0;
-				paginateReachEnd = NO;
+				self.tableViewController.paginateReachEnd = NO;
 			}
 			
 			for (RPStoreLocation *storeLocation in results) {
@@ -223,7 +223,7 @@
 			}
 			
 			if(paginateCount >= 1) { //shortcut for limiting to 30 results
-				paginateReachEnd = YES;
+				self.tableViewController.paginateReachEnd = YES;
 			}
 			
 			[self updateChildViewControllers];
@@ -233,7 +233,8 @@
 			[RepunchUtils showConnectionErrorDialog];
 		}
 		
-		loadInProgress = NO;
+		self.tableViewController.loadInProgress = NO;
+		self.navigationItem.rightBarButtonItem = (storeLocationIdArray.count > 0) ? toggleButton : nil;
 	}];
 }
 

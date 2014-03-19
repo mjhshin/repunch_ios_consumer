@@ -38,6 +38,10 @@
 
 - (void)refreshMapView
 {
+	if(self.storeLocationIdArray.count == 0) {
+		return;
+	}
+	
 	[self.mapView removeAnnotations:self.mapView.annotations];
 	
 	double maxLongitude = -MAX_LONGITUDE;
@@ -86,6 +90,10 @@
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
+	if ([annotation isKindOfClass:[MKUserLocation class]]) {
+		return nil;
+	}
+	
 	RPAnnotationView *pin = (RPAnnotationView *)
 							[mapView dequeueReusableAnnotationViewWithIdentifier:[RPAnnotationView reuseIdentifier]];
 	
@@ -105,21 +113,5 @@
 	storeVC.storeId = storeLocation.Store.objectId;
 	[self.navigationController pushViewController:storeVC animated:YES];
 }
-/*
-- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
-{
-	if(![view.annotation isKindOfClass:[MKUserLocation class]])
-    {
-        CGSize  calloutSize = CGSizeMake(100.0, 80.0);
-        UIView *calloutView = [[UIView alloc] initWithFrame:CGRectMake(view.frame.origin.x, view.frame.origin.y-calloutSize.height, calloutSize.width, calloutSize.height)];
-        calloutView.backgroundColor = [UIColor whiteColor];
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        button.frame = CGRectMake(5.0, 5.0, calloutSize.width - 10.0, calloutSize.height - 10.0);
-        [button setTitle:@"OK" forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(checkin) forControlEvents:UIControlEventTouchUpInside];
-        [calloutView addSubview:button];
-        [view.superview addSubview:calloutView];
-    }
-}*/
 
 @end

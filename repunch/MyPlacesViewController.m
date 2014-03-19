@@ -263,7 +263,7 @@
 	
 	cell.storeName.text = store.store_name;
 	cell.numPunches.text = [NSString stringWithFormat:(patronStore.punch_count == 1) ?
-										@"%i Punch": @"%i Punches", patronStore.punch_count];
+										@"%d Punch": @"%d Punches", patronStore.punch_count];
     
     if (store.rewards.count > 0) {
         if ([store.rewards[0][@"punches"] intValue] <= patronStore.punch_count) {

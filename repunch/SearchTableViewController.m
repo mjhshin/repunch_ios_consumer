@@ -21,12 +21,12 @@
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-	
+
 	imageDownloadsInProgress = [NSMutableDictionary dictionary];
 	
 	__weak typeof(self) weakSelf = self;
 	[self.tableView addPullToRefreshActionHandler:^{
-		[weakSelf refreshDataOnPagination:NO];
+		[weakSelf.delegate refreshData:weakSelf forPaginate:NO];
 	}];
 
 }
@@ -105,7 +105,7 @@
 		NSInteger punchCount = patronStore.punch_count;
 		[cell.punchIcon setHidden:NO];
 		[cell.numPunches setHidden:NO];
-		[cell.numPunches setText:[NSString stringWithFormat:@"%i %@", punchCount, (punchCount == 1) ? @"Punch" : @"Punches"]];
+		[cell.numPunches setText:[NSString stringWithFormat:@"%d %@", punchCount, (punchCount == 1) ? @"Punch" : @"Punches"]];
 	}
 	
 	cell.storeAddress.text = street;
@@ -157,8 +157,8 @@
 	CGFloat scrollLocation = scrollView.contentOffset.y + adjustments;
 	CGFloat overScrollPoint = MAX(scrollView.contentSize.height, scrollView.bounds.size.height) - 20.0;
 	
-    if(scrollLocation >= overScrollPoint) {
-		[self refreshDataOnPagination:YES];
+    if(scrollLocation >= overScrollPoint && !self.loadInProgress && !self.paginateReachEnd) {
+		[self.delegate refreshData:self forPaginate:YES];
     }
 }
 
@@ -195,12 +195,6 @@
     for(PFFile *imageFile in imageDownloadsInProgress) {
         [imageFile cancel];
     }
-}
-
-- (void)refreshDataOnPagination:(BOOL)paginate
-{
-	[self showRefreshViews:paginate];
-	[self.delegate refreshData:self forPaginate:paginate];
 }
 
 - (void)showRefreshViews:(BOOL)paginate

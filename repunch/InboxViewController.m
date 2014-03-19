@@ -527,7 +527,7 @@
 	}
 	
 	UITabBarItem *tab = [self.tabBarController.tabBar.items objectAtIndex:1];	
-	tab.badgeValue = (alertBadgeCount == 0) ? nil : [NSString stringWithFormat:@"%i", alertBadgeCount];
+	tab.badgeValue = (alertBadgeCount == 0) ? nil : [NSString stringWithFormat:@"%d", alertBadgeCount];
 	[UIApplication sharedApplication].applicationIconBadgeNumber = alertBadgeCount;
 	
 	RPInstallation *installation = [RPInstallation currentInstallation];

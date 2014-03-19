@@ -85,7 +85,7 @@
     RPCustomAlertController * alert = [RPCustomAlertController actionForIdentifier:@"RedeemAlert"];
     alert.titleLabel.text = title ;
 
-    alert.label2.text = [NSString stringWithFormat:@"%i %@", punches , punches == 1 ? @"Punch" : @"Punches"];
+    alert.label2.text = [NSString stringWithFormat:@"%d %@", punches , punches == 1 ? @"Punch" : @"Punches"];
 	alert.alertBlock = block;
 	
     [alert showAsAction];

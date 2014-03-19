@@ -47,7 +47,7 @@
 
 + (void)showNavigationBarDropdownView:(UIView *)parentView withMessage:(NSString *)message
 {
-	UILabel *dropdownLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+	UILabel *dropdownLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
 	
 	if(message == nil) {
 		dropdownLabel.text = @"No Internet Connection";
@@ -59,7 +59,7 @@
 	dropdownLabel.font = [RepunchUtils repunchFontWithSize:17 isBold:YES];
 	dropdownLabel.textAlignment = NSTextAlignmentCenter;
 	dropdownLabel.textColor = [UIColor whiteColor];
-	dropdownLabel.backgroundColor = [UIColor colorWithRed:(0.9) green:(0.0) blue:(0.0) alpha:1.0]; //[UIColor redColor];
+	dropdownLabel.backgroundColor = [UIColor colorWithRed:(0.9) green:(0.0) blue:(0.0) alpha:0.9]; //[UIColor redColor];
 	[parentView addSubview:dropdownLabel];
 	
 	CGRect rect = dropdownLabel.frame;

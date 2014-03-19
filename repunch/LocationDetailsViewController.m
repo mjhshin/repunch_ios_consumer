@@ -8,6 +8,7 @@
 
 #import "LocationDetailsViewController.h"
 #import "LocationsViewController.h"
+#import "RPAnnotationView.h"
 
 @interface LocationDetailsViewController ()
 
@@ -30,6 +31,7 @@
 	
 	self.mapView.zoomEnabled = NO;
 	self.mapView.scrollEnabled = NO;
+	self.mapView.delegate = self;
 	
 	[self setInformation];
 	[self addMapAnnotation];
@@ -142,10 +144,7 @@
 														placeName:store.store_name
 													  description:storeLocation.street
 												  storeLocationId:nil];
-	MKAnnotationView *annotationView = [self.mapView viewForAnnotation:pin];
-	annotationView.image = [UIImage imageNamed:@"star"];
-    
-    [self.mapView addAnnotation:pin];
+	[self.mapView addAnnotation:pin];
 }
 
 - (void)expandMapView //TODO: slide animation for these changes
@@ -177,7 +176,7 @@
 	self.expandedMapExitButton.hidden = YES;
 	self.expandedMapStatusBar.hidden = YES;
 	
-	self.expandedMapDirectionsButton.hidden = YES; //[erhaps move to slide animation for hiding button also
+	self.expandedMapDirectionsButton.hidden = YES; //perhaps move to slide animation for hiding button also
 }
 
 - (void)getDirections
@@ -237,6 +236,22 @@
 	{
         [self expandMapView];
     }
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
+	if ([annotation isKindOfClass:[MKUserLocation class]]) {
+		return nil;
+	}
+	
+	RPAnnotationView *pin = (RPAnnotationView *)
+	[mapView dequeueReusableAnnotationViewWithIdentifier:[RPAnnotationView reuseIdentifier]];
+	
+	if(pin == nil) {
+		pin = [[RPAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:[RPAnnotationView reuseIdentifier]];
+	}
+	
+	return pin;
 }
 
 @end

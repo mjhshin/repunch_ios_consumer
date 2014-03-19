@@ -20,7 +20,7 @@
 - (void)refreshData:(SearchTableViewController *)controller forPaginate:(BOOL)paginate;
 @end
 
-@interface SearchTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
+@interface SearchTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, weak) id <SearchTableVCDelegate> delegate;
 
@@ -32,6 +32,8 @@
 
 @property (strong, nonatomic) NSArray *storeLocationIdArray;
 @property (strong, nonatomic) PFGeoPoint *userLocation;
+@property (assign, nonatomic) BOOL loadInProgress;
+@property (assign, nonatomic) BOOL paginateReachEnd;
 
 - (void)refreshTableView;
 - (void)showRefreshViews:(BOOL)paginate;

@@ -15,15 +15,21 @@
 {
 	self = [super initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
 	if (self) {
-        self.canShowCallout = YES;
-		self.draggable = NO;
-		self.image = [UIImage imageNamed:@"star"];
-		
-		UIButton *storeButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-		storeButton.tintColor = [RepunchUtils repunchOrangeColor];
-		self.rightCalloutAccessoryView = storeButton;
+        [self initAnnotationView];
     }
     return self;
+}
+
+- (void)initAnnotationView
+{
+	self.canShowCallout = YES;
+	self.draggable = NO;
+	self.image = [UIImage imageNamed:@"annotation_icon"];
+	self.centerOffset = CGPointMake(0, -30); //image height 42
+	
+	UIButton *storeButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+	storeButton.tintColor = [RepunchUtils repunchOrangeColor];
+	self.rightCalloutAccessoryView = storeButton;
 }
 
 

@@ -21,7 +21,7 @@
 	
 	NSString *title = [NSString stringWithFormat:@"Redeemed '%@'", rewardTitle];
 	NSString *message = [NSString stringWithFormat:
-						 @"Share this on Facebook to receive %i extra punches?", store.punches_facebook];
+						 @"Share this on Facebook to receive %d extra punches?", store.punches_facebook];
 	
 	[RPCustomAlertController showDecisionAlertWithTitle:title
 											 andMessage:message

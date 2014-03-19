@@ -17,7 +17,7 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-	BOOL isProduction = NO; // DON'T FORGET TO SET!!!!
+	BOOL isProduction = YES; // DON'T FORGET TO SET!!!!
 	
 	if(isProduction) {	// PRODUCTION KEY
 		[Parse setApplicationId:@"m0EdwpRYlJwttZLZ5PUk7y13TWCnvSScdn8tfVoh"

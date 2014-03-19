@@ -18,8 +18,7 @@
 #import <Parse/Parse.h>
 
 @interface StoreViewController : UIViewController<UITableViewDataSource, UITableViewDelegate,
-													UIGestureRecognizerDelegate, FacebookFriendsDelegate,
-													UIScrollViewDelegate>
+													UIGestureRecognizerDelegate, FacebookFriendsDelegate>
 
 @property (nonatomic, strong) NSString *storeId;
 @property (nonatomic, strong) NSString *storeLocationId;

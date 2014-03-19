@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="LdT-hG-yr2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="LdT-hG-yr2">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
         <!--Custom Alert Controller - Default Dialog-->
@@ -77,6 +77,7 @@
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="270" height="140"/>
                     <connections>
                         <outlet property="closeButton" destination="dQv-nM-7AI" id="M1N-Wf-ESu"/>
                         <outlet property="label1" destination="acZ-Qm-2by" id="tge-kw-P9D"/>
@@ -190,6 +191,7 @@
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="270" height="140"/>
                     <connections>
                         <outlet property="confirmButton" destination="kp1-tW-kev" id="PzL-mZ-kfy"/>
                         <outlet property="denyButton" destination="cZV-wh-xtq" id="wtb-0t-bJB"/>
@@ -301,6 +303,7 @@
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="280" height="162"/>
                     <connections>
                         <outlet property="closeButton" destination="aAE-qx-ezK" id="B9f-ei-kP4"/>
                         <outlet property="deleteButton" destination="mjq-B0-Dp0" id="zeV-0n-4iN"/>
@@ -408,6 +411,7 @@
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="280" height="162"/>
                     <connections>
                         <outlet property="closeButton" destination="aLw-Y8-Xh5" id="G9J-pw-ZRP"/>
                         <outlet property="deleteButton" destination="YRA-Jw-UwQ" id="qnd-a1-hZE"/>
@@ -590,6 +594,7 @@
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="280" height="250"/>
                     <connections>
                         <outlet property="closeButton" destination="Fm5-50-bxF" id="DYA-uD-K17"/>
                         <outlet property="giftButton" destination="FU9-OA-eP7" id="Hwt-74-NO2"/>
@@ -673,6 +678,7 @@
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="270" height="160"/>
                     <connections>
                         <outlet property="closeButton" destination="YKU-hz-SVX" id="qjS-G2-mIf"/>
                         <outlet property="label1" destination="E8F-8J-9TB" id="6Rc-P2-zF5"/>
@@ -753,6 +759,7 @@
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="270" height="180"/>
                     <connections>
                         <outlet property="closeButton" destination="oyd-9O-IRk" id="N8E-9W-Bn3"/>
                         <outlet property="label1" destination="bzF-Y3-ITd" id="t6x-oX-874"/>
@@ -902,6 +909,7 @@
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="300" height="220"/>
                     <connections>
                         <outlet property="closeButton" destination="EyO-Id-Bmv" id="rIH-bD-JQx"/>
                         <outlet property="label1" destination="HA0-Pv-HX6" id="viG-bb-CPi"/>
@@ -1093,6 +1101,7 @@
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="300" height="280"/>
                     <connections>
                         <outlet property="closeButton" destination="gIz-ze-Lj8" id="mgQ-oo-Dz6"/>
                         <outlet property="label1" destination="vAn-R9-67X" id="usJ-f8-tP9"/>
