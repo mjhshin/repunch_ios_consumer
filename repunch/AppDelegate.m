@@ -195,28 +195,9 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     [Crashlytics setUserName:[RPUser currentUser].username];
 
-    MyPlacesViewController *myPlacesVC = [[MyPlacesViewController alloc] init];
-    InboxViewController *inboxVC = [[InboxViewController alloc] init];
-	
-	RPNavigationController *myPlacesNavController = [[RPNavigationController alloc] initWithRootViewController:myPlacesVC];
-	RPNavigationController *inboxNavController = [[RPNavigationController alloc] initWithRootViewController:inboxVC];
-	[RepunchUtils setupNavigationController:myPlacesNavController];
-	[RepunchUtils setupNavigationController:inboxNavController];
-    
-    myPlacesNavController.tabBarItem.title = @"My Places";
-    inboxNavController.tabBarItem.title = @"Inbox";
-    
-    myPlacesNavController.tabBarItem.image = [UIImage imageNamed:@"tab_my_places"];
-    inboxNavController.tabBarItem.image = [UIImage imageNamed:@"tab_inbox"];
-    
-    UITabBarController *tabBarController = [[UITabBarController alloc] init];
-	tabBarController.viewControllers = @[myPlacesNavController, inboxNavController];
-	
+	RPTabBarController *tabBarController = [[RPTabBarController alloc] init];
 	self.window.rootViewController = tabBarController;
 	[self.window makeKeyAndVisible];
-	
-	//pre-load inbox tab
-	[inboxVC view];
 	
 	//pre-load Facebook friend picker
 	if([PFFacebookUtils isLinkedWithUser:[RPUser currentUser]]) {

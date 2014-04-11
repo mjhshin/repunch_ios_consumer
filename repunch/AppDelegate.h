@@ -5,18 +5,17 @@
 //  Copyright (c) 2013 Repunch. All rights reserved.
 //
 
-#import "MyPlacesViewController.h"
-#import "RPNavigationController.h"
-#import "InboxViewController.h"
 #import "LandingViewController.h"
-#import <Parse/Parse.h>
-#import <FacebookSDK/FacebookSDK.h>
-#import "DataManager.h"
-#import <UIKit/UIKit.h>
+#import "RPTabBarController.h"
+#import "RPNavigationController.h"
 #import "PunchHandler.h"
 #import "RedeemHandler.h"
 #import "MessageHandler.h"
 #import "Reachability.h"
+#import "DataManager.h"
+#import <Parse/Parse.h>
+#import <FacebookSDK/FacebookSDK.h>
+#import <UIKit/UIKit.h>
 #import <Crashlytics/Crashlytics.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>

@@ -68,6 +68,15 @@
 		EE16537218D8AF1A006E2CE5 /* button_popup_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = EE16537018D8AF1A006E2CE5 /* button_popup_grey.png */; };
 		EE16537718D8BBFA006E2CE5 /* annotation_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EE16537518D8BBFA006E2CE5 /* annotation_icon.png */; };
 		EE16537818D8BBFA006E2CE5 /* annotation_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE16537618D8BBFA006E2CE5 /* annotation_icon@2x.png */; };
+		EE1654B318F5F442006E2CE5 /* RPTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE1654B218F5F442006E2CE5 /* RPTabBarController.m */; };
+		EE1654B618F60654006E2CE5 /* BluetoothManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE1654B518F60654006E2CE5 /* BluetoothManager.m */; };
+		EE1654B918F60665006E2CE5 /* BluetoothConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = EE1654B818F60665006E2CE5 /* BluetoothConstants.m */; };
+		EE1654BE18F60680006E2CE5 /* PunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE1654BC18F60680006E2CE5 /* PunchViewController.m */; };
+		EE1654BF18F60680006E2CE5 /* PunchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE1654BD18F60680006E2CE5 /* PunchViewController.xib */; };
+		EE1654C118F6077B006E2CE5 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE1654C018F6077B006E2CE5 /* CoreBluetooth.framework */; };
+		EE1654C318F61636006E2CE5 /* exit_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE1654C218F61636006E2CE5 /* exit_button@2x.png */; };
+		EE1654C818F61C8A006E2CE5 /* punch_button_exit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE1654C618F61C8A006E2CE5 /* punch_button_exit@2x.png */; };
+		EE1654C918F61C8A006E2CE5 /* punch_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE1654C718F61C8A006E2CE5 /* punch_button@2x.png */; };
 		EE17EE0E17FA34EE0053C36C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE17EE0D17FA34EE0053C36C /* Crashlytics.framework */; };
 		EE255EA418BD38C800A6E15E /* RPPopupButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EE255EA318BD38C800A6E15E /* RPPopupButton.m */; };
 		EE28DAE017AC447E00E4C460 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE28DADF17AC447E00E4C460 /* DataManager.m */; };
@@ -194,8 +203,6 @@
 		EEB75A9318722D0800AA4F89 /* LocationDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEB75A9118722D0800AA4F89 /* LocationDetailsViewController.xib */; };
 		EEB75A9B187F5CAA00AA4F89 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEB75A9A187F5CAA00AA4F89 /* Images.xcassets */; };
 		EEB75A9D188457EE00AA4F89 /* StoreSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEB75A9C188457EE00AA4F89 /* StoreSectionHeaderView.xib */; };
-		EEB75AA41884B2FD00AA4F89 /* nav_back.png in Resources */ = {isa = PBXBuildFile; fileRef = EEB75AA21884B2FD00AA4F89 /* nav_back.png */; };
-		EEB75AA51884B2FD00AA4F89 /* nav_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEB75AA31884B2FD00AA4F89 /* nav_back@2x.png */; };
 		EEB8A44D17EA61140020E2EE /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB8A44B17EA61140020E2EE /* SettingsViewController.m */; };
 		EEB8A44E17EA61140020E2EE /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEB8A44C17EA61140020E2EE /* SettingsViewController.xib */; };
 		EEE19EE2185A541A0084C63B /* RPStoreLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE19EE1185A541A0084C63B /* RPStoreLocation.m */; };
@@ -301,6 +308,19 @@
 		EE16537318D8B9C5006E2CE5 /* annotation_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "annotation_icon@2x.png"; sourceTree = "<group>"; };
 		EE16537518D8BBFA006E2CE5 /* annotation_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = annotation_icon.png; sourceTree = "<group>"; };
 		EE16537618D8BBFA006E2CE5 /* annotation_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "annotation_icon@2x.png"; sourceTree = "<group>"; };
+		EE1654B118F5F442006E2CE5 /* RPTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPTabBarController.h; path = repunch/CustomUIViews/RPTabBarController.h; sourceTree = SOURCE_ROOT; };
+		EE1654B218F5F442006E2CE5 /* RPTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RPTabBarController.m; path = repunch/CustomUIViews/RPTabBarController.m; sourceTree = SOURCE_ROOT; };
+		EE1654B418F60654006E2CE5 /* BluetoothManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothManager.h; sourceTree = "<group>"; };
+		EE1654B518F60654006E2CE5 /* BluetoothManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BluetoothManager.m; sourceTree = "<group>"; };
+		EE1654B718F60665006E2CE5 /* BluetoothConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothConstants.h; sourceTree = "<group>"; };
+		EE1654B818F60665006E2CE5 /* BluetoothConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BluetoothConstants.m; sourceTree = "<group>"; };
+		EE1654BB18F60680006E2CE5 /* PunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PunchViewController.h; sourceTree = "<group>"; };
+		EE1654BC18F60680006E2CE5 /* PunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PunchViewController.m; sourceTree = "<group>"; };
+		EE1654BD18F60680006E2CE5 /* PunchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PunchViewController.xib; sourceTree = "<group>"; };
+		EE1654C018F6077B006E2CE5 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		EE1654C218F61636006E2CE5 /* exit_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "exit_button@2x.png"; sourceTree = "<group>"; };
+		EE1654C618F61C8A006E2CE5 /* punch_button_exit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "punch_button_exit@2x.png"; sourceTree = "<group>"; };
+		EE1654C718F61C8A006E2CE5 /* punch_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "punch_button@2x.png"; sourceTree = "<group>"; };
 		EE17EE0D17FA34EE0053C36C /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
 		EE255EA218BD38C800A6E15E /* RPPopupButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPPopupButton.h; path = repunch/CustomUIViews/RPPopupButton.h; sourceTree = SOURCE_ROOT; };
 		EE255EA318BD38C800A6E15E /* RPPopupButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RPPopupButton.m; path = repunch/CustomUIViews/RPPopupButton.m; sourceTree = SOURCE_ROOT; };
@@ -464,8 +484,6 @@
 		EEB75A9118722D0800AA4F89 /* LocationDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LocationDetailsViewController.xib; path = repunch/LocationDetailsViewController.xib; sourceTree = SOURCE_ROOT; };
 		EEB75A9A187F5CAA00AA4F89 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = repunch/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		EEB75A9C188457EE00AA4F89 /* StoreSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StoreSectionHeaderView.xib; path = repunch/CustomUIViews/StoreSectionHeaderView.xib; sourceTree = SOURCE_ROOT; };
-		EEB75AA21884B2FD00AA4F89 /* nav_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_back.png; sourceTree = "<group>"; };
-		EEB75AA31884B2FD00AA4F89 /* nav_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_back@2x.png"; sourceTree = "<group>"; };
 		EEB8A44A17EA61140020E2EE /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		EEB8A44B17EA61140020E2EE /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		EEB8A44C17EA61140020E2EE /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
@@ -506,6 +524,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE1654C118F6077B006E2CE5 /* CoreBluetooth.framework in Frameworks */,
 				207AA96A181195C300E73B2E /* Parse.framework in Frameworks */,
 				798D6DE81785B98A00CF8109 /* libsqlite3.dylib in Frameworks */,
 				7996B3B017820B1C00CCAFED /* Accounts.framework in Frameworks */,
@@ -597,6 +616,7 @@
 		7996B35B17820A9700CCAFED /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EE1654C018F6077B006E2CE5 /* CoreBluetooth.framework */,
 				2027286D181031E4004BD1A6 /* Parse.framework */,
 				798D6DE71785B98A00CF8109 /* libsqlite3.dylib */,
 				7996B3AF17820B1C00CCAFED /* Accounts.framework */,
@@ -623,6 +643,7 @@
 		EE04ABCF181AF26800DDA5D0 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				EE1654BA18F60678006E2CE5 /* Punch */,
 				EE8D702F18BBB15A00ADE0DB /* Inbox */,
 				EE8D702E18BBB14400ADE0DB /* FacebookFriends */,
 				EE8D702D18BBB13800ADE0DB /* LocationDetails */,
@@ -635,6 +656,16 @@
 				EEFBA1711810A6BE00783F05 /* Welcome */,
 			);
 			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		EE1654BA18F60678006E2CE5 /* Punch */ = {
+			isa = PBXGroup;
+			children = (
+				EE1654BB18F60680006E2CE5 /* PunchViewController.h */,
+				EE1654BC18F60680006E2CE5 /* PunchViewController.m */,
+				EE1654BD18F60680006E2CE5 /* PunchViewController.xib */,
+			);
+			name = Punch;
 			sourceTree = "<group>";
 		};
 		EE3F36D517B5865800D28FC9 /* Push */ = {
@@ -795,6 +826,8 @@
 				EE93162F18AAA24300ECEABF /* RPButton.m */,
 				EE5250BC18B2D60C00AC7E6B /* RPImageView.h */,
 				EE5250BD18B2D60C00AC7E6B /* RPImageView.m */,
+				EE1654B118F5F442006E2CE5 /* RPTabBarController.h */,
+				EE1654B218F5F442006E2CE5 /* RPTabBarController.m */,
 			);
 			name = CustomUI;
 			path = CustomUIViews;
@@ -833,15 +866,18 @@
 		EE9D4E7617A84ABB005E0CC5 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				EE16536F18D8AF1A006E2CE5 /* button_popup_grey_highlighted.png */,
-				EE16537018D8AF1A006E2CE5 /* button_popup_grey.png */,
+				EE16537518D8BBFA006E2CE5 /* annotation_icon.png */,
+				EE16537318D8B9C5006E2CE5 /* annotation_icon@2x.png */,
 				EE398B351885E5D6005BEDFE /* black_alpha_gradient.png */,
+				EE16537018D8AF1A006E2CE5 /* button_popup_grey.png */,
+				EE16536F18D8AF1A006E2CE5 /* button_popup_grey_highlighted.png */,
 				EE5378C417B2FEA8002D8B18 /* call_button.png */,
 				EE92C01C17E7D0F900532CBE /* call_button@2x.png */,
 				EEE4D26318A06CCE00A5EC25 /* checkmark_icon.png */,
 				EEE4D25F18A06B3200A5EC25 /* checkmark_icon@2x.png */,
 				EE398B4E1891D21A005BEDFE /* circular_exit_button.png */,
 				EE398B501891D780005BEDFE /* circular_exit_button@2x.png */,
+				EE1654C218F61636006E2CE5 /* exit_button@2x.png */,
 				EE5378C617B2FEA9002D8B18 /* feedback_button.png */,
 				EEE777AF17E7D1B50023768B /* feedback_button@2x.png */,
 				EEE4D24B1899AD8700A5EC25 /* forward_button.png */,
@@ -884,17 +920,18 @@
 				EE93166518AD552500ECEABF /* message_type_offer_orange@2x.png */,
 				EE93164618AC242A00ECEABF /* nav_add_store.png */,
 				EE93164718AC242A00ECEABF /* nav_add_store@2x.png */,
-				EEB75AA21884B2FD00AA4F89 /* nav_back.png */,
-				EEB75AA31884B2FD00AA4F89 /* nav_back@2x.png */,
+				EE0FBE7518D1162B00087DEF /* nav_back.png */,
+				EE0FBE7618D1162B00087DEF /* nav_back@2x.png */,
 				EE93165218AC27D200ECEABF /* nav_delete.png */,
 				EE93165318AC27D200ECEABF /* nav_delete@2x.png */,
 				EE79DF7617BD702500E92DE5 /* nav_exit.png */,
 				EE79DF7717BD702500E92DE5 /* nav_exit@2x.png */,
+				EE1654C618F61C8A006E2CE5 /* punch_button_exit@2x.png */,
+				EE1654C718F61C8A006E2CE5 /* punch_button@2x.png */,
 				EEB75A8B186E187700AA4F89 /* nav_forward.png */,
 				EEB75A8C186E187700AA4F89 /* nav_forward@2x.png */,
 				EEA181AE17C95D1D00553336 /* nav_reply.png */,
 				EEA181AF17C95D1D00553336 /* nav_reply@2x.png */,
-				EE16537318D8B9C5006E2CE5 /* annotation_icon@2x.png */,
 				EE93168418B2899F00ECEABF /* nav_repunch_logo.png */,
 				EE93168518B2899F00ECEABF /* nav_repunch_logo@2x.png */,
 				EE79DF7817BD702500E92DE5 /* nav_search.png */,
@@ -911,8 +948,6 @@
 				EE93167918AD87E500ECEABF /* placeholder_cover_image@2x.png */,
 				EE93167C18ADACB600ECEABF /* placeholder_thumbnail_image.png */,
 				EE93167E18ADAD3D00ECEABF /* placeholder_thumbnail_image@2x.png */,
-				EE16537518D8BBFA006E2CE5 /* annotation_icon.png */,
-				EE16537618D8BBFA006E2CE5 /* annotation_icon@2x.png */,
 				EE031C1B18B66C8A0027E79F /* redeem_gift_icon.png */,
 				EE031C1C18B66C8A0027E79F /* redeem_gift_icon@2x.png */,
 				EE031C2118B66EDC0027E79F /* redeem_gift_icon_white.png */,
@@ -941,6 +976,7 @@
 				EE93168118B287D500ECEABF /* tab_inbox@2x.png */,
 				EE93165618AC32A800ECEABF /* tab_my_places.png */,
 				EE93165718AC32A800ECEABF /* tab_my_places@2x.png */,
+				EE16537618D8BBFA006E2CE5 /* annotation_icon@2x.png */,
 				EE0FBE7518D1162B00087DEF /* nav_back.png */,
 				EE0FBE7618D1162B00087DEF /* nav_back@2x.png */,
 			);
@@ -1002,6 +1038,10 @@
 				EEA181B517CC499900553336 /* RepunchUtils.h */,
 				EEA181B617CC499B00553336 /* RepunchUtils.m */,
 				EE04ABD0181AF8C100DDA5D0 /* RPConstants.h */,
+				EE1654B418F60654006E2CE5 /* BluetoothManager.h */,
+				EE1654B518F60654006E2CE5 /* BluetoothManager.m */,
+				EE1654B718F60665006E2CE5 /* BluetoothConstants.h */,
+				EE1654B818F60665006E2CE5 /* BluetoothConstants.m */,
 				EE6394C218C7E04100A9A474 /* LocationManager.h */,
 				EE6394C318C7E04100A9A474 /* LocationManager.m */,
 			);
@@ -1107,6 +1147,7 @@
 				EE04ABE3182872BB00DDA5D0 /* orange_gradient_button_highlighted.png in Resources */,
 				EE93167318AD569A00ECEABF /* message_type_offer@2x.png in Resources */,
 				EE93164918AC242A00ECEABF /* nav_add_store@2x.png in Resources */,
+				EE1654C918F61C8A006E2CE5 /* punch_button@2x.png in Resources */,
 				EE93164818AC242A00ECEABF /* nav_add_store.png in Resources */,
 				EE031C1D18B66C8A0027E79F /* redeem_gift_icon.png in Resources */,
 				EE031C2518B66EDC0027E79F /* redeem_gift_icon_white.png in Resources */,
@@ -1126,7 +1167,6 @@
 				EEE4D24D1899AD8700A5EC25 /* forward_button.png in Resources */,
 				EEB75A9B187F5CAA00AA4F89 /* Images.xcassets in Resources */,
 				EE93169518B29FD400ECEABF /* store_save_background.png in Resources */,
-				EEB75AA41884B2FD00AA4F89 /* nav_back.png in Resources */,
 				EE0FBE8B18D280EB00087DEF /* SearchMapViewController.xib in Resources */,
 				EE398B4F1891D21A005BEDFE /* circular_exit_button.png in Resources */,
 				EE9D4F3717A84ABB005E0CC5 /* login-button-small-pressed.png in Resources */,
@@ -1164,8 +1204,9 @@
 				EE79DF7E17BD702500E92DE5 /* nav_exit.png in Resources */,
 				EEB8A44E17EA61140020E2EE /* SettingsViewController.xib in Resources */,
 				EE031C0418B3DE8B0027E79F /* message_recepient_icon@2x.png in Resources */,
+				EE1654C818F61C8A006E2CE5 /* punch_button_exit@2x.png in Resources */,
+				EE1654C318F61636006E2CE5 /* exit_button@2x.png in Resources */,
 				EE79DF7F17BD702500E92DE5 /* nav_exit@2x.png in Resources */,
-				EEB75AA51884B2FD00AA4F89 /* nav_back@2x.png in Resources */,
 				EE93166E18AD552500ECEABF /* message_type_gift@2x.png in Resources */,
 				EE93168918B28E0B00ECEABF /* StoreSectionHeaderViewAdd.xib in Resources */,
 				EEE4D2351899682200A5EC25 /* gift_box.png in Resources */,
@@ -1187,6 +1228,7 @@
 				EEE4D22E18985E6D00A5EC25 /* scissors.png in Resources */,
 				EE93165918AC32A800ECEABF /* tab_my_places@2x.png in Resources */,
 				EE031C2618B66EDC0027E79F /* redeem_icon_white@2x.png in Resources */,
+				EE1654BF18F60680006E2CE5 /* PunchViewController.xib in Resources */,
 				EEA181B017C95D1D00553336 /* nav_reply.png in Resources */,
 				EE16537218D8AF1A006E2CE5 /* button_popup_grey.png in Resources */,
 				204D4FB218B6C508001B9560 /* IncomingMessageViewController.xib in Resources */,
@@ -1237,6 +1279,7 @@
 				EE9D4C6717A83F4B005E0CC5 /* AppDelegate.m in Sources */,
 				EE93163C18AC090600ECEABF /* RPInstallation.m in Sources */,
 				EE255EA418BD38C800A6E15E /* RPPopupButton.m in Sources */,
+				EE1654B918F60665006E2CE5 /* BluetoothConstants.m in Sources */,
 				EE9D4C7517A83F4B005E0CC5 /* InboxTableViewCell.m in Sources */,
 				EE9D4C7717A83F4B005E0CC5 /* StoreTableViewCell.m in Sources */,
 				EEE19EE2185A541A0084C63B /* RPStoreLocation.m in Sources */,
@@ -1263,9 +1306,11 @@
 				EE9D4C8B17A83F4B005E0CC5 /* MyPlacesViewController.m in Sources */,
 				20E8609B18BBB686007DB153 /* RPAlertController.m in Sources */,
 				EE0FBE9B18D7BF8400087DEF /* RPAnnotationView.m in Sources */,
+				EE1654BE18F60680006E2CE5 /* PunchViewController.m in Sources */,
 				EE9D4C8F17A83F4B005E0CC5 /* RegisterViewController.m in Sources */,
 				EE6394C418C7E04100A9A474 /* LocationManager.m in Sources */,
 				EEE4D26C18A30C9C00A5EC25 /* RPNavigationController.m in Sources */,
+				EE1654B618F60654006E2CE5 /* BluetoothManager.m in Sources */,
 				EE0FBE6718CF819100087DEF /* RPPullToRefreshView.m in Sources */,
 				EE9D4C9617A83F4B005E0CC5 /* LoginViewController.m in Sources */,
 				EE9D4C9817A83F4B005E0CC5 /* RPAnnotation.m in Sources */,
@@ -1283,6 +1328,7 @@
 				EE460EC317BB5C7A00AC3588 /* MessageHandler.m in Sources */,
 				EEA181A317C5894B00553336 /* FacebookPost.m in Sources */,
 				EEA181AC17C6FD9B00553336 /* FacebookFriendsViewController.m in Sources */,
+				EE1654B318F5F442006E2CE5 /* RPTabBarController.m in Sources */,
 				EE93163018AAA24300ECEABF /* RPButton.m in Sources */,
 				EEE4D27218A5AE5F00A5EC25 /* RPPatronStore.m in Sources */,
 				EEA181B717CC499C00553336 /* RepunchUtils.m in Sources */,
@@ -1322,7 +1368,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				"INFOPLIST_FILE[sdk=*]" = /Users/michaelshin/workspace/shin_repunch_ios_consumer/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1350,7 +1396,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				"INFOPLIST_FILE[sdk=*]" = /Users/michaelshin/workspace/shin_repunch_ios_consumer/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1377,11 +1423,11 @@
 				GCC_PREFIX_HEADER = "Repunch-Prefix.pch";
 				INFOPLIST_FILE = "Repunch-Info.plist";
 				"INFOPLIST_FILE[sdk=*]" = "Repunch-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "704D791A-0688-4BED-9440-9623BF1EF582";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "704D791A-0688-4BED-9440-9623BF1EF582";
+				PROVISIONING_PROFILE = "6067DE10-768C-4B89-88EF-22493882EC96";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6067DE10-768C-4B89-88EF-22493882EC96";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1405,10 +1451,10 @@
 				GCC_PREFIX_HEADER = "Repunch-Prefix.pch";
 				INFOPLIST_FILE = "Repunch-Info.plist";
 				"INFOPLIST_FILE[sdk=*]" = "Repunch-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "704D791A-0688-4BED-9440-9623BF1EF582";
+				PROVISIONING_PROFILE = "6067DE10-768C-4B89-88EF-22493882EC96";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "704D791A-0688-4BED-9440-9623BF1EF582";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
