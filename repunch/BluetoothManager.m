@@ -286,7 +286,7 @@ didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
 													encoding:NSUTF8StringEncoding];
 		
 		NSDictionary *dataDict = [NSDictionary dictionaryWithObject:storeName
-															 forKey:@"store"];
+															 forKey:@"store_name"];
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:kBluetoothNotificationStoreDiscovered
 															object:self

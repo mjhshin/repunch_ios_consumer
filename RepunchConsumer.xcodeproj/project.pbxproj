@@ -197,6 +197,9 @@
 		EEA181B717CC499C00553336 /* RepunchUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA181B617CC499B00553336 /* RepunchUtils.m */; };
 		EEA181C217CD20D300553336 /* map_button_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = EEA181BC17CD20D300553336 /* map_button_highlighted.png */; };
 		EEA181C317CD20D300553336 /* map_button_highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEA181BD17CD20D300553336 /* map_button_highlighted@2x.png */; };
+		EEB0E31E18FC9358005B75E1 /* UICountingLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB0E31D18FC9358005B75E1 /* UICountingLabel.m */; };
+		EEB0E32418FCA1FA005B75E1 /* PunchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB0E32218FCA1FA005B75E1 /* PunchResultViewController.m */; };
+		EEB0E32518FCA1FA005B75E1 /* PunchResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEB0E32318FCA1FA005B75E1 /* PunchResultViewController.xib */; };
 		EEB75A8D186E187700AA4F89 /* nav_forward.png in Resources */ = {isa = PBXBuildFile; fileRef = EEB75A8B186E187700AA4F89 /* nav_forward.png */; };
 		EEB75A8E186E187700AA4F89 /* nav_forward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEB75A8C186E187700AA4F89 /* nav_forward@2x.png */; };
 		EEB75A9218722D0800AA4F89 /* LocationDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB75A9018722D0800AA4F89 /* LocationDetailsViewController.m */; };
@@ -477,6 +480,11 @@
 		EEA181B617CC499B00553336 /* RepunchUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepunchUtils.m; sourceTree = "<group>"; };
 		EEA181BC17CD20D300553336 /* map_button_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_button_highlighted.png; sourceTree = "<group>"; };
 		EEA181BD17CD20D300553336 /* map_button_highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_button_highlighted@2x.png"; sourceTree = "<group>"; };
+		EEB0E31C18FC9358005B75E1 /* UICountingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICountingLabel.h; sourceTree = "<group>"; };
+		EEB0E31D18FC9358005B75E1 /* UICountingLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICountingLabel.m; sourceTree = "<group>"; };
+		EEB0E32118FCA1FA005B75E1 /* PunchResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PunchResultViewController.h; path = repunch/PunchResultViewController.h; sourceTree = SOURCE_ROOT; };
+		EEB0E32218FCA1FA005B75E1 /* PunchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PunchResultViewController.m; path = repunch/PunchResultViewController.m; sourceTree = SOURCE_ROOT; };
+		EEB0E32318FCA1FA005B75E1 /* PunchResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PunchResultViewController.xib; path = repunch/PunchResultViewController.xib; sourceTree = SOURCE_ROOT; };
 		EEB75A8B186E187700AA4F89 /* nav_forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_forward.png; sourceTree = "<group>"; };
 		EEB75A8C186E187700AA4F89 /* nav_forward@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_forward@2x.png"; sourceTree = "<group>"; };
 		EEB75A8F18722D0800AA4F89 /* LocationDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationDetailsViewController.h; path = repunch/LocationDetailsViewController.h; sourceTree = SOURCE_ROOT; };
@@ -664,6 +672,9 @@
 				EE1654BB18F60680006E2CE5 /* PunchViewController.h */,
 				EE1654BC18F60680006E2CE5 /* PunchViewController.m */,
 				EE1654BD18F60680006E2CE5 /* PunchViewController.xib */,
+				EEB0E32118FCA1FA005B75E1 /* PunchResultViewController.h */,
+				EEB0E32218FCA1FA005B75E1 /* PunchResultViewController.m */,
+				EEB0E32318FCA1FA005B75E1 /* PunchResultViewController.xib */,
 			);
 			name = Punch;
 			sourceTree = "<group>";
@@ -844,6 +855,8 @@
 				EE9D4BCC17A83F4A005E0CC5 /* NSDate+whenString.m */,
 				EE0FBE9918D7BF8300087DEF /* RPAnnotationView.h */,
 				EE0FBE9A18D7BF8300087DEF /* RPAnnotationView.m */,
+				EEB0E31C18FC9358005B75E1 /* UICountingLabel.h */,
+				EEB0E31D18FC9358005B75E1 /* UICountingLabel.m */,
 			);
 			path = ThirdPartyViews;
 			sourceTree = "<group>";
@@ -1182,6 +1195,7 @@
 				EE9D4F4017A84ABB005E0CC5 /* repunch@2x.png in Resources */,
 				EE06E66017E7525000073AAF /* app_icon_58x58.png in Resources */,
 				EE398B4518908A31005BEDFE /* location_map_icon.png in Resources */,
+				EEB0E32518FCA1FA005B75E1 /* PunchResultViewController.xib in Resources */,
 				EE5378BD17B2E8D6002D8B18 /* StoreTableViewHeaderView.xib in Resources */,
 				EE5378CA17B2FEA9002D8B18 /* call_button.png in Resources */,
 				EE5378CC17B2FEA9002D8B18 /* feedback_button.png in Resources */,
@@ -1313,12 +1327,14 @@
 				EE1654B618F60654006E2CE5 /* BluetoothManager.m in Sources */,
 				EE0FBE6718CF819100087DEF /* RPPullToRefreshView.m in Sources */,
 				EE9D4C9617A83F4B005E0CC5 /* LoginViewController.m in Sources */,
+				EEB0E32418FCA1FA005B75E1 /* PunchResultViewController.m in Sources */,
 				EE9D4C9817A83F4B005E0CC5 /* RPAnnotation.m in Sources */,
 				EEE4D26F18A5AA7F00A5EC25 /* RPPatron.m in Sources */,
 				EE9D4C9917A83F4B005E0CC5 /* MKMapView+ZoomLevel.m in Sources */,
 				EE9D4C9A17A83F4B005E0CC5 /* NSDate+whenString.m in Sources */,
 				EE28DAE017AC447E00E4C460 /* DataManager.m in Sources */,
 				202F1DFA18523DC500495BDF /* NSDate+Additions.m in Sources */,
+				EEB0E31E18FC9358005B75E1 /* UICountingLabel.m in Sources */,
 				20E8609C18BBB686007DB153 /* RPCustomAlertController.m in Sources */,
 				EE3F36D417B585B300D28FC9 /* PunchHandler.m in Sources */,
 				EEB8A44D17EA61140020E2EE /* SettingsViewController.m in Sources */,

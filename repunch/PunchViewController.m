@@ -7,12 +7,16 @@
 //
 
 #import "PunchViewController.h"
+#import "PunchResultViewController.h"
 #import "BluetoothManager.h"
 
 @interface PunchViewController ()
 
 @property (strong, nonatomic) BluetoothManager *bluetoothManager;
 @property (assign, nonatomic) BOOL punchRequested;
+
+@property (strong, nonatomic) NSString *storeName;
+@property (strong, nonatomic) NSString *storeId;
 
 @end
 
@@ -123,8 +127,10 @@
 
 - (void)discoveredStore:(NSNotification *)notification
 {
-	NSString *storeName = notification.userInfo[@"store"];
-	_storeNameLabel.text = storeName;
+	_storeName = notification.userInfo[@"store_name"];
+	_storeId = notification.userInfo[@"store_id"];
+	
+	_storeNameLabel.text = _storeName;
 }
 
 - (void)receivedPunch:(NSNotification *)notification
@@ -132,7 +138,11 @@
 	NSNumber *receivedPunches = notification.userInfo[@"punches"];
 	NSLog(@"Received punches");
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"PunchComplete" object:self userInfo:nil];
+	PunchResultViewController *punchResultVC = [[PunchResultViewController alloc] init];
+	punchResultVC.storeName = _storeName;
+	//punchResultVC.storeId = _storeId;
+	punchResultVC.punchesReceived = 3;//[receivedPunches integerValue];
+	[self presentViewController:punchResultVC animated:NO completion:nil];
 }
 
 - (void)storeConnected
