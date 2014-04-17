@@ -10,6 +10,10 @@
 #import "DataManager.h"
 #import "RPStore.h"
 
+#define kAnimateDelay 0.5f
+#define kAnimateDuration 0.5f
+#define kCountDuration 0.8f
+
 @interface PunchResultViewController ()
 
 @end
@@ -37,26 +41,12 @@
 	_punchReceivedLabel.text = (_punchesReceived == 1) ? @"You received 1 punch!" :
 		[NSString stringWithFormat:@"You received %i punches!", _punchesReceived];
 	_punchCountLabel.format = @"%d";
-	_punchCountLabel.text = [NSString stringWithFormat:@"%i", 6];
 	_punchCountLabel.method = UILabelCountingMethodLinear;
+	_punchCountLabel.text = [NSString stringWithFormat:@"%i", 6];
 	
-	[UIView animateWithDuration:0.5
-						  delay:0.5
-						options:UIViewAnimationOptionCurveEaseIn
-					 animations:^{
-						 _punchReceivedLabel.alpha = 1.0f;
-						 _punchCountView.alpha = 1.0f;
-					 }
-					 completion:^(BOOL completed) {
-						 [_punchCountLabel countFrom:6
-												  to:12
-										withDuration:0.8f];
-					 }];
+	[self showPunchesReceivedLabel];
 	
-	_punchReceivedLabel.text = (_punchesReceived == 1) ? @"You received 1 punch!" :
-								[NSString stringWithFormat:@"You received %i punches!", _punchesReceived];
-	
-	//[[NSNotificationCenter defaultCenter] postNotificationName:@"PunchComplete" object:self userInfo:nil];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"PunchComplete" object:self userInfo:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -70,25 +60,106 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)animatePunchCount
+- (void)showPunchesReceivedLabel
 {
-	
+	[UIView animateWithDuration:kAnimateDuration
+						  delay:kAnimateDelay
+						options:UIViewAnimationOptionCurveEaseIn
+					 animations:^{
+						 _punchReceivedLabel.alpha = 1.0f;
+					 }
+					 completion:^(BOOL completed) {
+						 [self showPunchCountView];
+					 }];
 }
 
+- (void)showPunchCountView
+{
+	[UIView animateWithDuration:kAnimateDuration
+						  delay:0.0f
+						options:UIViewAnimationOptionCurveEaseIn
+					 animations:^{
+						 _punchCountView.alpha = 1.0f;
+					 }
+					 completion:^(BOOL completed) {
+						 [_punchCountLabel countFrom:6
+												  to:12
+										withDuration:kCountDuration];
+						 
+						 [self showUnlockedRewardsLabel];
+						 //[self checkUnlockedRewards];
+					 }];
+}
+
+- (void)showUnlockedRewardsLabel
+{
+	[UIView animateWithDuration:kAnimateDuration
+						  delay:kCountDuration
+						options:UIViewAnimationOptionCurveEaseIn
+					 animations:^{
+						 _unlockedRewardLabel.alpha = 1.0f;
+					 }
+					 completion:^(BOOL completed) {
+						 [UIView animateWithDuration:kAnimateDuration
+											   delay:0.0f
+											 options:UIViewAnimationOptionCurveEaseIn
+										  animations:^{
+											  _rewardTitleLabel.alpha = 1.0f;
+											  _moreRewardsLabel.alpha = 1.0f;
+										  }
+										  completion:nil];
+					 }];
+}
 
 - (void)checkUnlockedRewards
 {
-	/*
 	RPStore *store = [[DataManager getSharedInstance] getStore:_storeId]; //TODO: when store is not in cache
 	RPPatronStore *patronStore = [[DataManager getSharedInstance] getPatronStore:_storeId];
 	
 	BOOL didUnlockReward = NO;
-	NSInteger startIndex = 0;
+	NSUInteger firstUnlockedIndex = 0;
+	NSUInteger unlockedRewards = 0;
 	
-	for (int i=0; i<store.rewards.count; i++) {
-		if(patronStore.punch_count <
+	for (int i = 0; i < store.rewards.count; i++) {
+		if(patronStore.punch_count < [store.rewards[i][@"punches"] intValue]
+		   && patronStore.punch_count + _punchesReceived >= [store.rewards[i][@"punches"] intValue]) {
+			didUnlockReward = YES;
+			unlockedRewards++;
+			
+			if(firstUnlockedIndex == 0)
+				firstUnlockedIndex = i;
+		}
+		else if(patronStore.punch_count + _punchesReceived < [store.rewards[i][@"punches"] intValue]) {
+			break;
+		}
 	}
-	 */
+	
+	if(didUnlockReward) {
+		_rewardTitleLabel.text = store.rewards[firstUnlockedIndex][@"reward_name"];
+		
+		if(unlockedRewards > 1) {
+			_moreRewardsLabel.text = [NSString stringWithFormat:@"+%i other rewards", unlockedRewards - 1];
+		}
+		
+		[UIView animateWithDuration:kAnimateDuration
+							  delay:kCountDuration
+							options:UIViewAnimationOptionCurveEaseIn
+						 animations:^{
+							 _unlockedRewardLabel.alpha = 1.0f;
+						 }
+						 completion:^(BOOL completed) {
+							 [UIView animateWithDuration:kAnimateDuration
+												   delay:0.0f
+												 options:UIViewAnimationOptionCurveEaseIn
+											  animations:^{
+												  _rewardTitleLabel.alpha = 1.0f;
+												  if(unlockedRewards > 1) {
+													  _moreRewardsLabel.alpha = 1.0f;
+												  }
+											  }
+											  completion:nil];
+						 }];
+	}
 }
 
 @end

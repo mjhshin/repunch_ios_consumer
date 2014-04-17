@@ -11,5 +11,7 @@
 @interface RPTabBarController : UITabBarController
 
 - (void)disablePunch;
+- (void)hidePunchButton;
+- (void)showPunchButton;
 
 @end

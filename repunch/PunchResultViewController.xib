@@ -21,14 +21,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You received 4 punches!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qbg-nc-Axs" userLabel="PunchReceivedLabel">
-                    <rect key="frame" x="20" y="60" width="280" height="25"/>
+                    <rect key="frame" x="20" y="120" width="280" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="18"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sg7-F5-U7U" userLabel="PunchCountView">
-                    <rect key="frame" x="88" y="115" width="144" height="69"/>
+                    <rect key="frame" x="88" y="175" width="144" height="69"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="5000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s1A-6C-daZ" userLabel="PunchCountLabel" customClass="UICountingLabel">
@@ -60,42 +60,54 @@
                     </constraints>
                 </view>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You've unlocked a new reward!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="piC-hP-so6" userLabel="UnlockedRewardLabel">
-                    <rect key="frame" x="20" y="244" width="280" height="25"/>
+                    <rect key="frame" x="20" y="304" width="280" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="18"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Signed shirt by Scholes and Fellaini and Giggs and Sir Alex and pretty much anyone" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="71A-5X-yQ6" userLabel="RewardTitleLabel">
-                    <rect key="frame" x="20" y="299" width="280" height="74"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="A night &quot;out&quot; with Bar Rafaeli" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="71A-5X-yQ6" userLabel="RewardTitleLabel">
+                    <rect key="frame" x="20" y="359" width="280" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="18"/>
+                    <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="20"/>
                     <color key="textColor" red="0.92549019610000005" green="0.54117647059999996" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <size key="shadowOffset" width="1" height="1"/>
                 </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+5 other rewards" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W39-hg-rvr" userLabel="MoreRewardsLabel">
-                    <rect key="frame" x="20" y="381" width="280" height="25"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+2 other rewards" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W39-hg-rvr" userLabel="MoreRewardsLabel">
+                    <rect key="frame" x="20" y="395" width="280" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="18"/>
                     <color key="textColor" red="0.92549019610000005" green="0.54117647059999996" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <size key="shadowOffset" width="1" height="1"/>
                 </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Brooklyn Roasting Company" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="BO4-xl-Duk" userLabel="StoreNameLabel">
+                    <rect key="frame" x="20" y="50" width="280" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="21"/>
+                    <color key="textColor" red="0.92549019610000005" green="0.54117647059999996" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <color key="shadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <size key="shadowOffset" width="1" height="1"/>
+                </label>
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="qbg-nc-Axs" secondAttribute="trailing" constant="20" id="1mO-yX-H4G"/>
+                <constraint firstItem="qbg-nc-Axs" firstAttribute="top" secondItem="BO4-xl-Duk" secondAttribute="bottom" constant="40" id="1ps-hH-2XB"/>
+                <constraint firstItem="BO4-xl-Duk" firstAttribute="leading" secondItem="CpZ-gL-jaF" secondAttribute="leading" constant="20" id="29n-CV-EXv"/>
+                <constraint firstItem="BO4-xl-Duk" firstAttribute="top" secondItem="CpZ-gL-jaF" secondAttribute="top" constant="50" id="3el-dn-KRr"/>
                 <constraint firstItem="piC-hP-so6" firstAttribute="leading" secondItem="CpZ-gL-jaF" secondAttribute="leading" constant="20" id="48S-2b-p0I"/>
                 <constraint firstItem="qbg-nc-Axs" firstAttribute="leading" secondItem="CpZ-gL-jaF" secondAttribute="leading" constant="20" id="8tv-lT-xvY"/>
                 <constraint firstAttribute="trailing" secondItem="71A-5X-yQ6" secondAttribute="trailing" constant="20" id="C20-x8-Yvi"/>
                 <constraint firstAttribute="trailing" secondItem="W39-hg-rvr" secondAttribute="trailing" constant="20" id="HKn-im-Bau"/>
+                <constraint firstAttribute="trailing" secondItem="BO4-xl-Duk" secondAttribute="trailing" constant="20" id="IxC-7j-eKB"/>
                 <constraint firstAttribute="centerX" secondItem="sg7-F5-U7U" secondAttribute="centerX" id="JqI-uH-UMe"/>
                 <constraint firstItem="71A-5X-yQ6" firstAttribute="leading" secondItem="CpZ-gL-jaF" secondAttribute="leading" constant="20" id="LP0-kT-NwU"/>
                 <constraint firstItem="W39-hg-rvr" firstAttribute="leading" secondItem="CpZ-gL-jaF" secondAttribute="leading" constant="20" id="S1v-Yn-Qs3"/>
                 <constraint firstItem="sg7-F5-U7U" firstAttribute="top" secondItem="qbg-nc-Axs" secondAttribute="bottom" constant="30" id="Unj-7A-k48"/>
                 <constraint firstAttribute="trailing" secondItem="piC-hP-so6" secondAttribute="trailing" constant="20" id="a2d-Ul-8X3"/>
                 <constraint firstItem="W39-hg-rvr" firstAttribute="top" secondItem="71A-5X-yQ6" secondAttribute="bottom" constant="8" id="cIU-Kf-2nh"/>
-                <constraint firstItem="qbg-nc-Axs" firstAttribute="top" secondItem="CpZ-gL-jaF" secondAttribute="top" constant="60" id="d2o-LP-iSF"/>
                 <constraint firstItem="71A-5X-yQ6" firstAttribute="top" secondItem="piC-hP-so6" secondAttribute="bottom" constant="30" id="t1i-ex-ca5"/>
                 <constraint firstItem="piC-hP-so6" firstAttribute="top" secondItem="sg7-F5-U7U" secondAttribute="bottom" constant="60" id="zlU-8x-D6q"/>
             </constraints>

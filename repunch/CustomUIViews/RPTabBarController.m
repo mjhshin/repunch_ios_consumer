@@ -13,7 +13,7 @@
 
 #define kPunchTabIndex 1
 
-@interface RPTabBarController () <UITabBarControllerDelegate>
+@interface RPTabBarController () <UITabBarControllerDelegate, UINavigationControllerDelegate>
 
 @property (assign, nonatomic) BOOL punchViewControllerShowing;
 @property (assign, nonatomic) NSUInteger selectedIndexBeforePunch;
@@ -45,21 +45,21 @@
 	
 	MyPlacesViewController *myPlacesVC = [[MyPlacesViewController alloc] init];
 	InboxViewController *inboxVC = [[InboxViewController alloc] init];
-	//_blankVC = [[UIViewController alloc] init];
 	_punchVC = [[PunchViewController alloc] init];
 	
 	RPNavigationController *myPlacesNavController = [[RPNavigationController alloc] initWithRootViewController:myPlacesVC];
 	RPNavigationController *inboxNavController = [[RPNavigationController alloc] initWithRootViewController:inboxVC];
 	[RepunchUtils setupNavigationController:myPlacesNavController];
 	[RepunchUtils setupNavigationController:inboxNavController];
+	myPlacesNavController.delegate = self;
+	inboxNavController.delegate = self;
 	
 	myPlacesNavController.tabBarItem.title = @"My Places";
-	inboxNavController.tabBarItem.title = @"Inbox";
-	
 	myPlacesNavController.tabBarItem.titlePositionAdjustment = UIOffsetMake(8.0f, 0.0f);
-	inboxNavController.tabBarItem.titlePositionAdjustment = UIOffsetMake(-8.0f, 0.0f);
-	
 	myPlacesNavController.tabBarItem.image = [UIImage imageNamed:@"tab_my_places"];
+	
+	inboxNavController.tabBarItem.title = @"Inbox";
+	inboxNavController.tabBarItem.titlePositionAdjustment = UIOffsetMake(-8.0f, 0.0f);
 	inboxNavController.tabBarItem.image = [UIImage imageNamed:@"tab_inbox"];
 	
 	self.viewControllers = @[myPlacesNavController, _punchVC, inboxNavController];
@@ -96,62 +96,61 @@
 
 - (void)setupPunchButton
 {
-	UITabBarItem *item = [self.tabBar.items objectAtIndex:kPunchTabIndex];
-	
-	UIView *view = [item valueForKey:@"view"];
-	CGPoint pointToSuperview = [self.tabBar.superview convertPoint:view.center fromView:self.tabBar];
-	CGRect myRect = CGRectMake(pointToSuperview.x, pointToSuperview.y, 70.0f, 64.0f);
-	
-	_punchTabButton = [[UIButton alloc] initWithFrame:myRect];
+	_punchTabButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	_punchTabButton.frame = CGRectMake(0.0f, 0.0f, 72.0f, 68.0f);
+	_punchTabButton.center = self.tabBar.center;
 	_punchTabButton.autoresizingMask =	UIViewAutoresizingFlexibleLeftMargin |
 										UIViewAutoresizingFlexibleRightMargin |
 										UIViewAutoresizingFlexibleTopMargin |
 										UIViewAutoresizingFlexibleBottomMargin;
 	
-	_punchTabButton.layer.anchorPoint = CGPointMake(1, 1);
 	_punchTabButton.layer.cornerRadius = 6;
 	_punchTabButton.clipsToBounds = YES;
 	
 	[_punchTabButton setBackgroundImage:[UIImage imageNamed:@"orange_gradient_button"] forState:UIControlStateNormal];
 	[_punchTabButton setImage:[UIImage imageNamed:@"punch_button"] forState:UIControlStateNormal];
 	
-	[_punchTabButton addTarget:nil action:@selector(punchButtonAction) forControlEvents:UIControlEventTouchUpInside];
-	_punchTabButton.layer.zPosition = 1;
+	[_punchTabButton addTarget:self
+						action:@selector(enablePunch)
+			  forControlEvents:UIControlEventTouchUpInside];
 	
 	[self.view addSubview:_punchTabButton];
 }
 
-- (void)punchButtonAction
+- (void)hidePunchButton
 {
-	NSLog(@"z: %f", _punchTabButton.layer.zPosition);
-	if(_punchViewControllerShowing) {
-		[self disablePunch];
-	}
-	else {
-		[self enablePunch];
-	}
+	_punchTabButton.hidden = YES;
+}
+
+- (void)showPunchButton
+{
+	_punchTabButton.layer.zPosition = 1;
+	_punchTabButton.hidden = NO;
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
-	if(viewController != _punchVC) {
+	NSLog(@"Open index: %i", tabBarController.selectedIndex);
+	if(tabBarController.selectedIndex != 1) {
 		_selectedIndexBeforePunch = tabBarController.selectedIndex;
 	}
-	
-	if(_punchViewControllerShowing) {
-		[self disablePunch];
-	}
 	else {
-		[self enablePunch];
+		if(_punchViewControllerShowing) {
+			[self disablePunch];
+		}
+		else {
+			[self enablePunch];
+		}
 	}
 }
 
 - (void)enablePunch
 {
 	NSLog(@"Open punchVC");
+	_punchViewControllerShowing = YES;
+	
 	self.selectedIndex = kPunchTabIndex;
 	[_punchTabButton setImage:[UIImage imageNamed:@"punch_button_exit"] forState:UIControlStateNormal];
-	_punchViewControllerShowing = YES;
 	
 	[_punchVC requestPunch];
 }
@@ -159,12 +158,24 @@
 - (void)disablePunch
 {
 	NSLog(@"Close punchVC");
+	_punchViewControllerShowing = NO;
 	
 	self.selectedIndex = _selectedIndexBeforePunch;
 	[_punchTabButton setImage:[UIImage imageNamed:@"punch_button"] forState:UIControlStateNormal];
-	_punchViewControllerShowing = NO;
 	
 	[_punchVC cancelPunchRequest];
+}
+
+- (void)navigationController:(UINavigationController *)navigationController
+	  willShowViewController:(UIViewController *)viewController
+					animated:(BOOL)animated
+{
+	if(navigationController.viewControllers.count > 1) {
+		[self hidePunchButton];
+	}
+	else {
+		[self showPunchButton];
+	}
 }
 
 @end
