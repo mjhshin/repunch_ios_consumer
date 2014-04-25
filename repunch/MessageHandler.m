@@ -36,7 +36,7 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
             
             NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:result.objectId, @"message_status_id", nil];
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"Message"
+            [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationMessage
 																object:self
 															  userInfo:args];
 			
@@ -69,7 +69,7 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 			
 			NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:result.objectId, @"message_status_id", nil];
 			
-			[[NSNotificationCenter defaultCenter] postNotificationName:@"Message"
+			[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationMessage
 																object:self
 															  userInfo:args];
 			

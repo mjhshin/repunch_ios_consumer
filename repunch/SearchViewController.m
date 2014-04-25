@@ -104,17 +104,17 @@
 {
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(updateChildViewControllers)
-												 name:@"AddOrRemoveStore"
+												 name:kNotificationAddOrRemoveStore
 											   object:nil];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(updateChildViewControllers)
-												 name:@"Punch"
+												 name:kNotificationPunch
 											   object:nil];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(updateChildViewControllers)
-												 name:@"Redeem"
+												 name:kNotificationRedeem
 											   object:nil];
 	
 	__weak typeof(self) weakSelf = self;

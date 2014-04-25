@@ -32,14 +32,14 @@
 			[dataManager updatePatronStore:storeId withPunches:totalPunches];
 		}
 
-		[[NSNotificationCenter defaultCenter] postNotificationName:@"Punch" object:self];
+		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationPunch object:self];
 		[RepunchUtils showDialogWithTitle:@"Punch!" withMessage:alert];
 		completionHandler(UIBackgroundFetchResultNoData);
 	}
 	else
 	{
 		PFQuery *query = [RPPatronStore query];
-		[query includeKey:@"Store"];
+		[query includeKey:@"Store.store_locations"];
 		[query includeKey:@"FacebookPost"];
 		
 		[query getObjectInBackgroundWithId:patronStoreId block:^(PFObject *result, NSError *error)
@@ -58,7 +58,7 @@
                 
                 NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:storeId, @"store_id", nil];
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"Punch" object:self userInfo:args];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationPunch object:self userInfo:args];
 				[RepunchUtils showDialogWithTitle:@"Punch!" withMessage:alert];
 				completionHandler(UIBackgroundFetchResultNewData);
             }

@@ -15,7 +15,7 @@
 
 @property (assign, readonly, atomic) BOOL pending_reward;
 @property (assign, readonly, atomic) NSInteger all_time_punches;
-@property (assign, readonly, atomic) NSInteger punch_count;
+@property (assign, atomic) NSInteger punch_count;
 
 @property (strong, readonly, atomic) RPPatron *Patron;
 @property (strong, readonly, atomic) RPStore *Store;

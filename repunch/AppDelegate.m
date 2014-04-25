@@ -6,6 +6,7 @@
 //
 
 #import "AppDelegate.h"
+#import "RPTabBarViewController.h"
 
 @implementation AppDelegate
 {
@@ -17,7 +18,7 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-	BOOL isProduction = YES; // DON'T FORGET TO SET!!!!
+	BOOL isProduction = NO; // DON'T FORGET TO SET!!!!
 	
 	if(isProduction) {	// PRODUCTION KEY
 		[Parse setApplicationId:@"m0EdwpRYlJwttZLZ5PUk7y13TWCnvSScdn8tfVoh"
@@ -195,8 +196,12 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     [Crashlytics setUserName:[RPUser currentUser].username];
 
-	RPTabBarController *tabBarController = [[RPTabBarController alloc] init];
-	self.window.rootViewController = tabBarController;
+	//RPTabBarController *tabBarController = [[RPTabBarController alloc] init];
+	//self.window.rootViewController = tabBarController;
+	//[self.window makeKeyAndVisible];
+	
+	RPTabBarViewController *tabBarVC = [[RPTabBarViewController alloc] init];
+	self.window.rootViewController = tabBarVC;
 	[self.window makeKeyAndVisible];
 	
 	//pre-load Facebook friend picker

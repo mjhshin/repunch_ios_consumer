@@ -8,6 +8,8 @@
 
 #import "BluetoothManager.h"
 #import "BluetoothConstants.h"
+#import "DataManager.h"
+#import "RPConstants.h"
 
 @interface BluetoothManager () <CBCentralManagerDelegate, CBPeripheralDelegate>
 
@@ -15,6 +17,7 @@
 @property (strong, nonatomic) CBPeripheral *connectedPeripheral;
 
 @property (strong, nonatomic) CBUUID *UUIDserviceStore;
+@property (strong, nonatomic) CBUUID *UUIDcharacteristicStoreId;
 @property (strong, nonatomic) CBUUID *UUIDcharacteristicStoreName;
 @property (strong, nonatomic) CBUUID *UUIDcharacteristicCustomerName;
 @property (strong, nonatomic) CBUUID *UUIDcharacteristicPunch;
@@ -24,9 +27,15 @@
 
 @property (strong, nonatomic) NSMutableArray *wrongPeripherals;
 
-@property (assign, nonatomic) BOOL customerNameSent;
-@property (assign, nonatomic) BOOL storeNameRead;
-@property (assign, nonatomic) BOOL punchCountSubscribed;
+@property (strong, nonatomic) NSTimer *timer;
+
+@property (strong, nonatomic) NSString *storeId;
+@property (strong, nonatomic) NSString *storeName;
+
+@property (strong, nonatomic) NSOperationQueue *operationQueue;
+@property (strong, nonatomic) NSOperation *operationReadStoreId;
+@property (strong, nonatomic) NSOperation *operationReadStoreName;
+@property (strong, nonatomic) NSOperation *operationSubscribePunch;
 
 @end
 
@@ -52,15 +61,12 @@ static BluetoothManager *sharedBluetoothManager = nil;
 		_state = CBCentralManagerStateUnknown;
 		
 		_UUIDserviceStore = [CBUUID UUIDWithString:kUUIDServiceStore];
+		_UUIDcharacteristicStoreId = [CBUUID UUIDWithString:kUUIDCharacteristicStoreId];
 		_UUIDcharacteristicStoreName = [CBUUID UUIDWithString:kUUIDCharacteristicStoreName];
 		_UUIDcharacteristicCustomerName = [CBUUID UUIDWithString:kUUIDCharacteristicCustomerName];
 		_UUIDcharacteristicPunch = [CBUUID UUIDWithString:kUUIDCharacteristicPunch];
 		
 		_wrongPeripherals = [NSMutableArray array];
-		
-		_customerNameSent = NO;
-		_storeNameRead = NO;
-		_punchCountSubscribed = NO;
 	}
 	
 	return self;
@@ -77,12 +83,18 @@ static BluetoothManager *sharedBluetoothManager = nil;
 											options:nil];
     
     NSLog(@"Scanning started");
+	_timer = [NSTimer scheduledTimerWithTimeInterval:kBluetoothScanTimeoutInterval
+											  target:self
+											selector:@selector(scanningTimeout)
+											userInfo:nil
+											 repeats:NO];
+	[self initOperations];
 }
 
 - (void)sendWriteRquestForName
 {
-	NSString *name = @"Neil deGrasse Tyson";
-	NSData* data = [name dataUsingEncoding:NSUTF8StringEncoding];
+	RPPatron *patron = [[DataManager getSharedInstance] patron];
+	NSData* data = [patron.full_name dataUsingEncoding:NSUTF8StringEncoding];
 	[_connectedPeripheral writeValue:data
 				   forCharacteristic:_characteristicCustomerName
 								type:CBCharacteristicWriteWithResponse];
@@ -103,14 +115,14 @@ static BluetoothManager *sharedBluetoothManager = nil;
 
 - (void)notifyPeripheralConnected
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:kBluetoothNotificationStoreConnected
+	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationBluetoothStoreConnected
 														object:self
 													  userInfo:nil];
 }
 
 - (void)notifyPeripheralDisconnected
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:kBluetoothNotificationStoreDisconnected
+	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationBluetoothStoreDisconnected
 														object:self
 													  userInfo:nil];
 }
@@ -119,7 +131,7 @@ static BluetoothManager *sharedBluetoothManager = nil;
 {
 	_state = central.state;
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:kBluetoothNotificationStateChange
+	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationBluetoothStateChange
 														object:self
 													  userInfo:nil];
 	
@@ -208,11 +220,8 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
 				 error:(NSError *)error
 {
 	NSLog(@"Failed to connect to %@. (%@)", peripheral, error.localizedDescription);
-	//[self cleanup];
+	[self handleError];
 }
-
-
-
 
 
 // ========================================================
@@ -223,12 +232,13 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
 {
 	if (error) {
         NSLog(@"Error discovering services: %@", error.localizedDescription);
-        //[self cleanup];
+        [self handleError];
         return;
     }
 	
 	for (CBService *service in peripheral.services) {
-        [peripheral discoverCharacteristics:@[_UUIDcharacteristicStoreName,
+        [peripheral discoverCharacteristics:@[_UUIDcharacteristicStoreId,
+											  _UUIDcharacteristicStoreName,
 											  _UUIDcharacteristicCustomerName,
 											  _UUIDcharacteristicPunch]
 								 forService:service];
@@ -241,13 +251,17 @@ didDiscoverCharacteristicsForService:(CBService *)service
 {
 	if (error) {
         NSLog(@"Error discovering characteristics: %@", error.localizedDescription);
-        //[self cleanup];
+        [self handleError];
         return;
     }
 	
 	for (CBCharacteristic *characteristic in service.characteristics)
 	{
-        if ([characteristic.UUID isEqual:_UUIDcharacteristicStoreName])
+		if ([characteristic.UUID isEqual:_UUIDcharacteristicStoreId])
+		{
+			[peripheral readValueForCharacteristic:characteristic];
+        }
+        else if ([characteristic.UUID isEqual:_UUIDcharacteristicStoreName])
 		{
 			[peripheral readValueForCharacteristic:characteristic];
         }
@@ -274,23 +288,22 @@ didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
 {
 	if (error) {
         NSLog(@"Error reading characteristic: %@", error.localizedDescription);
+		[self handleError];
         return;
     }
 	
-	if([characteristic.UUID isEqual:_UUIDcharacteristicStoreName])
+	if([characteristic.UUID isEqual:_UUIDcharacteristicStoreId])
 	{
-		NSLog(@"Read store name characteristic");
-		_storeNameRead = YES;
 		
-		NSString *storeName = [[NSString alloc] initWithData:characteristic.value
-													encoding:NSUTF8StringEncoding];
-		
-		NSDictionary *dataDict = [NSDictionary dictionaryWithObject:storeName
-															 forKey:@"store_name"];
-		
-		[[NSNotificationCenter defaultCenter] postNotificationName:kBluetoothNotificationStoreDiscovered
-															object:self
-														  userInfo:dataDict];
+		_storeId = [[NSString alloc] initWithData:characteristic.value encoding:NSUTF8StringEncoding];
+		NSLog(@"Read store ID characteristic: %@", _storeId);
+		[_operationQueue addOperation:_operationReadStoreId];
+	}
+	else if([characteristic.UUID isEqual:_UUIDcharacteristicStoreName])
+	{
+		_storeName = [[NSString alloc] initWithData:characteristic.value encoding:NSUTF8StringEncoding];
+		NSLog(@"Read store name characteristic: %@", _storeName);
+		[_operationQueue addOperation:_operationReadStoreName];
 	}
 	else if([characteristic.UUID isEqual:_UUIDcharacteristicPunch])
 	{
@@ -302,9 +315,9 @@ didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
 		NSLog(@"4 byte value: %i", value);
 		NSLog(@"4 byte value (reverse endian): %i", reverseEndianValue);
 		NSDictionary *dataDict = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:reverseEndianValue]
-															 forKey:@"punches"];
+															 forKey:kNotificationBluetoothPunches];
 		
-		[[NSNotificationCenter defaultCenter] postNotificationName:kBluetoothNotificationReceivedPunch
+		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationBluetoothReceivedPunch
 															object:self
 														  userInfo:dataDict];
 		
@@ -319,11 +332,10 @@ didWriteValueForCharacteristic:(CBCharacteristic *)characteristic
 {
 	if (error) {
         NSLog(@"Error writing characteristic: %@", error.localizedDescription);
+		[self handleError];
 		return;
     }
 	NSLog(@"Wrote customer name characteristic");
-	
-	_customerNameSent = YES;
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral
@@ -332,14 +344,13 @@ didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic
 {
 	if (error) {
         NSLog(@"Error changing notification state: %@", error.localizedDescription);
+		[self handleError];
 		return;
     }
 	
 	NSLog(@"Set notify for punch characteristic");
-	
-	_punchCountSubscribed = YES;
-	
-	[self notifyPeripheralConnected];
+	[_timer invalidate];
+	[_operationQueue addOperation:_operationSubscribePunch];
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didModifyServices:(NSArray *)invalidatedServices
@@ -356,6 +367,65 @@ didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic
 	 have been added to the peripheral’s database or to find out whether any of the invalidated services that you were 
 	 using (and want to continue using) have been added back to a different location in the peripheral’s database.
 	 */
+}
+
+- (void)scanningTimeout
+{
+	[_centralManager stopScan];
+	[self cleanup];
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationBluetoothScanTimeout
+														object:self
+													  userInfo:nil];
+}
+
+- (void)handleError
+{
+	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationBluetoothError
+														object:self
+													  userInfo:nil];
+	
+	[self cleanup];
+}
+
+- (void)cleanup
+{
+	[_timer invalidate];
+	
+	_connectedPeripheral = nil;
+	_wrongPeripherals = nil;
+	
+	_operationQueue = nil;
+	_operationReadStoreId = nil;
+	_operationReadStoreName = nil;
+	_operationSubscribePunch = nil;
+}
+
+- (void)initOperations
+{
+	_operationQueue = [[NSOperationQueue alloc] init];
+	
+	NSOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			
+			NSDictionary *dataDict = @{kNotificationBluetoothStoreId	: _storeId,
+									   kNotificationBluetoothStoreName	: _storeName};
+			
+			[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationBluetoothStoreConnected
+																object:self
+															  userInfo:dataDict];
+		}];
+	}];
+	
+	_operationReadStoreId = [NSBlockOperation blockOperationWithBlock:^{}];
+	_operationReadStoreName = [NSBlockOperation blockOperationWithBlock:^{}];
+	_operationSubscribePunch = [NSBlockOperation blockOperationWithBlock:^{}];
+	
+	[operation addDependency:_operationReadStoreId];
+	[operation addDependency:_operationReadStoreName];
+	[operation addDependency:_operationSubscribePunch];
+	
+	[_operationQueue addOperation:operation];
 }
 
 @end

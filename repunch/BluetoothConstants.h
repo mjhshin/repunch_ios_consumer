@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 FOUNDATION_EXPORT NSString *const kUUIDServiceStore;
+FOUNDATION_EXPORT NSString *const kUUIDCharacteristicStoreId;
 FOUNDATION_EXPORT NSString *const kUUIDCharacteristicStoreName;
 FOUNDATION_EXPORT NSString *const kUUIDCharacteristicCustomerName;
 FOUNDATION_EXPORT NSString *const kUUIDCharacteristicPunch;

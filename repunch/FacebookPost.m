@@ -69,7 +69,7 @@
 			
 			if(accept) {
 				[patronStore incrementKey:@"punch_count" byAmount:[NSNumber numberWithInteger:punches]];
-				[[NSNotificationCenter defaultCenter] postNotificationName:@"FacebookPost" object:self];
+				[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationFacebookPost object:self];
 				
 				[RepunchUtils showDialogWithTitle:@"Successfully posted to Facebook" withMessage:nil];
 			}

@@ -90,22 +90,22 @@
 {
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(receiveRefreshNotification:)
-												 name:@"AddOrRemoveStore"
+												 name:kNotificationAddOrRemoveStore
 											   object:nil];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(receiveRefreshNotification:)
-												 name:@"Punch"
+												 name:kNotificationPunch
 											   object:nil];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(refreshTableView)
-												 name:@"Redeem"
+												 name:kNotificationRedeem
 											   object:nil];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(refreshTableView)
-												 name:@"FacebookPost"
+												 name:kNotificationFacebookPost
 											   object:nil];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
@@ -317,7 +317,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 105;
+    return 96;
 }
 
 - (void)downloadImage:(PFFile *)imageFile forIndexPath:(NSIndexPath *)indexPath withStoreId:(NSString *)storeId

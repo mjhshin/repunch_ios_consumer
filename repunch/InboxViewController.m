@@ -87,7 +87,7 @@
 {
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(addMessageFromPush:)
-												 name:@"Message"
+												 name:kNotificationMessage
 											   object:nil];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
@@ -526,8 +526,8 @@
 		alertBadgeCount = 0;
 	}
 	
-	UITabBarItem *tab = [self.tabBarController.tabBar.items objectAtIndex:2];
-	tab.badgeValue = (alertBadgeCount == 0) ? nil : [NSString stringWithFormat:@"%d", alertBadgeCount];
+	//UITabBarItem *tab = self.tabBarController.tabBar.items[self.tabBarController.viewControllers.count-1];
+	//tab.badgeValue = (alertBadgeCount == 0) ? nil : [NSString stringWithFormat:@"%d", alertBadgeCount];
 	[UIApplication sharedApplication].applicationIconBadgeNumber = alertBadgeCount;
 	
 	RPInstallation *installation = [RPInstallation currentInstallation];

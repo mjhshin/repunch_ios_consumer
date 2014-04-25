@@ -34,7 +34,7 @@ withFetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 			[dataManager updatePatronStore:storeId withPunches:totalPunches];
 		}
 		
-		[[NSNotificationCenter defaultCenter] postNotificationName:@"Redeem" object:self];
+		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRedeem object:self];
 
 		if( [PFFacebookUtils isLinkedWithUser:[RPUser currentUser]] &&  store.punches_facebook > 0)
 		{

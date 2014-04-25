@@ -51,17 +51,17 @@
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(checkPatronStore)
-												 name:@"Punch"
+												 name:kNotificationPunch
 											   object:nil];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(checkPatronStore)
-												 name:@"Redeem"
+												 name:kNotificationRedeem
 											   object:nil];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(checkPatronStore)
-												 name:@"FacebookPost"
+												 name:kNotificationFacebookPost
 											   object:nil];
     
 	dataManager = [DataManager getSharedInstance];
@@ -664,7 +664,9 @@
 			[self checkPatronStore];
 			
 			NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:weakSelf.storeId, @"store_id", nil];
-			[[NSNotificationCenter defaultCenter] postNotificationName:@"AddOrRemoveStore" object:weakSelf userInfo:args];
+			[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationAddOrRemoveStore
+																object:weakSelf
+															  userInfo:args];
 		}
 		else {
 			NSLog(@"add_patronStore error: %@", error);
@@ -719,7 +721,9 @@
 			 [weakSelf.tableView reloadData];
          
 			 NSDictionary *args = [[NSDictionary alloc] initWithObjectsAndKeys:weakSelf.storeId, @"store_id", nil];
-			 [[NSNotificationCenter defaultCenter] postNotificationName:@"AddOrRemoveStore" object:weakSelf userInfo:args];
+			 [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationAddOrRemoveStore
+																 object:weakSelf
+															   userInfo:args];
 		 }
 		 else {
 			 NSLog(@"delete_patronStore error: %@", error);
@@ -758,7 +762,9 @@
 				 [self setupTableViewHeader];
 				 [self checkPatronStore];
 				 
-				 [[NSNotificationCenter defaultCenter] postNotificationName:@"AddOrRemoveStore" object:self userInfo:nil];
+				 [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationAddOrRemoveStore
+																	 object:self
+																   userInfo:nil];
 			 }
 			 else {
 				 NSLog(@"error fetching PatronStore: %@", error);
@@ -852,7 +858,7 @@
                             [dataManager updatePatronStore:self.storeId withPunches:newPunchCount];
 
                             [RepunchUtils showDialogWithTitle:@"Your gift has been sent!" withMessage:nil];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"Punch" object:self];
+                            [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationPunch object:self];
                         }
                     }
                     else {

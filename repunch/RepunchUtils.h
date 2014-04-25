@@ -22,6 +22,7 @@
 + (void)setupNavigationController:(UINavigationController *)navController;
 
 + (UIColor *)repunchOrangeColor;
++ (UIColor *)repunchOrangeColorWithAlpha:(CGFloat)alpha;
 + (UIColor *)lightRepunchOrangeColor;
 + (UIColor *)darkRepunchOrangeColor;
 + (UIColor *)repunchOrangeHighlightedColor;

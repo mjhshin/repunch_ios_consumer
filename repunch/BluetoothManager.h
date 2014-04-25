@@ -8,12 +8,6 @@
 
 #import <CoreBluetooth/CoreBluetooth.h>
 
-#define kBluetoothNotificationStateChange @"NotificationStateChange"
-#define kBluetoothNotificationReceivedPunch @"NotificationPunch"
-#define kBluetoothNotificationStoreDiscovered @"NotificationStoreDiscovered"
-#define kBluetoothNotificationStoreConnected @"NotificationStoreConnected"
-#define kBluetoothNotificationStoreDisconnected @"NotificationStoreDisconnected"
-
 @interface BluetoothManager : NSObject
 
 @property (assign, nonatomic) CBCentralManagerState state;

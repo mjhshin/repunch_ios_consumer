@@ -6,7 +6,6 @@
 //
 
 #import "LandingViewController.h"
-#import "RPTabBarController.h"
 #import "RPNavigationController.h"
 #import "PunchHandler.h"
 #import "RedeemHandler.h"

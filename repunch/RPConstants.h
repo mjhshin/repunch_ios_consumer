@@ -15,6 +15,28 @@
 
 #define BLOCK_SAFE_RUN(block, ...) block ? block(__VA_ARGS__) : nil
 
+// Notifications
+
+#define kNotificationBluetoothStateChange			@"NotificationBluetoothStateChange"
+#define kNotificationBluetoothReceivedPunch			@"NotificationBluetoothPunch"
+#define kNotificationBluetoothStoreDiscovered		@"NotificationBluetoothStoreDiscovered"
+#define kNotificationBluetoothStoreConnected		@"NotificationBluetoothStoreConnected"
+#define kNotificationBluetoothStoreDisconnected		@"NotificationBluetoothStoreDisconnected"
+#define kNotificationBluetoothScanTimeout			@"NotificationBluetoothScanTimeout"
+#define kNotificationBluetoothError					@"NotificationBluetoothError"
+#define kNotificationBluetoothStoreName				@"NotificationBluetoothStoreName"
+#define kNotificationBluetoothStoreId				@"NotificationBluetoothStoreId"
+#define kNotificationBluetoothPunches				@"NotificationBluetoothPunches"
+
+#define kNotificationPunch							@"NotificationPunch"
+#define kNotificationRedeem							@"NotificationRedeem"
+#define kNotificationAddOrRemoveStore				@"NotificationAddOrRemoveStore"
+#define kNotificationMessage						@"NotificationMessage"
+#define kNotificationFacebookPost					@"NotificationFacebookPost"
+
+// Bluetooth settings
+#define kBluetoothScanTimeoutInterval 4.0f
+
 typedef void(^AuthenticationManagerHandler)(NSInteger errorCode);
 
 typedef void(^MyPlacesFetchHandler)(NSArray *results, NSError *error);
