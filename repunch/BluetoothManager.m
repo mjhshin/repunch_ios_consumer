@@ -19,11 +19,9 @@
 @property (strong, nonatomic) CBUUID *UUIDserviceStore;
 @property (strong, nonatomic) CBUUID *UUIDcharacteristicStoreId;
 @property (strong, nonatomic) CBUUID *UUIDcharacteristicStoreName;
-@property (strong, nonatomic) CBUUID *UUIDcharacteristicCustomerName;
+@property (strong, nonatomic) CBUUID *UUIDcharacteristicPatronId;
+@property (strong, nonatomic) CBUUID *UUIDcharacteristicPatronName;
 @property (strong, nonatomic) CBUUID *UUIDcharacteristicPunch;
-
-@property (strong, nonatomic) CBCharacteristic *characteristicCustomerName;
-@property (strong, nonatomic) CBCharacteristic *characteristicPunch;
 
 @property (strong, nonatomic) NSMutableArray *wrongPeripherals;
 
@@ -63,7 +61,8 @@ static BluetoothManager *sharedBluetoothManager = nil;
 		_UUIDserviceStore = [CBUUID UUIDWithString:kUUIDServiceStore];
 		_UUIDcharacteristicStoreId = [CBUUID UUIDWithString:kUUIDCharacteristicStoreId];
 		_UUIDcharacteristicStoreName = [CBUUID UUIDWithString:kUUIDCharacteristicStoreName];
-		_UUIDcharacteristicCustomerName = [CBUUID UUIDWithString:kUUIDCharacteristicCustomerName];
+		_UUIDcharacteristicPatronId = [CBUUID UUIDWithString:kUUIDCharacteristicPatronId];
+		_UUIDcharacteristicPatronName = [CBUUID UUIDWithString:kUUIDCharacteristicPatronName];
 		_UUIDcharacteristicPunch = [CBUUID UUIDWithString:kUUIDCharacteristicPunch];
 		
 		_wrongPeripherals = [NSMutableArray array];
@@ -91,18 +90,27 @@ static BluetoothManager *sharedBluetoothManager = nil;
 	[self initOperations];
 }
 
-- (void)sendWriteRquestForName
+- (void)writePatronNameCharacteristic:(CBCharacteristic *)characteristic
 {
 	RPPatron *patron = [[DataManager getSharedInstance] patron];
 	NSData* data = [patron.full_name dataUsingEncoding:NSUTF8StringEncoding];
 	[_connectedPeripheral writeValue:data
-				   forCharacteristic:_characteristicCustomerName
+				   forCharacteristic:characteristic
 								type:CBCharacteristicWriteWithResponse];
 }
 
-- (void)subscribeForPunches
+- (void)writePatronIdCharacteristic:(CBCharacteristic *)characteristic
 {
-	[_connectedPeripheral setNotifyValue:YES forCharacteristic:_characteristicPunch];
+	RPPatron *patron = [[DataManager getSharedInstance] patron];
+	NSData* data = [patron.objectId dataUsingEncoding:NSUTF8StringEncoding];
+	[_connectedPeripheral writeValue:data
+				   forCharacteristic:characteristic
+								type:CBCharacteristicWriteWithResponse];
+}
+
+- (void)subscribeToPunchesCharacteristic:(CBCharacteristic *)characteristic
+{
+	[_connectedPeripheral setNotifyValue:YES forCharacteristic:characteristic];
 }
 
 - (void)cancelRequest
@@ -237,11 +245,14 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     }
 	
 	for (CBService *service in peripheral.services) {
-        [peripheral discoverCharacteristics:@[_UUIDcharacteristicStoreId,
-											  _UUIDcharacteristicStoreName,
-											  _UUIDcharacteristicCustomerName,
-											  _UUIDcharacteristicPunch]
-								 forService:service];
+		if([service.UUID isEqual:_UUIDserviceStore]) {
+			[peripheral discoverCharacteristics:@[_UUIDcharacteristicStoreId,
+												  _UUIDcharacteristicStoreName,
+												  _UUIDcharacteristicPatronId,
+												  _UUIDcharacteristicPatronName,
+												  _UUIDcharacteristicPunch]
+									 forService:service];
+		}
     }
 }
 
@@ -255,25 +266,33 @@ didDiscoverCharacteristicsForService:(CBService *)service
         return;
     }
 	
+	NSLog(@"Discovered characteristics");
 	for (CBCharacteristic *characteristic in service.characteristics)
 	{
 		if ([characteristic.UUID isEqual:_UUIDcharacteristicStoreId])
 		{
+			NSLog(@"Discovered store id");
 			[peripheral readValueForCharacteristic:characteristic];
         }
         else if ([characteristic.UUID isEqual:_UUIDcharacteristicStoreName])
 		{
+			NSLog(@"Discovered store name");
 			[peripheral readValueForCharacteristic:characteristic];
         }
-		else if([characteristic.UUID isEqual:_UUIDcharacteristicCustomerName])
+		else if([characteristic.UUID isEqual:_UUIDcharacteristicPatronId])
 		{
-			_characteristicCustomerName = characteristic;
-			[self sendWriteRquestForName];
+			NSLog(@"Discovered patron id");
+			[self writePatronIdCharacteristic:characteristic];
+		}
+		else if([characteristic.UUID isEqual:_UUIDcharacteristicPatronName])
+		{
+			NSLog(@"Discovered patron name");
+			[self writePatronNameCharacteristic:characteristic];
 		}
 		else if([characteristic.UUID isEqual:_UUIDcharacteristicPunch])
 		{
-			_characteristicPunch = characteristic;
-			[self subscribeForPunches];
+			NSLog(@"Discovered punch");
+			[self subscribeToPunchesCharacteristic:characteristic];
 		}
 		else
 		{
@@ -286,15 +305,15 @@ didDiscoverCharacteristicsForService:(CBService *)service
 didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
 			 error:(NSError *)error
 {
+	NSLog(@"Characteristic UUID: %@", characteristic.UUID.UUIDString);
 	if (error) {
         NSLog(@"Error reading characteristic: %@", error.localizedDescription);
-		[self handleError];
+		//[self handleError];
         return;
     }
 	
 	if([characteristic.UUID isEqual:_UUIDcharacteristicStoreId])
 	{
-		
 		_storeId = [[NSString alloc] initWithData:characteristic.value encoding:NSUTF8StringEncoding];
 		NSLog(@"Read store ID characteristic: %@", _storeId);
 		[_operationQueue addOperation:_operationReadStoreId];
@@ -309,10 +328,10 @@ didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
 	{
 		NSLog(@"Read punch characteristic");
 		
-		NSData *data = [characteristic.value subdataWithRange:NSMakeRange(0, 4)];
-		int value = CFSwapInt32BigToHost(*(int *)([data bytes]));
+		NSData *data = [characteristic.value subdataWithRange:NSMakeRange(0, 4)]; //need to handle different range
+		//int value = CFSwapInt32BigToHost(*(int *)([data bytes]));
+		//NSLog(@"4 byte value: %i", value);
 		int reverseEndianValue = *(int *)([data bytes]);
-		NSLog(@"4 byte value: %i", value);
 		NSLog(@"4 byte value (reverse endian): %i", reverseEndianValue);
 		NSDictionary *dataDict = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:reverseEndianValue]
 															 forKey:kNotificationBluetoothPunches];
@@ -332,10 +351,10 @@ didWriteValueForCharacteristic:(CBCharacteristic *)characteristic
 {
 	if (error) {
         NSLog(@"Error writing characteristic: %@", error.localizedDescription);
-		[self handleError];
+		//[self handleError];
 		return;
     }
-	NSLog(@"Wrote customer name characteristic");
+	NSLog(@"Wrote characteristic");
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral
@@ -355,6 +374,7 @@ didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic
 
 - (void)peripheral:(CBPeripheral *)peripheral didModifyServices:(NSArray *)invalidatedServices
 {
+	NSLog(@"Peripheral didModifyServices");
 	/*
 	 Invoked when a peripheral’s services have changed.
 	 
