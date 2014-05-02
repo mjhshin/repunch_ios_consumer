@@ -25,8 +25,8 @@
 
 @property (strong, nonatomic) NSString *storeName;
 @property (strong, nonatomic) NSString *storeId;
-@property (assign, nonatomic) NSUInteger punchesReceived;
-@property (assign, nonatomic) NSUInteger oldPunchCount;
+@property (assign, nonatomic) NSInteger punchesReceived;
+@property (assign, nonatomic) NSInteger oldPunchCount;
 
 @property (strong, nonatomic) RPPatronStore *patronStore;
 
@@ -152,6 +152,7 @@
 	}
 	else if(_bluetoothManager.state == CBCentralManagerStatePoweredOff) {
 		//prompt to turn on
+		[self bluetoothOff];
 	}
 	else if(_bluetoothManager.state == CBCentralManagerStateUnauthorized) {
 		//prompt to authorize
@@ -181,9 +182,16 @@
 
 - (void)receivedPunch:(NSNotification *)notification
 {
+	_punchRequested = NO;
 	_punchesReceived = [notification.userInfo[kNotificationBluetoothPunches] integerValue];
 	
-	[self getPatronStore];
+	if(_punchesReceived < 0) { //"-1" is sent went punch rejected
+		[self cancelPunchRequest];
+		[self punchRejected];
+	}
+	else {
+		[self getPatronStore];
+	}
 }
 
 - (void)storeConnected:(NSNotification *)notification
@@ -212,32 +220,49 @@
 - (void)storeDisconnected
 {
 	NSLog(@"Store disconnected");
-	_punchRequested = NO;
-	//disconnects on punch complete. Is this needed?
-	//[self bluetoothError];
+	
+	if(_punchRequested) {
+		[self cancelPunchRequest];
+		[self bluetoothError];
+	}
 }
 
 - (void)storeNotFound
 {
 	NSLog(@"Store not found");
 	_statusLabel.text = @"Sorry, we couldn't find \n any stores nearby.";
-	_statusImageView.image = [UIImage imageNamed:@"bluetooth_not_found"];
+	_statusImageView.image = [UIImage imageNamed:@"BluetoothTimeout"];
 	
-	_radarView.hidden = YES;
-	_statusLabel.hidden = NO;
-	_statusImageView.hidden = NO;
-	_storeNameLabel.hidden = YES;
-	_explanationLabel.hidden = YES;
-	_wrongStoreButton.hidden = YES;
+	[self setViewsForError];
+}
+
+- (void)punchRejected
+{
+	NSLog(@"Punch rejected");
+	_statusLabel.text = @"The store said no.";
+	_statusImageView.image = [UIImage imageNamed:@"BluetoothDisconnected"];
 	
-	[_radarView stopAnimation];
+	[self setViewsForError];
 }
 
 - (void)bluetoothError
 {
 	_statusLabel.text = @"Sorry, something went wrong.";
-	_statusImageView.image = [UIImage imageNamed:@"bluetooth_error"];
+	_statusImageView.image = [UIImage imageNamed:@"BluetoothError"];
 	
+	[self setViewsForError];
+}
+
+- (void)bluetoothOff
+{
+	_statusLabel.text = @"Please enable Bluetooth \n to use this feature.";
+	_statusImageView.image = [UIImage imageNamed:@"BluetoothOff"];
+	
+	[self setViewsForError];
+}
+
+- (void)setViewsForError
+{
 	_radarView.hidden = YES;
 	_statusLabel.hidden = NO;
 	_statusImageView.hidden = NO;
@@ -314,7 +339,7 @@
 	_punchReceivedLabel.text = (_punchesReceived == 1) ? @"You received 1 punch!" :
 									[NSString stringWithFormat:@"You received %i punches!", _punchesReceived];
 	_punchCountLabel.format = @"%d";
-	_punchCountLabel.method = UILabelCountingMethodLinear;
+	_punchCountLabel.method = UILabelCountingMethodEaseIn;
 	_punchCountLabel.text = [NSString stringWithFormat:@"%i", _oldPunchCount];
 	
 	[UIView animateWithDuration:kAnimateSlideDuration
