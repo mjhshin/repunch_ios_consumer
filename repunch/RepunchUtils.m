@@ -9,6 +9,7 @@
 #import "RepunchUtils.h"
 #import "Reachability.h"
 #import "RPCustomAlertController.h"
+#import "UIImage+ImageEffects.h"
 
 @implementation RepunchUtils
 
@@ -215,6 +216,21 @@
 	UIGraphicsEndImageContext();
 	
     return newImage;
+}
+
++ (UIImageView *)blurredImageFromView:(UIView *)view
+{
+	UIGraphicsBeginImageContext(view.bounds.size);
+    [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
+    UIImage *backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+	
+	backgroundImage = [backgroundImage applyDarkEffect];
+	
+	UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:view.frame];
+	backgroundImageView.image = backgroundImage;
+	
+	return backgroundImageView;
 }
 
 + (void)callPhoneNumber:(NSString *)phoneNumber

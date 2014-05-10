@@ -85,7 +85,7 @@
 		EE16537218D8AF1A006E2CE5 /* button_popup_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = EE16537018D8AF1A006E2CE5 /* button_popup_grey.png */; };
 		EE16537718D8BBFA006E2CE5 /* annotation_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EE16537518D8BBFA006E2CE5 /* annotation_icon.png */; };
 		EE16537818D8BBFA006E2CE5 /* annotation_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE16537618D8BBFA006E2CE5 /* annotation_icon@2x.png */; };
-		EE1654B618F60654006E2CE5 /* BluetoothManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE1654B518F60654006E2CE5 /* BluetoothManager.m */; };
+		EE1654B618F60654006E2CE5 /* BluetoothPunchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE1654B518F60654006E2CE5 /* BluetoothPunchManager.m */; };
 		EE1654B918F60665006E2CE5 /* BluetoothConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = EE1654B818F60665006E2CE5 /* BluetoothConstants.m */; };
 		EE1654BE18F60680006E2CE5 /* PunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE1654BC18F60680006E2CE5 /* PunchViewController.m */; };
 		EE1654BF18F60680006E2CE5 /* PunchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE1654BD18F60680006E2CE5 /* PunchViewController.xib */; };
@@ -209,6 +209,9 @@
 		EEA181B717CC499C00553336 /* RepunchUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA181B617CC499B00553336 /* RepunchUtils.m */; };
 		EEA181C217CD20D300553336 /* map_button_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = EEA181BC17CD20D300553336 /* map_button_highlighted.png */; };
 		EEA181C317CD20D300553336 /* map_button_highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEA181BD17CD20D300553336 /* map_button_highlighted@2x.png */; };
+		EEA5116B1917F5430097E4ED /* RedeemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA511691917F5430097E4ED /* RedeemViewController.m */; };
+		EEA5116C1917F5430097E4ED /* RedeemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEA5116A1917F5430097E4ED /* RedeemViewController.xib */; };
+		EEA511701917F6660097E4ED /* BluetoothRedeemManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA5116F1917F6660097E4ED /* BluetoothRedeemManager.m */; };
 		EEB0E31E18FC9358005B75E1 /* UICountingLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB0E31D18FC9358005B75E1 /* UICountingLabel.m */; };
 		EEB75A8D186E187700AA4F89 /* nav_forward.png in Resources */ = {isa = PBXBuildFile; fileRef = EEB75A8B186E187700AA4F89 /* nav_forward.png */; };
 		EEB75A8E186E187700AA4F89 /* nav_forward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEB75A8C186E187700AA4F89 /* nav_forward@2x.png */; };
@@ -342,8 +345,8 @@
 		EE16537318D8B9C5006E2CE5 /* annotation_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "annotation_icon@2x.png"; sourceTree = "<group>"; };
 		EE16537518D8BBFA006E2CE5 /* annotation_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = annotation_icon.png; sourceTree = "<group>"; };
 		EE16537618D8BBFA006E2CE5 /* annotation_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "annotation_icon@2x.png"; sourceTree = "<group>"; };
-		EE1654B418F60654006E2CE5 /* BluetoothManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothManager.h; sourceTree = "<group>"; };
-		EE1654B518F60654006E2CE5 /* BluetoothManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BluetoothManager.m; sourceTree = "<group>"; };
+		EE1654B418F60654006E2CE5 /* BluetoothPunchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothPunchManager.h; sourceTree = "<group>"; };
+		EE1654B518F60654006E2CE5 /* BluetoothPunchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BluetoothPunchManager.m; sourceTree = "<group>"; };
 		EE1654B718F60665006E2CE5 /* BluetoothConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothConstants.h; sourceTree = "<group>"; };
 		EE1654B818F60665006E2CE5 /* BluetoothConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BluetoothConstants.m; sourceTree = "<group>"; };
 		EE1654BB18F60680006E2CE5 /* PunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PunchViewController.h; sourceTree = "<group>"; };
@@ -505,6 +508,11 @@
 		EEA181B617CC499B00553336 /* RepunchUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepunchUtils.m; sourceTree = "<group>"; };
 		EEA181BC17CD20D300553336 /* map_button_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_button_highlighted.png; sourceTree = "<group>"; };
 		EEA181BD17CD20D300553336 /* map_button_highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_button_highlighted@2x.png"; sourceTree = "<group>"; };
+		EEA511681917F5430097E4ED /* RedeemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RedeemViewController.h; path = repunch/RedeemViewController.h; sourceTree = SOURCE_ROOT; };
+		EEA511691917F5430097E4ED /* RedeemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RedeemViewController.m; path = repunch/RedeemViewController.m; sourceTree = SOURCE_ROOT; };
+		EEA5116A1917F5430097E4ED /* RedeemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RedeemViewController.xib; path = repunch/RedeemViewController.xib; sourceTree = SOURCE_ROOT; };
+		EEA5116E1917F6660097E4ED /* BluetoothRedeemManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BluetoothRedeemManager.h; path = repunch/BluetoothRedeemManager.h; sourceTree = SOURCE_ROOT; };
+		EEA5116F1917F6660097E4ED /* BluetoothRedeemManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BluetoothRedeemManager.m; path = repunch/BluetoothRedeemManager.m; sourceTree = SOURCE_ROOT; };
 		EEB0E31C18FC9358005B75E1 /* UICountingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICountingLabel.h; sourceTree = "<group>"; };
 		EEB0E31D18FC9358005B75E1 /* UICountingLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICountingLabel.m; sourceTree = "<group>"; };
 		EEB75A8B186E187700AA4F89 /* nav_forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_forward.png; sourceTree = "<group>"; };
@@ -675,6 +683,7 @@
 		EE04ABCF181AF26800DDA5D0 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				EEA5116D1917F5610097E4ED /* Redeem */,
 				EE1654BA18F60678006E2CE5 /* Punch */,
 				EE8D702F18BBB15A00ADE0DB /* Inbox */,
 				EE8D702E18BBB14400ADE0DB /* FacebookFriends */,
@@ -1029,6 +1038,16 @@
 			path = Assets;
 			sourceTree = "<group>";
 		};
+		EEA5116D1917F5610097E4ED /* Redeem */ = {
+			isa = PBXGroup;
+			children = (
+				EEA511681917F5430097E4ED /* RedeemViewController.h */,
+				EEA511691917F5430097E4ED /* RedeemViewController.m */,
+				EEA5116A1917F5430097E4ED /* RedeemViewController.xib */,
+			);
+			name = Redeem;
+			sourceTree = "<group>";
+		};
 		EEE4D2321899654C00A5EC25 /* Message */ = {
 			isa = PBXGroup;
 			children = (
@@ -1073,12 +1092,18 @@
 			children = (
 				EE5F947217FB5471006E6F67 /* AuthenticationManager.h */,
 				EE5F947317FB5471006E6F67 /* AuthenticationManager.m */,
+				EE1654B718F60665006E2CE5 /* BluetoothConstants.h */,
+				EE1654B818F60665006E2CE5 /* BluetoothConstants.m */,
+				EE1654B418F60654006E2CE5 /* BluetoothPunchManager.h */,
+				EE1654B518F60654006E2CE5 /* BluetoothPunchManager.m */,
+				EEA5116E1917F6660097E4ED /* BluetoothRedeemManager.h */,
+				EEA5116F1917F6660097E4ED /* BluetoothRedeemManager.m */,
 				EE28DADE17AC447E00E4C460 /* DataManager.h */,
 				EE28DADF17AC447E00E4C460 /* DataManager.m */,
+				EE6394C218C7E04100A9A474 /* LocationManager.h */,
+				EE6394C318C7E04100A9A474 /* LocationManager.m */,
 				202F1DF218523DC500495BDF /* NSDate+Additions.h */,
 				202F1DF318523DC500495BDF /* NSDate+Additions.m */,
-				EE1246431906EC66007D45DB /* UIImage+ImageEffects.h */,
-				EE1246441906EC66007D45DB /* UIImage+ImageEffects.m */,
 				EE04ABD6181EFAC100DDA5D0 /* ParseManager.h */,
 				EE04ABD7181EFAC100DDA5D0 /* ParseManager.m */,
 				EE04ABCC181AEC5D00DDA5D0 /* Reachability.h */,
@@ -1086,12 +1111,8 @@
 				EEA181B517CC499900553336 /* RepunchUtils.h */,
 				EEA181B617CC499B00553336 /* RepunchUtils.m */,
 				EE04ABD0181AF8C100DDA5D0 /* RPConstants.h */,
-				EE1654B418F60654006E2CE5 /* BluetoothManager.h */,
-				EE1654B518F60654006E2CE5 /* BluetoothManager.m */,
-				EE1654B718F60665006E2CE5 /* BluetoothConstants.h */,
-				EE1654B818F60665006E2CE5 /* BluetoothConstants.m */,
-				EE6394C218C7E04100A9A474 /* LocationManager.h */,
-				EE6394C318C7E04100A9A474 /* LocationManager.m */,
+				EE1246431906EC66007D45DB /* UIImage+ImageEffects.h */,
+				EE1246441906EC66007D45DB /* UIImage+ImageEffects.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1200,6 +1221,7 @@
 				EE93164918AC242A00ECEABF /* nav_add_store@2x.png in Resources */,
 				EE93164818AC242A00ECEABF /* nav_add_store.png in Resources */,
 				EE031C1D18B66C8A0027E79F /* redeem_gift_icon.png in Resources */,
+				EEA5116C1917F5430097E4ED /* RedeemViewController.xib in Resources */,
 				EE031C2518B66EDC0027E79F /* redeem_gift_icon_white.png in Resources */,
 				EEB75A8D186E187700AA4F89 /* nav_forward.png in Resources */,
 				EE93165418AC27D200ECEABF /* nav_delete.png in Resources */,
@@ -1357,6 +1379,7 @@
 				EE9D4C8017A83F4B005E0CC5 /* LandingViewController.m in Sources */,
 				EE9D4C8217A83F4B005E0CC5 /* IncomingMessageViewController.m in Sources */,
 				EE93162D18AA9A7100ECEABF /* RPTableView.m in Sources */,
+				EEA511701917F6660097E4ED /* BluetoothRedeemManager.m in Sources */,
 				EE9D4C8717A83F4B005E0CC5 /* StoreViewController.m in Sources */,
 				EE5F947417FB5471006E6F67 /* AuthenticationManager.m in Sources */,
 				EE9D4C8917A83F4B005E0CC5 /* SearchTableViewController.m in Sources */,
@@ -1369,7 +1392,7 @@
 				EE6394C418C7E04100A9A474 /* LocationManager.m in Sources */,
 				EEE4D26C18A30C9C00A5EC25 /* RPNavigationController.m in Sources */,
 				EE1246261905CF03007D45DB /* RPTabBarViewController.m in Sources */,
-				EE1654B618F60654006E2CE5 /* BluetoothManager.m in Sources */,
+				EE1654B618F60654006E2CE5 /* BluetoothPunchManager.m in Sources */,
 				EE0FBE6718CF819100087DEF /* RPPullToRefreshView.m in Sources */,
 				EE9D4C9617A83F4B005E0CC5 /* LoginViewController.m in Sources */,
 				EE9D4C9817A83F4B005E0CC5 /* RPAnnotation.m in Sources */,
@@ -1395,6 +1418,7 @@
 				EE12464E19071547007D45DB /* RPPunchButton.m in Sources */,
 				202F1DFB18523DC500495BDF /* RPStore.m in Sources */,
 				EEB75A9218722D0800AA4F89 /* LocationDetailsViewController.m in Sources */,
+				EEA5116B1917F5430097E4ED /* RedeemViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RedeemViewController">
+            <connections>
+                <outlet property="punchCountLabel" destination="x6r-Lw-WhF" id="dzJ-xA-GYS"/>
+                <outlet property="punchCountView" destination="kkt-gy-bf6" id="QID-ua-k78"/>
+                <outlet property="radarView" destination="03C-2P-8Bi" id="5y2-gg-p5r"/>
+                <outlet property="resultLabel" destination="fTB-DQ-nqC" id="332-Rb-Heu"/>
+                <outlet property="resultView" destination="qIV-oA-Clm" id="RFl-V6-H2l"/>
+                <outlet property="statusImageView" destination="M0V-Gq-vJW" id="QfJ-Sy-99N"/>
+                <outlet property="statusLabel" destination="Yqj-Fe-qcH" id="KAm-dy-LxA"/>
+                <outlet property="storeNameLabel" destination="30l-YP-mmt" id="1MK-Ip-62q"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Brooklyn Roasting Company" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="30l-YP-mmt" userLabel="StoreNameLabel">
+                    <rect key="frame" x="20" y="85" width="280" height="70"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="25"/>
+                    <color key="textColor" red="0.92549019610000005" green="0.54117647059999996" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <size key="shadowOffset" width="1" height="1"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="Yqj-Fe-qcH" userLabel="StatusLabel">
+                    <rect key="frame" x="20" y="375" width="280" height="51"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <string key="text">Requesting
+'The Repunch Cafe T-Shirt'</string>
+                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="18"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                    <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <size key="shadowOffset" width="1" height="1"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="03C-2P-8Bi" userLabel="RadarView" customClass="RPRadarView">
+                    <rect key="frame" x="85" y="195" width="150" height="150"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="150" id="aC4-UC-FJl"/>
+                        <constraint firstAttribute="height" constant="150" id="sxt-mS-NA9"/>
+                    </constraints>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bluetooth_not_found.png" translatesAutoresizingMaskIntoConstraints="NO" id="M0V-Gq-vJW" userLabel="StatusImageView">
+                    <rect key="frame" x="85" y="195" width="150" height="150"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="150" id="Fx9-O7-qi2"/>
+                        <constraint firstAttribute="height" constant="150" id="uLO-fu-6H6"/>
+                    </constraints>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qIV-oA-Clm" userLabel="ResultView">
+                    <rect key="frame" x="0.0" y="195" width="320" height="200"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <subviews>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="fTB-DQ-nqC" userLabel="RedeemLabel">
+                            <rect key="frame" x="20" y="0.0" width="280" height="52"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <string key="text">Redeemed
+'The Repunch Cafe T-Shirt'</string>
+                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="19"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kkt-gy-bf6" userLabel="PunchCountView">
+                            <rect key="frame" x="88" y="82" width="144" height="69"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="5000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x6r-Lw-WhF" userLabel="PunchCountLabel" customClass="UICountingLabel">
+                                    <rect key="frame" x="32" y="0.0" width="112" height="69"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="50"/>
+                                    <color key="textColor" red="0.92549019610000005" green="0.54117647059999996" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                    <size key="shadowOffset" width="1" height="1"/>
+                                </label>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star.png" translatesAutoresizingMaskIntoConstraints="NO" id="nfD-Mi-GGM" userLabel="PunchIcon">
+                                    <rect key="frame" x="0.0" y="22" width="24" height="24"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="24" id="Hyh-Gf-PCI"/>
+                                        <constraint firstAttribute="width" constant="24" id="lAb-y6-7bR"/>
+                                    </constraints>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="x6r-Lw-WhF" firstAttribute="centerY" secondItem="nfD-Mi-GGM" secondAttribute="centerY" id="EqS-Fi-NRi"/>
+                                <constraint firstAttribute="centerY" secondItem="x6r-Lw-WhF" secondAttribute="centerY" id="Gs7-bB-Own"/>
+                                <constraint firstItem="x6r-Lw-WhF" firstAttribute="leading" secondItem="nfD-Mi-GGM" secondAttribute="trailing" constant="8" id="brO-i2-XoI"/>
+                                <constraint firstItem="x6r-Lw-WhF" firstAttribute="top" secondItem="kkt-gy-bf6" secondAttribute="top" id="ktI-GF-Dvf"/>
+                                <constraint firstItem="nfD-Mi-GGM" firstAttribute="leading" secondItem="kkt-gy-bf6" secondAttribute="leading" id="sTE-z4-lSu"/>
+                                <constraint firstAttribute="trailing" secondItem="x6r-Lw-WhF" secondAttribute="trailing" id="u5a-Eo-aKw"/>
+                                <constraint firstAttribute="bottom" secondItem="x6r-Lw-WhF" secondAttribute="bottom" id="xwy-OF-KVx"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="fTB-DQ-nqC" secondAttribute="trailing" constant="20" id="7hB-br-lPq"/>
+                        <constraint firstItem="kkt-gy-bf6" firstAttribute="top" secondItem="fTB-DQ-nqC" secondAttribute="bottom" constant="30" id="D2L-FJ-DrY"/>
+                        <constraint firstAttribute="height" constant="200" id="SmE-M9-QAC"/>
+                        <constraint firstItem="fTB-DQ-nqC" firstAttribute="top" secondItem="qIV-oA-Clm" secondAttribute="top" id="kEn-VB-wHJ"/>
+                        <constraint firstItem="fTB-DQ-nqC" firstAttribute="leading" secondItem="qIV-oA-Clm" secondAttribute="leading" constant="20" id="lWi-pa-Hqu"/>
+                        <constraint firstAttribute="centerX" secondItem="kkt-gy-bf6" secondAttribute="centerX" id="ufz-ki-HzC"/>
+                    </constraints>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gpQ-WE-6P9" userLabel="ExitButton">
+                    <rect key="frame" x="120" y="518" width="80" height="50"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="VhF-AL-BM7"/>
+                        <constraint firstAttribute="width" constant="80" id="cev-h7-an9"/>
+                    </constraints>
+                    <state key="normal" image="tab_punch_exit.png" backgroundImage="new_orange_button.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="exitButtonAction:" destination="-1" eventType="touchUpInside" id="zX9-O4-DDR"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="30l-YP-mmt" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="85" id="1uQ-xI-Ids"/>
+                <constraint firstItem="30l-YP-mmt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" symbolic="YES" id="5eB-hr-4dU"/>
+                <constraint firstItem="M0V-Gq-vJW" firstAttribute="centerY" secondItem="03C-2P-8Bi" secondAttribute="centerY" id="HbD-cH-nZC"/>
+                <constraint firstItem="qIV-oA-Clm" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="NXe-BF-IgU"/>
+                <constraint firstAttribute="trailing" secondItem="qIV-oA-Clm" secondAttribute="trailing" id="O2P-SY-Za6"/>
+                <constraint firstAttribute="bottom" secondItem="gpQ-WE-6P9" secondAttribute="bottom" id="S88-yn-2PI"/>
+                <constraint firstAttribute="trailing" secondItem="Yqj-Fe-qcH" secondAttribute="trailing" constant="20" symbolic="YES" id="bm0-ig-ujD"/>
+                <constraint firstAttribute="trailing" secondItem="30l-YP-mmt" secondAttribute="trailing" constant="20" symbolic="YES" id="h0v-cq-oX1"/>
+                <constraint firstAttribute="centerX" secondItem="M0V-Gq-vJW" secondAttribute="centerX" id="icU-Jv-JBf"/>
+                <constraint firstItem="Yqj-Fe-qcH" firstAttribute="top" secondItem="M0V-Gq-vJW" secondAttribute="bottom" constant="30" id="jco-SE-JI5"/>
+                <constraint firstItem="Yqj-Fe-qcH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" symbolic="YES" id="r79-pY-nfx"/>
+                <constraint firstAttribute="centerX" secondItem="gpQ-WE-6P9" secondAttribute="centerX" id="wOD-hA-Ir5"/>
+                <constraint firstItem="qIV-oA-Clm" firstAttribute="top" secondItem="30l-YP-mmt" secondAttribute="bottom" constant="40" id="x3S-tX-RxS"/>
+                <constraint firstItem="M0V-Gq-vJW" firstAttribute="top" secondItem="30l-YP-mmt" secondAttribute="bottom" constant="40" id="ynH-Eu-HXi"/>
+                <constraint firstItem="M0V-Gq-vJW" firstAttribute="centerX" secondItem="03C-2P-8Bi" secondAttribute="centerX" id="zaz-4q-I4a"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="bluetooth_not_found.png" width="150" height="150"/>
+        <image name="new_orange_button.png" width="50" height="50"/>
+        <image name="star.png" width="32" height="32"/>
+        <image name="tab_punch_exit.png" width="24" height="24"/>
+    </resources>
+</document>

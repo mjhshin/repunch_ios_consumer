@@ -9,8 +9,9 @@
 #import "LocationsViewController.h"
 #import "LocationDetailsViewController.h"
 #import "RPStore.h"
-
+#import "RedeemViewController.h"
 #import "RPCustomAlertController.h"
+#import "UIImage+ImageEffects.h"
 
 @interface StoreViewController ()
 //@property (strong, nonatomic) RPReloadControl *reloadControl;
@@ -485,48 +486,13 @@
 
 - (void)redeemReward:(id)reward
 {
-	if( ![RepunchUtils isConnectionAvailable] ) {
-		[RepunchUtils showConnectionErrorDialog];
-		return;
-	}
+	RedeemViewController *redeemVC = [[RedeemViewController alloc] init];
+	redeemVC.storeId = self.storeId;
+	redeemVC.patronStoreId =  patronStore.objectId;
+	redeemVC.rewardId = [reward[@"reward_id"] intValue];
+	redeemVC.backgroundImageView = [RepunchUtils blurredImageFromView:self.view];
 	
-	NSInteger rewardPunches = [reward[@"punches"] integerValue];
-	NSInteger rewardId = [reward[@"reward_id"] integerValue];
-	NSString *rewardPunchesString = [NSString stringWithFormat:@"%d", rewardPunches];
-	NSString *rewardIdString = [NSString stringWithFormat:@"%d", rewardId];
-	NSString *rewardName = reward[@"reward_name"];
-	
-	NSDictionary *functionArguments = [NSDictionary dictionaryWithObjectsAndKeys:
-									   patron.objectId,			@"patron_id",
-									   store.objectId,			@"store_id",
-									   patronStore.objectId,	@"patron_store_id",
-									   rewardName,				@"title",
-									   rewardIdString,			@"reward_id",
-									   rewardPunchesString,		@"num_punches",
-									   patron.full_name,		@"name",
-									   nil];
-	
-	[PFCloud callFunctionInBackground:@"request_redeem"
-					   withParameters:functionArguments
-								block:^(NSString *success, NSError *error) {
-									
-									if (!error) {
-										if ([success isEqualToString:@"pending"]) {
-											NSLog(@"function call is: %@", success);
-											[RepunchUtils showDialogWithTitle:@"Pending"
-																  withMessage:@"You can only request one reward at a time. Please wait for your reward to be approved."];
-										}
-										else {
-											NSLog(@"function call is: %@", success);
-											[RepunchUtils showDialogWithTitle:@"Waiting for confirmation"
-																  withMessage:@"Please wait for your reward to be approved"];
-										}
-									}
-									else {
-										NSLog(@"error occurred: %@", error);
-										[RepunchUtils showConnectionErrorDialog];
-									}
-								}];
+	[self presentViewController:redeemVC animated:YES completion:nil];
 }
 
 - (IBAction)callButtonAction:(id)sender

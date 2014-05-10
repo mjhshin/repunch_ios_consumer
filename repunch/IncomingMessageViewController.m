@@ -10,6 +10,7 @@
 #import "GiftBorderView.h"
 #import "RPCustomAlertController.h"
 #import "RepunchUtils.h"
+#import "RedeemViewController.h"
 
 @implementation IncomingMessageViewController
 {
@@ -348,12 +349,31 @@
 
 - (IBAction)redeemButtonAction:(id)sender
 {
-	if( ![RepunchUtils isConnectionAvailable] ) {
-		[RepunchUtils showDefaultDropdownView:self.view];
+	if(timer == nil && message.type != RPMessageTypeGift) { //timer is nil when it expires.
 		return;
 	}
 	
-	if(timer == nil && message.type != RPMessageTypeGift) { //timer is nil when it expires.
+	if( [messageStatus.redeem_available isEqualToString:@"yes"] ) {
+		RedeemViewController *redeemVC = [[RedeemViewController alloc] init];
+		redeemVC.storeId = message.store_id;
+		redeemVC.messageStatusId = self.messageStatusId;
+		redeemVC.backgroundImageView = [RepunchUtils blurredImageFromView:self.view];
+		
+		[self presentViewController:redeemVC animated:YES completion:nil];
+	}
+	else if( [messageStatus.redeem_available isEqualToString:@"pending"] ) {
+		[RepunchUtils showDialogWithTitle:@"Offer pending"
+							  withMessage:@"You can only request this item once"];
+	}
+	else
+	{
+		[RepunchUtils showDialogWithTitle:@"Offer redeemed"
+							  withMessage:@"You have already redeemed this item"];
+	}
+	
+	/*
+	if( ![RepunchUtils isConnectionAvailable] ) {
+		[RepunchUtils showDefaultDropdownView:self.view];
 		return;
 	}
 	
@@ -408,6 +428,7 @@
 		[RepunchUtils showDialogWithTitle:@"Offer redeemed"
 							  withMessage:@"You have already redeemed this item"];
 	}
+	 */
 }
 
 - (IBAction)replyButtonAction:(id)sender
@@ -419,7 +440,9 @@
 
     // If alert button was close then it will close automatically, if not then send message then close, then execute code
 
-    [RPCustomAlertController showCreateGiftMessageAlertWithRecepient:message.sender_name rewardTitle:message.gift_title andBlock:^(RPCustomAlertController *alert ,RPCustomAlertActionButton buttonType, id anObject) {
+    [RPCustomAlertController showCreateGiftMessageAlertWithRecepient:message.sender_name
+														 rewardTitle:message.gift_title
+															andBlock:^(RPCustomAlertController *alert ,RPCustomAlertActionButton buttonType, id anObject) {
 
 
         alert.sendButton.hidden = YES;

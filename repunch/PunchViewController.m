@@ -7,7 +7,7 @@
 //
 
 #import "PunchViewController.h"
-#import "BluetoothManager.h"
+#import "BluetoothPunchManager.h"
 #import "RepunchUtils.h"
 #import "RPConstants.h"
 #import "DataManager.h"
@@ -20,7 +20,7 @@
 
 @interface PunchViewController ()
 
-@property (strong, nonatomic) BluetoothManager *bluetoothManager;
+@property (strong, nonatomic) BluetoothPunchManager *bluetoothManager;
 @property (assign, nonatomic) BOOL punchRequested;
 
 @property (strong, nonatomic) NSString *storeName;
@@ -47,22 +47,12 @@
 {
     [super viewDidLoad];
 	
-	_bluetoothManager = [BluetoothManager getSharedInstance];
+	_bluetoothManager = [BluetoothPunchManager getSharedInstance];
 	_punchRequested = NO;
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(checkBluetoothManagerState)
 												 name:kNotificationBluetoothStateChange
-											   object:nil];
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(discoveredStore:)
-												 name:kNotificationBluetoothStoreDiscovered
-											   object:nil];
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(receivedPunch:)
-												 name:kNotificationBluetoothReceivedPunch
 											   object:nil];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
@@ -73,6 +63,21 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(storeDisconnected)
 												 name:kNotificationBluetoothStoreDisconnected
+											   object:nil];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(discoveredStore:)
+												 name:kNotificationBluetoothStoreDiscovered
+											   object:nil];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(punchReceived:)
+												 name:kNotificationBluetoothPunchApproved
+											   object:nil];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(punchRejected)
+												 name:kNotificationBluetoothPunchRejected
 											   object:nil];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
@@ -148,10 +153,10 @@
 - (void)checkBluetoothManagerState
 {
 	if(_bluetoothManager.state == CBCentralManagerStatePoweredOn && _punchRequested) {
+		[self setViewsForScanning];
 		[_bluetoothManager requestPunchesFromNearestStore];
 	}
 	else if(_bluetoothManager.state == CBCentralManagerStatePoweredOff) {
-		//prompt to turn on
 		[self bluetoothOff];
 	}
 	else if(_bluetoothManager.state == CBCentralManagerStateUnauthorized) {
@@ -165,7 +170,6 @@
 - (void)requestPunch
 {
 	_punchRequested = YES;
-	[self setViewsForScanning];
 	[self checkBluetoothManagerState];
 }
 
@@ -178,20 +182,6 @@
 - (void)discoveredStore:(NSNotification *)notification
 {
 	// is this needed?
-}
-
-- (void)receivedPunch:(NSNotification *)notification
-{
-	_punchRequested = NO;
-	_punchesReceived = [notification.userInfo[kNotificationBluetoothPunches] integerValue];
-	
-	if(_punchesReceived < 0) { //"-1" is sent went punch rejected
-		[self cancelPunchRequest];
-		[self punchRejected];
-	}
-	else {
-		[self getPatronStore];
-	}
 }
 
 - (void)storeConnected:(NSNotification *)notification
@@ -219,28 +209,36 @@
 
 - (void)storeDisconnected
 {
-	NSLog(@"Store disconnected");
-	
 	if(_punchRequested) {
 		[self cancelPunchRequest];
 		[self bluetoothError];
 	}
 }
 
-- (void)storeNotFound
+- (void)punchReceived:(NSNotification *)notification
 {
-	NSLog(@"Store not found");
-	_statusLabel.text = @"Sorry, we couldn't find \n any stores nearby.";
-	_statusImageView.image = [UIImage imageNamed:@"BluetoothTimeout"];
+	_punchRequested = NO;
+	_punchesReceived = [notification.userInfo[kNotificationBluetoothPunches] integerValue];
 	
-	[self setViewsForError];
+	[self getPatronStore];
 }
 
 - (void)punchRejected
 {
-	NSLog(@"Punch rejected");
+	_punchRequested = NO;
+	
+	[self cancelPunchRequest];
+	
 	_statusLabel.text = @"The store said no.";
 	_statusImageView.image = [UIImage imageNamed:@"BluetoothDisconnected"];
+	
+	[self setViewsForError];
+}
+
+- (void)storeNotFound
+{
+	_statusLabel.text = @"Sorry, we couldn't find \n any stores nearby.";
+	_statusImageView.image = [UIImage imageNamed:@"BluetoothTimeout"];
 	
 	[self setViewsForError];
 }
@@ -339,7 +337,7 @@
 	_punchReceivedLabel.text = (_punchesReceived == 1) ? @"You received 1 punch!" :
 									[NSString stringWithFormat:@"You received %i punches!", _punchesReceived];
 	_punchCountLabel.format = @"%d";
-	_punchCountLabel.method = UILabelCountingMethodEaseIn;
+	_punchCountLabel.method = UILabelCountingMethodLinear;
 	_punchCountLabel.text = [NSString stringWithFormat:@"%i", _oldPunchCount];
 	
 	[UIView animateWithDuration:kAnimateSlideDuration

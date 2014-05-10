@@ -35,6 +35,7 @@
 + (void)configureAppearance;
 
 + (UIImage *)imageScaledForThumbnail:(UIImage *)image;
++ (UIImageView *)blurredImageFromView:(UIView *)view;
 
 + (void)callPhoneNumber:(NSString *)phoneNumber;
 

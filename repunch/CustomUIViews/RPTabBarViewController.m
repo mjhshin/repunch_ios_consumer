@@ -191,23 +191,8 @@
 - (void)punchButtonAction
 {
 	PunchViewController *punchVC = [[PunchViewController alloc] init];
-	punchVC.backgroundImageView = [self generateBlurredBackgroundImage];
+	punchVC.backgroundImageView = [RepunchUtils blurredImageFromView:self.view];
 	[self presentViewController:punchVC animated:YES completion:nil];
-}
-
-- (UIImageView *)generateBlurredBackgroundImage
-{
-	UIGraphicsBeginImageContext(self.view.bounds.size);
-    [self.view drawViewHierarchyInRect:self.view.bounds afterScreenUpdates:YES];
-    UIImage *backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-	
-	backgroundImage = [backgroundImage applyDarkEffect];
-	
-	UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:self.view.frame];
-	backgroundImageView.image = backgroundImage;
-	
-	return backgroundImageView;
 }
 
 - (void)navigationController:(UINavigationController *)navigationController

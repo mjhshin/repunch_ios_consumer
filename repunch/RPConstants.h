@@ -18,7 +18,8 @@
 // Notifications
 
 #define kNotificationBluetoothStateChange			@"NotificationBluetoothStateChange"
-#define kNotificationBluetoothReceivedPunch			@"NotificationBluetoothPunch"
+#define kNotificationBluetoothPunchApproved			@"NotificationBluetoothPunchApproved"
+#define kNotificationBluetoothPunchRejected			@"NotificationBluetoothPunchRejected"
 #define kNotificationBluetoothStoreDiscovered		@"NotificationBluetoothStoreDiscovered"
 #define kNotificationBluetoothStoreConnected		@"NotificationBluetoothStoreConnected"
 #define kNotificationBluetoothStoreDisconnected		@"NotificationBluetoothStoreDisconnected"
@@ -27,6 +28,9 @@
 #define kNotificationBluetoothStoreName				@"NotificationBluetoothStoreName"
 #define kNotificationBluetoothStoreId				@"NotificationBluetoothStoreId"
 #define kNotificationBluetoothPunches				@"NotificationBluetoothPunches"
+
+#define kNotificationBluetoothRedeemApproved		@"NotificationBluetoothRedeemApproved"
+#define kNotificationBluetoothRedeemRejected		@"NotificationBluetoothRedeemRejected"
 
 #define kNotificationPunch							@"NotificationPunch"
 #define kNotificationRedeem							@"NotificationRedeem"
