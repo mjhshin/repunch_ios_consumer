@@ -358,7 +358,7 @@
     
     if([today isEqualToDate:otherDate]) {
         NSTimeZone *thisTimeZone = [NSTimeZone localTimeZone];
-        [formatter setDateFormat:@"hh:mm a"];
+        [formatter setDateFormat:@"h:mm a"];
         [formatter setLocale:locale];
         [formatter setTimeZone:thisTimeZone];
         
