@@ -115,7 +115,7 @@
     self.backgroundLayer = backgroundLayer;
     
 	//set image
-    self.imageIcon = [UIImage imageNamed:@"star_refresh"];
+    self.imageIcon = [UIImage imageNamed:@"StarRefresh"];
     
     //init icon layer
     CALayer *imageLayer = [CALayer layer];

@@ -177,14 +177,14 @@
 	if(newSelectedIndex == 0) {
 		_myPlacesButton.backgroundColor = [UIColor colorWithWhite:kBlackColorSelected alpha:1.0f];
 		_inboxButton.backgroundColor = [UIColor colorWithWhite:kBlackColorUnselected alpha:1.0f];
-		[_myPlacesButton setImage:[UIImage imageNamed:@"tab_my_places"] forState:UIControlStateNormal];
-		[_inboxButton setImage:[UIImage imageNamed:@"tab_inbox_gray"] forState:UIControlStateNormal];
+		[_myPlacesButton setImage:[UIImage imageNamed:@"TabMyPlacesSelected"] forState:UIControlStateNormal];
+		[_inboxButton setImage:[UIImage imageNamed:@"TabInbox"] forState:UIControlStateNormal];
 	}
 	else {
 		_myPlacesButton.backgroundColor = [UIColor colorWithWhite:kBlackColorUnselected alpha:1.0f];
 		_inboxButton.backgroundColor = [UIColor colorWithWhite:kBlackColorSelected alpha:1.0f];
-		[_myPlacesButton setImage:[UIImage imageNamed:@"tab_my_places_gray"] forState:UIControlStateNormal];
-		[_inboxButton setImage:[UIImage imageNamed:@"tab_inbox"] forState:UIControlStateNormal];
+		[_myPlacesButton setImage:[UIImage imageNamed:@"TabMyPlaces"] forState:UIControlStateNormal];
+		[_inboxButton setImage:[UIImage imageNamed:@"TabInboxSelected"] forState:UIControlStateNormal];
 	}
 }
 
@@ -194,7 +194,7 @@
 	punchVC.backgroundImageView = [RepunchUtils blurredImageFromView:self.view];
 	[self presentViewController:punchVC animated:YES completion:nil];
 }
-
+/*
 - (void)navigationController:(UINavigationController *)navigationController
 	  willShowViewController:(UIViewController *)viewController
 					animated:(BOOL)animated
@@ -226,5 +226,6 @@
 						 completion:nil];
 	}
 }
+ */
 
 @end

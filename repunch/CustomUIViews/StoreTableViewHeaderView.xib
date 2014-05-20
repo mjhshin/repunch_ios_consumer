@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -35,7 +35,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forward_button.png" translatesAutoresizingMaskIntoConstraints="NO" id="mlx-JI-wRQ" userLabel="ArrowImageView">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NavForward" translatesAutoresizingMaskIntoConstraints="NO" id="mlx-JI-wRQ" userLabel="ArrowImageView">
                                     <rect key="frame" x="280" y="23" width="20" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <constraints>
@@ -295,9 +295,9 @@
         </tapGestureRecognizer>
     </objects>
     <resources>
+        <image name="NavForward" width="24" height="24"/>
         <image name="call_button.png" width="54" height="54"/>
         <image name="feedback_button.png" width="54" height="54"/>
-        <image name="forward_button.png" width="24" height="24"/>
         <image name="map_button.png" width="54" height="54"/>
     </resources>
 </document>

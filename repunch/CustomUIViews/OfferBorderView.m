@@ -23,7 +23,7 @@
 - (void)drawRect:(CGRect)rect
 {
 	UIImageView *scissors = [[UIImageView alloc] initWithFrame:CGRectMake(50, 0, 48, 24)];
-	scissors.image = [UIImage imageNamed:@"scissors"];
+	scissors.image = [UIImage imageNamed:@"Scissors"];
 	scissors.contentMode = UIViewContentModeScaleAspectFit;
 	[self addSubview:scissors];
 	
@@ -34,7 +34,7 @@
 	
 	// set width to 4 and color to orange
     CGContextSetLineWidth(context, 6);
-    CGContextSetStrokeColorWithColor(context, [RepunchUtils lightRepunchOrangeColor].CGColor);
+    CGContextSetStrokeColorWithColor(context, [RepunchUtils repunchOrangeColor].CGColor);
     
 	// pattern where dash = 9, gap = 4
 	CGFloat dashArray[] = {12,6};

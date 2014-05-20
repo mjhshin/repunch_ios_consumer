@@ -23,7 +23,7 @@
 - (void)drawRect:(CGRect)rect
 {
 	UIImageView *giftBox = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 280, 70)];
-	giftBox.image = [UIImage imageNamed:@"gift_box"];
+	giftBox.image = [UIImage imageNamed:@"GiftLid"];
 	giftBox.contentMode = UIViewContentModeScaleToFill;
 	[self addSubview:giftBox];
 	
@@ -34,7 +34,7 @@
 	
 	// set width to 4 and color to orange
     CGContextSetLineWidth(context, 3);
-    CGContextSetStrokeColorWithColor(context, [RepunchUtils lightRepunchOrangeColor].CGColor);
+    CGContextSetStrokeColorWithColor(context, [RepunchUtils repunchOrangeColor].CGColor);
     
 	// left edge
 	CGContextMoveToPoint(context, horizontalPadding, giftBoxHeight);

@@ -55,7 +55,7 @@
 {
 	self.userInteractionEnabled = YES;
 	self.rewardStatusIcon.hidden = NO;
-	self.rewardStatusIcon.image = [UIImage imageNamed:@"checkmark_icon"];
+	self.rewardStatusIcon.image = [UIImage imageNamed:@"RedeemCheckmark"];
 	self.rewardPunches.textColor = [RepunchUtils repunchOrangeColor];
 	self.rewardPunchesStatic.textColor = [RepunchUtils repunchOrangeColor];
 }

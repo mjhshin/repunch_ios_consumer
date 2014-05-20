@@ -110,18 +110,16 @@
 	
 	[[UIActivityIndicatorView appearance] setTintColor:[self repunchOrangeColor]];
 	
-	[[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"nav_back"]];
-	[[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"nav_back"]];
+	[[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"BarButtonBack"]];
+	[[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"BarButtonBack"]];
 }
 
 + (void)setupNavigationController:(UINavigationController *)navController
 {
 	navController.navigationBar.tintColor = [UIColor whiteColor];
-	//[navController.navigationBar setBackgroundImage:[UIImage imageNamed:@"orange_gradient"] forBarMetrics:UIBarMetricsDefault];
 	
 	//NEW_ORANGE
-	[navController.navigationBar setBackgroundImage:[UIImage imageNamed:@"new_orange_bar"] forBarMetrics:UIBarMetricsDefault];
-	//navController.navigationBar.barTintColor = [RepunchUtils repunchOrangeColor];
+	[navController.navigationBar setBackgroundImage:[UIImage imageNamed:@"OrangeBar"] forBarMetrics:UIBarMetricsDefault];
 	navController.navigationBar.barStyle = UIBarStyleBlack;
 	navController.navigationBar.translucent = YES;
 }
@@ -143,17 +141,11 @@
 
 + (UIColor *)repunchOrangeColor // RGBA = F79234FF
 {
-	//return [UIColor colorWithRed:(247/255.0) green:(146/255.0) blue:(52/255.0) alpha:1.0];
-	
-	//NEW_ORANGE
 	return [UIColor colorWithRed:(255/255.0) green:(140/255.0) blue:(77/255.0) alpha:1.0];
 }
 
 + (UIColor *)repunchOrangeColorWithAlpha:(CGFloat)alpha
 {
-	//return [UIColor colorWithRed:(247/255.0) green:(146/255.0) blue:(52/255.0) alpha:1.0];
-	
-	//NEW_ORANGE
 	return [UIColor colorWithRed:(255/255.0) green:(140/255.0) blue:(77/255.0) alpha:alpha];
 }
 
@@ -164,15 +156,12 @@
 
 + (UIColor *)darkRepunchOrangeColor
 {
-	//return [UIColor colorWithRed:(220/255.0) green:(120/255.0) blue:(20/255.0) alpha:1.0];
-	
-	//NEW_ORANGE
 	return [UIColor colorWithRed:(255/255.0) green:(130/255.0) blue:(77/255.0) alpha:1.0];
 }
 
 + (UIColor *)repunchOrangeHighlightedColor
 {
-	return [UIColor colorWithRed:(240/255.0) green:(140/255.0) blue:(19/255.0) alpha:0.5];
+	return [UIColor colorWithRed:(255/255.0) green:(140/255.0) blue:(77/255.0) alpha:0.5];
 }
 
 + (UIFont *)repunchFontWithSize:(NSUInteger)fontSize isBold:(BOOL)isBold
@@ -205,7 +194,7 @@
 	imageLayer.frame = imageFrame;
 	imageLayer.contents = (id) image.CGImage;
 	
-	imageLayer.cornerRadius = 12;
+	imageLayer.cornerRadius = 5;
 	imageLayer.masksToBounds = YES;
 	
 	UIGraphicsBeginImageContext(CGSizeMake(imageWidth, imageHeight));

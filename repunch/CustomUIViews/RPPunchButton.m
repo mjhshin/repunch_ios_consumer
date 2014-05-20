@@ -36,7 +36,7 @@
 	self.adjustsImageWhenHighlighted = YES;
 	
 	[self setImage:[UIImage imageNamed:@"tab_punch"] forState:UIControlStateNormal];
-	[self setBackgroundImage:[UIImage imageNamed:@"new_orange_button"] forState:UIControlStateNormal];
+	[self setBackgroundImage:[UIImage imageNamed:@"OrangeButton"] forState:UIControlStateNormal];
 	//[self setBackgroundImage:[UIImage imageNamed:@"new_orange_button_pressed"] forState:UIControlStateHighlighted];
 }
 

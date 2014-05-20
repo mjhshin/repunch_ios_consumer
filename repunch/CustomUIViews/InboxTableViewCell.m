@@ -55,13 +55,13 @@
 	if (messageType == RPMessageTypeOffer)
 	{
 		self.offerPic.image = isRead ? [UIImage imageNamed:@"message_type_offer"]
-										: [UIImage imageNamed:@"message_type_offer_orange"];
+										: [UIImage imageNamed:@"MessageTypeOffer"];
 		self.offerPic.hidden = NO;
     }
 	else if (messageType == RPMessageTypeGift)
 	{
 		self.offerPic.image = isRead ? [UIImage imageNamed:@"message_type_gift"]
-										: [UIImage imageNamed:@"message_type_gift_orange"];
+										: [UIImage imageNamed:@"MessageTypeGift"];
 		self.offerPic.hidden = NO;
     }
 	else

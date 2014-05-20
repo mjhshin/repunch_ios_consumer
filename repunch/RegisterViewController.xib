@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RegisterViewController">
@@ -128,7 +128,7 @@
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="11" userLabel="LeftDividerLabel">
                             <rect key="frame" x="0.0" y="110" width="140" height="1"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" red="0.99215692280000001" green="0.56862747670000002" blue="0.14901961389999999" alpha="1" colorSpace="deviceRGB"/>
+                            <color key="backgroundColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="fhb-fi-VJq"/>
                             </constraints>
@@ -144,13 +144,13 @@
                                 <constraint firstAttribute="width" constant="25" id="Shf-gx-bMe"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
-                            <color key="textColor" red="0.92361582880000004" green="0.55974298280000001" blue="0.1052079196" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="10" userLabel="RightDividerLabel">
                             <rect key="frame" x="181" y="110" width="140" height="1"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" red="0.99215692280000001" green="0.56862747670000002" blue="0.14901961389999999" alpha="1" colorSpace="deviceRGB"/>
+                            <color key="backgroundColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="AEl-rg-3XI"/>
                             </constraints>
@@ -168,7 +168,7 @@
                                 <segment title="Female"/>
                                 <segment title="Male"/>
                             </segments>
-                            <color key="tintColor" red="0.92361582880000004" green="0.55974298280000001" blue="0.1052079196" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
                         </segmentedControl>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="126" userLabel="RegisterButton" customClass="RPButton">
                             <rect key="frame" x="51" y="467" width="221" height="44"/>
@@ -203,7 +203,7 @@
                             </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
                             <state key="normal" title="Terms and Conditions">
-                                <color key="titleColor" red="0.92361582880000004" green="0.55974298280000001" blue="0.1052079196" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
@@ -228,7 +228,7 @@
                             </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
                             <state key="normal" title="Privacy Policy">
-                                <color key="titleColor" red="0.92361582880000004" green="0.55974298280000001" blue="0.1052079196" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>

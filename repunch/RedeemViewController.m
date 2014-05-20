@@ -120,7 +120,7 @@
 	[self.view addSubview:_backgroundImageView];
 	_backgroundImageView.layer.zPosition = -1;
 	
-	_resultLabel.text = [NSString stringWithFormat:@"Redeemed\n'%@'", _rewardTitle];
+	_resultLabel.text = [NSString stringWithFormat:@"Redeemed reward\n'%@'", _rewardTitle];
 	
 	_radarView.hidden = YES;
 	_statusImageView.hidden = YES;

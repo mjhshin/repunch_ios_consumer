@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="LdT-hG-yr2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="LdT-hG-yr2">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -20,7 +20,7 @@
                                 <rect key="frame" x="20" y="15" width="230" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
-                                <color key="textColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="230" translatesAutoresizingMaskIntoConstraints="NO" id="acZ-Qm-2by" userLabel="MessageLabel">
@@ -104,7 +104,7 @@
                                 <rect key="frame" x="20" y="15" width="230" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
-                                <color key="textColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="230" translatesAutoresizingMaskIntoConstraints="NO" id="dv6-fH-a6I" userLabel="MessageLabel">
@@ -123,7 +123,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cZV-wh-xtq" userLabel="NoButton">
-                                <rect key="frame" x="0.0" y="91" width="135" height="50"/>
+                                <rect key="frame" x="0.0" y="91" width="134" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="f2e-Vk-NvG"/>
@@ -140,7 +140,7 @@
                                     <action selector="actionButton:" destination="TgM-5F-YcR" eventType="touchUpInside" id="C6n-gT-8Op"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kp1-tW-kev" userLabel="YesButton">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kp1-tW-kev" userLabel="YesButton">
                                 <rect key="frame" x="135" y="91" width="135" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
@@ -159,7 +159,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oLJ-FH-0zT" userLabel="VerticalDivider">
-                                <rect key="frame" x="135" y="91" width="1" height="50"/>
+                                <rect key="frame" x="134" y="91" width="1" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.86838503649999998" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -445,7 +445,7 @@
                                             <constraint firstAttribute="height" constant="42" id="Ec8-85-uK9"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
-                                        <color key="textColor" red="0.92549019610000005" green="0.54117647059999996" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dmj-AN-UXr">
@@ -532,7 +532,7 @@
                                 <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
                                 <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="30" maxY="0.0"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="172" maxY="0.0"/>
-                                <state key="normal" title="Gift" image="redeem_gift_icon.png">
+                                <state key="normal" title="Gift" image="RedeemButton">
                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
@@ -623,7 +623,7 @@
                                 <rect key="frame" x="20" y="15" width="230" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
-                                <color key="textColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="12345" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="230" translatesAutoresizingMaskIntoConstraints="NO" id="E8F-8J-9TB" userLabel="MessageLabel">
@@ -704,7 +704,7 @@
                                 <rect key="frame" x="20" y="15" width="230" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
-                                <color key="textColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There was a problem connecting to Repunch. Please check your connection and try again." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="230" translatesAutoresizingMaskIntoConstraints="NO" id="bzF-Y3-ITd" userLabel="MessageLabel">
@@ -830,7 +830,8 @@
                                         <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </activityIndicatorView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.54901960780000003" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="1" green="0.54901963472366333" blue="0.30196079611778259" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="centerY" secondItem="tgf-hV-tD5" secondAttribute="centerY" id="2BY-Yq-uGu"/>
                                     <constraint firstItem="tgf-hV-tD5" firstAttribute="centerY" secondItem="FUk-Nz-MoF" secondAttribute="centerY" id="9ke-ad-gyg"/>
@@ -861,7 +862,8 @@
                             <view alpha="0.65000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="59m-PW-C0k" userLabel="Divider1">
                                 <rect key="frame" x="10" y="85" width="280" height="1"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="xnU-Fl-IrX"/>
                                 </constraints>
@@ -987,7 +989,8 @@
                                         <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </activityIndicatorView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.54901963472366333" blue="0.30196079611778259" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="1" green="0.54901963472366333" blue="0.30196079611778259" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="gIz-ze-Lj8" firstAttribute="leading" secondItem="Aee-yg-3BK" secondAttribute="leading" constant="8" id="03r-FZ-Kij"/>
                                     <constraint firstItem="qEf-S2-YBE" firstAttribute="centerX" secondItem="xBY-l6-1kh" secondAttribute="centerX" id="J45-1i-cI0"/>
@@ -1018,7 +1021,8 @@
                             <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Ix-ff-1jb" userLabel="Divider1">
                                 <rect key="frame" x="10" y="85" width="280" height="1"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="dxN-zV-Yeb"/>
                                 </constraints>
@@ -1119,12 +1123,12 @@
         </scene>
     </scenes>
     <resources>
+        <image name="RedeemButton" width="26" height="26"/>
         <image name="message_recepient_icon.png" width="32" height="32"/>
         <image name="message_send_feedback_icon.png" width="32" height="32"/>
         <image name="message_type_gift_orange.png" width="32" height="32"/>
         <image name="nav_exit.png" width="32" height="32"/>
-        <image name="orange_highlighted.png" width="256" height="32"/>
-        <image name="redeem_gift_icon.png" width="26" height="26"/>
+        <image name="orange_highlighted.png" width="32" height="32"/>
         <image name="redeem_gift_icon_white.png" width="26" height="26"/>
         <image name="redeem_icon.png" width="32" height="19"/>
         <image name="redeem_icon_white.png" width="32" height="19"/>

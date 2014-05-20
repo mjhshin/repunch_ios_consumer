@@ -39,8 +39,8 @@
 {
 	self.enabled = YES;
 	
-	[self setBackgroundImage:[UIImage imageNamed:@"orange_gradient_button"] forState:UIControlStateNormal];
-	[self setBackgroundImage:[UIImage imageNamed:@"orange_gradient_button_highlighted"] forState:UIControlStateHighlighted];
+	[self setBackgroundImage:[UIImage imageNamed:@"OrangeButton"] forState:UIControlStateNormal];
+	[self setBackgroundImage:[UIImage imageNamed:@"OrangeButtonHighlighted"] forState:UIControlStateHighlighted];
 }
 
 - (void)setDisabled

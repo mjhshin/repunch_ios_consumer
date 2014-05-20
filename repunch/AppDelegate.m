@@ -196,10 +196,6 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     [Crashlytics setUserName:[RPUser currentUser].username];
 
-	//RPTabBarController *tabBarController = [[RPTabBarController alloc] init];
-	//self.window.rootViewController = tabBarController;
-	//[self.window makeKeyAndVisible];
-	
 	RPTabBarViewController *tabBarVC = [[RPTabBarViewController alloc] init];
 	self.window.rootViewController = tabBarVC;
 	[self.window makeKeyAndVisible];

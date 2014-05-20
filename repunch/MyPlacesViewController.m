@@ -141,7 +141,7 @@
 																	action:@selector(openSearch)];
 	
 	UIButton *punchCodeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, 50)];
-	[punchCodeButton setImage:[UIImage imageNamed:@"nav_repunch_logo"] forState:UIControlStateNormal];
+	[punchCodeButton setImage:[UIImage imageNamed:@"RepunchLogoWhite"] forState:UIControlStateNormal];
 	[punchCodeButton addTarget:self action:@selector(showPunchCode) forControlEvents:UIControlEventTouchUpInside];
 	
 	self.navigationItem.leftBarButtonItem = settingsButton;

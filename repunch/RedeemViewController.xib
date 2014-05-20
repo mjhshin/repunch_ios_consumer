@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -84,7 +84,7 @@
                                     <nil key="highlightedColor"/>
                                     <size key="shadowOffset" width="1" height="1"/>
                                 </label>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star.png" translatesAutoresizingMaskIntoConstraints="NO" id="nfD-Mi-GGM" userLabel="PunchIcon">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Star" translatesAutoresizingMaskIntoConstraints="NO" id="nfD-Mi-GGM" userLabel="PunchIcon">
                                     <rect key="frame" x="0.0" y="22" width="24" height="24"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <constraints>
@@ -124,7 +124,7 @@
                         <constraint firstAttribute="height" constant="50" id="VhF-AL-BM7"/>
                         <constraint firstAttribute="width" constant="80" id="cev-h7-an9"/>
                     </constraints>
-                    <state key="normal" image="tab_punch_exit.png" backgroundImage="new_orange_button.png">
+                    <state key="normal" image="tab_punch_exit.png" backgroundImage="OrangeButton">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -154,9 +154,9 @@
         </view>
     </objects>
     <resources>
+        <image name="OrangeButton" width="50" height="50"/>
+        <image name="Star" width="32" height="32"/>
         <image name="bluetooth_not_found.png" width="150" height="150"/>
-        <image name="new_orange_button.png" width="50" height="50"/>
-        <image name="star.png" width="32" height="32"/>
         <image name="tab_punch_exit.png" width="24" height="24"/>
     </resources>
 </document>

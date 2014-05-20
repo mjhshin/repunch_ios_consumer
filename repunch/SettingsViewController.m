@@ -123,7 +123,7 @@
 			selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
 			cell.selectedBackgroundView = selectedView;
 			
-			cell.textLabel.font = [RepunchUtils repunchFontWithSize:16 isBold:YES];
+			cell.textLabel.font = [RepunchUtils repunchFontWithSize:17 isBold:NO];
 			cell.textLabel.highlightedTextColor = [UIColor whiteColor];
 		}
 		
@@ -146,7 +146,7 @@
 			selectedView.backgroundColor = [RepunchUtils repunchOrangeHighlightedColor];
 			cell.selectedBackgroundView = selectedView;
 			
-			cell.textLabel.font = [RepunchUtils repunchFontWithSize:16 isBold:YES];
+			cell.textLabel.font = [RepunchUtils repunchFontWithSize:17 isBold:NO];
 			cell.textLabel.highlightedTextColor = [UIColor whiteColor];
 			
 			cell.detailTextLabel.font = [RepunchUtils repunchFontWithSize:13 isBold:NO];

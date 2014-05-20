@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -13,10 +13,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="95"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalCompressionResistancePriority="749" text="Old Soul at The Weatherstone" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" preferredMaxLayoutWidth="212" translatesAutoresizingMaskIntoConstraints="NO" id="3" userLabel="StoreNameLabel">
-                        <rect key="frame" x="100" y="8" width="212" height="23"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalCompressionResistancePriority="749" text="Old Soul at The Weatherstone" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" preferredMaxLayoutWidth="214" translatesAutoresizingMaskIntoConstraints="NO" id="3" userLabel="StoreNameLabel">
+                        <rect key="frame" x="98" y="8" width="214" height="23"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
+                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
@@ -50,7 +50,7 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="checkmark_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="37" userLabel="RewardImageView">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="RedeemCheckmark" translatesAutoresizingMaskIntoConstraints="NO" id="37" userLabel="RewardImageView">
                         <rect key="frame" x="104" y="71" width="12" height="12"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
@@ -65,7 +65,7 @@
                     <constraint firstItem="6" firstAttribute="leading" secondItem="7" secondAttribute="trailing" constant="6" id="2v4-Vy-bFO"/>
                     <constraint firstItem="7" firstAttribute="leading" secondItem="5" secondAttribute="trailing" constant="16" id="7ok-wd-JiZ"/>
                     <constraint firstItem="36" firstAttribute="leading" secondItem="37" secondAttribute="trailing" constant="6" id="FHI-vf-NHE"/>
-                    <constraint firstItem="3" firstAttribute="leading" secondItem="5" secondAttribute="trailing" constant="12" id="G3P-Rq-dPh"/>
+                    <constraint firstItem="3" firstAttribute="leading" secondItem="5" secondAttribute="trailing" constant="10" id="G3P-Rq-dPh"/>
                     <constraint firstItem="6" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" id="Iax-s7-jcZ"/>
                     <constraint firstItem="6" firstAttribute="centerY" secondItem="7" secondAttribute="centerY" id="LdS-N8-1zY"/>
                     <constraint firstItem="5" firstAttribute="leading" secondItem="yoB-KE-hbE" secondAttribute="leading" constant="8" id="PBy-wW-Aev"/>
@@ -88,7 +88,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="checkmark_icon.png" width="32" height="24"/>
+        <image name="RedeemCheckmark" width="32" height="24"/>
         <image name="star.png" width="32" height="32"/>
     </resources>
 </document>
