@@ -251,7 +251,7 @@
 														   toItem:self.replyView
 														attribute:NSLayoutAttributeBottom
 													   multiplier:1
-														 constant:30];
+														 constant:80];
 	}
 	else if(message.type == RPMessageTypeOffer || message.type == RPMessageTypeGift) {
 		bottomConstraint = [NSLayoutConstraint constraintWithItem:self.scrollView
@@ -260,7 +260,7 @@
 														   toItem:self.attachmentView
 														attribute:NSLayoutAttributeBottom
 													   multiplier:1
-														 constant:70];
+														 constant:120];
 	}
 	else {
 		bottomConstraint = [NSLayoutConstraint constraintWithItem:self.scrollView
@@ -269,11 +269,10 @@
 														   toItem:self.messageView
 														attribute:NSLayoutAttributeBottom
 													   multiplier:1
-														 constant:30];
+														 constant:80];
 	}
 	
 	[self.scrollView addConstraint:bottomConstraint];
-	
 	[self.scrollView setNeedsLayout];
 	[self.scrollView layoutIfNeeded];
 }

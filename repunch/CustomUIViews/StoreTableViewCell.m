@@ -48,7 +48,7 @@
 	self.userInteractionEnabled = NO;
 	self.rewardStatusIcon.hidden = YES;
 	self.rewardPunches.textColor = [RepunchUtils repunchOrangeColor];
-	self.rewardPunchesStatic.textColor = [RepunchUtils repunchOrangeColor];
+	self.rewardPunchesStatic.textColor = [RepunchUtils darkRepunchOrangeColor];
 }
 
 - (void)setRewardUnlocked
@@ -57,7 +57,7 @@
 	self.rewardStatusIcon.hidden = NO;
 	self.rewardStatusIcon.image = [UIImage imageNamed:@"RedeemCheckmark"];
 	self.rewardPunches.textColor = [RepunchUtils repunchOrangeColor];
-	self.rewardPunchesStatic.textColor = [RepunchUtils repunchOrangeColor];
+	self.rewardPunchesStatic.textColor = [RepunchUtils darkRepunchOrangeColor];
 }
 
 - (void)setRewardLocked

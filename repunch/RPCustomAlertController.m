@@ -78,7 +78,7 @@
     [alert showAlert];
 }
 
-+ (void) showRedeemAlertWithTitle:(NSString*)title
++ (void)showRedeemAlertWithTitle:(NSString*)title
 						 punches:(NSInteger)punches
 						andBlock:(RPCustomAlertActionButtonBlock)block
 {
@@ -181,16 +181,38 @@
     maskLayer.path = maskPath.CGPath;
     header.layer.mask = maskLayer;
 
-    UIButton *button = alert.deleteButton ? alert.deleteButton : alert.giftButton;
-    UIBezierPath *maskPath2 = [UIBezierPath bezierPathWithRoundedRect:button.bounds
-                                                    byRoundingCorners: UIRectCornerBottomLeft| UIRectCornerBottomRight
-                                                          cornerRadii:CGSizeMake(5.0, 15.0)];
-
-    CAShapeLayer *maskLayer2 = [[CAShapeLayer alloc] init];
-    maskLayer2.frame = button.bounds;
-    maskLayer2.path = maskPath2.CGPath;
-
-    button.layer.mask = maskLayer2;
+	if(alert.deleteButton) {
+		UIBezierPath *maskPath2 = [UIBezierPath bezierPathWithRoundedRect:alert.deleteButton.bounds
+														byRoundingCorners: UIRectCornerBottomLeft| UIRectCornerBottomRight
+															  cornerRadii:CGSizeMake(5.0, 15.0)];
+		
+		CAShapeLayer *maskLayer2 = [[CAShapeLayer alloc] init];
+		maskLayer2.frame = alert.deleteButton.bounds;
+		maskLayer2.path = maskPath2.CGPath;
+		
+		alert.deleteButton.layer.mask = maskLayer2;
+	}
+	else {
+		UIBezierPath *maskPath2 = [UIBezierPath bezierPathWithRoundedRect:alert.redeemButton.bounds
+														byRoundingCorners: UIRectCornerBottomLeft
+															  cornerRadii:CGSizeMake(5.0, 15.0)];
+		
+		CAShapeLayer *maskLayer2 = [[CAShapeLayer alloc] init];
+		maskLayer2.frame = alert.redeemButton.bounds;
+		maskLayer2.path = maskPath2.CGPath;
+		
+		alert.redeemButton.layer.mask = maskLayer2;
+		
+		UIBezierPath *maskPath3 = [UIBezierPath bezierPathWithRoundedRect:alert.giftButton.bounds
+														byRoundingCorners: UIRectCornerBottomRight
+															  cornerRadii:CGSizeMake(5.0, 15.0)];
+		
+		CAShapeLayer *maskLayer3 = [[CAShapeLayer alloc] init];
+		maskLayer3.frame = alert.giftButton.bounds;
+		maskLayer3.path = maskPath3.CGPath;
+		
+		alert.giftButton.layer.mask = maskLayer3;
+	}
 
     return alert;
 }

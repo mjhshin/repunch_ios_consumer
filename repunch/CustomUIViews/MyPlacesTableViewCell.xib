@@ -14,7 +14,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalCompressionResistancePriority="749" text="Old Soul at The Weatherstone" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" preferredMaxLayoutWidth="214" translatesAutoresizingMaskIntoConstraints="NO" id="3" userLabel="StoreNameLabel">
-                        <rect key="frame" x="98" y="8" width="214" height="23"/>
+                        <rect key="frame" x="98" y="8" width="214" height="27"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -35,7 +35,7 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="star.png" translatesAutoresizingMaskIntoConstraints="NO" id="7" userLabel="PunchImageView">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Star" translatesAutoresizingMaskIntoConstraints="NO" id="7" userLabel="PunchImageView">
                         <rect key="frame" x="104" y="47" width="12" height="12"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
@@ -72,7 +72,7 @@
                     <constraint firstAttribute="centerY" secondItem="5" secondAttribute="centerY" id="WeH-Rc-Hyw"/>
                     <constraint firstAttribute="trailing" secondItem="3" secondAttribute="trailing" constant="8" id="ZkC-Kk-pvi"/>
                     <constraint firstItem="36" firstAttribute="centerY" secondItem="37" secondAttribute="centerY" id="a4r-kZ-sPp"/>
-                    <constraint firstItem="7" firstAttribute="top" secondItem="3" secondAttribute="bottom" priority="750" constant="16" id="gkg-NF-hzo"/>
+                    <constraint firstItem="7" firstAttribute="top" secondItem="3" secondAttribute="bottom" priority="750" constant="12" id="gkg-NF-hzo"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="37" secondAttribute="bottom" constant="12" id="h4D-Ge-x8p"/>
                     <constraint firstItem="5" firstAttribute="top" secondItem="3" secondAttribute="top" id="iIr-iT-dy2"/>
                     <constraint firstItem="7" firstAttribute="leading" secondItem="37" secondAttribute="leading" id="jwT-eX-zss"/>
@@ -89,6 +89,6 @@
     </objects>
     <resources>
         <image name="RedeemCheckmark" width="32" height="24"/>
-        <image name="star.png" width="32" height="32"/>
+        <image name="Star" width="32" height="32"/>
     </resources>
 </document>

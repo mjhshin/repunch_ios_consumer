@@ -29,11 +29,11 @@
                         <constraint firstAttribute="height" constant="48" id="gi6-0C-uc1"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="15"/>
-                    <state key="normal" backgroundImage="login-button-small.png">
+                    <state key="normal" backgroundImage="FacebookButton">
                         <color key="titleColor" white="0.96615533760000005" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
-                    <state key="highlighted">
+                    <state key="highlighted" backgroundImage="FacebookButtonHighlighted">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -85,7 +85,7 @@
                         <constraint firstAttribute="height" constant="25" id="aXF-Vw-Ta5"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
-                    <color key="textColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" red="0.87058823529999996" green="0.4039215686" blue="0.27450980390000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8" userLabel="EmailTextField">
@@ -139,7 +139,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="15"/>
                     <state key="normal" title="Forgot your password?">
-                        <color key="titleColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleColor" red="0.87058823529999996" green="0.4039215686" blue="0.27450980390000002" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </state>
                     <state key="highlighted">
@@ -180,6 +180,7 @@
         </view>
     </objects>
     <resources>
-        <image name="login-button-small.png" width="151" height="43"/>
+        <image name="FacebookButton" width="151" height="43"/>
+        <image name="FacebookButtonHighlighted" width="151" height="43"/>
     </resources>
 </document>

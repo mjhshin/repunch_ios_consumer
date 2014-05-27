@@ -164,7 +164,7 @@
 			self.storeImage.image = coverImage;
 		}
 		else {
-			self.storeImage.image = [UIImage imageNamed:@"placeholder_cover_image"];
+			self.storeImage.image = [UIImage imageNamed:@"PlaceholderCover"];
 			
 			[store.cover_image getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
 				if (!error) {
@@ -190,7 +190,7 @@
 			self.storeImage.image = [RepunchUtils imageScaledForThumbnail:thumbnailImage];
 		}
 		else {
-			self.storeImage.image = [UIImage imageNamed:@"placeholder_thumbnail_image"];
+			self.storeImage.image = [UIImage imageNamed:@"PlaceholderThumbnail"];
 			
 			[store.thumbnail_image getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
 				if (!error) {
@@ -210,7 +210,7 @@
 	}
 	else {
 		self.storeImage.contentMode = UIViewContentModeScaleAspectFill;
-		self.storeImage.image = [UIImage imageNamed:@"placeholder_cover_image"];
+		self.storeImage.image = [UIImage imageNamed:@"PlaceholderCover"];
 	}
 }
 
@@ -491,6 +491,7 @@
 	redeemVC.patronStoreId =  patronStore.objectId;
 	redeemVC.rewardId = [reward[@"reward_id"] intValue];
 	redeemVC.backgroundImageView = [RepunchUtils blurredImageFromView:self.view];
+	redeemVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
 	
 	[self presentViewController:redeemVC animated:YES completion:nil];
 }

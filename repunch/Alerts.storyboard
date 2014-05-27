@@ -19,8 +19,8 @@
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="230" translatesAutoresizingMaskIntoConstraints="NO" id="akR-11-2ZS" userLabel="TitleLabel">
                                 <rect key="frame" x="20" y="15" width="230" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
-                                <color key="textColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
+                                <color key="textColor" red="0.87058823529999996" green="0.4039215686" blue="0.27450980390000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="230" translatesAutoresizingMaskIntoConstraints="NO" id="acZ-Qm-2by" userLabel="MessageLabel">
@@ -49,7 +49,7 @@
                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="highlighted" backgroundImage="orange_highlighted.png">
+                                <state key="highlighted" backgroundImage="OrangeHighlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -103,8 +103,8 @@
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="230" translatesAutoresizingMaskIntoConstraints="NO" id="qHR-Gq-HNQ" userLabel="TitleLabel">
                                 <rect key="frame" x="20" y="15" width="230" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
-                                <color key="textColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
+                                <color key="textColor" red="0.87058823529999996" green="0.4039215686" blue="0.27450980390000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="230" translatesAutoresizingMaskIntoConstraints="NO" id="dv6-fH-a6I" userLabel="MessageLabel">
@@ -133,7 +133,7 @@
                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="highlighted" backgroundImage="orange_highlighted.png">
+                                <state key="highlighted" backgroundImage="OrangeHighlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -151,7 +151,7 @@
                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="highlighted" backgroundImage="orange_highlighted.png">
+                                <state key="highlighted" backgroundImage="OrangeHighlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -252,12 +252,12 @@
                                 <rect key="frame" x="0.0" y="51" width="280" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="0.90000000000000002" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
                                 <state key="normal" title="Delete">
                                     <color key="titleColor" red="0.81726163321167888" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="highlighted" backgroundImage="orange_highlighted.png">
+                                <state key="highlighted" backgroundImage="OrangeHighlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -268,12 +268,12 @@
                                 <rect key="frame" x="0.0" y="109" width="280" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
                                 <state key="normal" title="Cancel">
                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="highlighted" backgroundImage="orange_highlighted.png">
+                                <state key="highlighted" backgroundImage="OrangeHighlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -351,12 +351,12 @@
                                 <rect key="frame" x="0.0" y="51" width="280" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="0.90000000000000002" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
                                 <state key="normal" title="Delete">
                                     <color key="titleColor" red="0.8172616332" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="highlighted" backgroundImage="orange_highlighted.png">
+                                <state key="highlighted" backgroundImage="OrangeHighlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -376,12 +376,12 @@
                                 <rect key="frame" x="0.0" y="109" width="280" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
                                 <state key="normal" title="Cancel">
                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="highlighted" backgroundImage="orange_highlighted.png">
+                                <state key="highlighted" backgroundImage="OrangeHighlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -431,41 +431,42 @@
                         <viewControllerLayoutGuide type="bottom" id="3h9-8a-Z5f"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="uey-sn-kcw">
-                        <rect key="frame" x="0.0" y="0.0" width="280" height="250"/>
+                        <rect key="frame" x="0.0" y="0.0" width="281" height="222"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" restorationIdentifier="HeaderLabel" translatesAutoresizingMaskIntoConstraints="NO" id="LH7-Bu-3cg">
-                                <rect key="frame" x="0.0" y="0.0" width="280" height="86"/>
+                                <rect key="frame" x="0.0" y="0.0" width="281" height="86"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Redeem Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" preferredMaxLayoutWidth="264" translatesAutoresizingMaskIntoConstraints="NO" id="KZo-0f-j3H" userLabel="RewardTitle">
-                                        <rect key="frame" x="8" y="5" width="264" height="42"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Redeem Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" preferredMaxLayoutWidth="265" translatesAutoresizingMaskIntoConstraints="NO" id="KZo-0f-j3H" userLabel="RewardTitle">
+                                        <rect key="frame" x="8" y="5" width="265" height="42"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="42" id="Ec8-85-uK9"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
-                                        <color key="textColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
+                                        <color key="textColor" red="0.87058823529999996" green="0.4039215686" blue="0.27450980390000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dmj-AN-UXr">
-                                        <rect key="frame" x="89" y="55" width="103" height="20"/>
+                                        <rect key="frame" x="90" y="52" width="101" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star.png" translatesAutoresizingMaskIntoConstraints="NO" id="5ze-fQ-TeA" userLabel="PunchIcon">
-                                                <rect key="frame" x="0.0" y="2" width="16" height="16"/>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Star" translatesAutoresizingMaskIntoConstraints="NO" id="5ze-fQ-TeA" userLabel="PunchIcon">
+                                                <rect key="frame" x="0.0" y="4" width="14" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="16" id="6XX-0g-dhN"/>
-                                                    <constraint firstAttribute="height" constant="16" id="Zwv-Mf-oxR"/>
+                                                    <constraint firstAttribute="width" constant="14" id="6XX-0g-dhN"/>
+                                                    <constraint firstAttribute="height" constant="14" id="Zwv-Mf-oxR"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="999 Punches" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x5O-7a-f7T" userLabel="PunchCount">
-                                                <rect key="frame" x="23" y="0.0" width="80" height="20"/>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="999 Punches" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x5O-7a-f7T" userLabel="PunchCount">
+                                                <rect key="frame" x="21" y="0.0" width="80" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
+                                                <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </label>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -481,7 +482,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="dmj-AN-UXr" firstAttribute="top" secondItem="KZo-0f-j3H" secondAttribute="bottom" constant="8" id="Jch-eQ-qcz"/>
+                                    <constraint firstItem="dmj-AN-UXr" firstAttribute="top" secondItem="KZo-0f-j3H" secondAttribute="bottom" constant="5" id="Jch-eQ-qcz"/>
                                     <constraint firstItem="KZo-0f-j3H" firstAttribute="top" secondItem="LH7-Bu-3cg" secondAttribute="top" constant="5" id="Tqc-VX-mNf"/>
                                     <constraint firstAttribute="trailing" secondItem="KZo-0f-j3H" secondAttribute="trailing" constant="8" id="UOB-Aj-OdV"/>
                                     <constraint firstAttribute="height" constant="86" id="VEo-UT-4WV"/>
@@ -490,7 +491,7 @@
                                 </constraints>
                             </view>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qXi-Y6-DpR" userLabel="HorizontalDivider">
-                                <rect key="frame" x="0.0" y="86" width="280" height="1"/>
+                                <rect key="frame" x="0.0" y="86" width="281" height="1"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.86838503649999998" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -498,45 +499,46 @@
                                     <constraint firstAttribute="height" constant="1" id="oQP-oo-SKw"/>
                                 </constraints>
                             </view>
+                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vFl-cV-N8s" userLabel="VerticalDivider">
+                                <rect key="frame" x="140" y="87" width="1" height="74"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.86838503649999998" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="74" id="VsW-w8-Y7J"/>
+                                    <constraint firstAttribute="width" constant="1" id="nkm-rz-fIg"/>
+                                </constraints>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IVY-YJ-Tuw" userLabel="RedeemButton">
-                                <rect key="frame" x="0.0" y="87" width="280" height="50"/>
+                                <rect key="frame" x="0.0" y="87" width="140" height="74"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="0.90000000000000002" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
-                                <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="30" maxY="0.0"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="140" maxY="0.0"/>
-                                <state key="normal" title="Redeem" image="redeem_icon.png">
+                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
+                                <inset key="titleEdgeInsets" minX="0.0" minY="36" maxX="30" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="50" minY="0.0" maxX="0.0" maxY="26"/>
+                                <state key="normal" title="Redeem" image="RedeemButton">
                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="highlighted" image="redeem_icon_white.png" backgroundImage="orange_highlighted.png">
+                                <state key="highlighted" image="RedeemButtonWhite" backgroundImage="OrangeHighlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="actionButton:" destination="l1j-QX-BTh" eventType="touchUpInside" id="8DE-H4-YZM"/>
                                 </connections>
                             </button>
-                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bUh-Ca-zuc" userLabel="HorizontalDivider2">
-                                <rect key="frame" x="0.0" y="137" width="280" height="1"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.86838503649999998" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="uDA-zY-ayZ"/>
-                                </constraints>
-                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FU9-OA-eP7" userLabel="GiftButton">
-                                <rect key="frame" x="0.0" y="138" width="280" height="50"/>
+                                <rect key="frame" x="141" y="87" width="140" height="74"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="0.90000000000000002" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
-                                <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="30" maxY="0.0"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="172" maxY="0.0"/>
-                                <state key="normal" title="Gift" image="RedeemButton">
+                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
+                                <inset key="titleEdgeInsets" minX="0.0" minY="36" maxX="26" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="28" minY="0.0" maxX="0.0" maxY="26"/>
+                                <state key="normal" title="Gift" image="GiftButton">
                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="highlighted" title="Gift" image="redeem_gift_icon_white.png" backgroundImage="orange_highlighted.png">
+                                <state key="highlighted" title="Gift" image="GiftButtonWhite" backgroundImage="OrangeHighlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -544,20 +546,20 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fm5-50-bxF" userLabel="CancelButton">
-                                <rect key="frame" x="0.0" y="196" width="280" height="50"/>
+                                <rect key="frame" x="0.0" y="169" width="281" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Fgv-Ky-Qvm"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
                                 <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="5" maxY="0.0"/>
                                 <state key="normal" title="Cancel">
                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="highlighted" backgroundImage="orange_highlighted.png">
+                                <state key="highlighted" backgroundImage="OrangeHighlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -568,25 +570,23 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <color key="tintColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="vFl-cV-N8s" firstAttribute="height" secondItem="FU9-OA-eP7" secondAttribute="height" id="2fF-8F-GHB"/>
                             <constraint firstAttribute="trailing" secondItem="FU9-OA-eP7" secondAttribute="trailing" id="4Qs-kH-TVo"/>
-                            <constraint firstItem="FU9-OA-eP7" firstAttribute="leading" secondItem="uey-sn-kcw" secondAttribute="leading" id="4nH-Pp-zok"/>
                             <constraint firstAttribute="trailing" secondItem="qXi-Y6-DpR" secondAttribute="trailing" id="4qV-Qg-1aW"/>
                             <constraint firstItem="qXi-Y6-DpR" firstAttribute="top" secondItem="LH7-Bu-3cg" secondAttribute="bottom" id="7v6-Zq-iBF"/>
-                            <constraint firstItem="FU9-OA-eP7" firstAttribute="top" secondItem="bUh-Ca-zuc" secondAttribute="bottom" id="IL9-RR-Xoq"/>
                             <constraint firstItem="IVY-YJ-Tuw" firstAttribute="top" secondItem="qXi-Y6-DpR" secondAttribute="bottom" id="T5m-UB-IKU"/>
                             <constraint firstAttribute="trailing" secondItem="LH7-Bu-3cg" secondAttribute="trailing" id="W5J-bP-EjV"/>
-                            <constraint firstAttribute="trailing" secondItem="bUh-Ca-zuc" secondAttribute="trailing" id="YmA-yF-dY3"/>
-                            <constraint firstItem="Fm5-50-bxF" firstAttribute="top" secondItem="FU9-OA-eP7" secondAttribute="bottom" constant="8" id="aWU-Lk-4iZ"/>
-                            <constraint firstAttribute="trailing" secondItem="IVY-YJ-Tuw" secondAttribute="trailing" id="fDf-Ck-eR4"/>
+                            <constraint firstItem="Fm5-50-bxF" firstAttribute="top" secondItem="vFl-cV-N8s" secondAttribute="bottom" constant="8" id="eOL-KU-t14"/>
+                            <constraint firstItem="FU9-OA-eP7" firstAttribute="top" secondItem="qXi-Y6-DpR" secondAttribute="bottom" id="eWq-MW-HwI"/>
                             <constraint firstItem="LH7-Bu-3cg" firstAttribute="top" secondItem="uey-sn-kcw" secondAttribute="top" id="fM0-HH-Vw1"/>
-                            <constraint firstItem="bUh-Ca-zuc" firstAttribute="top" secondItem="IVY-YJ-Tuw" secondAttribute="bottom" id="jbi-dm-URV"/>
-                            <constraint firstItem="bUh-Ca-zuc" firstAttribute="leading" secondItem="uey-sn-kcw" secondAttribute="leading" id="jc9-t8-HhU"/>
                             <constraint firstAttribute="trailing" secondItem="Fm5-50-bxF" secondAttribute="trailing" id="jwR-LM-PV9"/>
-                            <constraint firstItem="FU9-OA-eP7" firstAttribute="height" secondItem="Fm5-50-bxF" secondAttribute="height" id="lYc-qB-kDY"/>
-                            <constraint firstItem="FU9-OA-eP7" firstAttribute="height" secondItem="IVY-YJ-Tuw" secondAttribute="height" id="nwt-gv-lWl"/>
+                            <constraint firstItem="vFl-cV-N8s" firstAttribute="leading" secondItem="IVY-YJ-Tuw" secondAttribute="trailing" id="nbP-Al-cT4"/>
                             <constraint firstItem="Fm5-50-bxF" firstAttribute="leading" secondItem="uey-sn-kcw" secondAttribute="leading" id="rUa-d2-Da8"/>
                             <constraint firstItem="LH7-Bu-3cg" firstAttribute="leading" secondItem="uey-sn-kcw" secondAttribute="leading" id="trn-lA-Cpj"/>
-                            <constraint firstItem="FU9-OA-eP7" firstAttribute="height" secondItem="IVY-YJ-Tuw" secondAttribute="height" id="wwB-o7-2WG"/>
+                            <constraint firstItem="IVY-YJ-Tuw" firstAttribute="width" secondItem="FU9-OA-eP7" secondAttribute="width" id="w4f-MT-lmR"/>
+                            <constraint firstItem="vFl-cV-N8s" firstAttribute="top" secondItem="qXi-Y6-DpR" secondAttribute="bottom" id="xAQ-bt-cbZ"/>
+                            <constraint firstItem="FU9-OA-eP7" firstAttribute="leading" secondItem="vFl-cV-N8s" secondAttribute="trailing" id="xcq-3l-jHa"/>
+                            <constraint firstItem="vFl-cV-N8s" firstAttribute="height" secondItem="IVY-YJ-Tuw" secondAttribute="height" id="xgU-qI-Jog"/>
                             <constraint firstItem="IVY-YJ-Tuw" firstAttribute="leading" secondItem="uey-sn-kcw" secondAttribute="leading" id="yrd-YK-hee"/>
                             <constraint firstItem="qXi-Y6-DpR" firstAttribute="leading" secondItem="uey-sn-kcw" secondAttribute="leading" id="zlH-8n-O97"/>
                         </constraints>
@@ -594,7 +594,7 @@
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="280" height="250"/>
+                    <size key="freeformSize" width="281" height="222"/>
                     <connections>
                         <outlet property="closeButton" destination="Fm5-50-bxF" id="DYA-uD-K17"/>
                         <outlet property="giftButton" destination="FU9-OA-eP7" id="Hwt-74-NO2"/>
@@ -622,8 +622,8 @@
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Your Punch Code" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="230" translatesAutoresizingMaskIntoConstraints="NO" id="hYb-16-ITQ" userLabel="TitleLabel">
                                 <rect key="frame" x="20" y="15" width="230" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
-                                <color key="textColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
+                                <color key="textColor" red="0.87058823529999996" green="0.4039215686" blue="0.27450980390000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="12345" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="230" translatesAutoresizingMaskIntoConstraints="NO" id="E8F-8J-9TB" userLabel="MessageLabel">
@@ -652,7 +652,7 @@
                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="highlighted" backgroundImage="orange_highlighted.png">
+                                <state key="highlighted" backgroundImage="OrangeHighlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -703,8 +703,8 @@
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Network Error" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qkS-BD-mOK" userLabel="TitleLabel">
                                 <rect key="frame" x="20" y="15" width="230" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
-                                <color key="textColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
+                                <color key="textColor" red="0.87058823529999996" green="0.4039215686" blue="0.27450980390000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There was a problem connecting to Repunch. Please check your connection and try again." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="230" translatesAutoresizingMaskIntoConstraints="NO" id="bzF-Y3-ITd" userLabel="MessageLabel">
@@ -730,7 +730,7 @@
                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="highlighted" backgroundImage="orange_highlighted.png">
+                                <state key="highlighted" backgroundImage="OrangeHighlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1052,7 +1052,7 @@
                                     <constraint firstAttribute="height" constant="1" id="aeF-7K-4rB"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="message_type_gift_orange.png" translatesAutoresizingMaskIntoConstraints="NO" id="Nzz-2h-39X" userLabel="GiftIcon">
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MessageTypeGift" translatesAutoresizingMaskIntoConstraints="NO" id="Nzz-2h-39X" userLabel="GiftIcon">
                                 <rect key="frame" x="20" y="234" width="32" height="32"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <constraints>
@@ -1066,7 +1066,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="pRu-J4-1e2"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -1123,16 +1123,16 @@
         </scene>
     </scenes>
     <resources>
-        <image name="RedeemButton" width="26" height="26"/>
+        <image name="GiftButton" width="26" height="26"/>
+        <image name="GiftButtonWhite" width="26" height="26"/>
+        <image name="MessageTypeGift" width="32" height="32"/>
+        <image name="OrangeHighlighted" width="160" height="20"/>
+        <image name="RedeemButton" width="32" height="19"/>
+        <image name="RedeemButtonWhite" width="32" height="19"/>
+        <image name="Star" width="32" height="32"/>
         <image name="message_recepient_icon.png" width="32" height="32"/>
         <image name="message_send_feedback_icon.png" width="32" height="32"/>
-        <image name="message_type_gift_orange.png" width="32" height="32"/>
         <image name="nav_exit.png" width="32" height="32"/>
-        <image name="orange_highlighted.png" width="32" height="32"/>
-        <image name="redeem_gift_icon_white.png" width="26" height="26"/>
-        <image name="redeem_icon.png" width="32" height="19"/>
-        <image name="redeem_icon_white.png" width="32" height="19"/>
-        <image name="star.png" width="32" height="32"/>
     </resources>
     <color key="tintColor" red="0.94117647059999998" green="0.54901960780000003" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

@@ -60,11 +60,11 @@
                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
                             <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" title="67 Front St" image="location_map_icon.png">
+                            <state key="normal" title="67 Front St" image="LocationDirections">
                                 <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </state>
-                            <state key="highlighted" backgroundImage="orange_highlighted.png">
+                            <state key="highlighted" backgroundImage="OrangeHighlighted">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
@@ -88,11 +88,11 @@
                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
                             <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" title="(123) 456-7890" image="location_call_icon.png">
+                            <state key="normal" title="(123) 456-7890" image="LocationCall">
                                 <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </state>
-                            <state key="highlighted" backgroundImage="orange_highlighted.png">
+                            <state key="highlighted" backgroundImage="OrangeHighlighted">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
@@ -111,16 +111,16 @@
                             <rect key="frame" x="0.0" y="433" width="320" height="76"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="location_hours_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="57E-wy-leP" userLabel="HoursImageView">
-                                    <rect key="frame" x="15" y="15" width="36" height="36"/>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LocationHours" translatesAutoresizingMaskIntoConstraints="NO" id="57E-wy-leP" userLabel="HoursImageView">
+                                    <rect key="frame" x="15" y="15" width="25" height="25"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="36" id="VIV-yf-g5b"/>
-                                        <constraint firstAttribute="width" constant="36" id="qW2-7Z-qRc"/>
+                                        <constraint firstAttribute="height" constant="25" id="VIV-yf-g5b"/>
+                                        <constraint firstAttribute="width" constant="25" id="qW2-7Z-qRc"/>
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hours" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hLy-oW-oZC" userLabel="HoursStaticLabel">
-                                    <rect key="frame" x="66" y="15" width="48" height="20"/>
+                                    <rect key="frame" x="63" y="15" width="48" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="48" id="GUu-Uu-yVS"/>
@@ -131,7 +131,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Monday" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="80" translatesAutoresizingMaskIntoConstraints="NO" id="ipI-wb-lES" userLabel="HoursDaysLabel">
-                                    <rect key="frame" x="66" y="40" width="80" height="21"/>
+                                    <rect key="frame" x="63" y="40" width="80" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="80" id="vje-SS-BAV"/>
@@ -157,7 +157,7 @@
                             <constraints>
                                 <constraint firstItem="ipI-wb-lES" firstAttribute="top" secondItem="zDH-tG-KWX" secondAttribute="top" id="54n-xk-Jsu"/>
                                 <constraint firstItem="ipI-wb-lES" firstAttribute="top" secondItem="hLy-oW-oZC" secondAttribute="bottom" constant="5" id="Cnp-U6-Txe"/>
-                                <constraint firstItem="hLy-oW-oZC" firstAttribute="leading" secondItem="57E-wy-leP" secondAttribute="trailing" constant="15" id="PDa-gH-b1Q"/>
+                                <constraint firstItem="hLy-oW-oZC" firstAttribute="leading" secondItem="57E-wy-leP" secondAttribute="trailing" constant="23" id="PDa-gH-b1Q"/>
                                 <constraint firstItem="hLy-oW-oZC" firstAttribute="top" secondItem="57E-wy-leP" secondAttribute="top" id="PiP-Yj-4gc"/>
                                 <constraint firstItem="ipI-wb-lES" firstAttribute="leading" secondItem="hLy-oW-oZC" secondAttribute="leading" id="XcQ-bn-HYi"/>
                                 <constraint firstAttribute="trailing" secondItem="zDH-tG-KWX" secondAttribute="trailing" constant="15" id="oCj-0d-tdY"/>
@@ -187,7 +187,7 @@
                                 <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </state>
-                            <state key="highlighted" backgroundImage="orange_highlighted.png">
+                            <state key="highlighted" backgroundImage="OrangeHighlighted">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
@@ -245,7 +245,7 @@
                         <constraint firstAttribute="height" constant="36" id="71q-mJ-j99"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <state key="normal" image="circular_exit_button.png"/>
+                    <state key="normal" image="MapExitButton"/>
                     <connections>
                         <action selector="bigMapExitButtonAction:" destination="-1" eventType="touchUpInside" id="ReX-CD-m4O"/>
                     </connections>
@@ -294,11 +294,11 @@
         </tapGestureRecognizer>
     </objects>
     <resources>
-        <image name="circular_exit_button.png" width="32" height="32"/>
-        <image name="location_call_icon.png" width="36" height="36"/>
-        <image name="location_hours_icon.png" width="36" height="36"/>
-        <image name="location_map_icon.png" width="36" height="36"/>
+        <image name="LocationCall" width="32" height="32"/>
+        <image name="LocationDirections" width="32" height="32"/>
+        <image name="LocationHours" width="32" height="32"/>
+        <image name="MapExitButton" width="32" height="32"/>
+        <image name="OrangeHighlighted" width="160" height="20"/>
         <image name="location_others_icon.png" width="36" height="36"/>
-        <image name="orange_highlighted.png" width="256" height="32"/>
     </resources>
 </document>

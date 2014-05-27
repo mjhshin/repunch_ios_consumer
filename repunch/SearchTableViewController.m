@@ -119,18 +119,18 @@
 	//{
 	if( !IS_NIL(store.thumbnail_image) )
 	{
-		cell.storeImage.image = [UIImage imageNamed:@"placeholder_thumbnail_image"];
+		cell.storeImage.image = [UIImage imageNamed:@"PlaceholderThumbnail"];
 		UIImage *storeImage = [[DataManager getSharedInstance] getThumbnailImage:store.objectId];
 		if(storeImage == nil)
 		{
-			cell.storeImage.image = [UIImage imageNamed:@"placeholder_thumbnail_image"];
+			cell.storeImage.image = [UIImage imageNamed:@"PlaceholderThumbnail"];
 			[self downloadImage:store.thumbnail_image forIndexPath:indexPath withStoreId:store.objectId];
 		} else {
 			cell.storeImage.image = storeImage;
 		}
 	} else {
 		// if a download is deferred or in progress, return a placeholder image
-		cell.storeImage.image = [UIImage imageNamed:@"placeholder_thumbnail_image"];
+		cell.storeImage.image = [UIImage imageNamed:@"PlaceholderThumbnail"];
 	}
 	//}
     //}

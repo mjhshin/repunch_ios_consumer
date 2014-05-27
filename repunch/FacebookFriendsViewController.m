@@ -68,7 +68,7 @@
 			for (NSDictionary<FBGraphUser>* friend in friends)
 			{
 				//NSLog(@"I have a friend named %@ with id %@", friend.name, friend.id);
-				[friendIds addObject:friend.id];
+				[friendIds addObject:friend.objectID];
 			}
 			
 			PFQuery *patronQuery = [RPPatron query];
@@ -128,7 +128,7 @@
 - (BOOL)friendPickerViewController:(FBFriendPickerViewController *)friendPicker
                  shouldIncludeUser:(id <FBGraphUser>)user
 {
-    return friendDictionary[user.id] ? YES : NO;
+    return friendDictionary[user.objectID] ? YES : NO;
 }
 
 // Event: Selection changed
@@ -136,7 +136,7 @@
 {
 	
 	NSDictionary<FBGraphUser> *selection = friendPicker.selection[0];
-	NSString *recepientId = friendDictionary[selection.id];
+	NSString *recepientId = friendDictionary[selection.objectID];
 
 	[self dismissViewControllerAnimated:NO
                              completion:^{

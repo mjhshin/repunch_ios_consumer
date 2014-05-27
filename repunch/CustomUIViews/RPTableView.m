@@ -7,6 +7,7 @@
 //
 
 #import "RPTableView.h"
+#import "RepunchUtils.h"
 #import <objc/runtime.h>
 
 static char RPTableViewPullToRefreshView;

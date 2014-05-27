@@ -47,7 +47,7 @@
 	self.contentView.backgroundColor = [UIColor whiteColor];
 	self.senderName.font = [RepunchUtils repunchFontWithSize:17 isBold:YES];
 	self.dateSent.font = [RepunchUtils repunchFontWithSize:14 isBold:YES];
-	self.dateSent.textColor = [RepunchUtils repunchOrangeColor];
+	self.dateSent.textColor = [RepunchUtils darkRepunchOrangeColor];
 }
 
 - (void)setMessageTypeIcon:(RPMessageType)messageType forReadMessage:(BOOL)isRead

@@ -119,11 +119,11 @@
 			NSInteger hourStringLength = hourString.length - hourStringBeginIndex;
 			
 			[dayString addAttribute:NSForegroundColorAttributeName
-							  value:[RepunchUtils repunchOrangeColor]
+							  value:[RepunchUtils darkRepunchOrangeColor]
 							  range:NSMakeRange(dayStringBeginIndex, dayStringLength)];
 			
 			[hourString addAttribute:NSForegroundColorAttributeName
-							   value:[RepunchUtils repunchOrangeColor]
+							   value:[RepunchUtils darkRepunchOrangeColor]
 							   range:NSMakeRange(hourStringBeginIndex, hourStringLength)];
 		}
 	}

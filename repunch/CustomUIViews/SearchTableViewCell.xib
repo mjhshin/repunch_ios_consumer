@@ -62,7 +62,7 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="star.png" translatesAutoresizingMaskIntoConstraints="NO" id="54" userLabel="PunchIconImageView">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Star" translatesAutoresizingMaskIntoConstraints="NO" id="54" userLabel="PunchIconImageView">
                         <rect key="frame" x="108" y="83" width="12" height="12"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
@@ -78,7 +78,7 @@
                             <constraint firstAttribute="width" constant="70" id="rzh-lP-WA0"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="13"/>
-                        <color key="textColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.87058823529999996" green="0.4039215686" blue="0.27450980390000002" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
                 </subviews>
@@ -114,6 +114,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="star.png" width="32" height="32"/>
+        <image name="Star" width="32" height="32"/>
     </resources>
 </document>

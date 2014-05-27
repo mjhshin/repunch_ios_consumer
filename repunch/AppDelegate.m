@@ -19,6 +19,19 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
 	BOOL isProduction = NO; // DON'T FORGET TO SET!!!!
+		
+	[RPInstallation registerSubclass];
+	[RPUser registerSubclass];
+	[RPPatron registerSubclass];
+	[RPPatronStore registerSubclass];
+    [RPStore registerSubclass];
+	[RPStoreLocation registerSubclass];
+	[RPMessage registerSubclass];
+	[RPMessageStatus registerSubclass];
+	[RPFacebookPost registerSubclass];
+	
+	[Crashlytics startWithAPIKey:@"87229bb388427a182709b79fc61e45ec5de14023"];
+	[Crashlytics setBoolValue:isProduction forKey:@"is_production"];
 	
 	if(isProduction) {	// PRODUCTION KEY
 		[Parse setApplicationId:@"m0EdwpRYlJwttZLZ5PUk7y13TWCnvSScdn8tfVoh"
@@ -29,23 +42,9 @@
 					  clientKey:@"2anJYVl8sakbPVqPz4MEbP2GLWBcs7uRFTvWMaZ0"];
 	}
 	
-	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+	[PFFacebookUtils initializeFacebook];
 	
-	// Register Parse subclasses
-	[RPInstallation registerSubclass];
-	[RPUser registerSubclass];
-	[RPPatron registerSubclass];
-	[RPPatronStore registerSubclass];
-    [RPStore registerSubclass];
-	[RPStoreLocation registerSubclass];
-	[RPMessage registerSubclass];
-	[RPMessageStatus registerSubclass];
-	[RPFacebookPost registerSubclass];
-
-    [PFFacebookUtils initializeFacebook];
-	
-	[Crashlytics startWithAPIKey:@"87229bb388427a182709b79fc61e45ec5de14023"];
-	[Crashlytics setBoolValue:isProduction forKey:@"is_production"];
+	[application setStatusBarStyle:UIStatusBarStyleLightContent];
 	
 	[application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge |
 													UIRemoteNotificationTypeAlert |
@@ -57,15 +56,19 @@
     return YES;
 }
 
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
 {
-    return [PFFacebookUtils handleOpenURL:url];
+    return [FBAppCall handleOpenURL:url
+                  sourceApplication:sourceApplication
+                        withSession:[PFFacebookUtils session]];
 }
 
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+- (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    return [PFFacebookUtils handleOpenURL:url];
+    [FBAppCall handleDidBecomeActiveWithSession:[PFFacebookUtils session]];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

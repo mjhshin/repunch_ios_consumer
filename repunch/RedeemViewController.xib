@@ -26,7 +26,7 @@
                     <rect key="frame" x="20" y="85" width="280" height="70"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="25"/>
-                    <color key="textColor" red="0.92549019610000005" green="0.54117647059999996" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" red="0.87058823529999996" green="0.4039215686" blue="0.27450980390000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <size key="shadowOffset" width="1" height="1"/>
@@ -51,7 +51,7 @@
                         <constraint firstAttribute="height" constant="150" id="sxt-mS-NA9"/>
                     </constraints>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bluetooth_not_found.png" translatesAutoresizingMaskIntoConstraints="NO" id="M0V-Gq-vJW" userLabel="StatusImageView">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BluetoothTimeout" translatesAutoresizingMaskIntoConstraints="NO" id="M0V-Gq-vJW" userLabel="StatusImageView">
                     <rect key="frame" x="85" y="195" width="150" height="150"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
@@ -80,7 +80,7 @@
                                     <rect key="frame" x="32" y="0.0" width="112" height="69"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="50"/>
-                                    <color key="textColor" red="0.92549019610000005" green="0.54117647059999996" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="textColor" red="0.87058823529999996" green="0.4039215686" blue="0.27450980390000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                     <size key="shadowOffset" width="1" height="1"/>
                                 </label>
@@ -154,9 +154,9 @@
         </view>
     </objects>
     <resources>
+        <image name="BluetoothTimeout" width="150" height="150"/>
         <image name="OrangeButton" width="50" height="50"/>
         <image name="Star" width="32" height="32"/>
-        <image name="bluetooth_not_found.png" width="150" height="150"/>
         <image name="tab_punch_exit.png" width="24" height="24"/>
     </resources>
 </document>

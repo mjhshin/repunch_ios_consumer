@@ -156,7 +156,7 @@
 
 + (UIColor *)darkRepunchOrangeColor
 {
-	return [UIColor colorWithRed:(255/255.0) green:(130/255.0) blue:(77/255.0) alpha:1.0];
+	return [UIColor colorWithRed:(222/255.0) green:(103/255.0) blue:(70/255.0) alpha:1.0];
 }
 
 + (UIColor *)repunchOrangeHighlightedColor

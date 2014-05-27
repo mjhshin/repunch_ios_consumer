@@ -192,6 +192,7 @@
 {
 	PunchViewController *punchVC = [[PunchViewController alloc] init];
 	punchVC.backgroundImageView = [RepunchUtils blurredImageFromView:self.view];
+	punchVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
 	[self presentViewController:punchVC animated:YES completion:nil];
 }
 /*

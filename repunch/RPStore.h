@@ -15,14 +15,14 @@
 
 @interface RPStore : PFObject <PFSubclassing>
 
-@property (strong, readonly, atomic) NSString *store_name;
-@property (strong, readonly, atomic) PFFile *thumbnail_image;
-@property (strong, readonly, atomic) PFFile *cover_image;
-@property (assign, readonly, atomic) BOOL active;
-@property (assign, readonly, atomic) NSInteger punches_facebook;
-@property (strong, readonly, atomic) NSArray *categories;
-@property (strong, readonly, atomic) NSArray *rewards;
-@property (strong, readonly, atomic) NSArray *store_locations;
+@property (strong, readonly, nonatomic) NSString *store_name;
+@property (strong, readonly, nonatomic) PFFile *thumbnail_image;
+@property (strong, readonly, nonatomic) PFFile *cover_image;
+@property (assign, readonly, nonatomic) BOOL active;
+@property (assign, readonly, nonatomic) NSInteger punches_facebook;
+@property (strong, readonly, nonatomic) NSArray *categories;
+@property (strong, readonly, nonatomic) NSArray *rewards;
+@property (strong, readonly, nonatomic) NSArray *store_locations;
 
 // Unused (PFRelations also unused, not listed)
 //@property (strong, readonly, atomic) NSString *country;

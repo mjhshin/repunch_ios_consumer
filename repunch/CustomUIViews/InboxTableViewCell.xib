@@ -29,7 +29,7 @@
                             <constraint firstAttribute="height" constant="20" id="483"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
-                        <color key="textColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.87058823529999996" green="0.4039215686" blue="0.27450980390000002" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" text="Message preview - bla bla bla bla hello bonjour goodbye rabble rabble ellipses" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="258" translatesAutoresizingMaskIntoConstraints="NO" id="34" userLabel="PreviewLabel">
@@ -42,7 +42,7 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="message_type_offer_orange.png" translatesAutoresizingMaskIntoConstraints="NO" id="245" userLabel="IconImageView">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="MessageTypeOffer" translatesAutoresizingMaskIntoConstraints="NO" id="245" userLabel="IconImageView">
                         <rect key="frame" x="288" y="53" width="22" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
@@ -76,6 +76,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="message_type_offer_orange.png" width="32" height="32"/>
+        <image name="MessageTypeOffer" width="32" height="32"/>
     </resources>
 </document>

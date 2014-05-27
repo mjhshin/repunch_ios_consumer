@@ -24,7 +24,7 @@
 {
 	self.canShowCallout = YES;
 	self.draggable = NO;
-	self.image = [UIImage imageNamed:@"annotation_icon"];
+	self.image = [UIImage imageNamed:@"AnnotationIcon"];
 	self.centerOffset = CGPointMake(0, -30); //image height 42
 	
 	UIButton *storeButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];

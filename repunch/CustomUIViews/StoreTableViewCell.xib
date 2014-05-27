@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NDA-YO-fDP" userLabel="PunchView">
-                                <rect key="frame" x="0.0" y="0.0" width="96" height="33"/>
+                                <rect key="frame" x="0.0" y="0.0" width="99" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="999" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="21" userLabel="PunchLabel">
@@ -30,10 +30,10 @@
                                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Punches" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="61i-ev-3Da" userLabel="PunchStaticLabel">
-                                        <rect key="frame" x="46" y="12" width="50" height="18"/>
+                                        <rect key="frame" x="46" y="10" width="53" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="13"/>
-                                        <color key="textColor" red="1" green="0.50980392159999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                                        <color key="textColor" red="0.87058823529999996" green="0.4039215686" blue="0.27450980390000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </label>
                                 </subviews>
@@ -41,7 +41,7 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="61i-ev-3Da" secondAttribute="trailing" id="D9d-LQ-cxH"/>
                                     <constraint firstAttribute="height" constant="33" id="RwZ-sz-HC9"/>
-                                    <constraint firstItem="61i-ev-3Da" firstAttribute="top" secondItem="21" secondAttribute="bottom" constant="-21" id="Sav-pa-GAt"/>
+                                    <constraint firstItem="61i-ev-3Da" firstAttribute="top" secondItem="21" secondAttribute="bottom" constant="-23" id="Sav-pa-GAt"/>
                                     <constraint firstItem="61i-ev-3Da" firstAttribute="leading" secondItem="21" secondAttribute="trailing" constant="3" id="V5J-xC-Dnb"/>
                                     <constraint firstAttribute="centerY" secondItem="21" secondAttribute="centerY" id="sbS-uk-odG"/>
                                     <constraint firstItem="21" firstAttribute="leading" secondItem="NDA-YO-fDP" secondAttribute="leading" id="tOC-EM-Xcr"/>

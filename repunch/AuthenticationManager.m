@@ -91,7 +91,7 @@ withCompletionHandler:(AuthenticationManagerHandler)handler;
 	[[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *graphUser, NSError *error) {
 		 if (!error) {
 			 
-			 NSString *facebookId = graphUser.id;
+			 NSString *facebookId = graphUser.objectID;
 			 NSString *firstName = graphUser.first_name;
 			 NSString *lastName = graphUser.last_name;
 			 NSString *birthday = graphUser.birthday;
